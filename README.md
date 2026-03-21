@@ -28,6 +28,44 @@ Dependence → Independence → Interdependence → Significance
 
 This maps to the Three Loops model: In-the-Loop (human decides everything) -> On-the-Loop (human reviews AI proposals) -> Out-of-Loop (AI executes autonomously within guardrails) -> Voice (contributing back to the community).
 
+## The Framework
+
+```
+                    ┌─────────────────────────┐
+                    │    H8: FIND YOUR VOICE   │
+                    │  Body · Mind · Heart ·   │
+                    │       Spirit             │
+                    │  "Am I contributing      │
+                    │   something meaningful?" │
+                    └────────────┬─────────────┘
+                                │
+        ┌───────────────────────┼───────────────────────┐
+        │                      │                        │
+        ▼                      ▼                        ▼
+ PRIVATE VICTORY        PUBLIC VICTORY            RENEWAL
+ (Self-Management)      (Collaboration)        (Sustainability)
+        │                      │                        │
+   ┌────┴────┐            ┌────┴────┐              ┌────┴────┐
+   │         │            │         │              │         │
+   ▼         ▼            ▼         ▼              ▼         │
+┌──────┐ ┌──────┐    ┌──────┐ ┌──────┐       ┌──────┐      │
+│  H1  │ │  H2  │    │  H4  │ │  H5  │       │  H7  │      │
+│Proact│ │End in│    │Win-  │ │Under-│       │Sharpen│     │
+│-ive  │ │Mind  │    │Win   │ │stand │       │the Saw│     │
+└──┬───┘ └──┬───┘    └──┬───┘ └──┬───┘       └──┬───┘      │
+   │        │           │        │              │          │
+   ▼        ▼           ▼        ▼              ▼          │
+┌──────┐              ┌──────┐              ┌─────────┐    │
+│  H3  │              │  H6  │              │Cross-   │    │
+│First │              │Syner-│              │Verify   │    │
+│Things│              │gize  │              │Checklist│    │
+│First │              │      │              │(17 pts) │    │
+└──────┘              └──────┘              └─────────┘    │
+                                                           │
+  Dependence ──► Independence ──► Interdependence ──► Significance
+  (In-the-Loop)  (On-the-Loop)   (Out-of-Loop)      (Voice)
+```
+
 ## The 8 Habits
 
 ### Private Victory (Self-Management)
