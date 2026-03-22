@@ -112,6 +112,63 @@ Checklists create compliance theater — people tick boxes without understanding
 
 The [cross-verification guide](guides/cross-verification.md) exists for planning reviews, not as a gate for every commit.
 
+## Quick Setup (Claude Code)
+
+### 1. Install rules file (one-time)
+
+```bash
+mkdir -p ~/.claude/rules
+curl -sL https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/rules/effective-development.md \
+  -o ~/.claude/rules/effective-development.md
+```
+
+This auto-loads 8-habit principles into every Claude Code session.
+
+### 2. Set memory instruction (paste once in any session)
+
+```
+ทุกงานยึดหลัก Covey's 7+1 Habits (8-Habit Effective Development) เป็น working principle:
+- H5/H3/H2 ก่อนเริ่มงาน (เข้าใจ → จัดลำดับ → กำหนด done)
+- H1/H6/H8 ระหว่างทำ (เชิงรุก → synergize → มีคุณค่า)
+- H4/H7 หลังเสร็จ (win-win → ลับเลื่อย)
+Reference: https://github.com/pitimon/8-habit-ai-dev
+ใช้ cross-verification (guides/cross-verification.md) กับงาน non-trivial
+```
+
+### 3. Verify
+
+```bash
+cat ~/.claude/rules/effective-development.md | head -5
+# Should show: "# Effective Development Playbook"
+```
+
+### Update
+
+```bash
+curl -sL https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/rules/effective-development.md \
+  -o ~/.claude/rules/effective-development.md
+```
+
+## What's in this repo
+
+```
+8-habit-ai-dev/
+├── README.md                          ← You are here
+├── rules/
+│   └── effective-development.md       ← Claude Code rules (174 lines, auto-loaded)
+├── habits/
+│   ├── h1-be-proactive.md             ← Deep dive + examples per habit
+│   ├── h2-begin-with-end.md
+│   ├── h3-first-things-first.md
+│   ├── h4-win-win.md
+│   ├── h5-understand-first.md
+│   ├── h6-synergize.md
+│   ├── h7-sharpen-saw.md
+│   └── h8-find-voice.md
+└── guides/
+    └── cross-verification.md          ← 17-point checklist for planning reviews
+```
+
 ## Contributing
 
 Found a habit that worked (or broke) in your AI-assisted development? PRs welcome.
