@@ -32,15 +32,18 @@ This plugin provides a **skill for each step** — not as a gate, but as a habit
 ## Quick Start
 
 ```bash
-# Install the plugin
+# Step 1: Add the marketplace source
 claude plugin marketplace add pitimon/8-habit-ai-dev
 
-# Restart Claude Code, then use any skill:
+# Step 2: Install the plugin
+claude plugin install 8-habit-ai-dev@8-habit-ai-dev
+
+# Step 3: Restart Claude Code, then use any skill:
 /requirements       # Before you build anything
 /cross-verify       # Before you ship anything
 ```
 
-That's it. The plugin loads a session reminder and makes 8 skills available.
+Three commands. The plugin loads a session reminder and makes 8 skills available.
 
 ---
 
