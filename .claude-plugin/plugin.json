@@ -1,0 +1,23 @@
+{
+  "name": "8-habit-ai-dev",
+  "version": "1.0.0",
+  "description": "Anti-Vibe-Coding plugin — 7-step workflow discipline + 8-Habit cross-verification for AI-assisted development",
+  "author": {
+    "name": "Pitimon",
+    "email": "pitimon@thaicloud.ai"
+  },
+  "repository": "https://github.com/pitimon/8-habit-ai-dev",
+  "license": "MIT",
+  "skills": "./skills/",
+  "keywords": [
+    "workflow",
+    "habits",
+    "discipline",
+    "anti-vibe-coding",
+    "code-review",
+    "planning",
+    "8-habits",
+    "covey",
+    "senior-dev"
+  ]
+}

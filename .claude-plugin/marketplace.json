@@ -1,0 +1,34 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "pitimon-8-habit-ai-dev",
+  "description": "8 Habits of Effective AI-Assisted Development — 7-step workflow skills + Covey's 8 Habits cross-verification",
+  "owner": {
+    "name": "Pitimon",
+    "email": "pitimon@thaicloud.ai"
+  },
+  "plugins": [
+    {
+      "name": "8-habit-ai-dev",
+      "description": "Anti-Vibe-Coding plugin — 7-step workflow discipline + 8-Habit cross-verification",
+      "version": "1.0.0",
+      "author": {
+        "name": "Pitimon",
+        "email": "pitimon@thaicloud.ai"
+      },
+      "source": "./",
+      "category": "workflow",
+      "homepage": "https://github.com/pitimon/8-habit-ai-dev",
+      "repository": "https://github.com/pitimon/8-habit-ai-dev",
+      "license": "MIT",
+      "keywords": [
+        "workflow",
+        "habits",
+        "discipline",
+        "anti-vibe-coding",
+        "covey",
+        "8-habits"
+      ],
+      "tags": ["workflow", "quality", "planning", "review"]
+    }
+  ]
+}
