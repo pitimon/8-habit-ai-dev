@@ -36,7 +36,7 @@ This plugin provides a **skill for each step** — not as a gate, but as a habit
 claude plugin marketplace add pitimon/8-habit-ai-dev
 
 # Step 2: Install the plugin
-claude plugin install 8-habit-ai-dev@8-habit-ai-dev
+claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 # Step 3: Restart Claude Code, then use any skill:
 /requirements       # Before you build anything
