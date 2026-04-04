@@ -1,34 +1,56 @@
-# CLAUDE.md — 8-Habit AI Dev Plugin
+# CLAUDE.md
 
-**Anti-Vibe-Coding plugin** — 7-step workflow discipline + 8-Habit cross-verification
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Structure
+## What This Is
 
+A **Claude Code plugin** (not a runnable application). No build system, no dependencies, no tests — the entire plugin is structured markdown files that Claude Code loads at runtime. The plugin provides a 7-step workflow discipline based on Covey's 8 Habits, designed to replace "vibe coding" with structured AI-assisted development.
+
+**Install**: `claude plugin marketplace add pitimon/8-habit-ai-dev && claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev`
+
+## Architecture
+
+The plugin has three loading mechanisms with distinct timing:
+
+1. **`rules/effective-development.md`** — Auto-loaded into every Claude Code session (via Claude's rules system). Contains the full 8-Habit playbook with Rules, Anti-patterns, and Checkpoints per habit.
+2. **`hooks/session-start.sh`** — Runs at SessionStart (registered in `hooks/hooks.json`). Prints a ≤300-token reminder of the 7-step workflow. Must stay concise — this is injected into every conversation.
+3. **`skills/*/SKILL.md`** — Loaded on-demand when user invokes `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/review-ai`, `/deploy-guide`, `/monitor-setup`, or `/cross-verify`.
+
+**On-demand loading**: Skills reference habit content via `Load ${CLAUDE_PLUGIN_ROOT}/habits/h*.md` — the habit files are NOT loaded at session start. This keeps the token budget lean.
+
+## Skill Authoring Conventions
+
+Each skill file (`skills/<name>/SKILL.md`) follows this structure:
+
+```yaml
+---
+name: <skill-name> # Must match directory name
+description: > # Multi-line, explains when to use
+user-invocable: true # Always true for workflow skills
+argument-hint: "[description]" # Shown in skill list
+allowed-tools: ["Read", "Glob", "Grep"] # Bash only when needed (e.g., review-ai)
+---
 ```
-skills/           8 actionable workflow skills (Steps 1-7 + Cross-Verify)
-habits/           8 habit reference files (loaded on-demand by skills)
-guides/           Cross-verification checklist
-rules/            Effective development rules (auto-loaded)
-agents/           8-habit-reviewer (deep review agent)
-hooks/            Session start reminder
-```
+
+Body pattern: Habit mapping → Process steps → When to Skip → H\* Checkpoint → Load directive for the full habit file.
+
+## Key Conventions
+
+- **Skills are read-only guidance** — they tell Claude how to approach a task, they do not modify files themselves
+- **`habits/`, `guides/`, `rules/` are reference content** — never generated or modified by skills
+- **Agent (`agents/8-habit-reviewer.md`)** uses model `sonnet` with read-only tools (`Read`, `Glob`, `Grep`) — it analyzes and reports, never edits
+- **Plugin metadata** lives in `.claude-plugin/plugin.json` (plugin config) and `.claude-plugin/marketplace.json` (marketplace listing)
+- **Session hook budget**: `hooks/session-start.sh` output must stay ≤300 tokens
 
 ## Skills → Habits Mapping
 
-| Skill | Step | Habit | Purpose |
-|-------|------|-------|---------|
-| `/requirements` | 1 | H2 Begin with End | Define done before starting |
-| `/design` | 2 | H8 Find Your Voice | Human decides architecture |
-| `/breakdown` | 3 | H3 First Things First | Atomic tasks, no scope creep |
-| `/build-brief` | 4 | H5 Understand First | Read code before writing |
-| `/review-ai` | 5 | H4 Win-Win | Actionable feedback |
-| `/deploy-guide` | 6 | H1 Be Proactive | Staging first, rollback ready |
-| `/monitor-setup` | 7 | H7 Sharpen the Saw | Invest in observability |
-| `/cross-verify` | All | H1-H8 | 17-question checklist |
-
-## Design Principles
-
-- Skills are **empowering, not restrictive** — reminders, not blockers
-- Habit content loaded **on-demand** via `Load ${CLAUDE_PLUGIN_ROOT}/habits/h*.md`
-- Token budget: session-start hook ≤ 300 tokens
-- Existing `habits/`, `guides/`, `rules/` content is **reference only** — never modified by skills
+| Skill            | Step | Habit                 | Purpose                       |
+| ---------------- | ---- | --------------------- | ----------------------------- |
+| `/requirements`  | 1    | H2 Begin with End     | Define done before starting   |
+| `/design`        | 2    | H8 Find Your Voice    | Human decides architecture    |
+| `/breakdown`     | 3    | H3 First Things First | Atomic tasks, no scope creep  |
+| `/build-brief`   | 4    | H5 Understand First   | Read code before writing      |
+| `/review-ai`     | 5    | H4 Win-Win            | Actionable feedback           |
+| `/deploy-guide`  | 6    | H1 Be Proactive       | Staging first, rollback ready |
+| `/monitor-setup` | 7    | H7 Sharpen the Saw    | Invest in observability       |
+| `/cross-verify`  | All  | H1-H8                 | 17-question checklist         |

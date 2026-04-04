@@ -54,11 +54,11 @@ Run through this checklist. Flag any item that fails.
 
 ### Renewal & Significance
 
-| #   | Habit           | Question                                                           |
-| --- | --------------- | ------------------------------------------------------------------ |
-| 15  | H7: Sharpen Saw | Have I tracked any tech debt this change introduces?               |
-| 16  | H7: Sharpen Saw | After this task, what could be automated for next time?            |
-| 17  | H8: Find Voice  | Am I contributing something meaningful, or just completing a task? |
+| #   | Habit           | Question                                                                |
+| --- | --------------- | ----------------------------------------------------------------------- |
+| 15  | H7: Sharpen Saw | After this task, will I capture what I learned (script, doc, or issue)? |
+| 16  | H8: Voice       | Do I understand WHY this task matters, not just WHAT needs to be done?  |
+| 17  | H8: Voice       | Does this work empower the next person who touches this code?           |
 
 ## Output
 
