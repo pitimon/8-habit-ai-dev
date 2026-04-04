@@ -28,7 +28,13 @@ allowed-tools: ["Read", "Glob", "Grep", "Bash"]
    - Uptime monitoring: health check ping every 30-60s
    - Disk/memory alerts: warn at 85%, critical at 95%
 
-4. **Post-deploy monitoring habit**:
+4. **Infrastructure health** (prevent cascade failures):
+   - [ ] Disk space monitoring with alerts before exhaustion
+   - [ ] Dependent services checked (DB, cache, queue) — if one dies, what cascades?
+   - [ ] Container/process auto-restart configured (Docker restart policy, systemd)
+   - [ ] Recovery runbook exists for each critical dependency
+
+5. **Post-deploy monitoring habit**:
 
    ```
    After every deploy:
@@ -39,7 +45,7 @@ allowed-tools: ["Read", "Glob", "Grep", "Bash"]
    5. Record any incidents for future learning
    ```
 
-5. **H7 Checkpoint**: "Am I investing in Production Capability (monitoring), or just grinding out Production (features)?"
+6. **H7 Checkpoint**: "Am I investing in Production Capability (monitoring), or just grinding out Production (features)?"
 
 ## The P/PC Balance
 

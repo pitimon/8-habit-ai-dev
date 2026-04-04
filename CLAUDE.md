@@ -41,6 +41,7 @@ Body pattern: Habit mapping → Process steps → When to Skip → H\* Checkpoin
 - **Agent (`agents/8-habit-reviewer.md`)** uses model `sonnet` with read-only tools (`Read`, `Glob`, `Grep`) — it analyzes and reports, never edits
 - **Plugin metadata** lives in `.claude-plugin/plugin.json` (plugin config) and `.claude-plugin/marketplace.json` (marketplace listing)
 - **Session hook budget**: `hooks/session-start.sh` output must stay ≤300 tokens
+- **Version lives in 3 files** — must bump together: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `README.md` footer
 
 ## Skills → Habits Mapping
 
