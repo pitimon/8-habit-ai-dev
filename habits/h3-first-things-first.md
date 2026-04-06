@@ -35,6 +35,20 @@ If you spend every week fixing the same class of bug, the fix isn't another patc
 
 Context-switching kills quality. An AI assistant that's halfway through implementing feature A and gets redirected to feature B will produce poor results on both. Finish A, commit, then start B.
 
+### Before/After: Q1 Firefighting vs Q2 Prevention
+
+```yaml
+# BEFORE — Q1 reactive firefighting every sprint:
+sprint-12: "fix: search timeout in production (again)"
+sprint-13: "fix: search timeout different endpoint (again)"
+sprint-14: "fix: search timeout under load (again)"
+
+# AFTER — Q2 proactive investment:
+sprint-12: "feat: add circuit breaker + configurable timeout for all search endpoints"
+sprint-12: "feat: add search latency dashboard with P95 alerting"
+# Result: zero search timeout incidents in sprints 13-20
+```
+
 ## Anti-Patterns
 
 - **Gold-plating**: Adding features nobody asked for because the AI makes it easy. "Let me also add pagination, sorting, and full-text search" when the ticket says "add a list endpoint." Ship the requirement, then enhance.

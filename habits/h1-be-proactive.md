@@ -28,6 +28,23 @@ Before marking a function complete, mentally walk through the failure modes. AI 
 
 When working on area X and you notice area Y could benefit from the same fix, flag it. Even if it's out of scope, a comment like "FYI: the same date parsing issue exists in the export module" prevents future bugs.
 
+### Before/After: Reactive vs Proactive Fix
+
+```javascript
+// REACTIVE: fix only the reported path
+function parseDate(input) {
+  return new Date(input); // "fixed" here, but 11 other callers still break
+}
+
+// PROACTIVE: fix the function AND verify all callers
+function parseDate(input) {
+  if (!input || typeof input !== "string") return null;
+  const parsed = new Date(input);
+  return isNaN(parsed.getTime()) ? null : parsed;
+}
+// Then: grep -r "parseDate(" src/ to verify all 12 callers handle null
+```
+
 ## Anti-Patterns
 
 - **Fix-the-line syndrome**: Changing only the exact line mentioned in the bug report without checking related code paths. The AI will happily do this — you need to ask for more.
