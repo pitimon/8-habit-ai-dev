@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A **Claude Code plugin** (not a runnable application). No build system, no dependencies, no tests — the entire plugin is structured markdown files that Claude Code loads at runtime. The plugin provides a 7-step workflow discipline based on Covey's 8 Habits, designed to replace "vibe coding" with structured AI-assisted development.
+A **Claude Code plugin** (not a runnable application). No build system, no dependencies — the entire plugin is structured markdown files that Claude Code loads at runtime. Structural validation via `tests/validate-structure.sh` (pure bash, no test framework). The plugin provides a 7-step workflow discipline based on Covey's 8 Habits, designed to replace "vibe coding" with structured AI-assisted development.
 
 **Install**: `claude plugin marketplace add pitimon/8-habit-ai-dev && claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev`
 

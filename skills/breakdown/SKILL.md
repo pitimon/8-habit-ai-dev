@@ -50,6 +50,12 @@ next-skill: build-brief
 - **Expects from predecessor** (`/design`): Architecture decisions and constraints
 - **Produces for successor** (`/build-brief`): Prioritized task list with dependencies and file paths
 
+## When to Skip
+
+- Single-file change with no dependencies — nothing to decompose
+- Bug fix with obvious root cause and single touch point
+- Task already broken down in an external tracker (Linear, Jira, GitHub Project)
+
 ## Definition of Done
 
 - [ ] Each task describable in 1 sentence — if not, break it down further

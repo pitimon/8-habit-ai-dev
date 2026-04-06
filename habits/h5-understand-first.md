@@ -33,6 +33,23 @@ When reviewing test failures, error logs, or code review comments, look for patt
 
 "Add caching" could mean: add Redis, add in-memory cache, add HTTP cache headers, or add browser cache. Each is a different week of work. Ask before building.
 
+### Before/After: Write-First vs Understand-First
+
+```python
+# BEFORE — write-first: AI generates a brand new date parser (120 lines)
+def parse_date(text):
+    """Parse date string to datetime."""
+    formats = ["%Y-%m-%d", "%m/%d/%Y", "%d %b %Y"]
+    for fmt in formats:
+        try: return datetime.strptime(text, fmt)
+        except ValueError: continue
+    return None
+
+# AFTER — understand-first: read existing code, discover it already exists
+from app.utils.dates import parse_date  # handles 15 formats + relative dates
+# No new code needed. 120 lines saved. Zero new bugs introduced.
+```
+
 ## Anti-Patterns
 
 - **Write-first, read-later**: Generating code immediately without reading the existing module. Results in duplicated utilities, inconsistent patterns, and style clashes.

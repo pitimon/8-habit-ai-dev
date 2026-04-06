@@ -100,6 +100,14 @@ When calculating adjusted score, exclude N/A items from both numerator and denom
 - **Q11-12 fail together**: Jumping to solutions — read the code and reproduce the problem
 - **Q13 always N/A**: May be underutilizing parallelization
 
+## Definition of Done
+
+- [ ] All 17 questions answered with Pass/Fail/N/A and 1-line evidence
+- [ ] Dimension Summary table rendered with per-dimension scores
+- [ ] Band determined from adjusted score (N/A items excluded)
+- [ ] Failed items each have a specific remediation action
+- [ ] Report follows the output template above (not free-form prose)
+
 ## Domain Question Packs (Optional)
 
 If the work is domain-specific, load the relevant pack for additional questions:

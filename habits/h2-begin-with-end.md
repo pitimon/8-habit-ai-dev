@@ -37,6 +37,17 @@ A PR without a test plan is a PR that "works on my machine." Every PR body shoul
 - [ ] Run `curl -H "X-API-Key: test" /api/search` (no query) — expect 400
 ```
 
+### Before/After: Commit Messages
+
+```
+# BEFORE (withdrawal — reader learns nothing):
+git commit -m "fix: update parser"
+
+# AFTER (deposit — reader understands WHY):
+git commit -m "fix(search): handle relative dates — 'yesterday' queries
+returned future dates due to timezone offset in parseRelativeDate()"
+```
+
 **3. Before coding: "What does done look like? How will we verify it?"**
 
 Ask this question every time. If you can't answer it, you're not ready to code. This applies doubly with AI assistants — they'll produce something, but without a target, you won't know if it's right.
