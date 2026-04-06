@@ -55,14 +55,14 @@ Three commands. The plugin loads a session reminder and makes 13 skills availabl
 Each step maps to one of Covey's 8 Habits — the habit explains _why_ the step matters.
 
 ```
- Step 1        Step 2       Step 3        Step 4       Step 5       Step 6        Step 7
-┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
-│Require-  │→│ Design   │→│Breakdown │→│  Build   │→│ Review   │→│ Deploy   │→│ Monitor  │
-│ments     │ │          │ │          │ │  Brief   │ │          │ │  Guide   │ │  Setup   │
-│          │ │          │ │          │ │          │ │          │ │          │ │          │
-│ H2: End  │ │ H8: Voice│ │ H3: First│ │ H5: Under│ │ H4: Win- │ │ H1: Pro- │ │ H7: Saw  │
-│ in Mind  │ │          │ │ Things   │ │ -stand   │ │ Win      │ │ active   │ │          │
-└──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘
+ Step 0        Step 1       Step 2       Step 3        Step 4       Step 5       Step 6        Step 7
+┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
+│Research  │→│Require-  │→│ Design   │→│Breakdown │→│  Build   │→│ Review   │→│ Deploy   │→│ Monitor  │
+│          │ │ments     │ │          │ │          │ │  Brief   │ │          │ │  Guide   │ │  Setup   │
+│          │ │          │ │          │ │          │ │          │ │          │ │          │ │          │
+│ H5: Under│ │ H2: End  │ │ H8: Voice│ │ H3: First│ │ H5: Under│ │ H4: Win- │ │ H1: Pro- │ │ H7: Saw  │
+│ -stand   │ │ in Mind  │ │          │ │ Things   │ │ -stand   │ │ Win      │ │ active   │ │          │
+└──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘
 ```
 
 ### Skills Reference
@@ -90,7 +90,7 @@ Each step maps to one of Covey's 8 Habits — the habit explains _why_ the step 
 | `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking    |
 | `/workflow`           | All                 | Guided 7-step walkthrough — invoke or skip each step               |
 
-You don't need all 12 skills every time. Start with `/requirements` before building and `/review-ai` before committing — those two alone will eliminate most Vibe Coding problems. Use `/workflow` for a guided walkthrough if you're new.
+You don't need all 13 skills every time. Start with `/requirements` before building and `/review-ai` before committing — those two alone will eliminate most Vibe Coding problems. Use `/workflow` for a guided walkthrough if you're new.
 
 ---
 
@@ -148,7 +148,9 @@ The `/cross-verify` skill runs **17 questions** across all 8 habits, with **dime
 
 **Scoring Bands**: 15-17 (proceed) → 12-14 (address gaps) → 8-11 (revisit plan) → <8 (stop and rethink)
 
-**Domain Packs**: Optional question sets for [API](guides/cross-verify-packs/api.md), [Frontend](guides/cross-verify-packs/frontend.md), and [Infrastructure](guides/cross-verify-packs/infra.md) work.
+**Confidence Levels** _(v1.9.0)_: For high-stakes reviews, mark each Pass as ✓V (Verified), ✓I (Inferred), or ✓U (Unverified) — inspired by [Feynman's](https://github.com/getcompanion-ai/feynman) honest uncertainty principle.
+
+**Domain Packs**: Optional question sets for [API](guides/cross-verify-packs/api.md), [Frontend](guides/cross-verify-packs/frontend.md), [Infrastructure](guides/cross-verify-packs/infra.md), [AI/ML](guides/cross-verify-packs/ai-ml.md), and [Mobile](guides/cross-verify-packs/mobile.md) work.
 
 Full checklist: [guides/cross-verification.md](guides/cross-verification.md)
 
@@ -176,7 +178,7 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v1.5.0)
+│   ├── plugin.json                 # Plugin metadata (v1.9.0)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 13 skills (8 workflow + 5 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (pre-requirements investigation)
@@ -210,15 +212,19 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 │   ├── cross-verification.md       # 17-point checklist
 │   ├── whole-person-rubrics.md     # 4-dimension maturity rubrics
 │   ├── integrity-principles.md    # 12 AI Integrity Commandments
+│   ├── quick-reference.md          # 19 prioritized rules (scannable)
+│   ├── situation-map.md            # 15 situations → right habit/skill
 │   ├── templates/                  # Output templates
 │   │   ├── prd-template.md         #   For /requirements
 │   │   ├── adr-template.md         #   For /design
 │   │   ├── task-list-template.md   #   For /breakdown
 │   │   └── review-report-template.md # For /review-ai
-│   └── cross-verify-packs/         # Domain question packs
-│       ├── api.md                  #   API development (5 questions)
-│       ├── frontend.md             #   Frontend/UI (5 questions)
-│       └── infra.md                #   Infrastructure (5 questions)
+│   └── cross-verify-packs/         # Domain question packs (5 questions each)
+│       ├── api.md                  #   API development
+│       ├── frontend.md             #   Frontend/UI
+│       ├── infra.md                #   Infrastructure
+│       ├── ai-ml.md                #   AI/ML systems
+│       └── mobile.md               #   Mobile apps
 ├── rules/
 │   └── effective-development.md    # Auto-loaded Claude Code rules
 ├── CLAUDE.md                       # Plugin development guide
@@ -237,6 +243,18 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 - **When to Skip** — honest conditions prevent compliance theater (H8: contribution over compliance)
 - **Output templates** — structured formats for PRD, ADR, task list, review report
 - **Dimension mapping** — all 17 cross-verify questions tagged with Body/Mind/Heart/Spirit
+
+---
+
+## What's New in v1.9.0
+
+Inspired by patterns from [getcompanion-ai/feynman](https://github.com/getcompanion-ai/feynman) — an AI research agent that enforces "URL or it didn't happen."
+
+- **`/research`** (Step 0) — investigate existing solutions and constraints _before_ defining requirements
+- **Evidence grounding** in `/review-ai` — every finding must cite `file:line`, not just "you should consider..."
+- **[12 AI Integrity Commandments](guides/integrity-principles.md)** — "Never claim tested without test output", "Never fabricate file paths"
+- **Confidence levels** in `/cross-verify` — mark answers as Verified / Inferred / Unverified for high-stakes reviews
+- **Lazy Parallelism Gate** in `/breakdown` — "Can I do this in ≤5 tool calls?" before spawning agents
 
 ---
 
