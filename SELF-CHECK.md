@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 1.8.0 | **Date**: 2026-04-06 | **Previous**: 1.7.0 (Body 4, Mind 4, Heart 5, Spirit 4 = 4.25)
+**Version**: 1.9.0 | **Date**: 2026-04-07 | **Previous**: 1.8.0 (Body 4, Mind 4, Heart 5, Spirit 4 = 4.25)
 
 Running our own 17-question checklist against the plugin itself. H8 Modeling: "Follow the process always, no shortcuts when unwatched."
 
@@ -53,20 +53,23 @@ Running our own 17-question checklist against the plugin itself. H8 Modeling: "F
 
 ## Honesty Notes
 
-v1.8.0 improvements:
+v1.9.0 improvements (Feynman-inspired):
 
-- **Discoverability**: quick-reference.md (19 prioritized rules), situation-map.md (15 situation→habit mappings)
-- **Domain coverage**: 5 cross-verify packs (api, frontend, infra, ai-ml, mobile) — was 3
-- **Scannability**: Quick Reference do/don't/reasoning tables in all 8 habit files
-- **Research-backed**: Miller's Law, Airbnb Style Guide pattern, Google PAIR, Microsoft RAI, OECD AI Principles
+- **New skill**: `/research` (Step 0) — investigate before specifying requirements
+- **Evidence grounding**: `/review-ai` now requires file:line evidence for every finding
+- **Integrity principles**: 12 AI Integrity Commandments guide (Spirit dimension)
+- **Confidence levels**: `/cross-verify` optional Verified/Inferred/Unverified marking
+- **Lazy parallelism**: `/breakdown` + H6 gate — "Can I do this in ≤5 tool calls?"
+- **Inspiration**: Feynman research agent patterns adapted for development workflow
 
 The cross-verify score (16/16) measures **plan discipline**. The Whole Person score measures **plugin maturity**:
 
 - v1.2.0: Body 2, Mind 4, Heart 3, Spirit 3 = **3.0** (inflated to 4.5 — dishonest)
 - v1.6.0: Body 3, Mind 4, Heart 4, Spirit 4 = **3.75** (honest)
 - v1.7.0: Body 4, Mind 4, Heart 5, Spirit 4 = **4.25**
-- v1.8.0: Body 4, Mind 4, Heart 5, Spirit 4 = **4.25** (consolidated — discoverability improvement, same dimension scores)
+- v1.8.0: Body 4, Mind 4, Heart 5, Spirit 4 = **4.25** (consolidated — discoverability, same scores)
+- v1.9.0: Body 4, Mind 4.5, Heart 5, Spirit 4.5 = **4.5** (evidence grounding + integrity principles)
 
 ---
 
-_Updated with each release. Previous: 1.7.0 (Body 4, Mind 4, Heart 5, Spirit 4 = 4.25)_
+_Updated with each release. Previous: 1.8.0 (Body 4, Mind 4, Heart 5, Spirit 4 = 4.25)_

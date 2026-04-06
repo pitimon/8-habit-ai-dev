@@ -51,6 +51,7 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 
 | Skill                 | Step | Habit                 | Purpose                                       |
 | --------------------- | ---- | --------------------- | --------------------------------------------- |
+| `/research`           | 0    | H5 Understand First   | Investigate before specifying                 |
 | `/requirements`       | 1    | H2 Begin with End     | Define done before starting                   |
 | `/design`             | 2    | H8 Find Your Voice    | Human decides architecture                    |
 | `/breakdown`          | 3    | H3 First Things First | Atomic tasks, no scope creep                  |

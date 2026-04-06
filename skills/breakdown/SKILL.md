@@ -35,9 +35,16 @@ next-skill: build-brief
 
 4. **Identify parallel work**: Tasks with no dependencies can run simultaneously using parallel agents.
 
-5. **Scope guard**: For each task ask — "Is this in scope? Will this prevent future problems (Q2) or is it gold-plating (Q4)?"
+5. **Lazy Parallelism Gate**: Before spawning parallel agents, ask:
+   - Can I do this sequentially in ≤5 tool calls? If yes, sequential is cheaper.
+   - Are the tasks meaningfully disjoint (different files, different concerns)?
+   - Will coordinating results add complexity that outweighs time savings?
 
-6. **H3 Checkpoint**: "Am I doing what's important, or what's interesting?"
+   Parallel agents have overhead: context loading, coordination, result merging. Only parallelize when decomposition is genuinely independent and substantial enough to justify the cost.
+
+6. **Scope guard**: For each task ask — "Is this in scope? Will this prevent future problems (Q2) or is it gold-plating (Q4)?"
+
+7. **H3 Checkpoint**: "Am I doing what's important, or what's interesting?"
 
 ## Rule of Thumb
 

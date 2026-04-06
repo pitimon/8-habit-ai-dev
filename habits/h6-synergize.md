@@ -43,11 +43,31 @@ Each wave can run in parallel internally, but waves execute in sequence.
   Saved: 15 min (37%) by identifying independent work
 ```
 
-**3. Seek third alternatives — not just option A or B.**
+**3. Apply the Lazy Parallelism Gate before spawning agents.**
+
+Not every multi-part task benefits from parallelization. Before launching parallel agents, ask: "Can I do this sequentially in ≤5 tool calls?" If yes, the sequential path is cheaper — no context loading, no coordination, no result merging. Only parallelize when tasks are meaningfully disjoint: different files, different concerns, substantial enough to justify the overhead.
+
+### Before/After: Premature vs Lazy Parallelism
+
+```
+# BEFORE — premature parallelism (3 agents for trivial work):
+  Agent 1: Read config.ts (1 tool call)
+  Agent 2: Read schema.ts (1 tool call)
+  Agent 3: Read types.ts (1 tool call)
+  → 3 agents launched, 3 contexts loaded, results merged
+  → Total overhead: ~30s setup for 3s of actual work
+
+# AFTER — lazy parallelism (sequential, 3 tool calls):
+  Read config.ts → Read schema.ts → Read types.ts
+  → Same result, zero coordination overhead
+  → Reserve parallelism for substantial independent work
+```
+
+**4. Seek third alternatives — not just option A or B.**
 
 AI assistants often present binary choices: "Should we use Redis or Memcached?" But the third alternative might be better: "Use in-memory cache with Redis fallback for shared state." Always ask: "Is there a creative option C?"
 
-**4. Combine strengths deliberately.**
+**5. Combine strengths deliberately.**
 
 | Task                      | Who Does It Best | Why                 |
 | ------------------------- | ---------------- | ------------------- |
@@ -85,6 +105,7 @@ Before starting any multi-part task, ask:
 | Do                                               | Don't                                                | Why                                                  |
 | ------------------------------------------------ | ---------------------------------------------------- | ---------------------------------------------------- |
 | Run independent tasks in parallel                | Sequential execution when parallel is possible       | 37% time saved by identifying independent work       |
+| Apply Lazy Parallelism Gate before spawning      | Launch agents for trivial 1-2 tool call tasks        | Overhead of context loading exceeds time saved       |
 | Seek a third alternative beyond A or B           | Accept binary choices at face value                  | "Redis vs Memcached?" maybe in-memory + fallback     |
 | Combine strengths: human judgment + AI execution | Try to do everything yourself or delegate everything | Neither alone matches the combination                |
 | Use wave-based execution for dependent tasks     | Mix dependent and independent work randomly          | Waves = parallel within, sequential between          |

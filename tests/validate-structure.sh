@@ -132,7 +132,7 @@ echo ""
 
 # --- Check 7: Handoff chain validation ---
 echo "--- Check 7: Handoff chain consistency ---"
-EXPECTED_CHAIN="requirements:design design:breakdown breakdown:build-brief build-brief:review-ai review-ai:deploy-guide deploy-guide:monitor-setup"
+EXPECTED_CHAIN="research:requirements requirements:design design:breakdown breakdown:build-brief build-brief:review-ai review-ai:deploy-guide deploy-guide:monitor-setup"
 CHAIN_FAIL=0
 for pair in $EXPECTED_CHAIN; do
   from="${pair%%:*}"
