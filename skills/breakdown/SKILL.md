@@ -6,6 +6,8 @@ description: >
 user-invocable: true
 argument-hint: "[feature or PRD to decompose]"
 allowed-tools: ["Read", "Glob", "Grep"]
+prev-skill: design
+next-skill: build-brief
 ---
 
 # Step 3: Plan (หั่นงานเป็นชิ้นเล็ก)
@@ -43,6 +45,11 @@ allowed-tools: ["Read", "Glob", "Grep"]
 - If you can't describe a task in 1 sentence, it's too big
 - If tasks have circular dependencies, redesign
 
+## Handoff
+
+- **Expects from predecessor** (`/design`): Architecture decisions and constraints
+- **Produces for successor** (`/build-brief`): Prioritized task list with dependencies and file paths
+
 ## Definition of Done
 
 - [ ] Each task describable in 1 sentence — if not, break it down further
@@ -51,4 +58,5 @@ allowed-tools: ["Read", "Glob", "Grep"]
 - [ ] Tasks prioritized by importance (Q2 > Q1 > Q3, Q4 eliminated)
 - [ ] No task touches more than 5 files
 
+Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/task-list-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h3-first-things-first.md` for the full H3 principle and examples.

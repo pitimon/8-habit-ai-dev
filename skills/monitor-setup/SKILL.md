@@ -6,6 +6,8 @@ description: >
 user-invocable: true
 argument-hint: "[project or service to monitor]"
 allowed-tools: ["Read", "Glob", "Grep", "Bash"]
+prev-skill: deploy-guide
+next-skill: none
 ---
 
 # Step 7: Monitor (เฝ้าระวัง)
@@ -53,6 +55,11 @@ Production (P) = shipping features, fixing bugs
 Production Capability (PC) = monitoring, alerting, runbooks, incident playbooks
 
 If you only invest in P and neglect PC, eventually the saw is too dull to cut.
+
+## Handoff
+
+- **Expects from predecessor** (`/deploy-guide`): Deployed service in staging or production
+- **Produces for successor**: Observability configured — workflow complete
 
 ## When to Skip
 

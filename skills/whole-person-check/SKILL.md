@@ -7,6 +7,8 @@ description: >
 user-invocable: true
 argument-hint: "[feature, component, or PR to assess]"
 allowed-tools: ["Read", "Glob", "Grep"]
+prev-skill: any
+next-skill: any
 ---
 
 # Whole Person Check (ประเมิน 4 มิติ)

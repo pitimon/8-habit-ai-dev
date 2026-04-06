@@ -6,6 +6,8 @@ description: >
 user-invocable: true
 argument-hint: "[feature description]"
 allowed-tools: ["Read", "Glob", "Grep"]
+prev-skill: none
+next-skill: design
 ---
 
 # Step 1: Requirements (คิดก่อนทำ)
@@ -43,6 +45,11 @@ allowed-tools: ["Read", "Glob", "Grep"]
 - Formatting or linting changes
 - Dependency version bumps
 
+## Handoff
+
+- **Expects from predecessor**: User intent — a feature idea, bug report, or problem statement
+- **Produces for successor** (`/design`): PRD summary with What/Why/Who/Scope/Success criteria
+
 ## Definition of Done
 
 - [ ] PRD summary exists with What/Why/Who/Scope sections filled
@@ -50,4 +57,5 @@ allowed-tools: ["Read", "Glob", "Grep"]
 - [ ] Scope boundaries clear — both "in scope" and "out of scope" listed
 - [ ] Stakeholder/target user identified
 
+Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/prd-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h2-begin-with-end.md` for the full H2 principle and examples.

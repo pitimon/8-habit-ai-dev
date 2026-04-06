@@ -6,6 +6,8 @@ description: >
 user-invocable: true
 argument-hint: "[component or system to design]"
 allowed-tools: ["Read", "Glob", "Grep"]
+prev-skill: requirements
+next-skill: breakdown
 ---
 
 # Step 2: Design (วางโครงสร้าง)
@@ -41,6 +43,11 @@ allowed-tools: ["Read", "Glob", "Grep"]
 
 6. **H8 Checkpoint**: "Do I understand WHY we're building it this way, not just WHAT?"
 
+## Handoff
+
+- **Expects from predecessor** (`/requirements`): PRD summary with scope and success criteria
+- **Produces for successor** (`/breakdown`): Architecture decisions (ADRs), technology choices, constraints
+
 ## When to Skip
 
 - Solo bug fix that follows an existing, established pattern
@@ -54,4 +61,5 @@ allowed-tools: ["Read", "Glob", "Grep"]
 - [ ] ADR created for decisions affecting >3 files or changing public API
 - [ ] Constraints and non-goals documented
 
+Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/adr-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h8-find-voice.md` for the full H8 principle and examples.

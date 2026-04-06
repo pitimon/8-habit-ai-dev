@@ -6,6 +6,8 @@ description: >
 user-invocable: true
 argument-hint: "[staging|production]"
 allowed-tools: ["Read", "Glob", "Grep", "Bash"]
+prev-skill: review-ai
+next-skill: monitor-setup
 ---
 
 # Step 6: Deploy (ปล่อยของ)
@@ -46,6 +48,11 @@ allowed-tools: ["Read", "Glob", "Grep", "Bash"]
 - Deploying on Friday afternoon
 - No rollback procedure documented
 - Skipping health check after deploy
+
+## Handoff
+
+- **Expects from predecessor** (`/review-ai`): Review verdict PASS — code ready for deployment
+- **Produces for successor** (`/monitor-setup`): Deployed service with rollback plan documented
 
 ## When to Skip
 

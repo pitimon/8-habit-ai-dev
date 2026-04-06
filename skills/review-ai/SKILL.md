@@ -6,6 +6,8 @@ description: >
 user-invocable: true
 argument-hint: "[files or git diff to review]"
 allowed-tools: ["Read", "Glob", "Grep", "Bash"]
+prev-skill: build-brief
+next-skill: deploy-guide
 ---
 
 # Step 5: Review (อย่าไว้ใจทาง อย่าวางใจ AI)
@@ -43,6 +45,11 @@ allowed-tools: ["Read", "Glob", "Grep", "Bash"]
    ```
 
 6. **H4 Checkpoint**: "Does this review help the developer (or AI) get better, not just point out flaws?"
+
+## Handoff
+
+- **Expects from predecessor** (`/build-brief`): Implemented code with context brief
+- **Produces for successor** (`/deploy-guide`): Review verdict (PASS/CONCERNS/REWORK/FAIL) with findings resolved
 
 ## Verdict (Required Output)
 
@@ -97,4 +104,5 @@ If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
 - [ ] Each finding includes actionable feedback (WHY + HOW to fix)
 - [ ] Summary table shows findings count per category
 
+Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/review-report-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md` for the full H4 principle and examples.
