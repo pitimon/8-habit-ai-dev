@@ -115,6 +115,8 @@ If the work is domain-specific, load the relevant pack for additional questions:
 - **API work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/api.md` (5 extra questions)
 - **Frontend work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/frontend.md` (5 extra questions)
 - **Infrastructure work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/infra.md` (5 extra questions)
+- **AI/ML work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/ai-ml.md` (5 extra questions)
+- **Mobile work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/mobile.md` (5 extra questions)
 
 Domain questions are scored separately and do not affect the main 17-question score.
 
