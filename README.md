@@ -298,4 +298,4 @@ MIT
 
 ---
 
-_Version: 1.6.0 | Last updated: 2026-04-06_
+_Version: 1.7.0 | Last updated: 2026-04-06_
