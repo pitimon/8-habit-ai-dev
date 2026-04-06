@@ -100,4 +100,14 @@ When calculating adjusted score, exclude N/A items from both numerator and denom
 - **Q11-12 fail together**: Jumping to solutions — read the code and reproduce the problem
 - **Q13 always N/A**: May be underutilizing parallelization
 
+## Domain Question Packs (Optional)
+
+If the work is domain-specific, load the relevant pack for additional questions:
+
+- **API work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/api.md` (5 extra questions)
+- **Frontend work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/frontend.md` (5 extra questions)
+- **Infrastructure work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/infra.md` (5 extra questions)
+
+Domain questions are scored separately and do not affect the main 17-question score.
+
 Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verification.md` for detailed guidance on each question.

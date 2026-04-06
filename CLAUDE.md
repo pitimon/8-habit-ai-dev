@@ -60,3 +60,4 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 | `/monitor-setup`      | 7    | H7 Sharpen the Saw    | Invest in observability                       |
 | `/cross-verify`       | All  | H1-H8                 | 17-question checklist + dimension summary     |
 | `/whole-person-check` | —    | H8 Find Your Voice    | Body/Mind/Heart/Spirit 4-dimension assessment |
+| `/security-check`     | —    | H1 Be Proactive       | Focused security review — OWASP Top 10        |
