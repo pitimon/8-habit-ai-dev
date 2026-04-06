@@ -2,9 +2,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
-[![Skills](https://img.shields.io/badge/Skills-12-blue)]()
+[![Skills](https://img.shields.io/badge/Skills-13-blue)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-1.5.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v1.5.0)
+[![Version](https://img.shields.io/badge/Version-1.9.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v1.9.0)
 
 > **"ทำเสร็จ ≠ ทำดี"** — Shipping code is not the same as shipping _good_ code.
 >
@@ -46,7 +46,7 @@ claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
 /whole-person-check # Assess Body/Mind/Heart/Spirit balance
 ```
 
-Three commands. The plugin loads a session reminder and makes 12 skills available.
+Three commands. The plugin loads a session reminder and makes 13 skills available.
 
 ---
 
@@ -69,15 +69,16 @@ Each step maps to one of Covey's 8 Habits — the habit explains _why_ the step 
 
 **7-Step Workflow** (sequential, with handoff contracts between steps):
 
-| Skill            | Step | Habit                        | What It Does                                                    |
-| ---------------- | ---- | ---------------------------- | --------------------------------------------------------------- |
-| `/requirements`  | 1    | H2: Begin with End in Mind   | Draft PRD — what, why, who, scope, success criteria             |
-| `/design`        | 2    | H8: Find Your Voice          | Surface architecture decisions for **human** judgment           |
-| `/breakdown`     | 3    | H3: Put First Things First   | Decompose into atomic tasks, prioritize by importance           |
-| `/build-brief`   | 4    | H5: Seek First to Understand | Problem statement gate + context brief before implementing      |
-| `/review-ai`     | 5    | H4: Think Win-Win            | 4-level verdict (PASS/CONCERNS/REWORK/FAIL) + dimension balance |
-| `/deploy-guide`  | 6    | H1: Be Proactive             | Staging-first deployment with rollback plan                     |
-| `/monitor-setup` | 7    | H7: Sharpen the Saw          | Set up health checks, alerting, error tracking                  |
+| Skill            | Step | Habit                        | What It Does                                                     |
+| ---------------- | ---- | ---------------------------- | ---------------------------------------------------------------- |
+| `/research`      | 0    | H5: Seek First to Understand | Investigate existing solutions and constraints before specifying |
+| `/requirements`  | 1    | H2: Begin with End in Mind   | Draft PRD — what, why, who, scope, success criteria              |
+| `/design`        | 2    | H8: Find Your Voice          | Surface architecture decisions for **human** judgment            |
+| `/breakdown`     | 3    | H3: Put First Things First   | Decompose into atomic tasks, prioritize by importance            |
+| `/build-brief`   | 4    | H5: Seek First to Understand | Problem statement gate + context brief before implementing       |
+| `/review-ai`     | 5    | H4: Think Win-Win            | 4-level verdict (PASS/CONCERNS/REWORK/FAIL) + dimension balance  |
+| `/deploy-guide`  | 6    | H1: Be Proactive             | Staging-first deployment with rollback plan                      |
+| `/monitor-setup` | 7    | H7: Sharpen the Saw          | Set up health checks, alerting, error tracking                   |
 
 **Assessment & Verification** (use anytime):
 
@@ -177,7 +178,8 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 ├── .claude-plugin/
 │   ├── plugin.json                 # Plugin metadata (v1.5.0)
 │   └── marketplace.json            # Marketplace listing
-├── skills/                         # 12 skills (7 workflow + 5 standalone)
+├── skills/                         # 13 skills (8 workflow + 5 standalone)
+│   ├── research/SKILL.md           #   Step 0 → H5 (pre-requirements investigation)
 │   ├── requirements/SKILL.md       #   Step 1 → H2
 │   ├── design/SKILL.md             #   Step 2 → H8
 │   ├── breakdown/SKILL.md          #   Step 3 → H3
@@ -207,6 +209,7 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 ├── guides/
 │   ├── cross-verification.md       # 17-point checklist
 │   ├── whole-person-rubrics.md     # 4-dimension maturity rubrics
+│   ├── integrity-principles.md    # 12 AI Integrity Commandments
 │   ├── templates/                  # Output templates
 │   │   ├── prd-template.md         #   For /requirements
 │   │   ├── adr-template.md         #   For /design
@@ -298,4 +301,4 @@ MIT
 
 ---
 
-_Version: 1.8.0 | Last updated: 2026-04-06_
+_Version: 1.9.0 | Last updated: 2026-04-07_

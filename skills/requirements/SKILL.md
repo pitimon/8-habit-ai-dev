@@ -6,7 +6,7 @@ description: >
 user-invocable: true
 argument-hint: "[feature description]"
 allowed-tools: ["Read", "Glob", "Grep"]
-prev-skill: none
+prev-skill: research
 next-skill: design
 ---
 

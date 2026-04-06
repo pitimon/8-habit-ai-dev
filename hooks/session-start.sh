@@ -16,7 +16,8 @@ fi
 cat <<EOF
 ## 8-Habit AI Dev Active
 
-**7-Step Workflow** (not Vibe Coding)${PROGRESS}:
+**7-Step Workflow** (not Vibe Coding):
+0. \`/research\` — Investigate before specifying (H5)
 1. \`/requirements\` — Define what, why, who (H2)${PRD:+ ✓}
 2. \`/design\` — Architecture decisions (H8)${ADR:+ ✓}
 3. \`/breakdown\` — Atomic tasks (H3)${TASKS:+ ✓}
@@ -25,8 +26,7 @@ cat <<EOF
 6. \`/deploy-guide\` — Staging first (H1)
 7. \`/monitor-setup\` — Observe after deploy (H7)
 
-**New**: \`/workflow\` — Guided 7-step walkthrough | \`/whole-person-check\` — Body/Mind/Heart/Spirit
-**Cross-verify**: \`/cross-verify\` — 17-question 8-Habit checklist + dimension summary
+**More**: \`/workflow\` | \`/cross-verify\` | \`/whole-person-check\` | \`/security-check\` | \`/reflect\`
 
 **Principle**: ทำเสร็จ ≠ ทำดี — "Done" is not "Done well"
 EOF

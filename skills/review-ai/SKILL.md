@@ -44,7 +44,16 @@ next-skill: deploy-guide
    → Why: Keys in code get committed to git history permanently
    ```
 
-6. **H4 Checkpoint**: "Does this review help the developer (or AI) get better, not just point out flaws?"
+6. **Evidence Requirements** (Feynman principle: "line number or it didn't happen"):
+
+   Every finding MUST include specific evidence — no "you should consider..." without pointing to code:
+   - **Security**: Exact `file:line` where vulnerability exists
+   - **Quality**: Specific function name and line count (e.g., `processOrder() at api.ts:142 — 73 lines`)
+   - **Completeness**: Missing test file path or untested function name
+
+   Unsupported findings are not findings — they are opinions. Drop or substantiate.
+
+7. **H4 Checkpoint**: "Does this review help the developer (or AI) get better, not just point out flaws?"
 
 ## Handoff
 
@@ -120,7 +129,9 @@ If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
 - [ ] All CRITICAL findings addressed (zero remaining)
 - [ ] Verdict rendered using the 4-level table above
 - [ ] Each finding includes actionable feedback (WHY + HOW to fix)
+- [ ] Every finding cites specific evidence (file:line, test output, or diff)
 - [ ] Summary table shows findings count per category
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/review-report-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md` for the full H4 principle and examples.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards (the 12 commandments).

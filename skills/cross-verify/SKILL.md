@@ -62,6 +62,21 @@ Run through this checklist. Flag any item that fails.
 | 16  | H8: Voice       | Spirit    | Do I understand WHY this task matters, not just WHAT needs to be done?  |
 | 17  | H8: Voice       | Spirit    | Does this work empower the next person who touches this code?           |
 
+## Confidence Levels (Optional — for high-stakes reviews)
+
+For critical decisions (architecture, security, production deploys), mark each Pass with a confidence level. Inspired by Feynman's honest uncertainty principle — separate what you verified from what you assumed.
+
+| Level      | Mark | Meaning                                                   | Example                                                             |
+| ---------- | ---- | --------------------------------------------------------- | ------------------------------------------------------------------- |
+| Verified   | ✓V   | Evidence checked — test ran, code read, diff reviewed     | "Read the function at api.ts:42, confirmed input validation exists" |
+| Inferred   | ✓I   | Reasonable belief based on context, not directly verified | "Codebase uses Zod throughout, likely validated here too"           |
+| Unverified | ✓U   | Assumption — should verify before proceeding              | "Assuming tests exist but haven't checked coverage"                 |
+
+**Scoring**: All Pass levels count toward the score, but ✓U items are flagged as verification debt.
+
+**When to use**: Architecture reviews, security-sensitive changes, pre-production gates.
+**When to skip**: Quick checks, formatting changes, familiar code — Pass/Fail/N/A is sufficient.
+
 ## Output
 
 ```
@@ -69,6 +84,7 @@ Run through this checklist. Flag any item that fails.
 **Feature**: [name]
 **Score**: [X]/17 (N/A excluded: [Y]/[Z] applicable = [%])
 **Band**: [see table below]
+**Confidence**: [optional — V: X, I: Y, U: Z]
 **Failed**: [list failed items with 1-line explanation each]
 **Recommendation**: [proceed / address gaps / revisit plan / stop and rethink]
 
@@ -121,3 +137,4 @@ If the work is domain-specific, load the relevant pack for additional questions:
 Domain questions are scored separately and do not affect the main 17-question score.
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verification.md` for detailed guidance on each question.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards when using confidence levels.
