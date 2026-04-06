@@ -28,6 +28,19 @@ Schedule time to update dependencies, review security advisories, and assess whe
 
 The more context your AI assistant has (project docs, coding standards, architectural decisions), the better its output. Maintaining a clear CLAUDE.md, keeping docs current, and writing good commit messages are all PC investments — they make every future AI session more productive.
 
+### Before/After: All Output vs Capability Investment
+
+```bash
+# BEFORE — manual deploy every time (P only, no PC):
+ssh server "cd /app && git pull && npm install && pm2 restart"
+# 60 min per deploy, error-prone, no rollback, repeated every release
+
+# AFTER — invested in CI/CD (10 min PC investment, 2 min deploys forever):
+git push origin main
+# GitHub Actions: build → test → staging → health check → production
+# Rollback: git revert + push. Total: 2 min. Repeatable. Safe.
+```
+
 ## Anti-Patterns
 
 - **All output, no capability**: Shipping features every sprint but never improving the build process that takes 20 minutes. Eventually the slow build costs more than all the features combined.
