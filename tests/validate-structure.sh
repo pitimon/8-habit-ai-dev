@@ -7,8 +7,8 @@ set -euo pipefail
 ERRORS=0
 PASS=0
 
-pass() { ((PASS++)); echo "  PASS: $1"; }
-fail() { ((ERRORS++)); echo "  FAIL: $1"; }
+pass() { PASS=$((PASS + 1)); echo "  PASS: $1"; }
+fail() { ERRORS=$((ERRORS + 1)); echo "  FAIL: $1"; }
 
 echo "=== 8-Habit Plugin Structure Validation ==="
 echo ""
@@ -96,14 +96,17 @@ echo ""
 
 # --- Check 5: File size limit (800 lines) ---
 echo "--- Check 5: File size < 800 lines ---"
-find skills/ habits/ guides/ -name "*.md" -type f | while read -r f; do
+SIZE_FAIL=0
+while read -r f; do
   lines=$(wc -l < "$f")
   if [ "$lines" -gt 800 ]; then
     fail "$f has $lines lines (limit: 800)"
+    SIZE_FAIL=$((SIZE_FAIL + 1))
   fi
-done
-# Check if any failures were added in the subshell
-pass "All markdown files under 800 lines"
+done < <(find skills/ habits/ guides/ -name "*.md" -type f)
+if [ "$SIZE_FAIL" -eq 0 ]; then
+  pass "All markdown files under 800 lines"
+fi
 echo ""
 
 # --- Summary ---
