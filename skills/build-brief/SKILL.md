@@ -16,6 +16,15 @@ next-skill: review-ai
 
 ## Process
 
+0. **Problem statement gate** (REQUIRED before anything else):
+
+   > "What specific problem does this implementation solve?"
+
+   Must cite one of: requirement (issue #), bug report, or design decision (ADR).
+   If you cannot answer this question, go back to `/requirements` first.
+
+   Research basis: Amazon Working Backwards, Basecamp Shape Up, and Google Design Docs all physically separate "what & why" from "how". Teams that skip this waste 30-40% of implementation time on rework.
+
 1. **Read existing code first**: Before writing anything new, read the files in the affected area. Understand current patterns, naming conventions, and architecture.
 
 2. **Build the context brief**:
