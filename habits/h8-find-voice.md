@@ -107,6 +107,16 @@ Code review comment:
 
 After 910 man-day-equivalents building a production AI memory system, the team extracted 12 architectural patterns and published them as open-source documentation. This wasn't required — the system worked fine without sharing. But the team recognized that the hard-won lessons about hybrid search, multi-tenancy, LLM provider fallbacks, and benchmark methodology could save other teams months of trial and error. Publishing wasn't about marketing — it was about the Spirit dimension: "Should we share this? Yes, because others need it." The repository received contributions from developers who adapted the patterns to their own systems, creating a feedback loop that improved the original patterns.
 
+## Quick Reference
+
+| Do                                             | Don't                                                 | Why                                                           |
+| ---------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------- |
+| Understand WHY before implementing             | "Just following orders" — execute without questioning | AI can suggest improvements if it understands the goal        |
+| Seek contribution over compliance              | Follow checklists without understanding their purpose | Compliance theater catches nothing; contribution catches bugs |
+| Surface improvements the user hasn't asked for | Wait to be asked                                      | H1 + H8 synergy: proactive + meaningful                       |
+| Error messages, docs, examples should empower  | Just inform without helping fix                       | Empowerment = deposit in everyone's account                   |
+| Share patterns that could help others          | Keep useful solutions internal                        | Spirit: "Should we share this? Yes, others need it."          |
+
 ## Checkpoint
 
 > "Am I contributing something meaningful, or just completing a task? Does this empower the next person?"

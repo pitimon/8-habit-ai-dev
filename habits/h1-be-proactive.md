@@ -55,6 +55,16 @@ function parseDate(input) {
 
 While running a standardized benchmark against an AI memory system, the team proactively tested not just the benchmark scenarios but also edge cases around retrieval pipeline behavior. This uncovered 2 production bugs that no user had reported — a date parser that silently returned wrong results for relative time expressions, and a search scoring function that over-weighted recency. Both would have caused subtle data quality issues. The benchmark was about measuring accuracy; the bugs were found because the team looked beyond what was asked.
 
+## Quick Reference
+
+| Do                                           | Don't                        | Why                                        |
+| -------------------------------------------- | ---------------------------- | ------------------------------------------ |
+| Trace ALL callers of a bug fix               | Fix only the reported line   | Root cause may affect 12 callers           |
+| Handle null, missing file, permission denied | Write only happy path        | AI skews optimistic                        |
+| Update docs DURING feature work              | "Document it later"          | Later never comes                          |
+| Surface improvements proactively             | Wait to be asked             | A comment today prevents a bug tomorrow    |
+| Consider edge cases before marking done      | Assume AI covered everything | AI-generated code skews toward happy paths |
+
 ## Checkpoint
 
 > "Have I checked what else this change affects? Am I reacting or preventing?"

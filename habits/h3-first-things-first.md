@@ -59,6 +59,16 @@ sprint-12: "feat: add search latency dashboard with P95 alerting"
 
 When implementing a benchmark evaluation for an AI memory system, the team faced a choice: spend time building proper benchmark infrastructure (test harness, data loading, scoring pipeline) or manually run a few queries and eyeball the results. They chose the infrastructure — a Q2 investment that felt slow at first. But when the benchmark needed to run 7 times over 3 weeks of optimization, the infrastructure paid for itself many times over. Teams that skip Q2 would have spent hours on each manual run, or worse, drawn wrong conclusions from inconsistent manual testing.
 
+## Quick Reference
+
+| Do                                                   | Don't                               | Why                                          |
+| ---------------------------------------------------- | ----------------------------------- | -------------------------------------------- |
+| Never skip PR creation, CI checks, test verification | "Just this once" shortcuts          | Skipping Q2 creates Q1 crises later          |
+| Ask "is this in scope?" before unplanned work        | Gold-plate with unasked features    | Nice-to-have steals time from critical       |
+| Invest in process improvements (Q2)                  | Firefight the same bug every sprint | Fix the system, not the symptom              |
+| Finish current task before starting new one          | Context-switch between tasks        | Half-done tasks produce poor results on both |
+| Prioritize by importance, not interest               | Work on what's fun or easy          | Important work prevents future problems      |
+
 ## Checkpoint
 
 > "Am I doing what's important, or what's urgent? Will this prevent future problems?"
