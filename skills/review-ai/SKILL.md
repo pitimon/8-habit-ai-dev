@@ -68,6 +68,24 @@ Output format:
 **Action required**: [specific next steps or "none — clear to commit"]
 ```
 
+## Dimension Balance Check
+
+After rendering the verdict, assess the review through the Whole Person lens. Flag imbalances:
+
+| Dimension | What to Check                                                       | Common AI Blind Spot                          |
+| --------- | ------------------------------------------------------------------- | --------------------------------------------- |
+| Body      | Tests exist? CI passes? Monitoring configured?                      | AI generates tests well — usually strong      |
+| Mind      | Architecture sound? Design documented? Trade-offs considered?       | AI excels here — usually strong               |
+| Heart     | Error messages empathetic? Code readable? UX considered?            | AI follows patterns but lacks genuine empathy |
+| Spirit    | Security reviewed? Ethical impact considered? Should we build this? | AI checks lists but doesn't question purpose  |
+
+If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
+
+```
+⚠️ Dimension imbalance: [Mind: strong, Spirit: weak]
+→ Consider: [specific action to address the gap]
+```
+
 ## Sequence Rule
 
 **Write → Review → Commit** (NEVER reverse. "Small change" is not an excuse to skip.)

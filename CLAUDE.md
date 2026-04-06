@@ -45,13 +45,14 @@ Body pattern: Habit mapping → Process steps → When to Skip → H\* Checkpoin
 
 ## Skills → Habits Mapping
 
-| Skill            | Step | Habit                 | Purpose                       |
-| ---------------- | ---- | --------------------- | ----------------------------- |
-| `/requirements`  | 1    | H2 Begin with End     | Define done before starting   |
-| `/design`        | 2    | H8 Find Your Voice    | Human decides architecture    |
-| `/breakdown`     | 3    | H3 First Things First | Atomic tasks, no scope creep  |
-| `/build-brief`   | 4    | H5 Understand First   | Read code before writing      |
-| `/review-ai`     | 5    | H4 Win-Win            | Actionable feedback           |
-| `/deploy-guide`  | 6    | H1 Be Proactive       | Staging first, rollback ready |
-| `/monitor-setup` | 7    | H7 Sharpen the Saw    | Invest in observability       |
-| `/cross-verify`  | All  | H1-H8                 | 17-question checklist         |
+| Skill                 | Step | Habit                 | Purpose                                       |
+| --------------------- | ---- | --------------------- | --------------------------------------------- |
+| `/requirements`       | 1    | H2 Begin with End     | Define done before starting                   |
+| `/design`             | 2    | H8 Find Your Voice    | Human decides architecture                    |
+| `/breakdown`          | 3    | H3 First Things First | Atomic tasks, no scope creep                  |
+| `/build-brief`        | 4    | H5 Understand First   | Read code before writing                      |
+| `/review-ai`          | 5    | H4 Win-Win            | Actionable feedback                           |
+| `/deploy-guide`       | 6    | H1 Be Proactive       | Staging first, rollback ready                 |
+| `/monitor-setup`      | 7    | H7 Sharpen the Saw    | Invest in observability                       |
+| `/cross-verify`       | All  | H1-H8                 | 17-question checklist + dimension summary     |
+| `/whole-person-check` | —    | H8 Find Your Voice    | Body/Mind/Heart/Spirit 4-dimension assessment |
