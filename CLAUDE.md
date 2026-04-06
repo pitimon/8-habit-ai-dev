@@ -29,10 +29,14 @@ description: > # Multi-line, explains when to use
 user-invocable: true # Always true for workflow skills
 argument-hint: "[description]" # Shown in skill list
 allowed-tools: ["Read", "Glob", "Grep"] # Bash only when needed (e.g., review-ai)
+prev-skill: <skill-name|none|any> # Predecessor in 7-step chain
+next-skill: <skill-name|none|any> # Successor in 7-step chain
 ---
 ```
 
-Body pattern: Habit mapping → Process steps → When to Skip → H\* Checkpoint → Load directive for the full habit file.
+Body pattern: Habit mapping → Process steps → Handoff → When to Skip → Definition of Done → H\* Checkpoint → Load directive.
+
+**Handoff protocol**: Each skill declares what it expects from its predecessor and what it produces for its successor. Standalone skills (cross-verify, whole-person-check) use `any` for both.
 
 ## Key Conventions
 

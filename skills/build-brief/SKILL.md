@@ -6,6 +6,8 @@ description: >
 user-invocable: true
 argument-hint: "[task to implement]"
 allowed-tools: ["Read", "Glob", "Grep"]
+prev-skill: breakdown
+next-skill: review-ai
 ---
 
 # Step 4: Build (บรีฟให้ชัด ไม่ใช่แค่สั่ง)
@@ -44,6 +46,11 @@ allowed-tools: ["Read", "Glob", "Grep"]
 - Writing new code without reading what already exists
 - Assuming a utility function exists when it doesn't
 - Duplicating logic that's already implemented elsewhere
+
+## Handoff
+
+- **Expects from predecessor** (`/breakdown`): Specific task with file paths and dependencies
+- **Produces for successor** (`/review-ai`): Implementation brief with context, patterns, constraints, and test approach
 
 ## When to Skip
 

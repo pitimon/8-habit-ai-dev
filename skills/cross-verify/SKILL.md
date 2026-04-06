@@ -6,6 +6,8 @@ description: >
 user-invocable: true
 argument-hint: "[plan or feature to verify]"
 allowed-tools: ["Read", "Glob", "Grep"]
+prev-skill: any
+next-skill: any
 ---
 
 # Cross-Verify (8-Habit Checklist)
