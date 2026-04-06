@@ -77,6 +77,26 @@ When AI identifies an improvement opportunity — a security vulnerability, a pe
 
 Don't just tell someone what went wrong. Help them fix it. Don't just document the API. Show them how to use it effectively. Don't just publish code. Explain the patterns so others can adapt them.
 
+### Before/After: Compliance vs Contribution
+
+```
+# BEFORE (compliance theater — checking boxes):
+Code review comment: "LGTM" ✓
+  (Didn't actually read the code. Checked the box because process requires it.)
+
+# AFTER (genuine contribution — empowering the author):
+Code review comment:
+  "Line 42: This works, but the retry logic will silently mask
+   intermittent DB connection failures. The retry succeeds on the
+   3rd attempt, so the error never surfaces — but the underlying
+   connection instability goes undiagnosed.
+
+   Consider adding a circuit breaker pattern. We have one in
+   src/infra/circuit-breaker.ts:15 that could be reused here.
+   It logs failures even when retries succeed, so ops can spot
+   the pattern before it becomes an outage."
+```
+
 ## Anti-Patterns
 
 - **Industrial Age mindset**: Treating AI as a factory worker — specifying every detail, leaving no room for judgment. You lose the AI's ability to suggest improvements.

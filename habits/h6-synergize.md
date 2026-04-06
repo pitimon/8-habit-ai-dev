@@ -31,6 +31,18 @@ Wave 3 (sequential): Integration testing, documentation update
 
 Each wave can run in parallel internally, but waves execute in sequence.
 
+### Before/After: Sequential vs Parallel
+
+```
+# BEFORE — sequential execution (40 min total):
+  research (10m) → design (10m) → implement (15m) → test (5m)
+
+# AFTER — parallel where independent (25 min total):
+  research (10m) → design (10m) ──→ implement (15m) → test
+                 └→ test fixtures ─┘  (parallel — no dependency)
+  Saved: 15 min (37%) by identifying independent work
+```
+
 **3. Seek third alternatives — not just option A or B.**
 
 AI assistants often present binary choices: "Should we use Redis or Memcached?" But the third alternative might be better: "Use in-memory cache with Redis fallback for shared state." Always ask: "Is there a creative option C?"

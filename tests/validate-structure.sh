@@ -109,6 +109,103 @@ if [ "$SIZE_FAIL" -eq 0 ]; then
 fi
 echo ""
 
+# --- Check 6: prev-skill/next-skill fields exist ---
+echo "--- Check 6: prev-skill/next-skill frontmatter ---"
+for skill_dir in skills/*/; do
+  skill_file="${skill_dir}SKILL.md"
+  [ ! -f "$skill_file" ] && continue
+  frontmatter=$(sed -n '/^---$/,/^---$/p' "$skill_file")
+
+  if echo "$frontmatter" | grep -q "prev-skill:"; then
+    pass "$skill_file has prev-skill"
+  else
+    fail "$skill_file missing prev-skill"
+  fi
+
+  if echo "$frontmatter" | grep -q "next-skill:"; then
+    pass "$skill_file has next-skill"
+  else
+    fail "$skill_file missing next-skill"
+  fi
+done
+echo ""
+
+# --- Check 7: Handoff chain validation ---
+echo "--- Check 7: Handoff chain consistency ---"
+EXPECTED_CHAIN="requirements:design design:breakdown breakdown:build-brief build-brief:review-ai review-ai:deploy-guide deploy-guide:monitor-setup"
+CHAIN_FAIL=0
+for pair in $EXPECTED_CHAIN; do
+  from="${pair%%:*}"
+  to="${pair##*:}"
+  from_next=$(sed -n '/^---$/,/^---$/p' "skills/$from/SKILL.md" 2>/dev/null | grep "^next-skill:" | head -1 | sed 's/^next-skill:[[:space:]]*//')
+  to_prev=$(sed -n '/^---$/,/^---$/p' "skills/$to/SKILL.md" 2>/dev/null | grep "^prev-skill:" | head -1 | sed 's/^prev-skill:[[:space:]]*//')
+
+  if [ "$from_next" = "$to" ] && [ "$to_prev" = "$from" ]; then
+    pass "$from → $to chain valid"
+  else
+    fail "$from → $to chain broken (${from}.next=$from_next, ${to}.prev=$to_prev)"
+    CHAIN_FAIL=$((CHAIN_FAIL + 1))
+  fi
+done
+# Standalone skills should use "any" or "none"
+for standalone in cross-verify whole-person-check security-check reflect workflow; do
+  skill_file="skills/$standalone/SKILL.md"
+  [ ! -f "$skill_file" ] && continue
+  prev=$(sed -n '/^---$/,/^---$/p' "$skill_file" | grep "^prev-skill:" | head -1 | sed 's/^prev-skill:[[:space:]]*//')
+  if [ "$prev" = "any" ] || [ "$prev" = "none" ]; then
+    pass "$standalone prev-skill=$prev (standalone OK)"
+  else
+    fail "$standalone prev-skill=$prev (expected 'any' or 'none')"
+  fi
+done
+echo ""
+
+# --- Check 8: Load directive resolution ---
+echo "--- Check 8: Load directives resolve to existing files ---"
+LOAD_FAIL=0
+while read -r skill_file; do
+  while read -r ref_path; do
+    if [ ! -f "$ref_path" ]; then
+      fail "$skill_file references '$ref_path' but file not found"
+      LOAD_FAIL=$((LOAD_FAIL + 1))
+    fi
+  done < <(grep 'Load `\${CLAUDE_PLUGIN_ROOT}/' "$skill_file" 2>/dev/null | sed 's/.*\${CLAUDE_PLUGIN_ROOT}\///' | sed 's/`.*//')
+done < <(find skills/ -name "SKILL.md" -type f)
+if [ "$LOAD_FAIL" -eq 0 ]; then
+  pass "All Load directives resolve to existing files"
+fi
+echo ""
+
+# --- Check 9: Word count guardrails (warning only) ---
+echo "--- Check 9: Word count guardrails ---"
+for skill_dir in skills/*/; do
+  skill_file="${skill_dir}SKILL.md"
+  [ ! -f "$skill_file" ] && continue
+  words=$(wc -w < "$skill_file" | tr -d ' ')
+  if [ "$words" -lt 200 ]; then
+    echo "  WARN: $skill_file has $words words (consider 200+ for completeness)"
+  elif [ "$words" -gt 2000 ]; then
+    echo "  WARN: $skill_file has $words words (consider splitting or moving detail to references/)"
+  else
+    pass "$skill_file word count OK ($words words)"
+  fi
+done
+echo ""
+
+# --- Check 10: SELF-CHECK.md version matches plugin ---
+echo "--- Check 10: SELF-CHECK.md version matches plugin ---"
+if [ -f "SELF-CHECK.md" ]; then
+  v_selfcheck=$(grep 'Version' SELF-CHECK.md 2>/dev/null | head -1 | sed 's/.*Version[^0-9]*\([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\).*/\1/')
+  if [ "$v_selfcheck" = "$v_plugin" ]; then
+    pass "SELF-CHECK.md version $v_selfcheck matches plugin"
+  else
+    fail "SELF-CHECK.md version $v_selfcheck does not match plugin $v_plugin"
+  fi
+else
+  fail "SELF-CHECK.md not found"
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"

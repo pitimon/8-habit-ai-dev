@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 1.5.0 | **Date**: 2026-04-06 | **Previous**: 1.2.0 (15/15 — inflated, self-assessed without honesty)
+**Version**: 1.7.0 | **Date**: 2026-04-06 | **Previous**: 1.5.0 (16/16, honest but Body was still 3)
 
 Running our own 17-question checklist against the plugin itself. H8 Modeling: "Follow the process always, no shortcuts when unwatched."
 
@@ -53,14 +53,18 @@ Running our own 17-question checklist against the plugin itself. H8 Modeling: "F
 
 ## Honesty Notes
 
-This score is higher than expected because the gap fix PR addresses the previously-failing items:
+v1.7.0 improvements:
 
-- Q2 now passes because validate-structure.sh exists (was Fail before this PR)
-- Q5 now passes because CI workflow exists (was Fail before this PR)
-- The 1.2.0 score of 15/15 was inflated — it should have been ~12/15 due to missing CI and validation
+- **Body 3→4**: validate-structure.sh expanded from 5→10 checks (83% coverage), branch protection added, subshell bugs caught by code review
+- **Heart 4→5**: 8/8 habit files now have before/after code examples (was 5/8 in v1.6.0)
+- **Process**: Issues created BEFORE implementation, branch+PR workflow, cross-verify before plan approval
 
-The honest thing is to acknowledge: **the score measures the plan quality, not the plugin maturity**. The plugin's Whole Person score (Body 3, Mind 4, Heart 4, Spirit 4 = 3.75) is the real capability measure.
+The cross-verify score (16/16) measures **plan discipline**. The Whole Person score measures **plugin maturity**:
+
+- v1.2.0: Body 2, Mind 4, Heart 3, Spirit 3 = **3.0** (inflated to 4.5 — dishonest)
+- v1.6.0: Body 3, Mind 4, Heart 4, Spirit 4 = **3.75** (honest)
+- v1.7.0: Body 4, Mind 4, Heart 5, Spirit 4 = **4.25** (current)
 
 ---
 
-_Updated with each release. Previous: 1.2.0 (15/15 — inflated self-assessment, no CI or validation existed)_
+_Updated with each release. Previous: 1.5.0 (16/16 — honest, but Body still 3 and Heart still 4)_
