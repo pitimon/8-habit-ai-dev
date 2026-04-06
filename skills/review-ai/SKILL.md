@@ -68,6 +68,18 @@ Output format:
 **Action required**: [specific next steps or "none — clear to commit"]
 ```
 
+## Deep Review Mode (Optional)
+
+For thorough reviews, delegate to the `8-habit-reviewer` agent for a second perspective. Trigger when:
+
+- User explicitly requests deep/thorough review
+- Initial review verdict is CONCERNS or REWORK
+- Change touches >5 files or crosses architectural boundaries
+
+To invoke: Use the Agent tool with `subagent_type: "8-habit-ai-dev:8-habit-reviewer"` passing the files or diff to review. The agent evaluates against all 8 habits and produces a scored report (X/17).
+
+The skill checks **code quality**; the agent checks **habit alignment**. Together they catch what either would miss alone.
+
 ## Dimension Balance Check
 
 After rendering the verdict, assess the review through the Whole Person lens. Flag imbalances:
