@@ -66,6 +66,16 @@ Ask this question every time. If you can't answer it, you're not ready to code. 
 
 On a production AI memory system project, every planning document followed a strict template that included "Success Criteria" and "Definition of Done" sections. When implementing a new search algorithm, the plan specified: "F1 score >= 0.65 on the standard benchmark, response time < 500ms p95, zero regression on existing query types." This made the AI's work measurable. Three iterations of generated code were rejected not because they were bad, but because they didn't meet the pre-defined threshold. The fourth iteration passed — and everyone knew it was done.
 
+## Quick Reference
+
+| Do                                         | Don't                                  | Why                                             |
+| ------------------------------------------ | -------------------------------------- | ----------------------------------------------- |
+| Define 3-5 success criteria before coding  | Start coding without "done" definition | Without a target, you can't verify AI output    |
+| Include test plan in every PR              | "It works on my machine"               | Reviewers need verification steps               |
+| Commit messages explain WHY                | `git commit -m "fix: update parser"`   | Future readers need context, not a diff summary |
+| Ask "what does done look like?" every time | Jump into implementation               | AI produces something, but is it right?         |
+| Document constraints and non-goals         | Leave scope boundaries implicit        | Scope creep starts when boundaries are unclear  |
+
 ## Checkpoint
 
 > "Can I describe what success looks like before writing code?"

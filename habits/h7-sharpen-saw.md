@@ -51,6 +51,16 @@ git push origin main
 
 After running a retrieval benchmark on an AI memory system, the team could have just recorded the scores and moved on. Instead, they invested time in building reusable benchmark infrastructure — data loaders, automated scoring, comparison reports. This was pure PC investment with no immediate production value. But when optimization required 7 benchmark runs over 3 weeks, the infrastructure turned each run from a half-day manual effort into a 15-minute automated process. The PC investment saved 10x its cost within the same project.
 
+## Quick Reference
+
+| Do                                              | Don't                                   | Why                                                |
+| ----------------------------------------------- | --------------------------------------- | -------------------------------------------------- |
+| Track tech debt explicitly                      | "It works, don't touch it"              | Accumulated debt demands payment all at once       |
+| After each task: "what did I learn?"            | Complete task, immediately start next   | Lessons evaporate, same mistakes recur             |
+| Invest in CI/CD, monitoring, automation (PC)    | Only ship features (P)                  | Eventually the saw is too dull to cut              |
+| Periodically review frameworks and dependencies | Assume tools are still the right choice | Security advisories and better alternatives emerge |
+| Maintain CLAUDE.md and commit messages          | Let AI context degrade over time        | Better context = better AI output every session    |
+
 ## Checkpoint
 
 > "Am I investing in future capability, or just grinding out output?"

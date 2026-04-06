@@ -53,6 +53,16 @@ AI assistants often generate correct but unhelpful error messages, vague variabl
 
 On a production project, the team adopted a policy: every issue must be closed with a comment summarizing root cause, solution, and what to watch for. Six months later, when a similar issue appeared, a developer searched closed issues, found the detailed closure comment, and resolved the new issue in 20 minutes instead of 2 hours. That single deposit paid dividends across the team.
 
+## Quick Reference
+
+| Do                                                              | Don't                                               | Why                                         |
+| --------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------- |
+| Close issues with detailed rationale                            | Close with just "fixed"                             | Future devs need context for similar issues |
+| Error messages: what went wrong + how to fix                    | Error messages that just say "failed"               | Opaque errors cost hours downstream         |
+| Review for Win-Win: help author improve                         | Review to find flaws and point blame                | Win-Lose reviews destroy collaboration      |
+| Propose alternatives when disagreeing                           | Force your solution without considering constraints | Both sides should walk away better off      |
+| AI-generated code: review for helpfulness, not just correctness | Ship AI output without reading it                   | Correct but unhelpful code is a withdrawal  |
+
 ## Checkpoint
 
 > "Does this interaction leave the other party better informed and more capable?"

@@ -80,6 +80,16 @@ Before starting any multi-part task, ask:
 4. What does the AI do best here? (execution, search, iteration)
 5. Is there a third alternative we haven't considered?
 
+## Quick Reference
+
+| Do                                               | Don't                                                | Why                                                  |
+| ------------------------------------------------ | ---------------------------------------------------- | ---------------------------------------------------- |
+| Run independent tasks in parallel                | Sequential execution when parallel is possible       | 37% time saved by identifying independent work       |
+| Seek a third alternative beyond A or B           | Accept binary choices at face value                  | "Redis vs Memcached?" maybe in-memory + fallback     |
+| Combine strengths: human judgment + AI execution | Try to do everything yourself or delegate everything | Neither alone matches the combination                |
+| Use wave-based execution for dependent tasks     | Mix dependent and independent work randomly          | Waves = parallel within, sequential between          |
+| When touching area X, check what else benefits   | "Not my problem" mindset                             | Nearby improvements are cheap while context is fresh |
+
 ## Checkpoint
 
 > "Am I leveraging all available capabilities? Is there a third alternative?"

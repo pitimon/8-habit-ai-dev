@@ -72,6 +72,16 @@ For any non-trivial task, follow this sequence:
 
 AI assistants are great at steps 4-5. You need to ensure steps 1-3 happen first.
 
+## Quick Reference
+
+| Do                                                           | Don't                                            | Why                                                   |
+| ------------------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------------- |
+| Read existing code before writing new code                   | Generate new code without checking what exists   | 120 lines of new parser vs 1-line import              |
+| Reproduce bugs before fixing them                            | Apply fix without verifying the bug              | Fix might suppress symptom, not root cause            |
+| Identify patterns across feedback, not just individual items | Treat each review comment as isolated            | Three error-handling comments = systemic gap          |
+| Ask clarifying questions when scope is ambiguous             | Assume "add caching" means one specific approach | Could mean Redis, in-memory, HTTP headers, or browser |
+| Read ALL feedback before responding                          | Cherry-pick the easy comments                    | Patterns emerge from the full picture                 |
+
 ## Checkpoint
 
 > "Have I fully understood the problem before proposing a solution?"
