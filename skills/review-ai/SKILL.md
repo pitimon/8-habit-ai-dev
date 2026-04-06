@@ -109,6 +109,12 @@ If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
 
 **Write → Review → Commit** (NEVER reverse. "Small change" is not an excuse to skip.)
 
+## When to Skip
+
+- Auto-generated formatting changes (lint --fix, prettier — no logic change)
+- Dependency version bumps with passing CI and no API changes
+- Reverting a commit to its exact previous state
+
 ## Definition of Done
 
 - [ ] All CRITICAL findings addressed (zero remaining)
