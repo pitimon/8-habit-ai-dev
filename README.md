@@ -2,8 +2,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
-[![Skills](https://img.shields.io/badge/Skills-8-blue)]()
+[![Skills](https://img.shields.io/badge/Skills-12-blue)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
+[![Version](https://img.shields.io/badge/Version-1.5.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v1.5.0)
 
 > **"ทำเสร็จ ≠ ทำดี"** — Shipping code is not the same as shipping _good_ code.
 >
@@ -40,10 +41,12 @@ claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 # Step 3: Restart Claude Code, then use any skill:
 /requirements       # Before you build anything
+/review-ai          # Before you commit anything
 /cross-verify       # Before you ship anything
+/whole-person-check # Assess Body/Mind/Heart/Spirit balance
 ```
 
-Three commands. The plugin loads a session reminder and makes 8 skills available.
+Three commands. The plugin loads a session reminder and makes 12 skills available.
 
 ---
 
@@ -64,18 +67,29 @@ Each step maps to one of Covey's 8 Habits — the habit explains _why_ the step 
 
 ### Skills Reference
 
-| Skill            | Step | Habit                        | What It Does                                                |
-| ---------------- | ---- | ---------------------------- | ----------------------------------------------------------- |
-| `/requirements`  | 1    | H2: Begin with End in Mind   | Draft PRD — what, why, who, scope, success criteria         |
-| `/design`        | 2    | H8: Find Your Voice          | Surface architecture decisions for **human** judgment       |
-| `/breakdown`     | 3    | H3: Put First Things First   | Decompose into atomic tasks, prioritize by importance       |
-| `/build-brief`   | 4    | H5: Seek First to Understand | Read existing code, build context brief before implementing |
-| `/review-ai`     | 5    | H4: Think Win-Win            | Audit AI output — security, quality, completeness           |
-| `/deploy-guide`  | 6    | H1: Be Proactive             | Staging-first deployment with rollback plan                 |
-| `/monitor-setup` | 7    | H7: Sharpen the Saw          | Set up health checks, alerting, error tracking              |
-| `/cross-verify`  | All  | H1-H8                        | 17-question checklist across all 8 habits                   |
+**7-Step Workflow** (sequential, with handoff contracts between steps):
 
-You don't need to use all 8 skills every time. Start with `/requirements` before building and `/review-ai` before committing — those two alone will eliminate most Vibe Coding problems.
+| Skill            | Step | Habit                        | What It Does                                                    |
+| ---------------- | ---- | ---------------------------- | --------------------------------------------------------------- |
+| `/requirements`  | 1    | H2: Begin with End in Mind   | Draft PRD — what, why, who, scope, success criteria             |
+| `/design`        | 2    | H8: Find Your Voice          | Surface architecture decisions for **human** judgment           |
+| `/breakdown`     | 3    | H3: Put First Things First   | Decompose into atomic tasks, prioritize by importance           |
+| `/build-brief`   | 4    | H5: Seek First to Understand | Problem statement gate + context brief before implementing      |
+| `/review-ai`     | 5    | H4: Think Win-Win            | 4-level verdict (PASS/CONCERNS/REWORK/FAIL) + dimension balance |
+| `/deploy-guide`  | 6    | H1: Be Proactive             | Staging-first deployment with rollback plan                     |
+| `/monitor-setup` | 7    | H7: Sharpen the Saw          | Set up health checks, alerting, error tracking                  |
+
+**Assessment & Verification** (use anytime):
+
+| Skill                 | Habit               | What It Does                                                       |
+| --------------------- | ------------------- | ------------------------------------------------------------------ |
+| `/cross-verify`       | H1-H8               | 17-question checklist + dimension summary (Body/Mind/Heart/Spirit) |
+| `/whole-person-check` | H8: Find Your Voice | 4-dimension assessment (1-5 scale) with AI Blind Spot detection    |
+| `/security-check`     | H1: Be Proactive    | Focused OWASP security lens — secrets, injection, auth, deps       |
+| `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking    |
+| `/workflow`           | All                 | Guided 7-step walkthrough — invoke or skip each step               |
+
+You don't need all 12 skills every time. Start with `/requirements` before building and `/review-ai` before committing — those two alone will eliminate most Vibe Coding problems. Use `/workflow` for a guided walkthrough if you're new.
 
 ---
 
@@ -123,15 +137,36 @@ Dependence → Independence → Interdependence → Significance
 
 ## Cross-Verification
 
-The `/cross-verify` skill runs **17 questions** across all 8 habits. Use it after planning and before committing to multi-file changes.
+The `/cross-verify` skill runs **17 questions** across all 8 habits, with **dimension mapping** (Body/Mind/Heart/Spirit) and **scoring bands**.
 
-| Category        | Questions   | Habits                                                |
-| --------------- | ----------- | ----------------------------------------------------- |
-| Private Victory | 8 questions | H1 (scope), H2 (criteria), H3 (priority)              |
-| Public Victory  | 6 questions | H4 (feedback), H5 (understanding), H6 (parallel work) |
-| Renewal         | 3 questions | H7 (tech debt), H8 (meaning)                          |
+| Category        | Questions   | Dimensions   | Habits                                          |
+| --------------- | ----------- | ------------ | ----------------------------------------------- |
+| Private Victory | 8 questions | Body, Mind   | H1 (scope), H2 (criteria), H3 (priority)        |
+| Public Victory  | 6 questions | Mind, Heart  | H4 (feedback), H5 (understanding), H6 (synergy) |
+| Renewal         | 3 questions | Body, Spirit | H7 (learning), H8 (meaning)                     |
+
+**Scoring Bands**: 15-17 (proceed) → 12-14 (address gaps) → 8-11 (revisit plan) → <8 (stop and rethink)
+
+**Domain Packs**: Optional question sets for [API](guides/cross-verify-packs/api.md), [Frontend](guides/cross-verify-packs/frontend.md), and [Infrastructure](guides/cross-verify-packs/infra.md) work.
 
 Full checklist: [guides/cross-verification.md](guides/cross-verification.md)
+
+---
+
+## Whole Person Assessment
+
+The `/whole-person-check` skill evaluates work across Covey's 4 dimensions — the plugin's **unique differentiator**. No other engineering tool covers all four.
+
+| Dimension               | What It Measures                            | AI Strength         |
+| ----------------------- | ------------------------------------------- | ------------------- |
+| **Body** (Discipline)   | CI, tests, monitoring, quality gates        | Strong — AI excels  |
+| **Mind** (Vision)       | Architecture, ADRs, roadmap, tech debt      | Strong — AI excels  |
+| **Heart** (Passion)     | Craft quality, empathetic errors, UX, DX    | Weak — needs humans |
+| **Spirit** (Conscience) | Security-first, ethics, compliance, sharing | Weak — needs humans |
+
+AI-assisted development systematically neglects Heart and Spirit. This assessment makes the gap visible so teams can compensate.
+
+**Maturity Rubrics** (3 levels per dimension): [guides/whole-person-rubrics.md](guides/whole-person-rubrics.md)
 
 ---
 
@@ -140,22 +175,26 @@ Full checklist: [guides/cross-verification.md](guides/cross-verification.md)
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v1.0.0)
+│   ├── plugin.json                 # Plugin metadata (v1.5.0)
 │   └── marketplace.json            # Marketplace listing
-├── skills/                         # 8 actionable workflow skills
+├── skills/                         # 12 skills (7 workflow + 5 standalone)
 │   ├── requirements/SKILL.md       #   Step 1 → H2
 │   ├── design/SKILL.md             #   Step 2 → H8
 │   ├── breakdown/SKILL.md          #   Step 3 → H3
-│   ├── build-brief/SKILL.md        #   Step 4 → H5
-│   ├── review-ai/SKILL.md          #   Step 5 → H4
+│   ├── build-brief/SKILL.md        #   Step 4 → H5 (with research gate)
+│   ├── review-ai/SKILL.md          #   Step 5 → H4 (4-level verdict)
 │   ├── deploy-guide/SKILL.md       #   Step 6 → H1
 │   ├── monitor-setup/SKILL.md      #   Step 7 → H7
-│   └── cross-verify/SKILL.md       #   All habits (17 questions)
+│   ├── cross-verify/SKILL.md       #   All habits (17Q + dimension summary)
+│   ├── whole-person-check/SKILL.md #   H8: Body/Mind/Heart/Spirit
+│   ├── security-check/SKILL.md     #   H1: OWASP security lens
+│   ├── reflect/SKILL.md            #   H7: micro-retrospective
+│   └── workflow/SKILL.md           #   Guided 7-step walkthrough
 ├── agents/
 │   └── 8-habit-reviewer.md         # Deep cross-verification agent
 ├── hooks/
 │   ├── hooks.json                  # SessionStart hook registration
-│   └── session-start.sh            # 7-step workflow reminder
+│   └── session-start.sh            # Workflow reminder + progress indicators
 ├── habits/                         # Reference content (loaded on-demand)
 │   ├── h1-be-proactive.md
 │   ├── h2-begin-with-end.md
@@ -166,10 +205,22 @@ Full checklist: [guides/cross-verification.md](guides/cross-verification.md)
 │   ├── h7-sharpen-saw.md
 │   └── h8-find-voice.md
 ├── guides/
-│   └── cross-verification.md       # 17-point checklist
+│   ├── cross-verification.md       # 17-point checklist
+│   ├── whole-person-rubrics.md     # 4-dimension maturity rubrics
+│   ├── templates/                  # Output templates
+│   │   ├── prd-template.md         #   For /requirements
+│   │   ├── adr-template.md         #   For /design
+│   │   ├── task-list-template.md   #   For /breakdown
+│   │   └── review-report-template.md # For /review-ai
+│   └── cross-verify-packs/         # Domain question packs
+│       ├── api.md                  #   API development (5 questions)
+│       ├── frontend.md             #   Frontend/UI (5 questions)
+│       └── infra.md                #   Infrastructure (5 questions)
 ├── rules/
 │   └── effective-development.md    # Auto-loaded Claude Code rules
 ├── CLAUDE.md                       # Plugin development guide
+├── CONTRIBUTING.md                 # Skill authoring guide
+├── SELF-CHECK.md                   # Meta cross-verification
 └── README.md                       # This file
 ```
 
@@ -177,8 +228,12 @@ Full checklist: [guides/cross-verification.md](guides/cross-verification.md)
 
 - **Skills are empowering, not restrictive** — reminders and tools, not blocking gates
 - **Habit content loaded on-demand** — skills reference `habits/*.md` only when invoked, keeping session context lean
-- **Session hook under 300 tokens** — light reminder, not a wall of text
-- **Existing content preserved** — `habits/`, `guides/`, `rules/` are reference material, never modified by skills
+- **Session hook under 300 tokens** — light reminder with progress indicators, not a wall of text
+- **Handoff contracts** — each skill declares what it expects from its predecessor and produces for its successor
+- **Definition of Done** — every skill has 3-5 verifiable checkbox items
+- **When to Skip** — honest conditions prevent compliance theater (H8: contribution over compliance)
+- **Output templates** — structured formats for PRD, ADR, task list, review report
+- **Dimension mapping** — all 17 cross-verify questions tagged with Body/Mind/Heart/Spirit
 
 ---
 
@@ -228,9 +283,14 @@ This auto-loads the 8-Habit principles into every Claude Code session without th
 
 Found a habit that worked (or broke) in your AI-assisted development? PRs welcome.
 
-- Add real examples to `habits/*.md` files
-- Propose new cross-verification questions in `guides/cross-verification.md`
-- Report issues with skills at [GitHub Issues](https://github.com/pitimon/8-habit-ai-dev/issues)
+See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full guide — skill authoring conventions, blank templates, and quality checklist.
+
+Quick options:
+
+- **Add a new skill** — follow the template in CONTRIBUTING.md
+- **Add real examples** to `habits/*.md` files
+- **Add domain question packs** in `guides/cross-verify-packs/`
+- **Report issues** at [GitHub Issues](https://github.com/pitimon/8-habit-ai-dev/issues)
 
 ## License
 
