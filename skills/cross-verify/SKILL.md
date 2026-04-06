@@ -65,9 +65,28 @@ Run through this checklist. Flag any item that fails.
 ```
 ## Cross-Verification Report
 **Feature**: [name]
-**Pass**: [X]/17
-**Fail**: [list failed items with explanation]
-**Recommendation**: [proceed / address items first]
+**Score**: [X]/17 (N/A excluded: [Y]/[Z] applicable = [%])
+**Band**: [see table below]
+**Failed**: [list failed items with 1-line explanation each]
+**Recommendation**: [proceed / address gaps / revisit plan / stop and rethink]
 ```
+
+### Scoring Bands
+
+| Score | Band             | Action                               |
+| ----- | ---------------- | ------------------------------------ |
+| 15-17 | Well-prepared    | Proceed with confidence              |
+| 12-14 | Mostly ready     | Address gaps, then proceed           |
+| 8-11  | Significant gaps | Revisit the plan before implementing |
+| < 8   | Not ready        | Stop and rethink the approach        |
+
+When calculating adjusted score, exclude N/A items from both numerator and denominator. Use the adjusted percentage to determine the band.
+
+### Common Failure Patterns
+
+- **Q1-3 fail together**: Being reactive, not proactive — step back and think about impact
+- **Q4-6 fail together**: Haven't defined success — write criteria first
+- **Q11-12 fail together**: Jumping to solutions — read the code and reproduce the problem
+- **Q13 always N/A**: May be underutilizing parallelization
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verification.md` for detailed guidance on each question.

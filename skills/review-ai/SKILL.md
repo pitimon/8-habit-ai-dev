@@ -44,8 +44,39 @@ allowed-tools: ["Read", "Glob", "Grep", "Bash"]
 
 6. **H4 Checkpoint**: "Does this review help the developer (or AI) get better, not just point out flaws?"
 
+## Verdict (Required Output)
+
+Every review MUST end with a structured verdict — not free-form prose.
+
+| Level | Label        | Criteria                                   | Action                               |
+| ----- | ------------ | ------------------------------------------ | ------------------------------------ |
+| 0     | **PASS**     | No findings, or all informational          | Proceed to commit                    |
+| 1     | **CONCERNS** | Non-blocking issues found                  | Merge allowed, author should address |
+| 2     | **REWORK**   | Significant quality or completeness issues | Must fix before merge                |
+| 3     | **FAIL**     | Security vulnerability or breaking change  | Cannot merge, immediate fix required |
+
+Output format:
+
+```
+## Review Verdict: [PASS|CONCERNS|REWORK|FAIL]
+**Summary**: [1-2 sentence overall assessment]
+| Category     | Findings | Severity |
+|--------------|----------|----------|
+| Security     | [count]  | [highest] |
+| Quality      | [count]  | [highest] |
+| Completeness | [count]  | [highest] |
+**Action required**: [specific next steps or "none — clear to commit"]
+```
+
 ## Sequence Rule
 
 **Write → Review → Commit** (NEVER reverse. "Small change" is not an excuse to skip.)
+
+## Definition of Done
+
+- [ ] All CRITICAL findings addressed (zero remaining)
+- [ ] Verdict rendered using the 4-level table above
+- [ ] Each finding includes actionable feedback (WHY + HOW to fix)
+- [ ] Summary table shows findings count per category
 
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md` for the full H4 principle and examples.

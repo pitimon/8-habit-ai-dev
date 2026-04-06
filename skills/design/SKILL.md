@@ -41,4 +41,17 @@ allowed-tools: ["Read", "Glob", "Grep"]
 
 6. **H8 Checkpoint**: "Do I understand WHY we're building it this way, not just WHAT?"
 
+## When to Skip
+
+- Solo bug fix that follows an existing, established pattern
+- Cosmetic or UI-only change with no architecture impact
+- Change already covered by a previously accepted ADR
+
+## Definition of Done
+
+- [ ] At least 2 options presented with trade-offs for each key decision
+- [ ] Human has explicitly decided (not AI default) — decision recorded
+- [ ] ADR created for decisions affecting >3 files or changing public API
+- [ ] Constraints and non-goals documented
+
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h8-find-voice.md` for the full H8 principle and examples.

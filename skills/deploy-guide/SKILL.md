@@ -47,4 +47,17 @@ allowed-tools: ["Read", "Glob", "Grep", "Bash"]
 - No rollback procedure documented
 - Skipping health check after deploy
 
+## When to Skip
+
+- Local development environment only — no deployment involved
+- CI/CD pipeline already handles the full staging→production flow automatically
+- Documentation-only or config-only change with no runtime impact
+
+## Definition of Done
+
+- [ ] Staging deploy verified — health endpoint returns correct version
+- [ ] Rollback plan documented with specific steps and time estimate
+- [ ] Post-deploy health check confirmed (smoke test passed)
+- [ ] Error rate monitored for at least 5 minutes after deploy
+
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h1-be-proactive.md` for the full H1 principle and examples.

@@ -45,4 +45,18 @@ allowed-tools: ["Read", "Glob", "Grep"]
 - Assuming a utility function exists when it doesn't
 - Duplicating logic that's already implemented elsewhere
 
+## When to Skip
+
+- Single-file change in code you already understand well
+- Follow-up fix where context is still fresh from previous session
+- Task already has a detailed spec with file paths and patterns documented
+
+## Definition of Done
+
+- [ ] Existing code in affected area has been read (not just assumed)
+- [ ] All referenced file paths verified to exist
+- [ ] Existing patterns and naming conventions documented in brief
+- [ ] Constraints listed (backward compatibility, file size, performance)
+- [ ] Test approach defined (what to test, TDD if applicable)
+
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the full H5 principle and examples.

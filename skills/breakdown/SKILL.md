@@ -43,4 +43,12 @@ allowed-tools: ["Read", "Glob", "Grep"]
 - If you can't describe a task in 1 sentence, it's too big
 - If tasks have circular dependencies, redesign
 
+## Definition of Done
+
+- [ ] Each task describable in 1 sentence — if not, break it down further
+- [ ] Dependencies mapped (no circular dependencies)
+- [ ] Parallel work identified — independent tasks marked for concurrent execution
+- [ ] Tasks prioritized by importance (Q2 > Q1 > Q3, Q4 eliminated)
+- [ ] No task touches more than 5 files
+
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h3-first-things-first.md` for the full H3 principle and examples.

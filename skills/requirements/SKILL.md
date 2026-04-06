@@ -43,4 +43,11 @@ allowed-tools: ["Read", "Glob", "Grep"]
 - Formatting or linting changes
 - Dependency version bumps
 
+## Definition of Done
+
+- [ ] PRD summary exists with What/Why/Who/Scope sections filled
+- [ ] 3-5 concrete, verifiable success criteria defined
+- [ ] Scope boundaries clear — both "in scope" and "out of scope" listed
+- [ ] Stakeholder/target user identified
+
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h2-begin-with-end.md` for the full H2 principle and examples.

@@ -54,4 +54,17 @@ Production Capability (PC) = monitoring, alerting, runbooks, incident playbooks
 
 If you only invest in P and neglect PC, eventually the saw is too dull to cut.
 
+## When to Skip
+
+- Monitoring is already comprehensive for this service (verified, not assumed)
+- Change is purely frontend with no backend or infrastructure impact
+- Service is being deprecated — invest monitoring effort elsewhere
+
+## Definition of Done
+
+- [ ] Health endpoint exists and returns version information
+- [ ] Alerting configured for error rate and resource thresholds
+- [ ] Error tracking active (logs accessible, not just stdout)
+- [ ] Recovery runbook exists for each critical dependency
+
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h7-sharpen-saw.md` for the full H7 principle and examples.
