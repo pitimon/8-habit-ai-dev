@@ -4,7 +4,7 @@
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
 [![Skills](https://img.shields.io/badge/Skills-13-blue)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.0.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.0.0)
+[![Version](https://img.shields.io/badge/Version-2.1.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.1.0)
 
 > **"ทำเสร็จ ≠ ทำดี"** — Shipping code is not the same as shipping _good_ code.
 >
@@ -69,16 +69,16 @@ Each step maps to one of Covey's 8 Habits — the habit explains _why_ the step 
 
 **7-Step Workflow** (sequential, with handoff contracts between steps):
 
-| Skill            | Step | Habit                        | What It Does                                                     |
-| ---------------- | ---- | ---------------------------- | ---------------------------------------------------------------- |
-| `/research`      | 0    | H5: Seek First to Understand | Investigate existing solutions and constraints before specifying |
-| `/requirements`  | 1    | H2: Begin with End in Mind   | Draft PRD — what, why, who, scope, success criteria              |
-| `/design`        | 2    | H8: Find Your Voice          | Surface architecture decisions for **human** judgment            |
-| `/breakdown`     | 3    | H3: Put First Things First   | Decompose into atomic tasks, prioritize by importance            |
-| `/build-brief`   | 4    | H5: Seek First to Understand | Problem statement gate + context brief before implementing       |
-| `/review-ai`     | 5    | H4: Think Win-Win            | 4-level verdict (PASS/CONCERNS/REWORK/FAIL) + dimension balance  |
-| `/deploy-guide`  | 6    | H1: Be Proactive             | Staging-first deployment with rollback plan                      |
-| `/monitor-setup` | 7    | H7: Sharpen the Saw          | Set up health checks, alerting, error tracking                   |
+| Skill            | Step | Habit                        | What It Does                                                                                                |
+| ---------------- | ---- | ---------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `/research`      | 0    | H5: Seek First to Understand | Investigate with depth levels (Quick/Standard/Deep), modes (General/Compare/Audit), and source verification |
+| `/requirements`  | 1    | H2: Begin with End in Mind   | Draft PRD — what, why, who, scope, success criteria                                                         |
+| `/design`        | 2    | H8: Find Your Voice          | Surface architecture decisions for **human** judgment                                                       |
+| `/breakdown`     | 3    | H3: Put First Things First   | Decompose into atomic tasks, prioritize by importance                                                       |
+| `/build-brief`   | 4    | H5: Seek First to Understand | Problem statement gate + context brief before implementing                                                  |
+| `/review-ai`     | 5    | H4: Think Win-Win            | 4-level verdict (PASS/CONCERNS/REWORK/FAIL) + dimension balance                                             |
+| `/deploy-guide`  | 6    | H1: Be Proactive             | Staging-first deployment with rollback plan                                                                 |
+| `/monitor-setup` | 7    | H7: Sharpen the Saw          | Set up health checks, alerting, error tracking                                                              |
 
 **Assessment & Verification** (use anytime):
 
@@ -250,6 +250,16 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 
 ---
 
+## What's New in v2.1.0
+
+**Theme: Multi-Agent Research** — deeper investigation with Feynman-inspired depth levels, research modes, and source verification.
+
+- **Research depth levels** in `/research` — Quick (codebase only), Standard (default), Deep (multi-agent + verification)
+- **Research modes** in `/research` — General (default), Compare (comparison matrix), Audit (code vs docs)
+- **[`research-verifier` agent](agents/research-verifier.md)** — validates URLs, checks file paths, flags dead links in Deep mode
+- **[Research brief template](guides/templates/research-brief-template.md)** — structured output with optional comparison matrix, audit results, and verification report
+- **[ADR-002](docs/adr/ADR-002-research-modes.md)** — documents why modes integrate into `/research` rather than becoming separate skills
+
 ## What's New in v2.0.0
 
 **Theme: Orchestration-Aware Development** — inspired by [UltraWorkers](https://github.com/ultraworkers) (ULW) multi-agent orchestration tools (OmC, OmX, clawhip).
@@ -335,4 +345,4 @@ MIT
 
 ---
 
-_Version: 2.0.0 | Last updated: 2026-04-07_
+_Version: 2.1.0 | Last updated: 2026-04-07_
