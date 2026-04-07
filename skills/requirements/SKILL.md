@@ -47,7 +47,7 @@ next-skill: design
 
 ## Handoff
 
-- **Expects from predecessor**: User intent — a feature idea, bug report, or problem statement
+- **Expects from predecessor**: User intent — a feature idea, bug report, or problem statement. If `/research` was run, a research brief with findings, constraints, comparison matrix (if applicable), and recommendation
 - **Produces for successor** (`/design`): PRD summary with What/Why/Who/Scope/Success criteria
 
 ## Definition of Done

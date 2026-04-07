@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 2.0.0 | **Date**: 2026-04-07 | **Previous**: 1.9.0 (Body 4, Mind 4.5, Heart 5, Spirit 4.5 = 4.5)
+**Version**: 2.1.0 | **Date**: 2026-04-07 | **Previous**: 2.0.0 (Body 4, Mind 5, Heart 5, Spirit 4.5 = 4.625)
 
 Running our own 17-question checklist against the plugin itself. H8 Modeling: "Follow the process always, no shortcuts when unwatched."
 
@@ -53,6 +53,14 @@ Running our own 17-question checklist against the plugin itself. H8 Modeling: "F
 
 ## Honesty Notes
 
+v2.1.0 improvements (Feynman-inspired multi-agent research):
+
+- **Research depth levels**: `/research` now supports Quick/Standard/Deep — auto-detected from the argument or explicit keyword
+- **Research modes**: General/Compare/Audit — comparison matrix and code-vs-docs audit output
+- **`research-verifier` agent**: Source verification agent validates URLs, file paths, document references
+- **Research brief template**: Structured output with optional comparison matrix, audit results, verification report
+- **ADR-002**: Documents why modes integrate into `/research` rather than becoming separate skills
+
 v2.0.0 improvements (ULW-inspired orchestration):
 
 - **Orchestration classification**: `/breakdown` now classifies tasks as sequential/parallel-safe/parallel-worktree
@@ -79,7 +87,8 @@ The cross-verify score (16/16) measures **plan discipline**. The Whole Person sc
 - v1.8.0: Body 4, Mind 4, Heart 5, Spirit 4 = **4.25** (consolidated — discoverability, same scores)
 - v1.9.0: Body 4, Mind 4.5, Heart 5, Spirit 4.5 = **4.5** (evidence grounding + integrity principles)
 - v2.0.0: Body 4, Mind 5, Heart 5, Spirit 4.5 = **4.625** (orchestration patterns + meta-system mindset + ADR)
+- v2.1.0: Body 4, Mind 5, Heart 5, Spirit 5 = **4.75** (research depth/modes + verification agent + evidence rigor)
 
 ---
 
-_Updated with each release. Previous: 1.9.0 (Body 4, Mind 4.5, Heart 5, Spirit 4.5 = 4.5)_
+_Updated with each release. Previous: 2.0.0 (Body 4, Mind 5, Heart 5, Spirit 4.5 = 4.625)_
