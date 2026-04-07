@@ -65,14 +65,16 @@ This plugin provides a **skill for each step** — not as a gate, but as a habit
 
 ## Quick Start
 
+**Install:**
+
 ```bash
-# Step 1: Add the marketplace source
 claude plugin marketplace add pitimon/8-habit-ai-dev
-
-# Step 2: Install the plugin
 claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
+```
 
-# Step 3: Restart Claude Code, then use any skill:
+**Use** (restart Claude Code, then invoke any skill):
+
+```
 /requirements       # Before you build anything
 /review-ai          # Before you commit anything
 /cross-verify       # Before you ship anything
