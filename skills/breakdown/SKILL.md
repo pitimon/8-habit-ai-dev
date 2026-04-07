@@ -33,7 +33,23 @@ next-skill: build-brief
    - Q3 (Urgent, Not Important): Nice-to-have polish
    - Q4 (Neither): Skip entirely
 
-4. **Identify parallel work**: Tasks with no dependencies can run simultaneously using parallel agents.
+4. **Identify parallel work and classify orchestration**: Tasks with no dependencies can run simultaneously. Classify each task:
+
+   | Type                | When                                           | Isolation                             |
+   | ------------------- | ---------------------------------------------- | ------------------------------------- |
+   | `sequential`        | Output of A feeds input of B                   | Run after dependency completes        |
+   | `parallel-safe`     | Tasks touch completely different files         | Same repo, concurrent execution       |
+   | `parallel-worktree` | Tasks touch overlapping files or shared config | Each agent gets isolated git worktree |
+
+   Produce an orchestration table for the task list:
+
+   ```
+   | Task | Type | Isolation | Depends On |
+   |------|------|-----------|------------|
+   | T1   | parallel-worktree | own worktree | none |
+   | T2   | parallel-safe | same repo | none |
+   | T3   | sequential | — | T1, T2 |
+   ```
 
 5. **Lazy Parallelism Gate**: Before spawning parallel agents, ask:
    - Can I do this sequentially in ≤5 tool calls? If yes, sequential is cheaper.
@@ -70,6 +86,8 @@ next-skill: build-brief
 - [ ] Parallel work identified — independent tasks marked for concurrent execution
 - [ ] Tasks prioritized by importance (Q2 > Q1 > Q3, Q4 eliminated)
 - [ ] No task touches more than 5 files
+- [ ] Orchestration classification assigned to each task (sequential/parallel-safe/parallel-worktree)
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/task-list-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h3-first-things-first.md` for the full H3 principle and examples.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/orchestration-patterns.md` for worktree isolation and context boundary patterns.

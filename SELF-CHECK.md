@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 1.9.0 | **Date**: 2026-04-07 | **Previous**: 1.8.0 (Body 4, Mind 4, Heart 5, Spirit 4 = 4.25)
+**Version**: 2.0.0 | **Date**: 2026-04-07 | **Previous**: 1.9.0 (Body 4, Mind 4.5, Heart 5, Spirit 4.5 = 4.5)
 
 Running our own 17-question checklist against the plugin itself. H8 Modeling: "Follow the process always, no shortcuts when unwatched."
 
@@ -53,6 +53,15 @@ Running our own 17-question checklist against the plugin itself. H8 Modeling: "F
 
 ## Honesty Notes
 
+v2.0.0 improvements (ULW-inspired orchestration):
+
+- **Orchestration classification**: `/breakdown` now classifies tasks as sequential/parallel-safe/parallel-worktree
+- **Context boundaries**: `/build-brief` adds must-know/must-NOT-know/merge-contract per agent
+- **Orchestration patterns guide**: 3-pattern catalog (Worktree Isolation, Context Boundaries, Meta-System Mindset)
+- **Meta-system mindset**: H7 Rule 5 — "invest in the system that builds the system"
+- **ADR-001**: First Architecture Decision Record — documents integrate-vs-new-skill decision
+- **Inspiration**: UltraWorkers (ULW) multi-agent orchestration tools (OmC, OmX, clawhip)
+
 v1.9.0 improvements (Feynman-inspired):
 
 - **New skill**: `/research` (Step 0) — investigate before specifying requirements
@@ -69,7 +78,8 @@ The cross-verify score (16/16) measures **plan discipline**. The Whole Person sc
 - v1.7.0: Body 4, Mind 4, Heart 5, Spirit 4 = **4.25**
 - v1.8.0: Body 4, Mind 4, Heart 5, Spirit 4 = **4.25** (consolidated — discoverability, same scores)
 - v1.9.0: Body 4, Mind 4.5, Heart 5, Spirit 4.5 = **4.5** (evidence grounding + integrity principles)
+- v2.0.0: Body 4, Mind 5, Heart 5, Spirit 4.5 = **4.625** (orchestration patterns + meta-system mindset + ADR)
 
 ---
 
-_Updated with each release. Previous: 1.8.0 (Body 4, Mind 4, Heart 5, Spirit 4 = 4.25)_
+_Updated with each release. Previous: 1.9.0 (Body 4, Mind 4.5, Heart 5, Spirit 4.5 = 4.5)_

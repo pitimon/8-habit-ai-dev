@@ -48,7 +48,28 @@ next-skill: review-ai
    - Does the file path you reference exist?
    - Is the API endpoint you'll use actually implemented?
 
-5. **H5 Checkpoint**: "Have I fully understood the problem before proposing a solution?"
+5. **Define context boundaries** (for parallel/multi-agent work):
+
+   ```
+   ## Context Boundaries
+   **Must know** (include in agent prompt):
+   - Files to read: [specific paths]
+   - Domain context: [1-2 sentences]
+   - Success criteria: [from /breakdown]
+
+   **Must NOT know** (exclude to prevent pollution):
+   - Other agents' tasks and their file changes
+   - Unrelated codebase areas
+   - Implementation details of dependencies not yet merged
+
+   **Merge contract**:
+   - Output: [what this agent produces — files, tests, types]
+   - Merge point: [when/where results integrate — branch, PR, or sequential step]
+   ```
+
+   Skip this step for single-agent sequential work. Required when `/breakdown` classified tasks as `parallel-safe` or `parallel-worktree`.
+
+6. **H5 Checkpoint**: "Have I fully understood the problem before proposing a solution?"
 
 ## Common Mistakes
 
@@ -74,5 +95,7 @@ next-skill: review-ai
 - [ ] Existing patterns and naming conventions documented in brief
 - [ ] Constraints listed (backward compatibility, file size, performance)
 - [ ] Test approach defined (what to test, TDD if applicable)
+- [ ] Context boundaries defined for parallel tasks (must-know / must-not-know / merge contract)
 
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the full H5 principle and examples.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/orchestration-patterns.md` for context boundary and orchestration patterns.

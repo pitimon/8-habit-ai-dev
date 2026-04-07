@@ -4,7 +4,7 @@
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
 [![Skills](https://img.shields.io/badge/Skills-13-blue)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-1.9.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v1.9.0)
+[![Version](https://img.shields.io/badge/Version-2.0.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.0.0)
 
 > **"ทำเสร็จ ≠ ทำดี"** — Shipping code is not the same as shipping _good_ code.
 >
@@ -178,7 +178,7 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v1.9.0)
+│   ├── plugin.json                 # Plugin metadata (v2.0.0)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 13 skills (8 workflow + 5 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (pre-requirements investigation)
@@ -219,12 +219,16 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 │   │   ├── adr-template.md         #   For /design
 │   │   ├── task-list-template.md   #   For /breakdown
 │   │   └── review-report-template.md # For /review-ai
+│   ├── orchestration-patterns.md   # Multi-agent orchestration patterns (v2.0.0)
 │   └── cross-verify-packs/         # Domain question packs (5 questions each)
 │       ├── api.md                  #   API development
 │       ├── frontend.md             #   Frontend/UI
 │       ├── infra.md                #   Infrastructure
 │       ├── ai-ml.md                #   AI/ML systems
 │       └── mobile.md               #   Mobile apps
+├── docs/
+│   └── adr/                        # Architecture Decision Records
+│       └── ADR-001-orchestration-patterns.md
 ├── rules/
 │   └── effective-development.md    # Auto-loaded Claude Code rules
 ├── CLAUDE.md                       # Plugin development guide
@@ -246,7 +250,19 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 
 ---
 
-## What's New in v1.9.0
+## What's New in v2.0.0
+
+**Theme: Orchestration-Aware Development** — inspired by [UltraWorkers](https://github.com/ultraworkers) (ULW) multi-agent orchestration tools (OmC, OmX, clawhip).
+
+> "The scarce resource is no longer typing speed but architectural clarity, task decomposition, judgment, taste, and conviction about what's worth building."
+
+- **Orchestration classification** in `/breakdown` — classify each task as `sequential`, `parallel-safe`, or `parallel-worktree` before dispatching agents
+- **Context boundaries** in `/build-brief` — define must-know / must-NOT-know / merge contract per agent to prevent context pollution
+- **[Orchestration Patterns guide](guides/orchestration-patterns.md)** — 3-pattern catalog: Worktree Isolation, Context Boundaries, Meta-System Mindset
+- **Meta-system mindset** in H7 — "invest in the system that builds the system, not just what it produces"
+- **[ADR-001](docs/adr/ADR-001-orchestration-patterns.md)** — documents why orchestration integrates into existing skills rather than becoming a new `/orchestrate` skill
+
+### What's New in v1.9.0
 
 Inspired by patterns from [getcompanion-ai/feynman](https://github.com/getcompanion-ai/feynman) — an AI research agent that enforces "URL or it didn't happen."
 
@@ -319,4 +335,4 @@ MIT
 
 ---
 
-_Version: 1.9.0 | Last updated: 2026-04-07_
+_Version: 2.0.0 | Last updated: 2026-04-07_

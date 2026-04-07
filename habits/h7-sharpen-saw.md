@@ -28,6 +28,12 @@ Schedule time to update dependencies, review security advisories, and assess whe
 
 The more context your AI assistant has (project docs, coding standards, architectural decisions), the better its output. Maintaining a clear CLAUDE.md, keeping docs current, and writing good commit messages are all PC investments — they make every future AI session more productive.
 
+**5. Invest in the meta-system — the system that builds the system.**
+
+When AI agents can rebuild a codebase in hours, the bottleneck shifts from coding speed to orchestration quality. The plugin you configure, the workflow you follow, the decomposition patterns you use — these are the meta-system. Improving the meta-system compounds: every future task benefits from better orchestration, clearer boundaries, and smarter decomposition.
+
+> "If you're only looking at the files created in this repository, you're looking at the wrong layer. What you should study is the system that built it." — UltraWorkers philosophy
+
 ### Before/After: All Output vs Capability Investment
 
 ```bash
@@ -53,13 +59,14 @@ After running a retrieval benchmark on an AI memory system, the team could have 
 
 ## Quick Reference
 
-| Do                                              | Don't                                   | Why                                                |
-| ----------------------------------------------- | --------------------------------------- | -------------------------------------------------- |
-| Track tech debt explicitly                      | "It works, don't touch it"              | Accumulated debt demands payment all at once       |
-| After each task: "what did I learn?"            | Complete task, immediately start next   | Lessons evaporate, same mistakes recur             |
-| Invest in CI/CD, monitoring, automation (PC)    | Only ship features (P)                  | Eventually the saw is too dull to cut              |
-| Periodically review frameworks and dependencies | Assume tools are still the right choice | Security advisories and better alternatives emerge |
-| Maintain CLAUDE.md and commit messages          | Let AI context degrade over time        | Better context = better AI output every session    |
+| Do                                                            | Don't                                                     | Why                                                         |
+| ------------------------------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------------- |
+| Track tech debt explicitly                                    | "It works, don't touch it"                                | Accumulated debt demands payment all at once                |
+| After each task: "what did I learn?"                          | Complete task, immediately start next                     | Lessons evaporate, same mistakes recur                      |
+| Invest in CI/CD, monitoring, automation (PC)                  | Only ship features (P)                                    | Eventually the saw is too dull to cut                       |
+| Periodically review frameworks and dependencies               | Assume tools are still the right choice                   | Security advisories and better alternatives emerge          |
+| Maintain CLAUDE.md and commit messages                        | Let AI context degrade over time                          | Better context = better AI output every session             |
+| Invest in the meta-system (plugins, workflows, decomposition) | Only optimize the code, never the process that creates it | Better orchestration compounds — every future task benefits |
 
 ## Checkpoint
 
