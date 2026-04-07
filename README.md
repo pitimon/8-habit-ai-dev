@@ -8,7 +8,7 @@
 
 > **"ทำเสร็จ ≠ ทำดี"** — Shipping code is not the same as shipping _good_ code.
 >
-> This plugin replaces Vibe Coding with structured discipline: **7-step workflow skills** powered by **Covey's 8 Habits**.
+> AI coding tools are powerful — but "build me X" without requirements, review, or staging creates fast, fragile code. This plugin adds the discipline AI lacks: **13 skills** across a **7-step workflow**, grounded in **Covey's 8 Habits** of effective development.
 
 ---
 
