@@ -85,7 +85,7 @@ claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 **New to the plugin?** Start with `/workflow` for a guided walkthrough, or see [Use Cases](#use-cases-which-skill-when) to find the right skill for your situation.
 
-Three commands. The plugin loads a session reminder and makes 13 skills available.
+Two commands to install. The plugin loads a session reminder and makes 13 skills available.
 
 ---
 
