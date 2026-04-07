@@ -1,5 +1,6 @@
 #!/bin/bash
 # 8-Habit AI Dev — Structural Validation (pure bash, no dependencies)
+# Requires bash (process substitution). Do not run with sh.
 # Validates SKILL.md files, version consistency, and file size limits.
 
 set -euo pipefail
@@ -206,11 +207,125 @@ else
 fi
 echo ""
 
+# --- Check 11: allowed-tools field validation ---
+echo "--- Check 11: allowed-tools values are valid tool names ---"
+VALID_TOOLS="Read Glob Grep Bash WebSearch WebFetch Agent Edit Write"
+TOOLS_FAIL=0
+for skill_dir in skills/*/; do
+  skill_file="${skill_dir}SKILL.md"
+  [ ! -f "$skill_file" ] && continue
+  skill_name=$(basename "$skill_dir")
+
+  tools_line=$(sed -n '/^---$/,/^---$/p' "$skill_file" | grep "^allowed-tools:" | head -1)
+  if [ -z "$tools_line" ]; then
+    fail "$skill_name — missing allowed-tools field"
+    TOOLS_FAIL=$((TOOLS_FAIL + 1))
+    continue
+  fi
+
+  # Extract tool names from JSON-like array: ["Read", "Glob"] → Read Glob
+  tools=$(echo "$tools_line" | sed 's/^allowed-tools:[[:space:]]*//' | tr -d '[]"' | tr ',' ' ')
+  all_valid=1
+  for tool in $tools; do
+    tool=$(echo "$tool" | tr -d ' ')
+    [ -z "$tool" ] && continue
+    if ! echo "$VALID_TOOLS" | grep -qw "$tool"; then
+      fail "$skill_name — unknown tool '$tool' in allowed-tools"
+      TOOLS_FAIL=$((TOOLS_FAIL + 1))
+      all_valid=0
+    fi
+  done
+  if [ "$all_valid" -eq 1 ]; then
+    pass "$skill_name — all allowed-tools valid"
+  fi
+done
+echo ""
+
+# --- Check 12: README skills table cross-reference ---
+echo "--- Check 12: README ↔ skills directory cross-reference ---"
+# Extract skill directory names
+DIR_SKILLS=""
+for skill_dir in skills/*/; do
+  [ ! -d "$skill_dir" ] && continue
+  DIR_SKILLS="$DIR_SKILLS $(basename "$skill_dir")"
+done
+
+# Extract skill names from README table rows matching | `/skill-name`
+README_SKILLS=""
+while IFS= read -r line; do
+  sname=$(echo "$line" | sed -n 's/.*`\/\([a-z-]*\)`.*/\1/p')
+  [ -n "$sname" ] && README_SKILLS="$README_SKILLS $sname"
+done < <(grep '| `/[a-z]' README.md 2>/dev/null)
+# Deduplicate
+README_SKILLS=$(echo "$README_SKILLS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+
+XREF_FAIL=0
+# Check: every directory skill is in README
+for s in $DIR_SKILLS; do
+  if ! echo "$README_SKILLS" | grep -qw "$s"; then
+    fail "Skill '$s' exists as directory but missing from README"
+    XREF_FAIL=$((XREF_FAIL + 1))
+  fi
+done
+# Check: every README skill has a directory
+for s in $README_SKILLS; do
+  if ! echo "$DIR_SKILLS" | grep -qw "$s"; then
+    fail "Skill '$s' listed in README but no skills/$s/ directory"
+    XREF_FAIL=$((XREF_FAIL + 1))
+  fi
+done
+if [ "$XREF_FAIL" -eq 0 ]; then
+  pass "README skills table matches skills/ directories ($(echo "$DIR_SKILLS" | wc -w | tr -d ' ') skills)"
+fi
+echo ""
+
+# --- Check 13: Agent definition validation ---
+echo "--- Check 13: Agent definition validation ---"
+AGENT_FAIL=0
+if [ -d "agents" ]; then
+  while read -r agent_file; do
+    agent_name=$(basename "$agent_file")
+    frontmatter=$(sed -n '/^---$/,/^---$/p' "$agent_file" | head -20)
+
+    if [ -z "$frontmatter" ]; then
+      fail "$agent_name — no YAML frontmatter"
+      AGENT_FAIL=$((AGENT_FAIL + 1))
+      continue
+    fi
+
+    # Required fields
+    for field in "name:" "description:" "model:" "tools:"; do
+      if echo "$frontmatter" | grep -q "$field"; then
+        pass "$agent_name has $field"
+      else
+        fail "$agent_name missing $field"
+        AGENT_FAIL=$((AGENT_FAIL + 1))
+      fi
+    done
+
+    # Validate model value
+    model_val=$(echo "$frontmatter" | grep "^model:" | head -1 | sed 's/^model:[[:space:]]*//')
+    case "$model_val" in
+      sonnet|opus|haiku)
+        pass "$agent_name model '$model_val' is valid"
+        ;;
+      *)
+        fail "$agent_name model '$model_val' not in [sonnet, opus, haiku]"
+        AGENT_FAIL=$((AGENT_FAIL + 1))
+        ;;
+    esac
+  done < <(find agents/ -name "*.md" -type f 2>/dev/null | sort)
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"
 echo "FAIL: $ERRORS"
 echo ""
+
+# Export pass count for validate-content.sh fitness function F2
+echo "$PASS" > /tmp/validate-structure-pass.txt
 
 if [ "$ERRORS" -gt 0 ]; then
   echo "RESULT: FAILED ($ERRORS errors)"
