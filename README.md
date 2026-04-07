@@ -12,6 +12,39 @@
 
 ---
 
+## Table of Contents
+
+**Get Started**
+
+- [The Problem](#the-problem) — Why this exists
+- [Quick Start](#quick-start) — Install in 3 steps, verify in 1
+
+**The Framework**
+
+- [7-Step Workflow](#the-7-step-workflow) — Visual pipeline from research to monitoring
+- [Skills Reference](#skills-reference) — All 13 skills with habit mappings
+- [Use Cases](#use-cases-which-skill-when) — Common scenarios and recommended paths
+- [The 8 Habits](#the-8-habits) — Principles behind the workflow
+- [Maturity Model](#the-maturity-model) — Dependence to Significance
+
+**Deep Dives**
+
+- [Cross-Verification](#cross-verification) — 17-question checklist + scoring
+- [Whole Person Assessment](#whole-person-assessment) — Body/Mind/Heart/Spirit + worked example
+- [Agents](#agents) — Read-only reviewers that analyze your work
+- [Architecture](#architecture) — File tree + design decisions
+
+**Reference**
+
+- [What's New](#whats-new-in-v220) — Version history
+- [Not a Checklist](#not-a-checklist) — Principles, not gates
+- [Origin](#origin) — Where these habits come from
+- [FAQ](#faq) — Common questions answered
+- [Glossary](#glossary) — Key terms defined
+- [Alternative Setup](#alternative-setup-without-plugin) | [Contributing](#contributing) | [License](#license)
+
+---
+
 ## The Problem
 
 AI coding tools (Claude Code, Cursor, Copilot, Codex) are powerful — but they amplify whatever process you bring to them. No process? You get fast, fragile code that works in demo but breaks in production.
@@ -46,6 +79,10 @@ claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
 /whole-person-check # Assess Body/Mind/Heart/Spirit balance
 ```
 
+**Verify installation**: After restarting, you should see `## 8-Habit AI Dev Active` in the session banner with the 7-step workflow reminder.
+
+**New to the plugin?** Start with `/workflow` for a guided walkthrough, or see [Use Cases](#use-cases-which-skill-when) to find the right skill for your situation.
+
 Three commands. The plugin loads a session reminder and makes 13 skills available.
 
 ---
@@ -58,18 +95,25 @@ Each step maps to one of Covey's 8 Habits — the habit explains _why_ the step 
  Step 0        Step 1       Step 2       Step 3        Step 4       Step 5       Step 6        Step 7
 ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
 │Research  │→│Require-  │→│ Design   │→│Breakdown │→│  Build   │→│ Review   │→│ Deploy   │→│ Monitor  │
-│          │ │ments     │ │          │ │          │ │  Brief   │ │          │ │  Guide   │ │  Setup   │
-│          │ │          │ │          │ │          │ │          │ │          │ │          │ │          │
-│ H5: Under│ │ H2: End  │ │ H8: Voice│ │ H3: First│ │ H5: Under│ │ H4: Win- │ │ H1: Pro- │ │ H7: Saw  │
-│ -stand   │ │ in Mind  │ │          │ │ Things   │ │ -stand   │ │ Win      │ │ active   │ │          │
+│          │ │  ments   │ │          │ │          │ │  Brief   │ │          │ │  Guide   │ │  Setup   │
+├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤
+│ /research│ │/require- │ │ /design  │ │/breakdown│ │/build-   │ │/review-ai│ │/deploy-  │ │/monitor- │
+│          │ │  ments   │ │          │ │          │ │  brief   │ │          │ │  guide   │ │  setup   │
+├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤
+│H5:Under- │ │H2:End in │ │H8:Find   │ │H3:First  │ │H5:Under- │ │H4:Win-   │ │H1:Be Pro-│ │H7:Sharpen│
+│stand 1st │ │  Mind    │ │Your Voice│ │Things 1st│ │stand 1st │ │  Win     │ │  active  │ │the Saw   │
 └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘
 ```
 
-### Skills Reference
+You don't need all 8 steps every time. Start with **`/requirements` before building** and **`/review-ai` before committing** — those two alone eliminate most Vibe Coding problems.
 
-**7-Step Workflow** (sequential, with handoff contracts between steps):
+---
 
-| Skill            | Step | Habit                        | What It Does                                                                                                |
+## Skills Reference
+
+### Workflow Skills (Steps 0-7)
+
+| Skill            | Step | Habit                        | Purpose                                                                                                     |
 | ---------------- | ---- | ---------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | `/research`      | 0    | H5: Seek First to Understand | Investigate with depth levels (Quick/Standard/Deep), modes (General/Compare/Audit), and source verification |
 | `/requirements`  | 1    | H2: Begin with End in Mind   | Draft PRD — what, why, who, scope, success criteria                                                         |
@@ -80,9 +124,9 @@ Each step maps to one of Covey's 8 Habits — the habit explains _why_ the step 
 | `/deploy-guide`  | 6    | H1: Be Proactive             | Staging-first deployment with rollback plan                                                                 |
 | `/monitor-setup` | 7    | H7: Sharpen the Saw          | Set up health checks, alerting, error tracking                                                              |
 
-**Assessment & Verification** (use anytime):
+### Assessment Skills (Use Anytime)
 
-| Skill                 | Habit               | What It Does                                                       |
+| Skill                 | Habit               | Purpose                                                            |
 | --------------------- | ------------------- | ------------------------------------------------------------------ |
 | `/cross-verify`       | H1-H8               | 17-question checklist + dimension summary (Body/Mind/Heart/Spirit) |
 | `/whole-person-check` | H8: Find Your Voice | 4-dimension assessment (1-5 scale) with AI Blind Spot detection    |
@@ -90,7 +134,32 @@ Each step maps to one of Covey's 8 Habits — the habit explains _why_ the step 
 | `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking    |
 | `/workflow`           | All                 | Guided 7-step walkthrough — invoke or skip each step               |
 
-You don't need all 13 skills every time. Start with `/requirements` before building and `/review-ai` before committing — those two alone will eliminate most Vibe Coding problems. Use `/workflow` for a guided walkthrough if you're new.
+---
+
+## Use Cases: Which Skill When?
+
+Start from **your situation**, not the skill name.
+
+| I want to...                      | Start with      | Then                        | Habit                   |
+| --------------------------------- | --------------- | --------------------------- | ----------------------- |
+| Build a new feature from scratch  | `/requirements` | `/design` → `/breakdown`    | H2: Define done first   |
+| Review code before committing     | `/review-ai`    | `/security-check` if needed | H4: Never skip review   |
+| Understand an unfamiliar codebase | `/research`     | `/build-brief`              | H5: Read before writing |
+| Deploy to production              | `/deploy-guide` | `/monitor-setup`            | H1: Staging first       |
+| Assess overall project health     | `/cross-verify` | `/whole-person-check`       | All 8 habits            |
+| Fix a production bug              | `/build-brief`  | Reproduce first             | H5: Understand first    |
+| Something feels off about a plan  | `/cross-verify` | Check dimension scores      | H1-H8                   |
+| Learn the full workflow           | `/workflow`     | (guided walkthrough)        | All                     |
+
+### Recommended Paths
+
+**Minimum Viable Discipline** — `/requirements` before building + `/review-ai` before committing. Two skills, biggest impact.
+
+**Full Workflow** — `/research` through `/monitor-setup` via `/workflow`. For new features or greenfield projects.
+
+**Quality Gate** — `/cross-verify` + `/whole-person-check`. For pre-PR or pre-release assessment.
+
+For the full 15-situation map, see [`guides/situation-map.md`](guides/situation-map.md).
 
 ---
 
@@ -169,7 +238,61 @@ The `/whole-person-check` skill evaluates work across Covey's 4 dimensions — t
 
 AI-assisted development systematically neglects Heart and Spirit. This assessment makes the gap visible so teams can compensate.
 
-**Maturity Rubrics** (3 levels per dimension): [guides/whole-person-rubrics.md](guides/whole-person-rubrics.md)
+### Worked Example: A REST API Feature
+
+After building a user authentication API, `/whole-person-check` might produce:
+
+| Dimension | Score | Finding                                                     |
+| --------- | ----- | ----------------------------------------------------------- |
+| Body      | 4/5   | CI green, 85% coverage, but no load test                    |
+| Mind      | 5/5   | ADR documented, JWT vs session decision recorded            |
+| Heart     | 2/5   | Error messages return raw 500s, no onboarding guide         |
+| Spirit    | 3/5   | Input validation present, but no rate limiting or audit log |
+
+**AI Blind Spot visible**: Body and Mind scored high (AI's strength). Heart and Spirit scored low (needs human attention).
+
+**Action**: Before shipping, add user-friendly error messages (Heart) and rate limiting with audit logging (Spirit). These are the gaps AI won't catch on its own.
+
+### Maturity Rubrics
+
+3 levels per dimension (Reactive → Proactive → Significant): [guides/whole-person-rubrics.md](guides/whole-person-rubrics.md)
+
+### Plugin's Own Progression
+
+```
+v1.2.0  ████████████░░░░░░░░  3.0   (honest reassessment after inflated 4.5)
+v1.9.0  ██████████████████░░  4.5   (evidence grounding + integrity)
+v2.0.0  ██████████████████░░  4.625 (orchestration + meta-system)
+v2.1.0  ███████████████████░  4.75  (verification agent + research rigor)
+v2.2.0  ████████████████████  5.0   (content validation + fitness functions)
+```
+
+Full self-assessment: [SELF-CHECK.md](SELF-CHECK.md)
+
+---
+
+## Agents
+
+The plugin includes two specialized agents — **read-only reviewers** that analyze without modifying your code.
+
+### 8-habit-reviewer
+
+Deep cross-verification reviewer. Evaluates plans, implementations, or PRs against all 8 habits.
+
+- **When it runs**: Invoked by `/cross-verify` or manually via the Agent tool
+- **What it produces**: Score out of 17, dimension summary, failed items with `file:line` evidence
+- **Tools**: Read, Glob, Grep (read-only)
+
+### research-verifier
+
+Source verification agent _(v2.1.0)_. Validates every citation in a research brief.
+
+- **When it runs**: Automatically during `/research` Deep mode
+- **What it produces**: Verification report — Verified / Dead / Not Found / Redirected per source
+- **Tools**: Read, Glob, Grep, WebFetch (read-only)
+- **Principle**: Feynman standard — _"The first principle is that you must not fool yourself"_
+
+Both agents use the `sonnet` model for fast, focused analysis.
 
 ---
 
@@ -178,14 +301,14 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.0.0)
+│   ├── plugin.json                 # Plugin metadata (v2.2.0)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 13 skills (8 workflow + 5 standalone)
-│   ├── research/SKILL.md           #   Step 0 → H5 (pre-requirements investigation)
+│   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
 │   ├── requirements/SKILL.md       #   Step 1 → H2
 │   ├── design/SKILL.md             #   Step 2 → H8
-│   ├── breakdown/SKILL.md          #   Step 3 → H3
-│   ├── build-brief/SKILL.md        #   Step 4 → H5 (with research gate)
+│   ├── breakdown/SKILL.md          #   Step 3 → H3 (orchestration classification)
+│   ├── build-brief/SKILL.md        #   Step 4 → H5 (context boundaries)
 │   ├── review-ai/SKILL.md          #   Step 5 → H4 (4-level verdict)
 │   ├── deploy-guide/SKILL.md       #   Step 6 → H1
 │   ├── monitor-setup/SKILL.md      #   Step 7 → H7
@@ -201,27 +324,21 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 │   ├── hooks.json                  # SessionStart hook registration
 │   └── session-start.sh            # Workflow reminder + progress indicators
 ├── habits/                         # Reference content (loaded on-demand)
-│   ├── h1-be-proactive.md
-│   ├── h2-begin-with-end.md
-│   ├── h3-first-things-first.md
-│   ├── h4-win-win.md
-│   ├── h5-understand-first.md
-│   ├── h6-synergize.md
-│   ├── h7-sharpen-saw.md
-│   └── h8-find-voice.md
+│   ├── h1-be-proactive.md          #   through h8-find-voice.md
+│   └── ...                         #   (8 files, one per habit)
 ├── guides/
-│   ├── cross-verification.md       # 17-point checklist
+│   ├── cross-verification.md       # 17-point checklist detail
 │   ├── whole-person-rubrics.md     # 4-dimension maturity rubrics
 │   ├── integrity-principles.md    # 12 AI Integrity Commandments
 │   ├── quick-reference.md          # 19 prioritized rules (scannable)
 │   ├── situation-map.md            # 15 situations → right habit/skill
+│   ├── orchestration-patterns.md   # Multi-agent orchestration (v2.0.0)
 │   ├── templates/                  # Output templates
 │   │   ├── prd-template.md         #   For /requirements
 │   │   ├── adr-template.md         #   For /design
 │   │   ├── task-list-template.md   #   For /breakdown
 │   │   ├── review-report-template.md # For /review-ai
 │   │   └── research-brief-template.md # For /research (v2.1.0)
-│   ├── orchestration-patterns.md   # Multi-agent orchestration patterns (v2.0.0)
 │   └── cross-verify-packs/         # Domain question packs (5 questions each)
 │       ├── api.md                  #   API development
 │       ├── frontend.md             #   Frontend/UI
@@ -229,7 +346,7 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 │       ├── ai-ml.md                #   AI/ML systems
 │       └── mobile.md               #   Mobile apps
 ├── tests/
-│   ├── validate-structure.sh       # Structure validation (17 checks, pure bash)
+│   ├── validate-structure.sh       # Structure validation (13 checks, pure bash)
 │   └── validate-content.sh         # Content validation + fitness functions (v2.2.0)
 ├── docs/
 │   └── adr/                        # Architecture Decision Records
@@ -252,8 +369,9 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 - **Handoff contracts** — each skill declares what it expects from its predecessor and produces for its successor
 - **Definition of Done** — every skill has 3-5 verifiable checkbox items
 - **When to Skip** — honest conditions prevent compliance theater (H8: contribution over compliance)
-- **Output templates** — structured formats for PRD, ADR, task list, review report
+- **Output templates** — structured formats for PRD, ADR, task list, review report, research brief
 - **Dimension mapping** — all 17 cross-verify questions tagged with Body/Mind/Heart/Spirit
+- **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
 
 ---
 
@@ -264,7 +382,7 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 - **Content validation** (`tests/validate-content.sh`) — section depth, markdown integrity, ADR format, handoff completeness
 - **Architecture fitness functions** — 3 tracked metrics: Skill Complexity Budget, Validation Coverage Ratio, Convention Consistency Score
 - **Extended structure validation** — `allowed-tools` field validation, README ↔ skills cross-reference, agent definition checks
-- **17 check categories, 215+ assertions** (up from 10 checks / 133 assertions in v2.1.0)
+- **17 check categories, 221 assertions** (up from 10 checks / 133 assertions in v2.1.0)
 - **CI enforces both scripts** — fitness function breach fails the build
 - **[ADR-003](docs/adr/ADR-003-content-validation.md)** — documents why bash content validation was chosen over npm linting or agent-driven validation
 - **Zero new dependencies** — pure bash, as always
@@ -279,27 +397,12 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 - **[Research brief template](guides/templates/research-brief-template.md)** — structured output with optional comparison matrix, audit results, and verification report
 - **[ADR-002](docs/adr/ADR-002-research-modes.md)** — documents why modes integrate into `/research` rather than becoming separate skills
 
-## What's New in v2.0.0
+### Earlier Versions
 
-**Theme: Orchestration-Aware Development** — inspired by [UltraWorkers](https://github.com/ultraworkers) (ULW) multi-agent orchestration tools (OmC, OmX, clawhip).
+- **v2.0.0** — Orchestration-Aware Development (ULW-inspired): task classification in `/breakdown`, context boundaries in `/build-brief`, [orchestration patterns guide](guides/orchestration-patterns.md), [ADR-001](docs/adr/ADR-001-orchestration-patterns.md)
+- **v1.9.0** — Feynman-inspired: `/research` skill, evidence grounding, [12 AI Integrity Commandments](guides/integrity-principles.md), confidence levels, lazy parallelism gate
 
-> "The scarce resource is no longer typing speed but architectural clarity, task decomposition, judgment, taste, and conviction about what's worth building."
-
-- **Orchestration classification** in `/breakdown` — classify each task as `sequential`, `parallel-safe`, or `parallel-worktree` before dispatching agents
-- **Context boundaries** in `/build-brief` — define must-know / must-NOT-know / merge contract per agent to prevent context pollution
-- **[Orchestration Patterns guide](guides/orchestration-patterns.md)** — 3-pattern catalog: Worktree Isolation, Context Boundaries, Meta-System Mindset
-- **Meta-system mindset** in H7 — "invest in the system that builds the system, not just what it produces"
-- **[ADR-001](docs/adr/ADR-001-orchestration-patterns.md)** — documents why orchestration integrates into existing skills rather than becoming a new `/orchestrate` skill
-
-### What's New in v1.9.0
-
-Inspired by patterns from [getcompanion-ai/feynman](https://github.com/getcompanion-ai/feynman) — an AI research agent that enforces "URL or it didn't happen."
-
-- **`/research`** (Step 0) — investigate existing solutions and constraints _before_ defining requirements
-- **Evidence grounding** in `/review-ai` — every finding must cite `file:line`, not just "you should consider..."
-- **[12 AI Integrity Commandments](guides/integrity-principles.md)** — "Never claim tested without test output", "Never fabricate file paths"
-- **Confidence levels** in `/cross-verify` — mark answers as Verified / Inferred / Unverified for high-stakes reviews
-- **Lazy Parallelism Gate** in `/breakdown` — "Can I do this in ≤5 tool calls?" before spawning agents
+Full release history: [GitHub Releases](https://github.com/pitimon/8-habit-ai-dev/releases)
 
 ---
 
@@ -327,6 +430,56 @@ This framework was developed while building [MemForge](https://github.com/pitimo
 - **H5**: A database password mismatch crashed production because nobody validated the .env file before deploying
 
 Every habit in this plugin exists because **skipping it caused real damage**.
+
+---
+
+## FAQ
+
+**Q: Do I need to use all 13 skills for every task?**
+No. Start with `/requirements` before building and `/review-ai` before committing. Those two alone eliminate most Vibe Coding problems. Add more skills as they feel natural. See [Use Cases](#use-cases-which-skill-when).
+
+**Q: What is "Vibe Coding"?**
+Building software by feel — jumping straight to "build me X" without requirements, design, or review. AI tools amplify this tendency because they make coding feel effortless. This plugin provides structure without removing speed.
+
+**Q: How is this different from a linter or CI tool?**
+Linters check syntax. CI checks tests. This plugin checks _process_ — did you define success criteria? Did you review before committing? Did you consider security? It operates at the planning and judgment layer, not the code layer.
+
+**Q: What does "ทำเสร็จ ≠ ทำดี" mean?**
+Thai: "Done is not done well." Completing a task (ทำเสร็จ) is not the same as completing it with quality (ทำดี). This principle is the plugin's core identity — speed without discipline creates debt.
+
+**Q: Can I use this without Claude Code?**
+The skills require Claude Code's plugin system. However, the underlying principles work with any AI tool. See [Alternative Setup](#alternative-setup-without-plugin) to load just the rules file, or read the `habits/` files as standalone guides.
+
+**Q: What are the "Whole Person dimensions"?**
+Covey's model: Body (discipline/quality), Mind (vision/architecture), Heart (passion/craft/empathy), Spirit (conscience/ethics/security). AI excels at Body and Mind but systematically neglects Heart and Spirit. See [Whole Person Assessment](#whole-person-assessment).
+
+**Q: How do the agents work?**
+Agents are read-only reviewers that run inside Claude Code. They analyze your code and produce reports but never modify files. See [Agents](#agents).
+
+**Q: Is this plugin opinionated?**
+Yes, deliberately. The opinions come from 910 man-day-equivalents of production AI-assisted development. Every rule exists because skipping it caused real damage. See [Origin](#origin).
+
+---
+
+## Glossary
+
+| Term                   | Definition                                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Vibe Coding**        | Building software by feel without structured process. The anti-pattern this plugin addresses.           |
+| **Handoff Contract**   | What a skill expects from its predecessor and produces for its successor. Ensures workflow continuity.  |
+| **AI Blind Spot**      | The systematic tendency of AI tools to excel at Body/Mind dimensions while neglecting Heart/Spirit.     |
+| **Whole Person Model** | Covey's 4-dimension framework: Body (discipline), Mind (vision), Heart (passion), Spirit (conscience).  |
+| **Cross-Verification** | 17-question checklist covering all 8 habits with dimension mapping and scoring bands.                   |
+| **Confidence Level**   | Marking a cross-verify answer as Verified (V), Inferred (I), or Unverified (U). From Feynman principle. |
+| **Domain Pack**        | Optional 5-question set for specific domains (API, Frontend, Infra, AI/ML, Mobile). Scored separately.  |
+| **Definition of Done** | 3-5 verifiable checkbox items that define when a skill's output is complete.                            |
+| **When to Skip**       | Honest conditions under which a skill is genuinely unnecessary. Prevents compliance theater.            |
+| **Orchestration**      | Multi-agent task dispatch patterns: sequential, parallel-safe, parallel-worktree _(v2.0.0)_.            |
+| **Fitness Function**   | Automated metric tracking architecture health. Breach fails the CI build _(v2.2.0)_.                    |
+| **Maturity Model**     | Progression: Dependence → Independence → Interdependence → Significance.                                |
+| **Private Victory**    | Habits 1-3: self-management (proactive, end-in-mind, first-things-first).                               |
+| **Public Victory**     | Habits 4-6: collaboration (win-win, understand-first, synergize).                                       |
+| **ทำเสร็จ ≠ ทำดี**     | Thai: "Done is not done well." The plugin's core philosophy.                                            |
 
 ---
 
@@ -364,4 +517,4 @@ MIT
 
 ---
 
-_Version: 2.2.0 | Last updated: 2026-04-07_
+_Version: 2.2.0 | Last updated: 2026-04-08_
