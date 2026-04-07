@@ -94,20 +94,16 @@ Two commands to install. The plugin loads a session reminder and makes 13 skills
 Each step maps to one of Covey's 8 Habits — the habit explains _why_ the step matters.
 
 ```
- Step 0        Step 1       Step 2       Step 3        Step 4       Step 5       Step 6        Step 7
-┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
-│Research  │→│Require-  │→│ Design   │→│Breakdown │→│  Build   │→│ Review   │→│ Deploy   │→│ Monitor  │
-│          │ │  ments   │ │          │ │          │ │  Brief   │ │          │ │  Guide   │ │  Setup   │
-├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤
-│ /research│ │/require- │ │ /design  │ │/breakdown│ │/build-   │ │/review-ai│ │/deploy-  │ │/monitor- │
-│          │ │  ments   │ │          │ │          │ │  brief   │ │          │ │  guide   │ │  setup   │
-├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤ ├──────────┤
-│H5:Under- │ │H2:End in │ │H8:Find   │ │H3:First  │ │H5:Under- │ │H4:Win-   │ │H1:Be Pro-│ │H7:Sharpen│
-│stand 1st │ │  Mind    │ │Your Voice│ │Things 1st│ │stand 1st │ │  Win     │ │  active  │ │the Saw   │
-└──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘
+Step 0          Step 1          Step 2         Step 3
+/research  ───→ /requirements ─→ /design  ────→ /breakdown
+H5:Understand   H2:End in Mind   H8:Find Voice  H3:First Things
+
+Step 4          Step 5          Step 6         Step 7
+/build-brief ─→ /review-ai ───→ /deploy-guide → /monitor-setup
+H5:Understand   H4:Win-Win      H1:Proactive   H7:Sharpen Saw
 ```
 
-You don't need all 8 steps every time. Start with **`/requirements` before building** and **`/review-ai` before committing** — those two alone eliminate most Vibe Coding problems.
+You don't need all steps every time. Start with **`/requirements` before building** and **`/review-ai` before committing** — those two alone eliminate most Vibe Coding problems.
 
 ---
 
