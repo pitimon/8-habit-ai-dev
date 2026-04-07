@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 2.1.0 | **Date**: 2026-04-07 | **Previous**: 2.0.0 (Body 4, Mind 5, Heart 5, Spirit 4.5 = 4.625)
+**Version**: 2.2.0 | **Date**: 2026-04-07 | **Previous**: 2.1.0 (Body 4, Mind 5, Heart 5, Spirit 5 = 4.75)
 
 Running our own 17-question checklist against the plugin itself. H8 Modeling: "Follow the process always, no shortcuts when unwatched."
 
@@ -44,14 +44,25 @@ Running our own 17-question checklist against the plugin itself. H8 Modeling: "F
 
 ## Dimension Summary
 
-| Dimension           | Questions         | Pass         | Score |
-| ------------------- | ----------------- | ------------ | ----- |
-| Body (Discipline)   | Q1,2,3,15         | 4/4          | 100%  |
-| Mind (Vision)       | Q4,5,6,7,11,12,14 | 7/7          | 100%  |
-| Heart (Passion)     | Q8,9,10,13        | 3/3 (+1 N/A) | 100%  |
-| Spirit (Conscience) | Q1,16,17          | 3/3          | 100%  |
+| Dimension         | Questions | Pass | Score |
+| ----------------- | --------- | ---- | ----- |
+| Body (Discipline) | Q1,2,3,15 | 4/4  | 100%  |
+
+| Mind (Vision) | Q4,5,6,7,11,12,14 | 7/7 | 100% |
+| Heart (Passion) | Q8,9,10,13 | 3/3 (+1 N/A) | 100% |
+| Spirit (Conscience) | Q1,16,17 | 3/3 | 100% |
 
 ## Honesty Notes
+
+v2.2.0 improvements (Body dimension level-up):
+
+- **Content validation script**: `validate-content.sh` — 4 new check categories (section depth, markdown integrity, ADR format, handoff content)
+- **Architecture fitness functions**: 3 tracked metrics — Skill Complexity Budget, Validation Coverage Ratio, Convention Consistency Score
+- **Extended structure validation**: `allowed-tools` field validation, README ↔ skills cross-reference, agent definition checks
+- **17 check categories, 215+ assertions** — up from 10/133 in v2.1.0
+- **CI enforces both scripts** — fitness function breach fails the build
+- **ADR-003**: Documents why bash content validation was chosen over npm linting or agent-driven validation
+- **Body reaches Level 3**: Quality gates enforce standards automatically, fitness functions track architecture health
 
 v2.1.0 improvements (Feynman-inspired multi-agent research):
 
@@ -88,7 +99,8 @@ The cross-verify score (16/16) measures **plan discipline**. The Whole Person sc
 - v1.9.0: Body 4, Mind 4.5, Heart 5, Spirit 4.5 = **4.5** (evidence grounding + integrity principles)
 - v2.0.0: Body 4, Mind 5, Heart 5, Spirit 4.5 = **4.625** (orchestration patterns + meta-system mindset + ADR)
 - v2.1.0: Body 4, Mind 5, Heart 5, Spirit 5 = **4.75** (research depth/modes + verification agent + evidence rigor)
+- v2.2.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (content validation + fitness functions + CI enforcement)
 
 ---
 
-_Updated with each release. Previous: 2.0.0 (Body 4, Mind 5, Heart 5, Spirit 4.5 = 4.625)_
+_Updated with each release. Previous: 2.1.0 (Body 4, Mind 5, Heart 5, Spirit 5 = 4.75)_

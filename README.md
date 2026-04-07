@@ -4,7 +4,7 @@
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
 [![Skills](https://img.shields.io/badge/Skills-13-blue)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.1.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.1.0)
+[![Version](https://img.shields.io/badge/Version-2.2.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.2.0)
 
 > **"ทำเสร็จ ≠ ทำดี"** — Shipping code is not the same as shipping _good_ code.
 >
@@ -195,7 +195,8 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 │   ├── reflect/SKILL.md            #   H7: micro-retrospective
 │   └── workflow/SKILL.md           #   Guided 7-step walkthrough
 ├── agents/
-│   └── 8-habit-reviewer.md         # Deep cross-verification agent
+│   ├── 8-habit-reviewer.md         # Deep cross-verification agent
+│   └── research-verifier.md        # Source verification agent (v2.1.0)
 ├── hooks/
 │   ├── hooks.json                  # SessionStart hook registration
 │   └── session-start.sh            # Workflow reminder + progress indicators
@@ -218,7 +219,8 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 │   │   ├── prd-template.md         #   For /requirements
 │   │   ├── adr-template.md         #   For /design
 │   │   ├── task-list-template.md   #   For /breakdown
-│   │   └── review-report-template.md # For /review-ai
+│   │   ├── review-report-template.md # For /review-ai
+│   │   └── research-brief-template.md # For /research (v2.1.0)
 │   ├── orchestration-patterns.md   # Multi-agent orchestration patterns (v2.0.0)
 │   └── cross-verify-packs/         # Domain question packs (5 questions each)
 │       ├── api.md                  #   API development
@@ -226,9 +228,14 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 │       ├── infra.md                #   Infrastructure
 │       ├── ai-ml.md                #   AI/ML systems
 │       └── mobile.md               #   Mobile apps
+├── tests/
+│   ├── validate-structure.sh       # Structure validation (17 checks, pure bash)
+│   └── validate-content.sh         # Content validation + fitness functions (v2.2.0)
 ├── docs/
 │   └── adr/                        # Architecture Decision Records
-│       └── ADR-001-orchestration-patterns.md
+│       ├── ADR-001-orchestration-patterns.md
+│       ├── ADR-002-research-modes.md
+│       └── ADR-003-content-validation.md
 ├── rules/
 │   └── effective-development.md    # Auto-loaded Claude Code rules
 ├── CLAUDE.md                       # Plugin development guide
@@ -249,6 +256,18 @@ AI-assisted development systematically neglects Heart and Spirit. This assessmen
 - **Dimension mapping** — all 17 cross-verify questions tagged with Body/Mind/Heart/Spirit
 
 ---
+
+## What's New in v2.2.0
+
+**Theme: Body Dimension Level-Up** — content validation and architecture fitness functions to reach Whole Person Body Level 3 "Significant."
+
+- **Content validation** (`tests/validate-content.sh`) — section depth, markdown integrity, ADR format, handoff completeness
+- **Architecture fitness functions** — 3 tracked metrics: Skill Complexity Budget, Validation Coverage Ratio, Convention Consistency Score
+- **Extended structure validation** — `allowed-tools` field validation, README ↔ skills cross-reference, agent definition checks
+- **17 check categories, 215+ assertions** (up from 10 checks / 133 assertions in v2.1.0)
+- **CI enforces both scripts** — fitness function breach fails the build
+- **[ADR-003](docs/adr/ADR-003-content-validation.md)** — documents why bash content validation was chosen over npm linting or agent-driven validation
+- **Zero new dependencies** — pure bash, as always
 
 ## What's New in v2.1.0
 
@@ -345,4 +364,4 @@ MIT
 
 ---
 
-_Version: 2.1.0 | Last updated: 2026-04-07_
+_Version: 2.2.0 | Last updated: 2026-04-07_

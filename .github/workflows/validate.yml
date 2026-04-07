@@ -11,5 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate SKILL.md structure and conventions
+      - name: Validate structure and conventions
         run: bash tests/validate-structure.sh
+      - name: Validate content quality and fitness functions
+        run: bash tests/validate-content.sh
