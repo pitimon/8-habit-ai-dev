@@ -41,6 +41,7 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 ## Key Conventions
 
 - **Skills are read-only guidance** — they tell Claude how to approach a task, they do not modify files themselves
+- **Bash tool is allowed in skills only when needed** — currently used by `review-ai`, `eu-ai-act-check`, `ai-dev-log`. New skills should default to `Read/Glob/Grep` only and add `Bash` only with justification
 - **`habits/`, `guides/`, `rules/` are reference content** — never generated or modified by skills
 - **Agent (`agents/8-habit-reviewer.md`)** uses model `sonnet` with read-only tools (`Read`, `Glob`, `Grep`) — it analyzes and reports, never edits
 - **Plugin metadata** lives in `.claude-plugin/plugin.json` (plugin config) and `.claude-plugin/marketplace.json` (marketplace listing)
