@@ -36,12 +36,30 @@ next-skill: breakdown
 
 4. **Human must decide**: AI proposes, human disposes. Mark each decision as In-the-Loop.
 
-5. **Document as ADR** if the decision is:
+5. **Article 14 Human-Oversight Checkpoint** (for AI-system designs):
+
+   If the system being designed is an **AI system that may target the EU market** (or any high-risk AI system regardless of market), confirm the design satisfies EU AI Act Article 14 capabilities. Answer for each:
+
+   | Capability (Art. 14)  | Question                                                                            | Pass? |
+   | --------------------- | ----------------------------------------------------------------------------------- | ----- |
+   | ¶4(a) Understand      | Can humans understand the system's capacities and limitations and detect anomalies? | Y/N   |
+   | ¶4(b) Automation bias | Are humans aware of and protected from over-reliance on AI output?                  | Y/N   |
+   | ¶4(c) Interpret       | Can humans correctly interpret the system's output?                                 | Y/N   |
+   | ¶4(d) Override        | Can humans disregard, override, or reverse the output?                              | Y/N   |
+   | ¶4(e) Stop button     | Can humans intervene OR trigger a 'stop' procedure for safe halt?                   | Y/N   |
+
+   **All five must be YES for high-risk AI deployment to the EU.** If any are NO, the design needs revision before proceeding to `/breakdown`.
+
+   > 🔗 **Skip if**: System is not AI-based, or is AI but not high-risk under Annex III, or not EU-targeted. Run `/eu-ai-act-check --scope` to confirm scope before applying this checkpoint.
+   >
+   > 🔗 **Three Loops note**: Issue #59 (F2) will add a separate Three Loops decision classifier. Three Loops is a design pattern that satisfies Article 14 — it is NOT EU law terminology. Cite Article 14 ¶4 paragraphs in audit, not Three Loops labels.
+
+6. **Document as ADR** if the decision is:
    - Hard to reverse
    - Affects >3 files
    - Changes public API
 
-6. **H8 Checkpoint**: "Do I understand WHY we're building it this way, not just WHAT?"
+7. **H8 Checkpoint**: "Do I understand WHY we're building it this way, not just WHAT?"
 
 ## Handoff
 
