@@ -5,6 +5,7 @@
 #   bash scripts/generate-ai-dev-log.sh                    # last 90 days, markdown to stdout
 #   bash scripts/generate-ai-dev-log.sh --since 2026-01-01 # custom start date
 #   bash scripts/generate-ai-dev-log.sh --out FILE         # write to file
+#   bash scripts/generate-ai-dev-log.sh --repo /path/to/dir # custom repo directory
 #   bash scripts/generate-ai-dev-log.sh --json             # JSON output
 #   bash scripts/generate-ai-dev-log.sh --summary          # one-line stats only
 #
@@ -16,10 +17,10 @@
 set -euo pipefail
 
 # ─── Dependency check ──────────────────────────────────────────────
-for cmd in git awk sort uniq grep sed wc tr basename; do
+for cmd in git awk sort sed wc tr basename mktemp; do
   if ! command -v "$cmd" >/dev/null 2>&1; then
     echo "ERROR: Required command not found: $cmd" >&2
-    echo "This script needs: git, awk, sort, uniq, grep, sed, wc, tr, basename" >&2
+    echo "This script needs: git, awk, sort, sed, wc, tr, basename, mktemp" >&2
     exit 2
   fi
 done
@@ -173,7 +174,8 @@ NOTABLE=$(awk -F'|' -v p="$AI_PATTERN" '
 
 OVERFLOW_NOTE=""
 if [[ "$AI_COMMITS" -gt 30 ]]; then
-  OVERFLOW_NOTE="_(showing 30 of $AI_COMMITS AI-assisted commits — see git log for full history)_"
+  # Leading newline keeps spacing tidy when present; avoids blank line when empty
+  OVERFLOW_NOTE=$'\n_(showing 30 of '"$AI_COMMITS"' AI-assisted commits — see git log for full history)_'
 fi
 
 OUTPUT=$(cat <<EOF
@@ -212,7 +214,6 @@ $MONTH_STATS
 ## Notable AI-Assisted Commits
 
 $NOTABLE
-
 $OVERFLOW_NOTE
 
 ## Human Oversight Evidence (Article 14 reference)
