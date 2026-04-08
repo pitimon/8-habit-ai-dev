@@ -48,6 +48,25 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 - **Session hook budget**: `hooks/session-start.sh` output must stay ≤300 tokens
 - **Version lives in 4 files** — must bump together: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `README.md` (badge + footer), and `SELF-CHECK.md` header. `tests/validate-structure.sh` enforces consistency across all four — CI will fail if any drifts.
 
+## Plugin Boundary
+
+`8-habit-ai-dev` and [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) are **complementary by design** (see memory obs #233270, 2026-04-07, titled "Both Recommended for Maximum Coverage"). Do not duplicate features across plugins.
+
+| Plugin                      | Domain                                                                                     | Examples                                                                                                                                                                                                                                                                          |
+| --------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`8-habit-ai-dev`** (this) | Workflow **discipline** — how to develop well                                              | 7-step workflow, 8 Habits, Whole Person Model, `/research`, `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/review-ai`, `/deploy-guide`, `/monitor-setup`, `/cross-verify`, `/reflect`, `/ai-dev-log` (transparency), `/security-check` (review lens)                 |
+| **`claude-governance`**     | Compliance **enforcement** + **frameworks** — blocking bad behavior + mapping to standards | PreToolUse secret-scanner hook (25 patterns), Three Loops Decision Model (ADR-002 consequence-based auth), OWASP DSGAI mapping (11 controls), EU AI Act compliance toolkit (planned v3.1.0+), `/governance-check`, `/spec-driven-dev`, `/create-adr`, `governance-reviewer` agent |
+
+**Rule of thumb before adding a new feature here**:
+
+- If it's a **workflow step** or **discipline practice** → belongs here
+- If it's a **runtime hook** (PreToolUse, PostToolUse), **compliance framework mapping** (DSGAI, EU AI Act, SOC2, NIST, etc.), **enforcement gate** that blocks actions, or **formal decision-authorization model** → belongs in `claude-governance`
+- When uncertain, check both plugins' existing files first (`ls ~/claude-governance/skills/ ~/claude-governance/hooks/`) and search memory (`mem_search "plugin boundary"`)
+
+**Historical boundary violations (corrected)**: Issues #58 (PreToolUse secret blocker) and #60 (OWASP DSGAI mapping) were originally scoped here despite being enforcement/compliance concerns — closed as wrong-plugin on 2026-04-09. Issue #57 (EU AI Act toolkit) shipped here in v2.3.0 via PRs #65-70, then was identified as a boundary error; Path C hybrid migration will move it to `claude-governance` (tracked in pitimon/claude-governance#21) in a future v2.3.1 release. See ADR-005 (and the future ADR-006 once Stage B ships) for full rationale.
+
+**Users who want maximum coverage**: install both plugins together. They compose cleanly — no conflicts.
+
 ## Skills → Habits Mapping
 
 | Skill                 | Step | Habit                 | Purpose                                          |
