@@ -428,6 +428,54 @@ fi
 
 echo ""
 
+# --- Check 18: /using-8-habits meta-skill (onboarding) ---
+echo "--- Check 18: /using-8-habits meta-skill ---"
+META_SKILL="skills/using-8-habits/SKILL.md"
+if [ -f "$META_SKILL" ]; then
+  pass "$META_SKILL exists"
+  # Frontmatter: meta-skill is a starting point
+  if grep -qE '^prev-skill:\s*none' "$META_SKILL"; then
+    pass "$META_SKILL prev-skill is 'none'"
+  else
+    fail "$META_SKILL prev-skill should be 'none'"
+  fi
+  # Content: explains workflow + decision tree + all skills
+  for keyword in "7-step workflow" "decision tree" "workflow skill" "assessment skill" "Covey" "Whole Person"; do
+    if grep -qi "$keyword" "$META_SKILL"; then
+      pass "$META_SKILL mentions '$keyword'"
+    else
+      fail "$META_SKILL missing '$keyword'"
+    fi
+  done
+  # Must mention every current skill (anti-drift assertion)
+  # Use /skill-name pattern to anchor (skill names preceded by slash)
+  for skill_dir in skills/*/; do
+    skill_name=$(basename "$skill_dir")
+    # Skip the meta-skill referencing itself
+    [ "$skill_name" = "using-8-habits" ] && continue
+    if grep -q "/$skill_name\b" "$META_SKILL"; then
+      pass "$META_SKILL mentions /$skill_name"
+    else
+      fail "$META_SKILL missing mention of /$skill_name (anti-drift assertion)"
+    fi
+  done
+  # Cross-linked from README + CLAUDE.md
+  if grep -q "/using-8-habits" README.md; then
+    pass "README.md cross-links to /using-8-habits"
+  else
+    fail "README.md missing /using-8-habits cross-link"
+  fi
+  if grep -q "/using-8-habits" CLAUDE.md; then
+    pass "CLAUDE.md cross-links to /using-8-habits"
+  else
+    fail "CLAUDE.md missing /using-8-habits cross-link"
+  fi
+else
+  fail "$META_SKILL not found"
+fi
+
+echo ""
+
 # ===================================================================
 # Architecture Fitness Functions
 # These track health metrics over time. A BREACH fails the build.

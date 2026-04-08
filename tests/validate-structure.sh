@@ -255,7 +255,7 @@ done
 # Extract skill names from README table rows matching | `/skill-name`
 README_SKILLS=""
 while IFS= read -r line; do
-  sname=$(echo "$line" | sed -n 's/.*`\/\([a-z-]*\)`.*/\1/p')
+  sname=$(echo "$line" | sed -n 's/.*`\/\([a-z0-9-]*\)`.*/\1/p')
   [ -n "$sname" ] && README_SKILLS="$README_SKILLS $sname"
 done < <(grep '| `/[a-z]' README.md 2>/dev/null)
 # Deduplicate
