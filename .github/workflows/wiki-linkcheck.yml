@@ -19,8 +19,19 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
-      - name: Run lychee on docs/wiki/
+      - name: Run lychee on docs/wiki/ (external HTTP links only)
+        # Wiki-style links like [Home](Home) work on GitHub Wiki but cannot be
+        # resolved as local files. Internal link integrity is enforced by
+        # tests/validate-structure.sh Check 14 instead. Self-referential URLs
+        # to main/ are excluded because they only resolve after merge.
         uses: lycheeverse/lychee-action@8646ba30535128ac92d33dfc9133794bfdd9b411 # v2
         with:
-          args: --no-progress --verbose --max-concurrency 4 './docs/wiki/**/*.md'
+          args: >-
+            --no-progress
+            --verbose
+            --max-concurrency 4
+            --scheme https
+            --scheme http
+            --exclude '^https://github\.com/pitimon/8-habit-ai-dev/(blob|tree|raw)/main/'
+            './docs/wiki/**/*.md'
           fail: true

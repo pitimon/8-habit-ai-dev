@@ -364,17 +364,25 @@ if [ -d "docs/wiki" ]; then
     esac
   done
 
-  if [ -f "docs/wiki/_Sidebar.md" ]; then
+  # Cross-check every wiki-internal link in every page (wiki-style: [text](Page-Name))
+  WIKI_LINK_FAIL=0
+  for f in docs/wiki/*.md; do
+    [ -f "$f" ] || continue
     while IFS= read -r link; do
       [ -z "$link" ] && continue
-      target="docs/wiki/${link}.md"
+      page="${link%%#*}"  # strip anchor fragment
+      [ -z "$page" ] && continue
+      target="docs/wiki/${page}.md"
       if [ ! -f "$target" ]; then
-        fail "Sidebar links to non-existent page: $link"
+        fail "$f links to non-existent wiki page: $page"
+        WIKI_LINK_FAIL=$((WIKI_LINK_FAIL + 1))
       fi
-    done < <(grep -oE '\]\([^)]+\)' docs/wiki/_Sidebar.md \
+    done < <(grep -oE '\]\([^)]+\)' "$f" \
               | sed -E 's/^\]\(([^)]+)\)$/\1/' \
-              | grep -Ev '^(https?://|#|_)')
-    pass "Sidebar link targets resolved"
+              | grep -Ev '^(https?://|mailto:|#)')
+  done
+  if [ "$WIKI_LINK_FAIL" -eq 0 ]; then
+    pass "All wiki-internal links resolve to existing pages"
   fi
 else
   fail "docs/wiki/ directory missing"
