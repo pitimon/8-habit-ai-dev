@@ -35,17 +35,17 @@ Each obligation below includes a **"Verified Quote"** block from the primary law
 
 ## Obligation Grouping (7 Articles → 9 Obligations)
 
-| #   | Obligation                | Article                | 8-Habit Skill                        |
-| --- | ------------------------- | ---------------------- | ------------------------------------ |
-| 1   | Risk Management           | Art. 9                 | /security-check, /design             |
-| 2   | Data Governance           | Art. 10                | /design, /requirements               |
-| 3   | Technical Documentation   | Art. 11                | /design, /requirements, /build-brief |
-| 4   | Record-Keeping            | Art. 12                | /monitor-setup, /reflect             |
-| 5   | Transparency to Deployers | Art. 13                | /requirements, /design               |
-| 6   | Human Oversight           | Art. 14                | /design (Three Loops), /review-ai    |
-| 7   | Accuracy                  | Art. 15 ¶1-3 / ¶4 / ¶5 | /review-ai, /monitor-setup           |
-| 8   | Robustness                | Art. 15 ¶1-3 / ¶4 / ¶5 | /security-check, /review-ai          |
-| 9   | Cybersecurity             | Art. 15 ¶1-3 / ¶4 / ¶5 | /security-check                      |
+| #   | Obligation                | Article      | 8-Habit Skill                        |
+| --- | ------------------------- | ------------ | ------------------------------------ |
+| 1   | Risk Management           | Art. 9       | /security-check, /design             |
+| 2   | Data Governance           | Art. 10      | /design, /requirements               |
+| 3   | Technical Documentation   | Art. 11      | /design, /requirements, /build-brief |
+| 4   | Record-Keeping            | Art. 12      | /monitor-setup, /reflect             |
+| 5   | Transparency to Deployers | Art. 13      | /requirements, /design               |
+| 6   | Human Oversight           | Art. 14      | /design (Three Loops), /review-ai    |
+| 7   | Accuracy                  | Art. 15 ¶1-3 | /review-ai, /monitor-setup           |
+| 8   | Robustness                | Art. 15 ¶4   | /security-check, /review-ai          |
+| 9   | Cybersecurity             | Art. 15 ¶5   | /security-check                      |
 
 ---
 
@@ -345,7 +345,8 @@ T3 (`/eu-ai-act-check` skill) reads the 9 sections above and turns each "Checkli
 
 ---
 
-**Document size**: ~340 lines
-**Sources verified**: 1/5 primary law text (full) + 2/5 secondary deep-fetch + 2/5 snippet
-**Coverage**: 9/9 obligations with Verified Quotes from primary source
+**Document size**: ~351 lines
+**Sources verified**: 2/6 directly verified (source 2 = OJ text mirror via web.archive.org; source 6 = EC Service Desk via research-verifier agent) + 2/6 secondary deep-fetch + 2/6 snippet
+**Coverage**: 9/9 obligations with Verified Quotes anchored to ¶ references
 **Corrections from secondary sources**: 4 items removed (quarterly review, 36-month retention, annual pen test, quarterly retrieval test)
+**Post-verifier fixes**: 3 additional (sub-article labels 15a/b/c → ¶1-3/¶4/¶5, Three Loops reframing, EC Service Desk source promotion)
