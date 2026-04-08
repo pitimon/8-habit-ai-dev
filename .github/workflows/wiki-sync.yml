@@ -1,0 +1,39 @@
+name: Wiki Sync
+
+# Publishes docs/wiki/ to the GitHub Wiki repository on push to main.
+# Source of truth is docs/wiki/ — web-UI edits to the wiki are overwritten.
+# See ADR-004 for rationale.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/wiki/**"
+      - "habits/**"
+      - "scripts/gen-habits-reference.sh"
+      - ".github/workflows/wiki-sync.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wiki-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Generate Habits-Reference.md from habits/
+        run: bash scripts/gen-habits-reference.sh
+
+      - name: Sync docs/wiki/ to GitHub Wiki
+        uses: Andrew-Chen-Wang/github-wiki-action@50650fccf3a10f741995523cf9708c53cec8912a # v4
+        with:
+          path: docs/wiki/
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "docs(wiki): sync from docs/wiki/ @ ${{ github.sha }}"

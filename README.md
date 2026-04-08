@@ -5,6 +5,9 @@
 [![Skills](https://img.shields.io/badge/Skills-13-blue)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
 [![Version](https://img.shields.io/badge/Version-2.2.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.2.0)
+[![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
+
+📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
 
 > **"ทำเสร็จ ≠ ทำดี"** — Shipping code is not the same as shipping _good_ code.
 >
