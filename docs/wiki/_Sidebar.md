@@ -2,7 +2,7 @@
 
 **Start here**
 
-- [Home](Home)
+- [Base Camp](Home)
 - [Getting Started](Getting-Started)
 - [Installation](Installation)
 
