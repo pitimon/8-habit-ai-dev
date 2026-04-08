@@ -318,6 +318,69 @@ if [ -d "agents" ]; then
 fi
 echo ""
 
+# --- Check 14: Wiki skeleton integrity (ADR-004) ---
+echo "Check 14: Wiki skeleton (docs/wiki/)"
+if [ -d "docs/wiki" ]; then
+  REQUIRED_WIKI_PAGES=(
+    "Home.md"
+    "_Sidebar.md"
+    "_Footer.md"
+    "Getting-Started.md"
+    "Installation.md"
+    "Workflow-Overview.md"
+    "Step-0-Research.md"
+    "Step-1-Requirements.md"
+    "Step-2-Design.md"
+    "Step-3-Breakdown.md"
+    "Step-4-Build-Brief.md"
+    "Step-5-Review-AI.md"
+    "Step-6-Deploy-Guide.md"
+    "Step-7-Monitor-Setup.md"
+    "Habits-Reference.md"
+    "Skills-Reference.md"
+    "Vibe-Coding-vs-Structured.md"
+    "FAQ.md"
+    "Troubleshooting.md"
+    "Contributing-to-Wiki.md"
+    "Changelog.md"
+  )
+  for page in "${REQUIRED_WIKI_PAGES[@]}"; do
+    path="docs/wiki/$page"
+    if [ ! -f "$path" ]; then
+      fail "Wiki page missing: $path"
+      continue
+    fi
+    case "$page" in
+      _Sidebar.md|_Footer.md)
+        pass "$path exists"
+        ;;
+      *)
+        if head -n 5 "$path" | grep -qE '^# '; then
+          pass "$path exists with H1"
+        else
+          fail "$path missing top-level H1 heading"
+        fi
+        ;;
+    esac
+  done
+
+  if [ -f "docs/wiki/_Sidebar.md" ]; then
+    while IFS= read -r link; do
+      [ -z "$link" ] && continue
+      target="docs/wiki/${link}.md"
+      if [ ! -f "$target" ]; then
+        fail "Sidebar links to non-existent page: $link"
+      fi
+    done < <(grep -oE '\]\([^)]+\)' docs/wiki/_Sidebar.md \
+              | sed -E 's/^\]\(([^)]+)\)$/\1/' \
+              | grep -Ev '^(https?://|#|_)')
+    pass "Sidebar link targets resolved"
+  fi
+else
+  fail "docs/wiki/ directory missing"
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"
