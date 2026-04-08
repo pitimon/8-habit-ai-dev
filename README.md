@@ -113,10 +113,11 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 
 ## Skills Reference
 
-### Workflow Skills (Steps 0-7)
+### Workflow Skills (Steps 0a, 0-7)
 
 | Skill            | Step | Habit                        | Purpose                                                                                                     |
 | ---------------- | ---- | ---------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `/brainstorm`    | 0a   | H2 + H5                      | Divergent thinking BEFORE research — explore framings, 5 Whys, surface hidden assumptions (optional)        |
 | `/research`      | 0    | H5: Seek First to Understand | Investigate with depth levels (Quick/Standard/Deep), modes (General/Compare/Audit), and source verification |
 | `/requirements`  | 1    | H2: Begin with End in Mind   | Draft PRD — what, why, who, scope, success criteria                                                         |
 | `/design`        | 2    | H8: Find Your Voice          | Surface architecture decisions for **human** judgment                                                       |
