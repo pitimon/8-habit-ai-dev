@@ -378,6 +378,56 @@ fi
 
 echo ""
 
+# --- Check 17: EARS-notation in /requirements skill + guide ---
+echo "--- Check 17: EARS-notation in /requirements ---"
+REQ_SKILL="skills/requirements/SKILL.md"
+EARS_GUIDE="guides/ears-notation.md"
+if [ -f "$REQ_SKILL" ]; then
+  if grep -q "EARS" "$REQ_SKILL"; then
+    pass "$REQ_SKILL mentions EARS"
+  else
+    fail "$REQ_SKILL missing EARS reference"
+  fi
+  # All 5 EARS shape keywords present in skill
+  for shape in "Ubiquitous" "Event-driven" "State-driven" "Unwanted" "Optional"; do
+    if grep -q "$shape" "$REQ_SKILL"; then
+      pass "$REQ_SKILL mentions EARS shape '$shape'"
+    else
+      fail "$REQ_SKILL missing EARS shape '$shape'"
+    fi
+  done
+  # Opt-out rule for small features
+  if grep -qi "opt.?out\|skip EARS\|fewer than 3\|<3" "$REQ_SKILL"; then
+    pass "$REQ_SKILL documents EARS opt-out rule"
+  else
+    fail "$REQ_SKILL missing EARS opt-out rule"
+  fi
+else
+  fail "$REQ_SKILL not found"
+fi
+
+if [ -f "$EARS_GUIDE" ]; then
+  pass "$EARS_GUIDE exists"
+  # All 5 EARS shapes in guide
+  for shape in "Ubiquitous" "Event-driven" "State-driven" "Unwanted" "Optional"; do
+    if grep -q "### .*$shape" "$EARS_GUIDE"; then
+      pass "$EARS_GUIDE has section for '$shape' shape"
+    else
+      fail "$EARS_GUIDE missing section for '$shape' shape"
+    fi
+  done
+  # Worked login example (both before and after)
+  if grep -qi "login" "$EARS_GUIDE"; then
+    pass "$EARS_GUIDE has login worked example"
+  else
+    fail "$EARS_GUIDE missing worked example"
+  fi
+else
+  fail "$EARS_GUIDE not found"
+fi
+
+echo ""
+
 # ===================================================================
 # Architecture Fitness Functions
 # These track health metrics over time. A BREACH fails the build.

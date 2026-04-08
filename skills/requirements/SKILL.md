@@ -37,7 +37,42 @@ next-skill: design
    **Definition of Done**: [What must be true before this is "done"]
    ```
 
-4. **H2 Checkpoint**: "Can I describe what success looks like before writing code?"
+4. **Write acceptance criteria in EARS notation** (recommended for features with ≥3 criteria):
+
+   EARS = Easy Approach to Requirements Syntax — 5 templates that eliminate ambiguity in acceptance criteria. Originally from Rolls-Royce (2009), now adopted by GitHub Spec Kit (84.7K⭐).
+
+   Pick one of 5 shapes per criterion:
+
+   | Shape            | Template                                            | Use for                             |
+   | ---------------- | --------------------------------------------------- | ----------------------------------- |
+   | **Ubiquitous**   | `The <system> shall <response>.`                    | Invariants, always-on behavior      |
+   | **Event-driven** | `When <trigger>, the <system> shall <response>.`    | User actions, incoming signals      |
+   | **State-driven** | `While <state>, the <system> shall <response>.`     | Continuous behavior in a state      |
+   | **Unwanted**     | `If <trigger>, then the <system> shall <response>.` | Error paths, edge cases             |
+   | **Optional**     | `Where <feature>, the <system> shall <response>.`   | Feature-gated, plan-tiered behavior |
+
+   Worked example — user login:
+
+   ```markdown
+   1. [Event-driven] When the user submits the login form with valid email and
+      password, the system shall issue a JWT valid for 24 hours and set it as
+      an HttpOnly, Secure, SameSite=Strict cookie.
+   2. [Unwanted] If the login attempt fails (invalid credentials, rate limit
+      exceeded, account locked), then the system shall return HTTP 401 with a
+      generic error message that does not reveal whether the email exists.
+   3. [State-driven] While a valid JWT cookie is present and not expired, the
+      system shall authenticate subsequent requests without re-prompting.
+   4. [Ubiquitous] All login attempts shall be logged with timestamp, user ID,
+      source IP, and outcome.
+   5. [Optional] Where the user has enabled 2FA, the login flow shall prompt
+      for a 6-digit TOTP code before issuing the JWT.
+   ```
+
+   Full reference: see `${CLAUDE_PLUGIN_ROOT}/guides/ears-notation.md` for all 5 shapes with multiple examples, complex patterns, and before/after rewrites.
+
+   **EARS opt-out**: Skip EARS for single-line bug fixes, rename refactors, dependency bumps, or any requirement with fewer than 3 acceptance criteria. **Honest skip rule**: if you can test the requirement with one assertion, EARS is overhead. Use it when multiple conditions interact.
+
+5. **H2 Checkpoint**: "Can I describe what success looks like before writing code?"
 
 ## When to Skip
 
