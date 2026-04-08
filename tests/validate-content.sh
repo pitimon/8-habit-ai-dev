@@ -332,6 +332,52 @@ fi
 
 echo ""
 
+# --- Check 16: /brainstorm skill (Step 0a, divergent thinking) ---
+echo "--- Check 16: /brainstorm skill (Step 0a) ---"
+BRAINSTORM_SKILL="skills/brainstorm/SKILL.md"
+if [ -f "$BRAINSTORM_SKILL" ]; then
+  pass "$BRAINSTORM_SKILL exists"
+  # Frontmatter: prev-skill should be 'none', next-skill should be 'research'
+  if grep -qE '^prev-skill:\s*none' "$BRAINSTORM_SKILL"; then
+    pass "$BRAINSTORM_SKILL prev-skill is 'none' (start of chain)"
+  else
+    fail "$BRAINSTORM_SKILL prev-skill should be 'none'"
+  fi
+  if grep -qE '^next-skill:\s*research' "$BRAINSTORM_SKILL"; then
+    pass "$BRAINSTORM_SKILL next-skill is 'research'"
+  else
+    fail "$BRAINSTORM_SKILL next-skill should be 'research'"
+  fi
+  # Content: divergent vs convergent separation, 5 Whys, hidden assumptions
+  for keyword in "divergent" "convergent" "5 Whys" "hidden assumption" "alternative framing"; do
+    if grep -qi "$keyword" "$BRAINSTORM_SKILL"; then
+      pass "$BRAINSTORM_SKILL mentions '$keyword'"
+    else
+      fail "$BRAINSTORM_SKILL missing '$keyword'"
+    fi
+  done
+  # Habit mapping H2 + H5
+  if grep -qE "H2.*H5|H5.*H2" "$BRAINSTORM_SKILL"; then
+    pass "$BRAINSTORM_SKILL maps to H2 + H5"
+  else
+    fail "$BRAINSTORM_SKILL should map to H2 + H5"
+  fi
+else
+  fail "$BRAINSTORM_SKILL not found"
+fi
+
+# workflow.md references brainstorm as Step 0a
+WORKFLOW_SKILL="skills/workflow/SKILL.md"
+if [ -f "$WORKFLOW_SKILL" ]; then
+  if grep -qE "0a.*brainstorm|brainstorm.*0a" "$WORKFLOW_SKILL"; then
+    pass "$WORKFLOW_SKILL references /brainstorm as Step 0a"
+  else
+    fail "$WORKFLOW_SKILL missing /brainstorm Step 0a reference"
+  fi
+fi
+
+echo ""
+
 # ===================================================================
 # Architecture Fitness Functions
 # These track health metrics over time. A BREACH fails the build.

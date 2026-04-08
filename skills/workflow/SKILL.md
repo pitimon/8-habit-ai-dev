@@ -18,18 +18,21 @@ next-skill: none
 
 Walk the user through each step. For each step: explain what it does, ask whether to invoke or skip, and track progress.
 
-### The 7 Steps
+### The 7 Steps (+ optional Step 0a)
 
-| Step | Skill          | Purpose                       | Skip if...                                          |
-| ---- | -------------- | ----------------------------- | --------------------------------------------------- |
-| 0    | /research      | Investigate before specifying | Requirements already clear, well-understood domain  |
-| 1    | /requirements  | Define what, why, who         | Single-line fix, formatting change                  |
-| 2    | /design        | Architecture decisions        | Bug fix in existing pattern, no architecture impact |
-| 3    | /breakdown     | Atomic tasks                  | Single task, scope already clear                    |
-| 4    | /build-brief   | Context before coding         | Familiar code, context still fresh                  |
-| 5    | /review-ai     | Audit before commit           | Never skip                                          |
-| 6    | /deploy-guide  | Staging first                 | No deployment involved                              |
-| 7    | /monitor-setup | Observability after deploy    | Monitoring already comprehensive                    |
+| Step | Skill          | Purpose                                       | Skip if...                                          |
+| ---- | -------------- | --------------------------------------------- | --------------------------------------------------- |
+| 0a   | /brainstorm    | Divergent thinking before research (optional) | Problem statement already crisp and well-defined    |
+| 0    | /research      | Investigate before specifying                 | Requirements already clear, well-understood domain  |
+| 1    | /requirements  | Define what, why, who                         | Single-line fix, formatting change                  |
+| 2    | /design        | Architecture decisions                        | Bug fix in existing pattern, no architecture impact |
+| 3    | /breakdown     | Atomic tasks                                  | Single task, scope already clear                    |
+| 4    | /build-brief   | Context before coding                         | Familiar code, context still fresh                  |
+| 5    | /review-ai     | Audit before commit                           | Never skip                                          |
+| 6    | /deploy-guide  | Staging first                                 | No deployment involved                              |
+| 7    | /monitor-setup | Observability after deploy                    | Monitoring already comprehensive                    |
+
+**Step 0a vs Step 0 — crisp separation**: `/brainstorm` is **divergent** (no sources, explore framings) — `/research` is **convergent** (sources, verify facts). Use `/brainstorm` when the problem statement itself is fuzzy. Skip to `/research` when you already know what you're solving.
 
 ### For Each Step
 
