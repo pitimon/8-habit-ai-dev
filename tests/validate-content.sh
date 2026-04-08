@@ -184,6 +184,154 @@ for skill_name in $WORKFLOW_SKILLS; do
 done
 echo ""
 
+# --- Check 15: v2.3.0 EU AI Act Compliance Toolkit content ---
+echo "--- Check 15: v2.3.0 EU AI Act compliance toolkit content ---"
+
+# 15a: Research artifact has all 9 obligations + Verified Quotes
+EU_RESEARCH="docs/research/eu-ai-act-obligations.md"
+if [ -f "$EU_RESEARCH" ]; then
+  for art in 9 10 11 12 13 14 15; do
+    if grep -q "^## .*Article $art\b\|Art\. $art " "$EU_RESEARCH"; then
+      pass "$EU_RESEARCH covers Article $art"
+    else
+      fail "$EU_RESEARCH missing Article $art coverage"
+    fi
+  done
+  verified_quotes=$(grep -c '^\*\*Verified Quote' "$EU_RESEARCH" || true)
+  if [ "$verified_quotes" -ge 7 ]; then
+    pass "$EU_RESEARCH has $verified_quotes Verified Quote blocks (≥7 expected)"
+  else
+    fail "$EU_RESEARCH has only $verified_quotes Verified Quote blocks (need ≥7)"
+  fi
+  if grep -q "NOT LEGAL ADVICE\|not legal advice" "$EU_RESEARCH"; then
+    pass "$EU_RESEARCH has NOT LEGAL ADVICE disclaimer"
+  else
+    fail "$EU_RESEARCH missing NOT LEGAL ADVICE disclaimer"
+  fi
+else
+  fail "$EU_RESEARCH not found"
+fi
+
+# 15b: User-facing mapping guide has bootstrap + disclaimer
+EU_GUIDE="guides/eu-ai-act-mapping.md"
+if [ -f "$EU_GUIDE" ]; then
+  if grep -q "NOT LEGAL ADVICE" "$EU_GUIDE"; then
+    pass "$EU_GUIDE has NOT LEGAL ADVICE disclaimer"
+  else
+    fail "$EU_GUIDE missing NOT LEGAL ADVICE disclaimer"
+  fi
+  if grep -q "mkdir -p docs/compliance/eu-ai-act" "$EU_GUIDE"; then
+    pass "$EU_GUIDE has bootstrap mkdir block"
+  else
+    fail "$EU_GUIDE missing bootstrap mkdir block"
+  fi
+else
+  fail "$EU_GUIDE not found"
+fi
+
+# 15c: /eu-ai-act-check skill — tier counts match Tier Summary table
+EU_SKILL="skills/eu-ai-act-check/SKILL.md"
+if [ -f "$EU_SKILL" ]; then
+  must_count=$(grep -c '^- \[ \] \*\*\[MUST\]\*\*' "$EU_SKILL" || true)
+  should_count=$(grep -c '^- \[ \] \*\*\[SHOULD\]\*\*' "$EU_SKILL" || true)
+  could_count=$(grep -c '^- \[ \] \*\*\[COULD\]\*\*' "$EU_SKILL" || true)
+  total_count=$((must_count + should_count + could_count))
+
+  # Tier Summary table claimed counts (extract from table rows)
+  must_claimed=$(awk '/^### Tier Summary/{found=1} found && /\*\*MUST\*\*/{print $4; exit}' "$EU_SKILL" || echo 0)
+  should_claimed=$(awk '/^### Tier Summary/{found=1} found && /\*\*SHOULD\*\*/{print $4; exit}' "$EU_SKILL" || echo 0)
+  could_claimed=$(awk '/^### Tier Summary/{found=1} found && /\*\*COULD\*\*/{print $4; exit}' "$EU_SKILL" || echo 0)
+
+  if [ "$must_count" -eq "$must_claimed" ]; then
+    pass "$EU_SKILL MUST tier: actual=$must_count matches claimed=$must_claimed"
+  else
+    fail "$EU_SKILL MUST tier mismatch: actual=$must_count vs claimed=$must_claimed in Tier Summary"
+  fi
+  if [ "$should_count" -eq "$should_claimed" ]; then
+    pass "$EU_SKILL SHOULD tier: actual=$should_count matches claimed=$should_claimed"
+  else
+    fail "$EU_SKILL SHOULD tier mismatch: actual=$should_count vs claimed=$should_claimed"
+  fi
+  if [ "$could_count" -eq "$could_claimed" ]; then
+    pass "$EU_SKILL COULD tier: actual=$could_count matches claimed=$could_claimed"
+  else
+    fail "$EU_SKILL COULD tier mismatch: actual=$could_count vs claimed=$could_claimed"
+  fi
+
+  # Article paragraph references
+  para_refs=$(grep -c '¶' "$EU_SKILL" || true)
+  if [ "$para_refs" -ge 30 ]; then
+    pass "$EU_SKILL has $para_refs paragraph references (≥30 expected)"
+  else
+    fail "$EU_SKILL has only $para_refs paragraph references (need ≥30)"
+  fi
+
+  # Scope pre-flight present
+  if grep -q "Step 0.*Scope Pre-Flight\|--scope" "$EU_SKILL"; then
+    pass "$EU_SKILL has Step 0 scope pre-flight"
+  else
+    fail "$EU_SKILL missing scope pre-flight"
+  fi
+else
+  fail "$EU_SKILL not found"
+fi
+
+# 15d: /ai-dev-log skill references the generator script
+AI_LOG_SKILL="skills/ai-dev-log/SKILL.md"
+if [ -f "$AI_LOG_SKILL" ]; then
+  if grep -q "scripts/generate-ai-dev-log.sh" "$AI_LOG_SKILL"; then
+    pass "$AI_LOG_SKILL references generator script"
+  else
+    fail "$AI_LOG_SKILL missing reference to generator script"
+  fi
+  if grep -q "Privacy Note" "$AI_LOG_SKILL"; then
+    pass "$AI_LOG_SKILL has Privacy Note section"
+  else
+    fail "$AI_LOG_SKILL missing Privacy Note"
+  fi
+else
+  fail "$AI_LOG_SKILL not found"
+fi
+
+# 15e: generate-ai-dev-log.sh script — strict mode + dependency check + executable
+SCRIPT="scripts/generate-ai-dev-log.sh"
+if [ -f "$SCRIPT" ]; then
+  if [ -x "$SCRIPT" ]; then
+    pass "$SCRIPT is executable"
+  else
+    fail "$SCRIPT is not executable"
+  fi
+  if grep -q "set -euo pipefail" "$SCRIPT"; then
+    pass "$SCRIPT uses strict mode"
+  else
+    fail "$SCRIPT missing 'set -euo pipefail'"
+  fi
+  if grep -q "command -v" "$SCRIPT"; then
+    pass "$SCRIPT has dependency check"
+  else
+    fail "$SCRIPT missing dependency check"
+  fi
+  if grep -q "trap.*EXIT" "$SCRIPT"; then
+    pass "$SCRIPT has tempfile cleanup trap"
+  else
+    fail "$SCRIPT missing cleanup trap"
+  fi
+else
+  fail "$SCRIPT not found"
+fi
+
+# 15f: /design Article 14 checkpoint integrated as Step 5
+DESIGN_SKILL="skills/design/SKILL.md"
+if [ -f "$DESIGN_SKILL" ]; then
+  if grep -q "Article 14 Human-Oversight Checkpoint\|¶4(a)\|¶4(e)" "$DESIGN_SKILL"; then
+    pass "$DESIGN_SKILL has Article 14 checkpoint"
+  else
+    fail "$DESIGN_SKILL missing Article 14 checkpoint"
+  fi
+fi
+
+echo ""
+
 # ===================================================================
 # Architecture Fitness Functions
 # These track health metrics over time. A BREACH fails the build.

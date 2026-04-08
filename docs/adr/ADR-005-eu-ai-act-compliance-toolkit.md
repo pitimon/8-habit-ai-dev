@@ -32,7 +32,7 @@ Add an **EU AI Act Compliance Toolkit** to v2.3.0 as the flagship feature, compr
 5. **`scripts/generate-ai-dev-log.sh`** — Executable bash generator (4 modes, single-pass aggregation)
 6. **Article 14 checkpoint added to `skills/design/SKILL.md`** as new Step 5 (5-capability table from Art. 14 ¶4(a-e))
 
-## Alternatives Considered
+## Options Considered
 
 ### Alt 1: Skip EU AI Act, focus on US market
 
