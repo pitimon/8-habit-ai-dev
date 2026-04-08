@@ -53,7 +53,7 @@ They complement each other:
 - **8-habit-ai-dev** = workflow discipline (7 steps, 8 habits, cross-verification)
 - **claude-governance** = fitness functions and guardrails (secret scanning, commit conventions, ADRs)
 
-Use both for maximum coverage. See the note in [Home](Home) for more.
+Use both for maximum coverage. See the note in [Base Camp](Home) for more.
 
 ## Where are the habits actually defined?
 
