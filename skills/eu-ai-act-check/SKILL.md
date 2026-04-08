@@ -71,11 +71,7 @@ To prevent checklist fatigue, items are grouped into 3 tiers. **Default mode run
 | **SHOULD** | Important — explicit law text, secondary requirements                                    | Soft warning           | `--full`   |
 | **COULD**  | Conditional/niche — applies only in specific cases (SME, biometric, continuous-learning) | Info only              | `--full`   |
 
-For each item, mark Pass / Fail / N/A with 1-line evidence. Reference the linked 8-habit skill that produces the evidence.
-
-#### MUST Tier (Blocking — ~16 items)
-
-For each obligation, mark Pass / Fail / N/A with 1-line evidence. Reference the linked 8-habit skill that produces the evidence.
+For each item, mark Pass / Fail / N/A with 1-line evidence. Items are tagged inline with **[MUST]** / **[SHOULD]** / **[COULD]** so a default-mode runner can filter to MUST only. Reference the linked 8-habit skill that produces each piece of evidence.
 
 #### Obligation 1: Risk Management (Article 9)
 
