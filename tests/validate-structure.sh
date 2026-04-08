@@ -24,7 +24,9 @@ for skill_dir in skills/*/; do
   fi
 
   # Extract frontmatter (between first two --- lines)
-  frontmatter=$(sed -n '/^---$/,/^---$/p' "$skill_file" | head -20)
+  # Use awk (not sed|head) to avoid SIGPIPE under set -o pipefail when
+  # head closes stdout early on fast exits — caused intermittent CI failures.
+  frontmatter=$(awk '/^---$/{c++; print; if(c==2) exit; next} c==1' "$skill_file")
 
   if [ -z "$frontmatter" ]; then
     fail "$skill_file — no YAML frontmatter found"
