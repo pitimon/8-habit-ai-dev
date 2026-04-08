@@ -46,7 +46,7 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 - **Agent (`agents/8-habit-reviewer.md`)** uses model `sonnet` with read-only tools (`Read`, `Glob`, `Grep`) — it analyzes and reports, never edits
 - **Plugin metadata** lives in `.claude-plugin/plugin.json` (plugin config) and `.claude-plugin/marketplace.json` (marketplace listing)
 - **Session hook budget**: `hooks/session-start.sh` output must stay ≤300 tokens
-- **Version lives in 3 files** — must bump together: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `README.md` footer
+- **Version lives in 4 files** — must bump together: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `README.md` (badge + footer), and `SELF-CHECK.md` header. `tests/validate-structure.sh` enforces consistency across all four — CI will fail if any drifts.
 
 ## Skills → Habits Mapping
 
