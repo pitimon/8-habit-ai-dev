@@ -136,6 +136,8 @@ If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
 
 See [Step 5 wiki page](../../docs/wiki/Step-5-Review-AI.md) for deeper walkthrough, examples, and common pitfalls.
 
+**If `superpowers` is installed**: `superpowers:requesting-code-review` dispatches a multi-agent review with structured feedback. Use it for large PRs or cross-cutting changes. `/review-ai` is lighter-weight — best for single-file or focused reviews before commit.
+
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/review-report-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md` for the full H4 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards (the 12 commandments).

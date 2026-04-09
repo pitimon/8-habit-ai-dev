@@ -14,6 +14,10 @@
 # Opt out for a single commit:
 #   git commit --no-verify
 #
+# Note: This hook is independent of HABIT_QUIET=1 (which silences the
+# session-start reminder). You can silence the reminder while keeping
+# the pre-commit review gate, or vice versa.
+#
 # Requirements:
 #   - Claude Code CLI (claude) must be on PATH
 
