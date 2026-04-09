@@ -52,7 +52,7 @@ next-skill: breakdown
 
    > 🔗 **Skip if**: System is not AI-based, or is AI but not high-risk under Annex III, or not EU-targeted. Run `/eu-ai-act-check --scope` to confirm scope before applying this checkpoint.
    >
-   > 🔗 **Three Loops note**: Issue #59 (F2) will add a separate Three Loops decision classifier. Three Loops is a design pattern that satisfies Article 14 — it is NOT EU law terminology. Cite Article 14 ¶4 paragraphs in audit, not Three Loops labels.
+   > 🔗 **Three Loops — use claude-governance for the formal model**: The 5-capability table above is a lightweight design-time sanity check. For **formal Three Loops classification per decision** (Out-of / On-the / In-the-Loop with consequence-based gating for irreversible ops), install [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) alongside this plugin. The Three Loops Decision Model and its ADR-002 live in governance by design — `8-habit-ai-dev` references it rather than reimplementing (see `CLAUDE.md` → Plugin Boundary). Three Loops originates from human-autonomy teaming literature (Endsley 1999, DARPA) — it is a design pattern that _satisfies_ EU AI Act Article 14 ¶4(a-e), not a term used by EU law itself. Cite Article 14 ¶ refs in audits, not Three Loops labels.
 
 6. **Document as ADR** if the decision is:
    - Hard to reverse
