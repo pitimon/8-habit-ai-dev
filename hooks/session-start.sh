@@ -1,5 +1,10 @@
 #!/bin/bash
 # 8-Habit AI Dev — Session Start Reminder (≤300 tokens)
+#
+# Opt out: export HABIT_QUIET=1 (silences this reminder entirely)
+
+# Honor opt-out before any work
+[[ "${HABIT_QUIET:-}" == "1" ]] && exit 0
 
 # Read version from plugin.json for the session banner
 VERSION=$(sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' \
@@ -21,8 +26,7 @@ fi
 cat <<EOF
 ## 8-Habit AI Dev Active (v${VERSION})
 
-**7-Step Workflow** (not Vibe Coding):
-0a. \`/brainstorm\` — Divergent thinking before research (H2+H5) [optional]
+**7-Step Workflow reference** — use what fits the task:
 0. \`/research\` — Investigate before specifying (H5)
 1. \`/requirements\` — Define what, why, who + EARS criteria (H2)${PRD:+ ✓}
 2. \`/design\` — Architecture decisions + Art. 14 checkpoint (H8)${ADR:+ ✓}
@@ -32,9 +36,10 @@ cat <<EOF
 6. \`/deploy-guide\` — Staging first (H1)
 7. \`/monitor-setup\` — Observe after deploy (H7)
 
-**Assessment**: \`/workflow\` | \`/cross-verify\` | \`/whole-person-check\` | \`/security-check\` | \`/reflect\`
-**Onboarding**: \`/using-8-habits\` — first skill for new users (decision tree)
-**Compliance**: \`/eu-ai-act-check\` | \`/ai-dev-log\` (audit transparency)
+**Core 5** (80% of daily work): \`/requirements\` · \`/review-ai\` · \`/cross-verify\` · \`/research\` · \`/reflect\`
+**Assessment**: \`/workflow\` · \`/whole-person-check\` · \`/security-check\` · \`/ai-dev-log\`
+**Onboarding**: \`/using-8-habits\` (decision tree + Core 5 explained)
+**Compliance**: \`/eu-ai-act-check\` (EU AI Act, migration to claude-governance planned)
 
-**Principle**: ทำเสร็จ ≠ ทำดี — "Done" is not "Done well"
+_Silence this reminder: \`export HABIT_QUIET=1\`_
 EOF

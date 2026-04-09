@@ -332,48 +332,77 @@ fi
 
 echo ""
 
-# --- Check 16: /brainstorm skill (Step 0a, divergent thinking) ---
-echo "--- Check 16: /brainstorm skill (Step 0a) ---"
-BRAINSTORM_SKILL="skills/brainstorm/SKILL.md"
-if [ -f "$BRAINSTORM_SKILL" ]; then
-  pass "$BRAINSTORM_SKILL exists"
-  # Frontmatter: prev-skill should be 'none', next-skill should be 'research'
-  if grep -qE '^prev-skill:\s*none' "$BRAINSTORM_SKILL"; then
-    pass "$BRAINSTORM_SKILL prev-skill is 'none' (start of chain)"
+# --- Check 16: v2.4.1 audience honesty (HABIT_QUIET opt-out + Core 5 tier + /brainstorm removal) ---
+echo "--- Check 16: v2.4.1 audience honesty (opt-out + Core 5 + brainstorm deletion) ---"
+HOOK="hooks/session-start.sh"
+if [ -f "$HOOK" ]; then
+  if grep -q 'HABIT_QUIET' "$HOOK"; then
+    pass "$HOOK references HABIT_QUIET opt-out"
   else
-    fail "$BRAINSTORM_SKILL prev-skill should be 'none'"
+    fail "$HOOK missing HABIT_QUIET opt-out"
   fi
-  if grep -qE '^next-skill:\s*research' "$BRAINSTORM_SKILL"; then
-    pass "$BRAINSTORM_SKILL next-skill is 'research'"
+  if grep -qE 'HABIT_QUIET.*==.*1.*exit 0|HABIT_QUIET.*1.*&&.*exit' "$HOOK"; then
+    pass "$HOOK honors HABIT_QUIET=1 with early exit"
   else
-    fail "$BRAINSTORM_SKILL next-skill should be 'research'"
+    fail "$HOOK missing HABIT_QUIET=1 early exit guard"
   fi
-  # Content: divergent vs convergent separation, 5 Whys, hidden assumptions
-  for keyword in "divergent" "convergent" "5 Whys" "hidden assumption" "alternative framing"; do
-    if grep -qi "$keyword" "$BRAINSTORM_SKILL"; then
-      pass "$BRAINSTORM_SKILL mentions '$keyword'"
-    else
-      fail "$BRAINSTORM_SKILL missing '$keyword'"
-    fi
-  done
-  # Habit mapping H2 + H5
-  if grep -qE "H2.*H5|H5.*H2" "$BRAINSTORM_SKILL"; then
-    pass "$BRAINSTORM_SKILL maps to H2 + H5"
+  if grep -q "Core 5" "$HOOK"; then
+    pass "$HOOK surfaces the Core 5 tier"
   else
-    fail "$BRAINSTORM_SKILL should map to H2 + H5"
+    fail "$HOOK missing Core 5 reference"
+  fi
+  if grep -q "not Vibe Coding" "$HOOK"; then
+    fail "$HOOK still has religious 'not Vibe Coding' framing"
+  else
+    pass "$HOOK framing softened (no 'not Vibe Coding')"
+  fi
+  if grep -q "/brainstorm" "$HOOK"; then
+    fail "$HOOK still references /brainstorm"
+  else
+    pass "$HOOK no /brainstorm reference"
   fi
 else
-  fail "$BRAINSTORM_SKILL not found"
+  fail "$HOOK not found"
 fi
 
-# workflow.md references brainstorm as Step 0a
-WORKFLOW_SKILL="skills/workflow/SKILL.md"
-if [ -f "$WORKFLOW_SKILL" ]; then
-  if grep -qE "0a.*brainstorm|brainstorm.*0a" "$WORKFLOW_SKILL"; then
-    pass "$WORKFLOW_SKILL references /brainstorm as Step 0a"
+# /brainstorm skill must be deleted
+if [ -d "skills/brainstorm" ]; then
+  fail "skills/brainstorm/ should be removed in v2.4.1"
+else
+  pass "skills/brainstorm/ deleted (v2.4.1 honest correction)"
+fi
+
+# using-8-habits meta-skill surfaces Core 5
+META="skills/using-8-habits/SKILL.md"
+if [ -f "$META" ]; then
+  if grep -q "Core 5" "$META"; then
+    pass "$META has Core 5 tier section"
   else
-    fail "$WORKFLOW_SKILL missing /brainstorm Step 0a reference"
+    fail "$META missing Core 5 tier section"
   fi
+  if grep -q "superpowers:brainstorming" "$META"; then
+    pass "$META references superpowers:brainstorming"
+  else
+    fail "$META missing superpowers:brainstorming pointer"
+  fi
+fi
+
+# /research skill points at Superpowers for fuzzy problems
+RESEARCH_SKILL="skills/research/SKILL.md"
+if [ -f "$RESEARCH_SKILL" ]; then
+  if grep -q "superpowers:brainstorming" "$RESEARCH_SKILL"; then
+    pass "$RESEARCH_SKILL references superpowers:brainstorming for fuzzy problems"
+  else
+    fail "$RESEARCH_SKILL missing superpowers:brainstorming pointer"
+  fi
+fi
+
+# ADR-006 exists
+ADR006="docs/adr/ADR-006-audience-honesty-and-superpowers-deferral.md"
+if [ -f "$ADR006" ]; then
+  pass "$ADR006 exists"
+else
+  fail "$ADR006 not found"
 fi
 
 echo ""

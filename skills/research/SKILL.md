@@ -14,6 +14,12 @@ next-skill: requirements
 
 **Habit**: H5 — Seek First to Understand | **Anti-pattern**: Defining requirements without investigating the problem space
 
+## Before You Start: Is the Problem Statement Fuzzy?
+
+`/research` is **convergent** — it assumes you know what to investigate and produces a research brief with verified sources. If the problem statement itself is still fuzzy (you're not sure what you're really solving, stakeholders disagree, the request is vague), **do not start here**. Invoke `superpowers:brainstorming` from the `claude-plugins-official:superpowers` plugin first — it ships a hard-gate collaborative design session that produces a committed spec document before any research. Come back to `/research` once the problem is crisp.
+
+If you don't have Superpowers installed, proceed here only when the problem is clearly stated — otherwise you risk producing excellent research on the wrong problem. (v2.4.1 removed our own `/brainstorm` skill in favor of Superpowers' stronger equivalent — see ADR-006.)
+
 ## Research Depth
 
 Choose the appropriate depth based on the problem complexity. Default is **Standard**.

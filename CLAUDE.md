@@ -82,7 +82,6 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 | `/cross-verify`       | All  | H1-H8                 | 17-question checklist + dimension summary                                        |
 | `/whole-person-check` | —    | H8 Find Your Voice    | Body/Mind/Heart/Spirit 4-dimension assessment                                    |
 | `/security-check`     | —    | H1 Be Proactive       | Focused security review — OWASP Top 10                                           |
-| `/brainstorm`         | 0a   | H2 + H5               | Divergent thinking BEFORE /research (v2.4.0)                                     |
 | `/using-8-habits`     | —    | H5 + H8               | Onboarding meta-skill + decision tree (v2.4.0)                                   |
 | `/eu-ai-act-check`    | —    | H1 + H8 (Spirit)      | EU AI Act 9-obligation tiered checklist (v2.3.0, migrating to claude-governance) |
 | `/ai-dev-log`         | —    | H4 Win-Win + H1       | AI-assisted dev log from git history (v2.3.0)                                    |
