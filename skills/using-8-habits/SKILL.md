@@ -169,9 +169,56 @@ Each step produces an artifact. The artifacts compose. That's the discipline.
 - [ ] User knows about the honest skip rule: justify skipping out loud, or run the step
 - [ ] User knows `/cross-verify` + `/reflect` exist for review and retrospective
 
+## Composing with Other Plugins (optional)
+
+8-habit-ai-dev is designed to compose cleanly with [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) and `devsecops-ai-team`. Users who install multiple plugins can thread 8-habit's workflow discipline through governance's compliance gates and devsecops's security probes without conflicts.
+
+### Recommended flows when other plugins are present
+
+**Security-sensitive feature** (thanks to mgmt-pve QA tester for this suggested flow):
+
+```
+/brainstorm  →  /threat-model  →  /research  →  /spec-driven-dev  →  /requirements  →  /design  →  /breakdown  →  ...
+(Step 0a)       (devsecops)      (Step 0)       (governance)        (Step 1)         (Step 2)      (Step 3)
+```
+
+Rationale: inserting `/threat-model` (devsecops STRIDE/PASTA) between brainstorm and research surfaces security threats early; `/spec-driven-dev` (governance) provides formal spec scaffolding before 8-habit's `/requirements` adds EARS criteria.
+
+**Standard feature with governance**:
+
+```
+/brainstorm  →  /research  →  /requirements  →  /design  →  /breakdown  →  ...  →  /governance-check  →  /review-ai
+```
+
+`/governance-check` (governance) runs fitness functions + pre-commit checks; 8-habit's `/review-ai` adds the 4-level verdict on top.
+
+**EU AI Act compliance flow**:
+
+```
+... 7-step workflow ...  →  /eu-ai-act-check  →  /review-ai  →  /ai-dev-log  →  /deploy-guide
+                            (from claude-governance v3.1.0+    (8-habit)       (8-habit, Art. 11 log)
+                             after Stage B migration; currently
+                             in 8-habit v2.3.0+ per PR #57)
+```
+
+### Cross-plugin reference skills
+
+| If you have...                | And you need...                             | Invoke                      |
+| ----------------------------- | ------------------------------------------- | --------------------------- |
+| `devsecops-ai-team` installed | Threat modeling during brainstorm           | `/threat-model`             |
+| `devsecops-ai-team` installed | Security posture check (Mind+Spirit)        | `/posture-scan`             |
+| `devsecops-ai-team` installed | Threat intelligence during research         | `/threat-intel`             |
+| `claude-governance` installed | Formal spec with fitness functions          | `/spec-driven-dev`          |
+| `claude-governance` installed | Pre-commit governance gates                 | `/governance-check`         |
+| `claude-governance` installed | Three Loops classification + ADR-002 gating | `governance-reviewer` agent |
+| `claude-governance` installed | Write-time secret blocking                  | automatic (hook)            |
+
+If a peer plugin isn't installed, its skill simply isn't available — nothing breaks, you just use 8-habit's lighter-weight equivalent (e.g. `/security-check` instead of `/posture-scan`).
+
 ## References
 
 - **Covey's 8 Habits**: the values anchor for the whole plugin (see `habits/` directory)
 - **Whole Person Model**: 4-dimension assessment (Body/Mind/Heart/Spirit) — see `/whole-person-check`
 - **addyosmani/agent-skills** (8.3K⭐): ships `using-agent-skills` meta-skill; this is the 8-habit-ai-dev equivalent
 - **Plugin Boundary**: `8-habit-ai-dev` owns workflow discipline; `pitimon/claude-governance` owns enforcement and compliance frameworks (see `CLAUDE.md` → Plugin Boundary section)
+- **Cross-plugin composition**: suggested security flow above contributed by mgmt-pve QA tester in feedback issue #77
