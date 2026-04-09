@@ -85,3 +85,5 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 | `/using-8-habits`     | —    | H5 + H8               | Onboarding meta-skill + decision tree (v2.4.0)                                   |
 | `/eu-ai-act-check`    | —    | H1 + H8 (Spirit)      | EU AI Act 9-obligation tiered checklist (v2.3.0, migrating to claude-governance) |
 | `/ai-dev-log`         | —    | H4 Win-Win + H1       | AI-assisted dev log from git history (v2.3.0)                                    |
+| `/reflect`            | —    | H7 Sharpen the Saw    | 5-question post-task retrospective                                               |
+| `/workflow`           | —    | All                   | Guided 7-step walkthrough                                                        |
