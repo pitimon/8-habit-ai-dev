@@ -1,6 +1,11 @@
 #!/bin/bash
 # 8-Habit AI Dev — Session Start Reminder (≤300 tokens)
 
+# Read version from plugin.json for the session banner
+VERSION=$(sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' \
+  "${CLAUDE_PLUGIN_ROOT:-.}/.claude-plugin/plugin.json" 2>/dev/null | head -1)
+VERSION="${VERSION:-unknown}"
+
 # Check for workflow artifacts to show progress
 PRD="" ; ADR="" ; TASKS="" ; BRIEF=""
 [ -f PRD.md ] || [ -f docs/PRD.md ] && PRD="✓"
@@ -14,19 +19,22 @@ else
 fi
 
 cat <<EOF
-## 8-Habit AI Dev Active
+## 8-Habit AI Dev Active (v${VERSION})
 
 **7-Step Workflow** (not Vibe Coding):
+0a. \`/brainstorm\` — Divergent thinking before research (H2+H5) [optional]
 0. \`/research\` — Investigate before specifying (H5)
-1. \`/requirements\` — Define what, why, who (H2)${PRD:+ ✓}
-2. \`/design\` — Architecture decisions (H8)${ADR:+ ✓}
+1. \`/requirements\` — Define what, why, who + EARS criteria (H2)${PRD:+ ✓}
+2. \`/design\` — Architecture decisions + Art. 14 checkpoint (H8)${ADR:+ ✓}
 3. \`/breakdown\` — Atomic tasks (H3)${TASKS:+ ✓}
 4. \`/build-brief\` — Context before coding (H5)
 5. \`/review-ai\` — Audit before commit (H4)
 6. \`/deploy-guide\` — Staging first (H1)
 7. \`/monitor-setup\` — Observe after deploy (H7)
 
-**More**: \`/workflow\` | \`/cross-verify\` | \`/whole-person-check\` | \`/security-check\` | \`/reflect\`
+**Assessment**: \`/workflow\` | \`/cross-verify\` | \`/whole-person-check\` | \`/security-check\` | \`/reflect\`
+**Onboarding**: \`/using-8-habits\` — first skill for new users (decision tree)
+**Compliance**: \`/eu-ai-act-check\` | \`/ai-dev-log\` (audit transparency)
 
 **Principle**: ทำเสร็จ ≠ ทำดี — "Done" is not "Done well"
 EOF
