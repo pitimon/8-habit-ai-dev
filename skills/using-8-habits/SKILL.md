@@ -30,13 +30,27 @@ next-skill: any
 - You already know exactly which skill you need → invoke it directly
 - You're in the middle of an established workflow (e.g. already did `/requirements`, going to `/design`) — the skill itself will tell you what comes next via the `next-skill` frontmatter field
 
+## The Core 5 (80/20 rule)
+
+**Most tasks only need these 5 skills**:
+
+1. **`/requirements`** — define what "done" looks like before coding (H2)
+2. **`/review-ai`** — audit AI-generated code before committing (H4)
+3. **`/cross-verify`** — 17-question 8-habit checklist before shipping (H1–H8)
+4. **`/research`** — investigate before specifying when the problem is new (H5)
+5. **`/reflect`** — 5-question micro-retrospective after completing significant work (H7)
+
+The other 11 skills are **optional depth** for specific situations — compliance (`/eu-ai-act-check`), architecture-heavy work (`/design`), cross-plugin flows, transparency logs (`/ai-dev-log`), onboarding (this skill), etc. Running all 16 skills for every task is theater. Pick what fits.
+
+**Honest framing**: if you're doing a single-line bug fix, rename refactor, or dependency bump — run `/review-ai` and skip the rest. Run more skills as the scope grows.
+
 ## The Core Idea
 
-8-habit-ai-dev enforces a **7-step workflow** (with optional Step 0a) grounded in Covey's 8 Habits. Each step is a skill. Each skill tells you what it expects from the previous step and what it produces for the next step. The chain prevents "vibe coding" — the anti-pattern of jumping straight to code without thinking.
+8-habit-ai-dev enforces a **7-step workflow** grounded in Covey's 8 Habits. Each step is a skill. Each skill tells you what it expects from the previous step and what it produces for the next step. The chain prevents "vibe coding" — the anti-pattern of jumping straight to code without thinking.
 
 **Three skill categories**:
 
-1. **Workflow skills** (Steps 0a, 0-7) — the 7-step chain, used roughly in order for new features
+1. **Workflow skills** (Steps 0-7) — the 7-step chain, used roughly in order for new features
 2. **Assessment skills** — invoke anytime to review quality (cross-verify, whole-person-check, security-check, reflect)
 3. **Meta skills** — navigation + transparency (workflow, using-8-habits, ai-dev-log)
 
@@ -44,17 +58,18 @@ next-skill: any
 
 Each step maps to a Covey habit. The habit explains WHY the step matters.
 
-| Step | Skill            | Habit                  | What it produces                                     | Skip if...                       |
-| ---- | ---------------- | ---------------------- | ---------------------------------------------------- | -------------------------------- |
-| 0a   | `/brainstorm`    | H2 + H5                | Refined problem statement + 2-3 convergent questions | Problem already crisp            |
-| 0    | `/research`      | H5: Understand First   | Research brief with sources + recommendation         | Requirements already clear       |
-| 1    | `/requirements`  | H2: Begin with End     | PRD + EARS acceptance criteria                       | Single-line bug fix              |
-| 2    | `/design`        | H8: Find Your Voice    | Architecture decisions (human decides, AI proposes)  | No architecture impact           |
-| 3    | `/breakdown`     | H3: First Things First | Atomic task list with dependencies                   | Single task, scope clear         |
-| 4    | `/build-brief`   | H5: Understand First   | Context brief for each task before coding            | Familiar code, context fresh     |
-| 5    | `/review-ai`     | H4: Win-Win            | 4-level verdict (PASS/CONCERNS/REWORK/FAIL)          | **Never skip**                   |
-| 6    | `/deploy-guide`  | H1: Be Proactive       | Staging-first deployment plan                        | No deployment involved           |
-| 7    | `/monitor-setup` | H7: Sharpen the Saw    | Health checks, alerting, error tracking              | Monitoring already comprehensive |
+| Step | Skill            | Habit                  | What it produces                                    | Skip if...                       |
+| ---- | ---------------- | ---------------------- | --------------------------------------------------- | -------------------------------- |
+| 0    | `/research`      | H5: Understand First   | Research brief with sources + recommendation        | Requirements already clear       |
+| 1    | `/requirements`  | H2: Begin with End     | PRD + EARS acceptance criteria                      | Single-line bug fix              |
+| 2    | `/design`        | H8: Find Your Voice    | Architecture decisions (human decides, AI proposes) | No architecture impact           |
+| 3    | `/breakdown`     | H3: First Things First | Atomic task list with dependencies                  | Single task, scope clear         |
+| 4    | `/build-brief`   | H5: Understand First   | Context brief for each task before coding           | Familiar code, context fresh     |
+| 5    | `/review-ai`     | H4: Win-Win            | 4-level verdict (PASS/CONCERNS/REWORK/FAIL)         | **Never skip**                   |
+| 6    | `/deploy-guide`  | H1: Be Proactive       | Staging-first deployment plan                       | No deployment involved           |
+| 7    | `/monitor-setup` | H7: Sharpen the Saw    | Health checks, alerting, error tracking             | Monitoring already comprehensive |
+
+**When the problem itself is fuzzy** (before `/research`): use `superpowers:brainstorming` from `claude-plugins-official:superpowers` — it ships a collaborative hard-gate design session that writes a spec doc to git before any implementation. v2.4.1 removed our own `/brainstorm` in favor of that stronger equivalent (see ADR-006).
 
 **The chain is opt-in, not forced**. Every skill has a `next-skill` field in its frontmatter pointing to the default successor, but you can jump, skip, or loop as needed. The honest skip rule: if you can justify skipping a step out loud, skip it. If you can't, run it.
 
@@ -62,8 +77,7 @@ Each step maps to a Covey habit. The habit explains WHY the step matters.
 
 ### Workflow skills (8)
 
-- **`/brainstorm`** (Step 0a) — Divergent thinking before research. Explore framings, run 5 Whys, surface hidden assumptions. Output: refined problem statement.
-- **`/research`** (Step 0) — Convergent investigation with sources. Depth levels (Quick/Standard/Deep), modes (General/Compare/Audit), verification. Output: research brief.
+- **`/research`** (Step 0) — Convergent investigation with sources. Depth levels (Quick/Standard/Deep), modes (General/Compare/Audit), verification. Output: research brief. For divergent "explore the problem" thinking BEFORE research, use `superpowers:brainstorming` instead.
 - **`/requirements`** (Step 1) — PRD with What/Why/Who/Scope + **EARS-notation** acceptance criteria (5 templates). Output: PRD summary.
 - **`/design`** (Step 2) — Architecture decisions with trade-offs. Human decides, AI proposes. Includes Article 14 human-oversight checkpoint for AI systems. Output: ADRs.
 - **`/breakdown`** (Step 3) — Decompose into atomic tasks. Orchestration classification (sequential/parallel-safe/parallel-worktree). Output: task list with dependencies.
@@ -94,7 +108,7 @@ Use this tree to pick your starting point. Each leaf maps to an entry skill.
 What are you doing?
 │
 ├── Starting a new feature from scratch
-│   ├── Is the problem statement fuzzy? ─── YES → /brainstorm (Step 0a)
+│   ├── Is the problem statement fuzzy? ─── YES → superpowers:brainstorming
 │   └── Is the problem clear?            ─── YES → /research (Step 0)
 │
 ├── Feature already scoped, need to build
@@ -127,16 +141,11 @@ What are you doing?
 
 A new developer wants to add password reset to an existing auth system. Here's the full 8-habit flow:
 
-1. **`/brainstorm "password reset"`** — is this really needed? Could we use magic links instead? What about passwordless? After 5 Whys: refined statement = "Users who forget passwords need a secure self-service recovery path without contacting support."
+1. **`superpowers:brainstorming "password reset"`** — frame the problem (magic links? passwordless?). Refined statement: "secure self-service recovery without contacting support." (Skip if Superpowers isn't installed.)
 
 2. **`/research "password reset security patterns"`** — find OWASP guidance, existing patterns in the codebase (if any), look at how Auth0/Clerk handle it. Output: research brief with 3 verified sources.
 
-3. **`/requirements`** — draft PRD. Use EARS for acceptance criteria:
-   - [Event-driven] When the user clicks "Forgot password", the system shall send a reset link to the registered email within 60 seconds.
-   - [Unwanted] If the email is not registered, then the system shall return a generic "If the email exists, you will receive a link" message and not reveal whether the email exists.
-   - [State-driven] While the reset token is unused and within 15 minutes, the system shall accept it for one password change.
-   - [Ubiquitous] All reset attempts shall be logged with timestamp, source IP, and outcome.
-   - [Optional] Where the user has 2FA enabled, the reset flow shall require a 6-digit TOTP code in addition to email verification.
+3. **`/requirements`** — draft PRD with EARS acceptance criteria (Event-driven, Unwanted, State-driven, Ubiquitous, Optional shapes).
 
 4. **`/design`** — architecture decisions. Token storage (DB vs signed JWT)? Email provider? Rate limiting? Trade-off table + ADR.
 
@@ -178,16 +187,16 @@ Each step produces an artifact. The artifacts compose. That's the discipline.
 **Security-sensitive feature** (thanks to mgmt-pve QA tester for this suggested flow):
 
 ```
-/brainstorm  →  /threat-model  →  /research  →  /spec-driven-dev  →  /requirements  →  /design  →  /breakdown  →  ...
-(Step 0a)       (devsecops)      (Step 0)       (governance)        (Step 1)         (Step 2)      (Step 3)
+superpowers:brainstorming  →  /threat-model  →  /research  →  /spec-driven-dev  →  /requirements  →  /design  →  /breakdown  →  ...
+(superpowers)                 (devsecops)      (Step 0)       (governance)        (Step 1)         (Step 2)      (Step 3)
 ```
 
-Rationale: inserting `/threat-model` (devsecops STRIDE/PASTA) between brainstorm and research surfaces security threats early; `/spec-driven-dev` (governance) provides formal spec scaffolding before 8-habit's `/requirements` adds EARS criteria.
+Rationale: inserting `/threat-model` (devsecops STRIDE/PASTA) between the brainstorming session and research surfaces security threats early; `/spec-driven-dev` (governance) provides formal spec scaffolding before 8-habit's `/requirements` adds EARS criteria.
 
 **Standard feature with governance**:
 
 ```
-/brainstorm  →  /research  →  /requirements  →  /design  →  /breakdown  →  ...  →  /governance-check  →  /review-ai
+superpowers:brainstorming  →  /research  →  /requirements  →  /design  →  /breakdown  →  ...  →  /governance-check  →  /review-ai
 ```
 
 `/governance-check` (governance) runs fitness functions + pre-commit checks; 8-habit's `/review-ai` adds the 4-level verdict on top.
@@ -205,7 +214,7 @@ Rationale: inserting `/threat-model` (devsecops STRIDE/PASTA) between brainstorm
 
 | If you have...                | And you need...                             | Invoke                      |
 | ----------------------------- | ------------------------------------------- | --------------------------- |
-| `devsecops-ai-team` installed | Threat modeling during brainstorm           | `/threat-model`             |
+| `devsecops-ai-team` installed | Threat modeling during early design         | `/threat-model`             |
 | `devsecops-ai-team` installed | Security posture check (Mind+Spirit)        | `/posture-scan`             |
 | `devsecops-ai-team` installed | Threat intelligence during research         | `/threat-intel`             |
 | `claude-governance` installed | Formal spec with fitness functions          | `/spec-driven-dev`          |

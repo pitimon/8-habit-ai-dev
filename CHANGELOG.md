@@ -10,6 +10,27 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.4.1 — Honest Correction (2026-04-09)
+
+Same-day correction after reading the `claude-plugins-official:superpowers` `brainstorming` source and confirming our `/brainstorm` (shipped in v2.4.0) was a weaker reimplementation of ~60% of its functionality.
+
+### Removed (breaking — install `superpowers` for equivalent)
+
+- **`/brainstorm` skill** — deleted. Superpowers' `brainstorming` ships a 500+ line hard-gate discipline suite with spec doc written to git, visual companion, one-question-at-a-time dialogue, and 143K installs. `/research` now references it for fuzzy problem statements. See ADR-006 for the lesson.
+
+### Added
+
+- **`HABIT_QUIET=1` opt-out** for `hooks/session-start.sh` — reduces religious adherence pressure. Users who internalize the workflow can silence the reminder via env var.
+- **"Core 5" tier** in `/using-8-habits` — acknowledges 80/20 reality: most daily work uses `/requirements`, `/review-ai`, `/cross-verify`, `/research`, `/reflect`. The other 11 skills are optional depth.
+- **ADR-006** — documents audience honesty + opt-out + "check installed peer plugins before building parity features" lesson.
+
+### Changed
+
+- `hooks/session-start.sh` banner softened: "7-Step Workflow (not Vibe Coding)" → "7-Step Workflow reference — use what fits the task"
+- Skills count: 17 → 16 (removed `/brainstorm`)
+
+---
+
 ## v2.4.0 — Workflow Completions (2026-04-09)
 
 Three workflow additions closing parity gaps with peer plugins.

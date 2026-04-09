@@ -2,17 +2,17 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
-[![Skills](https://img.shields.io/badge/Skills-17-blue)]()
+[![Skills](https://img.shields.io/badge/Skills-16-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.4.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.4.0)
+[![Version](https://img.shields.io/badge/Version-2.4.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.4.1)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
 
 > **"ทำเสร็จ ≠ ทำดี"** — Shipping code is not the same as shipping _good_ code.
 >
-> AI coding tools are powerful — but "build me X" without requirements, review, or staging creates fast, fragile code. This plugin adds the discipline AI lacks: **17 skills** across a **7-step workflow**, grounded in **Covey's 8 Habits** of effective development.
+> AI coding tools are powerful — but "build me X" without requirements, review, or staging creates fast, fragile code. This plugin adds the discipline AI lacks: **16 skills** across a **7-step workflow**, grounded in **Covey's 8 Habits** of effective development.
 
 ---
 
@@ -26,7 +26,7 @@
 **The Framework**
 
 - [7-Step Workflow](#the-7-step-workflow) — Visual pipeline from research to monitoring
-- [Skills Reference](#skills-reference) — All 17 skills with habit mappings
+- [Skills Reference](#skills-reference) — All 16 skills with habit mappings
 - [Use Cases](#use-cases-which-skill-when) — Common scenarios and recommended paths
 - [The 8 Habits](#the-8-habits) — Principles behind the workflow
 - [Maturity Model](#the-maturity-model) — Dependence to Significance
@@ -89,7 +89,7 @@ claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 **New to the plugin?** Start with `/workflow` for a guided walkthrough, or see [Use Cases](#use-cases-which-skill-when) to find the right skill for your situation.
 
-Two commands to install. The plugin loads a session reminder and makes 17 skills available.
+Two commands to install. The plugin loads a session reminder and makes 16 skills available.
 
 ---
 
@@ -113,11 +113,10 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 
 ## Skills Reference
 
-### Workflow Skills (Steps 0a, 0-7)
+### Workflow Skills (Steps 0-7)
 
 | Skill            | Step | Habit                        | Purpose                                                                                                     |
 | ---------------- | ---- | ---------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `/brainstorm`    | 0a   | H2 + H5                      | Divergent thinking BEFORE research — explore framings, 5 Whys, surface hidden assumptions (optional)        |
 | `/research`      | 0    | H5: Seek First to Understand | Investigate with depth levels (Quick/Standard/Deep), modes (General/Compare/Audit), and source verification |
 | `/requirements`  | 1    | H2: Begin with End in Mind   | Draft PRD — what, why, who, scope, success criteria                                                         |
 | `/design`        | 2    | H8: Find Your Voice          | Surface architecture decisions for **human** judgment                                                       |
@@ -307,9 +306,9 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.4.0)
+│   ├── plugin.json                 # Plugin metadata (v2.4.1)
 │   └── marketplace.json            # Marketplace listing
-├── skills/                         # 17 skills (9 workflow + 8 standalone)
+├── skills/                         # 16 skills (8 workflow + 8 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
 │   ├── requirements/SKILL.md       #   Step 1 → H2
 │   ├── design/SKILL.md             #   Step 2 → H8
@@ -441,7 +440,7 @@ Every habit in this plugin exists because **skipping it caused real damage**.
 
 ## FAQ
 
-**Q: Do I need to use all 17 skills for every task?**
+**Q: Do I need to use all 16 skills for every task?**
 No. Start with `/requirements` before building and `/review-ai` before committing. Those two alone eliminate most Vibe Coding problems. Add more skills as they feel natural. See [Use Cases](#use-cases-which-skill-when).
 
 **Q: What is "Vibe Coding"?**
@@ -523,4 +522,4 @@ MIT
 
 ---
 
-_Version: 2.4.0 | Last updated: 2026-04-09_
+_Version: 2.4.1 | Last updated: 2026-04-09_
