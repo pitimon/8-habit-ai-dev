@@ -10,6 +10,22 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.5.0 — Testing & Discoverability (2026-04-09)
+
+### Added
+
+- **`tests/test-skill-graph.sh`** — DAG validator for `prev-skill`/`next-skill` chains (#79). Checks: cycles, dangling refs, symmetric edges, chain anchors, orphans. 55 assertions. Wired into CI.
+- **`hooks/pre-commit.sh.example`** — template that runs `/review-ai` on staged files before commit (#80). Copy to `.git/hooks/pre-commit` to opt in. NOT auto-installed.
+- **Bidirectional wiki ↔ skills linking** (#81) — each workflow skill (Steps 0-7) now has a `## Further Reading` section linking to its wiki page. Validator Check 15b enforces both directions.
+- **Validator Check 15a** — asserts `pre-commit.sh.example` exists and is NOT executable.
+
+### Changed
+
+- CI now runs 3 validators: `validate-structure.sh` + `test-skill-graph.sh` + `validate-content.sh`
+- Version bump 2.4.1 → 2.5.0
+
+---
+
 ## v2.4.1 — Honest Correction (2026-04-09)
 
 Same-day correction after reading the `claude-plugins-official:superpowers` `brainstorming` source and confirming our `/brainstorm` (shipped in v2.4.0) was a weaker reimplementation of ~60% of its functionality.

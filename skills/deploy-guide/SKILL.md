@@ -67,4 +67,8 @@ next-skill: monitor-setup
 - [ ] Post-deploy health check confirmed (smoke test passed)
 - [ ] Error rate monitored for at least 5 minutes after deploy
 
+## Further Reading
+
+See [Step 6 wiki page](../../docs/wiki/Step-6-Deploy-Guide.md) for deeper walkthrough, examples, and common pitfalls.
+
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h1-be-proactive.md` for the full H1 principle and examples.

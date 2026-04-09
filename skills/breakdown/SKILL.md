@@ -88,6 +88,10 @@ next-skill: build-brief
 - [ ] No task touches more than 5 files
 - [ ] Orchestration classification assigned to each task (sequential/parallel-safe/parallel-worktree)
 
+## Further Reading
+
+See [Step 3 wiki page](../../docs/wiki/Step-3-Breakdown.md) for deeper walkthrough, examples, and common pitfalls.
+
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/task-list-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h3-first-things-first.md` for the full H3 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/orchestration-patterns.md` for worktree isolation and context boundary patterns.

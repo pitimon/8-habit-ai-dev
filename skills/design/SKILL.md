@@ -79,5 +79,9 @@ next-skill: breakdown
 - [ ] ADR created for decisions affecting >3 files or changing public API
 - [ ] Constraints and non-goals documented
 
+## Further Reading
+
+See [Step 2 wiki page](../../docs/wiki/Step-2-Design.md) for deeper walkthrough, examples, and common pitfalls.
+
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/adr-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h8-find-voice.md` for the full H8 principle and examples.

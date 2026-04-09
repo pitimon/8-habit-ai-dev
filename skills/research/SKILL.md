@@ -162,6 +162,10 @@ No unsourced claims. If you can't cite it, mark it as "unverified assumption."
 - [ ] Audit results included (if Audit mode) with file:line per row
 - [ ] Research brief ready for handoff to /requirements
 
+## Further Reading
+
+See [Step 0 wiki page](../../docs/wiki/Step-0-Research.md) for deeper walkthrough, examples, and common pitfalls.
+
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the full H5 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/research-brief-template.md` for the output template.

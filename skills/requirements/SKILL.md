@@ -92,5 +92,9 @@ next-skill: design
 - [ ] Scope boundaries clear — both "in scope" and "out of scope" listed
 - [ ] Stakeholder/target user identified
 
+## Further Reading
+
+See [Step 1 wiki page](../../docs/wiki/Step-1-Requirements.md) for deeper walkthrough, examples, and common pitfalls.
+
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/prd-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h2-begin-with-end.md` for the full H2 principle and examples.

@@ -132,6 +132,10 @@ If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
 - [ ] Every finding cites specific evidence (file:line, test output, or diff)
 - [ ] Summary table shows findings count per category
 
+## Further Reading
+
+See [Step 5 wiki page](../../docs/wiki/Step-5-Review-AI.md) for deeper walkthrough, examples, and common pitfalls.
+
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/review-report-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md` for the full H4 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards (the 12 commandments).

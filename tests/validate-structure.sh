@@ -391,6 +391,62 @@ else
 fi
 echo ""
 
+# --- Check 15a: pre-commit.sh.example template ---
+echo "--- Check 15a: pre-commit.sh.example ---"
+PRECOMMIT="hooks/pre-commit.sh.example"
+if [ -f "$PRECOMMIT" ]; then
+  pass "$PRECOMMIT exists"
+  if [ -x "$PRECOMMIT" ]; then
+    fail "$PRECOMMIT should NOT be executable (prevents accidental auto-install)"
+  else
+    pass "$PRECOMMIT is not executable"
+  fi
+  if head -1 "$PRECOMMIT" | grep -q '^#!/bin/bash'; then
+    pass "$PRECOMMIT has bash shebang"
+  else
+    fail "$PRECOMMIT missing bash shebang"
+  fi
+else
+  fail "$PRECOMMIT not found"
+fi
+echo ""
+
+# --- Check 15b: Bidirectional wiki ↔ skills linking ---
+echo "--- Check 15: Wiki ↔ Skills bidirectional linking ---"
+WIKI_SKILL_MAP="
+Step-0-Research:research
+Step-1-Requirements:requirements
+Step-2-Design:design
+Step-3-Breakdown:breakdown
+Step-4-Build-Brief:build-brief
+Step-5-Review-AI:review-ai
+Step-6-Deploy-Guide:deploy-guide
+Step-7-Monitor-Setup:monitor-setup
+"
+for pair in $WIKI_SKILL_MAP; do
+  wiki_page=$(echo "$pair" | cut -d: -f1)
+  skill_name=$(echo "$pair" | cut -d: -f2)
+  wiki_file="docs/wiki/${wiki_page}.md"
+  skill_file="skills/${skill_name}/SKILL.md"
+
+  # Wiki → Skill (forward link)
+  if [ -f "$wiki_file" ] && [ -f "$skill_file" ]; then
+    if grep -q "$skill_name" "$wiki_file"; then
+      pass "$wiki_page → $skill_name (wiki links to skill)"
+    else
+      fail "$wiki_file missing reference to $skill_name"
+    fi
+
+    # Skill → Wiki (back-reference via Further Reading)
+    if grep -q "$wiki_page" "$skill_file"; then
+      pass "$skill_name → $wiki_page (skill links back to wiki)"
+    else
+      fail "$skill_file missing back-reference to $wiki_page"
+    fi
+  fi
+done
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"
