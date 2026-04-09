@@ -74,4 +74,8 @@ If you only invest in P and neglect PC, eventually the saw is too dull to cut.
 - [ ] Error tracking active (logs accessible, not just stdout)
 - [ ] Recovery runbook exists for each critical dependency
 
+## Further Reading
+
+See [Step 7 wiki page](../../docs/wiki/Step-7-Monitor-Setup.md) for deeper walkthrough, examples, and common pitfalls.
+
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h7-sharpen-saw.md` for the full H7 principle and examples.
