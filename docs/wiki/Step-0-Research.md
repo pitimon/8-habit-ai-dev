@@ -22,10 +22,11 @@ Investigate the problem space **before** writing requirements. Prevents specifyi
 ## Process
 
 1. **Define the question** — 1 sentence, specific
-2. **Gather prior art** — existing code, docs, web research, comparable libraries
-3. **Compare** — if evaluating alternatives, produce a trade-off matrix
-4. **Surface constraints** — legal, performance, team skills, budget
-5. **Recommend** (not decide) — AI recommends; human decides in Step 2
+2. **Check past lessons** — search `~/.claude/lessons/` for relevant lessons from prior sessions (v2.6.0+)
+3. **Gather prior art** — existing code, docs, web research, comparable libraries
+4. **Compare** — if evaluating alternatives, produce a trade-off matrix
+5. **Surface constraints** — legal, performance, team skills, budget
+6. **Recommend** (not decide) — AI recommends; human decides in Step 2
 
 ## Output
 

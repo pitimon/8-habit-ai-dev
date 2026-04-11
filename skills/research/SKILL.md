@@ -59,16 +59,25 @@ What do we need to know before specifying requirements?
 
 ### 2. Search existing solutions
 
+**Before external search — check past lessons** (all depth levels):
+
+- Glob `~/.claude/lessons/*.md` to check if lesson files exist
+- If lessons exist, Grep for tags or keywords matching the research topic: `Grep pattern="tags:.*<keyword>" path="~/.claude/lessons/"` then fall back to `Grep pattern="<keyword>" path="~/.claude/lessons/"` for body matches
+- If relevant lessons are found, Read them and include findings under "Prior lessons learned" in the research brief
+- If `~/.claude/lessons/` does not exist or is empty, skip silently
+
 Route by depth level:
 
 **Quick** (codebase only):
 
+- Search past lessons (see above)
 - Glob/Grep the codebase for related patterns
 - Read existing implementations, ADRs, and documentation
 - Skip WebSearch/WebFetch entirely
 
 **Standard** (codebase + external):
 
+- Search past lessons (see above)
 - Glob/Grep the codebase for related patterns
 - WebSearch for existing tools, libraries, or approaches
 - WebFetch to read key external documentation

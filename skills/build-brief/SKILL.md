@@ -27,6 +27,13 @@ next-skill: review-ai
 
 1. **Read existing code first**: Before writing anything new, read the files in the affected area. Understand current patterns, naming conventions, and architecture.
 
+1b. **Check past lessons** (if `~/.claude/lessons/` exists):
+   - Grep `~/.claude/lessons/` for tags or keywords matching the task name, affected file paths, or domain
+   - Search by tags first: `Grep pattern="tags:.*<keyword>" path="~/.claude/lessons/"`
+   - Fall back to keyword search: `Grep pattern="<keyword>" path="~/.claude/lessons/"`
+   - If relevant lessons found, include them in the context brief under "Lessons from past work"
+   - If no lessons directory or no matches, skip silently
+
 2. **Build the context brief**:
 
    ```
