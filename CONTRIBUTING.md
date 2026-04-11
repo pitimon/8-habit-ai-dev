@@ -93,6 +93,44 @@ Create `guides/templates/<name>-template.md`:
 - Placeholder sections (not just headings)
 - Referenced from skills via `Load` directive
 
+## Testing Conventions
+
+Test scripts under `tests/` run in GitHub Actions on Linux with `set -o pipefail`. When shelling out, prefer patterns that cannot SIGPIPE.
+
+### Frontmatter extraction — use `awk`, not `sed | grep | head`
+
+**Anti-pattern** (SIGPIPE race under `pipefail`):
+
+```bash
+# DON'T — GNU sed exits 4 when head closes stdin mid-stream
+name_value=$(sed -n '/^---$/,/^---$/p' "$skill_file" | grep "^name:" | head -1 | sed 's/^name:[[:space:]]*//')
+```
+
+**Convention** (zero-pipe, SIGPIPE-safe):
+
+```bash
+# DO — single awk, no pipe, bounded by second frontmatter delimiter
+name_value=$(awk '/^---$/{c++; if(c==2) exit; next} c==1 && sub(/^name:[[:space:]]*/, ""){print; exit}' "$skill_file")
+```
+
+The awk pattern: count `---` delimiters, stop at the second one, inside frontmatter (`c==1`) strip the `field:[[:space:]]*` prefix and print the first match — all in one process, no pipe buffer, no race.
+
+### Why it matters
+
+On Linux CI with GNU sed, if `head` closes stdin before sed finishes writing, sed receives SIGPIPE and exits with code 4 (`couldn't flush stdout: Broken pipe`). Under `set -o pipefail` this propagates as test failure. macOS BSD sed silently ignores SIGPIPE so the anti-pattern passes locally and flakes only in CI — the worst kind of bug class.
+
+The `grep` filter between `sed` and `head` reduces output volume and shrinks the race window, but does not eliminate it. Widen the race by adding body `---` lines to any SKILL / ADR / habit doc and the flake returns.
+
+### Prior art
+
+- **First fix**: [PR #99](https://github.com/pitimon/8-habit-ai-dev/pull/99) (v2.6.1) fixed one flaking instance in `tests/validate-content.sh:614`
+- **Full audit**: [PR #103](https://github.com/pitimon/8-habit-ai-dev/pull/103) (closes #101) replaced 8 remaining instances in `tests/validate-structure.sh` and `tests/test-skill-graph.sh`
+- **Header comment**: See `tests/validate-structure.sh:27-28` and `tests/validate-content.sh:619-620` for the in-code rationale
+
+### Broader lens
+
+Audit any new shell pipeline for the same shape: any `<file-reader> | <filter> | head` under `pipefail` is suspect. When in doubt, materialize into a variable first (`fm=$(awk ...)`) and then slice — variable expansion + small pipes don't have the file-reading race.
+
 ## Version Bumping
 
 Version lives in **3 files** — all must be bumped together:
