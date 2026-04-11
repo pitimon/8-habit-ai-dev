@@ -46,6 +46,7 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 - **Agent (`agents/8-habit-reviewer.md`)** uses model `sonnet` with read-only tools (`Read`, `Glob`, `Grep`) — it analyzes and reports, never edits
 - **Plugin metadata** lives in `.claude-plugin/plugin.json` (plugin config) and `.claude-plugin/marketplace.json` (marketplace listing)
 - **Lesson persistence** (v2.6.0): `/reflect` saves lesson files to `~/.claude/lessons/YYYY-MM-DD-<slug>.md`. `/research` and `/build-brief` search these before starting work. This closes the learning loop: reflect → persist → retrieve → apply
+- **Verbosity adaptation** (v2.7.0): `hooks/session-start.sh` reads `~/.claude/habit-profile.md` and emits a level-specific adaptation directive into session context. Zero per-skill changes — the directive shapes Claude's behavior at runtime for all subsequent skill invocations. Canonical rules in `guides/verbosity-adaptation.md`. 8-branch regression coverage in `tests/test-verbosity-hook.sh`. Respects existing `HABIT_QUIET=1` opt-out from ADR-006. Closes #96 (the reader half of the #90 calibrate loop)
 - **Session hook budget**: `hooks/session-start.sh` output must stay ≤300 tokens
 - **Version lives in 4 files** — must bump together: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `README.md` (badge + footer), and `SELF-CHECK.md` header. `tests/validate-structure.sh` enforces consistency across all four — CI will fail if any drifts.
 

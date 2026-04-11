@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-17-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.6.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.6.1)
+[![Version](https://img.shields.io/badge/Version-2.7.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.7.0)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -307,7 +307,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.6.1)
+│   ├── plugin.json                 # Plugin metadata (v2.7.0)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
@@ -523,4 +523,4 @@ MIT
 
 ---
 
-_Version: 2.6.1 | Last updated: 2026-04-11_
+_Version: 2.7.0 | Last updated: 2026-04-11_

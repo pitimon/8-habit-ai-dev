@@ -23,11 +23,61 @@ else
   PROGRESS=""
 fi
 
-# Calibration nudge — appended only when no habit profile exists (v2.6.0)
-CALIBRATE_NUDGE=""
-if [ ! -f "${HOME}/.claude/habit-profile.md" ]; then
-  CALIBRATE_NUDGE='
-💡 **No habit profile detected** — run `/calibrate` to personalize guidance to your maturity level (H8).'
+# Habit profile state — emits level-specific adaptation directive (v2.7.0, Issue #96).
+# When ~/.claude/habit-profile.md exists with a valid level, outputs a one-sentence
+# directive that shapes how skills should adapt their verbosity in the session.
+# When the profile is missing, falls back to the v2.6.0 /calibrate nudge.
+#
+# Override precedence: preferences.verbosity-override (verbose|concise) > level field.
+# Unknown/missing level → Dependence fallback (safest for uncalibrated users).
+#
+# awk patterns use the pipe-safe "read until exit" technique from
+# tests/validate-structure.sh:27 and validate-content.sh:614 to avoid the
+# sed|head SIGPIPE flake fixed in v2.6.1.
+PROFILE_MSG=""
+PROFILE_FILE="${HOME}/.claude/habit-profile.md"
+if [ -f "$PROFILE_FILE" ] && [ -r "$PROFILE_FILE" ]; then
+  # Extract level from frontmatter (between --- markers)
+  LEVEL=$(awk '/^---$/{c++; if(c==2) exit; next} c==1 && /^level:/{sub(/^level:[[:space:]]*/, ""); print; exit}' "$PROFILE_FILE" 2>/dev/null)
+  # Extract verbosity-override (nested under preferences:)
+  OVERRIDE=$(awk '/^preferences:/{f=1; next} /^[^[:space:]]/{if(f) exit; next} f && /verbosity-override:/{sub(/^[[:space:]]*verbosity-override:[[:space:]]*/, ""); print; exit}' "$PROFILE_FILE" 2>/dev/null)
+
+  # Apply override precedence: explicit verbose/concise wins over level
+  case "$OVERRIDE" in
+    verbose)   EFFECTIVE_LEVEL="Dependence (verbose override)"; DIRECTIVE_LEVEL="Dependence" ;;
+    concise)   EFFECTIVE_LEVEL="Significance (concise override)"; DIRECTIVE_LEVEL="Significance" ;;
+    ""|none)   EFFECTIVE_LEVEL="$LEVEL"; DIRECTIVE_LEVEL="$LEVEL" ;;
+    *)         EFFECTIVE_LEVEL="$LEVEL"; DIRECTIVE_LEVEL="$LEVEL" ;;
+  esac
+
+  # Emit level-specific one-sentence directive
+  case "$DIRECTIVE_LEVEL" in
+    Dependence)
+      PROFILE_MSG="
+📖 **Profile active: ${EFFECTIVE_LEVEL}** — skills should show full guidance, all checkpoints, and beginner examples inline."
+      ;;
+    Independence)
+      PROFILE_MSG="
+📖 **Profile active: ${EFFECTIVE_LEVEL}** — skills should show key checkpoints only and skip beginner examples."
+      ;;
+    Interdependence)
+      PROFILE_MSG="
+📖 **Profile active: ${EFFECTIVE_LEVEL}** — skills should focus on delegation, review, and synergy patterns over individual ceremony."
+      ;;
+    Significance)
+      PROFILE_MSG="
+📖 **Profile active: ${EFFECTIVE_LEVEL}** — skills should show minimal prompts, trust user judgment, and surface only non-obvious checkpoints."
+      ;;
+    *)
+      # Unknown or missing level → Dependence fallback with visible note
+      PROFILE_MSG="
+⚠️ **Profile exists but level is unknown** (got: \"${LEVEL:-<missing>}\") — using Dependence (full guidance) as fallback. Run \`/calibrate\` to refresh."
+      ;;
+  esac
+else
+  # No profile file → v2.6.0 nudge (backwards compatible)
+  PROFILE_MSG="
+💡 **No habit profile detected** — run \`/calibrate\` to personalize guidance to your maturity level (H8)."
 fi
 
 cat <<EOF
@@ -46,7 +96,7 @@ cat <<EOF
 **Core 5** (80% of daily work): \`/requirements\` · \`/review-ai\` · \`/cross-verify\` · \`/research\` · \`/reflect\`
 **Assessment**: \`/workflow\` · \`/whole-person-check\` · \`/security-check\` · \`/ai-dev-log\`
 **Onboarding**: \`/using-8-habits\` (decision tree) · \`/calibrate\` (maturity profile)
-**Compliance**: \`/eu-ai-act-check\` (EU AI Act, migration to claude-governance planned)${CALIBRATE_NUDGE}
+**Compliance**: \`/eu-ai-act-check\` (EU AI Act, migration to claude-governance planned)${PROFILE_MSG}
 
 _Silence this reminder: \`export HABIT_QUIET=1\`_
 EOF
