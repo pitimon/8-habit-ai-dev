@@ -23,7 +23,7 @@ Running our own 17-question checklist against the plugin itself. H8 Modeling: "F
 | --- | -------------- | --------- | -------------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------- |
 | 9   | H4: Win-Win    | Heart     | Issue closures include rationale?      | Pass   | Each issue maps to a gap finding with acceptance criteria. Commits use Closes #N with context                     |
 | 10  | H4: Win-Win    | Heart     | Error messages help next developer?    | N/A    | Plugin is markdown guidance — no runtime error messages. validate-structure.sh has clear PASS/FAIL output         |
-| 11  | H5: Understand | Mind      | Read existing code before writing new? | Pass   | All 12 SKILL.md, all 8 habit files, SELF-CHECK, CLAUDE.md read before plan was designed                           |
+| 11  | H5: Understand | Mind      | Read existing code before writing new? | Pass   | All 17 SKILL.md, all 8 habit files, SELF-CHECK, CLAUDE.md read before plan was designed                           |
 | 12  | H5: Understand | Mind      | Reproduced bug first?                  | Pass   | Whole Person Assessment reproduced the gap honestly (3.0/5). Exploration confirmed specific missing sections      |
 | 13  | H6: Synergize  | Heart     | Independent tasks running in parallel? | Pass   | Phases 1-3 are independent (different files). Research used 3 parallel agents                                     |
 | 14  | H6: Synergize  | Mind      | Considered third alternative?          | Pass   | markdownlint rejected (npm dep), Thai expansion deferred (quality concern), external validation deferred (future) |
@@ -53,6 +53,58 @@ Running our own 17-question checklist against the plugin itself. H8 Modeling: "F
 | Spirit (Conscience) | Q1,16,17 | 3/3 | 100% |
 
 ## Honesty Notes
+
+v2.7.0 improvements (Reader Adoption — closing the /calibrate feature loop):
+
+- **Hook-based verbosity adaptation** (#96) — `hooks/session-start.sh` reads `~/.claude/habit-profile.md` and emits a level-specific one-sentence directive into session context. Claude honors the directive when invoking any skill. Writer (v2.6.0) + reader (v2.7.0) = complete #90 feature loop.
+- **`guides/verbosity-adaptation.md`** — canonical per-level rules + worked examples across 5 skill archetypes. Zero changes to individual skills.
+- **`tests/test-verbosity-hook.sh`** — 11 new regression assertions covering 8 hook branches + HABIT_QUIET silence + token budget. Wired into CI as 4th validator. Validators grow 470 → 481.
+- **Architectural forcing**: pre-implementation F3 word-budget audit revealed 2 skills with single-digit headroom, ruling out any per-skill approach and forcing the hook-based design. Demonstrates H3 (First Things First) — constraint surfaced before design saved a rework cycle.
+- **Milestone v2.7.0 — Reader Adoption: CLOSED 1/1.**
+
+v2.6.1 improvements (Skill Effectiveness Tracking + CI hygiene):
+
+- **`/reflect` Q6 skill-effectiveness signal** (#92) — 6th question added asking "most useful / least useful or confusing skill this session". Feeds maintainer trend review.
+- **`SKILL-EFFECTIVENESS.md`** (new, repo root) — maintainer-curated trend tracker with per-skill tally for all 17 skills; ships empty, populated from `/reflect` Q6 over time. H7 applied to the plugin itself.
+- **SIGPIPE CI fix** — `tests/validate-content.sh` F3 convention-consistency check switched from `sed|head -20` to pipe-safe awk after PR #99 first CI run flaked on Linux. Root cause: `skills/ai-dev-log/SKILL.md` has a body `---` horizontal rule at line 65 making sed emit 187 lines from a 239-line file, overflowing `head -20`. BSD sed on macOS ignored SIGPIPE; GNU sed on Linux with pipefail exit 4. Same awk pattern as `tests/validate-structure.sh:27`.
+- **Milestone v2.6.0 — Hermes-Inspired Improvements: CLOSED 5/5** with this release.
+
+v2.6.0 improvements (Hermes-Inspired Improvements — 4 issues, 2 ADRs):
+
+- **Persistent reflection artifacts** (#88) — `/reflect` now writes `~/.claude/lessons/YYYY-MM-DD-<slug>.md`. `/research` and `/build-brief` retrieve lessons before starting work. Closes the learning loop.
+- **Habit nudge guidance document** (#89) — `guides/habit-nudges.md` specifies nudge catalog + trigger + cooldown semantics; runtime hook implementation deferred to `pitimon/claude-governance` per plugin boundary.
+- **User Maturity Calibration** (#90) — `/calibrate` skill + `~/.claude/habit-profile.md` (schema v1, YAML frontmatter) + `guides/habit-profile-schema.md` public contract + **ADR-008** (5 interlocking design decisions: Alt E hybrid, dominant-level scoring, YAML frontmatter schema, standalone chain position, user-driven re-calibration).
+- **agentskills.io NO-GO** (#91) — Deep + Compare research brief + hands-on sandbox test + **ADR-007**. Key insight: "the reach of a standard is measured by what adopting tools *parse*, not by their logo list."
+- Validators grew 443 → 470.
+
+v2.5.0 improvements (Testing & Discoverability):
+
+- **`tests/test-skill-graph.sh`** (#79) — DAG validator for `prev-skill`/`next-skill` chains. 55 assertions. Wired into CI.
+- **`hooks/pre-commit.sh.example`** (#80) — opt-in pre-commit template running `/review-ai` on staged files.
+- **Bidirectional wiki ↔ skills linking** (#81) — each workflow skill links to its wiki page; validator enforces both directions.
+- Validators: 443 total; CI runs 3 scripts.
+
+v2.4.1 improvements (Honest Correction, 2026-04-09):
+
+- **Deleted `/brainstorm`** — shipped prematurely in v2.4.0 without reading `superpowers:brainstorming` source. Same-day correction.
+- **`HABIT_QUIET=1` opt-out** for the session-start hook — audience-honest acknowledgment that not every user wants the 7-step workflow reminder every session.
+- **Core 5 framing** — `/requirements`, `/review-ai`, `/cross-verify`, `/research`, `/reflect` named as the 80% of daily work; other 11 skills as optional depth.
+- **ADR-006**: Audience Honesty + Superpowers Deferral — the "read the peer plugin source before claiming parity" lesson.
+- Modeling H5 (Understand first) by correcting a v2.4.0 mistake within 24 hours instead of defending it.
+
+v2.4.0 improvements (/using-8-habits meta-skill):
+
+- **`/using-8-habits`** — onboarding meta-skill explaining the 7-step workflow and decision tree for "which skill next?" Reduces 16-skill overwhelm for new users.
+- Validator check 18: meta-skill content assertions (references every skill by name, has decision tree, etc.).
+
+v2.3.0 improvements (EU AI Act Compliance Toolkit — Flagship feature):
+
+- **`/eu-ai-act-check`** — 9-obligation tiered checklist for EU high-risk AI systems (Articles 9-15). Pre-flight scope check skips if not high-risk or not EU-targeted.
+- **`docs/research/eu-ai-act-obligations.md`** — verified-quote research brief.
+- **`guides/eu-ai-act-mapping.md`** — MUST/SHOULD/COULD tier mapping.
+- **`scripts/generate-ai-dev-log.sh`** — Article 11 transparency (AI-assisted dev log from git history).
+- **ADR-005**: EU AI Act compliance toolkit scope + plugin-boundary decision (eventually migrating to `claude-governance`).
+- Spirit dimension strengthened: compliance depth without enforcement theater.
 
 v2.2.0 improvements (Body dimension level-up):
 
@@ -100,7 +152,14 @@ The cross-verify score (16/16) measures **plan discipline**. The Whole Person sc
 - v2.0.0: Body 4, Mind 5, Heart 5, Spirit 4.5 = **4.625** (orchestration patterns + meta-system mindset + ADR)
 - v2.1.0: Body 4, Mind 5, Heart 5, Spirit 5 = **4.75** (research depth/modes + verification agent + evidence rigor)
 - v2.2.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (content validation + fitness functions + CI enforcement)
+- v2.3.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (EU AI Act compliance toolkit — Spirit depth, ADR-005)
+- v2.4.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (`/using-8-habits` meta-skill + decision tree)
+- v2.4.1: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (honest correction of /brainstorm ship-delete, HABIT_QUIET opt-out, ADR-006)
+- v2.5.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (DAG validator + pre-commit template + wiki↔skills linking, +55 assertions → 443)
+- v2.6.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (Hermes-inspired arc: #88 persistent reflection, #89 nudge spec, #90 /calibrate + ADR-008, #91 agentskills NO-GO + ADR-007 — 443 → 470 assertions)
+- v2.6.1: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#92 /reflect Q6 + SKILL-EFFECTIVENESS.md, SIGPIPE CI fix — milestone v2.6.0 CLOSED 5/5)
+- v2.7.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#96 hook-based reader adoption — closes #90 feature loop, 470 → 481 assertions, zero per-skill changes)
 
 ---
 
-_Updated with each release. Previous: 2.1.0 (Body 4, Mind 5, Heart 5, Spirit 5 = 4.75)_
+_Updated with each release. Previous: 2.6.1 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_

@@ -151,7 +151,7 @@ After scoring, persist the profile. This step should be automatic — do not ask
 
 ## Schema reference
 
-The profile file format is documented in `guides/habit-profile-schema.md` (v1 contract). Future skill readers — the 16 existing skills will adopt this profile in a separate v2.7.0 follow-up — code against that schema, not against this skill's body. If the schema needs to change, update `guides/habit-profile-schema.md` first and bump `schema-version`.
+The profile file format is documented in `guides/habit-profile-schema.md` (v1 contract). Skill readers (shipped in v2.7.0 via `hooks/session-start.sh` — see `guides/verbosity-adaptation.md`) code against that schema, not against this skill's body. If the schema needs to change, update `guides/habit-profile-schema.md` first and bump `schema-version`.
 
 ## Handoff
 
