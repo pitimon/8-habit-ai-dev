@@ -10,6 +10,38 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.6.0 — Hermes-Inspired Improvements (2026-04-11)
+
+Operationalizes four user-modeling and learning-loop patterns inspired by Hermes Agent (Nous Research), filtered through plugin-boundary discipline and cross-verification. Milestone v2.6.0 scope: P1 + P2 issues shipped (4/5 closed); #92 deferred to v2.6.1 or v2.7.0.
+
+### Added
+
+- **`/calibrate` skill + habit-profile schema v1** ([#90](https://github.com/pitimon/8-habit-ai-dev/issues/90), [ADR-008](docs/adr/ADR-008-user-maturity-calibration-design.md)) — new standalone skill that asks 5-7 questions and writes `~/.claude/habit-profile.md` so other skills can adapt verbosity to the user's maturity level (Dependence → Independence → Interdependence → Significance). Uses dominant-level scoring rubric adapted from `guides/whole-person-rubrics.md`. Writer side only — reader adoption for the 16 existing skills is tracked as [#96](https://github.com/pitimon/8-habit-ai-dev/issues/96) for v2.7.0.
+- **`guides/habit-profile-schema.md`** — public schema contract (v1, YAML frontmatter + markdown body, versioned via `schema-version`). Defines the API future reader skills code against; documents reader compatibility expectations and the BSD-vs-GNU date syntax caveat for age calculations.
+- **Persistent reflection artifacts** ([#88](https://github.com/pitimon/8-habit-ai-dev/issues/88)) — `/reflect` now persists lessons to `~/.claude/lessons/YYYY-MM-DD-<slug>.md`. `/research` and `/build-brief` search these before starting work. Closes the learning loop: reflect → persist → retrieve → apply.
+- **`guides/habit-nudges.md`** ([#89](https://github.com/pitimon/8-habit-ai-dev/issues/89)) — specification document for proactive workflow reminders (hook implementation belongs in `pitimon/claude-governance` per plugin boundary — this is the spec side).
+- **`guides/agentskills-compatibility-eval.md`** + **ADR-007** ([#91](https://github.com/pitimon/8-habit-ai-dev/issues/91)) — Deep + Compare research brief evaluating migration to the agentskills.io open standard. Decision: **NO-GO**. Other tools only parse `name`/`description`, not `metadata.*`, so migrating would trade the DAG validator's chain enforcement for a prose convention — a net loss. Hands-on sandbox test included.
+- **ADR-008** — User Maturity Calibration design record with 5 interlocking decisions: Alt E hybrid, dominant-level scoring, YAML frontmatter schema, standalone chain position, user-driven re-calibration with age warning.
+- **`/calibrate` discovery nudge** in `hooks/session-start.sh` — when `~/.claude/habit-profile.md` is missing, append a one-line 💡 nudge to the Onboarding line. Fully respects existing `HABIT_QUIET=1` opt-out from ADR-006.
+
+### Changed
+
+- Skill count: **16 → 17** (`/calibrate` added). Updated across README badge, CLAUDE.md Skills → Habits table, SELF-CHECK.md, `/using-8-habits` inventory, and `validate-structure.sh` counter.
+- `skills/using-8-habits/SKILL.md` — added `/calibrate` entry to the Assessment skills inventory; trimmed existing content to stay under F3 convention-consistency fitness budget (now 1990/2000 words — monitor margin for future edits).
+- `hooks/session-start.sh` — Onboarding line now lists `/calibrate` alongside `/using-8-habits`.
+- Validators expanded: **443 → 470 PASS** across 3 validators with 17/17 F3 convention-consistency.
+
+### Not Changed (Deferred or Out-of-Scope)
+
+- **Reader adoption for the 16 pre-v2.6.0 skills** — tracked as [#96](https://github.com/pitimon/8-habit-ai-dev/issues/96) for v2.7.0. Reading the profile and adjusting verbosity is a cross-cutting change that deserves its own PR.
+- **Issue [#92](https://github.com/pitimon/8-habit-ai-dev/issues/92) Skill Effectiveness Tracking** (P3) — remains open, deferrable to v2.6.1 or v2.7.0.
+
+### Migration notes
+
+No breaking changes. New users installing v2.6.0 for the first time will be nudged to run `/calibrate` on their next session. Existing users can opt in anytime by running `/calibrate` directly. Users who prefer the previous behavior can export `HABIT_QUIET=1` to silence both the session-start reminder and the calibration nudge.
+
+---
+
 ## v2.5.0 — Testing & Discoverability (2026-04-09)
 
 ### Added
