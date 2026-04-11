@@ -12,7 +12,7 @@
 
 > **"ทำเสร็จ ≠ ทำดี"** — Shipping code is not the same as shipping _good_ code.
 >
-> AI coding tools are powerful — but "build me X" without requirements, review, or staging creates fast, fragile code. This plugin adds the discipline AI lacks: **16 skills** across a **7-step workflow**, grounded in **Covey's 8 Habits** of effective development.
+> AI coding tools are powerful — but "build me X" without requirements, review, or staging creates fast, fragile code. This plugin adds the discipline AI lacks: **17 skills** across a **7-step workflow**, grounded in **Covey's 8 Habits** of effective development.
 
 ---
 
@@ -26,7 +26,7 @@
 **The Framework**
 
 - [7-Step Workflow](#the-7-step-workflow) — Visual pipeline from research to monitoring
-- [Skills Reference](#skills-reference) — All 16 skills with habit mappings
+- [Skills Reference](#skills-reference) — All 17 skills with habit mappings
 - [Use Cases](#use-cases-which-skill-when) — Common scenarios and recommended paths
 - [The 8 Habits](#the-8-habits) — Principles behind the workflow
 - [Maturity Model](#the-maturity-model) — Dependence to Significance
@@ -89,7 +89,7 @@ claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 **New to the plugin?** Start with `/workflow` for a guided walkthrough, or see [Use Cases](#use-cases-which-skill-when) to find the right skill for your situation.
 
-Two commands to install. The plugin loads a session reminder and makes 16 skills available.
+Two commands to install. The plugin loads a session reminder and makes 17 skills available.
 
 ---
 
@@ -135,7 +135,8 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 | `/security-check`     | H1: Be Proactive    | Focused OWASP security lens — secrets, injection, auth, deps                  |
 | `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking               |
 | `/workflow`           | All                 | Guided 7-step walkthrough — invoke or skip each step                          |
-| `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 16 skills + decision tree for "which skill next?" |
+| `/calibrate`          | H8: Find Your Voice | Self-assessment (5-7 questions) → writes `~/.claude/habit-profile.md` so other skills adapt verbosity to your maturity level |
+| `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 17 skills + decision tree for "which skill next?" |
 | `/eu-ai-act-check`    | H1 + H8 (Spirit)    | EU AI Act compliance — 9 obligations × tiered checklist (Art. 9-15)           |
 | `/ai-dev-log`         | H4 + H1             | Generate AI-assisted dev log from git history for audit trail                 |
 
@@ -308,7 +309,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ├── .claude-plugin/
 │   ├── plugin.json                 # Plugin metadata (v2.5.0)
 │   └── marketplace.json            # Marketplace listing
-├── skills/                         # 16 skills (8 workflow + 8 standalone)
+├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
 │   ├── requirements/SKILL.md       #   Step 1 → H2
 │   ├── design/SKILL.md             #   Step 2 → H8
@@ -440,7 +441,7 @@ Every habit in this plugin exists because **skipping it caused real damage**.
 
 ## FAQ
 
-**Q: Do I need to use all 16 skills for every task?**
+**Q: Do I need to use all 17 skills for every task?**
 No. Start with `/requirements` before building and `/review-ai` before committing. Those two alone eliminate most Vibe Coding problems. Add more skills as they feel natural. See [Use Cases](#use-cases-which-skill-when).
 
 **Q: What is "Vibe Coding"?**

@@ -23,6 +23,13 @@ else
   PROGRESS=""
 fi
 
+# Calibration nudge — appended only when no habit profile exists (v2.6.0)
+CALIBRATE_NUDGE=""
+if [ ! -f "${HOME}/.claude/habit-profile.md" ]; then
+  CALIBRATE_NUDGE='
+💡 **No habit profile detected** — run `/calibrate` to personalize guidance to your maturity level (H8).'
+fi
+
 cat <<EOF
 ## 8-Habit AI Dev Active (v${VERSION})
 
@@ -38,8 +45,8 @@ cat <<EOF
 
 **Core 5** (80% of daily work): \`/requirements\` · \`/review-ai\` · \`/cross-verify\` · \`/research\` · \`/reflect\`
 **Assessment**: \`/workflow\` · \`/whole-person-check\` · \`/security-check\` · \`/ai-dev-log\`
-**Onboarding**: \`/using-8-habits\` (decision tree + Core 5 explained)
-**Compliance**: \`/eu-ai-act-check\` (EU AI Act, migration to claude-governance planned)
+**Onboarding**: \`/using-8-habits\` (decision tree) · \`/calibrate\` (maturity profile)
+**Compliance**: \`/eu-ai-act-check\` (EU AI Act, migration to claude-governance planned)${CALIBRATE_NUDGE}
 
 _Silence this reminder: \`export HABIT_QUIET=1\`_
 EOF
