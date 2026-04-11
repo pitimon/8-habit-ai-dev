@@ -381,34 +381,40 @@ Both agents use the `sonnet` model for fast, focused analysis.
 
 ---
 
-## What's New in v2.2.0
+## What's New in v2.7.0
 
-**Theme: Body Dimension Level-Up** — content validation and architecture fitness functions to reach Whole Person Body Level 3 "Significant."
+**Theme: Reader Adoption** — closes the `/calibrate` feature loop (v2.6.0 wrote the profile, v2.7.0 makes the other 16 skills read it).
 
-- **Content validation** (`tests/validate-content.sh`) — section depth, markdown integrity, ADR format, handoff completeness
-- **Architecture fitness functions** — 3 tracked metrics: Skill Complexity Budget, Validation Coverage Ratio, Convention Consistency Score
-- **Extended structure validation** — `allowed-tools` field validation, README ↔ skills cross-reference, agent definition checks
-- **17 check categories, 221 assertions** (up from 10 checks / 133 assertions in v2.1.0)
-- **CI enforces both scripts** — fitness function breach fails the build
-- **[ADR-003](docs/adr/ADR-003-content-validation.md)** — documents why bash content validation was chosen over npm linting or agent-driven validation
-- **Zero new dependencies** — pure bash, as always
+- **Hook-based verbosity adaptation** ([#96](https://github.com/pitimon/8-habit-ai-dev/issues/96)) — `hooks/session-start.sh` reads `~/.claude/habit-profile.md` at session start and emits a level-specific directive into context. Skills auto-adapt from Dependence (full guidance) through Significance (minimal prompts) with **zero changes to individual skill files** — F3 word budget preserved
+- **`guides/verbosity-adaptation.md`** — canonical per-level adaptation rules with worked examples across 5 skill archetypes
+- **`tests/test-verbosity-hook.sh`** — 12-assertion regression coverage for all 8 hook branches plus HABIT_QUIET opt-out and ≤300-token budget check
+- **`preferences.verbosity-override`** in habit-profile schema — `verbose` promotes any level to Dependence, `concise` demotes to Significance
+- **4 validators in CI** (up from 3) — total **482 assertions** across validate-structure, test-skill-graph, validate-content, test-verbosity-hook
+- **Milestone v2.7.0 CLOSED** — Hermes-inspired feature loop (v2.6.0 + v2.7.0) complete; plugin at a local maximum given pure-markdown constraints
 
-## What's New in v2.1.0
+## What's New in v2.6.0 / v2.6.1
 
-**Theme: Multi-Agent Research** — deeper investigation with Feynman-inspired depth levels, research modes, and source verification.
+**Theme: Hermes-Inspired Improvements** — user-modeling + learning-loop patterns filtered through plugin-boundary discipline.
 
-- **Research depth levels** in `/research` — Quick (codebase only), Standard (default), Deep (multi-agent + verification)
-- **Research modes** in `/research` — General (default), Compare (comparison matrix), Audit (code vs docs)
-- **[`research-verifier` agent](agents/research-verifier.md)** — validates URLs, checks file paths, flags dead links in Deep mode
-- **[Research brief template](guides/templates/research-brief-template.md)** — structured output with optional comparison matrix, audit results, and verification report
-- **[ADR-002](docs/adr/ADR-002-research-modes.md)** — documents why modes integrate into `/research` rather than becoming separate skills
+- **`/calibrate` skill + habit-profile schema v1** ([#90](https://github.com/pitimon/8-habit-ai-dev/issues/90), [ADR-008](docs/adr/ADR-008-user-maturity-calibration-design.md)) — 5-7 question self-assessment that writes `~/.claude/habit-profile.md` for other skills to adapt to. Dominant-level scoring across Dependence → Independence → Interdependence → Significance
+- **`guides/habit-profile-schema.md`** — public schema contract (YAML + markdown, `schema-version: 1`) defining the writer-reader API future skills code against
+- **Persistent reflection artifacts** ([#88](https://github.com/pitimon/8-habit-ai-dev/issues/88)) — `/reflect` persists lessons to `~/.claude/lessons/YYYY-MM-DD-<slug>.md`; `/research` and `/build-brief` search these before starting work. Closes the loop: reflect → persist → retrieve → apply
+- **`/reflect` Q6 Skill Effectiveness signal** ([#92](https://github.com/pitimon/8-habit-ai-dev/issues/92)) — new 6th retro question naming "most useful" and "least useful/confusing" skill this session. Feeds maintainer-curated `SKILL-EFFECTIVENESS.md` trend tracker — **H7 applied to the plugin itself**
+- **`guides/habit-nudges.md`** + **ADR-007** — nudge specification (hook implementation delegated to `claude-governance` per plugin boundary) + agentskills.io NO-GO decision record
+- **Skill count: 16 → 17** (`/calibrate` added)
 
 ### Earlier Versions
 
-- **v2.0.0** — Orchestration-Aware Development (ULW-inspired): task classification in `/breakdown`, context boundaries in `/build-brief`, [orchestration patterns guide](guides/orchestration-patterns.md), [ADR-001](docs/adr/ADR-001-orchestration-patterns.md)
+- **v2.5.0** (2026-04-09) — Testing & Discoverability: `test-skill-graph.sh` DAG validator, `pre-commit.sh.example` template, bidirectional wiki ↔ skills linking
+- **v2.4.1** (2026-04-09) — Honest Correction: removed `/brainstorm` after finding `superpowers:brainstorming` is a better implementation; added `HABIT_QUIET=1` opt-out; introduced "Core 5" tier (ADR-006)
+- **v2.4.0** (2026-04-09) — Workflow Completions: `/brainstorm` (later removed), EARS-notation in `/requirements`, `/using-8-habits` onboarding meta-skill
+- **v2.3.0** (2026-04-09) — EU AI Act Compliance Toolkit (flagship): `/eu-ai-act-check` 9-obligation tiered checklist, `/ai-dev-log` AI transparency, `/design` Article 14 human-oversight checkpoint, `docs/research/eu-ai-act-obligations.md` primary-source research, [ADR-005](docs/adr/ADR-005-eu-ai-act-toolkit.md), Plugin Boundary section
+- **v2.2.0** (2026-04-07) — Body Dimension Level-Up: content validation (`validate-content.sh`), 3 architecture fitness functions, [ADR-003](docs/adr/ADR-003-content-validation.md)
+- **v2.1.0** (2026-04-07) — Multi-Agent Research (Feynman-inspired): research depth levels, research modes, `research-verifier` agent, [ADR-002](docs/adr/ADR-002-research-modes.md)
+- **v2.0.0** (2026-04-07) — Orchestration-Aware Development (ULW-inspired): task classification in `/breakdown`, context boundaries in `/build-brief`, [ADR-001](docs/adr/ADR-001-orchestration-patterns.md)
 - **v1.9.0** — Feynman-inspired: `/research` skill, evidence grounding, [12 AI Integrity Commandments](guides/integrity-principles.md), confidence levels, lazy parallelism gate
 
-Full release history: [GitHub Releases](https://github.com/pitimon/8-habit-ai-dev/releases)
+Full release history: [`CHANGELOG.md`](CHANGELOG.md) (v2.3.0+) · [`docs/wiki/Changelog.md`](docs/wiki/Changelog.md) (v2.2.0 and earlier) · [GitHub Releases](https://github.com/pitimon/8-habit-ai-dev/releases)
 
 ---
 
