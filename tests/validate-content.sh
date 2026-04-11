@@ -611,7 +611,14 @@ for skill_dir in skills/*/; do
   skill_ok=1
 
   # Check: frontmatter exists with 3 required fields
-  fm=$(sed -n '/^---$/,/^---$/p' "$skill_file" | head -20)
+  # Use awk (not sed|head) to avoid SIGPIPE under set -o pipefail when
+  # head closes stdout early — same fix pattern as validate-structure.sh:27.
+  # Triggered by skills/ai-dev-log/SKILL.md body `---` horizontal rule at
+  # line 65 which makes `sed -n '/^---$/,/^---$/p'` emit 187 lines (12
+  # frontmatter + 175 body-past-rule), overflowing head -20 and causing
+  # GNU sed exit 4 "couldn't flush stdout: Broken pipe" on Linux CI while
+  # BSD sed on macOS silently ignores SIGPIPE → intermittent CI failure.
+  fm=$(awk '/^---$/{c++; print; if(c==2) exit; next} c==1' "$skill_file")
   for field in "name:" "description:" "user-invocable:"; do
     echo "$fm" | grep -q "$field" || skill_ok=0
   done

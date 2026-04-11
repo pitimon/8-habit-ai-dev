@@ -29,6 +29,10 @@ Closes milestone v2.6.0 by shipping the final P3 issue from the Hermes-Inspired 
 
 `SKILL-EFFECTIVENESS.md` is **maintainer-curated, not auto-generated**. A runtime aggregator that scans `~/.claude/lessons/*.md` across users would need to be a hook (belongs in `pitimon/claude-governance` per plugin boundary) or would violate the "skills are read-only guidance" principle. The chosen design — maintainer reads lessons periodically, updates the report, commits — respects both constraints and matches ADR-008's schema-as-contract pattern (report format is a stable contract between `/reflect` writers and maintainer readers).
 
+### Fixed
+
+- **`tests/validate-content.sh` F3 convention-consistency check** — replaced `sed -n '/^---$/,/^---$/p' "$skill_file" | head -20` with an awk-based frontmatter extractor that exits cleanly at the second `---` marker. The old pattern was flaky under `set -o pipefail` on Linux CI (GNU sed) because `skills/ai-dev-log/SKILL.md` has a body horizontal rule at line 65, causing sed to emit 187 lines from a 239-line file; `head -20` closed early, sed hit SIGPIPE, and CI failed with exit code 4. BSD sed on macOS silently ignores SIGPIPE which masked the bug locally. Fix uses the same awk pattern already documented at `tests/validate-structure.sh:27`. The bug was latent since ai-dev-log gained its body `---` rule and caught PR #99 on its first CI run. No functional change to the F3 check — only the extraction mechanism.
+
 ### Milestone v2.6.0 — now CLOSED (5/5)
 
 With this release, all five Hermes-Inspired issues are shipped:
