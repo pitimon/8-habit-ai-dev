@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-17-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.7.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.7.0)
+[![Version](https://img.shields.io/badge/Version-2.7.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.7.1)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -307,7 +307,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.7.0)
+│   ├── plugin.json                 # Plugin metadata (v2.7.1)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
@@ -380,6 +380,14 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
 
 ---
+
+## What's New in v2.7.1
+
+**Theme: Review Discipline Refinement** — small post-milestone patch on top of v2.7.0, adding two review-time disciplines to `/review-ai` after a cost/benefit audit against `addyosmani/agent-skills` (MIT). Only the one genuine gap was imported; five other candidates were evaluated and rejected as duplicative or out-of-scope.
+
+- **`/review-ai` Performance axis** ([#110](https://github.com/pitimon/8-habit-ai-dev/issues/110), [PR #111](https://github.com/pitimon/8-habit-ai-dev/pull/111)) — fourth review category alongside Security/Quality/Completeness. Flags N+1 queries, unbounded loops, missing pagination, unindexed queries, and memory leaks. Same `file:line` evidence standard as other axes.
+- **`/review-ai` review-tests-first directive** — new Process step 2 directs the reviewer to open the new or changed test files before judging the implementation. Tests declare intent; reading them first gives the specification to review against.
+- **Rejections preserved in PR** — `guides/anti-rationalization.md`, `guides/red-flags.md`, `guides/google-engineering-principles.md`, `/cross-verify` Q18, and a cross-plugin hard-gate spec were all evaluated and rejected. Rationale archived in the PR #111 body so future "research hype" passes don't re-litigate them.
 
 ## What's New in v2.7.0
 
@@ -529,4 +537,4 @@ MIT
 
 ---
 
-_Version: 2.7.0 | Last updated: 2026-04-11_
+_Version: 2.7.1 | Last updated: 2026-04-11_

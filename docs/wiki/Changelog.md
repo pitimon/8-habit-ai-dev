@@ -4,6 +4,14 @@ Release history for `8-habit-ai-dev`. This page summarizes notable changes; the 
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
 
+## v2.7.1 — Review Discipline Refinement (April 2026)
+
+Small post-milestone patch adding two disciplines to `/review-ai` after a cost/benefit audit against `addyosmani/agent-skills` (MIT). Scope deliberately minimal — only one of six candidate mechanics was imported.
+
+- **`/review-ai` Performance axis** ([#110](https://github.com/pitimon/8-habit-ai-dev/issues/110), [PR #111](https://github.com/pitimon/8-habit-ai-dev/pull/111)) — fourth review category flagging N+1 queries, unbounded loops, missing pagination, unindexed queries, and memory leaks; same `file:line` evidence standard as the other axes
+- **Review-tests-first directive** — new Process step 2 directs the reviewer to read new/changed tests before judging implementation
+- **Rejections preserved in PR #111 body** — `guides/anti-rationalization.md`, `guides/red-flags.md`, `guides/google-engineering-principles.md`, `/cross-verify` Q18, and a cross-plugin hard-gate spec were all evaluated and rejected as duplicative of existing features or out-of-scope
+
 ## v2.7.0 — Reader Adoption (April 2026)
 
 Closes the `/calibrate` feature loop by making skills read `~/.claude/habit-profile.md` via a session-start hook.
