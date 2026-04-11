@@ -68,6 +68,9 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 
 **Users who want maximum coverage**: install both plugins together. They compose cleanly — no conflicts.
 
+**Cross-plugin specs** (defined here, implemented in `claude-governance`):
+- [`guides/habit-nudges.md`](guides/habit-nudges.md) (v2.6.0) — specification for proactive workflow nudges; hook implementation belongs in `claude-governance`. Catalog of 6 nudges with triggers, cooldowns, and opt-out via `HABIT_QUIET=1`.
+
 ## Skills → Habits Mapping
 
 | Skill                 | Step | Habit                 | Purpose                                                                          |
