@@ -45,6 +45,7 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 - **`habits/`, `guides/`, `rules/` are reference content** — never generated or modified by skills
 - **Agent (`agents/8-habit-reviewer.md`)** uses model `sonnet` with read-only tools (`Read`, `Glob`, `Grep`) — it analyzes and reports, never edits
 - **Plugin metadata** lives in `.claude-plugin/plugin.json` (plugin config) and `.claude-plugin/marketplace.json` (marketplace listing)
+- **Lesson persistence** (v2.6.0): `/reflect` saves lesson files to `~/.claude/lessons/YYYY-MM-DD-<slug>.md`. `/research` and `/build-brief` search these before starting work. This closes the learning loop: reflect → persist → retrieve → apply
 - **Session hook budget**: `hooks/session-start.sh` output must stay ≤300 tokens
 - **Version lives in 4 files** — must bump together: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `README.md` (badge + footer), and `SELF-CHECK.md` header. `tests/validate-structure.sh` enforces consistency across all four — CI will fail if any drifts.
 
@@ -85,5 +86,5 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 | `/using-8-habits`     | —    | H5 + H8               | Onboarding meta-skill + decision tree (v2.4.0)                                   |
 | `/eu-ai-act-check`    | —    | H1 + H8 (Spirit)      | EU AI Act 9-obligation tiered checklist (v2.3.0, migrating to claude-governance) |
 | `/ai-dev-log`         | —    | H4 Win-Win + H1       | AI-assisted dev log from git history (v2.3.0)                                    |
-| `/reflect`            | —    | H7 Sharpen the Saw    | 5-question post-task retrospective                                               |
+| `/reflect`            | —    | H7 Sharpen the Saw    | 5-question post-task retrospective + persistent lesson file (`~/.claude/lessons/`) |
 | `/workflow`           | —    | All                   | Guided 7-step walkthrough                                                        |

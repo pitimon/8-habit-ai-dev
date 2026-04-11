@@ -6,7 +6,7 @@ description: >
   Maps to H7 (Sharpen the Saw — invest in capability, not just output).
 user-invocable: true
 argument-hint: "[task or feature just completed]"
-allowed-tools: ["Read", "Glob", "Grep"]
+allowed-tools: ["Read", "Glob", "Grep", "Write"]
 prev-skill: any
 next-skill: none
 ---
@@ -59,6 +59,22 @@ One specific, assigned action with a deadline. Not "we should improve testing" b
 | 5 | Action item | [specific action] — **Owner**: [who] — **By**: [date] |
 ```
 
+## Step 6: Persist Lesson (automatic)
+
+After the 5 questions are answered, persist the reflection as a lesson file for future sessions. This step should be automatic — do not ask the user additional questions.
+
+1. **Create directory** if needed: `~/.claude/lessons/` (skip silently if it already exists)
+2. **Generate filename**: `YYYY-MM-DD-<slug>.md` where `<slug>` is a lowercase, hyphenated summary of the task (max 50 chars, no spaces or special characters)
+3. **Write the lesson file** using the template from `${CLAUDE_PLUGIN_ROOT}/guides/templates/lesson-template.md`:
+   - `date`: today's date
+   - `task`: the task/feature name from the reflection argument
+   - `project`: basename of the current working directory
+   - `tags`: 2-5 keywords extracted from the reflection answers (domain, technology, pattern)
+   - `habit`: the primary habit that applied during this task (if identifiable)
+   - Body: the 5-question answers from the reflection output
+4. **Confirm**: Print a one-line confirmation: `Lesson saved: ~/.claude/lessons/<filename>`
+5. **Graceful failure**: If the write fails (permissions, disk full), warn the user but do NOT block the reflection output. The conversation-level reflection is more valuable than persistence.
+
 ## When to Skip
 
 - Task took less than 15 minutes
@@ -69,6 +85,8 @@ One specific, assigned action with a deadline. Not "we should improve testing" b
 
 - [ ] All 5 questions answered (even if briefly)
 - [ ] Action item has an owner and deadline (or explicitly "none needed")
+- [ ] Lesson file persisted to `~/.claude/lessons/` (or warning printed if write failed)
 - [ ] Took no more than 5 minutes
 
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h7-sharpen-saw.md` for the full H7 principle and examples.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/lesson-template.md` for the lesson file format.
