@@ -2,10 +2,10 @@
 
 **Status**: Accepted
 **Date**: 2026-04-11
-**Version**: 2.6.0
 **Decision type**: On-the-Loop (architecture / format standard adoption)
 **Issue**: [#91](https://github.com/pitimon/8-habit-ai-dev/issues/91)
 **Research brief**: [`guides/agentskills-compatibility-eval.md`](../../guides/agentskills-compatibility-eval.md)
+**Related**: ADR-004 (wiki-as-artifact), ADR-006 (superpowers deferral) — both are precedents for format/adoption decisions
 
 ## Context
 
@@ -82,3 +82,14 @@ Revisit this decision if **any** of the following occurs (same list as in the re
 **A standard's reach is measured by what adopting tools actually parse, not by their logo list.** The agentskills.io spec allows arbitrary `metadata.*` keys — but "allows" and "parses" are different things. VS Code's docs clearly list 8 parsed fields and exclude custom metadata from the parsing contract. Gemini CLI's docs explicitly say "these are the only fields that [it] reads to determine when the skill gets used." The 30-tool adoption count is real; the chain-enforcement portability is not.
 
 This lesson generalizes: **when evaluating a standard for migration, enumerate what each adopting tool *actually* does with each field, not what the spec *permits*.** The gap between permitted and parsed is where portability claims go to die.
+
+## References
+
+- **agentskills.io specification**: [agentskills.io/specification](https://agentskills.io/specification) — core frontmatter fields (name, description, license, compatibility, metadata, allowed-tools)
+- **VS Code agent-skills docs**: [code.visualstudio.com/docs/copilot/customization/agent-skills](https://code.visualstudio.com/docs/copilot/customization/agent-skills) — VS Code extension fields (argument-hint, user-invocable, disable-model-invocation); no custom metadata parsing documented
+- **Gemini CLI skill docs**: [geminicli.com/docs/cli/creating-skills](https://geminicli.com/docs/cli/creating-skills/) — confirms only `name` and `description` are parsed for skill activation
+- **Research brief**: [`guides/agentskills-compatibility-eval.md`](../../guides/agentskills-compatibility-eval.md) — full 11-finding Deep + Compare research brief with comparison matrix, audit table, and Source Verification Report (verified by `8-habit-ai-dev:research-verifier` agent)
+- **DAG validator source**: [`tests/test-skill-graph.sh`](../../tests/test-skill-graph.sh) — chain-edge extraction regex at lines 36-37 (empirical test target)
+- **Structure validator source**: [`tests/validate-structure.sh`](../../tests/validate-structure.sh) — 5 check blocks requiring top-level `prev-skill`/`next-skill`/`allowed-tools` (lines 37, 115, 143, 157, 221)
+- **Issue #91**: [pitimon/8-habit-ai-dev#91](https://github.com/pitimon/8-habit-ai-dev/issues/91) — research-only evaluation mandate
+- **Related ADRs**: [ADR-005](./ADR-005-eu-ai-act-compliance-toolkit.md) (plugin boundary discipline — precedent for "don't adopt what we can't enforce"), [ADR-006](./ADR-006-audience-honesty-and-superpowers-deferral.md) (H5 "read the peer source before claiming parity" — same lesson pattern applied here to a format spec instead of a peer plugin)
