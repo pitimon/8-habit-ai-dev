@@ -505,6 +505,36 @@ fi
 
 echo ""
 
+# --- Check 19: Docs freshness vs plugin.json version ---
+# Enforces downstream propagation from CHANGELOG.md to README.md and docs/wiki/Changelog.md.
+# Prevents the "stuck at v2.N-5" drift scenario (see issue #106, fix in PR #107).
+# See CONTRIBUTING.md § Testing Conventions for rationale.
+echo "--- Check 19: Docs freshness vs plugin.json version ---"
+
+# Extract current version from plugin.json — no pipe, SIGPIPE-safe (see CONTRIBUTING.md)
+current_version=$(awk -F'"' '/"version"/{print $4; exit}' .claude-plugin/plugin.json)
+
+if [ -z "$current_version" ]; then
+  fail "could not extract version from .claude-plugin/plugin.json"
+else
+  # README.md must mention the current version somewhere (typically in "What's New")
+  if grep -q "v${current_version}" README.md; then
+    pass "README.md mentions current version v${current_version}"
+  else
+    fail "README.md does not mention v${current_version} — CHANGELOG.md likely updated but downstream propagation was skipped. See CONTRIBUTING.md § Testing Conventions."
+  fi
+
+  # docs/wiki/Changelog.md must either mention the version OR point to CHANGELOG.md
+  # (pointer-based design is valid per ADR-004 — wiki references root as source of truth)
+  if grep -Eq "v${current_version}|CHANGELOG\.md" docs/wiki/Changelog.md; then
+    pass "docs/wiki/Changelog.md references v${current_version} or points to CHANGELOG.md"
+  else
+    fail "docs/wiki/Changelog.md missing v${current_version} mention AND no CHANGELOG.md pointer — wiki drift. See CONTRIBUTING.md § Testing Conventions."
+  fi
+fi
+
+echo ""
+
 # ===================================================================
 # Architecture Fitness Functions
 # These track health metrics over time. A BREACH fails the build.
