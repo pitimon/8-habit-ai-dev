@@ -10,6 +10,39 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.7.1 — Review Discipline Refinement (2026-04-11)
+
+Small post-milestone patch on top of v2.7.0. Adds two review-time disciplines to `/review-ai` after a cost/benefit audit against Addy Osmani's `agent-skills` repository (MIT). Only one of six candidate mechanics was imported — the other five were explicitly rejected as duplicative of existing plugin features or out-of-scope for the `8-habit-ai-dev` plugin boundary. Scope deliberately minimal to honor the v2.7.0 "local maximum" framing from `~/.claude/lessons/2026-04-11-issue-96-reader-adoption.md`.
+
+### Added
+
+- **`/review-ai` Performance axis** ([#110](https://github.com/pitimon/8-habit-ai-dev/issues/110), [PR #111](https://github.com/pitimon/8-habit-ai-dev/pull/111)) — fourth review category alongside Security / Quality / Completeness, flagging N+1 queries, unbounded loops, missing pagination on list endpoints, unindexed queries on large tables, and memory leaks (unclosed streams, unbounded caches, retained references). Performance findings follow the same `file:line` evidence standard as the other axes.
+- **`/review-ai` review-tests-first directive** — new Process step 2 directs the reviewer to open the new or changed test files *before* judging the implementation. Tests declare the *intended* behavior; reading them first gives you the specification to review the code against. If new logic has no corresponding test, record it as a Completeness finding.
+- **Verdict output table** now lists four category rows (Security / Quality / Performance / Completeness); Definition of Done checkbox references all four categories by name.
+
+### Not Added (deliberately rejected after cost/benefit audit)
+
+The research brief evaluated six agent-skills mechanics; five were rejected. Rejection rationale is archived in PR #111's body and the local plan file `~/.claude/plans/drifting-waddling-pascal.md` so future "research hype" passes don't re-litigate the same ground:
+
+- ❌ `guides/anti-rationalization.md` — already present as 24 anti-patterns in `rules/effective-development.md` + 12 commandments in `guides/integrity-principles.md`, just in different prose form
+- ❌ `guides/red-flags.md` — `/reflect` and `/cross-verify` already provide self-detection
+- ❌ `guides/google-engineering-principles.md` (Hyrum's Law / Beyoncé Rule / Trunk-Based Development) — cultural flavor over existing substance; no new discipline the plugin lacks
+- ❌ `/cross-verify` Q18 "Beyoncé check" — existing questions already probe test coverage gaps
+- ❌ Cross-plugin hard-gate progression spec — no user demand signal; runtime enforcement belongs in `claude-governance`, not here
+
+### Fitness functions
+
+- All 4 validators green: `validate-structure.sh` 238/238, `validate-content.sh` 177/177, F1/F2/F3 HEALTHY, `test-verbosity-hook.sh` 11/11
+- `skills/review-ai/SKILL.md` word count: 890 → 1025 (F3 ceiling 2000, headroom 975 retained)
+- Validator assertion total unchanged — this patch does not add or remove assertions
+
+### Source attribution
+
+- Research source: [`addyosmani/agent-skills`](https://github.com/addyosmani/agent-skills) (MIT)
+- No code or text was directly copied; only the *idea* of a Performance review axis and a tests-first directive were adapted
+
+---
+
 ## v2.7.0 — Reader Adoption (2026-04-11)
 
 Closes the reader-adoption half of the `/calibrate` feature loop. v2.6.0 shipped `/calibrate` which **writes** `~/.claude/habit-profile.md`; until this release, the 17 skills did not **read** the profile, so the feature delivered discovery but not adaptation. v2.7.0 closes that gap via a hook-based adaptation directive — zero changes to individual skill files.
