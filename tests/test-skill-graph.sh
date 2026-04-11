@@ -33,8 +33,10 @@ for skill_dir in skills/*/; do
 
   name=$(basename "$skill_dir")
 
-  prev=$(sed -n '/^---$/,/^---$/{ s/^prev-skill:[[:space:]]*//p; }' "$skill_file" | head -1 | tr -d '[:space:]')
-  next=$(sed -n '/^---$/,/^---$/{ s/^next-skill:[[:space:]]*//p; }' "$skill_file" | head -1 | tr -d '[:space:]')
+  # awk (no pipe) avoids SIGPIPE under set -o pipefail on Linux CI where GNU sed exits 4
+  # when head closes stdin mid-stream; see tests/validate-structure.sh:27 header comment.
+  prev=$(awk '/^---$/{c++; if(c==2) exit; next} c==1 && sub(/^prev-skill:[[:space:]]*/, ""){gsub(/[[:space:]]/, ""); print; exit}' "$skill_file")
+  next=$(awk '/^---$/{c++; if(c==2) exit; next} c==1 && sub(/^next-skill:[[:space:]]*/, ""){gsub(/[[:space:]]/, ""); print; exit}' "$skill_file")
 
   if [ -z "$prev" ]; then
     fail "$name: missing prev-skill in frontmatter"

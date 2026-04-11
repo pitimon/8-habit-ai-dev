@@ -52,7 +52,8 @@ for skill_dir in skills/*/; do
   [ ! -f "$skill_file" ] && continue
 
   # Extract name value from frontmatter
-  name_value=$(sed -n '/^---$/,/^---$/p' "$skill_file" | grep "^name:" | head -1 | sed 's/^name:[[:space:]]*//')
+  # awk (no pipe) avoids SIGPIPE under set -o pipefail when head closes early — see Check 1 header comment
+  name_value=$(awk '/^---$/{c++; if(c==2) exit; next} c==1 && sub(/^name:[[:space:]]*/, ""){print; exit}' "$skill_file")
 
   if [ "$name_value" = "$dir_name" ]; then
     pass "$skill_file — name '$name_value' matches directory"
@@ -140,8 +141,8 @@ CHAIN_FAIL=0
 for pair in $EXPECTED_CHAIN; do
   from="${pair%%:*}"
   to="${pair##*:}"
-  from_next=$(sed -n '/^---$/,/^---$/p' "skills/$from/SKILL.md" 2>/dev/null | grep "^next-skill:" | head -1 | sed 's/^next-skill:[[:space:]]*//')
-  to_prev=$(sed -n '/^---$/,/^---$/p' "skills/$to/SKILL.md" 2>/dev/null | grep "^prev-skill:" | head -1 | sed 's/^prev-skill:[[:space:]]*//')
+  from_next=$(awk '/^---$/{c++; if(c==2) exit; next} c==1 && sub(/^next-skill:[[:space:]]*/, ""){print; exit}' "skills/$from/SKILL.md" 2>/dev/null)
+  to_prev=$(awk '/^---$/{c++; if(c==2) exit; next} c==1 && sub(/^prev-skill:[[:space:]]*/, ""){print; exit}' "skills/$to/SKILL.md" 2>/dev/null)
 
   if [ "$from_next" = "$to" ] && [ "$to_prev" = "$from" ]; then
     pass "$from → $to chain valid"
@@ -154,7 +155,7 @@ done
 for standalone in cross-verify whole-person-check security-check reflect workflow; do
   skill_file="skills/$standalone/SKILL.md"
   [ ! -f "$skill_file" ] && continue
-  prev=$(sed -n '/^---$/,/^---$/p' "$skill_file" | grep "^prev-skill:" | head -1 | sed 's/^prev-skill:[[:space:]]*//')
+  prev=$(awk '/^---$/{c++; if(c==2) exit; next} c==1 && sub(/^prev-skill:[[:space:]]*/, ""){print; exit}' "$skill_file")
   if [ "$prev" = "any" ] || [ "$prev" = "none" ]; then
     pass "$standalone prev-skill=$prev (standalone OK)"
   else
@@ -218,7 +219,7 @@ for skill_dir in skills/*/; do
   [ ! -f "$skill_file" ] && continue
   skill_name=$(basename "$skill_dir")
 
-  tools_line=$(sed -n '/^---$/,/^---$/p' "$skill_file" | grep "^allowed-tools:" | head -1)
+  tools_line=$(awk '/^---$/{c++; if(c==2) exit; next} c==1 && /^allowed-tools:/{print; exit}' "$skill_file")
   if [ -z "$tools_line" ]; then
     fail "$skill_name — missing allowed-tools field"
     TOOLS_FAIL=$((TOOLS_FAIL + 1))
@@ -287,7 +288,8 @@ AGENT_FAIL=0
 if [ -d "agents" ]; then
   while read -r agent_file; do
     agent_name=$(basename "$agent_file")
-    frontmatter=$(sed -n '/^---$/,/^---$/p' "$agent_file" | head -20)
+    # awk (no pipe) avoids SIGPIPE; bound to 20 content lines to match prior `head -20` cap
+    frontmatter=$(awk '/^---$/{c++; print; if(c==2) exit; next} c==1 {print; if(++n>=20) exit}' "$agent_file")
 
     if [ -z "$frontmatter" ]; then
       fail "$agent_name — no YAML frontmatter"
