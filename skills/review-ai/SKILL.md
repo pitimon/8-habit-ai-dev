@@ -18,25 +18,35 @@ next-skill: deploy-guide
 
 1. **Get the diff**: `git diff --name-only HEAD` to see what changed.
 
-2. **Security check** (CRITICAL — block if found):
+2. **Read the tests first** — before judging the implementation, open the new or changed test files. Tests declare the *intended* behavior; reading them first gives you the specification to review the code against. If new logic has no corresponding test, record that as a Completeness finding in step 6.
+
+3. **Security check** (CRITICAL — block if found):
    - Hardcoded secrets (API keys, passwords, tokens)
    - SQL injection (string interpolation in queries)
    - Missing input validation on new endpoints
    - XSS vulnerabilities (unsanitized HTML output)
 
-3. **Quality check** (HIGH):
+4. **Quality check** (HIGH):
    - Functions >50 lines → break down
    - Files >800 lines → extract
    - Nesting >4 levels → simplify
    - Missing error handling on external calls
    - `console.log` or `print()` in production code
 
-4. **Completeness check** (MEDIUM):
+5. **Performance check** (HIGH):
+   - N+1 queries, unbounded loops, or sync blocking in hot paths
+   - Missing pagination on list endpoints
+   - Unindexed queries on large tables
+   - Memory leaks (unclosed streams, unbounded caches, retained references)
+
+   Performance findings follow the same evidence standard as the other axes: cite `file:line` with the measured or obvious-on-inspection cost.
+
+6. **Completeness check** (MEDIUM):
    - Edge cases handled (null, empty, malformed input)
-   - Tests written for new functions
+   - Tests written for new functions (cross-check with step 2)
    - Docs updated if API changed
 
-5. **Give actionable feedback** — not just "fix this" but explain WHY and HOW:
+7. **Give actionable feedback** — not just "fix this" but explain WHY and HOW:
 
    ```
    CRITICAL: Hardcoded API key at line 42
@@ -44,16 +54,17 @@ next-skill: deploy-guide
    → Why: Keys in code get committed to git history permanently
    ```
 
-6. **Evidence Requirements** (Feynman principle: "line number or it didn't happen"):
+8. **Evidence Requirements** (Feynman principle: "line number or it didn't happen"):
 
    Every finding MUST include specific evidence — no "you should consider..." without pointing to code:
    - **Security**: Exact `file:line` where vulnerability exists
    - **Quality**: Specific function name and line count (e.g., `processOrder() at api.ts:142 — 73 lines`)
+   - **Performance**: `file:line` plus the cost (query count, loop bound, or order-of-magnitude estimate)
    - **Completeness**: Missing test file path or untested function name
 
    Unsupported findings are not findings — they are opinions. Drop or substantiate.
 
-7. **H4 Checkpoint**: "Does this review help the developer (or AI) get better, not just point out flaws?"
+9. **H4 Checkpoint**: "Does this review help the developer (or AI) get better, not just point out flaws?"
 
 ## Handoff
 
@@ -80,6 +91,7 @@ Output format:
 |--------------|----------|----------|
 | Security     | [count]  | [highest] |
 | Quality      | [count]  | [highest] |
+| Performance  | [count]  | [highest] |
 | Completeness | [count]  | [highest] |
 **Action required**: [specific next steps or "none — clear to commit"]
 ```
@@ -130,7 +142,7 @@ If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
 - [ ] Verdict rendered using the 4-level table above
 - [ ] Each finding includes actionable feedback (WHY + HOW to fix)
 - [ ] Every finding cites specific evidence (file:line, test output, or diff)
-- [ ] Summary table shows findings count per category
+- [ ] Summary table shows findings count for all four categories (Security, Quality, Performance, Completeness)
 
 ## Further Reading
 
