@@ -1,6 +1,69 @@
 # Changelog
 
-Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative source is the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases) and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
+Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
+
+> Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.7.0 — Reader Adoption (April 2026)
+
+Closes the `/calibrate` feature loop by making skills read `~/.claude/habit-profile.md` via a session-start hook.
+
+- **Hook-based verbosity adaptation** ([#96](https://github.com/pitimon/8-habit-ai-dev/issues/96)) — `hooks/session-start.sh` emits a per-level directive into session context; 16 existing skills auto-adapt with zero file changes
+- **`guides/verbosity-adaptation.md`** — canonical per-level rules with 5 skill-archetype examples
+- **`tests/test-verbosity-hook.sh`** — 12-assertion regression coverage for all 8 hook branches + HABIT_QUIET opt-out + ≤300-token budget check
+- **4 validators in CI, 482 total assertions** (up from 3 / 470)
+- **Milestone v2.7.0 CLOSED** — Hermes-inspired feature loop (v2.6.0 + v2.7.0) complete
+
+## v2.6.1 — Skill Effectiveness Tracking (April 2026)
+
+- **`/reflect` Q6 Skill Effectiveness signal** ([#92](https://github.com/pitimon/8-habit-ai-dev/issues/92)) — 6th retro question captures "most useful" and "least useful/confusing" skill
+- **`SKILL-EFFECTIVENESS.md`** (repo root) — maintainer-curated trend tracker; H7 applied to the plugin itself
+- **`guides/templates/lesson-template.md`** — new `## Skill effectiveness` section for consistent Q6 capture
+- **Fix**: SIGPIPE flake in `validate-content.sh` F3 extractor — replaced `sed | head` with pipe-safe awk
+
+## v2.6.0 — Hermes-Inspired Improvements (April 2026)
+
+- **`/calibrate` skill + habit-profile schema v1** ([#90](https://github.com/pitimon/8-habit-ai-dev/issues/90), [ADR-008](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-008-user-maturity-calibration-design.md)) — 5-7 question self-assessment writing `~/.claude/habit-profile.md` with dominant-level scoring
+- **`guides/habit-profile-schema.md`** — public schema contract (YAML + markdown body, versioned via `schema-version`)
+- **Persistent reflection artifacts** ([#88](https://github.com/pitimon/8-habit-ai-dev/issues/88)) — `/reflect` writes lessons to `~/.claude/lessons/`; `/research` and `/build-brief` read them before starting work
+- **`guides/habit-nudges.md`** + **ADR-007** — nudge spec (hook delegated to claude-governance) + agentskills.io NO-GO decision
+- **Skill count: 16 → 17** (`/calibrate` added)
+
+## v2.5.0 — Testing & Discoverability (April 2026)
+
+- **`tests/test-skill-graph.sh`** — DAG validator for `prev-skill` / `next-skill` chains (#79): cycles, dangling refs, symmetric edges, orphans
+- **`hooks/pre-commit.sh.example`** — template running `/review-ai` on staged files (opt-in, not auto-installed)
+- **Bidirectional wiki ↔ skills linking** (#81) — each workflow skill has a `## Further Reading` section linking to its wiki page
+- CI now runs 3 validators; 443 total assertions
+
+## v2.4.1 — Honest Correction (April 2026)
+
+Same-day correction after comparing `/brainstorm` to `superpowers:brainstorming`.
+
+- **Removed `/brainstorm` skill** (breaking) — superpowers' 500+ line hard-gate discipline suite is a better fit; `/research` now references it for fuzzy problem statements
+- **`HABIT_QUIET=1` opt-out** for `hooks/session-start.sh` — users who internalize the workflow can silence the reminder
+- **"Core 5" tier** in `/using-8-habits` — 80/20 reality acknowledgment
+- [ADR-006](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-006-audience-honesty-and-opt-out.md) — audience-honesty + opt-out + "check peer plugins before building parity" lesson
+
+## v2.4.0 — Workflow Completions (April 2026)
+
+- **`/brainstorm`** (Step 0a, later removed in v2.4.1) — 5 Whys, alternative framings, hidden assumptions
+- **EARS-notation in `/requirements`** — 5 structured acceptance criteria templates from Rolls-Royce (Mavin et al. 2009)
+- **`/using-8-habits`** — onboarding meta-skill with decision tree and complete walkthrough example
+- Validators: +52 assertions, anti-drift check ensures meta-skill references every directory skill
+- Fix: `validate-structure.sh` regex allowing digits in skill names
+
+## v2.3.0 — EU AI Act Compliance Toolkit (April 2026)
+
+Flagship blue-ocean feature: first Claude Code plugin with explicit EU AI Act compliance toolkit, shipped ~4 months before 2 August 2026 enforcement.
+
+- **`/eu-ai-act-check`** — 9-obligation tiered checklist (25 MUST + 27 SHOULD + 8 COULD) covering Articles 9-15
+- **`/ai-dev-log`** + **`scripts/generate-ai-dev-log.sh`** — AI-assisted development log from `git log` + Co-Authored-By trailers (4 modes: markdown/json/summary/out)
+- **`/design` Step 5** — Article 14 human-oversight 5-capability checkpoint (Understand / Automation bias / Interpret / Override / Stop button)
+- **`docs/research/eu-ai-act-obligations.md`** — primary-source research with Verified Quotes for all 7 articles
+- **[ADR-005](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-005-eu-ai-act-toolkit.md)** + **Plugin Boundary section** in `CLAUDE.md` — documents complementary relationship with [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance)
+- Version file convention corrected to **4 files** (added `SELF-CHECK.md`)
+- Fix: `validate-structure.sh` SIGPIPE race replaced `sed | head` with awk
 
 ## v2.2.0 — April 2026
 
@@ -40,11 +103,12 @@ This plugin follows [semantic versioning](https://semver.org/):
 - **Minor** — new skills, new habits content, backward-compatible additions
 - **Patch** — documentation fixes, typo corrections, clarifications
 
-Version is tracked in three files that must bump together:
+Version is tracked in four files that must bump together (enforced by `tests/validate-structure.sh`):
 
 - `.claude-plugin/plugin.json`
 - `.claude-plugin/marketplace.json`
-- `README.md` footer
+- `README.md` (badge + footer)
+- `SELF-CHECK.md` header
 
 ## Full history
 
