@@ -14,7 +14,7 @@ The plugin has three loading mechanisms with distinct timing:
 
 1. **`rules/effective-development.md`** — Auto-loaded into every Claude Code session (via Claude's rules system). Contains the full 8-Habit playbook with Rules, Anti-patterns, and Checkpoints per habit.
 2. **`hooks/session-start.sh`** — Runs at SessionStart (registered in `hooks/hooks.json`). Prints a ≤300-token reminder of the 7-step workflow. Must stay concise — this is injected into every conversation.
-3. **`skills/*/SKILL.md`** — Loaded on-demand when user invokes `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/review-ai`, `/deploy-guide`, `/monitor-setup`, or `/cross-verify`.
+3. **`skills/*/SKILL.md`** — Loaded on-demand when user invokes `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/review-ai`, `/deploy-guide`, `/monitor-setup`, `/cross-verify`, or `/calibrate`.
 
 **On-demand loading**: Skills reference habit content via `Load ${CLAUDE_PLUGIN_ROOT}/habits/h*.md` — the habit files are NOT loaded at session start. This keeps the token budget lean.
 
@@ -55,7 +55,7 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 
 | Plugin                      | Domain                                                                                     | Examples                                                                                                                                                                                                                                                                          |
 | --------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`8-habit-ai-dev`** (this) | Workflow **discipline** — how to develop well                                              | 7-step workflow, 8 Habits, Whole Person Model, `/research`, `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/review-ai`, `/deploy-guide`, `/monitor-setup`, `/cross-verify`, `/reflect`, `/ai-dev-log` (transparency), `/security-check` (review lens)                 |
+| **`8-habit-ai-dev`** (this) | Workflow **discipline** — how to develop well                                              | 7-step workflow, 8 Habits, Whole Person Model, `/research`, `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/review-ai`, `/deploy-guide`, `/monitor-setup`, `/cross-verify`, `/reflect`, `/calibrate` (user maturity), `/ai-dev-log` (transparency), `/security-check` (review lens)                 |
 | **`claude-governance`**     | Compliance **enforcement** + **frameworks** — blocking bad behavior + mapping to standards | PreToolUse secret-scanner hook (25 patterns), Three Loops Decision Model (ADR-002 consequence-based auth), OWASP DSGAI mapping (11 controls), EU AI Act compliance toolkit (planned v3.1.0+), `/governance-check`, `/spec-driven-dev`, `/create-adr`, `governance-reviewer` agent |
 
 **Rule of thumb before adding a new feature here**:
@@ -90,4 +90,5 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 | `/eu-ai-act-check`    | —    | H1 + H8 (Spirit)      | EU AI Act 9-obligation tiered checklist (v2.3.0, migrating to claude-governance) |
 | `/ai-dev-log`         | —    | H4 Win-Win + H1       | AI-assisted dev log from git history (v2.3.0)                                    |
 | `/reflect`            | —    | H7 Sharpen the Saw    | 5-question post-task retrospective + persistent lesson file (`~/.claude/lessons/`) |
+| `/calibrate`          | —    | H8 Find Your Voice    | Self-assessment → `~/.claude/habit-profile.md` so other skills adapt verbosity to maturity level (v2.6.0) |
 | `/workflow`           | —    | All                   | Guided 7-step walkthrough                                                        |

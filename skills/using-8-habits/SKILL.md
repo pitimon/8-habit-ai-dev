@@ -1,7 +1,7 @@
 ---
 name: using-8-habits
 description: >
-  Onboarding meta-skill — explains the 7-step workflow, all 16 skills, and the
+  Onboarding meta-skill — explains the 7-step workflow, all 17 skills, and the
   decision tree for "which skill next?". Read this first when starting with
   8-habit-ai-dev. Maps to H5 (Seek First to Understand) + H8 (Empower next person).
 user-invocable: true
@@ -15,7 +15,7 @@ next-skill: any
 
 **Habit**: H5 (Seek First to Understand — read before acting) + H8 (Find Your Voice — empower the next person)
 
-**Purpose**: First skill to invoke when you're new to 8-habit-ai-dev, or when you're unsure which skill fits your current task. Explains the 7-step workflow, all 16 skills, and provides a decision tree for "which skill next?".
+**Purpose**: First skill to invoke when you're new to 8-habit-ai-dev, or when you're unsure which skill fits your current task. Explains the 7-step workflow, all 17 skills, and provides a decision tree for "which skill next?".
 
 ## When to Use This Skill
 
@@ -40,7 +40,7 @@ next-skill: any
 4. **`/research`** — investigate before specifying when the problem is new (H5)
 5. **`/reflect`** — 5-question micro-retrospective after completing significant work (H7)
 
-The other 11 skills are **optional depth** for specific situations — compliance (`/eu-ai-act-check`), architecture-heavy work (`/design`), cross-plugin flows, transparency logs (`/ai-dev-log`), onboarding (this skill), etc. Running all 16 skills for every task is theater. Pick what fits.
+The other 12 skills are **optional depth** for specific situations — compliance (`/eu-ai-act-check`), architecture-heavy work (`/design`), cross-plugin flows, transparency logs (`/ai-dev-log`), onboarding (this skill), etc. Running all 17 skills for every task is theater. Pick what fits.
 
 **Honest framing**: if you're doing a single-line bug fix, rename refactor, or dependency bump — run `/review-ai` and skip the rest. Run more skills as the scope grows.
 
@@ -69,11 +69,11 @@ Each step maps to a Covey habit. The habit explains WHY the step matters.
 | 6    | `/deploy-guide`  | H1: Be Proactive       | Staging-first deployment plan                       | No deployment involved           |
 | 7    | `/monitor-setup` | H7: Sharpen the Saw    | Health checks, alerting, error tracking             | Monitoring already comprehensive |
 
-**When the problem itself is fuzzy** (before `/research`): use `superpowers:brainstorming` from `claude-plugins-official:superpowers` — it ships a collaborative hard-gate design session that writes a spec doc to git before any implementation. v2.4.1 removed our own `/brainstorm` in favor of that stronger equivalent (see ADR-006).
+**When the problem is fuzzy** (before `/research`): use `superpowers:brainstorming` — hard-gate design session that writes a spec doc before implementation. Replaces our removed `/brainstorm` (ADR-006).
 
 **The chain is opt-in, not forced**. Every skill has a `next-skill` field in its frontmatter pointing to the default successor, but you can jump, skip, or loop as needed. The honest skip rule: if you can justify skipping a step out loud, skip it. If you can't, run it.
 
-## All 16 Skills (full inventory)
+## All 17 Skills (full inventory)
 
 ### Workflow skills (8)
 
@@ -86,17 +86,18 @@ Each step maps to a Covey habit. The habit explains WHY the step matters.
 - **`/deploy-guide`** (Step 6) — Staging-first deployment with rollback plan. Output: deployment checklist.
 - **`/monitor-setup`** (Step 7) — Health checks, alerting, observability. Output: monitoring configuration.
 
-### Assessment skills (5)
+### Assessment skills (6)
 
 - **`/cross-verify`** — 17-question 8-habit checklist covering all 4 Whole Person dimensions (Body/Mind/Heart/Spirit). Band-based verdict. Run after plans, before PRs.
 - **`/whole-person-check`** — 4-dimension assessment (1-5 scale) with AI Blind Spot detection. Covers Body (discipline), Mind (vision), Heart (passion), Spirit (conscience).
 - **`/security-check`** — Focused OWASP security lens (secrets, injection, auth, deps). Review mode, not a runtime hook.
 - **`/reflect`** — 5-question micro-retrospective (5 min max) with action-item tracking. Run after completing significant work.
+- **`/calibrate`** — Writes `~/.claude/habit-profile.md` so skills adapt verbosity to user maturity (v2.6.0).
 - **`/workflow`** — Guided walkthrough of the 7-step workflow. Prompts at each step to invoke or skip.
 
 ### Meta / transparency skills (3)
 
-- **`/using-8-habits`** (this skill) — Onboarding navigation. Explains the 7-step workflow and all 16 skills.
+- **`/using-8-habits`** (this skill) — Onboarding navigation. Explains the 7-step workflow and all 17 skills.
 - **`/ai-dev-log`** — Generate AI-assisted development log from git history + Co-Authored-By trailers. Transparency artifact, framework-agnostic.
 - **`/eu-ai-act-check`** — EU AI Act 9-obligation compliance checklist (temporary placement; will migrate to `pitimon/claude-governance` in a future release per ADR-005 + ADR-006).
 
