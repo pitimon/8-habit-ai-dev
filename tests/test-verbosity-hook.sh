@@ -192,6 +192,34 @@ run_case "verbose override promotes Significance → Dependence" "$VERBOSE_OVERR
 run_case "concise override demotes Dependence → Significance"  "$CONCISE_OVERRIDE_PROFILE" "concise override"
 echo ""
 
+# --- Branches 6b: optional heart/spirit signal keys don't break extraction ---
+# (Regression test from Smart QA finding F1 — profile author who answered Q6/Q7
+# writes heart-signal and spirit-signal keys under responses. The hook's awk
+# extraction for `level` and `verbosity-override` must ignore these extra keys.)
+echo "--- Branch 6b: optional Q6/Q7 signal keys are tolerated ---"
+
+OPTIONAL_KEYS_PROFILE='---
+level: Interdependence
+calibrated: 2026-04-11T15:00:00+07:00
+schema-version: 1
+responses:
+  plugin-experience: "several months"
+  ci-experience: "mentor peers"
+  team-context: "lead a team"
+  vocabulary-comfort: "mostly clear"
+  orientation: "mostly preventing"
+  heart-signal: "publish/teach publicly"
+  spirit-signal: "I publicly advocate for this"
+preferences:
+  verbosity-override: none
+---
+
+# Habit Profile — Interdependence (with optional Q6/Q7 signals)
+'
+
+run_case "optional heart/spirit keys: hook still emits correct Interdependence directive" "$OPTIONAL_KEYS_PROFILE" "Profile active: Interdependence"
+echo ""
+
 # --- Branch 8: Unknown/missing level → Dependence fallback ---
 echo "--- Branch 8: Unknown/missing level → Dependence fallback ---"
 
