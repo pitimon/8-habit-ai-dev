@@ -10,6 +10,51 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.7.0 — Reader Adoption (2026-04-11)
+
+Closes the reader-adoption half of the `/calibrate` feature loop. v2.6.0 shipped `/calibrate` which **writes** `~/.claude/habit-profile.md`; until this release, the 17 skills did not **read** the profile, so the feature delivered discovery but not adaptation. v2.7.0 closes that gap via a hook-based adaptation directive — zero changes to individual skill files.
+
+### Added
+
+- **Hook-based verbosity adaptation** ([#96](https://github.com/pitimon/8-habit-ai-dev/issues/96)) — `hooks/session-start.sh` now reads `~/.claude/habit-profile.md` at session start and emits a level-specific one-sentence directive into session context. Claude honors the directive when invoking any skill in the session, adapting verbosity automatically from Dependence (full guidance) through Independence, Interdependence, and Significance (minimal prompts).
+- **`guides/verbosity-adaptation.md`** (new) — canonical per-level adaptation rules + worked examples across 5 skill archetypes (workflow planning, review/gate, research, implementation, retrospective). Reference material for maintainers and future skill authors. Not auto-loaded at runtime — the hook hardcodes its one-sentence directive per level from these rules.
+- **`tests/test-verbosity-hook.sh`** (new) — 11-check regression coverage for all 8 hook branches: missing profile, 4 levels (Dependence/Independence/Interdependence/Significance), 2 overrides (verbose/concise), unknown level with Dependence fallback, plus HABIT_QUIET silence check and ≤300-token budget assertion. Wired into `.github/workflows/validate.yml` alongside the 3 existing validators.
+- **`preferences.verbosity-override` precedence in the hook** — `verbose` promotes any level to Dependence; `concise` demotes any level to Significance; `none` or unset uses the profile `level` as-is. Matches the schema v1 contract documented in `guides/habit-profile-schema.md`.
+
+### Architectural constraint honored (why hook-based, not per-skill)
+
+A pre-implementation F3 word-budget audit surfaced two skills with dangerously thin headroom: `/using-8-habits` (1990/2000 words, 10 headroom) and `/eu-ai-act-check` (1989/2000 words, 11 headroom). Any per-skill text addition would have broken F3 fitness on the next edit — even a 15-word preamble like `Load guides/verbosity-adaptation.md` would overflow.
+
+The only viable runtime injection point in a pure-markdown plugin is `hooks/session-start.sh`, which outputs into session context once per session and applies globally to all subsequent skill invocations. The hook approach ships with **zero changes to individual skill files** — F3 preserved, validators untouched, existing skill bodies unchanged. Future skill authors don't need to add level-handling boilerplate; the directive is already in session context when they're invoked.
+
+### Changed
+
+- `hooks/session-start.sh` — expanded from the v2.6.0 static `/calibrate` nudge to a full 8-branch profile reader. Existing behavior preserved: when no profile exists, the v2.6.0 nudge still fires unchanged. Uses the pipe-safe `awk` pattern from v2.6.1's SIGPIPE fix to parse YAML frontmatter.
+- `.github/workflows/validate.yml` — now runs 4 validators instead of 3 (added `tests/test-verbosity-hook.sh`).
+- `CLAUDE.md` — added a Key Conventions bullet documenting the hook-based verbosity adaptation mechanism.
+
+### Milestone v2.7.0 — CLOSED (1/1)
+
+With this release, [milestone v2.7.0 — Reader Adoption](https://github.com/pitimon/8-habit-ai-dev/milestone/12) is closed. Issue #96 was the sole scope. The #90 user-calibration feature loop is now complete: write (v2.6.0) → read (v2.7.0).
+
+### Migration notes
+
+No breaking changes. Users upgrading from v2.6.1:
+- If you have a profile at `~/.claude/habit-profile.md`, the session-start hook will emit your level-specific directive on the next session start. No action needed.
+- If you don't yet have a profile, the existing v2.6.0 nudge still fires suggesting `/calibrate`. Behavior unchanged from v2.6.1.
+- `HABIT_QUIET=1` continues to silence everything (ADR-006 contract preserved).
+- If you want to override your level-default behavior, edit `~/.claude/habit-profile.md` and set `preferences.verbosity-override` to `verbose` (max guidance) or `concise` (minimum). `none` or unset uses the level as-is.
+
+### What's next (beyond v2.7.0)
+
+The Hermes-inspired feature loop (milestones v2.6.0 + v2.7.0) is complete. Further enhancements are either out-of-scope (runtime-dependent features like Honcho passive inference — would violate the pure-markdown constraint) or delegated to companion plugins (`claude-mem`, `pitimon/claude-governance`, `devsecops-ai-team`). The plugin is at a local maximum given its constraints.
+
+Potential v2.8.0+ targets, if user demand emerges:
+- Dual-artifact strategy for agentskills.io (publish individual standalone skills to the open registry while keeping the chain-enforcing SKILL.md here) — per ADR-007 §Future Triggers
+- Progressive disclosure for skill bodies (split `SKILL.md` into summary + `references/*.md` deep-dives) if token budgets get tight
+
+---
+
 ## v2.6.1 — Skill Effectiveness Tracking (2026-04-11)
 
 Closes milestone v2.6.0 by shipping the final P3 issue from the Hermes-Inspired research brief. This is a minor patch release — one question added to `/reflect` plus a new maintainer-curated report file. No breaking changes, no migrations.

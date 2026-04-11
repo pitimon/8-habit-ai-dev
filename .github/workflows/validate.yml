@@ -17,3 +17,5 @@ jobs:
         run: bash tests/test-skill-graph.sh
       - name: Validate content quality and fitness functions
         run: bash tests/validate-content.sh
+      - name: Verbosity hook regression test (8 branches + override + budget)
+        run: bash tests/test-verbosity-hook.sh
