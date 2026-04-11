@@ -10,6 +10,50 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.6.1 — Skill Effectiveness Tracking (2026-04-11)
+
+Closes milestone v2.6.0 by shipping the final P3 issue from the Hermes-Inspired research brief. This is a minor patch release — one question added to `/reflect` plus a new maintainer-curated report file. No breaking changes, no migrations.
+
+### Added
+
+- **`/reflect` Q6 — Skill effectiveness signal** ([#92](https://github.com/pitimon/8-habit-ai-dev/issues/92)) — `/reflect` now asks "which skill was most useful this session, and which was least useful or confusing?" after the 5 standard retro questions. Answer can be `n/a` if no skills were invoked. Feeds periodic maintainer trend analysis.
+- **`SKILL-EFFECTIVENESS.md`** (repo root) — maintainer-curated trend tracker aggregating Q6 signals from `~/.claude/lessons/*.md` across time. Ships empty (initial state, awaiting data). Includes explicit update protocol, "what this is NOT" boundaries, and per-skill tally table for all 17 skills. This is **H7 (Sharpen the Saw) applied to the plugin itself** — invest in the capability of the skills, not just their output.
+- **`guides/templates/lesson-template.md`** — added `## Skill effectiveness` section to the lesson template body so Q6 answers are captured consistently across user lesson files.
+
+### Changed
+
+- `skills/reflect/SKILL.md` — updated description from "5 questions" to "6 questions" (still fits the "5 minutes" DORA budget — Q6 is a 30-second signal question). Output table, Persist step, and Definition of Done all updated. Word count: 561 → 711 (well under 2000 F3 fitness budget).
+- `CLAUDE.md` Skills → Habits table — `/reflect` row now notes the skill-effectiveness signal.
+
+### Architectural constraint honored
+
+`SKILL-EFFECTIVENESS.md` is **maintainer-curated, not auto-generated**. A runtime aggregator that scans `~/.claude/lessons/*.md` across users would need to be a hook (belongs in `pitimon/claude-governance` per plugin boundary) or would violate the "skills are read-only guidance" principle. The chosen design — maintainer reads lessons periodically, updates the report, commits — respects both constraints and matches ADR-008's schema-as-contract pattern (report format is a stable contract between `/reflect` writers and maintainer readers).
+
+### Fixed
+
+- **`tests/validate-content.sh` F3 convention-consistency check** — replaced `sed -n '/^---$/,/^---$/p' "$skill_file" | head -20` with an awk-based frontmatter extractor that exits cleanly at the second `---` marker. The old pattern was flaky under `set -o pipefail` on Linux CI (GNU sed) because `skills/ai-dev-log/SKILL.md` has a body horizontal rule at line 65, causing sed to emit 187 lines from a 239-line file; `head -20` closed early, sed hit SIGPIPE, and CI failed with exit code 4. BSD sed on macOS silently ignores SIGPIPE which masked the bug locally. Fix uses the same awk pattern already documented at `tests/validate-structure.sh:27`. The bug was latent since ai-dev-log gained its body `---` rule and caught PR #99 on its first CI run. No functional change to the F3 check — only the extraction mechanism.
+
+### Milestone v2.6.0 — now CLOSED (5/5)
+
+With this release, all five Hermes-Inspired issues are shipped:
+
+- ✅ #88 Persistent Reflection Artifacts (v2.6.0)
+- ✅ #89 Habit Nudge Guidance Document (v2.6.0)
+- ✅ #91 agentskills.io Compatibility Evaluation — NO-GO (v2.6.0)
+- ✅ #90 User Maturity Calibration — `/calibrate` (v2.6.0)
+- ✅ #92 Skill Effectiveness Tracking — `/reflect` Q6 + report (v2.6.1, **this release**)
+
+Follow-up [#96](https://github.com/pitimon/8-habit-ai-dev/issues/96) (16-skill reader adoption for `habit-profile.md`) remains open for v2.7.0.
+
+### Migration notes
+
+No breaking changes. Users upgrading from v2.6.0:
+- Next `/reflect` invocation will include Q6. Answer `n/a` if no skills apply.
+- Your existing lesson files at `~/.claude/lessons/*.md` are unchanged. New lessons written after upgrade will include the `## Skill effectiveness` section.
+- `SKILL-EFFECTIVENESS.md` ships empty — data accumulates as you reflect.
+
+---
+
 ## v2.6.0 — Hermes-Inspired Improvements (2026-04-11)
 
 Operationalizes four user-modeling and learning-loop patterns inspired by Hermes Agent (Nous Research), filtered through plugin-boundary discipline and cross-verification. Milestone v2.6.0 scope: P1 + P2 issues shipped (4/5 closed); #92 deferred to v2.6.1 or v2.7.0.

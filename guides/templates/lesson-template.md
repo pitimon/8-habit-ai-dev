@@ -35,6 +35,10 @@ habit: "H[N]"
 
 ## Action item
 [Specific action] — **Owner**: [who] — **By**: [date]
+
+## Skill effectiveness
+**Most useful**: [skill name, e.g., `/cross-verify`, or "n/a" if no skills invoked]
+**Least useful / confusing**: [skill name, or "n/a"]
 ```
 
 ## Field Descriptions

@@ -1,8 +1,9 @@
 ---
 name: reflect
 description: >
-  Post-task micro-retrospective — 5 questions, 5 minutes.
-  Use AFTER completing a task or workflow to capture lessons learned.
+  Post-task micro-retrospective — 6 questions, 5 minutes.
+  Use AFTER completing a task or workflow to capture lessons learned,
+  including a skill-effectiveness signal that feeds SKILL-EFFECTIVENESS.md.
   Maps to H7 (Sharpen the Saw — invest in capability, not just output).
 user-invocable: true
 argument-hint: "[task or feature just completed]"
@@ -17,11 +18,11 @@ next-skill: none
 
 ## Why This Exists
 
-DORA research shows per-task micro-retros (3-5 questions, 5 minutes) are more effective than monthly hour-long retrospectives. The key differentiator: teams that assign action items with owners improve; teams that just "discuss" don't.
+DORA research shows per-task micro-retros (3-5 questions, 5 minutes) are more effective than monthly hour-long retrospectives. The key differentiator: teams that assign action items with owners improve; teams that just "discuss" don't. Q6 below extends the DORA pattern with a skill-effectiveness signal specific to this plugin (H7 applied to the plugin itself, per Issue #92).
 
 ## Process
 
-Ask these 5 questions. Keep answers brief — this should take no more than 5 minutes.
+Ask these 6 questions. Keep answers brief — this should take no more than 5 minutes.
 
 ### 1. What went well?
 
@@ -43,6 +44,10 @@ Extract for the team. Is there a script, template, or approach worth sharing?
 
 One specific, assigned action with a deadline. Not "we should improve testing" but "create a test template for API endpoints by Friday."
 
+### 6. Skill effectiveness signal
+
+Which 8-habit skill was **most useful** this session, and which was **least useful or confusing**? Answer "n/a" if no skills were invoked (e.g., quick fix outside the 7-step workflow). This signal feeds `SKILL-EFFECTIVENESS.md` during periodic maintainer review — H7 applied to the plugin itself. Do not overthink it: name up to one skill per side, or "n/a".
+
 ## Output
 
 ```
@@ -57,11 +62,12 @@ One specific, assigned action with a deadline. Not "we should improve testing" b
 | 3 | Do differently | [brief answer] |
 | 4 | Reusable pattern | [brief answer or "none this time"] |
 | 5 | Action item | [specific action] — **Owner**: [who] — **By**: [date] |
+| 6 | Skill effectiveness | Most useful: [skill or "n/a"] · Least/confusing: [skill or "n/a"] |
 ```
 
 ## Step 6: Persist Lesson (automatic)
 
-After the 5 questions are answered, persist the reflection as a lesson file for future sessions. This step should be automatic — do not ask the user additional questions.
+After the 6 questions are answered, persist the reflection as a lesson file for future sessions. This step should be automatic — do not ask the user additional questions.
 
 1. **Create directory** if needed: `~/.claude/lessons/` (skip silently if it already exists)
 2. **Generate filename**: `YYYY-MM-DD-<slug>.md` where `<slug>` is a lowercase, hyphenated summary of the task (max 50 chars, no spaces or special characters)
@@ -71,7 +77,7 @@ After the 5 questions are answered, persist the reflection as a lesson file for 
    - `project`: basename of the current working directory
    - `tags`: 2-5 keywords extracted from the reflection answers (domain, technology, pattern)
    - `habit`: the primary habit that applied during this task (if identifiable)
-   - Body: the 5-question answers from the reflection output
+   - Body: the 6-question answers from the reflection output, including the `## Skill effectiveness` section (Q6) which is parsed during periodic maintainer review for `SKILL-EFFECTIVENESS.md`
 4. **Confirm**: Print a one-line confirmation: `Lesson saved: ~/.claude/lessons/<filename>`
 5. **Graceful failure**: If the write fails (permissions, disk full), warn the user but do NOT block the reflection output. The conversation-level reflection is more valuable than persistence.
 
@@ -83,8 +89,9 @@ After the 5 questions are answered, persist the reflection as a lesson file for 
 
 ## Definition of Done
 
-- [ ] All 5 questions answered (even if briefly)
+- [ ] All 6 questions answered (even if briefly; Q6 can be "n/a")
 - [ ] Action item has an owner and deadline (or explicitly "none needed")
+- [ ] Skill effectiveness signal captured (Q6) — up to one "most useful" and one "least useful/confusing" skill, or "n/a"
 - [ ] Lesson file persisted to `~/.claude/lessons/` (or warning printed if write failed)
 - [ ] Took no more than 5 minutes
 
