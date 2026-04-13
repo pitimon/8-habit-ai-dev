@@ -80,6 +80,40 @@ else
 💡 **No habit profile detected** — run \`/calibrate\` to personalize guidance to your maturity level (H8)."
 fi
 
+# Workflow step awareness — detect highest completed step and suggest next skill
+WORKFLOW_HINT=""
+if [ "${HABIT_QUIET:-0}" != "1" ]; then
+  HIGHEST_STEP=0
+
+  # Check each step — use compgen (bash builtin) to test globs without ls exit-code issues
+  has_glob() { compgen -G "$1" >/dev/null 2>&1; }
+
+  # Check for Step 4 artifacts (build brief) — highest priority
+  if has_glob "*-brief.md" || has_glob "*build-brief*"; then
+    HIGHEST_STEP=4
+  # Check for Step 3 artifacts (breakdown/tasks)
+  elif has_glob "*-tasks.md" || has_glob "*-breakdown.md" || has_glob "*task-list*"; then
+    HIGHEST_STEP=3
+  # Check for Step 2 artifacts (design/architecture)
+  elif has_glob "*-design.md" || has_glob "*-architecture.md" || has_glob "*ADR*"; then
+    HIGHEST_STEP=2
+  # Check for Step 1 artifacts (PRD/requirements)
+  elif has_glob "*-prd.md" || has_glob "*-requirements.md" || has_glob "*PRD*"; then
+    HIGHEST_STEP=1
+  fi
+
+  if [ "$HIGHEST_STEP" -gt 0 ]; then
+    case $HIGHEST_STEP in
+      1) NEXT_SKILL="/design" ;;
+      2) NEXT_SKILL="/breakdown" ;;
+      3) NEXT_SKILL="/build-brief" ;;
+      4) NEXT_SKILL="/review-ai" ;;
+    esac
+    WORKFLOW_HINT="
+📍 Workflow: artifacts suggest Step ${HIGHEST_STEP} done — next: \`${NEXT_SKILL}\`"
+  fi
+fi
+
 cat <<EOF
 ## 8-Habit AI Dev Active (v${VERSION})
 
@@ -96,7 +130,7 @@ cat <<EOF
 **Core 5** (80% of daily work): \`/requirements\` · \`/review-ai\` · \`/cross-verify\` · \`/research\` · \`/reflect\`
 **Assessment**: \`/workflow\` · \`/whole-person-check\` · \`/security-check\` · \`/ai-dev-log\`
 **Onboarding**: \`/using-8-habits\` (decision tree) · \`/calibrate\` (maturity profile)
-**Compliance**: \`/eu-ai-act-check\` (EU AI Act, migration to claude-governance planned)${PROFILE_MSG}
+**Compliance**: \`/eu-ai-act-check\` (EU AI Act, migration to claude-governance planned)${WORKFLOW_HINT}${PROFILE_MSG}
 
 _Silence this reminder: \`export HABIT_QUIET=1\`_
 EOF

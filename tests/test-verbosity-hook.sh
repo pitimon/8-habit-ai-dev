@@ -263,6 +263,76 @@ else
 fi
 echo ""
 
+# --- Workflow step awareness: artifact detection ---
+echo "--- Workflow step awareness: artifact detection ---"
+
+# Absolute path to hook for use in subshells that cd elsewhere
+HOOK_ABS="$(cd "$(dirname "$HOOK")" && pwd)/$(basename "$HOOK")"
+
+# Helper: run hook in a tmpdir with given files, assert output contains/excludes substring
+run_workflow_case() {
+  local case_name="$1"
+  local expect_mode="$2"       # "contains" or "excludes"
+  local expected_substring="$3"
+  shift 3
+  # Remaining args are files to create (may be empty)
+
+  local workdir
+  workdir=$(mktemp -d)
+
+  for f in "$@"; do
+    touch "$workdir/$f"
+  done
+
+  local output
+  output=$(cd "$workdir" && HOME="$TMPHOME" bash "$HOOK_ABS" 2>&1) || {
+    fail "$case_name — hook exited non-zero"
+    rm -rf "$workdir"
+    return
+  }
+  rm -rf "$workdir"
+
+  if [ "$expect_mode" = "contains" ]; then
+    if echo "$output" | grep -qF "$expected_substring"; then
+      pass "$case_name"
+    else
+      fail "$case_name — expected substring not found: \"$expected_substring\""
+      echo "    got (last 3 lines): $(echo "$output" | tail -3)"
+    fi
+  else
+    if echo "$output" | grep -qF "$expected_substring"; then
+      fail "$case_name — should NOT contain: \"$expected_substring\""
+    else
+      pass "$case_name"
+    fi
+  fi
+}
+
+# Ensure a profile exists so hook doesn't exit early on HABIT_QUIET
+printf '%s' "$INTERDEPENDENCE_PROFILE" > "$TMPHOME/.claude/habit-profile.md"
+
+run_workflow_case "PRD artifact → Step 1" "contains" "Step 1 done" "feature-prd.md"
+run_workflow_case "design artifact → Step 2" "contains" "Step 2 done" "feature-design.md"
+run_workflow_case "tasks artifact → Step 3" "contains" "Step 3 done" "feature-tasks.md"
+run_workflow_case "brief artifact → Step 4" "contains" "Step 4 done" "feature-brief.md"
+
+run_workflow_case "no artifacts → no workflow line" "excludes" "Workflow:"
+
+run_workflow_case "highest step wins (multiple artifacts)" "contains" "Step 3 done" \
+  "feature-prd.md" "feature-design.md" "feature-tasks.md"
+
+# HABIT_QUIET suppresses workflow hint
+workdir_quiet=$(mktemp -d)
+touch "$workdir_quiet/feature-prd.md"
+quiet_wf_output=$(cd "$workdir_quiet" && HOME="$TMPHOME" HABIT_QUIET=1 bash "$HOOK_ABS" 2>&1 || true)
+rm -rf "$workdir_quiet"
+if echo "$quiet_wf_output" | grep -qF "Workflow:"; then
+  fail "HABIT_QUIET=1 should suppress workflow hint"
+else
+  pass "HABIT_QUIET=1 suppresses workflow hint"
+fi
+echo ""
+
 # --- Token budget check (≤300 per CLAUDE.md) ---
 echo "--- Token budget check ---"
 printf '%s' "$INTERDEPENDENCE_PROFILE" > "$TMPHOME/.claude/habit-profile.md"
