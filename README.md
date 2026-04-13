@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-17-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.7.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.7.1)
+[![Version](https://img.shields.io/badge/Version-2.8.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.8.0)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -307,7 +307,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.7.1)
+│   ├── plugin.json                 # Plugin metadata (v2.8.0)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
@@ -380,6 +380,15 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
 
 ---
+
+## What's New in v2.8.0
+
+**Theme: Claude Code Architecture Insights** — production patterns from Anthropic's Claude Code internals (reverse-engineered by [Alejandro Balderas](https://github.com/alejandrobalderas/claude-code-from-source)) adapted into plugin workflow guidance.
+
+- **`/build-brief` context compression awareness** ([#114](https://github.com/pitimon/8-habit-ai-dev/issues/114)) — new step 6 "Context survival" guides users to front-load critical info, keep briefs under ~4,000 tokens, and order stable content before volatile content. Based on Claude Code's 4-layer context compression pipeline (Ch5) and prompt cache stability pattern (Ch17).
+- **`/design` sticky latch principle** ([#116](https://github.com/pitimon/8-habit-ai-dev/issues/116)) — new step 5 "Identify sticky decisions" with rework-level classification table. Decisions marked STICKY (>50% rework to reverse) require a new `/design` cycle to change, preventing costly mid-session pivots. Inspired by Claude Code's sticky boolean latches for prompt cache stability.
+- **`/reflect` lesson consolidation** ([#113](https://github.com/pitimon/8-habit-ai-dev/issues/113)) — new Step 7 "Consolidation check" nudges when lesson files exceed 10. New `/reflect consolidate` argument runs a 4-phase cycle (Orient → Gather → Consolidate → Prune) inspired by Claude Code's auto-dream memory consolidation. Human approval gate before any deletions.
+- **`/breakdown` fork agent pattern** ([#115](https://github.com/pitimon/8-habit-ai-dev/issues/115)) — new step 5 "Token-efficient parallel design" with prompt prefix sharing guidance. Parallel tasks sharing context achieve ~90% input token savings via cache hits. Most valuable for 3+ parallel tasks.
 
 ## What's New in v2.7.1
 
@@ -537,4 +546,4 @@ MIT
 
 ---
 
-_Version: 2.7.1 | Last updated: 2026-04-11_
+_Version: 2.8.0 | Last updated: 2026-04-13_

@@ -36,7 +36,24 @@ next-skill: breakdown
 
 4. **Human must decide**: AI proposes, human disposes. Mark each decision as In-the-Loop.
 
-5. **Article 14 Human-Oversight Checkpoint** (for AI-system designs):
+5. **Identify sticky decisions** (decisions that should not change mid-implementation):
+
+   Some decisions act as **sticky latches** — once set, reversing them mid-session wastes all context built on top of them. Claude Code uses this pattern internally: boolean flags that once true, never revert, because toggling would invalidate the prompt cache (90% cost saving lost).
+
+   For each decision in step 4, ask: **"If we change this after implementation starts, how much rework does it cause?"**
+
+   | Rework Level | Classification | Example |
+   |-------------|----------------|---------|
+   | >50% redo   | **Sticky** — commit now, revisit only via new `/design` cycle | DB choice, auth model, API style |
+   | 10-50% redo | **Semi-sticky** — can adjust but flag the cost | ORM choice, test framework |
+   | <10% redo   | **Flexible** — change freely during implementation | Variable names, UI copy |
+
+   Mark sticky decisions explicitly in the ADR or design doc:
+   > **STICKY**: This decision is load-bearing. Changing it requires re-running `/design`, not patching mid-build.
+
+   This is H2 in practice: define done before starting, including which decisions ARE the definition of done.
+
+6. **Article 14 Human-Oversight Checkpoint** (for AI-system designs):
 
    If the system being designed is an **AI system that may target the EU market** (or any high-risk AI system regardless of market), confirm the design satisfies EU AI Act Article 14 capabilities. Answer for each:
 
@@ -54,12 +71,12 @@ next-skill: breakdown
    >
    > 🔗 **Three Loops — use claude-governance for the formal model**: The 5-capability table above is a lightweight design-time sanity check. For **formal Three Loops classification per decision** (Out-of / On-the / In-the-Loop with consequence-based gating for irreversible ops), install [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) alongside this plugin. The Three Loops Decision Model and its ADR-002 live in governance by design — `8-habit-ai-dev` references it rather than reimplementing (see `CLAUDE.md` → Plugin Boundary). Three Loops originates from human-autonomy teaming literature (Endsley 1999, DARPA) — it is a design pattern that _satisfies_ EU AI Act Article 14 ¶4(a-e), not a term used by EU law itself. Cite Article 14 ¶ refs in audits, not Three Loops labels.
 
-6. **Document as ADR** if the decision is:
+7. **Document as ADR** if the decision is:
    - Hard to reverse
    - Affects >3 files
    - Changes public API
 
-7. **H8 Checkpoint**: "Do I understand WHY we're building it this way, not just WHAT?"
+8. **H8 Checkpoint**: "Do I understand WHY we're building it this way, not just WHAT?"
 
 ## Handoff
 

@@ -51,16 +51,32 @@ next-skill: build-brief
    | T3   | sequential | — | T1, T2 |
    ```
 
-5. **Lazy Parallelism Gate**: Before spawning parallel agents, ask:
+5. **Token-efficient parallel design** (for `parallel-safe` and `parallel-worktree` tasks):
+
+   Claude Code's fork agents share a byte-identical prompt prefix with their parent, achieving ~90% input token savings. Apply this principle when designing parallel tasks:
+
+   - **Maximize shared context**: Group tasks that read the same files and share the same architectural understanding. Their `/build-brief` context sections will overlap, and the shared prefix stays cached.
+   - **Minimize divergence point**: Put the task-specific instruction LAST in the agent prompt. Everything before it is the shared prefix that gets cached.
+   - **Avoid redundant reads**: If 3 agents all need to read `schema.prisma`, include it in the shared brief rather than having each agent read it independently (3x the token cost).
+
+   | Pattern | When | Token Efficiency |
+   |---------|------|-----------------|
+   | Sequential (no sharing) | Tasks depend on each other | 1x (baseline) |
+   | Parallel, independent briefs | Tasks touch different areas | ~1.3x (overhead from duplicate system prompts) |
+   | Parallel, shared prefix brief | Tasks share context | ~0.3x (90% cache hit on shared prefix) |
+
+   This step is most valuable for 3+ parallel tasks. For 2 tasks, the overhead of optimizing the prefix rarely pays off.
+
+6. **Lazy Parallelism Gate**: Before spawning parallel agents, ask:
    - Can I do this sequentially in ≤5 tool calls? If yes, sequential is cheaper.
    - Are the tasks meaningfully disjoint (different files, different concerns)?
    - Will coordinating results add complexity that outweighs time savings?
 
    Parallel agents have overhead: context loading, coordination, result merging. Only parallelize when decomposition is genuinely independent and substantial enough to justify the cost.
 
-6. **Scope guard**: For each task ask — "Is this in scope? Will this prevent future problems (Q2) or is it gold-plating (Q4)?"
+7. **Scope guard**: For each task ask — "Is this in scope? Will this prevent future problems (Q2) or is it gold-plating (Q4)?"
 
-7. **H3 Checkpoint**: "Am I doing what's important, or what's interesting?"
+8. **H3 Checkpoint**: "Am I doing what's important, or what's interesting?"
 
 ## Rule of Thumb
 

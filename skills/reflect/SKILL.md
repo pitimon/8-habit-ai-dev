@@ -6,8 +6,8 @@ description: >
   including a skill-effectiveness signal that feeds SKILL-EFFECTIVENESS.md.
   Maps to H7 (Sharpen the Saw — invest in capability, not just output).
 user-invocable: true
-argument-hint: "[task or feature just completed]"
-allowed-tools: ["Read", "Glob", "Grep", "Write"]
+argument-hint: "[task just completed] or 'consolidate' to merge lessons"
+allowed-tools: ["Read", "Glob", "Grep", "Write", "Bash"]
 prev-skill: any
 next-skill: none
 ---
@@ -81,6 +81,40 @@ After the 6 questions are answered, persist the reflection as a lesson file for 
 4. **Confirm**: Print a one-line confirmation: `Lesson saved: ~/.claude/lessons/<filename>`
 5. **Graceful failure**: If the write fails (permissions, disk full), warn the user but do NOT block the reflection output. The conversation-level reflection is more valuable than persistence.
 
+## Step 7: Consolidation check (periodic)
+
+After saving the lesson file, check if lessons need consolidation. Inspired by Claude Code's auto-dream 4-phase consolidation pattern (Orient → Gather → Consolidate → Prune) — applied here as manual guidance, not automation.
+
+1. **Count lessons**: `Glob ~/.claude/lessons/*.md`
+2. **If count ≤ 10**: Skip — not enough lessons to consolidate yet.
+3. **If count > 10**: Print a consolidation nudge:
+
+   > **Consolidation suggested** — You have [N] lesson files. Consider running:
+   > `/reflect consolidate` to merge duplicates and prune stale lessons.
+
+4. **If the user runs `/reflect consolidate`** (argument = "consolidate"):
+
+   Run the 4-phase cycle on `~/.claude/lessons/`:
+
+   | Phase | Action | Tools |
+   |-------|--------|-------|
+   | **Orient** | Glob all lesson files, Read frontmatter (first 10 lines each) to build inventory | Glob, Read |
+   | **Gather** | Group lessons by `tags` overlap and `project` match | Grep |
+   | **Consolidate** | For each group with 2+ lessons: propose a merged lesson that combines insights, resolves contradictions, and keeps the most recent "do differently" actions. Present merge plan to user for approval before writing. | Read |
+   | **Prune** | After user approves merges: delete superseded lesson files, keep merged files | Bash |
+
+   **Human approval gate**: The consolidate phase MUST show the merge plan and get explicit user approval before deleting any files. This is In-the-Loop per governance — deletion is irreversible.
+
+   Output after consolidation:
+   ```
+   ## Consolidation Report
+   **Before**: [N] lesson files
+   **After**: [M] lesson files
+   **Merged**: [list of merged groups]
+   **Pruned**: [list of deleted files]
+   **Kept unchanged**: [list]
+   ```
+
 ## When to Skip
 
 - Task took less than 15 minutes
@@ -93,6 +127,7 @@ After the 6 questions are answered, persist the reflection as a lesson file for 
 - [ ] Action item has an owner and deadline (or explicitly "none needed")
 - [ ] Skill effectiveness signal captured (Q6) — up to one "most useful" and one "least useful/confusing" skill, or "n/a"
 - [ ] Lesson file persisted to `~/.claude/lessons/` (or warning printed if write failed)
+- [ ] Consolidation check performed if lesson count > 10
 - [ ] Took no more than 5 minutes
 
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h7-sharpen-saw.md` for the full H7 principle and examples.
