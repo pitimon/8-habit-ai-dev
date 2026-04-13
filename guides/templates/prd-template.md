@@ -38,3 +38,15 @@ Output template for `/requirements` (Step 1).
 ## Open Questions
 
 - [Anything unresolved that needs human decision]
+
+<!-- SKILL_OUTPUT:requirements
+ears_count: [N]
+ears_criteria:
+  - "[criterion 1]"
+scope_in: "[in-scope description]"
+scope_out: "[out-of-scope description]"
+primary_user: "[user role]"
+risks:
+  - "[risk 1]"
+success_criteria_count: [N]
+END_SKILL_OUTPUT -->
