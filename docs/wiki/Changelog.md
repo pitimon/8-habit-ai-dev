@@ -4,6 +4,15 @@ Release history for `8-habit-ai-dev`. This page summarizes notable changes; the 
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
 
+## v2.8.0 — Claude Code Architecture Insights (April 2026)
+
+Production patterns from Anthropic's Claude Code internals (reverse-engineered in ["Claude Code from Source"](https://github.com/alejandrobalderas/claude-code-from-source)) adapted into 4 existing skills as workflow guidance.
+
+- **`/build-brief` context compression awareness** ([#114](https://github.com/pitimon/8-habit-ai-dev/issues/114)) — step 6 "Context survival" for briefs that survive the 4-layer compression pipeline
+- **`/design` sticky latch principle** ([#116](https://github.com/pitimon/8-habit-ai-dev/issues/116)) — step 5 "Sticky decisions" with rework-level classification table
+- **`/reflect` lesson consolidation** ([#113](https://github.com/pitimon/8-habit-ai-dev/issues/113)) — Step 7 + `/reflect consolidate` argument with 4-phase dream-inspired cycle
+- **`/breakdown` fork agent pattern** ([#115](https://github.com/pitimon/8-habit-ai-dev/issues/115)) — step 5 "Token-efficient parallel design" with ~90% cache hit guidance
+
 ## v2.7.1 — Review Discipline Refinement (April 2026)
 
 Small post-milestone patch adding two disciplines to `/review-ai` after a cost/benefit audit against `addyosmani/agent-skills` (MIT). Scope deliberately minimal — only one of six candidate mechanics was imported.

@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 2.7.1 | **Date**: 2026-04-11 | **Previous**: 2.7.0 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)
+**Version**: 2.8.0 | **Date**: 2026-04-13 | **Previous**: 2.7.1 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)
 
 Running our own 17-question checklist against the plugin itself. H8 Modeling: "Follow the process always, no shortcuts when unwatched."
 
@@ -160,7 +160,8 @@ The cross-verify score (16/16) measures **plan discipline**. The Whole Person sc
 - v2.6.1: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#92 /reflect Q6 + SKILL-EFFECTIVENESS.md, SIGPIPE CI fix — milestone v2.6.0 CLOSED 5/5)
 - v2.7.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#96 hook-based reader adoption — closes #90 feature loop, 470 → 481 assertions, zero per-skill changes)
 - v2.7.1: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#110 /review-ai Performance axis + review-tests-first — minimal post-milestone refinement; 5 of 6 agent-skills candidates rejected in cost/benefit audit, honoring v2.7.0 "local maximum" framing)
+- v2.8.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (Claude Code Architecture Insights: #113 /reflect consolidation, #114 /build-brief compression awareness, #115 /breakdown fork agent pattern, #116 /design sticky latches — 4 skills enhanced with production patterns from "Claude Code from Source" analysis)
 
 ---
 
-_Updated with each release. Previous: 2.7.0 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_
+_Updated with each release. Previous: 2.7.1 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_

@@ -10,6 +10,24 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.8.0 — Claude Code Architecture Insights (2026-04-13)
+
+Production patterns from Anthropic's Claude Code internals — reverse-engineered in ["Claude Code from Source"](https://github.com/alejandrobalderas/claude-code-from-source) (Alejandro Balderas, 18-chapter architectural analysis of the March 2026 npm source map leak) — adapted into 4 existing skills as workflow guidance. All changes are skill-level guidance additions; no runtime hooks, no new files, no new dependencies.
+
+### Added
+
+- **`/build-brief` step 6 "Context survival"** ([#114](https://github.com/pitimon/8-habit-ai-dev/issues/114)) — guidance for briefs that survive Claude Code's 4-layer context compression pipeline. Recommends: front-load critical info, keep briefs under ~4,000 tokens, stable-first ordering for prompt cache stability. Inspired by Ch5 (Agent Loop) and Ch17 (Performance).
+- **`/design` step 5 "Identify sticky decisions"** ([#116](https://github.com/pitimon/8-habit-ai-dev/issues/116)) — rework-level classification table (Sticky >50% / Semi-sticky 10-50% / Flexible <10%). Decisions marked STICKY require a new `/design` cycle to change. Inspired by Ch17 sticky boolean latches for prompt cache stability. Maps to H2 (Begin with End in Mind).
+- **`/reflect` Step 7 "Consolidation check" + `/reflect consolidate` argument** ([#113](https://github.com/pitimon/8-habit-ai-dev/issues/113)) — nudges when lesson files exceed 10; new consolidate mode runs 4-phase cycle (Orient → Gather → Consolidate → Prune) with human approval gate before deletions. Inspired by Ch11 auto-dream memory consolidation. Added Bash to allowed-tools for prune phase.
+- **`/breakdown` step 5 "Token-efficient parallel design"** ([#115](https://github.com/pitimon/8-habit-ai-dev/issues/115)) — prompt prefix sharing guidance with efficiency table. Parallel tasks sharing context achieve ~90% input token savings via cache hits. Most valuable for 3+ parallel tasks. Inspired by Ch9 (Fork Agents).
+
+### Research
+
+- Deep research review of "Claude Code from Source" (18 chapters, 7 Parts) produced a [research brief](https://github.com/pitimon/8-habit-ai-dev/milestone/13) scoring the book 8.5/10 with live system cross-verification of Ch11 Memory claims (5/8 confirmed against running Claude Code v2.1.104).
+- KAIROS mode and `/dream` command investigated — confirmed as real feature-flagged code (not speculation), but not shipped in external builds as of April 2026.
+
+---
+
 ## v2.7.1 — Review Discipline Refinement (2026-04-11)
 
 Small post-milestone patch on top of v2.7.0. Adds two review-time disciplines to `/review-ai` after a cost/benefit audit against Addy Osmani's `agent-skills` repository (MIT). Only one of six candidate mechanics was imported — the other five were explicitly rejected as duplicative of existing plugin features or out-of-scope for the `8-habit-ai-dev` plugin boundary. Scope deliberately minimal to honor the v2.7.0 "local maximum" framing from `~/.claude/lessons/2026-04-11-issue-96-reader-adoption.md`.
