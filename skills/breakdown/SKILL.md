@@ -104,6 +104,24 @@ next-skill: build-brief
 - [ ] No task touches more than 5 files
 - [ ] Orchestration classification assigned to each task (sequential/parallel-safe/parallel-worktree)
 
+## Structured Output Block
+
+After writing the task list, append a structured output block for cross-skill handoff. This HTML comment is invisible when rendered but enables `/cross-verify` to auto-check scope alignment:
+
+```
+<!-- SKILL_OUTPUT:breakdown
+task_count: [N]
+tasks:
+  - "[task 1]"
+  - "[task 2]"
+dependencies:
+  - "[dependency description]"
+estimated_complexity: "[low|medium|high]"
+END_SKILL_OUTPUT -->
+```
+
+Place this at the very end of the task list output, after all human-readable content.
+
 ## Further Reading
 
 See [Step 3 wiki page](../../docs/wiki/Step-3-Breakdown.md) for deeper walkthrough, examples, and common pitfalls.
@@ -111,3 +129,4 @@ See [Step 3 wiki page](../../docs/wiki/Step-3-Breakdown.md) for deeper walkthrou
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/task-list-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h3-first-things-first.md` for the full H3 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/orchestration-patterns.md` for worktree isolation and context boundary patterns.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.

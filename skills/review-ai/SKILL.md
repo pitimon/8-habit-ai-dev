@@ -144,6 +144,25 @@ If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
 - [ ] Every finding cites specific evidence (file:line, test output, or diff)
 - [ ] Summary table shows findings count for all four categories (Security, Quality, Performance, Completeness)
 
+## Structured Output Block
+
+After rendering the review verdict, append a structured output block for cross-skill handoff. This HTML comment is invisible when rendered but enables `/cross-verify` to auto-check review coverage:
+
+```
+<!-- SKILL_OUTPUT:review
+files_reviewed: [N]
+findings_critical: [N]
+findings_high: [N]
+findings_medium: [N]
+findings_low: [N]
+pass: [true|false]
+test_coverage_checked: [true|false]
+security_checked: [true|false]
+END_SKILL_OUTPUT -->
+```
+
+Place this at the very end of the review report, after all human-readable content.
+
 ## Further Reading
 
 See [Step 5 wiki page](../../docs/wiki/Step-5-Review-AI.md) for deeper walkthrough, examples, and common pitfalls.
@@ -153,3 +172,4 @@ See [Step 5 wiki page](../../docs/wiki/Step-5-Review-AI.md) for deeper walkthrou
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/review-report-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md` for the full H4 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards (the 12 commandments).
+Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.

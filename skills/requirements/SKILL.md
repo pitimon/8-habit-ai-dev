@@ -95,6 +95,27 @@ next-skill: design
 - [ ] Scope boundaries clear — both "in scope" and "out of scope" listed
 - [ ] Stakeholder/target user identified
 
+## Structured Output Block
+
+After writing the PRD, append a structured output block for cross-skill handoff. This HTML comment is invisible when rendered but enables `/cross-verify` to auto-check coverage:
+
+```
+<!-- SKILL_OUTPUT:requirements
+ears_count: [N]
+ears_criteria:
+  - "[criterion 1]"
+  - "[criterion 2]"
+scope_in: "[in-scope description]"
+scope_out: "[out-of-scope description]"
+primary_user: "[user role]"
+risks:
+  - "[risk 1]"
+success_criteria_count: [N]
+END_SKILL_OUTPUT -->
+```
+
+Place this at the very end of the PRD output, after all human-readable content.
+
 ## Further Reading
 
 See [Step 1 wiki page](../../docs/wiki/Step-1-Requirements.md) for deeper walkthrough, examples, and common pitfalls.
@@ -102,3 +123,4 @@ See [Step 1 wiki page](../../docs/wiki/Step-1-Requirements.md) for deeper walkth
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/prd-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/interview-protocol.md` for the structured discovery protocol.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h2-begin-with-end.md` for the full H2 principle and examples.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.

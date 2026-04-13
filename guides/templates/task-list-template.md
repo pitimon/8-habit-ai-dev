@@ -23,3 +23,12 @@ Output template for `/breakdown` (Step 3).
 - Total tasks: [N]
 - Total files affected: [N] (if >15, consider splitting the feature)
 - Estimated complexity: [small | medium | large]
+
+<!-- SKILL_OUTPUT:breakdown
+task_count: [N]
+tasks:
+  - "[task 1]"
+dependencies:
+  - "[dependency description]"
+estimated_complexity: "[low|medium|high]"
+END_SKILL_OUTPUT -->

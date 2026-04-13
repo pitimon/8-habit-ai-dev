@@ -26,6 +26,19 @@ next-skill: any
 - Formatting or linting changes
 - Dependency version bumps with passing CI
 
+## Auto-Detection (Structured Output Blocks)
+
+Before running the manual checklist, search for structured output blocks in the current directory:
+
+1. Glob for `*-prd.md`, `*-requirements.md`, `*-tasks.md`, `*-breakdown.md`, `*-review.md` files
+2. Read each file and look for `<!-- SKILL_OUTPUT:` blocks
+3. If found, pre-populate evidence for:
+   - **Q4**: Extract `ears_count` and `success_criteria_count` from requirements block
+   - **Q5**: Extract `test_coverage_checked` from review block
+   - **Q8**: Compare `task_count` vs `ears_count` for scope alignment — flag if tasks >> criteria
+4. Mark auto-populated answers with `✓A` (auto-detected) confidence level
+5. If no blocks found, proceed with manual assessment (no change to current behavior)
+
 ## Process
 
 Run through this checklist. Flag any item that fails.
@@ -71,6 +84,7 @@ For critical decisions (architecture, security, production deploys), mark each P
 | Verified   | ✓V   | Evidence checked — test ran, code read, diff reviewed     | "Read the function at api.ts:42, confirmed input validation exists" |
 | Inferred   | ✓I   | Reasonable belief based on context, not directly verified | "Codebase uses Zod throughout, likely validated here too"           |
 | Unverified | ✓U   | Assumption — should verify before proceeding              | "Assuming tests exist but haven't checked coverage"                 |
+| Auto-detected | ✓A | Evidence extracted from structured output block           | "Parsed 5 EARS criteria from PRD structured block"                 |
 
 **Scoring**: All Pass levels count toward the score, but ✓U items are flagged as verification debt.
 
@@ -138,3 +152,4 @@ Domain questions are scored separately and do not affect the main 17-question sc
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verification.md` for detailed guidance on each question.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards when using confidence levels.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.
