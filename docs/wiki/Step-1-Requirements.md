@@ -20,10 +20,10 @@ Define what "done" looks like before touching code. A PRD you can verify against
 
 ## Process
 
-1. Clarify intent — What · Why · Who
+1. **Interview** — follow the [Interview Protocol](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/templates/interview-protocol.md) to discover requirements through structured conversation. Adaptive depth: Quick (3 questions) for small scope, Standard (5) by default, Deep (7+) for complex features
 2. Read existing `CLAUDE.md`, `PRD.md`, `DOMAIN.md`, `README.md` — don't duplicate
 3. Draft PRD summary (10–20 lines)
-4. Define 3–5 verifiable success criteria
+4. Define 3–5 verifiable success criteria in EARS notation
 5. List what's **out of scope** explicitly
 
 ## Output

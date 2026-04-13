@@ -16,11 +16,14 @@ next-skill: design
 
 ## Process
 
-1. **Clarify intent**: Ask the user (or derive from context):
-   - What are we building?
-   - Why are we building it?
-   - Who is it for?
-   - What is in scope / out of scope?
+1. **Discover requirements**: Before writing EARS criteria, follow the Interview Protocol (loaded below) to discover requirements through structured conversation. Use adaptive depth — Quick (3 questions) for small scope, Standard (5) by default, Deep (7+) for complex features.
+
+   Core questions to clarify:
+   - What problem are we solving? (not what solution — the problem)
+   - Who is affected?
+   - What does success look like?
+   - What are the boundaries? (in scope / out of scope)
+   - What exists already?
 
 2. **Check existing docs**: Read `CLAUDE.md`, `PRD.md`, `DOMAIN.md`, or `README.md` if they exist — don't duplicate what's already defined.
 
@@ -97,4 +100,5 @@ next-skill: design
 See [Step 1 wiki page](../../docs/wiki/Step-1-Requirements.md) for deeper walkthrough, examples, and common pitfalls.
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/prd-template.md` for the output template.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/interview-protocol.md` for the structured discovery protocol.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h2-begin-with-end.md` for the full H2 principle and examples.
