@@ -76,13 +76,25 @@ next-skill: review-ai
 
    Skip this step for single-agent sequential work. Required when `/breakdown` classified tasks as `parallel-safe` or `parallel-worktree`.
 
-6. **H5 Checkpoint**: "Have I fully understood the problem before proposing a solution?"
+6. **Context survival** (brief longevity in long sessions):
+
+   Claude Code uses a 4-layer context compression pipeline that progressively removes older content as the context window fills. Briefs written early in a session may be summarized or removed mid-implementation. Structure your brief to survive compression:
+
+   - **Front-load critical info**: Success criteria, key constraints, and file paths go at the TOP of the brief. Compression removes from the middle first.
+   - **Keep briefs under ~4,000 tokens**: Longer briefs are prime compression targets. If your brief exceeds this, split into one brief per implementation phase rather than one mega-brief.
+   - **Stable content first, volatile last**: Architecture decisions and conventions at the top; current task specifics at the bottom. This mirrors Claude Code's own prompt cache stability pattern — stable prefixes stay cached, volatile suffixes get refreshed.
+   - **Self-contained references**: Use "see file X at line Y" instead of pasting large code blocks. Compression can't remove external files.
+
+   Skip this step for quick tasks that will complete within a few exchanges.
+
+7. **H5 Checkpoint**: "Have I fully understood the problem before proposing a solution?"
 
 ## Common Mistakes
 
 - Writing new code without reading what already exists
 - Assuming a utility function exists when it doesn't
 - Duplicating logic that's already implemented elsewhere
+- Writing a 10,000-token mega-brief that gets compressed away mid-session
 
 ## Handoff
 
@@ -102,6 +114,7 @@ next-skill: review-ai
 - [ ] Existing patterns and naming conventions documented in brief
 - [ ] Constraints listed (backward compatibility, file size, performance)
 - [ ] Test approach defined (what to test, TDD if applicable)
+- [ ] Brief is ≤4,000 tokens (or split into per-phase briefs for complex tasks)
 - [ ] Context boundaries defined for parallel tasks (must-know / must-not-know / merge contract)
 
 ## Further Reading
