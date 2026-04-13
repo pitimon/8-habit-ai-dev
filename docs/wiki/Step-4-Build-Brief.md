@@ -42,6 +42,15 @@ Produce a context-rich implementation brief **before** Claude writes any code. F
 - **Expects**: A task from `/breakdown`
 - **Produces for `/review-ai`**: Implemented code with a brief to review against
 
+## Context Survival (v2.8.0)
+
+Claude Code uses a 4-layer context compression pipeline that progressively removes older content as the context window fills. Briefs written early in a session may be summarized or removed mid-implementation. To survive compression:
+
+- **Front-load critical info** — success criteria, constraints, and file paths at the TOP
+- **Keep briefs under ~4,000 tokens** — longer briefs are prime compression targets; split into per-phase briefs instead
+- **Stable content first, volatile last** — architecture decisions at the top, task specifics at the bottom (mirrors prompt cache stability)
+- **Self-contained references** — "see file X at line Y" instead of pasting large code blocks
+
 ## H5 Checkpoint
 
 > _"Have I read enough of the existing code to make good judgments here?"_

@@ -48,6 +48,18 @@ Decision document or ADR following `guides/templates/adr-template.md`:
 
 > _"Do I understand WHY we're building it this way, not just WHAT?"_
 
+## Sticky Decisions (v2.8.0)
+
+Some decisions act as **sticky latches** — once set, reversing them mid-session wastes all context built on top. For each decision, ask: _"If we change this after implementation starts, how much rework?"_
+
+| Rework | Classification | Example |
+|--------|---------------|---------|
+| >50%   | **Sticky** — revisit only via new `/design` cycle | DB choice, auth model, API style |
+| 10-50% | **Semi-sticky** — adjustable but flag the cost | ORM, test framework |
+| <10%   | **Flexible** — change freely | Variable names, UI copy |
+
+Mark sticky decisions in the ADR: **STICKY — changing this requires re-running `/design`, not patching mid-build.**
+
 ## Three Loops reminder
 
 Architecture decisions are **In-the-Loop** — human decides, not AI. Irreversible decisions (data migration, breaking API change) are always In-the-Loop regardless of perceived simplicity.

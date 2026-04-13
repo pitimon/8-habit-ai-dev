@@ -37,6 +37,16 @@ Decompose a feature into atomic tasks — 1 task per focused unit of work. Preve
 - **Expects**: Architecture decisions from `/design`
 - **Produces for `/build-brief`**: Prioritized task list with dependencies and file paths
 
+## Token-Efficient Parallel Design (v2.8.0)
+
+When designing `parallel-safe` or `parallel-worktree` tasks, optimize for prompt cache sharing:
+
+- **Maximize shared context** — group tasks that read the same files so their `/build-brief` prefixes overlap (~90% token savings)
+- **Minimize divergence point** — task-specific instructions go LAST in the agent prompt; everything before is the cached shared prefix
+- **Avoid redundant reads** — include shared files in the brief once rather than having each agent read them independently
+
+Most valuable for 3+ parallel tasks. For 2 tasks, the optimization overhead rarely pays off.
+
 ## H3 Checkpoint
 
 > _"Am I doing what's important, or what's interesting?"_
