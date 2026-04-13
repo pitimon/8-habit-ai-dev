@@ -85,7 +85,7 @@ When `/cross-verify` runs, it should:
 2. If blocks found, auto-populate evidence for relevant questions:
    - **Q4** (success criteria): Check `ears_count > 0` and `success_criteria_count > 0` from requirements block
    - **Q5** (test plan): Check `test_coverage_checked: true` from review block
-   - **Q8** (scope creep): Compare `task_count` from breakdown vs `ears_count` from requirements — flag if tasks >> criteria
+   - **Q8** (scope creep): Compare `task_count` from breakdown vs `ears_count` from requirements — flag if `task_count > ears_count * 3` (one requirement typically decomposes into 1-3 tasks)
 3. If no blocks found, fall back to manual assessment (current behavior)
 4. Report which blocks were found and which were missing
 

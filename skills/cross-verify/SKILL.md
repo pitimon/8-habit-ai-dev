@@ -35,7 +35,7 @@ Before running the manual checklist, search for structured output blocks in the 
 3. If found, pre-populate evidence for:
    - **Q4**: Extract `ears_count` and `success_criteria_count` from requirements block
    - **Q5**: Extract `test_coverage_checked` from review block
-   - **Q8**: Compare `task_count` vs `ears_count` for scope alignment — flag if tasks >> criteria
+   - **Q8**: Compare `task_count` vs `ears_count` for scope alignment — flag if `task_count > ears_count * 3`
 4. Mark auto-populated answers with `✓A` (auto-detected) confidence level
 5. If no blocks found, proceed with manual assessment (no change to current behavior)
 
