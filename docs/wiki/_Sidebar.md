@@ -1,10 +1,12 @@
 ### 8-Habit AI Dev
 
-**Start here**
+_Structured AI development_
 
-- [Base Camp](Home)
-- [Getting Started](Getting-Started)
+**Get Started**
+
+- [Home](Home)
 - [Installation](Installation)
+- [Getting Started](Getting-Started)
 
 **7-Step Workflow**
 
@@ -18,18 +20,20 @@
 - [6 · Deploy Guide](Step-6-Deploy-Guide)
 - [7 · Monitor Setup](Step-7-Monitor-Setup)
 
-**Reference**
+**Concepts**
 
+- [Architecture](Architecture)
+- [Maturity Model](Maturity-Model)
 - [8 Habits](Habits-Reference)
-- [Skills Catalog](Skills-Reference)
 - [Vibe Coding vs Structured](Vibe-Coding-vs-Structured)
 
-**Help**
+**Reference**
 
+- [Skills Catalog](Skills-Reference)
 - [FAQ](FAQ)
 - [Troubleshooting](Troubleshooting)
 
 **Project**
 
-- [Contributing to Wiki](Contributing-to-Wiki)
 - [Changelog](Changelog)
+- [Contributing to Wiki](Contributing-to-Wiki)

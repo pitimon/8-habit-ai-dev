@@ -21,6 +21,9 @@
 
 ## What vibe coding costs you
 
+> [!CAUTION]
+> These are not hypothetical. Every item below has been observed in production AI-generated codebases.
+
 - **Hallucinated APIs** shipped to production
 - **Missing error handling** that surfaces during the first outage
 - **Scope creep** — features nobody asked for

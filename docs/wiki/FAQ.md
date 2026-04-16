@@ -59,6 +59,18 @@ Use both for maximum coverage. See the note in [Base Camp](Home) for more.
 
 In [`habits/h1-...md` through `habits/h8-...md`](https://github.com/pitimon/8-habit-ai-dev/tree/main/habits). The [Habits Reference](Habits-Reference) page in this wiki is auto-generated from those files.
 
+## What is `/calibrate` and do I need it?
+
+`/calibrate` is a self-assessment skill that determines your maturity level (Dependence → Independence → Interdependence → Significance) and writes a profile to `~/.claude/habit-profile.md`. Other skills read this profile to adapt their verbosity — beginners get full guidance, experts get minimal prompts.
+
+You don't need it to use the plugin — the default is Independence level. Calibrate when guidance feels too detailed or too sparse. See [Maturity Model](Maturity-Model) for the full picture.
+
+## Does this plugin help with EU AI Act compliance?
+
+Yes. `/eu-ai-act-check` provides a 9-obligation checklist covering Articles 9-15 of EU AI Act Regulation 2024/1689, with **25 MUST + 27 SHOULD + 8 COULD** items. It includes a scope-check pre-flight so you can quickly skip if your system is not high-risk or not EU-targeted.
+
+The enforcement date is **2 August 2026**. This is believed to be the first Claude Code plugin with explicit EU AI Act compliance tooling. See [Skills Catalog → `/eu-ai-act-check`](Skills-Reference#eu-ai-act-check).
+
 ## I found a bug or want to suggest a feature
 
 Open an issue: [github.com/pitimon/8-habit-ai-dev/issues](https://github.com/pitimon/8-habit-ai-dev/issues).

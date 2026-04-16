@@ -49,7 +49,11 @@ claude plugin uninstall 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 ## What gets installed
 
-- **Skills** (loaded on demand): `/research`, `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/review-ai`, `/deploy-guide`, `/monitor-setup`, `/cross-verify`, `/whole-person-check`, `/security-check`, `/reflect`, `/workflow`
+- **Skills** (loaded on demand):
+  - _Workflow_: `/research`, `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/review-ai`, `/deploy-guide`, `/monitor-setup`
+  - _Assessment_: `/cross-verify`, `/whole-person-check`, `/security-check`, `/reflect`, `/workflow`
+  - _Meta_: `/using-8-habits`, `/calibrate`
+  - _Compliance_: `/eu-ai-act-check`, `/ai-dev-log`
 - **Rules** (auto-loaded every session): `rules/effective-development.md` — the full 8-Habit playbook
 - **Session hook**: ≤300-token reminder of the 7-step workflow
 - **Agent**: `8-habit-reviewer` — read-only cross-verification agent

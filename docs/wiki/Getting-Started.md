@@ -1,6 +1,9 @@
 # Getting Started
 
-Your first structured feature in ~10 minutes. This walkthrough shows how the 7-step workflow replaces "just ask Claude to build X."
+> [!TIP]
+> This walkthrough takes **~10 minutes**. Have a small feature from your backlog ready — a real one works best.
+
+Your first structured feature. This walkthrough shows how the 7-step workflow replaces "just ask Claude to build X."
 
 ## Before you start
 
@@ -19,7 +22,8 @@ Open Claude Code in your project and describe what you want:
 
 Claude produces a PRD summary: **What · Why · Who · In scope · Out of scope · Success criteria · Definition of Done**. Review and correct anything that does not match your intent — this is your first human checkpoint.
 
-> **Tip**: If the problem space is unclear, start with `/research` (Step 0) instead.
+> [!TIP]
+> If the problem space is unclear, start with `/research` (Step 0) instead.
 
 ### 2 · Decide architecture
 

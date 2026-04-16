@@ -53,6 +53,7 @@ Claude Code uses a 4-layer context compression pipeline that progressively remov
 
 ## H5 Checkpoint
 
+> [!IMPORTANT]
 > _"Have I read enough of the existing code to make good judgments here?"_
 
 ## See also

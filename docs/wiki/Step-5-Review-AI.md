@@ -45,6 +45,7 @@ Run these **in addition** to `/review-ai` for deeper coverage:
 
 ## H4 Checkpoint
 
+> [!IMPORTANT]
 > _"Does this interaction leave the next developer better informed and more capable?"_
 
 ## See also

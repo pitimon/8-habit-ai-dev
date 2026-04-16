@@ -43,6 +43,7 @@ Set up error tracking, alerting, and health checks so you **learn from productio
 
 ## H7 Checkpoint
 
+> [!IMPORTANT]
 > _"Am I investing in future capability, or just grinding out output?"_
 
 ## See also

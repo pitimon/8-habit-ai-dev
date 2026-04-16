@@ -46,6 +46,7 @@ A **research brief** containing:
 
 ## H5 Checkpoint
 
+> [!IMPORTANT]
 > _"Have I fully understood the problem before proposing a solution?"_
 
 ## See also
