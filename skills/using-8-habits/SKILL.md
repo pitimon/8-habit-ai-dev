@@ -130,7 +130,3 @@ Load `${CLAUDE_PLUGIN_ROOT}/skills/using-8-habits/examples.md` for the full onbo
 - [ ] User has picked their next skill based on the decision tree
 - [ ] User knows about the honest skip rule: justify skipping out loud, or run the step
 - [ ] User knows `/cross-verify` + `/reflect` exist for review and retrospective
-
-## Further Reading
-
-See [Using 8-Habits wiki page](../../docs/wiki/Using-8-Habits.md) for deeper walkthrough and onboarding tips.
