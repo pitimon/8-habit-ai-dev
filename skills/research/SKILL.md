@@ -56,6 +56,8 @@ What do we need to know before specifying requirements?
 - What prior art or patterns exist in the codebase?
 - What domain constraints should we respect?
 - What have others tried? What worked? What failed?
+- What technology options (language, framework, runtime) fit this problem? What are the ecosystem trade-offs?
+- Are there maturity, community, or licensing concerns with candidate technologies?
 
 ### 2. Search existing solutions
 
