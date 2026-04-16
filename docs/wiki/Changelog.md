@@ -1,10 +1,23 @@
-![Version](https://img.shields.io/badge/latest-v2.11.0-blue)
+![Version](https://img.shields.io/badge/latest-v2.11.1-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.11.1 — CHANGELOG Drift Guard (April 2026)
+
+Patch release hardening `validate-content.sh` Check 19 against recurring CHANGELOG drift ([#124](https://github.com/pitimon/8-habit-ai-dev/issues/124), [PR #131](https://github.com/pitimon/8-habit-ai-dev/pull/131)). Post-v2.11.0 `/cross-verify` exposed the same drift class slipping CI twice (v2.9.0 + v2.11.0) through a pointer-fallback loophole.
+
+- **3 new FAIL-severity assertions** in Check 19: `CHANGELOG.md ^## v<ver>` present, wiki `^## v<ver>` present (no pointer fallback), wiki badge `latest-v<ver>-blue` match.
+- **Backfilled** missing v2.9.0 + v2.11.0 entries in root `CHANGELOG.md` and v2.11.0 in wiki `Changelog.md`.
+
+Fitness receipts: `validate-structure.sh` 243/0, `validate-content.sh` 185/0, `test-skill-graph.sh` 57/0, `test-verbosity-hook.sh` 19/0.
+
+Closes #124.
+
+---
 
 ## v2.11.0 — Design Pipeline Completion + Wiki Redesign (April 2026)
 
