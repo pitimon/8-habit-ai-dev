@@ -10,6 +10,37 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.11.0 — Design Pipeline Completion + Wiki Redesign (2026-04-16)
+
+Close the only remaining structured-output-block gap in the `/requirements` → `/design` → `/breakdown` → `/review-ai` handoff chain ([#128](https://github.com/pitimon/8-habit-ai-dev/issues/128), [PR #129](https://github.com/pitimon/8-habit-ai-dev/pull/129)) and upgrade 20 wiki pages to a professional template ([#127](https://github.com/pitimon/8-habit-ai-dev/issues/127), [PR #130](https://github.com/pitimon/8-habit-ai-dev/pull/130)). Both PRs merged within 3 minutes of each other (14:13 and 14:16 UTC).
+
+### Added
+
+- **`SKILL_OUTPUT:design` structured block** ([#128](https://github.com/pitimon/8-habit-ai-dev/issues/128)) — closes the last cross-skill handoff gap. `/cross-verify` Q4, Q14, Q16 now auto-populate (`✓A`) from the design block instead of requiring manual re-reading.
+- **Tech-stack decisions as formal concerns** — `/design` Step 2 + `/research` Step 1 now surface language/framework choices as explicit design outputs, not implicit assumptions.
+- **Scope validation via `SKILL_OUTPUT:requirements`** — `/design` now consumes the requirements block so the skill can flag scope drift between decisions and success criteria.
+- **Decision granularity heuristic** — H3-based guidance for splitting vs grouping design decisions.
+- **H8 Whole Person dimensions in `/design` checkpoint** — Body/Mind/Heart/Spirit prompts added alongside the existing pass/fail gate.
+- **`docs/wiki/Architecture.md`** (new) — 4-layer plugin design documentation.
+- **`docs/wiki/Maturity-Model.md`** (new) — 4-level adaptive guidance system.
+
+### Changed
+
+- **`docs/wiki/Home.md`** — rewritten as a hero landing page (49 → 108 lines).
+- **`docs/wiki/Skills-Reference.md`** — expanded from 13 → 17 skills with quick-select matrix.
+- **`docs/wiki/Workflow-Overview.md`** — upgraded with a Mermaid diagram and full 17-skill coverage.
+- **All 8 Step wiki pages** — upgraded with `> [!IMPORTANT]` checkpoint callouts.
+- **`docs/wiki/_Sidebar.md`** — reorganized with a new "Concepts" section.
+- **`docs/wiki/FAQ.md`** — 2 new FAQ entries; **`docs/wiki/Getting-Started.md`** + **`docs/wiki/Vibe-Coding-vs-Structured.md`** updated with GitHub Alert boxes.
+- **`docs/wiki/Installation.md`** — skills list updated to 17 skills across 4 categories.
+- **Wiki redesign totals**: 18 files changed, 291 insertions, 53 deletions.
+
+### Fitness
+
+- `validate-structure.sh` 243/243 PASS, `validate-content.sh` 183/183 PASS, `test-skill-graph.sh` PASS, `test-verbosity-hook.sh` PASS — all green at release.
+
+---
+
 ## v2.10.0 — Progressive-Disclosure SKILL.md Split (2026-04-16)
 
 Refactor the 3 largest skills into `SKILL.md + reference.md + examples.md` triads to create headroom below the 2000-word F3 fitness-function ceiling. Pattern sourced from external research (`shanraisshan/claude-code-best-practice`), filtered through plugin-boundary audit — see [ADR-009](docs/adr/ADR-009-skill-split-convention.md).
@@ -38,6 +69,26 @@ Refactor the 3 largest skills into `SKILL.md + reference.md + examples.md` triad
 ### Fitness
 
 - All 3 validators pass: `validate-structure.sh` 243/0, `test-skill-graph.sh` PASS, `validate-content.sh` 183/0 with 0 fitness breaches.
+
+---
+
+## v2.9.0 — Deep-Project Inspired Improvements (2026-04-13)
+
+Three features inspired by comparison research against [`piercelamb/deep-project`](https://github.com/piercelamb/deep-project). Cross-verified (14/17), advisor-reviewed, 8-habit QA passed (13/17 → 15/17 after fixes). Released via PRs [#121](https://github.com/pitimon/8-habit-ai-dev/pull/121), [#122](https://github.com/pitimon/8-habit-ai-dev/pull/122), [#123](https://github.com/pitimon/8-habit-ai-dev/pull/123).
+
+### Added
+
+- **Interview protocol for `/requirements`** ([#118](https://github.com/pitimon/8-habit-ai-dev/issues/118), [PR #121](https://github.com/pitimon/8-habit-ai-dev/pull/121)) — new `guides/templates/interview-protocol.md` gives structured conversation scaffolding (Quick / Standard / Deep depth) for discovering requirements before EARS criteria. Replaces the "ask the user 5 questions" default with a better-shaped discovery flow.
+- **Workflow step awareness in session-start hook** ([#119](https://github.com/pitimon/8-habit-ai-dev/issues/119), [PR #122](https://github.com/pitimon/8-habit-ai-dev/pull/122)) — `hooks/session-start.sh` now surfaces a workflow step cue so partial chains can resume across sessions without per-skill rework. Respects existing `HABIT_QUIET=1` opt-out.
+- **Machine-readable structured output blocks** ([#120](https://github.com/pitimon/8-habit-ai-dev/issues/120), [PR #123](https://github.com/pitimon/8-habit-ai-dev/pull/123)) — new `guides/structured-output-protocol.md` defines `<!-- SKILL_OUTPUT:... END_SKILL_OUTPUT -->` HTML comment blocks at the end of `/requirements`, `/breakdown`, and `/review-ai`. Enables `/cross-verify` to auto-populate (`✓A`) answers from producer skills instead of requiring manual re-reading of prior-step artifacts.
+
+### Fixed
+
+- **Scope-alignment threshold in `/cross-verify` Q8** — QA raised the `task_count` vs `ears_count` ratio guard from hardcoded `3×` to a documented `≤ 3×` threshold so the heuristic is auditable and adjustable.
+
+### Fitness
+
+- `validate-structure.sh` 238/238 PASS, `validate-content.sh` 177/177 PASS, `test-skill-graph.sh` 57/57 PASS, `test-verbosity-hook.sh` 19/19 PASS — 491/491 total at release commit `8123b25`.
 
 ---
 
