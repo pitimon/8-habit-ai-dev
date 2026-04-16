@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 2.9.0 | **Date**: 2026-04-13 | **Previous**: 2.8.0 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)
+**Version**: 2.10.0 | **Date**: 2026-04-16 | **Previous**: 2.8.0 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)
 
 Running our own 17-question checklist against the plugin itself. H8 Modeling: "Follow the process always, no shortcuts when unwatched."
 

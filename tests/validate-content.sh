@@ -230,17 +230,25 @@ else
 fi
 
 # 15c: /eu-ai-act-check skill — tier counts match Tier Summary table
+# ADR-009: SKILL.md may be split into SKILL + reference + examples triad.
+# Search all three files as a unit when checking content assertions.
 EU_SKILL="skills/eu-ai-act-check/SKILL.md"
+EU_TRIAD="skills/eu-ai-act-check/SKILL.md skills/eu-ai-act-check/reference.md skills/eu-ai-act-check/examples.md"
+EU_TRIAD_EXISTING=""
+for f in $EU_TRIAD; do [ -f "$f" ] && EU_TRIAD_EXISTING="$EU_TRIAD_EXISTING $f"; done
 if [ -f "$EU_SKILL" ]; then
-  must_count=$(grep -c '^- \[ \] \*\*\[MUST\]\*\*' "$EU_SKILL" || true)
-  should_count=$(grep -c '^- \[ \] \*\*\[SHOULD\]\*\*' "$EU_SKILL" || true)
-  could_count=$(grep -c '^- \[ \] \*\*\[COULD\]\*\*' "$EU_SKILL" || true)
+  must_count=$({ grep -ch '^- \[ \] \*\*\[MUST\]\*\*' $EU_TRIAD_EXISTING 2>/dev/null || true; } | awk '{s+=$1} END {print s+0}' || echo 0)
+  should_count=$({ grep -ch '^- \[ \] \*\*\[SHOULD\]\*\*' $EU_TRIAD_EXISTING 2>/dev/null || true; } | awk '{s+=$1} END {print s+0}' || echo 0)
+  could_count=$({ grep -ch '^- \[ \] \*\*\[COULD\]\*\*' $EU_TRIAD_EXISTING 2>/dev/null || true; } | awk '{s+=$1} END {print s+0}' || echo 0)
   total_count=$((must_count + should_count + could_count))
 
-  # Tier Summary table claimed counts (extract from table rows)
-  must_claimed=$(awk '/^### Tier Summary/{found=1} found && /\*\*MUST\*\*/{print $4; exit}' "$EU_SKILL" || echo 0)
-  should_claimed=$(awk '/^### Tier Summary/{found=1} found && /\*\*SHOULD\*\*/{print $4; exit}' "$EU_SKILL" || echo 0)
-  could_claimed=$(awk '/^### Tier Summary/{found=1} found && /\*\*COULD\*\*/{print $4; exit}' "$EU_SKILL" || echo 0)
+  # Tier Summary table claimed counts (may live in SKILL.md or reference.md)
+  must_claimed=$(awk '/^##+ Tier Summary/{found=1} found && /\*\*MUST\*\*/{print $4; exit}' $EU_TRIAD_EXISTING 2>/dev/null || echo 0)
+  should_claimed=$(awk '/^##+ Tier Summary/{found=1} found && /\*\*SHOULD\*\*/{print $4; exit}' $EU_TRIAD_EXISTING 2>/dev/null || echo 0)
+  could_claimed=$(awk '/^##+ Tier Summary/{found=1} found && /\*\*COULD\*\*/{print $4; exit}' $EU_TRIAD_EXISTING 2>/dev/null || echo 0)
+  [ -z "$must_claimed" ] && must_claimed=0
+  [ -z "$should_claimed" ] && should_claimed=0
+  [ -z "$could_claimed" ] && could_claimed=0
 
   if [ "$must_count" -eq "$must_claimed" ]; then
     pass "$EU_SKILL MUST tier: actual=$must_count matches claimed=$must_claimed"
@@ -258,15 +266,15 @@ if [ -f "$EU_SKILL" ]; then
     fail "$EU_SKILL COULD tier mismatch: actual=$could_count vs claimed=$could_claimed"
   fi
 
-  # Article paragraph references
-  para_refs=$(grep -c '¶' "$EU_SKILL" || true)
+  # Article paragraph references (counted across triad per ADR-009)
+  para_refs=$({ grep -ch '¶' $EU_TRIAD_EXISTING 2>/dev/null || true; } | awk '{s+=$1} END {print s+0}' || echo 0)
   if [ "$para_refs" -ge 30 ]; then
-    pass "$EU_SKILL has $para_refs paragraph references (≥30 expected)"
+    pass "eu-ai-act-check triad has $para_refs paragraph references (≥30 expected)"
   else
-    fail "$EU_SKILL has only $para_refs paragraph references (need ≥30)"
+    fail "eu-ai-act-check triad has only $para_refs paragraph references (need ≥30)"
   fi
 
-  # Scope pre-flight present
+  # Scope pre-flight present (in SKILL.md body — stays in core)
   if grep -q "Step 0.*Scope Pre-Flight\|--scope" "$EU_SKILL"; then
     pass "$EU_SKILL has Step 0 scope pre-flight"
   else
@@ -460,32 +468,34 @@ echo ""
 # --- Check 18: /using-8-habits meta-skill (onboarding) ---
 echo "--- Check 18: /using-8-habits meta-skill ---"
 META_SKILL="skills/using-8-habits/SKILL.md"
+# ADR-009: search triad (SKILL + reference + examples) as a unit for content assertions
+META_TRIAD="skills/using-8-habits/SKILL.md skills/using-8-habits/reference.md skills/using-8-habits/examples.md"
+META_TRIAD_EXISTING=""
+for f in $META_TRIAD; do [ -f "$f" ] && META_TRIAD_EXISTING="$META_TRIAD_EXISTING $f"; done
 if [ -f "$META_SKILL" ]; then
   pass "$META_SKILL exists"
-  # Frontmatter: meta-skill is a starting point
+  # Frontmatter: meta-skill is a starting point (SKILL.md only — frontmatter lives there)
   if grep -qE '^prev-skill:\s*none' "$META_SKILL"; then
     pass "$META_SKILL prev-skill is 'none'"
   else
     fail "$META_SKILL prev-skill should be 'none'"
   fi
-  # Content: explains workflow + decision tree + all skills
+  # Content: explains workflow + decision tree + all skills (across triad per ADR-009)
   for keyword in "7-step workflow" "decision tree" "workflow skill" "assessment skill" "Covey" "Whole Person"; do
-    if grep -qi "$keyword" "$META_SKILL"; then
-      pass "$META_SKILL mentions '$keyword'"
+    if grep -qi "$keyword" $META_TRIAD_EXISTING 2>/dev/null; then
+      pass "using-8-habits triad mentions '$keyword'"
     else
-      fail "$META_SKILL missing '$keyword'"
+      fail "using-8-habits triad missing '$keyword'"
     fi
   done
-  # Must mention every current skill (anti-drift assertion)
-  # Use /skill-name pattern to anchor (skill names preceded by slash)
+  # Must mention every current skill (anti-drift assertion, searches triad)
   for skill_dir in skills/*/; do
     skill_name=$(basename "$skill_dir")
-    # Skip the meta-skill referencing itself
     [ "$skill_name" = "using-8-habits" ] && continue
-    if grep -q "/$skill_name\b" "$META_SKILL"; then
-      pass "$META_SKILL mentions /$skill_name"
+    if grep -q "/$skill_name\b" $META_TRIAD_EXISTING 2>/dev/null; then
+      pass "using-8-habits triad mentions /$skill_name"
     else
-      fail "$META_SKILL missing mention of /$skill_name (anti-drift assertion)"
+      fail "using-8-habits triad missing mention of /$skill_name (anti-drift assertion)"
     fi
   done
   # Cross-linked from README + CLAUDE.md
