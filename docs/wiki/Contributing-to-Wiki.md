@@ -93,6 +93,55 @@ The `wiki-sync.yml` Action publishes to `<repo>.wiki.git` within seconds of the 
 - **Emoji**: only if it adds clarity (warning, success, info). Do not put emoji in H1/H2 — they break anchor generation
 - **Bilingual**: English only for now; Thai translation is planned as a phase 2
 
+## Visual patterns
+
+The wiki uses consistent visual patterns. Follow these when editing or adding pages.
+
+### Alert boxes
+
+Use [GitHub alert syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) for callouts:
+
+| Type             | When to use                            | Example                                    |
+| ---------------- | -------------------------------------- | ------------------------------------------ |
+| `> [!NOTE]`      | Background context, FYI                | Architecture details, optional information |
+| `> [!TIP]`       | Helpful shortcuts, quick wins          | "New here? Start with..."                  |
+| `> [!IMPORTANT]` | Habit checkpoints, key principles      | Checkpoint questions on every step page    |
+| `> [!WARNING]`   | Process rules that must not be skipped | "Never skip `/review-ai`"                  |
+| `> [!CAUTION]`   | Real-world consequences, risk warnings | "These are not hypothetical..."            |
+
+### Mermaid diagrams
+
+Use `flowchart LR` for workflow pipelines. Color coding convention:
+
+```
+classDef optional fill:#e8f5e9,stroke:#4caf50     <!-- green: optional -->
+classDef human fill:#fce4ec,stroke:#e91e63         <!-- pink: human checkpoint -->
+classDef never_skip fill:#fff3e0,stroke:#ff9800    <!-- orange: never skip -->
+```
+
+Always add a legend line below the diagram: `> Green = optional · Pink = human checkpoint · Orange = **never skip**`
+
+### Badge row
+
+Use shields.io badges at the top of landing pages (Home, Changelog):
+
+```markdown
+![Version](https://img.shields.io/badge/version-X.Y.Z-blue)
+![Skills](https://img.shields.io/badge/skills-17-green)
+![License](https://img.shields.io/badge/license-MIT-brightgreen)
+```
+
+### Checkpoint pattern
+
+Every Step-N page ends with a checkpoint section using this exact format:
+
+```markdown
+## HN Checkpoint
+
+> [!IMPORTANT]
+> _"The checkpoint question here?"_
+```
+
 ## What not to contribute (yet)
 
 - Per-project tutorials (put those in your own repo)

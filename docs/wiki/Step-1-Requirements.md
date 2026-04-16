@@ -46,6 +46,7 @@ Define what "done" looks like before touching code. A PRD you can verify against
 
 ## H2 Checkpoint
 
+> [!IMPORTANT]
 > _"Can I describe what success looks like before writing code?"_
 
 ## See also

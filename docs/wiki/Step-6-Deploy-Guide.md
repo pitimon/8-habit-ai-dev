@@ -49,6 +49,7 @@ A deploy plan document containing:
 
 ## H1 Checkpoint
 
+> [!IMPORTANT]
 > _"Am I preventing future incidents, or reacting to current ones?"_
 
 ## See also

@@ -49,6 +49,7 @@ Most valuable for 3+ parallel tasks. For 2 tasks, the optimization overhead rare
 
 ## H3 Checkpoint
 
+> [!IMPORTANT]
 > _"Am I doing what's important, or what's interesting?"_
 
 ## See also
