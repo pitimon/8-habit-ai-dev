@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-17-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.10.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.10.0)
+[![Version](https://img.shields.io/badge/Version-2.11.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.11.0)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -307,7 +307,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.10.0)
+│   ├── plugin.json                 # Plugin metadata (v2.11.0)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
@@ -380,6 +380,17 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
 
 ---
+
+## What's New in v2.11.0
+
+**Theme: Design Skill Pipeline Completion + Wiki Professional Redesign** ([#128](https://github.com/pitimon/8-habit-ai-dev/issues/128), [#127](https://github.com/pitimon/8-habit-ai-dev/issues/127))
+
+- **`/design` structured output block** ([#128](https://github.com/pitimon/8-habit-ai-dev/issues/128)) — adds `SKILL_OUTPUT:design` block, closing the only gap in the `/requirements` → `/design` → `/breakdown` → `/review-ai` cross-skill handoff chain. `/cross-verify` can now auto-check design decisions (Q4, Q14, Q16).
+- **`/design` tech stack + Whole Person** — decision list now includes language/runtime and framework selection. H8 Checkpoint expanded with Body/Mind/Heart/Spirit dimensions.
+- **`/design` scope validation** — new step 1b consumes `SKILL_OUTPUT:requirements` to verify design doesn't expand beyond agreed scope.
+- **`/design` decision heuristic** — H3-based guidance: split decisions affecting >3 layers, group decisions sharing trade-offs.
+- **`/research` tech stack questions** — Step 1 research questions now include technology evaluation and ecosystem trade-offs.
+- **Wiki professional redesign** ([#127](https://github.com/pitimon/8-habit-ai-dev/issues/127)) — 20 pages upgraded: hero Home page, new Architecture and Maturity-Model pages, Skills-Reference expanded to 17 skills with quick-select matrix, Workflow-Overview with Mermaid diagram, all Step pages with `> [!IMPORTANT]` checkpoints.
 
 ## What's New in v2.10.0
 
@@ -557,4 +568,4 @@ MIT
 
 ---
 
-_Version: 2.10.0 | Last updated: 2026-04-16_
+_Version: 2.11.0 | Last updated: 2026-04-16_

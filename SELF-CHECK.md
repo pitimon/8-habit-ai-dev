@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 2.10.0 | **Date**: 2026-04-16 | **Previous**: 2.8.0 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)
+**Version**: 2.11.0 | **Date**: 2026-04-16 | **Previous**: 2.10.0 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)
 
 Running our own 17-question checklist against the plugin itself. H8 Modeling: "Follow the process always, no shortcuts when unwatched."
 
@@ -74,7 +74,7 @@ v2.6.0 improvements (Hermes-Inspired Improvements — 4 issues, 2 ADRs):
 - **Persistent reflection artifacts** (#88) — `/reflect` now writes `~/.claude/lessons/YYYY-MM-DD-<slug>.md`. `/research` and `/build-brief` retrieve lessons before starting work. Closes the learning loop.
 - **Habit nudge guidance document** (#89) — `guides/habit-nudges.md` specifies nudge catalog + trigger + cooldown semantics; runtime hook implementation deferred to `pitimon/claude-governance` per plugin boundary.
 - **User Maturity Calibration** (#90) — `/calibrate` skill + `~/.claude/habit-profile.md` (schema v1, YAML frontmatter) + `guides/habit-profile-schema.md` public contract + **ADR-008** (5 interlocking design decisions: Alt E hybrid, dominant-level scoring, YAML frontmatter schema, standalone chain position, user-driven re-calibration).
-- **agentskills.io NO-GO** (#91) — Deep + Compare research brief + hands-on sandbox test + **ADR-007**. Key insight: "the reach of a standard is measured by what adopting tools *parse*, not by their logo list."
+- **agentskills.io NO-GO** (#91) — Deep + Compare research brief + hands-on sandbox test + **ADR-007**. Key insight: "the reach of a standard is measured by what adopting tools _parse_, not by their logo list."
 - Validators grew 443 → 470.
 
 v2.5.0 improvements (Testing & Discoverability):
