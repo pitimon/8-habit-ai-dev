@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-17-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.11.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.11.0)
+[![Version](https://img.shields.io/badge/Version-2.11.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.11.1)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -307,7 +307,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.11.0)
+│   ├── plugin.json                 # Plugin metadata (v2.11.1)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
@@ -380,6 +380,14 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
 
 ---
+
+## What's New in v2.11.1
+
+**Theme: CHANGELOG Drift Guard** ([#124](https://github.com/pitimon/8-habit-ai-dev/issues/124), [#131](https://github.com/pitimon/8-habit-ai-dev/pull/131))
+
+- **`tests/validate-content.sh` Check 19 strengthened** — 3 new FAIL-severity assertions close the pointer-fallback loophole that let v2.9.0 and v2.11.0 ship with stale changelogs despite 491/491 validators passing. Now asserts: root `CHANGELOG.md` contains `^## v<version>` entry, wiki `Changelog.md` contains `^## v<version>` entry (no pointer-to-CHANGELOG.md fallback), wiki badge `latest-v<version>-blue` match.
+- **Backfill v2.9.0 + v2.11.0** in root `CHANGELOG.md` (was jumping v2.10.0 → v2.8.0) and v2.11.0 in wiki `Changelog.md` + badge bump.
+- **Lesson persisted** (`~/.claude/lessons/2026-04-17-v2.11.0-changelog-drift-recurrence.md`) as H7 capability pattern: when a QA surfaces the same drift class across 2+ releases, the fix is a validator assertion, not a checklist.
 
 ## What's New in v2.11.0
 
@@ -568,4 +576,4 @@ MIT
 
 ---
 
-_Version: 2.11.0 | Last updated: 2026-04-16_
+_Version: 2.11.1 | Last updated: 2026-04-17_

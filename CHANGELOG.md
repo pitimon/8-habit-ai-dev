@@ -10,6 +10,30 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.11.1 — CHANGELOG Drift Guard (2026-04-17)
+
+Patch release hardening `validate-content.sh` Check 19 against a recurring documentation-drift pattern ([#124](https://github.com/pitimon/8-habit-ai-dev/issues/124), [PR #131](https://github.com/pitimon/8-habit-ai-dev/pull/131)). Post-v2.11.0 `/cross-verify` exposed that the same drift class slipped through CI twice — at v2.9.0 and v2.11.0 — because Check 19's pointer-fallback logic (`grep -Eq "v${ver}|CHANGELOG\.md"`) passed purely on the literal string "CHANGELOG.md" in the wiki file, not on any actual version entry. Two releases in a row = capability-level pattern; the fix is a fitness-function assertion, not a checklist.
+
+### Added
+
+- **Check 19 hardening** — 3 new **FAIL**-severity assertions (`tests/validate-content.sh` lines 518–567):
+  - B. `CHANGELOG.md` contains `^## v<version>` section header
+  - C. `docs/wiki/Changelog.md` contains `^## v<version>` section (pointer-to-CHANGELOG.md fallback removed — the stealth loophole)
+  - D. `docs/wiki/Changelog.md` badge `latest-v<version>-blue` matches
+
+### Fixed
+
+- **`CHANGELOG.md`** — backfill missing v2.9.0 + v2.11.0 entries (file previously jumped v2.10.0 → v2.8.0).
+- **`docs/wiki/Changelog.md`** — backfill missing v2.11.0 entry + bump stale badge `latest-v2.10.0` → `latest-v2.11.0`.
+
+### Fitness
+
+- `validate-structure.sh` 243/0, `validate-content.sh` **185/0** (was 183 + 2 net new pass-able assertions), `test-skill-graph.sh` 57/0, `test-verbosity-hook.sh` 19/0.
+
+Closes [#124](https://github.com/pitimon/8-habit-ai-dev/issues/124). Lesson persisted as H7 capability pattern.
+
+---
+
 ## v2.11.0 — Design Pipeline Completion + Wiki Redesign (2026-04-16)
 
 Close the only remaining structured-output-block gap in the `/requirements` → `/design` → `/breakdown` → `/review-ai` handoff chain ([#128](https://github.com/pitimon/8-habit-ai-dev/issues/128), [PR #129](https://github.com/pitimon/8-habit-ai-dev/pull/129)) and upgrade 20 wiki pages to a professional template ([#127](https://github.com/pitimon/8-habit-ai-dev/issues/127), [PR #130](https://github.com/pitimon/8-habit-ai-dev/pull/130)). Both PRs merged within 3 minutes of each other (14:13 and 14:16 UTC).
