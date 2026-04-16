@@ -1,10 +1,24 @@
-![Version](https://img.shields.io/badge/latest-v2.10.0-blue)
+![Version](https://img.shields.io/badge/latest-v2.11.0-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.11.0 — Design Pipeline Completion + Wiki Redesign (April 2026)
+
+Close the final gap in the `/requirements` → `/design` → `/breakdown` → `/review-ai` structured-output-block handoff chain, and upgrade 20 wiki pages to a professional template. Both PRs merged within 3 minutes of each other.
+
+- **`SKILL_OUTPUT:design` structured block** ([#128](https://github.com/pitimon/8-habit-ai-dev/issues/128) / [PR #129](https://github.com/pitimon/8-habit-ai-dev/pull/129)) — closes the last cross-skill handoff gap; `/cross-verify` Q4/Q14/Q16 now auto-populate from the design block.
+- **Tech-stack decisions as formal concerns** — `/design` Step 2 + `/research` Step 1 surface language/framework as explicit outputs.
+- **Scope validation via `SKILL_OUTPUT:requirements`** — `/design` consumes the requirements block so scope drift between decisions and success criteria is flaggable.
+- **H8 Whole Person in `/design` checkpoint** — Body/Mind/Heart/Spirit prompts.
+- **Wiki redesign** ([#127](https://github.com/pitimon/8-habit-ai-dev/issues/127) / [PR #130](https://github.com/pitimon/8-habit-ai-dev/pull/130)) — new `Architecture.md` (4-layer plugin design), new `Maturity-Model.md` (4-level adaptive guidance), `Home.md` rewritten as hero landing page, `Skills-Reference.md` expanded 13 → 17 with quick-select matrix, `Workflow-Overview.md` Mermaid diagram, all 8 Step pages with `> [!IMPORTANT]` checkpoints, `_Sidebar.md` reorganized with Concepts section. 18 files, 291 insertions, 53 deletions.
+
+Fitness receipts: `validate-structure.sh` 243/0, `validate-content.sh` 183/0, `test-skill-graph.sh` PASS, `test-verbosity-hook.sh` PASS.
+
+---
 
 ## v2.10.0 — Progressive-Disclosure SKILL.md Split (April 2026)
 

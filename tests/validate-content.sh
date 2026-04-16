@@ -516,8 +516,11 @@ fi
 echo ""
 
 # --- Check 19: Docs freshness vs plugin.json version ---
-# Enforces downstream propagation from CHANGELOG.md to README.md and docs/wiki/Changelog.md.
+# Enforces downstream propagation from plugin.json across all changelog surfaces.
 # Prevents the "stuck at v2.N-5" drift scenario (see issue #106, fix in PR #107).
+# Tightened 2026-04-17 per issue #124 F1+F2 after v2.9.0 + v2.11.0 recurrence:
+# pointer-to-CHANGELOG.md fallback removed (the wiki was passing just by containing
+# the string "CHANGELOG.md" even when the actual entry was missing).
 # See CONTRIBUTING.md § Testing Conventions for rationale.
 echo "--- Check 19: Docs freshness vs plugin.json version ---"
 
@@ -527,19 +530,37 @@ current_version=$(awk -F'"' '/"version"/{print $4; exit}' .claude-plugin/plugin.
 if [ -z "$current_version" ]; then
   fail "could not extract version from .claude-plugin/plugin.json"
 else
-  # README.md must mention the current version somewhere (typically in "What's New")
+  # A. README.md must mention the current version somewhere (typically in "What's New")
   if grep -q "v${current_version}" README.md; then
     pass "README.md mentions current version v${current_version}"
   else
     fail "README.md does not mention v${current_version} — CHANGELOG.md likely updated but downstream propagation was skipped. See CONTRIBUTING.md § Testing Conventions."
   fi
 
-  # docs/wiki/Changelog.md must either mention the version OR point to CHANGELOG.md
-  # (pointer-based design is valid per ADR-004 — wiki references root as source of truth)
-  if grep -Eq "v${current_version}|CHANGELOG\.md" docs/wiki/Changelog.md; then
-    pass "docs/wiki/Changelog.md references v${current_version} or points to CHANGELOG.md"
+  # B. CHANGELOG.md must contain a version section header (^## v<version>)
+  # Added 2026-04-17: v2.9.0 (issue #124 F1) and v2.11.0 both shipped without this
+  # entry because nothing asserted it. Root CHANGELOG is authoritative per ADR-004.
+  if grep -q "^## v${current_version}" CHANGELOG.md; then
+    pass "CHANGELOG.md contains v${current_version} entry"
   else
-    fail "docs/wiki/Changelog.md missing v${current_version} mention AND no CHANGELOG.md pointer — wiki drift. See CONTRIBUTING.md § Testing Conventions."
+    fail "CHANGELOG.md missing '## v${current_version}' section header — backfill before release. See issue #124 F1."
+  fi
+
+  # C. docs/wiki/Changelog.md must contain a version section header — pointer-to-CHANGELOG.md
+  # is no longer sufficient (the pointer existed in both v2.9.0 and v2.11.0 misses,
+  # and the old assertion passed purely on the literal string "CHANGELOG.md").
+  if grep -q "^## v${current_version}" docs/wiki/Changelog.md; then
+    pass "docs/wiki/Changelog.md contains v${current_version} entry"
+  else
+    fail "docs/wiki/Changelog.md missing '## v${current_version}' section — pointer-to-CHANGELOG.md no longer sufficient. See issue #124 F2."
+  fi
+
+  # D. docs/wiki/Changelog.md badge must match the current version
+  # Added 2026-04-17: v2.11.0 shipped with a stale latest-v2.10.0 badge.
+  if grep -q "badge/latest-v${current_version}-blue" docs/wiki/Changelog.md; then
+    pass "docs/wiki/Changelog.md badge matches v${current_version}"
+  else
+    fail "docs/wiki/Changelog.md badge stale — bump 'latest-v…' to v${current_version}."
   fi
 fi
 
