@@ -196,6 +196,22 @@ for skill_dir in skills/*/; do
 done
 echo ""
 
+# --- Check 9b: Sibling reference/examples soft word budget (F6, ADR-009) ---
+# Hard existence check is already covered by Check 8 (Load directive resolution).
+# This check warns (not fails) when sibling files grow unbounded.
+echo "--- Check 9b: Sibling reference/examples word budget (F6) ---"
+SIBLING_SOFT_LIMIT=5000
+for sibling in skills/*/reference.md skills/*/examples.md; do
+  [ ! -f "$sibling" ] && continue
+  words=$(wc -w < "$sibling" | tr -d ' ')
+  if [ "$words" -gt "$SIBLING_SOFT_LIMIT" ]; then
+    echo "  WARN: $sibling has $words words (soft limit $SIBLING_SOFT_LIMIT — consider further split)"
+  else
+    pass "$sibling word count OK ($words words)"
+  fi
+done
+echo ""
+
 # --- Check 10: SELF-CHECK.md version matches plugin ---
 echo "--- Check 10: SELF-CHECK.md version matches plugin ---"
 if [ -f "SELF-CHECK.md" ]; then
