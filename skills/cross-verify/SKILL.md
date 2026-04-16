@@ -36,6 +36,9 @@ Before running the manual checklist, search for structured output blocks in the 
    - **Q4**: Extract `ears_count` and `success_criteria_count` from requirements block
    - **Q5**: Extract `test_coverage_checked` from review block
    - **Q8**: Compare `task_count` vs `ears_count` for scope alignment — flag if `task_count > ears_count * 3`
+   - **Q14**: Extract `decision_count` from design block — flag if only 1 option was presented (no third alternative considered)
+   - **Q16**: Extract `sticky_decisions` from design block — flag if 0 sticky decisions in a design with >3 decisions (WHY not captured)
+   - **Q4**: Cross-check `decision_count` against requirements `success_criteria_count` — flag if decisions don't cover all criteria
 4. Mark auto-populated answers with `✓A` (auto-detected) confidence level
 5. If no blocks found, proceed with manual assessment (no change to current behavior)
 
@@ -79,12 +82,12 @@ Run through this checklist. Flag any item that fails.
 
 For critical decisions (architecture, security, production deploys), mark each Pass with a confidence level. Inspired by Feynman's honest uncertainty principle — separate what you verified from what you assumed.
 
-| Level      | Mark | Meaning                                                   | Example                                                             |
-| ---------- | ---- | --------------------------------------------------------- | ------------------------------------------------------------------- |
-| Verified   | ✓V   | Evidence checked — test ran, code read, diff reviewed     | "Read the function at api.ts:42, confirmed input validation exists" |
-| Inferred   | ✓I   | Reasonable belief based on context, not directly verified | "Codebase uses Zod throughout, likely validated here too"           |
-| Unverified | ✓U   | Assumption — should verify before proceeding              | "Assuming tests exist but haven't checked coverage"                 |
-| Auto-detected | ✓A | Evidence extracted from structured output block           | "Parsed 5 EARS criteria from PRD structured block"                 |
+| Level         | Mark | Meaning                                                   | Example                                                             |
+| ------------- | ---- | --------------------------------------------------------- | ------------------------------------------------------------------- |
+| Verified      | ✓V   | Evidence checked — test ran, code read, diff reviewed     | "Read the function at api.ts:42, confirmed input validation exists" |
+| Inferred      | ✓I   | Reasonable belief based on context, not directly verified | "Codebase uses Zod throughout, likely validated here too"           |
+| Unverified    | ✓U   | Assumption — should verify before proceeding              | "Assuming tests exist but haven't checked coverage"                 |
+| Auto-detected | ✓A   | Evidence extracted from structured output block           | "Parsed 5 EARS criteria from PRD structured block"                  |
 
 **Scoring**: All Pass levels count toward the score, but ✓U items are flagged as verification debt.
 

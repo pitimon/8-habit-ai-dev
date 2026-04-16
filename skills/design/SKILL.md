@@ -18,11 +18,19 @@ next-skill: breakdown
 
 1. **Read existing architecture**: Check `CLAUDE.md`, `DESIGN.md`, `ARCHITECTURE.md`, `ADR/` directory — understand current state before proposing changes.
 
+1b. **Validate scope alignment**: If a `SKILL_OUTPUT:requirements` block exists in the PRD output, read it and verify:
+
+- Proposed architecture decisions don't expand beyond `scope_in`
+- Success criteria are achievable with the proposed design
+- Identified `risks` are addressed or accepted in design constraints
+
 2. **Identify decisions** that need human input:
    - Database choice and schema
    - Authentication/authorization approach
    - API contract (REST, GraphQL, MCP)
    - Service boundaries
+   - Language and runtime (if greenfield or migration)
+   - Framework selection (when alternatives exist)
    - Third-party dependencies
 
 3. **Present options** with trade-offs (not just one recommendation):
@@ -42,16 +50,23 @@ next-skill: breakdown
 
    For each decision in step 4, ask: **"If we change this after implementation starts, how much rework does it cause?"**
 
-   | Rework Level | Classification | Example |
-   |-------------|----------------|---------|
-   | >50% redo   | **Sticky** — commit now, revisit only via new `/design` cycle | DB choice, auth model, API style |
-   | 10-50% redo | **Semi-sticky** — can adjust but flag the cost | ORM choice, test framework |
-   | <10% redo   | **Flexible** — change freely during implementation | Variable names, UI copy |
+   | Rework Level | Classification                                                | Example                          |
+   | ------------ | ------------------------------------------------------------- | -------------------------------- |
+   | >50% redo    | **Sticky** — commit now, revisit only via new `/design` cycle | DB choice, auth model, API style |
+   | 10-50% redo  | **Semi-sticky** — can adjust but flag the cost                | ORM choice, test framework       |
+   | <10% redo    | **Flexible** — change freely during implementation            | Variable names, UI copy          |
 
    Mark sticky decisions explicitly in the ADR or design doc:
+
    > **STICKY**: This decision is load-bearing. Changing it requires re-running `/design`, not patching mid-build.
 
    This is H2 in practice: define done before starting, including which decisions ARE the definition of done.
+
+5b. **Decision granularity heuristic** (H3):
+
+- If one decision affects >3 layers (data + API + auth + UI), split into sub-decisions
+- If multiple decisions share the same trade-offs, group them into one ADR
+- Each ADR should have exactly one "Decision maker" — avoid committee deadlock
 
 6. **Article 14 Human-Oversight Checkpoint** (for AI-system designs):
 
@@ -77,6 +92,7 @@ next-skill: breakdown
    - Changes public API
 
 8. **H8 Checkpoint**: "Do I understand WHY we're building it this way, not just WHAT?"
+   Also check all 4 dimensions: Body (CI/infra ready?), Mind (serves roadmap?), Heart (good DX/UX?), Spirit (security/ethics defaults baked in?).
 
 ## Handoff
 
@@ -95,6 +111,29 @@ next-skill: breakdown
 - [ ] Human has explicitly decided (not AI default) — decision recorded
 - [ ] ADR created for decisions affecting >3 files or changing public API
 - [ ] Constraints and non-goals documented
+
+## Structured Output
+
+After documenting design decisions, append a structured output block for cross-skill handoff. This HTML comment is invisible when rendered but enables `/cross-verify` to auto-check design coverage:
+
+```
+<!-- SKILL_OUTPUT:design
+decision_count: [N]
+decisions:
+  - "[decision 1: e.g., PostgreSQL for persistence]"
+  - "[decision 2: e.g., REST API with versioned endpoints]"
+sticky_decisions:
+  - "[sticky 1: e.g., PostgreSQL — >50% rework to change]"
+constraints:
+  - "[constraint 1]"
+adr_references:
+  - "[ADR-NNN: title]"
+article_14_applicable: [true|false]
+article_14_pass: [true|false|n/a]
+END_SKILL_OUTPUT -->
+```
+
+Place this at the very end of the design output, after all human-readable content.
 
 ## Further Reading
 
