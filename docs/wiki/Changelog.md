@@ -4,6 +4,32 @@ Release history for `8-habit-ai-dev`. This page summarizes notable changes; the 
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
 
+## v2.10.0 — Progressive-Disclosure SKILL.md Split (April 2026)
+
+Refactor the 3 largest skills into `SKILL.md + reference.md + examples.md` triads per [ADR-009](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-009-skill-split-convention.md). Creates headroom below the F3 word-budget fitness ceiling so future feature additions don't break the validator. Pattern sourced from external research (`shanraisshan/claude-code-best-practice`), filtered through plugin-boundary audit.
+
+- **ADR-009** — codifies Load-directive mechanism (`${CLAUDE_PLUGIN_ROOT}` inline paths), naming convention, and when-to-apply threshold (SKILL >1500 words). Reuses existing Check 8 for sibling existence — no new fitness function needed for that.
+- **F6 (Check 9b)** — soft word-budget warning for `reference.md` / `examples.md` (5000-word soft limit).
+- **`using-8-habits`** split: SKILL 1990 → 1094 words; `reference.md` holds the full 17-skill inventory + cross-plugin composition tables; `examples.md` holds the password-reset onboarding walkthrough.
+- **`eu-ai-act-check`** split: SKILL 1989 → 908 words; `reference.md` holds the full 9-obligation checklist (25 MUST / 27 SHOULD / 8 COULD items) with article/paragraph references. No `examples.md` (pure-reference skill).
+- **`calibrate`** split: SKILL 1774 → 1161 words; `reference.md` holds the scoring rubric + profile-write procedure; `examples.md` holds 4 sample profiles (one per maturity level).
+- **Content validator triad-awareness** — Checks 15 and 18 in `tests/validate-content.sh` now search the SKILL + reference + examples triad as a unit, so content moved to sibling files still satisfies anti-drift and tier-count assertions.
+- **Rejected from this release** — 27-event hook catalog (referred to [`pitimon/claude-governance#22`](https://github.com/pitimon/claude-governance/issues/22)), Idea B (auto-load `user-invocable: false` habits), Idea D (parallel `/cross-verify` dispatch), F3 WARN→FAIL upgrade. Rejection rationale documented in root `CHANGELOG.md`.
+
+Fitness receipts: `validate-structure.sh` 243/0, `test-skill-graph.sh` PASS, `validate-content.sh` 183/0 with 0 fitness breaches. Release shipped via [Issue #125](https://github.com/pitimon/8-habit-ai-dev/issues/125) / [PR #126](https://github.com/pitimon/8-habit-ai-dev/pull/126) in a single clean forward pass.
+
+---
+
+## v2.9.0 — Deep-Project Inspired Improvements (April 2026)
+
+Three features inspired by comparison research against `piercelamb/deep-project`. Cross-verified (14/17), advisor-reviewed, 8-habit QA passed (13/17 → 15/17).
+
+- **Interview protocol for `/requirements`** ([#118](https://github.com/pitimon/8-habit-ai-dev/issues/118)) — new `guides/templates/interview-protocol.md` gives structured conversation scaffolding (Quick/Standard/Deep depth) for discovering requirements before EARS criteria. Replaces the "ask the user 5 questions" default with a better-shaped discovery flow.
+- **Workflow step awareness in session-start hook** ([#119](https://github.com/pitimon/8-habit-ai-dev/issues/119)) — `hooks/session-start.sh` now surfaces a workflow step cue so partial chains can resume across sessions without per-skill rework.
+- **Machine-readable structured output blocks** ([#120](https://github.com/pitimon/8-habit-ai-dev/issues/120)) — new `guides/structured-output-protocol.md` defines `<!-- SKILL_OUTPUT:... END_SKILL_OUTPUT -->` HTML comment blocks at the end of `/requirements`, `/breakdown`, and `/review-ai`. Enables `/cross-verify` to auto-check scope alignment (task_count vs ears_count ≤ 3× ratio) and review coverage, reducing manual re-reading of prior-step artifacts.
+
+---
+
 ## v2.8.0 — Claude Code Architecture Insights (April 2026)
 
 Production patterns from Anthropic's Claude Code internals (reverse-engineered in ["Claude Code from Source"](https://github.com/alejandrobalderas/claude-code-from-source)) adapted into 4 existing skills as workflow guidance.
