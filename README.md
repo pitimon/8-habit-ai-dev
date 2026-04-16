@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-17-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.9.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.9.0)
+[![Version](https://img.shields.io/badge/Version-2.10.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.10.0)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -128,17 +128,17 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 
 ### Assessment Skills (Use Anytime)
 
-| Skill                 | Habit               | Purpose                                                                       |
-| --------------------- | ------------------- | ----------------------------------------------------------------------------- |
-| `/cross-verify`       | H1-H8               | 17-question checklist + dimension summary (Body/Mind/Heart/Spirit)            |
-| `/whole-person-check` | H8: Find Your Voice | 4-dimension assessment (1-5 scale) with AI Blind Spot detection               |
-| `/security-check`     | H1: Be Proactive    | Focused OWASP security lens — secrets, injection, auth, deps                  |
-| `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking               |
-| `/workflow`           | All                 | Guided 7-step walkthrough — invoke or skip each step                          |
+| Skill                 | Habit               | Purpose                                                                                                                      |
+| --------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `/cross-verify`       | H1-H8               | 17-question checklist + dimension summary (Body/Mind/Heart/Spirit)                                                           |
+| `/whole-person-check` | H8: Find Your Voice | 4-dimension assessment (1-5 scale) with AI Blind Spot detection                                                              |
+| `/security-check`     | H1: Be Proactive    | Focused OWASP security lens — secrets, injection, auth, deps                                                                 |
+| `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking                                                              |
+| `/workflow`           | All                 | Guided 7-step walkthrough — invoke or skip each step                                                                         |
 | `/calibrate`          | H8: Find Your Voice | Self-assessment (5-7 questions) → writes `~/.claude/habit-profile.md` so other skills adapt verbosity to your maturity level |
-| `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 17 skills + decision tree for "which skill next?" |
-| `/eu-ai-act-check`    | H1 + H8 (Spirit)    | EU AI Act compliance — 9 obligations × tiered checklist (Art. 9-15)           |
-| `/ai-dev-log`         | H4 + H1             | Generate AI-assisted dev log from git history for audit trail                 |
+| `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 17 skills + decision tree for "which skill next?"                                                |
+| `/eu-ai-act-check`    | H1 + H8 (Spirit)    | EU AI Act compliance — 9 obligations × tiered checklist (Art. 9-15)                                                          |
+| `/ai-dev-log`         | H4 + H1             | Generate AI-assisted dev log from git history for audit trail                                                                |
 
 ---
 
@@ -307,7 +307,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.9.0)
+│   ├── plugin.json                 # Plugin metadata (v2.10.0)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
@@ -380,6 +380,17 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
 
 ---
+
+## What's New in v2.10.0
+
+**Theme: Progressive-Disclosure SKILL.md Split** ([#125](https://github.com/pitimon/8-habit-ai-dev/issues/125), [ADR-009](docs/adr/ADR-009-skill-split-convention.md)) — refactor the 3 largest skills into SKILL.md + reference.md + examples.md triads, creating headroom for future features without breaking the F3 word-budget fitness function.
+
+- **`using-8-habits` split** — SKILL 1990w → 1108w; `reference.md` (17-skill inventory + cross-plugin composition tables); `examples.md` (password-reset onboarding walkthrough).
+- **`eu-ai-act-check` split** — SKILL 1989w → 908w; `reference.md` (full 9-obligation checklist with 60 tier-tagged items and paragraph references).
+- **`calibrate` split** — SKILL 1774w → 1161w; `reference.md` (scoring rubric + profile-write procedure); `examples.md` (4 sample profiles, one per maturity level).
+- **ADR-009 codifies the convention** — inline `Load ${CLAUDE_PLUGIN_ROOT}/skills/<name>/<file>.md` directives enforce lazy loading. Check 8 (structure validator) already hard-fails on broken sibling references — no new existence check needed.
+- **F6 sibling word-budget soft limit** — new Check 9b warns (not fails) when `reference.md` or `examples.md` exceeds 5000 words, preventing unbounded growth without blocking legitimate reference material.
+- **Content validator triad-awareness** — Checks 15 and 18 now search the triad as a unit, so content moved to sibling files still satisfies anti-drift and tier-count assertions.
 
 ## What's New in v2.9.0
 
@@ -546,4 +557,4 @@ MIT
 
 ---
 
-_Version: 2.9.0 | Last updated: 2026-04-13_
+_Version: 2.10.0 | Last updated: 2026-04-16_

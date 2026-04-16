@@ -10,6 +10,37 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.10.0 — Progressive-Disclosure SKILL.md Split (2026-04-16)
+
+Refactor the 3 largest skills into `SKILL.md + reference.md + examples.md` triads to create headroom below the 2000-word F3 fitness-function ceiling. Pattern sourced from external research (`shanraisshan/claude-code-best-practice`), filtered through plugin-boundary audit — see [ADR-009](docs/adr/ADR-009-skill-split-convention.md).
+
+### Added
+
+- **ADR-009 — Progressive-disclosure SKILL.md split convention** ([#125](https://github.com/pitimon/8-habit-ai-dev/issues/125)) — decides Load-directive mechanism (inline `${CLAUDE_PLUGIN_ROOT}` paths), naming (`SKILL.md` + `reference.md` + `examples.md`), and when to apply (SKILL >1500w). Reuses existing Check 8 for sibling existence — no new fitness function needed for that.
+- **F6 — Sibling word-budget soft limit** (`tests/validate-structure.sh` Check 9b) — warns when `skills/*/reference.md` or `skills/*/examples.md` exceeds 5000 words.
+- **`skills/using-8-habits/reference.md` + `examples.md`** — split from 1990-word SKILL.md. `reference.md` holds the 17-skill inventory and cross-plugin composition tables; `examples.md` holds the password-reset onboarding walkthrough.
+- **`skills/eu-ai-act-check/reference.md`** — split from 1989-word SKILL.md. Full 9-obligation checklist (25 MUST / 27 SHOULD / 8 COULD items) with article/paragraph references. No `examples.md` (pure-reference skill).
+- **`skills/calibrate/reference.md` + `examples.md`** — split from 1774-word SKILL.md. Scoring rubric + profile-write procedure + 4 sample profiles (one per maturity level).
+
+### Changed
+
+- **`using-8-habits/SKILL.md`**: 1990 → 1108 words.
+- **`eu-ai-act-check/SKILL.md`**: 1989 → 908 words.
+- **`calibrate/SKILL.md`**: 1774 → 1161 words.
+- **`tests/validate-content.sh` Checks 15 and 18** — search the SKILL + reference + examples triad as a unit for anti-drift, tier-count, and paragraph-reference assertions. Content moved to a sibling still counts. Triad-existence detection uses a safe for-loop (avoids `ls` non-zero exit under `set -euo pipefail`).
+
+### Rejected (from the research brief at `plans/shiny-singing-dove.md`)
+
+- 27-event hook system, PermissionRequest routing, batch processing — plugin-boundary violation; belongs in `pitimon/claude-governance`.
+- Auto-load `user-invocable: false` background skills (Idea B), parallel cross-verify dispatch (Idea D) — separate decision cycles, not bundled into v2.10.
+- F3 word-budget upgrade from WARN to FAIL — deferred; stays as WARN for this release.
+
+### Fitness
+
+- All 3 validators pass: `validate-structure.sh` 243/0, `test-skill-graph.sh` PASS, `validate-content.sh` 183/0 with 0 fitness breaches.
+
+---
+
 ## v2.8.0 — Claude Code Architecture Insights (2026-04-13)
 
 Production patterns from Anthropic's Claude Code internals — reverse-engineered in ["Claude Code from Source"](https://github.com/alejandrobalderas/claude-code-from-source) (Alejandro Balderas, 18-chapter architectural analysis of the March 2026 npm source map leak) — adapted into 4 existing skills as workflow guidance. All changes are skill-level guidance additions; no runtime hooks, no new files, no new dependencies.
@@ -35,7 +66,7 @@ Small post-milestone patch on top of v2.7.0. Adds two review-time disciplines to
 ### Added
 
 - **`/review-ai` Performance axis** ([#110](https://github.com/pitimon/8-habit-ai-dev/issues/110), [PR #111](https://github.com/pitimon/8-habit-ai-dev/pull/111)) — fourth review category alongside Security / Quality / Completeness, flagging N+1 queries, unbounded loops, missing pagination on list endpoints, unindexed queries on large tables, and memory leaks (unclosed streams, unbounded caches, retained references). Performance findings follow the same `file:line` evidence standard as the other axes.
-- **`/review-ai` review-tests-first directive** — new Process step 2 directs the reviewer to open the new or changed test files *before* judging the implementation. Tests declare the *intended* behavior; reading them first gives you the specification to review the code against. If new logic has no corresponding test, record it as a Completeness finding.
+- **`/review-ai` review-tests-first directive** — new Process step 2 directs the reviewer to open the new or changed test files _before_ judging the implementation. Tests declare the _intended_ behavior; reading them first gives you the specification to review the code against. If new logic has no corresponding test, record it as a Completeness finding.
 - **Verdict output table** now lists four category rows (Security / Quality / Performance / Completeness); Definition of Done checkbox references all four categories by name.
 
 ### Not Added (deliberately rejected after cost/benefit audit)
@@ -57,7 +88,7 @@ The research brief evaluated six agent-skills mechanics; five were rejected. Rej
 ### Source attribution
 
 - Research source: [`addyosmani/agent-skills`](https://github.com/addyosmani/agent-skills) (MIT)
-- No code or text was directly copied; only the *idea* of a Performance review axis and a tests-first directive were adapted
+- No code or text was directly copied; only the _idea_ of a Performance review axis and a tests-first directive were adapted
 
 ---
 
@@ -91,6 +122,7 @@ With this release, [milestone v2.7.0 — Reader Adoption](https://github.com/pit
 ### Migration notes
 
 No breaking changes. Users upgrading from v2.6.1:
+
 - If you have a profile at `~/.claude/habit-profile.md`, the session-start hook will emit your level-specific directive on the next session start. No action needed.
 - If you don't yet have a profile, the existing v2.6.0 nudge still fires suggesting `/calibrate`. Behavior unchanged from v2.6.1.
 - `HABIT_QUIET=1` continues to silence everything (ADR-006 contract preserved).
@@ -101,6 +133,7 @@ No breaking changes. Users upgrading from v2.6.1:
 The Hermes-inspired feature loop (milestones v2.6.0 + v2.7.0) is complete. Further enhancements are either out-of-scope (runtime-dependent features like Honcho passive inference — would violate the pure-markdown constraint) or delegated to companion plugins (`claude-mem`, `pitimon/claude-governance`, `devsecops-ai-team`). The plugin is at a local maximum given its constraints.
 
 Potential v2.8.0+ targets, if user demand emerges:
+
 - Dual-artifact strategy for agentskills.io (publish individual standalone skills to the open registry while keeping the chain-enforcing SKILL.md here) — per ADR-007 §Future Triggers
 - Progressive disclosure for skill bodies (split `SKILL.md` into summary + `references/*.md` deep-dives) if token budgets get tight
 
@@ -144,6 +177,7 @@ Follow-up [#96](https://github.com/pitimon/8-habit-ai-dev/issues/96) (16-skill r
 ### Migration notes
 
 No breaking changes. Users upgrading from v2.6.0:
+
 - Next `/reflect` invocation will include Q6. Answer `n/a` if no skills apply.
 - Your existing lesson files at `~/.claude/lessons/*.md` are unchanged. New lessons written after upgrade will include the `## Skill effectiveness` section.
 - `SKILL-EFFECTIVENESS.md` ships empty — data accumulates as you reflect.
