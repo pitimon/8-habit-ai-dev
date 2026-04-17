@@ -117,6 +117,8 @@ Before documenting findings, verify all cited sources:
 
 **Deep**: Dispatch the `research-verifier` agent for comprehensive verification. Use the Agent tool with `subagent_type: "8-habit-ai-dev:research-verifier"` passing the draft brief. The agent checks every citation and produces a verification report.
 
+> **Scope of Deep-mode verification**: the agent gates **citation integrity** (cited files/URLs exist and contain the claimed text), not **semantic correctness** of conclusions drawn from those citations. A verdict like "this dep is unused" needs separate evidence (see _Evidence Standard_ below) even when Deep-mode passes.
+
 ### 5. Document constraints and findings
 
 Produce a research brief using the template. Load the template for the full structure:
@@ -154,6 +156,13 @@ Every finding MUST cite its source (Feynman principle: "evidence or it didn't ha
 
 No unsourced claims. If you can't cite it, mark it as "unverified assumption."
 
+**Code-symbol verdicts require grep evidence.** When an Audit-mode or Findings-table row's verdict concerns the existence or live usage of a code symbol (dependency, module, function, exported type, file) — specifically any verdict matching `/remove|dead|unused|transitional|safe to (drop|remove)/i` — the row must cite a grep-check across the repo's source directories showing whether consumers exist. Citing the declaration site alone (e.g. `package.json:6`, an import statement) does not establish liveness. Examples:
+
+- Dead verdict: `` `grep -rE "neo4j[-_]driver" --exclude-dir=node_modules --exclude=*.lock .` → 0 consumer matches `` (liveness evidence)
+- Keep verdict: list of 5 consumer files from the grep (liveness evidence)
+
+Rationale: a dep or symbol can be imported by a different-sounding name (e.g. `neo4j-driver` is the canonical Bolt client for Memgraph). Plausible-sounding "brand names differ, must be unrelated" reasoning has produced false-positive removal verdicts that passed Deep-mode verification with pristine citations. ~2 seconds of grep closes this class of error.
+
 ## When to Skip
 
 - Requirements already clear from user or stakeholder — nothing to investigate
@@ -171,6 +180,7 @@ No unsourced claims. If you can't cite it, mark it as "unverified assumption."
 - [ ] Constraints documented with source
 - [ ] Comparison matrix included (if Compare mode) with evidence per cell
 - [ ] Audit results included (if Audit mode) with file:line per row
+- [ ] Code-symbol verdicts (remove/dead/unused/transitional/safe-to-drop) cite grep-check liveness evidence, not just declaration sites
 - [ ] Research brief ready for handoff to /requirements
 
 ## Further Reading

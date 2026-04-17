@@ -1,10 +1,24 @@
-![Version](https://img.shields.io/badge/latest-v2.11.1-blue)
+![Version](https://img.shields.io/badge/latest-v2.12.0-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.12.0 — Code-Symbol Grep Evidence (April 2026)
+
+Minor release adding a new Evidence Standard obligation to `/research` and clarifying `research-verifier` scope ([#133](https://github.com/pitimon/8-habit-ai-dev/issues/133)). Guidance-only — no automation, no hook.
+
+- **`/research` Evidence Standard** — code-symbol verdicts matching `/remove|dead|unused|transitional|safe to (drop|remove)/i` must cite a grep-check showing consumer usage across source directories; declaration-site citations (e.g. `package.json:6`) do not establish liveness. Closes a false-positive class surfaced by memforge `neo4j-driver` audit (the canonical Bolt client for Memgraph — brand-name mismatch passed Deep-mode with pristine citations).
+- **`research-verifier` scope** — `description:` rewritten to "citation-integrity verification agent"; new `## Limit of Verification` section defines in-scope (citation accuracy) vs. out-of-scope (semantic correctness of conclusions). Verifier emits `SEMANTIC-EVIDENCE-MISSING` flag on code-symbol verdict rows lacking liveness evidence but does not perform the grep itself.
+- **Trigger regex scope** — `"revisit"` intentionally excluded; over-triggers on follow-up-style verdicts. Hard-removal verdicts are the load-bearing class.
+
+Fitness receipts: `validate-structure.sh`, `validate-content.sh`, `test-skill-graph.sh`, `test-verbosity-hook.sh` all green.
+
+Closes #133.
+
+---
 
 ## v2.11.1 — CHANGELOG Drift Guard (April 2026)
 

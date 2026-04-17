@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-17-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.11.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.11.1)
+[![Version](https://img.shields.io/badge/Version-2.12.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.12.0)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -307,7 +307,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.11.1)
+│   ├── plugin.json                 # Plugin metadata (v2.12.0)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
@@ -380,6 +380,14 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
 
 ---
+
+## What's New in v2.12.0
+
+**Theme: Code-Symbol Grep Evidence** ([#133](https://github.com/pitimon/8-habit-ai-dev/issues/133))
+
+- **`/research` Evidence Standard — code-symbol verdicts require grep evidence** — when an Audit-mode or Findings-table row's verdict matches `/remove|dead|unused|transitional|safe to (drop|remove)/i` on a code symbol (dep, module, function, exported type, file), the row must cite a grep-check showing consumers across the repo's source directories. Declaration-site citations (e.g. `package.json:6`) do not establish liveness. Closes a false-positive class where plausible-sounding "brand names differ, must be unrelated" reasoning passed Deep-mode verification with pristine citations (real-world: memforge `neo4j-driver` audit — `neo4j-driver` is the canonical Bolt client for Memgraph; would have broken production graph on first rebuild).
+- **`/research` Step 4 clarification** — one-line callout after the Deep-mode dispatch makes the verifier's scope explicit inline: citation integrity, not semantic correctness.
+- **`research-verifier` agent scope clarified** — `description:` frontmatter rewritten to say "citation-integrity verification agent" and to spell out what is out of scope. New `## Limit of Verification` section inside the agent body defines in-scope vs. out-of-scope, and introduces a `SEMANTIC-EVIDENCE-MISSING` flag the verifier emits (without performing the grep itself) when a code-symbol verdict row lacks liveness evidence. The agent's execution behavior is unchanged — this is a documentation change preventing authors from over-trusting a passing Deep-mode gate.
 
 ## What's New in v2.11.1
 
@@ -576,4 +584,4 @@ MIT
 
 ---
 
-_Version: 2.11.1 | Last updated: 2026-04-17_
+_Version: 2.12.0 | Last updated: 2026-04-17_
