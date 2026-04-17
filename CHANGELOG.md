@@ -10,6 +10,31 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.12.0 — Code-Symbol Grep Evidence (2026-04-17)
+
+Minor release adding a new Evidence Standard obligation to the `/research` skill and clarifying the scope of the `research-verifier` agent ([#133](https://github.com/pitimon/8-habit-ai-dev/issues/133)). Guidance-only — no automation, no hook, no change to verifier execution behavior.
+
+**Motivation**: A real-world Deep-mode `/research` tech-stack audit (memforge v1.10.0, 2026-04-17) produced a findings row verdicting `neo4j-driver` as "dead/transitional". The `research-verifier` agent passed the brief: every file path and line number cited was accurate. A downstream PRD and Design doc were produced recommending removal. A simple grep at the next workflow step revealed 5+ files with active imports — `neo4j-driver` is the canonical Bolt-protocol client for Memgraph (both engines share the same TS/Node client library). Removing it would have broken production graph on first image rebuild. The verdict passed Deep-mode verification on pristine citations while carrying a load-bearing false semantic claim.
+
+### Added
+
+- **`skills/research/SKILL.md` — Evidence Standard bullet**: when an Audit-mode or Findings-table row's verdict matches `/remove|dead|unused|transitional|safe to (drop|remove)/i` on a code symbol (dep, module, function, exported type, file), the row must cite a grep-check across the repo's source directories showing whether consumers exist. Declaration-site citations (e.g. `package.json:6`, import statements) do not establish liveness. Two concrete examples included (dead-verdict and keep-verdict shapes).
+- **`skills/research/SKILL.md` — Step 4 scope callout**: one-line note after the Deep-mode dispatch makes explicit that the verifier gates citation integrity, not semantic correctness, and that code-symbol verdicts need separate grep evidence even when Deep-mode passes.
+- **`skills/research/SKILL.md` — Definition-of-Done line**: new checklist item so code-symbol verdicts are visible at handoff time.
+- **`agents/research-verifier.md` — `description:` frontmatter**: rewritten to "citation-integrity verification agent" with an explicit out-of-scope clause callers see before dispatching.
+- **`agents/research-verifier.md` — `## Limit of Verification` section**: defines in-scope (file paths exist, line numbers contain the claimed text, URLs resolve, documents are findable) vs. out-of-scope (semantic correctness of conclusions) and introduces a `SEMANTIC-EVIDENCE-MISSING` flag the verifier emits when a code-symbol verdict row lacks liveness evidence. The verifier does **not** attempt the grep itself — that remains the author's obligation.
+
+### Intentionally not in scope
+
+- Expanding the `research-verifier` agent to semantically check conclusions. Per CONTRIBUTING.md philosophy ("Skills provide guidance, not automation"), this is a documentation change that gives Claude an explicit obligation for a specific verdict shape.
+- `"revisit"` is intentionally **excluded** from the obligation trigger. It is a weaker, follow-up-style verdict that would over-trigger the grep requirement on rows that are merely flagged for attention. The hard-removal verdicts (`remove`, `dead`, `unused`, `transitional`, `safe to drop/remove`) are the load-bearing class.
+
+### Cost/benefit
+
+~2 seconds of grep per dead-verdict row. Benefit in the incident above: ~1 hour of downstream workflow (PRD + Design + archive + correction log) saved, plus averted production-graph breakage.
+
+---
+
 ## v2.11.1 — CHANGELOG Drift Guard (2026-04-17)
 
 Patch release hardening `validate-content.sh` Check 19 against a recurring documentation-drift pattern ([#124](https://github.com/pitimon/8-habit-ai-dev/issues/124), [PR #131](https://github.com/pitimon/8-habit-ai-dev/pull/131)). Post-v2.11.0 `/cross-verify` exposed that the same drift class slipped through CI twice — at v2.9.0 and v2.11.0 — because Check 19's pointer-fallback logic (`grep -Eq "v${ver}|CHANGELOG\.md"`) passed purely on the literal string "CHANGELOG.md" in the wiki file, not on any actual version entry. Two releases in a row = capability-level pattern; the fix is a fitness-function assertion, not a checklist.
