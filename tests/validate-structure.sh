@@ -465,6 +465,53 @@ for pair in $WIKI_SKILL_MAP; do
 done
 echo ""
 
+# --- Check 20: skills/RESOLVER.md bidirectional cross-reference (ADR-010) ---
+echo "--- Check 20: skills/RESOLVER.md ↔ skills/ bidirectional cross-reference ---"
+RESOLVER_FILE="skills/RESOLVER.md"
+RESOLVER_FAIL=0
+
+if [ ! -f "$RESOLVER_FILE" ]; then
+  fail "Check 20 FAIL: skills/RESOLVER.md is required but not found"
+  RESOLVER_FAIL=1
+else
+  # Extract skill names cited in RESOLVER via skills/<name>/SKILL.md pattern.
+  # Uses the same sed-based extraction idiom as Check 12 for consistency.
+  RESOLVER_SKILLS=""
+  while IFS= read -r line; do
+    sname=$(echo "$line" | sed -n 's|.*skills/\([a-z0-9-]\{1,\}\)/SKILL\.md.*|\1|p')
+    [ -n "$sname" ] && RESOLVER_SKILLS="$RESOLVER_SKILLS $sname"
+  done < "$RESOLVER_FILE"
+  RESOLVER_SKILLS=$(echo "$RESOLVER_SKILLS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+
+  # Collect actual skill directories (reuse DIR_SKILLS pattern from Check 12).
+  DIR_SKILLS_R=""
+  for skill_dir in skills/*/; do
+    [ ! -d "$skill_dir" ] && continue
+    DIR_SKILLS_R="$DIR_SKILLS_R $(basename "$skill_dir")"
+  done
+
+  # Forward: every skill directory must appear in RESOLVER.
+  for s in $DIR_SKILLS_R; do
+    if ! echo "$RESOLVER_SKILLS" | grep -qw "$s"; then
+      fail "Skill '$s' exists as directory but missing from skills/RESOLVER.md"
+      RESOLVER_FAIL=$((RESOLVER_FAIL + 1))
+    fi
+  done
+
+  # Reverse: every RESOLVER-cited path must resolve to an existing skill directory.
+  for s in $RESOLVER_SKILLS; do
+    if [ ! -f "skills/$s/SKILL.md" ]; then
+      fail "skills/RESOLVER.md cites non-existent skill path: skills/$s/SKILL.md"
+      RESOLVER_FAIL=$((RESOLVER_FAIL + 1))
+    fi
+  done
+
+  if [ "$RESOLVER_FAIL" -eq 0 ]; then
+    pass "skills/RESOLVER.md matches skills/ directories ($(echo "$DIR_SKILLS_R" | wc -w | tr -d ' ') skills)"
+  fi
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"
