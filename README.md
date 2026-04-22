@@ -22,6 +22,7 @@
 
 - [The Problem](#the-problem) — Why this exists
 - [Quick Start](#quick-start) — Install in 3 steps, verify in 1
+- [Not using Claude Code?](AGENTS.md) — Entry point for Codex, Cursor, Windsurf, Aider, etc.
 
 **The Framework**
 

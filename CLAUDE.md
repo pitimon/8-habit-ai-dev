@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+> **Non-Claude agents** (Codex, Cursor, Windsurf, Aider, Continue): start at [`AGENTS.md`](AGENTS.md). [`llms.txt`](llms.txt) is the full doc map. Claude Code users: this file is auto-loaded — keep reading.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## What This Is
