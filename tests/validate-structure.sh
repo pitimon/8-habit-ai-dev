@@ -512,6 +512,43 @@ else
 fi
 echo ""
 
+# --- Check 21: Cross-agent discoverability (ADR-011) ---
+echo "--- Check 21: llms.txt + AGENTS.md cross-agent discoverability ---"
+CROSS_AGENT_FAIL=0
+
+# Existence — both files are required at repo root (EARS #4).
+for f in llms.txt AGENTS.md; do
+  if [ ! -f "$f" ]; then
+    fail "Check 21 FAIL: $f is required at repo root but not found"
+    CROSS_AGENT_FAIL=$((CROSS_AGENT_FAIL + 1))
+  fi
+done
+
+# Pointer integrity — only run if both files exist (avoids cascade noise).
+# Uses grep -q (BSD-safe; no sed/awk per ADR-011 portability constraint).
+if [ -f AGENTS.md ] && [ -f llms.txt ]; then
+  if ! grep -q 'skills/RESOLVER.md' AGENTS.md; then
+    fail "AGENTS.md missing pointer to skills/RESOLVER.md"
+    CROSS_AGENT_FAIL=$((CROSS_AGENT_FAIL + 1))
+  fi
+  if ! grep -q 'CLAUDE.md' AGENTS.md; then
+    fail "AGENTS.md missing pointer to CLAUDE.md"
+    CROSS_AGENT_FAIL=$((CROSS_AGENT_FAIL + 1))
+  fi
+  if ! grep -q 'AGENTS.md' llms.txt; then
+    fail "llms.txt missing pointer to AGENTS.md"
+    CROSS_AGENT_FAIL=$((CROSS_AGENT_FAIL + 1))
+  fi
+  if ! grep -q 'skills/RESOLVER.md' llms.txt; then
+    fail "llms.txt missing pointer to skills/RESOLVER.md"
+    CROSS_AGENT_FAIL=$((CROSS_AGENT_FAIL + 1))
+  fi
+  if [ "$CROSS_AGENT_FAIL" -eq 0 ]; then
+    pass "llms.txt + AGENTS.md exist with all required pointers intact"
+  fi
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"

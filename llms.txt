@@ -1,0 +1,36 @@
+# 8-habit-ai-dev
+
+> A Claude Code plugin that adds workflow discipline to AI-assisted development. 17 on-demand skills across a 7-step workflow, grounded in Covey's 8 Habits. Cross-agent: written for Claude Code first, usable by any agent platform that can load markdown skills.
+
+Repo: https://github.com/pitimon/8-habit-ai-dev
+
+## Core entry points
+
+- [AGENTS.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/AGENTS.md): Start here if you are not Claude Code. Install order, trust boundary, skill resolver pointer, common-tasks examples.
+- [CLAUDE.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/CLAUDE.md): Architecture reference for Claude Code. Plugin layout, skill authoring conventions, plugin boundary, skills-to-habits mapping.
+- [README.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/README.md): Human-facing overview, quick start, decision tree, full skill reference.
+- [SELF-CHECK.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/SELF-CHECK.md): Release checklist and integrity checks.
+- [CONTRIBUTING.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/CONTRIBUTING.md): How to author new skills and run local validators.
+- [skills/RESOLVER.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/skills/RESOLVER.md): Flat phrase-to-path dispatcher. Given user intent → which SKILL.md to read.
+
+## Skills
+
+- [skills/](https://github.com/pitimon/8-habit-ai-dev/tree/main/skills): 17 skill directories, each with `SKILL.md`. Read `skills/RESOLVER.md` first to pick the right one.
+- [CLAUDE.md § Skills → Habits Mapping](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/CLAUDE.md): Step-indexed skill table mapping each skill to a Covey habit.
+
+## Philosophy
+
+- [rules/effective-development.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/rules/effective-development.md): Covey's 8 Habits translated into Claude + human collaboration standards.
+- [habits/](https://github.com/pitimon/8-habit-ai-dev/tree/main/habits): Per-habit deep dives loaded on demand by skills.
+- [guides/integrity-principles.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/integrity-principles.md): Evidence standards for reviews, cross-verification, and reflection.
+
+## Compliance
+
+- [guides/eu-ai-act-mapping.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/eu-ai-act-mapping.md): EU AI Act Articles 9-15 mapping to plugin skills.
+- [guides/cross-verification.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/cross-verification.md): 17-question 8-habit checklist with dimension summary.
+- [guides/ears-notation.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/ears-notation.md): EARS requirements syntax reference for `/requirements`.
+- [SKILL-EFFECTIVENESS.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/SKILL-EFFECTIVENESS.md): Per-skill effectiveness signal ledger from `/reflect`.
+
+## Cross-plugin boundary
+
+- [CLAUDE.md § Plugin Boundary](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/CLAUDE.md): Rule of thumb for what belongs here (workflow discipline) vs. [pitimon/claude-governance](https://github.com/pitimon/claude-governance) (compliance enforcement + frameworks). Install both together for maximum coverage.
