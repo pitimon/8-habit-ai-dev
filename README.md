@@ -25,6 +25,7 @@
 
 **The Framework**
 
+- [Design Principle](#design-principle) — Thin harness, fat skills
 - [7-Step Workflow](#the-7-step-workflow) — Visual pipeline from research to monitoring
 - [Skills Reference](#skills-reference) — All 17 skills with habit mappings
 - [Use Cases](#use-cases-which-skill-when) — Common scenarios and recommended paths
@@ -64,6 +65,14 @@ The 7 most common mistakes:
 7. **No monitoring** — "it works on my machine" mindset
 
 This plugin provides a **skill for each step** — not as a gate, but as a habit.
+
+---
+
+## Design Principle
+
+We follow the **"Thin Harness, Fat Skills"** pattern — the session hook is bounded (≤300 tokens, enforced in [`hooks/session-start.sh`](hooks/session-start.sh) and documented in `CLAUDE.md`), and the intelligence lives in on-demand markdown skills loaded when you invoke them. The harness gets out of the way; the skills do the work.
+
+The same principle is documented independently by Garry Tan (President & CEO, Y Combinator) in his 2026 essay [_"Thin Harness, Fat Skills"_](https://github.com/garrytan/gbrain/blob/master/docs/ethos/THIN_HARNESS_FAT_SKILLS.md) and shipped in [gbrain](https://github.com/garrytan/gbrain). We arrived at it from workflow discipline; he arrived at it from building a brain — same conclusion.
 
 ---
 
