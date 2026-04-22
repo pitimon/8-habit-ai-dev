@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-17-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.12.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.12.0)
+[![Version](https://img.shields.io/badge/Version-2.13.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.13.0)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -317,7 +317,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.12.0)
+│   ├── plugin.json                 # Plugin metadata (v2.13.0)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
@@ -390,6 +390,16 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
 
 ---
+
+## What's New in v2.13.0
+
+**Theme: Cross-Agent Discoverability** ([#137](https://github.com/pitimon/8-habit-ai-dev/issues/137) + [#135](https://github.com/pitimon/8-habit-ai-dev/issues/135) + [#136](https://github.com/pitimon/8-habit-ai-dev/issues/136))
+
+- **`skills/RESOLVER.md`** — flat phrase-to-skill dispatcher so new users and non-Claude agents can find the right skill without knowing slash-command names. All 17 skills in 3 sections (Workflow / Assessment / Meta), ≤3 triggers each. Bidirectional coverage enforced by Check 20 in `tests/validate-structure.sh`.
+- **`llms.txt` + `AGENTS.md` at repo root** — Codex, Cursor, Windsurf, Aider, Continue, and LLM-based repo fetchers now have canonical entry points. `llms.txt` follows the [llmstxt.org](https://llmstxt.org) convention (flat doc-map with `raw.githubusercontent.com` URLs); `AGENTS.md` is the non-Claude operating protocol. Check 21 enforces both files exist and point to `skills/RESOLVER.md` + `CLAUDE.md`.
+- **"Design Principle" section** — cites Garry Tan's 2026 essay [_"Thin Harness, Fat Skills"_](https://github.com/garrytan/gbrain/blob/master/docs/ethos/THIN_HARNESS_FAT_SKILLS.md) as external validation of the bounded-hook + fat-skills pattern the plugin has always enforced (≤300 token session hook).
+- **ADR-010** (Flat Skill Dispatcher) and **ADR-011** (Cross-Agent Discoverability) — decision records with 6 options considered each.
+- **Pattern extracted**: "Bidirectional Validator for Canonical Cross-References" — when a new canonical artifact ships, its validator check should assert both directions (source→target AND target→source). See `CHANGELOG.md` v2.13.0 or `~/.claude/lessons/2026-04-22-cross-agent-discoverability-batch.md`.
 
 ## What's New in v2.12.0
 
@@ -594,4 +604,4 @@ MIT
 
 ---
 
-_Version: 2.12.0 | Last updated: 2026-04-17_
+_Version: 2.13.0 | Last updated: 2026-04-22_

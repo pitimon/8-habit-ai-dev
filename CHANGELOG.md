@@ -10,6 +10,35 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.13.0 — Cross-Agent Discoverability (2026-04-22)
+
+Minor release completing the cross-agent story — three linked PRs from the 2026-04-22 `/research` session on [`garrytan/gbrain`](https://github.com/garrytan/gbrain) make the plugin discoverable from non-Claude agent platforms (Codex, Cursor, Windsurf, Aider, Continue) and LLM-based repo fetchers. No breaking changes; every addition is opt-in or purely additive.
+
+### Added
+
+- **`skills/RESOLVER.md`** ([#135](https://github.com/pitimon/8-habit-ai-dev/issues/135), [PR #139](https://github.com/pitimon/8-habit-ai-dev/pull/139)) — flat trigger-phrase → skill-path dispatcher for all 17 skills, organized in 3 sections (Workflow / Assessment / Meta), ≤3 triggers per skill. Fills the phrase→path gap left by existing navigation sources (CLAUDE.md indexes by step, frontmatter by skill name, `/using-8-habits` narrative by situation, `prev-skill`/`next-skill` by predecessor). None of those is a flat lookup by user intent.
+- **`llms.txt` + `AGENTS.md`** at repo root ([#136](https://github.com/pitimon/8-habit-ai-dev/issues/136), [PR #140](https://github.com/pitimon/8-habit-ai-dev/pull/140)) — [`llmstxt.org`](https://llmstxt.org) convention flat doc-map + non-Claude operating protocol. Gives Codex / Cursor / Windsurf / Aider / Continue / LLM-based repo-fetchers a canonical door into the plugin. `skills/RESOLVER.md` is the shared link target; the chain `llms.txt → AGENTS.md → skills/RESOLVER.md → individual SKILL.md` is now end-to-end discoverable from any agent platform.
+- **README "Design Principle" section** ([#137](https://github.com/pitimon/8-habit-ai-dev/issues/137), [PR #138](https://github.com/pitimon/8-habit-ai-dev/pull/138)) — cites Garry Tan's 2026 essay [_"Thin Harness, Fat Skills"_](https://github.com/garrytan/gbrain/blob/master/docs/ethos/THIN_HARNESS_FAT_SKILLS.md) as external validation of the bounded-session-hook + on-demand-skills pattern already enforced by `hooks/session-start.sh` (≤300 tokens per CLAUDE.md).
+- **ADR-010** (`docs/adr/ADR-010-flat-skill-dispatcher.md`) and **ADR-011** (`docs/adr/ADR-011-cross-agent-discoverability.md`) — decision records with 6 options considered each (A accepted; B–F rejected with reasons). ADR-011 records the empirical finding that the `obra/superpowers-skills/.../references/` path cited in #136's issue body was already HTTP 404 at design time (caught via `gh api`; AGENTS.md cites upstream tool conventions by name only).
+- **`tests/validate-structure.sh` Check 20** (RESOLVER ↔ skills bidirectional cross-reference) and **Check 21** (llms.txt + AGENTS.md existence + 4× pointer integrity) — coverage invariants enforced at merge time. 3 negative-test scenarios captured in each PR body per the evidence-chain convention from v2.11.1 / #134.
+
+### Pattern extracted (lesson file)
+
+**"Bidirectional Validator for Canonical Cross-References"** — when a new canonical artifact (file A references a set in directory B) ships, write a validator check that asserts BOTH directions: forward ("every source-side entry has a target-side row") + reverse ("every target-side citation resolves to a real source-side entry"). Check 12 (README ↔ skills), Check 20 (RESOLVER ↔ skills), Check 21 (llms.txt/AGENTS.md ↔ RESOLVER/CLAUDE) all share this shape. It is the unit-test analog for documentation integrity. See `~/.claude/lessons/2026-04-22-cross-agent-discoverability-batch.md` for the full retrospective.
+
+### Intentionally not in scope
+
+- **No skill frontmatter schema changes** (no `triggers: [array]` field) — would force a 17-skill migration + major version bump; RESOLVER covers the same need with zero breaking impact.
+- **No runtime dispatch hook** — enforcement belongs in [`claude-governance`](https://github.com/pitimon/claude-governance), not `8-habit-ai-dev` (plugin boundary per `CLAUDE.md § Plugin Boundary`). RESOLVER is guidance + an invariant test, not a runtime gate.
+- **No `llms-full.txt` variant** — gbrain has one, we don't need it at 17 skills yet.
+- **No upstream `obra/superpowers-skills` hyperlink** in AGENTS.md — the cited path was 404 at design time; AGENTS.md references per-platform tooling (Codex `skill`, Cursor Rules, etc.) by name only.
+
+### Cost/benefit
+
+~4 hours end-to-end (plan + design + implement + negative tests + merge) across 3 PRs. Adds 473 lines across 10 files with zero deletions. 2 new ADRs, 2 new validator checks (covering invariants that would otherwise silently break on future renames or skill additions).
+
+---
+
 ## v2.12.0 — Code-Symbol Grep Evidence (2026-04-17)
 
 Minor release adding a new Evidence Standard obligation to the `/research` skill and clarifying the scope of the `research-verifier` agent ([#133](https://github.com/pitimon/8-habit-ai-dev/issues/133)). Guidance-only — no automation, no hook, no change to verifier execution behavior.

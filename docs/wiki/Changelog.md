@@ -1,10 +1,26 @@
-![Version](https://img.shields.io/badge/latest-v2.12.0-blue)
+![Version](https://img.shields.io/badge/latest-v2.13.0-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.13.0 — Cross-Agent Discoverability (April 2026)
+
+Minor release making the plugin discoverable from non-Claude agent platforms — three linked PRs from the 2026-04-22 `/research` session on [`garrytan/gbrain`](https://github.com/garrytan/gbrain). No breaking changes.
+
+- **`skills/RESOLVER.md`** ([#135](https://github.com/pitimon/8-habit-ai-dev/issues/135), [PR #139](https://github.com/pitimon/8-habit-ai-dev/pull/139)) — flat phrase-to-skill dispatcher covering all 17 skills in 3 sections (Workflow / Assessment / Meta), ≤3 triggers each. Fills the phrase→path lookup gap; **Check 20** enforces bidirectional coverage (directory ↔ RESOLVER row).
+- **`llms.txt` + `AGENTS.md`** at repo root ([#136](https://github.com/pitimon/8-habit-ai-dev/issues/136), [PR #140](https://github.com/pitimon/8-habit-ai-dev/pull/140)) — cross-agent entry points for Codex / Cursor / Windsurf / Aider / Continue / LLM-based fetchers. `llms.txt` follows [llmstxt.org](https://llmstxt.org) convention; `AGENTS.md` is the non-Claude operating protocol. **Check 21** enforces both files exist + 4× pointer integrity to `skills/RESOLVER.md` and `CLAUDE.md`.
+- **README "Design Principle" section** ([#137](https://github.com/pitimon/8-habit-ai-dev/issues/137), [PR #138](https://github.com/pitimon/8-habit-ai-dev/pull/138)) — cites Garry Tan's 2026 essay _"Thin Harness, Fat Skills"_ as external validation of the bounded-hook + fat-skills pattern already enforced by `hooks/session-start.sh` (≤300 tokens).
+- **ADR-010** (Flat Skill Dispatcher) and **ADR-011** (Cross-Agent Discoverability) — 6 options considered each; ADR-011 records the design-time empirical finding that `obra/superpowers-skills/.../references/` (cited in #136's issue body) was already HTTP 404 — AGENTS.md cites upstream tool patterns by name only.
+- **Pattern extracted**: "Bidirectional Validator for Canonical Cross-References" — forward + reverse coverage invariants as the unit-test analog for documentation integrity. Check 12 / 20 / 21 share this shape.
+
+Fitness receipts: `validate-structure.sh` 245/0, `validate-content.sh` 196/0/1 WARN, `test-skill-graph.sh` 57/0, `test-verbosity-hook.sh` 19/0. End-to-end cross-agent chain: `llms.txt → AGENTS.md → skills/RESOLVER.md → individual SKILL.md`.
+
+Closes #135, #136, #137.
+
+---
 
 ## v2.12.0 — Code-Symbol Grep Evidence (April 2026)
 
