@@ -562,6 +562,49 @@ else
   else
     fail "docs/wiki/Changelog.md badge stale — bump 'latest-v…' to v${current_version}."
   fi
+
+  # E + F. SELF-CHECK.md body freshness vs git tag history
+  # Added 2026-04-25 per issue #141: header was v2.13.0 but footer said Previous: 2.7.1
+  # and per-release score list ended at v2.8.0 — 6 releases shipped silently.
+  # Source of truth: git tag -l "v2.*" (v2.x release line; v2.0.0 onwards per #141 decision).
+  # Older v1.x tags predate the SELF-CHECK.md per-release list convention and are
+  # documented elsewhere (see CHANGELOG.md note "For v2.2.0 and earlier, see docs/wiki/Changelog.md").
+  # Dev-env resilience: if no tags available (shallow clone without fetch-tags),
+  # emit WARN and skip — CI has tags (.github/workflows/validate.yml sets fetch-tags: true)
+  # so drift is still caught at merge time.
+  all_tags=$(git tag -l "v2.*" 2>/dev/null | sort -V)
+  if [ -z "$all_tags" ]; then
+    warn "git tag history unavailable — skipping SELF-CHECK.md body freshness (sub-checks E + F). CI sets fetch-tags: true."
+  else
+    # E. Footer Previous: version must match the tag immediately preceding current_version.
+    prev_version=$(echo "$all_tags" | awk -v cur="v${current_version}" '
+      $0 == cur { print prev; exit }
+      { prev = $0 }
+    ' | sed 's/^v//')
+
+    if [ -z "$prev_version" ]; then
+      warn "could not derive previous version for v${current_version} from git tags — is this the first release?"
+    elif grep -Eq "Previous: ${prev_version}\b" SELF-CHECK.md; then
+      pass "SELF-CHECK.md footer references Previous: ${prev_version}"
+    else
+      fail "SELF-CHECK.md footer stale — expected 'Previous: ${prev_version}' (derived from git tags); update the last line of the file."
+    fi
+
+    # F. Per-release score list must have one row per tagged version — no gaps.
+    missing=()
+    while IFS= read -r tag; do
+      ver="${tag#v}"
+      if ! grep -Eq "^- v${ver}: " SELF-CHECK.md; then
+        missing+=("v${ver}")
+      fi
+    done <<< "$all_tags"
+
+    if [ ${#missing[@]} -eq 0 ]; then
+      pass "SELF-CHECK.md per-release list covers all tagged versions ($(echo "$all_tags" | wc -l | tr -d ' ') entries)"
+    else
+      fail "SELF-CHECK.md per-release list missing ${#missing[@]} version(s): ${missing[*]} — add a '- v<x.y.z>: Body N, Mind N, Heart N, Spirit N = **N.N** (…)' row per tagged release."
+    fi
+  fi
 fi
 
 echo ""
