@@ -161,7 +161,13 @@ The cross-verify score (16/16) measures **plan discipline**. The Whole Person sc
 - v2.7.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#96 hook-based reader adoption — closes #90 feature loop, 470 → 481 assertions, zero per-skill changes)
 - v2.7.1: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#110 /review-ai Performance axis + review-tests-first — minimal post-milestone refinement; 5 of 6 agent-skills candidates rejected in cost/benefit audit, honoring v2.7.0 "local maximum" framing)
 - v2.8.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (Claude Code Architecture Insights: #113 /reflect consolidation, #114 /build-brief compression awareness, #115 /breakdown fork agent pattern, #116 /design sticky latches — 4 skills enhanced with production patterns from "Claude Code from Source" analysis)
+- v2.9.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (Deep-Project Inspired Improvements: #118 interview protocol for /requirements, #119 workflow step awareness in session-start hook, #120 machine-readable structured output blocks — 491/491 assertions at release)
+- v2.10.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (Progressive-Disclosure SKILL.md Split: #125 ADR-009 convention, 3 largest skills refactored into SKILL.md + reference.md + examples.md triads, F6 sibling word-budget soft limit Check 9b added)
+- v2.11.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (Design Pipeline Completion + Wiki Redesign: #128 SKILL_OUTPUT:design closes last handoff gap, #127 20 wiki pages upgraded; 243 structure + 183 content assertions PASS)
+- v2.11.1: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (CHANGELOG Drift Guard: #124 hardened Check 19 with 3 FAIL assertions, backfilled v2.9.0 + v2.11.0 entries — two-release drift pattern closed with fitness function)
+- v2.12.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (Code-Symbol Grep Evidence: #133 /research gains grep obligation for remove/dead/unused verdicts, research-verifier scope clarified with Limit of Verification + SEMANTIC-EVIDENCE-MISSING flag)
+- v2.13.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (Cross-Agent Discoverability: #135 skills/RESOLVER.md flat dispatcher, #136 llms.txt + AGENTS.md at repo root, #137 README "Thin Harness, Fat Skills" citation, ADR-010 + ADR-011, Check 20 + 21 added)
 
 ---
 
-_Updated with each release. Previous: 2.7.1 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_
+_Updated with each release. Previous: 2.12.0 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_
