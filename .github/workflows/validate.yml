@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Required by tests/validate-content.sh Check 19 sub-checks E + F
+          # (SELF-CHECK.md body freshness vs git tag history). See issue #141.
+          fetch-tags: true
+          fetch-depth: 0
       - name: Validate structure and conventions
         run: bash tests/validate-structure.sh
       - name: Validate skill graph DAG
