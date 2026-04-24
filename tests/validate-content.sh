@@ -576,11 +576,18 @@ else
   if [ -z "$all_tags" ]; then
     warn "git tag history unavailable — skipping SELF-CHECK.md body freshness (sub-checks E + F). CI sets fetch-tags: true."
   else
-    # E. Footer Previous: version must match the tag immediately preceding current_version.
-    prev_version=$(echo "$all_tags" | awk -v cur="v${current_version}" '
-      $0 == cur { print prev; exit }
-      { prev = $0 }
-    ' | sed 's/^v//')
+    # E. Footer Previous: version must match the tag preceding current_version.
+    # Two shapes are valid:
+    #   1. Post-release (current_version is tagged): previous = tag before current in sorted list
+    #   2. Pre-release (plugin.json bumped but tag not yet pushed): previous = last tag in sorted list
+    if echo "$all_tags" | grep -qx "v${current_version}"; then
+      prev_version=$(echo "$all_tags" | awk -v cur="v${current_version}" '
+        $0 == cur { print prev; exit }
+        { prev = $0 }
+      ' | sed 's/^v//')
+    else
+      prev_version=$(echo "$all_tags" | tail -1 | sed 's/^v//')
+    fi
 
     if [ -z "$prev_version" ]; then
       warn "could not derive previous version for v${current_version} from git tags — is this the first release?"
@@ -591,6 +598,7 @@ else
     fi
 
     # F. Per-release score list must have one row per tagged version — no gaps.
+    # Plus: row for current_version must exist even if tag not yet pushed (release-in-progress).
     missing=()
     while IFS= read -r tag; do
       ver="${tag#v}"
@@ -599,8 +607,12 @@ else
       fi
     done <<< "$all_tags"
 
+    if ! grep -Eq "^- v${current_version}: " SELF-CHECK.md; then
+      missing+=("v${current_version}")
+    fi
+
     if [ ${#missing[@]} -eq 0 ]; then
-      pass "SELF-CHECK.md per-release list covers all tagged versions ($(echo "$all_tags" | wc -l | tr -d ' ') entries)"
+      pass "SELF-CHECK.md per-release list covers all tagged versions + current ($(echo "$all_tags" | wc -l | tr -d ' ') tags + v${current_version})"
     else
       fail "SELF-CHECK.md per-release list missing ${#missing[@]} version(s): ${missing[*]} — add a '- v<x.y.z>: Body N, Mind N, Heart N, Spirit N = **N.N** (…)' row per tagged release."
     fi

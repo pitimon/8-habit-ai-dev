@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-17-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.13.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.13.0)
+[![Version](https://img.shields.io/badge/Version-2.13.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.13.1)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -317,7 +317,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.13.0)
+│   ├── plugin.json                 # Plugin metadata (v2.13.1)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
@@ -390,6 +390,15 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
 
 ---
+
+## What's New in v2.13.1
+
+**Theme: SELF-CHECK.md Body Freshness** ([#141](https://github.com/pitimon/8-habit-ai-dev/issues/141))
+
+- **SELF-CHECK.md body drift fixed** ([#142](https://github.com/pitimon/8-habit-ai-dev/pull/142)) — footer updated from `Previous: 2.7.1` to `Previous: 2.12.0` and 6 missing per-release rows added (v2.9.0 through v2.13.0). Plugin opens with _"H8 Modeling: Follow the process always, no shortcuts when unwatched"_ — the 6-release silent gap contradicted the stated principle.
+- **CONTRIBUTING.md § Version Bumping corrected** ([#143](https://github.com/pitimon/8-habit-ai-dev/pull/143)) — "Version lives in **3 files**" → "**4 files**" and adds `SELF-CHECK.md` header to the list. The 4-file convention has been enforced by `tests/validate-structure.sh` since #106, but CONTRIBUTING.md never caught up.
+- **`tests/validate-content.sh` Check 19 sub-checks E + F** ([#144](https://github.com/pitimon/8-habit-ai-dev/pull/144)) — CI invariant against SELF-CHECK.md body drift. Sub-check E asserts the footer references the tag immediately preceding `plugin.json.version` (derived from `git tag -l "v2.*" | sort -V`). Sub-check F asserts every v2.x tag has a matching `^- v<x.y.z>: ` row — no gaps. Prevents recurrence of the #141 drift class.
+- **`.github/workflows/validate.yml`** — `fetch-tags: true` + `fetch-depth: 0` added to `actions/checkout@v4` so CI can read the tag list for sub-checks E + F.
 
 ## What's New in v2.13.0
 
@@ -604,4 +613,4 @@ MIT
 
 ---
 
-_Version: 2.13.0 | Last updated: 2026-04-22_
+_Version: 2.13.1 | Last updated: 2026-04-25_

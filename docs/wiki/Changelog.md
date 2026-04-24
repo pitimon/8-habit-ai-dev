@@ -1,10 +1,25 @@
-![Version](https://img.shields.io/badge/latest-v2.13.0-blue)
+![Version](https://img.shields.io/badge/latest-v2.13.1-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.13.1 — SELF-CHECK.md Body Freshness (April 2026)
+
+Patch release closing the three-PR arc for [#141](https://github.com/pitimon/8-habit-ai-dev/issues/141) — SELF-CHECK.md body drift (header said v2.13.0 but footer said Previous: 2.7.1 and per-release list ended at v2.8.0, skipping 6 releases).
+
+- **One-time catch-up** ([PR #142](https://github.com/pitimon/8-habit-ai-dev/pull/142)) — SELF-CHECK.md footer updated to `Previous: 2.12.0`; added 6 missing rows (v2.9.0 through v2.13.0). Plugin opens with _"H8 Modeling: Follow the process always, no shortcuts when unwatched"_ — contradicted by 6 consecutive silent releases.
+- **Convention correction** ([PR #143](https://github.com/pitimon/8-habit-ai-dev/pull/143)) — CONTRIBUTING.md § Version Bumping "Version lives in **3 files**" → "**4 files**", adds `SELF-CHECK.md` header to the list (convention enforced since [#106](https://github.com/pitimon/8-habit-ai-dev/issues/106) but CONTRIBUTING.md never caught up).
+- **CI invariant** ([PR #144](https://github.com/pitimon/8-habit-ai-dev/pull/144)) — `tests/validate-content.sh` Check 19 sub-checks E + F: footer must match `git tag -l "v2.*" | sort -V` predecessor of `plugin.json.version` (E); every v2.x tag must have a matching `^- v<x.y.z>: ` row in SELF-CHECK.md (F). Prevents recurrence of the drift class.
+- **`.github/workflows/validate.yml`** — `fetch-tags: true` + `fetch-depth: 0` added to `actions/checkout@v4` so CI can read tag history.
+
+Fitness receipts: `validate-structure.sh` 245/0, `validate-content.sh` **198/0/1 WARN** (was 196 + 2 net new pass-able assertions — same hardening shape as v2.11.1 drift guard), `test-skill-graph.sh` 57/0, `test-verbosity-hook.sh` 19/0.
+
+Closes #141.
+
+---
 
 ## v2.13.0 — Cross-Agent Discoverability (April 2026)
 

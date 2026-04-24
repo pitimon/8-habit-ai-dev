@@ -10,6 +10,41 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.13.1 — SELF-CHECK.md Body Freshness (2026-04-25)
+
+Patch release closing a three-PR arc for [#141](https://github.com/pitimon/8-habit-ai-dev/issues/141). `SELF-CHECK.md` had drifted within a single file — header read v2.13.0 while footer said `Previous: 2.7.1` and the per-release score list ended at v2.8.0, silently skipping 6 releases (v2.9.0 through v2.13.0). The plugin opens with _"H8 Modeling: Follow the process always, no shortcuts when unwatched"_ — the 6-release gap contradicted the stated principle. Same bug class as [#106](https://github.com/pitimon/8-habit-ai-dev/issues/106) on a surface not covered by Check 19.
+
+### Fixed
+
+- **`SELF-CHECK.md` body catch-up** ([#142](https://github.com/pitimon/8-habit-ai-dev/pull/142)) — footer updated from `Previous: 2.7.1` to `Previous: 2.12.0`; added 6 missing per-release rows (v2.9.0, v2.10.0, v2.11.0, v2.11.1, v2.12.0, v2.13.0) using the v2.8.0 row format with dimension evidence sourced from this CHANGELOG. All 6 rows scored 5.0 — no genuine regressions observed.
+- **`CONTRIBUTING.md` § Version Bumping** ([#143](https://github.com/pitimon/8-habit-ai-dev/pull/143)) — "Version lives in **3 files**" → "**4 files**", adds `SELF-CHECK.md` header (line 3) to the list. The 4-file convention has been enforced by `tests/validate-structure.sh` since [#106](https://github.com/pitimon/8-habit-ai-dev/issues/106) but CONTRIBUTING.md was missed in PR #107.
+
+### Added
+
+- **`tests/validate-content.sh` Check 19 sub-checks E + F** ([#144](https://github.com/pitimon/8-habit-ai-dev/pull/144)) — CI invariant preventing recurrence:
+  - **E (footer freshness)**: derives `prev_version` from `git tag -l "v2.*" | sort -V` (tag immediately preceding `plugin.json.version`) and asserts `SELF-CHECK.md` footer reads `Previous: <prev_version>`.
+  - **F (no-gaps)**: iterates all v2.x tags; each must have a matching `^- v<x.y.z>: ` row in `SELF-CHECK.md`.
+  - Dev-env resilience: if `git tag -l "v2.*"` returns empty (shallow clone without tags), emits WARN and skips E + F — CI sets `fetch-tags: true` + `fetch-depth: 0` so drift is still caught at merge time.
+- **`.github/workflows/validate.yml`** — `fetch-tags: true` + `fetch-depth: 0` on `actions/checkout@v4` so CI can read the tag list.
+
+### Pattern
+
+Same shape as v2.11.1 (CHANGELOG Drift Guard, [#124](https://github.com/pitimon/8-habit-ai-dev/issues/124)): when QA surfaces the same drift class across multiple releases, the fix is a validator assertion, not a checklist. Check 19 now covers README + CHANGELOG + wiki + SELF-CHECK freshness — all docs-freshness assertions co-located.
+
+### Fitness
+
+- `validate-structure.sh` 245/0, `validate-content.sh` **198/0/1 WARN** (was 196 + 2 net new pass-able assertions), `test-skill-graph.sh` 57/0, `test-verbosity-hook.sh` 19/0.
+
+### Intentionally not in scope
+
+- Re-computing dimension scores for v2.9.0..v2.13.0 — all defaulted to 5.0 (no regression evidence in CHANGELOG entries).
+- Same-PR version-bump policy — check runs on every PR; if version bumps without SELF-CHECK.md update, CI fails, which is the desired outcome.
+- Pre-v2.0.0 tag coverage — explicitly excluded; v1.x tags predate the per-release list convention and are documented in `docs/wiki/Changelog.md`.
+
+Closes #141.
+
+---
+
 ## v2.13.0 — Cross-Agent Discoverability (2026-04-22)
 
 Minor release completing the cross-agent story — three linked PRs from the 2026-04-22 `/research` session on [`garrytan/gbrain`](https://github.com/garrytan/gbrain) make the plugin discoverable from non-Claude agent platforms (Codex, Cursor, Windsurf, Aider, Continue) and LLM-based repo fetchers. No breaking changes; every addition is opt-in or purely additive.
