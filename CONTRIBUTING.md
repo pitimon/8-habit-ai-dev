@@ -144,11 +144,14 @@ See [issue #108](https://github.com/pitimon/8-habit-ai-dev/issues/108) and [issu
 
 ## Version Bumping
 
-Version lives in **3 files** — all must be bumped together:
+Version lives in **4 files** — all must be bumped together:
 
 - `.claude-plugin/plugin.json`
 - `.claude-plugin/marketplace.json`
 - `README.md` footer
+- `SELF-CHECK.md` header (line 3: `**Version**: ... | **Previous**: ...`)
+
+`tests/validate-structure.sh` enforces consistency across all four — CI fails if any drifts. See [issue #106](https://github.com/pitimon/8-habit-ai-dev/issues/106) for the drift incident that motivated the SELF-CHECK.md addition.
 
 ## Quality Checklist
 
