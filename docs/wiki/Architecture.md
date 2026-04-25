@@ -9,16 +9,17 @@ The plugin is a **pure-markdown Claude Code plugin** with zero runtime dependenc
 
 The plugin loads content in 4 layers, each with different timing and scope:
 
-```mermaid
-flowchart TD
-    A["Layer 1: Rules<br/><i>Auto-loaded every session</i><br/>rules/effective-development.md"] --> B["Layer 2: Session Hook<br/><i>Runs at session start</i><br/>hooks/session-start.sh"]
-    B --> C["Layer 3: Skills<br/><i>On-demand, user-invoked</i><br/>skills/*/SKILL.md"]
-    C --> D["Layer 4: Agents<br/><i>Cross-verification</i><br/>8-habit-reviewer"]
-
-    style A fill:#e3f2fd
-    style B fill:#f3e5f5
-    style C fill:#e8f5e9
-    style D fill:#fff8e1
+```
+   Layer 1 · Rules           auto-loaded every session    rules/effective-development.md
+        │
+        ▼
+   Layer 2 · Session Hook    runs at session start        hooks/session-start.sh
+        │
+        ▼
+   Layer 3 · Skills          on-demand, user-invoked      skills/*/SKILL.md
+        │
+        ▼
+   Layer 4 · Agents          cross-verification           8-habit-reviewer
 ```
 
 ### Layer 1: Rules (always active)
