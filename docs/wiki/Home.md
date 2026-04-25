@@ -30,22 +30,32 @@ AI-assisted coding is fast but often undisciplined: missing requirements, skippe
 
 ## The 7-Step Workflow
 
-```mermaid
-flowchart LR
-    R["0 · /research\nH5 Understand"]:::optional --> RQ["1 · /requirements\nH2 End in Mind"]:::human
-    RQ --> D["2 · /design\nH8 Voice"]:::human
-    D --> B["3 · /breakdown\nH3 First Things"]:::optional
-    B --> BB["4 · /build-brief\nH5 Understand"]:::optional
-    BB --> RA["5 · /review-ai\nH4 Win-Win"]:::never_skip
-    RA --> DG["6 · /deploy-guide\nH1 Proactive"]:::human
-    DG --> M["7 · /monitor-setup\nH7 Sharpen Saw"]:::optional
-
-    classDef optional fill:#e8f5e9,stroke:#4caf50
-    classDef human fill:#fce4ec,stroke:#e91e63
-    classDef never_skip fill:#fff3e0,stroke:#ff9800
 ```
+Legend:  [O] optional   [H] human checkpoint   [!] NEVER SKIP
 
-> Green = optional entry point · Pink = human checkpoint required · Orange = **never skip**
+   [O] 0 · /research        H5 Understand    investigate before specifying
+        │
+        ▼
+   [H] 1 · /requirements    H2 End in Mind   define what, why, who
+        │
+        ▼
+   [H] 2 · /design          H8 Voice         architecture (human-led)
+        │
+        ▼
+   [O] 3 · /breakdown       H3 First Things  atomic tasks, no scope creep
+        │
+        ▼
+   [O] 4 · /build-brief     H5 Understand    context before coding
+        │
+        ▼
+   [!] 5 · /review-ai       H4 Win-Win       audit before commit
+        │
+        ▼
+   [H] 6 · /deploy-guide    H1 Proactive     staging first, rollback ready
+        │
+        ▼
+   [O] 7 · /monitor-setup   H7 Sharpen Saw   observe after deploy
+```
 
 | Step | Command                                  | Habit | Purpose                            |
 | ---- | ---------------------------------------- | ----- | ---------------------------------- |
