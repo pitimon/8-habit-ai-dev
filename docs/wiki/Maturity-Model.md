@@ -9,16 +9,17 @@ The plugin adapts its guidance based on your self-assessed maturity level. A beg
 
 Based on Covey's maturity continuum, extended with the 8th Habit's Significance level:
 
-```mermaid
-flowchart LR
-    D["Dependence<br/><i>Full guidance</i>"]:::dep --> I["Independence<br/><i>Key checkpoints</i>"]:::ind
-    I --> ID["Interdependence<br/><i>Team focus</i>"]:::inter
-    ID --> S["Significance<br/><i>Minimal prompts</i>"]:::sig
-
-    classDef dep fill:#ffcdd2
-    classDef ind fill:#fff9c4
-    classDef inter fill:#c8e6c9
-    classDef sig fill:#bbdefb
+```
+   Dependence       full guidance — all examples, checkpoints, templates
+        │
+        ▼
+   Independence     key checkpoints — skip beginner detail, trust user
+        │
+        ▼
+   Interdependence  team focus — delegation, parallel execution, synergy
+        │
+        ▼
+   Significance     minimal prompts — expert mode, flag exceptions only
 ```
 
 | Level               | You are...                                                  | Plugin behavior                                                                                          |
