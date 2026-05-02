@@ -130,6 +130,30 @@ If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
 
 **Write → Review → Commit** (NEVER reverse. "Small change" is not an excuse to skip.)
 
+## Verification Phase (guidance only — NOT a hook)
+
+> **Plugin boundary**: This phase is SKILL.md prose guidance for Claude (the AI) — it is NOT a `git commit` hook, NOT a PreToolUse gate, NOT automated enforcement. Hook-based "block commit" enforcement belongs in `claude-governance`, not here. If a contributor proposes implementing this phase as a hook, close it as wrong-plugin and re-file in `pitimon/claude-governance` (cf. boundary corrections in issues #58, #60).
+
+After producing findings, do not stop at the verdict. Run a **Find → Fix → Re-Verify** loop for every CRITICAL/HIGH finding before declaring the review complete:
+
+1. **List** each CRITICAL and HIGH finding from the verdict table
+2. **Apply fix** — edit the offending file(s) per the actionable feedback
+3. **Re-run review on the same scope** — re-Read the changed lines, re-grep for the original pattern, confirm the issue is gone
+4. **Cite evidence-of-fix per finding** — `file:line` showing the fix is now in place (with before/after snippets where helpful), OR explicit `deferred — tracked as #N` with the issue number
+5. **Refuse to emit `SKILL_OUTPUT:review` with `pass: true`** unless all CRITICAL findings are closed. HIGH findings may be deferred only with an issue ref. Refusal is in prose: state `"review cannot pass — N CRITICAL finding(s) remain open"` and stop. This is guidance to Claude, not a runtime gate.
+
+**Output**: end the review report with a Verification Table replacing the prior flat finding list:
+
+| Finding       | Severity | Fix Evidence                                                     | Status   |
+| ------------- | -------- | ---------------------------------------------------------------- | -------- |
+| `[summary 1]` | CRITICAL | `path/to/file.ts:42` (was: insecure default, now: parameterized) | RESOLVED |
+| `[summary 2]` | HIGH     | deferred — tracked as `#NNN`                                     | DEFERRED |
+| `[summary 3]` | CRITICAL | re-grep shows pattern absent in scope                            | RESOLVED |
+
+**Why this exists** (H1 + H7): findings without verification become backlog instead of a gate. The loop forces the proactive fix (H1) and invests in capability rather than just output (H7) — every cited fix evidence is a learned pattern for the next review.
+
+**Evidence Standard alignment** (v2.12.0): code-symbol verdicts in fix evidence (e.g. "removed unused dep") still need grep-check liveness evidence per the Research skill's Evidence Standard. Don't claim "removed and safe" without proof of zero consumers.
+
 ## When to Skip
 
 - Auto-generated formatting changes (lint --fix, prettier — no logic change)
@@ -138,11 +162,12 @@ If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
 
 ## Definition of Done
 
-- [ ] All CRITICAL findings addressed (zero remaining)
+- [ ] All CRITICAL findings addressed (zero remaining) — proven in the Verification Table, not just claimed
 - [ ] Verdict rendered using the 4-level table above
 - [ ] Each finding includes actionable feedback (WHY + HOW to fix)
 - [ ] Every finding cites specific evidence (file:line, test output, or diff)
 - [ ] Summary table shows findings count for all four categories (Security, Quality, Performance, Completeness)
+- [ ] Verification Phase complete — Verification Table at end shows fix evidence per finding (RESOLVED with `file:line`, or DEFERRED with issue ref)
 
 ## Structured Output Block
 

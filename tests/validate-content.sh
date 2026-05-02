@@ -526,6 +526,39 @@ fi
 
 echo ""
 
+# --- Check 20: /review-ai Verification Phase (Issue #150) ---
+echo "--- Check 20: /review-ai Verification Phase ---"
+REVIEW_AI="skills/review-ai/SKILL.md"
+VERIFY_FAIL=0
+if [ -f "$REVIEW_AI" ]; then
+  # Section header present
+  if grep -q "^## Verification Phase" "$REVIEW_AI"; then
+    pass "$REVIEW_AI has '## Verification Phase' section"
+  else
+    fail "$REVIEW_AI missing '## Verification Phase' section (Issue #150)"
+    VERIFY_FAIL=$((VERIFY_FAIL + 1))
+  fi
+  # Plugin-boundary qualifier in the section: must say "guidance only" AND "NOT a hook"
+  # Boundary discipline — prevents future contributors from implementing as a git hook
+  if grep -q "guidance only" "$REVIEW_AI" && grep -q "NOT a hook" "$REVIEW_AI"; then
+    pass "$REVIEW_AI Verification Phase has plugin-boundary qualifier (guidance only, NOT a hook)"
+  else
+    fail "$REVIEW_AI Verification Phase missing plugin-boundary qualifier (need both 'guidance only' AND 'NOT a hook')"
+    VERIFY_FAIL=$((VERIFY_FAIL + 1))
+  fi
+  # Verification Table headers present (Finding | Severity | Fix Evidence | Status)
+  if grep -q "Fix Evidence" "$REVIEW_AI" && grep -q "RESOLVED" "$REVIEW_AI"; then
+    pass "$REVIEW_AI has Verification Table with Fix Evidence + RESOLVED status"
+  else
+    fail "$REVIEW_AI Verification Phase missing Verification Table example (need 'Fix Evidence' + 'RESOLVED')"
+    VERIFY_FAIL=$((VERIFY_FAIL + 1))
+  fi
+else
+  fail "$REVIEW_AI not found"
+  VERIFY_FAIL=$((VERIFY_FAIL + 1))
+fi
+echo ""
+
 # --- Check 19: Docs freshness vs plugin.json version ---
 # Enforces downstream propagation from plugin.json across all changelog surfaces.
 # Prevents the "stuck at v2.N-5" drift scenario (see issue #106, fix in PR #107).
