@@ -7,7 +7,8 @@ Enable cross-skill data handoff via machine-readable blocks embedded in markdown
 ## Format
 
 ```
-<!-- SKILL_OUTPUT:<skill-name>
+[/<skill-name>] <STATUS-MARKER> SKILL_OUTPUT:<type>
+<!-- SKILL_OUTPUT:<type>
 key: value
 list_key:
   - "item 1"
@@ -17,17 +18,27 @@ END_SKILL_OUTPUT -->
 
 ### Rules
 
-1. **Block delimiters**: `<!-- SKILL_OUTPUT:<name>` opens, `END_SKILL_OUTPUT -->` closes
-2. **Content format**: YAML-like key-value pairs (human-readable, not strict YAML)
-3. **Placement**: At the END of skill output, after all human-readable content
-4. **Optional**: Skills SHOULD emit blocks but output remains valid without them
-5. **Invisible**: HTML comments don't render in markdown viewers — zero visual impact
+1. **Attribution line** (visible, REQUIRED): `[/<skill-name>] <STATUS-MARKER> SKILL_OUTPUT:<type>` directly above the HTML comment opener.
+   - Status markers: `COMPLETE` (default emit), `PARTIAL` (degraded run, missing optional fields), `FAILED` (skill could not produce required fields)
+   - Skill-name in brackets is the slash-command name without the leading slash escaped — e.g. `[/requirements]`, `[/review-ai]`
+   - Text-only markers (no emoji) per `~/.claude/CLAUDE.md` no-emoji rule
+   - No plugin version in attribution — keeps version-bump checklist at 4 files instead of 4+N
+2. **Block delimiters**: `<!-- SKILL_OUTPUT:<type>` opens, `END_SKILL_OUTPUT -->` closes
+3. **Content format**: YAML-like key-value pairs (human-readable, not strict YAML)
+4. **Placement**: At the END of skill output, after all human-readable content
+5. **Optional payload, REQUIRED attribution**: Skills SHOULD emit blocks but output remains valid without payload; if a block is emitted, attribution is required.
+6. **Invisible payload, visible attribution**: HTML comment payload doesn't render in markdown viewers — zero visual impact. Attribution line is plain text above the comment, scannable in transcripts.
+
+### Parser-impact statement
+
+The `/cross-verify` parser at `skills/cross-verify/SKILL.md:34` scans for `<!-- SKILL_OUTPUT:` (HTML-comment opener) — the attribution line ABOVE the comment is unaffected. Attribution adds visibility for human readers and downstream skills without breaking existing payload parsers.
 
 ## Producer Skills
 
 ### `/requirements` → `SKILL_OUTPUT:requirements`
 
 ```
+[/requirements] COMPLETE SKILL_OUTPUT:requirements
 <!-- SKILL_OUTPUT:requirements
 ears_count: 5
 ears_criteria:
@@ -46,6 +57,7 @@ END_SKILL_OUTPUT -->
 ### `/breakdown` → `SKILL_OUTPUT:breakdown`
 
 ```
+[/breakdown] COMPLETE SKILL_OUTPUT:breakdown
 <!-- SKILL_OUTPUT:breakdown
 task_count: 5
 tasks:
@@ -63,6 +75,7 @@ END_SKILL_OUTPUT -->
 ### `/review-ai` → `SKILL_OUTPUT:review`
 
 ```
+[/review-ai] COMPLETE SKILL_OUTPUT:review
 <!-- SKILL_OUTPUT:review
 files_reviewed: 4
 findings_critical: 0

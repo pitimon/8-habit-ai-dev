@@ -100,6 +100,7 @@ next-skill: design
 After writing the PRD, append a structured output block for cross-skill handoff. This HTML comment is invisible when rendered but enables `/cross-verify` to auto-check coverage:
 
 ```
+[/requirements] COMPLETE SKILL_OUTPUT:requirements
 <!-- SKILL_OUTPUT:requirements
 ears_count: [N]
 ears_criteria:
