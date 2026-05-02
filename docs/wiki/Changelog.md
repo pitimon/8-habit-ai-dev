@@ -1,10 +1,26 @@
-![Version](https://img.shields.io/badge/latest-v2.13.1-blue)
+![Version](https://img.shields.io/badge/latest-v2.14.0-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.14.0 — TOH Framework Inspirations (May 2026)
+
+Minor release closing milestone [#15](https://github.com/pitimon/8-habit-ai-dev/milestone/15) — three workflow-discipline imports from [Toh Framework](https://github.com/Nathanphop/Toh-Framework) (an "AI-Orchestration Driven Development" framework for solo SaaS builders). Cross-pollination filtered through plugin-boundary: workflow discipline here, project-state persistence routed to `claude-governance`.
+
+- **SKILL_OUTPUT attribution lines** ([#151](https://github.com/pitimon/8-habit-ai-dev/issues/151), [PR #152](https://github.com/pitimon/8-habit-ai-dev/pull/152)) — `[/<skill>] COMPLETE SKILL_OUTPUT:<type>` directly above each HTML comment in the 4 emitter skills. Status markers `COMPLETE` / `PARTIAL` / `FAILED` (text-only). New **Check 22** in `validate-structure.sh`; `cross-verify` parser unaffected. Inspired by Toh's Agent Announcement format.
+- **Argument-driven smart-routing for `/using-8-habits`** ([#149](https://github.com/pitimon/8-habit-ai-dev/issues/149), [PR #154](https://github.com/pitimon/8-habit-ai-dev/pull/154)) — `/using-8-habits "<intent>"` returns ≤3 ranked skills + reasoning + alternatives + one direct question, instead of the full narrative tree. Reads `~/.claude/habit-profile.md` for verbosity and recent `~/.claude/lessons/` for context. Activates existing `argument-hint` frontmatter — no new skill file. Inspired by Toh's `/toh` Smart Command (reshape: extend rather than wrap).
+- **`/review-ai` Verification Phase** ([#150](https://github.com/pitimon/8-habit-ai-dev/issues/150), [PR #155](https://github.com/pitimon/8-habit-ai-dev/pull/155)) — Find → Fix → Re-Verify loop: list CRITICAL/HIGH, apply fix, re-run review, cite evidence per finding, refuse to emit `pass: true` unless all CRITICAL closed. Output ends with a Verification Table. **Plugin boundary**: section header reads "guidance only — NOT a hook"; new **Check 20** in `validate-content.sh` enforces three-anchor boundary qualifier. Inspired by Toh's Test → Fix → Loop adapted as discipline guidance, not automated enforcement.
+
+Pattern: external-framework cross-pollination kept tight by the boundary rule — 3 of 10 Toh ideas imported, 7 rejected with reason (multi-agent builders, "vibe" command, design profiles, component registry, multi-IDE adapters, 7-file project memory). Companion proposal in `claude-governance` ([#24](https://github.com/pitimon/claude-governance/issues/24)) for the persistence layer.
+
+Fitness receipts: `validate-structure.sh` **246/0** (+1), `validate-content.sh` **201/0/1 WARN** (+3), `test-skill-graph.sh` 57/0, `test-verbosity-hook.sh` 19/0.
+
+Closes #149, #150, #151.
+
+---
 
 ## v2.13.1 — SELF-CHECK.md Body Freshness (April 2026)
 

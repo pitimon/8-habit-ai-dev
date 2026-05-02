@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 2.13.1 | **Date**: 2026-04-25 | **Previous**: 2.13.0 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)
+**Version**: 2.14.0 | **Date**: 2026-05-02 | **Previous**: 2.13.1 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)
 
 Running our own 17-question checklist against the plugin itself. H8 Modeling: "Follow the process always, no shortcuts when unwatched."
 
@@ -168,7 +168,8 @@ The cross-verify score (16/16) measures **plan discipline**. The Whole Person sc
 - v2.12.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (Code-Symbol Grep Evidence: #133 /research gains grep obligation for remove/dead/unused verdicts, research-verifier scope clarified with Limit of Verification + SEMANTIC-EVIDENCE-MISSING flag)
 - v2.13.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (Cross-Agent Discoverability: #135 skills/RESOLVER.md flat dispatcher, #136 llms.txt + AGENTS.md at repo root, #137 README "Thin Harness, Fat Skills" citation, ADR-010 + ADR-011, Check 20 + 21 added)
 - v2.13.1: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (SELF-CHECK.md Body Freshness: #141 three-PR arc — #142 catch-up 6 missing per-release rows v2.9.0→v2.13.0 + footer, #143 CONTRIBUTING.md 3→4 files correction, #144 Check 19 sub-checks E + F — CI invariant via git tag source of truth)
+- v2.14.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (TOH Framework Inspirations — milestone #15: #151 SKILL_OUTPUT attribution lines + Check 22, #149 argument-driven smart-routing in /using-8-habits, #150 Verification Phase in /review-ai with explicit "guidance only, NOT a hook" boundary qualifier — three workflow-discipline imports from external framework, all stayed within plugin boundary)
 
 ---
 
-_Updated with each release. Previous: 2.13.0 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_
+_Updated with each release. Previous: 2.13.1 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_
