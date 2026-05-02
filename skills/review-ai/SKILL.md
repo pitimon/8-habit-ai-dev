@@ -18,7 +18,7 @@ next-skill: deploy-guide
 
 1. **Get the diff**: `git diff --name-only HEAD` to see what changed.
 
-2. **Read the tests first** — before judging the implementation, open the new or changed test files. Tests declare the *intended* behavior; reading them first gives you the specification to review the code against. If new logic has no corresponding test, record that as a Completeness finding in step 6.
+2. **Read the tests first** — before judging the implementation, open the new or changed test files. Tests declare the _intended_ behavior; reading them first gives you the specification to review the code against. If new logic has no corresponding test, record that as a Completeness finding in step 6.
 
 3. **Security check** (CRITICAL — block if found):
    - Hardcoded secrets (API keys, passwords, tokens)
@@ -149,6 +149,7 @@ If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
 After rendering the review verdict, append a structured output block for cross-skill handoff. This HTML comment is invisible when rendered but enables `/cross-verify` to auto-check review coverage:
 
 ```
+[/review-ai] COMPLETE SKILL_OUTPUT:review
 <!-- SKILL_OUTPUT:review
 files_reviewed: [N]
 findings_critical: [N]

@@ -549,6 +549,44 @@ if [ -f AGENTS.md ] && [ -f llms.txt ]; then
 fi
 echo ""
 
+# --- Check 22: SKILL_OUTPUT attribution lines (Issue #151) ---
+# Each emitter must have an attribution line directly above its `<!-- SKILL_OUTPUT:` opener
+# Format: [/<skill-name>] (COMPLETE|PARTIAL|FAILED) SKILL_OUTPUT:<type>
+# Uses grep -B1 only (BSD-safe; no sed/awk per ADR-011 portability constraint)
+echo "--- Check 22: SKILL_OUTPUT attribution lines ---"
+ATTR_FAIL=0
+
+for entry in "skills/design/SKILL.md:design" \
+             "skills/breakdown/SKILL.md:breakdown" \
+             "skills/requirements/SKILL.md:requirements" \
+             "skills/review-ai/SKILL.md:review"; do
+  file="${entry%:*}"
+  type="${entry##*:}"
+  if [ ! -f "$file" ]; then
+    fail "Check 22: emitter file $file not found"
+    ATTR_FAIL=$((ATTR_FAIL + 1))
+    continue
+  fi
+  # Get the line directly above the opener via grep -B1; head -1 yields the preceding line
+  attr_text=$(grep -B1 "^<!-- SKILL_OUTPUT:${type}\$" "$file" | head -1)
+  # If grep returned nothing (empty) or returned the opener itself (no preceding line in file), fail
+  if [ -z "$attr_text" ] || [ "$attr_text" = "<!-- SKILL_OUTPUT:${type}" ]; then
+    fail "Check 22: $file missing '<!-- SKILL_OUTPUT:${type}' opener or has no preceding line"
+    ATTR_FAIL=$((ATTR_FAIL + 1))
+    continue
+  fi
+  # Validate attribution format
+  if ! echo "$attr_text" | grep -qE '^\[/[a-z-]+\] (COMPLETE|PARTIAL|FAILED) SKILL_OUTPUT:[a-z-]+$'; then
+    fail "Check 22: $file attribution line malformed (got: '$attr_text')"
+    ATTR_FAIL=$((ATTR_FAIL + 1))
+  fi
+done
+
+if [ "$ATTR_FAIL" -eq 0 ]; then
+  pass "SKILL_OUTPUT attribution lines present and well-formed (4 emitters)"
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"

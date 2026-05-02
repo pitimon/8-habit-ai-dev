@@ -117,6 +117,7 @@ next-skill: breakdown
 After documenting design decisions, append a structured output block for cross-skill handoff. This HTML comment is invisible when rendered but enables `/cross-verify` to auto-check design coverage:
 
 ```
+[/design] COMPLETE SKILL_OUTPUT:design
 <!-- SKILL_OUTPUT:design
 decision_count: [N]
 decisions:
