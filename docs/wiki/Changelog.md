@@ -1,10 +1,28 @@
-![Version](https://img.shields.io/badge/latest-v2.14.0-blue)
+![Version](https://img.shields.io/badge/latest-v2.14.1-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.14.1 — README "What's New" Drift Guard (May 2026)
+
+Patch release closing [#157](https://github.com/pitimon/8-habit-ai-dev/issues/157) — external QA found `validate-content.sh` Check 19A was passing on the README badge URL `releases/tag/v2.14.0` instead of asserting the section header `## What's New in v2.14.0`. Same bug class as [#124](https://github.com/pitimon/8-habit-ai-dev/issues/124) (CHANGELOG pointer-fallback) and [#141](https://github.com/pitimon/8-habit-ai-dev/issues/141) (SELF-CHECK.md body drift) — capability-level recurrence on a sibling surface.
+
+- **README.md backfill** — restored missing `## What's New in v2.14.0` block, fixed broken TOC anchor (`#whats-new-in-v220` → `#whats-new-in-v2141`, broken since v2.3.0), backfilled 4 missing skills in the architecture file tree (calibrate, using-8-habits, eu-ai-act-check, ai-dev-log) so the tree matches the declared 17-skill count.
+- **`tests/validate-content.sh` Check 19 sub-check G** — anchored grep `^## What's New in v${current_version}` in README.md. Closes the badge-URL false-positive class permanently. Mirrors the sub-checks E + F mechanism from PR #144.
+- **Check 20 hardening** — pin literal `Find → Fix → Re-Verify` loop name + assert exactly 5 numbered steps in `skills/review-ai/SKILL.md` Verification Phase. Closes the v2.14.0 self-disclosed follow-up (passes-on-3-string-matches risk).
+
+Pattern: same shape as v2.11.1 and v2.13.1 — QA surfaces drift class on a sibling surface → fix is fitness function, not checklist. Check 19 now covers README + CHANGELOG + wiki + SELF-CHECK + README-section-header — five anchored assertions, all co-located.
+
+Fitness receipts: `validate-structure.sh` 246/0, `validate-content.sh` **206/0/1 WARN** (was 203; +3 new assertions), `test-skill-graph.sh` 57/0, `test-verbosity-hook.sh` 19/0.
+
+External QA report by [@itarunp-apple](https://github.com/itarunp-apple) — ran the plugin's own `8-habit-reviewer` agent against v2.14.0 install per the framework's intended self-discipline workflow.
+
+Closes #157.
+
+---
 
 ## v2.14.0 — TOH Framework Inspirations (May 2026)
 

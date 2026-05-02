@@ -553,6 +553,24 @@ if [ -f "$REVIEW_AI" ]; then
     fail "$REVIEW_AI Verification Phase missing Verification Table example (need 'Fix Evidence' + 'RESOLVED')"
     VERIFY_FAIL=$((VERIFY_FAIL + 1))
   fi
+  # Find → Fix → Re-Verify literal loop name pinned (Issue #157 hardening — was
+  # self-disclosed weak in v2.14.0 CHANGELOG follow-up; passes-on-3-string-matches risk)
+  if grep -q "Find → Fix → Re-Verify" "$REVIEW_AI"; then
+    pass "$REVIEW_AI Verification Phase pins 'Find → Fix → Re-Verify' loop name"
+  else
+    fail "$REVIEW_AI Verification Phase missing 'Find → Fix → Re-Verify' literal loop name (Issue #157 hardening)"
+    VERIFY_FAIL=$((VERIFY_FAIL + 1))
+  fi
+  # Exactly 5 numbered steps (1.-5.) in the Verification Phase section
+  # awk extracts the section content between '## Verification Phase' and the next '## ',
+  # then grep counts numbered-step lines like "1. **List**" / "2. **Apply fix**" / etc.
+  verify_steps=$(awk '/^## Verification Phase/{found=1; next} /^## /{if(found) exit} found' "$REVIEW_AI" | grep -cE '^[1-5]\. \*\*')
+  if [ "$verify_steps" = "5" ]; then
+    pass "$REVIEW_AI Verification Phase has exactly 5 numbered steps"
+  else
+    fail "$REVIEW_AI Verification Phase has $verify_steps numbered steps (expected exactly 5 — Issue #157 hardening pins the loop count)"
+    VERIFY_FAIL=$((VERIFY_FAIL + 1))
+  fi
 else
   fail "$REVIEW_AI not found"
   VERIFY_FAIL=$((VERIFY_FAIL + 1))
@@ -660,6 +678,18 @@ else
     else
       fail "SELF-CHECK.md per-release list missing ${#missing[@]} version(s): ${missing[*]} — add a '- v<x.y.z>: Body N, Mind N, Heart N, Spirit N = **N.N** (…)' row per tagged release."
     fi
+  fi
+
+  # G. README.md "What's New in v<current_version>" section header anchored.
+  # Added 2026-05-02 per issue #157: sub-check A (line 578) only checks bare
+  # version mention, which the badge URL "releases/tag/v<x.y.z>" satisfies even
+  # when the section header is missing. Same bug class as #124 pointer-fallback
+  # loophole — tighter assertion required so README "What's New" cannot drift
+  # like SELF-CHECK.md did before sub-checks E + F (#141/#144).
+  if grep -q "^## What's New in v${current_version}" README.md; then
+    pass "README.md contains '## What's New in v${current_version}' section header"
+  else
+    fail "README.md missing '## What's New in v${current_version}' section header — sub-check A passed on badge URL but the user-facing upgrade-discovery surface is stale. Add the section between the existing 'Zero dependencies' block and the previous '## What's New in v...' entry. See issue #157."
   fi
 fi
 
