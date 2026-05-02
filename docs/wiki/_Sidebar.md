@@ -26,6 +26,7 @@ _Structured AI development_
 - [Maturity Model](Maturity-Model)
 - [8 Habits](Habits-Reference)
 - [Vibe Coding vs Structured](Vibe-Coding-vs-Structured)
+- [Harness Engineering](Harness-Engineering)
 
 **Reference**
 
