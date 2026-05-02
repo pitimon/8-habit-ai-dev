@@ -84,7 +84,7 @@ These skills complement the pipeline and can run at any point:
 
 **Meta & Onboarding:**
 
-- [`/using-8-habits`](Skills-Reference#using-8-habits) — onboarding decision tree
+- [`/using-8-habits`](Skills-Reference#using-8-habits) — onboarding decision tree (no-arg) **or** smart-routing mode when invoked with intent (e.g. `/using-8-habits "I need to verify what we built last week"` returns ≤3 ranked skills with reasoning)
 - [`/calibrate`](Skills-Reference#calibrate) — maturity self-assessment, verbosity adaptation
 
 **Compliance & Audit:**
