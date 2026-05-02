@@ -10,6 +10,33 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.14.0 — TOH Framework Inspirations (2026-05-02)
+
+Minor release closing milestone [#15](https://github.com/pitimon/8-habit-ai-dev/milestone/15) — three workflow-discipline imports from [Toh Framework](https://github.com/Nathanphop/Toh-Framework) (an "AI-Orchestration Driven Development" framework for solo SaaS builders). Cross-pollination filtered through the plugin-boundary rule: workflow discipline lands here; enforcement and project-state persistence routed to `claude-governance` ([pitimon/claude-governance#24](https://github.com/pitimon/claude-governance/issues/24) for 7-file memory system).
+
+### Added
+
+- **`SKILL_OUTPUT` attribution lines** ([#151](https://github.com/pitimon/8-habit-ai-dev/issues/151), [PR #152](https://github.com/pitimon/8-habit-ai-dev/pull/152)) — visible attribution `[/<skill-name>] COMPLETE SKILL_OUTPUT:<type>` directly above each `<!-- SKILL_OUTPUT:` HTML comment in the 4 emitter skills (design, breakdown, requirements, review-ai). Status markers: `COMPLETE` / `PARTIAL` / `FAILED` (text-only per no-emoji rule). No plugin version in attribution — keeps version-bump checklist at 4 files. **Check 22** added to `tests/validate-structure.sh` (BSD-safe via `grep -B1`, no sed/awk per ADR-011). `cross-verify` parser at `skills/cross-verify/SKILL.md:34` unaffected (still scans HTML-comment opener). Inspired by Toh's Agent Announcement format.
+- **Argument-driven smart-routing for `/using-8-habits`** ([#149](https://github.com/pitimon/8-habit-ai-dev/issues/149), [PR #154](https://github.com/pitimon/8-habit-ai-dev/pull/154)) — when invoked with intent (`/using-8-habits "I need to verify what we built last week"`), switches from narrative-tree mode to ranked-recommendation mode: ≤3 ranked skills + reasoning + alternatives + a single direct question. Reads `~/.claude/habit-profile.md` for verbosity and `~/.claude/lessons/*.md` for context. **Activates** the existing `argument-hint` frontmatter at `skills/using-8-habits/SKILL.md:8` — no new skill file, no `/8h` shortcut. Reshape decision (extend existing skill rather than wrapper) made during planning per cross-verify + advisor feedback to avoid skill-catalogue bloat. Inspired by Toh's `/toh` Smart Command.
+- **`/review-ai` Verification Phase** ([#150](https://github.com/pitimon/8-habit-ai-dev/issues/150), [PR #155](https://github.com/pitimon/8-habit-ai-dev/pull/155)) — new section between Sequence Rule and When to Skip. 5-step Find→Fix→Re-Verify loop: list CRITICAL/HIGH findings → apply fix → re-run review on same scope → cite evidence-of-fix per finding (file:line or deferred issue ref) → **refuse to emit `pass: true` SKILL_OUTPUT unless all CRITICAL closed**. Output ends with Verification Table (Finding | Severity | Fix Evidence | Status). **Plugin-boundary guardrails** with three independent anchors in the implementation: (a) section header reads "guidance only — NOT a hook", (b) blockquote redirects hook-based proposals to `claude-governance` per #58/#60 correction pattern, (c) step 5 closes "guidance to Claude, not a runtime gate". `tests/validate-content.sh` Check 20 enforces all three. Inspired by Toh's Test → Fix → Loop adapted as discipline guidance, not automated enforcement.
+
+### Pattern
+
+External-framework cross-pollination kept tight by the boundary rule. Of 10 candidate ideas surfaced from Toh, 3 imported cleanly, 7 rejected with reason (multi-agent builders, "vibe" full-pipeline command, slash shortcuts, design profiles, component registry, multi-IDE syntax adapters, 7-file project memory system — all out of scope or routed elsewhere). Decision rationale captured in research brief at `~/.claude/plans/toh-framework-idea-inspiration-sunny-forest.md`. Companion proposal in `claude-governance` ([#24](https://github.com/pitimon/claude-governance/issues/24)) for the persistence layer.
+
+### Fitness
+
+- `validate-structure.sh` **246/0** (was 245; +1 Check 22), `validate-content.sh` **201/0/1 WARN** (was 198; +3 Check 20), `test-skill-graph.sh` 57/0, `test-verbosity-hook.sh` 19/0.
+
+### Follow-ups (open)
+
+- [#153](https://github.com/pitimon/8-habit-ai-dev/issues/153) — `/design` producer example missing from `guides/structured-output-protocol.md` (pre-existing gap, surfaced during #151 cross-verify, separate scope).
+- Reviewer suggestion (non-blocking): harden Check 20 to pin the 5-step loop name and step count — currently passes on 3 weak string matches.
+
+Closes #149, #150, #151.
+
+---
+
 ## v2.13.1 — SELF-CHECK.md Body Freshness (2026-04-25)
 
 Patch release closing a three-PR arc for [#141](https://github.com/pitimon/8-habit-ai-dev/issues/141). `SELF-CHECK.md` had drifted within a single file — header read v2.13.0 while footer said `Previous: 2.7.1` and the per-release score list ended at v2.8.0, silently skipping 6 releases (v2.9.0 through v2.13.0). The plugin opens with _"H8 Modeling: Follow the process always, no shortcuts when unwatched"_ — the 6-release gap contradicted the stated principle. Same bug class as [#106](https://github.com/pitimon/8-habit-ai-dev/issues/106) on a surface not covered by Check 19.
