@@ -210,7 +210,7 @@ Document the gap in the report's Methodology section. Honesty about what's measu
 ## Handoff
 
 - **Expects from predecessor**: A git repo with commit history (and ideally Co-Authored-By trailers from AI tools)
-- **Produces for successor**: AI development log file. Used as evidence for `/eu-ai-act-check` Obligation 3 (Technical Documentation).
+- **Produces for successor**: AI development log file. Used as evidence for `/eu-ai-act-check` Obligation 3 (Technical Documentation) — the canonical skill lives in [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0+ (migrated 2026-05-02 per ADR-012).
 
 ## Definition of Done
 
@@ -224,7 +224,7 @@ Document the gap in the report's Methodology section. Honesty about what's measu
 
 ## References
 
-- EU AI Act Article 11 (Technical Documentation) — `${CLAUDE_PLUGIN_ROOT}/docs/research/eu-ai-act-obligations.md`
+- EU AI Act Article 11 (Technical Documentation) — primary-source verified quotes live in [`pitimon/claude-governance` `docs/research/eu-ai-act-obligations.md`](https://github.com/pitimon/claude-governance/blob/main/docs/research/eu-ai-act-obligations.md) (migrated 2026-05-02 per ADR-012)
 - EU AI Act Article 13 ¶3(d) (Disclosure of human oversight measures)
 - Habit details: `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md`, `${CLAUDE_PLUGIN_ROOT}/habits/h1-be-proactive.md`
 

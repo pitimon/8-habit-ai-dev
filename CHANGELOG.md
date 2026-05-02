@@ -10,6 +10,44 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.14.2 — EU AI Act Migration Completion (2026-05-02)
+
+Completes the migration of the EU AI Act compliance toolkit from this plugin to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0 per the plugin boundary established in memory observation #233270 (2026-04-07): `8-habit-ai-dev` = workflow discipline; `claude-governance` = compliance enforcement + framework mappings. EU AI Act compliance is a framework mapping, not a workflow step. Original placement here was a boundary error; ADR-005 (the original toolkit ADR) is now marked Superseded by ADR-012 (this migration). See [`pitimon/claude-governance` PR #26](https://github.com/pitimon/claude-governance/pull/26) for the canonical landing.
+
+### Removed
+
+- **`skills/eu-ai-act-check/reference.md`** — full 9-obligation tiered checklist (25 MUST + 27 SHOULD + 8 COULD) now lives in [`pitimon/claude-governance` `skills/eu-ai-act-check/reference.md`](https://github.com/pitimon/claude-governance/blob/main/skills/eu-ai-act-check/reference.md)
+- **`docs/research/eu-ai-act-obligations.md`** — primary-source verified Articles 9-15 quotes now live in [`pitimon/claude-governance` `docs/research/eu-ai-act-obligations.md`](https://github.com/pitimon/claude-governance/blob/main/docs/research/eu-ai-act-obligations.md) (verbatim copy)
+- **`guides/eu-ai-act-mapping.md`** — Article-to-skill mapping guide rewritten for governance plugin's skill set, now lives in [`pitimon/claude-governance` `docs/compliance/EU-AI-ACT-MAPPING.md`](https://github.com/pitimon/claude-governance/blob/main/docs/compliance/EU-AI-ACT-MAPPING.md)
+
+### Changed
+
+- **`skills/eu-ai-act-check/SKILL.md`** — replaced with a redirect stub that names the canonical location, provides install + invocation examples, preserves the NOT LEGAL ADVICE disclaimer, and links to ADR-012 + governance ADR-003. Skill name `eu-ai-act-check` remains valid in the catalog so existing cross-references (RESOLVER, using-8-habits, design Step 5, ai-dev-log, session-start hook) still resolve.
+- **`docs/adr/ADR-005-eu-ai-act-compliance-toolkit.md`** — status updated from Accepted → Superseded by ADR-012 (preserves historical record while flagging as no longer current)
+- **`tests/validate-content.sh` Check 15** — replaced content assertions (research file, guide file, tier counts, ¶ refs) with stub-mode checks: stub exists + redirects to canonical location + preserves disclaimer + references ADR-012; deleted files are NOT present (catches accidental restore); ADR-012 exists; ADR-005 marked Superseded
+- **Cross-reference reframing** in surface-area files where `/eu-ai-act-check` was mentioned: `skills/RESOLVER.md` skill discovery table, `skills/using-8-habits/SKILL.md` + `reference.md`, `skills/design/SKILL.md` Article 14 checkpoint scope pre-flight pointer, `skills/ai-dev-log/SKILL.md` references + Privacy Note + Handoff section, `hooks/session-start.sh` Compliance line, `README.md` skill table entry
+
+### Added
+
+- **`docs/adr/ADR-012-eu-ai-act-migration-completion.md`** — completion-side ADR. Documents the boundary correction, the redirect-stub pattern (vs. hard delete), the deferred-cosmetic-cleanup decision, and the cross-plugin contract with [`pitimon/claude-governance` ADR-003](https://github.com/pitimon/claude-governance/blob/main/docs/adr/ADR-003-eu-ai-act-compliance-toolkit.md). Establishes a reusable migration pattern for future plugin-boundary corrections.
+
+### Deferred to follow-up doc-only PR
+
+- README "EU AI Act ready" badge update (currently still asserts in-plugin coverage)
+- Wiki pages: `Architecture.md` ADR-005 link, `Changelog.md` v2.3.0 retro, `FAQ.md` Q&A, `Home.md` value table, `Installation.md` skills list, `Skills-Reference.md` `/eu-ai-act-check` section, `Workflow-Overview.md` skill list
+
+Rationale for deferral: same precedent as [`pitimon/claude-governance` PR #25 + #26](https://github.com/pitimon/claude-governance/pull/25) — the local Markdown formatter rewrites all tables on every Edit, producing 140+ lines of unrelated noise. Batching cosmetic touches into a separate PR keeps this migration's diff focused on the load-bearing changes (deletion + stub + critical cross-refs + ADR + validator) and minimizes the cross-plugin duplication window.
+
+### Coordination
+
+- This release is the second half of the migration. The first half shipped in [`pitimon/claude-governance` v3.1.0](https://github.com/pitimon/claude-governance/releases/tag/v3.1.0) (PR #26) on 2026-05-02. Hard rule from PR #26: `8-habit-ai-dev` v2.14.2 deletion must NOT merge before `claude-governance` v3.1.0 ships. That hard rule is satisfied — v3.1.0 was tagged before this release.
+
+### Why this matters (H7 + H8)
+
+The migration restores plugin boundary integrity (H8 — Voice/Conscience: each plugin has a clear "what we are and aren't"). The redirect-stub-not-hard-delete decision preserves user discoverability (H4 — Win-Win: the user with only one plugin gets a helpful redirect, not a "skill not found" error). The deferred-cosmetic-cleanup decision follows the formatter-precedent lesson from `pitimon/claude-governance` PR #23 + #25 + #26 (H7 — Sharpen the Saw: the lesson generalized; the same trap doesn't get re-sprung).
+
+---
+
 ## v2.14.1 — README "What's New" Drift Guard (2026-05-02)
 
 Patch release closing [#157](https://github.com/pitimon/8-habit-ai-dev/issues/157) — external QA via the plugin's own `8-habit-reviewer` agent found 13/17 score with Spirit (33%) and Body (50%) failures concentrated in one root cause: `validate-content.sh` Check 19A passes on the README badge URL `releases/tag/v2.14.0`, never asserting that `## What's New in v2.14.0` exists as a section header. So the validator was green while the README "What's New" section ended at v2.13.1. Same bug class as [#124](https://github.com/pitimon/8-habit-ai-dev/issues/124) (CHANGELOG pointer-fallback loophole, hardened in v2.11.1) and [#141](https://github.com/pitimon/8-habit-ai-dev/issues/141) (SELF-CHECK.md body drift, hardened in v2.13.1). Capability-level pattern recurrence on a sibling surface — the v2.13.1 sub-checks E + F lesson did not generalize to README.md.

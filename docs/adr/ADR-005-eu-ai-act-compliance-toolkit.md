@@ -1,10 +1,11 @@
 # ADR-005: EU AI Act Compliance Toolkit (v2.3.0 Flagship)
 
-**Status**: Accepted
+**Status**: Superseded
 **Date**: 2026-04-08
 **Decision makers**: Pitimon (human) + Claude Opus 4.6 (AI)
 **Supersedes**: None
-**Related**: Issue #57, PRs #65/#66/#67/#68
+**Superseded by**: ADR-012 — EU AI Act Compliance Toolkit Migration Completion (2026-05-02). The toolkit (skill + research + guide + reference) moved to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0; this plugin retains a redirect stub at `skills/eu-ai-act-check/SKILL.md`. Original placement here was a plugin-boundary error — see ADR-012 + memory observation #233270.
+**Related**: Issue #57, PRs #65/#66/#67/#68; pitimon/claude-governance#21 + ADR-003
 
 ---
 
