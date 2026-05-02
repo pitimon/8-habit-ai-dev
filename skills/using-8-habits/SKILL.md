@@ -15,7 +15,7 @@ next-skill: any
 
 **Habit**: H5 (Seek First to Understand — read before acting) + H8 (Find Your Voice — empower the next person)
 
-**Purpose**: First skill to invoke when you're new to 8-habit-ai-dev, or when you're unsure which skill fits your current task. Explains the 7-step workflow, all 17 skills, and provides a decision tree for "which skill next?".
+**Purpose**: First skill to invoke when you're new to 8-habit-ai-dev, or when you're unsure which skill fits your current task. Explains the 7-step workflow, all 17 skills, and provides a decision tree for "which skill next?". When invoked with an argument (a free-text intent like `/using-8-habits "I need to verify what we built last week"`), switches to ranked-recommendation mode — see [Smart-routing mode](#smart-routing-mode-when-invoked-with-argument) below.
 
 ## When to Use This Skill
 
@@ -117,6 +117,33 @@ What are you doing?
 For a worked end-to-end example (password reset feature, all 11 steps), see the examples file below.
 
 Load `${CLAUDE_PLUGIN_ROOT}/skills/using-8-habits/examples.md` for the full onboarding walkthrough.
+
+## Smart-routing mode (when invoked with argument)
+
+If `$ARGUMENTS` is non-empty, switch from narrative-tree mode to ranked-recommendation mode. The decision tree above is for the no-arg case (onboarding); smart-routing handles "I have an intent in mind, which skill?".
+
+**Process**:
+
+1. Read `skills/RESOLVER.md` — flat trigger-phrase → skill index (already structured for matching)
+2. Read `~/.claude/habit-profile.md` if it exists — governs verbosity per the v2.7.0 contract (Dependence → Independence → Interdependence → Significance shapes how much narrative wraps each recommendation)
+3. Glob `~/.claude/lessons/*.md` and check the 5 most recent by mtime — past task context can disambiguate borderline intents
+4. Match the argument intent against RESOLVER triggers; rank up to 3 skills by fit
+5. For each recommended skill, output:
+   - Skill name (slash-command form)
+   - 1-line "why this fits your intent"
+   - 1-line "alternatives are X / Y because they Z" (helps user understand the choice)
+6. End with a single direct question — "which one?" or "should I dispatch /<top-pick> now?"
+
+**Output bound**: ≤3 ranked skills, NEVER the full narrative tree. If no skill scores above a sensible threshold (e.g. argument is "help" or pure noise), surface that explicitly and recommend either `/workflow` (guided 7-step walkthrough) or no-arg `/using-8-habits` (full tree). Don't invent a fit that isn't there.
+
+**Verbosity by maturity** (read from `habit-profile.md` `level:`):
+
+- `dependence` → include 3-line rationale per skill + step number reminder
+- `independence` → 2 lines per skill, expected default
+- `interdependence` → 1 line per skill, terse
+- `significance` → minimum viable: name + one-clause why + question
+
+For 5 worked examples covering all 4 quadrants (workflow / assessment / meta / unclear), see the reference file linked at the end of this skill.
 
 ## Handoff
 

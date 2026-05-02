@@ -509,6 +509,17 @@ if [ -f "$META_SKILL" ]; then
   else
     fail "CLAUDE.md missing /using-8-habits cross-link"
   fi
+  # Issue #149: Smart-routing mode (argument-driven) — section header + reference examples
+  if grep -q "^## Smart-routing mode" "$META_SKILL"; then
+    pass "$META_SKILL has '## Smart-routing mode' section (Issue #149)"
+  else
+    fail "$META_SKILL missing '## Smart-routing mode' section (Issue #149)"
+  fi
+  if grep -q "^## Smart-routing examples" skills/using-8-habits/reference.md 2>/dev/null; then
+    pass "using-8-habits/reference.md has '## Smart-routing examples' section (Issue #149)"
+  else
+    fail "using-8-habits/reference.md missing '## Smart-routing examples' section (Issue #149)"
+  fi
 else
   fail "$META_SKILL not found"
 fi

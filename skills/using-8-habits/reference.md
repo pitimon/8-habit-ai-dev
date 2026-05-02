@@ -83,3 +83,65 @@ If a peer plugin isn't installed, its skill simply isn't available — nothing b
 - **addyosmani/agent-skills** (8.3K⭐): ships `using-agent-skills` meta-skill; this is the 8-habit-ai-dev equivalent
 - **Plugin Boundary**: `8-habit-ai-dev` owns workflow discipline; `pitimon/claude-governance` owns enforcement and compliance frameworks (see `CLAUDE.md` → Plugin Boundary section)
 - **Cross-plugin composition**: suggested security flow above contributed by mgmt-pve QA tester in feedback issue #77
+
+## Smart-routing examples
+
+Five worked examples for the argument-driven mode introduced in #149. Each shows what `/using-8-habits "<intent>"` should return — ranked skills + reasoning, NOT the full decision tree.
+
+### Example 1 — Workflow quadrant
+
+**Intent**: `"I'm starting a new feature from scratch"`
+
+**Recommendation** (ranked):
+
+1. `/research` — your intent says "from scratch", so problem-space investigation comes first (H5 Seek First to Understand). Returns a research brief with depth (Quick/Standard/Deep) and verified sources.
+2. `/requirements` — alternative if the problem space is already clear; jump straight to PRD + EARS criteria.
+3. `superpowers:brainstorming` — alternative if the intent is still fuzzy and you can't articulate the problem yet (cross-plugin, optional).
+
+**Question**: Is the problem clear, or still fuzzy? If clear → `/research`; if fuzzy → `superpowers:brainstorming`.
+
+### Example 2 — Assessment quadrant
+
+**Intent**: `"something feels off about this plan"`
+
+**Recommendation**:
+
+1. `/cross-verify` — the 17-question 8-habit checklist surfaces what specifically feels off; band-based verdict (PASS/CONCERNS/REWORK/FAIL) anchors the gut feeling in evidence.
+2. `/whole-person-check` — alternative if the unease is dimensional (Body/Mind/Heart/Spirit imbalance) rather than habit-by-habit; runs a 4-dimension assessment.
+3. `/security-check` — alternative if the unease is specifically about secrets / injection / auth (focused OWASP lens).
+
+**Question**: Is it a general gut check (`/cross-verify`), a balance issue (`/whole-person-check`), or a security concern (`/security-check`)?
+
+### Example 3 — Meta quadrant
+
+**Intent**: `"how do I configure my habit profile?"`
+
+**Recommendation**:
+
+1. `/calibrate` — 5-7 question maturity self-assessment writes `~/.claude/habit-profile.md`; other skills read this for verbosity (v2.7.0 contract).
+2. No close alternative — if the user wants narrative onboarding instead, recommend no-arg `/using-8-habits`.
+
+**Question**: Run `/calibrate` now?
+
+### Example 4 — Unclear / multi-skill quadrant
+
+**Intent**: `"the deploy went sideways"`
+
+**Recommendation**:
+
+1. `/cross-verify` — first, anchor what specifically went sideways (deployment-related habits: H1 staging-first, H3 rollback ready). Output gives evidence to pick the next move.
+2. `/security-check` — alternative if the deploy issue may be a secret leak or injection regression introduced in the release.
+3. `/reflect` — alternative for after-the-fact retrospective once the immediate fire is out (5-question retro persisted to `~/.claude/lessons/`).
+
+**Question**: Is the deploy still failing right now (`/cross-verify` + `/security-check`), or is the dust settled and we want lessons captured (`/reflect`)?
+
+### Example 5 — Edge case (insufficient signal)
+
+**Intent**: `"help"`
+
+**Recommendation**: argument is too short / generic to route confidently. Two fallback paths:
+
+1. **No-arg mode** — invoke `/using-8-habits` without argument for the full narrative decision tree (best for new users).
+2. **Guided mode** — invoke `/workflow` for the step-by-step 7-step walkthrough with skip prompts (best when user knows they want structure but not which step).
+
+**Question**: New here, or just need a structured restart?
