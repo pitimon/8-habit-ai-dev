@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 2.14.0 | **Date**: 2026-05-02 | **Previous**: 2.13.1 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)
+**Version**: 2.14.1 | **Date**: 2026-05-02 | **Previous**: 2.14.0 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)
 
 Running our own 17-question checklist against the plugin itself. H8 Modeling: "Follow the process always, no shortcuts when unwatched."
 
@@ -169,7 +169,8 @@ The cross-verify score (16/16) measures **plan discipline**. The Whole Person sc
 - v2.13.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (Cross-Agent Discoverability: #135 skills/RESOLVER.md flat dispatcher, #136 llms.txt + AGENTS.md at repo root, #137 README "Thin Harness, Fat Skills" citation, ADR-010 + ADR-011, Check 20 + 21 added)
 - v2.13.1: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (SELF-CHECK.md Body Freshness: #141 three-PR arc — #142 catch-up 6 missing per-release rows v2.9.0→v2.13.0 + footer, #143 CONTRIBUTING.md 3→4 files correction, #144 Check 19 sub-checks E + F — CI invariant via git tag source of truth)
 - v2.14.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (TOH Framework Inspirations — milestone #15: #151 SKILL_OUTPUT attribution lines + Check 22, #149 argument-driven smart-routing in /using-8-habits, #150 Verification Phase in /review-ai with explicit "guidance only, NOT a hook" boundary qualifier — three workflow-discipline imports from external framework, all stayed within plugin boundary)
+- v2.14.1: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#157 README "What's New" Drift Guard — external QA found Check 19A passes on badge URL not section header, README "What's New" missing v2.14.0 entry, TOC anchor broken since v2.3.0, architecture tree under-enumerated 4 skills; same bug class as #124/#141 recurring on sibling surface; fix is doc backfill + Check 19 sub-check G anchored grep + Check 20 hardening pinning Find→Fix→Re-Verify loop name and step count — capability-level pattern closed with fitness function not checklist)
 
 ---
 
-_Updated with each release. Previous: 2.13.1 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_
+_Updated with each release. Previous: 2.14.0 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_

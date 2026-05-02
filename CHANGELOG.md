@@ -10,6 +10,37 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.14.1 — README "What's New" Drift Guard (2026-05-02)
+
+Patch release closing [#157](https://github.com/pitimon/8-habit-ai-dev/issues/157) — external QA via the plugin's own `8-habit-reviewer` agent found 13/17 score with Spirit (33%) and Body (50%) failures concentrated in one root cause: `validate-content.sh` Check 19A passes on the README badge URL `releases/tag/v2.14.0`, never asserting that `## What's New in v2.14.0` exists as a section header. So the validator was green while the README "What's New" section ended at v2.13.1. Same bug class as [#124](https://github.com/pitimon/8-habit-ai-dev/issues/124) (CHANGELOG pointer-fallback loophole, hardened in v2.11.1) and [#141](https://github.com/pitimon/8-habit-ai-dev/issues/141) (SELF-CHECK.md body drift, hardened in v2.13.1). Capability-level pattern recurrence on a sibling surface — the v2.13.1 sub-checks E + F lesson did not generalize to README.md.
+
+### Fixed
+
+- **`README.md` "What's New" backfill** — `## What's New in v2.14.0` block restored (3-bullet TOH theme summary). The section had stayed at v2.13.1 through the entire v2.14.0 release because the validator was matching the bare version string from the badge URL.
+- **`README.md` TOC anchor** — `[What's New](#whats-new-in-v220)` → `[What's New](#whats-new-in-v2141)`. The v2.2.0 anchor has not existed since v2.3.0; the broken link has shipped through 11 releases.
+- **`README.md` architecture file tree** — declared "17 skills (8 workflow + 9 standalone)" but enumerated only 13 SKILL.md paths. Backfilled the 4 missing skills (`calibrate`, `using-8-habits`, `eu-ai-act-check`, `ai-dev-log`) so the tree matches the count.
+
+### Added
+
+- **`tests/validate-content.sh` Check 19 sub-check G** — anchored grep `^## What's New in v${current_version}` against `README.md`. Mirrors the sub-checks E + F mechanism from [PR #144](https://github.com/pitimon/8-habit-ai-dev/pull/144) (SELF-CHECK.md body freshness). Closes the badge-URL false-positive class permanently — sub-check A keeps the existing "version mentioned anywhere" check, sub-check G adds the strict header anchor.
+- **Check 20 hardening** — pin literal `Find → Fix → Re-Verify` loop name + assert exactly 5 numbered steps in the Verification Phase section of `skills/review-ai/SKILL.md`. Closes the v2.14.0 self-disclosed follow-up (CHANGELOG noted "passes on 3 weak string matches; 5-step loop name + step count not pinned"). Two new assertions; reviewer concern documented and addressed in the same release.
+
+### Pattern
+
+Same shape as v2.11.1 (CHANGELOG drift guard) and v2.13.1 (SELF-CHECK body freshness): when QA surfaces the same drift class on a third surface, the fix is a fitness-function tightening, not a checklist. Check 19 now covers README + CHANGELOG + wiki + SELF-CHECK + README-section-header — five anchored assertions, all co-located.
+
+### Fitness
+
+- `validate-structure.sh` 246/0, `validate-content.sh` **206/0/1 WARN** (was 203 + 3 new pass-able assertions: sub-check G + Check 20 loop name + Check 20 step count), `test-skill-graph.sh` 57/0, `test-verbosity-hook.sh` 19/0.
+
+### Reviewer
+
+External QA report by [@itarunp-apple](https://github.com/itarunp-apple) — ran `8-habit-reviewer` agent against the v2.14.0 install at `~/.claude/plugins/cache/.../8-habit-ai-dev/2.14.0/` per the framework's intended self-discipline workflow. The boundary discipline citation in the issue body ("the H8 framing 'modeling = follow the process always' landing the structural-fix-not-checklist case is exactly the right pressure") frames the patch correctly: this is a deposit, not a withdrawal — the reporter brought rigorous file:line evidence and a sound patch plan.
+
+Closes #157.
+
+---
+
 ## v2.14.0 — TOH Framework Inspirations (2026-05-02)
 
 Minor release closing milestone [#15](https://github.com/pitimon/8-habit-ai-dev/milestone/15) — three workflow-discipline imports from [Toh Framework](https://github.com/Nathanphop/Toh-Framework) (an "AI-Orchestration Driven Development" framework for solo SaaS builders). Cross-pollination filtered through the plugin-boundary rule: workflow discipline lands here; enforcement and project-state persistence routed to `claude-governance` ([pitimon/claude-governance#24](https://github.com/pitimon/claude-governance/issues/24) for 7-file memory system).

@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-17-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.14.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.14.0)
+[![Version](https://img.shields.io/badge/Version-2.14.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.14.1)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -42,7 +42,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v220) — Version history
+- [What's New](#whats-new-in-v2141) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [FAQ](#faq) — Common questions answered
@@ -317,7 +317,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.14.0)
+│   ├── plugin.json                 # Plugin metadata (v2.14.1)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
@@ -331,7 +331,11 @@ Both agents use the `sonnet` model for fast, focused analysis.
 │   ├── cross-verify/SKILL.md       #   All habits (17Q + dimension summary)
 │   ├── whole-person-check/SKILL.md #   H8: Body/Mind/Heart/Spirit
 │   ├── security-check/SKILL.md     #   H1: OWASP security lens
-│   ├── reflect/SKILL.md            #   H7: micro-retrospective
+│   ├── reflect/SKILL.md            #   H7: micro-retrospective + lesson persistence
+│   ├── calibrate/SKILL.md          #   H8: maturity self-assessment → habit-profile.md
+│   ├── using-8-habits/SKILL.md     #   H5+H8: onboarding + smart-routing mode (v2.14.0)
+│   ├── eu-ai-act-check/SKILL.md    #   H1+H8: EU AI Act 9-obligation checklist
+│   ├── ai-dev-log/SKILL.md         #   H4+H1: AI dev log from git history (Art. 11)
 │   └── workflow/SKILL.md           #   Guided 7-step walkthrough
 ├── agents/
 │   ├── 8-habit-reviewer.md         # Deep cross-verification agent
@@ -390,6 +394,30 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
 
 ---
+
+## What's New in v2.14.1
+
+**Theme: README "What's New" Drift Guard** ([#157](https://github.com/pitimon/8-habit-ai-dev/issues/157))
+
+Patch release closing an external QA finding — same bug class as #124 (CHANGELOG pointer-fallback) and #141 (SELF-CHECK.md body drift) recurring on a sibling surface (README.md "What's New" section).
+
+- **README.md backfill** — `## What's New in v2.14.0` block restored (was missing — Check 19A passed silently because `grep -q "v${current_version}"` matched the badge URL `releases/tag/v2.14.0` instead of asserting the section header). Architecture file tree backfilled with 4 missing skills (calibrate, using-8-habits, eu-ai-act-check, ai-dev-log) so it matches the declared 17-skill count. TOC anchor fixed (`#whats-new-in-v220` → `#whats-new-in-v2141`) — broken since at least v2.3.0.
+- **`tests/validate-content.sh` Check 19 sub-check G** — anchored grep `^## What's New in v${current_version}` in README.md. Mirrors sub-checks E + F mechanism from #144 (SELF-CHECK.md body freshness). Prevents the badge-URL false-positive class permanently.
+- **Check 20 hardening** — `Find → Fix → Re-Verify` literal name pinned + assert exactly 5 numbered steps (1-5) in `skills/review-ai/SKILL.md` Verification Phase. Closes the v2.14.0 self-disclosed follow-up.
+
+Pattern: validator assertion, not checklist — when QA surfaces the same drift class across multiple releases, the fix is a fitness function. Same shape as v2.11.1 (CHANGELOG drift guard) and v2.13.1 (SELF-CHECK body freshness).
+
+## What's New in v2.14.0
+
+**Theme: TOH Framework Inspirations** ([milestone #15](https://github.com/pitimon/8-habit-ai-dev/milestone/15))
+
+Three workflow-discipline imports from [Toh Framework](https://github.com/Nathanphop/Toh-Framework) (an "AI-Orchestration Driven Development" framework for solo SaaS builders), filtered through plugin-boundary rule (3/10 candidates imported, 7 rejected with route-elsewhere reasoning).
+
+- **`SKILL_OUTPUT` attribution lines** ([#151](https://github.com/pitimon/8-habit-ai-dev/issues/151), [PR #152](https://github.com/pitimon/8-habit-ai-dev/pull/152)) — visible `[/<skill>] COMPLETE SKILL_OUTPUT:<type>` directly above each HTML comment in 4 emitter skills (design, breakdown, requirements, review-ai). Status markers `COMPLETE` / `PARTIAL` / `FAILED` (text-only, no emoji). New `validate-structure.sh` Check 22 enforces format (BSD-safe via `grep -B1`). `cross-verify` parser unaffected. Inspired by Toh's Agent Announcement format.
+- **Argument-driven smart-routing for `/using-8-habits`** ([#149](https://github.com/pitimon/8-habit-ai-dev/issues/149), [PR #154](https://github.com/pitimon/8-habit-ai-dev/pull/154)) — `/using-8-habits "<intent>"` returns ≤3 ranked skills + reasoning + alternatives + a single direct question instead of the full narrative tree. Reads `~/.claude/habit-profile.md` for verbosity tier (dependence → independence → interdependence → significance) and recent `~/.claude/lessons/` for context. **Activates** existing `argument-hint` frontmatter — no new skill file. Inspired by Toh's `/toh` Smart Command (reshape: extend rather than wrap).
+- **`/review-ai` Verification Phase** ([#150](https://github.com/pitimon/8-habit-ai-dev/issues/150), [PR #155](https://github.com/pitimon/8-habit-ai-dev/pull/155)) — Find → Fix → Re-Verify loop ending in a Verification Table (Finding | Severity | Fix Evidence | Status). **Plugin boundary**: section header reads "guidance only — NOT a hook"; three independent anchors (header + blockquote + step-5 prose) prevent future enforcement creep. New `validate-content.sh` Check 20 enforces all three anchors. Inspired by Toh's Test → Fix → Loop adapted as discipline guidance, not automated enforcement.
+
+Companion proposal: [pitimon/claude-governance#24](https://github.com/pitimon/claude-governance/issues/24) for the 7-file project memory persistence layer (out-of-boundary for this plugin).
 
 ## What's New in v2.13.1
 
@@ -613,4 +641,4 @@ MIT
 
 ---
 
-_Version: 2.14.0 | Last updated: 2026-05-02_
+_Version: 2.14.1 | Last updated: 2026-05-02_
