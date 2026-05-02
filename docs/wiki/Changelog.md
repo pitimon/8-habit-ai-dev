@@ -1,10 +1,24 @@
-![Version](https://img.shields.io/badge/latest-v2.14.1-blue)
+![Version](https://img.shields.io/badge/latest-v2.14.2-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.14.2 — EU AI Act Migration Completion (May 2026)
+
+Plugin-boundary correction. The EU AI Act compliance toolkit (skill + reference + research + mapping guide) migrated to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0 on 2026-05-02 per memory observation #233270 (2026-04-07): `8-habit-ai-dev` = workflow discipline; `claude-governance` = compliance enforcement + framework mappings. EU AI Act compliance is a framework mapping, not a workflow step. Original placement here was a boundary error.
+
+- **Removed**: `skills/eu-ai-act-check/reference.md`, `docs/research/eu-ai-act-obligations.md`, `guides/eu-ai-act-mapping.md` (now canonical in `claude-governance` v3.1.0)
+- **Stub**: `skills/eu-ai-act-check/SKILL.md` rewritten as a redirect to the canonical location with install + invocation examples; preserves NOT LEGAL ADVICE disclaimer; skill name remains valid in the catalog so existing cross-references resolve
+- **ADR**: ADR-005 marked Superseded by ADR-012 (this migration completion)
+- **Validator**: Check 15 in `tests/validate-content.sh` rewritten to assert post-migration state (stub correctness + deleted-file negative assertions + ADR-012 presence + ADR-005 Superseded marker)
+- **Cross-refs**: reframed in RESOLVER, using-8-habits, design Step 5, ai-dev-log, session-start hook, README skill table
+
+Wiki Architecture/FAQ/Home/Installation/Skills-Reference/Workflow-Overview pages and the README "EU AI Act ready" badge are deferred to a follow-up doc-only PR (precedent: `pitimon/claude-governance` PR #25 + #26 — local Markdown formatter rewrites tables on every Edit, producing 140+ lines of unrelated noise).
+
+Coordination: this is the second half of the migration. The first half shipped in [`pitimon/claude-governance` v3.1.0 PR #26](https://github.com/pitimon/claude-governance/pull/26).
 
 ## v2.14.1 — README "What's New" Drift Guard (May 2026)
 

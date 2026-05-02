@@ -40,7 +40,7 @@ next-skill: any
 4. **`/research`** — investigate before specifying when the problem is new (H5)
 5. **`/reflect`** — 5-question micro-retrospective after completing significant work (H7)
 
-The other 12 skills are **optional depth** for specific situations — compliance (`/eu-ai-act-check`), architecture-heavy work (`/design`), cross-plugin flows, transparency logs (`/ai-dev-log`), onboarding (this skill), etc. Running all 17 skills for every task is theater. Pick what fits.
+The other 12 skills are **optional depth** for specific situations — architecture-heavy work (`/design`), transparency logs (`/ai-dev-log`), onboarding (this skill), etc. EU AI Act compliance migrated to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0 (see ADR-012); install that plugin alongside this one for the canonical `/eu-ai-act-check`. Running all 17 skills for every task is theater. Pick what fits.
 
 **Honest framing**: if you're doing a single-line bug fix, rename refactor, or dependency bump — run `/review-ai` and skip the rest. Run more skills as the scope grows.
 

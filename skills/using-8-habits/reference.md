@@ -28,7 +28,7 @@ Full 17-skill inventory and cross-plugin composition tables. Loaded from `SKILL.
 
 - **`/using-8-habits`** (this skill) — Onboarding navigation. Explains the 7-step workflow and all 17 skills.
 - **`/ai-dev-log`** — Generate AI-assisted development log from git history + Co-Authored-By trailers. Transparency artifact, framework-agnostic.
-- **`/eu-ai-act-check`** — EU AI Act 9-obligation compliance checklist (temporary placement; will migrate to `pitimon/claude-governance` in a future release per ADR-005 + ADR-006).
+- **`/eu-ai-act-check`** — Redirect stub. Migrated to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0 on 2026-05-02 (see ADR-012). Install that plugin alongside this one for the canonical 9-obligation checklist.
 
 ## Composing with Other Plugins (optional)
 
@@ -53,14 +53,15 @@ superpowers:brainstorming  →  /research  →  /requirements  →  /design  →
 
 `/governance-check` (governance) runs fitness functions + pre-commit checks; 8-habit's `/review-ai` adds the 4-level verdict on top.
 
-**EU AI Act compliance flow**:
+**EU AI Act compliance flow** (requires `pitimon/claude-governance` v3.1.0+):
 
 ```
 ... 7-step workflow ...  →  /eu-ai-act-check  →  /review-ai  →  /ai-dev-log  →  /deploy-guide
-                            (from claude-governance v3.1.0+    (8-habit)       (8-habit, Art. 11 log)
-                             after Stage B migration; currently
-                             in 8-habit v2.3.0+ per PR #57)
+                            (claude-governance)   (8-habit)     (8-habit,       (8-habit)
+                                                                 Art. 11 log)
 ```
+
+The `/eu-ai-act-check` skill lives in `pitimon/claude-governance` (migrated from this plugin on 2026-05-02 per ADR-012). Install both plugins for the full flow.
 
 ### Cross-plugin reference skills
 

@@ -130,7 +130,7 @@ cat <<EOF
 **Core 5** (80% of daily work): \`/requirements\` · \`/review-ai\` · \`/cross-verify\` · \`/research\` · \`/reflect\`
 **Assessment**: \`/workflow\` · \`/whole-person-check\` · \`/security-check\` · \`/ai-dev-log\`
 **Onboarding**: \`/using-8-habits\` (decision tree) · \`/calibrate\` (maturity profile)
-**Compliance**: \`/eu-ai-act-check\` (EU AI Act, migration to claude-governance planned)${WORKFLOW_HINT}${PROFILE_MSG}
+**Compliance**: \`/eu-ai-act-check\` (redirect stub — install \`pitimon/claude-governance\` v3.1.0+ for the canonical skill, migrated 2026-05-02 per ADR-012)${WORKFLOW_HINT}${PROFILE_MSG}
 
 _Silence this reminder: \`export HABIT_QUIET=1\`_
 EOF

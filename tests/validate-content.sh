@@ -184,104 +184,69 @@ for skill_name in $WORKFLOW_SKILLS; do
 done
 echo ""
 
-# --- Check 15: v2.3.0 EU AI Act Compliance Toolkit content ---
-echo "--- Check 15: v2.3.0 EU AI Act compliance toolkit content ---"
+# --- Check 15: v2.14.2 EU AI Act stub (post-migration to claude-governance v3.1.0) ---
+echo "--- Check 15: v2.14.2 EU AI Act stub (post-migration) ---"
 
-# 15a: Research artifact has all 9 obligations + Verified Quotes
-EU_RESEARCH="docs/research/eu-ai-act-obligations.md"
-if [ -f "$EU_RESEARCH" ]; then
-  for art in 9 10 11 12 13 14 15; do
-    if grep -q "^## .*Article $art\b\|Art\. $art " "$EU_RESEARCH"; then
-      pass "$EU_RESEARCH covers Article $art"
-    else
-      fail "$EU_RESEARCH missing Article $art coverage"
-    fi
-  done
-  verified_quotes=$(grep -c '^\*\*Verified Quote' "$EU_RESEARCH" || true)
-  if [ "$verified_quotes" -ge 7 ]; then
-    pass "$EU_RESEARCH has $verified_quotes Verified Quote blocks (≥7 expected)"
+# Per ADR-012 (2026-05-02), the EU AI Act compliance toolkit migrated to
+# pitimon/claude-governance v3.1.0. This plugin retains a single redirect
+# stub at skills/eu-ai-act-check/SKILL.md. The deleted files (research,
+# guide, reference) now live in the governance plugin; their content
+# assertions moved there too (governance-side validate-plugin.sh section 6).
+#
+# The stub-mode checks below verify:
+#   - the redirect stub exists
+#   - it points users to the canonical location
+#   - it preserves the NOT LEGAL ADVICE disclaimer (regulatory communication)
+#   - the deleted files are NOT present (catches accidental restore)
+
+EU_STUB="skills/eu-ai-act-check/SKILL.md"
+if [ -f "$EU_STUB" ]; then
+  pass "$EU_STUB redirect stub exists"
+  if grep -q "pitimon/claude-governance" "$EU_STUB"; then
+    pass "$EU_STUB redirects to pitimon/claude-governance"
   else
-    fail "$EU_RESEARCH has only $verified_quotes Verified Quote blocks (need ≥7)"
+    fail "$EU_STUB missing pitimon/claude-governance redirect"
   fi
-  if grep -q "NOT LEGAL ADVICE\|not legal advice" "$EU_RESEARCH"; then
-    pass "$EU_RESEARCH has NOT LEGAL ADVICE disclaimer"
+  if grep -q "NOT LEGAL ADVICE\|not legal advice" "$EU_STUB"; then
+    pass "$EU_STUB preserves NOT LEGAL ADVICE disclaimer"
   else
-    fail "$EU_RESEARCH missing NOT LEGAL ADVICE disclaimer"
+    fail "$EU_STUB missing NOT LEGAL ADVICE disclaimer"
+  fi
+  if grep -q "ADR-012" "$EU_STUB"; then
+    pass "$EU_STUB references migration ADR-012"
+  else
+    fail "$EU_STUB missing ADR-012 reference"
   fi
 else
-  fail "$EU_RESEARCH not found"
+  fail "$EU_STUB not found"
 fi
 
-# 15b: User-facing mapping guide has bootstrap + disclaimer
-EU_GUIDE="guides/eu-ai-act-mapping.md"
-if [ -f "$EU_GUIDE" ]; then
-  if grep -q "NOT LEGAL ADVICE" "$EU_GUIDE"; then
-    pass "$EU_GUIDE has NOT LEGAL ADVICE disclaimer"
+# Negative checks: deleted files must not have been restored
+for deleted_file in \
+  "skills/eu-ai-act-check/reference.md" \
+  "docs/research/eu-ai-act-obligations.md" \
+  "guides/eu-ai-act-mapping.md"; do
+  if [ -f "$deleted_file" ]; then
+    fail "$deleted_file was restored — should be deleted post-migration (see ADR-012)"
   else
-    fail "$EU_GUIDE missing NOT LEGAL ADVICE disclaimer"
+    pass "$deleted_file correctly absent post-migration"
   fi
-  if grep -q "mkdir -p docs/compliance/eu-ai-act" "$EU_GUIDE"; then
-    pass "$EU_GUIDE has bootstrap mkdir block"
-  else
-    fail "$EU_GUIDE missing bootstrap mkdir block"
-  fi
+done
+
+# ADR-012 itself must exist
+if [ -f "docs/adr/ADR-012-eu-ai-act-migration-completion.md" ]; then
+  pass "docs/adr/ADR-012 (migration completion) exists"
 else
-  fail "$EU_GUIDE not found"
+  fail "docs/adr/ADR-012 (migration completion) not found"
 fi
 
-# 15c: /eu-ai-act-check skill — tier counts match Tier Summary table
-# ADR-009: SKILL.md may be split into SKILL + reference + examples triad.
-# Search all three files as a unit when checking content assertions.
-EU_SKILL="skills/eu-ai-act-check/SKILL.md"
-EU_TRIAD="skills/eu-ai-act-check/SKILL.md skills/eu-ai-act-check/reference.md skills/eu-ai-act-check/examples.md"
-EU_TRIAD_EXISTING=""
-for f in $EU_TRIAD; do [ -f "$f" ] && EU_TRIAD_EXISTING="$EU_TRIAD_EXISTING $f"; done
-if [ -f "$EU_SKILL" ]; then
-  must_count=$({ grep -ch '^- \[ \] \*\*\[MUST\]\*\*' $EU_TRIAD_EXISTING 2>/dev/null || true; } | awk '{s+=$1} END {print s+0}' || echo 0)
-  should_count=$({ grep -ch '^- \[ \] \*\*\[SHOULD\]\*\*' $EU_TRIAD_EXISTING 2>/dev/null || true; } | awk '{s+=$1} END {print s+0}' || echo 0)
-  could_count=$({ grep -ch '^- \[ \] \*\*\[COULD\]\*\*' $EU_TRIAD_EXISTING 2>/dev/null || true; } | awk '{s+=$1} END {print s+0}' || echo 0)
-  total_count=$((must_count + should_count + could_count))
-
-  # Tier Summary table claimed counts (may live in SKILL.md or reference.md)
-  must_claimed=$(awk '/^##+ Tier Summary/{found=1} found && /\*\*MUST\*\*/{print $4; exit}' $EU_TRIAD_EXISTING 2>/dev/null || echo 0)
-  should_claimed=$(awk '/^##+ Tier Summary/{found=1} found && /\*\*SHOULD\*\*/{print $4; exit}' $EU_TRIAD_EXISTING 2>/dev/null || echo 0)
-  could_claimed=$(awk '/^##+ Tier Summary/{found=1} found && /\*\*COULD\*\*/{print $4; exit}' $EU_TRIAD_EXISTING 2>/dev/null || echo 0)
-  [ -z "$must_claimed" ] && must_claimed=0
-  [ -z "$should_claimed" ] && should_claimed=0
-  [ -z "$could_claimed" ] && could_claimed=0
-
-  if [ "$must_count" -eq "$must_claimed" ]; then
-    pass "$EU_SKILL MUST tier: actual=$must_count matches claimed=$must_claimed"
+# ADR-005 must be marked as Superseded
+if [ -f "docs/adr/ADR-005-eu-ai-act-compliance-toolkit.md" ]; then
+  if grep -qE 'Status.*:.*Superseded' "docs/adr/ADR-005-eu-ai-act-compliance-toolkit.md"; then
+    pass "ADR-005 status updated to Superseded"
   else
-    fail "$EU_SKILL MUST tier mismatch: actual=$must_count vs claimed=$must_claimed in Tier Summary"
+    fail "ADR-005 still marked Accepted — should be Superseded by ADR-012"
   fi
-  if [ "$should_count" -eq "$should_claimed" ]; then
-    pass "$EU_SKILL SHOULD tier: actual=$should_count matches claimed=$should_claimed"
-  else
-    fail "$EU_SKILL SHOULD tier mismatch: actual=$should_count vs claimed=$should_claimed"
-  fi
-  if [ "$could_count" -eq "$could_claimed" ]; then
-    pass "$EU_SKILL COULD tier: actual=$could_count matches claimed=$could_claimed"
-  else
-    fail "$EU_SKILL COULD tier mismatch: actual=$could_count vs claimed=$could_claimed"
-  fi
-
-  # Article paragraph references (counted across triad per ADR-009)
-  para_refs=$({ grep -ch '¶' $EU_TRIAD_EXISTING 2>/dev/null || true; } | awk '{s+=$1} END {print s+0}' || echo 0)
-  if [ "$para_refs" -ge 30 ]; then
-    pass "eu-ai-act-check triad has $para_refs paragraph references (≥30 expected)"
-  else
-    fail "eu-ai-act-check triad has only $para_refs paragraph references (need ≥30)"
-  fi
-
-  # Scope pre-flight present (in SKILL.md body — stays in core)
-  if grep -q "Step 0.*Scope Pre-Flight\|--scope" "$EU_SKILL"; then
-    pass "$EU_SKILL has Step 0 scope pre-flight"
-  else
-    fail "$EU_SKILL missing scope pre-flight"
-  fi
-else
-  fail "$EU_SKILL not found"
 fi
 
 # 15d: /ai-dev-log skill references the generator script

@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-17-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.14.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.14.1)
+[![Version](https://img.shields.io/badge/Version-2.14.2-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.14.2)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -42,7 +42,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v2141) — Version history
+- [What's New](#whats-new-in-v2142) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [FAQ](#faq) — Common questions answered
@@ -138,17 +138,17 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 
 ### Assessment Skills (Use Anytime)
 
-| Skill                 | Habit               | Purpose                                                                                                                      |
-| --------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `/cross-verify`       | H1-H8               | 17-question checklist + dimension summary (Body/Mind/Heart/Spirit)                                                           |
-| `/whole-person-check` | H8: Find Your Voice | 4-dimension assessment (1-5 scale) with AI Blind Spot detection                                                              |
-| `/security-check`     | H1: Be Proactive    | Focused OWASP security lens — secrets, injection, auth, deps                                                                 |
-| `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking                                                              |
-| `/workflow`           | All                 | Guided 7-step walkthrough — invoke or skip each step                                                                         |
-| `/calibrate`          | H8: Find Your Voice | Self-assessment (5-7 questions) → writes `~/.claude/habit-profile.md` so other skills adapt verbosity to your maturity level |
-| `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 17 skills + decision tree for "which skill next?"                                                |
-| `/eu-ai-act-check`    | H1 + H8 (Spirit)    | EU AI Act compliance — 9 obligations × tiered checklist (Art. 9-15)                                                          |
-| `/ai-dev-log`         | H4 + H1             | Generate AI-assisted dev log from git history for audit trail                                                                |
+| Skill                 | Habit               | Purpose                                                                                                                                                                                                |
+| --------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `/cross-verify`       | H1-H8               | 17-question checklist + dimension summary (Body/Mind/Heart/Spirit)                                                                                                                                     |
+| `/whole-person-check` | H8: Find Your Voice | 4-dimension assessment (1-5 scale) with AI Blind Spot detection                                                                                                                                        |
+| `/security-check`     | H1: Be Proactive    | Focused OWASP security lens — secrets, injection, auth, deps                                                                                                                                           |
+| `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking                                                                                                                                        |
+| `/workflow`           | All                 | Guided 7-step walkthrough — invoke or skip each step                                                                                                                                                   |
+| `/calibrate`          | H8: Find Your Voice | Self-assessment (5-7 questions) → writes `~/.claude/habit-profile.md` so other skills adapt verbosity to your maturity level                                                                           |
+| `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 17 skills + decision tree for "which skill next?"                                                                                                                          |
+| `/eu-ai-act-check`    | H1 + H8 (Spirit)    | Redirect stub — migrated to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0+ on 2026-05-02 (ADR-012). Install that plugin for the canonical 9-obligation checklist. |
+| `/ai-dev-log`         | H4 + H1             | Generate AI-assisted dev log from git history for audit trail                                                                                                                                          |
 
 ---
 
@@ -317,7 +317,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.14.1)
+│   ├── plugin.json                 # Plugin metadata (v2.14.2)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
@@ -392,6 +392,22 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Output templates** — structured formats for PRD, ADR, task list, review report, research brief
 - **Dimension mapping** — all 17 cross-verify questions tagged with Body/Mind/Heart/Spirit
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
+
+---
+
+## What's New in v2.14.2
+
+**Theme: EU AI Act Migration Completion** (cross-plugin coordination with [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance))
+
+Plugin-boundary correction. The EU AI Act compliance toolkit migrated to `pitimon/claude-governance` v3.1.0 ([PR #26](https://github.com/pitimon/claude-governance/pull/26)) per memory observation #233270 (2026-04-07): `8-habit-ai-dev` = workflow discipline; `claude-governance` = compliance enforcement + framework mappings. EU AI Act compliance is a framework mapping, not a workflow step.
+
+- **Removed** — `skills/eu-ai-act-check/reference.md`, `docs/research/eu-ai-act-obligations.md`, `guides/eu-ai-act-mapping.md` (now canonical in `pitimon/claude-governance` v3.1.0+)
+- **Stub** — `skills/eu-ai-act-check/SKILL.md` rewritten as a redirect that names the canonical location, provides install + invocation examples, preserves NOT LEGAL ADVICE disclaimer, and links to ADR-012. Skill name remains valid in the catalog so existing cross-references resolve.
+- **ADR-012** — completion-side migration ADR. ADR-005 marked Superseded. Establishes a reusable migration pattern.
+- **Validator** — Check 15 in `tests/validate-content.sh` rewritten as stub-mode + negative-restore assertions.
+- **Cross-refs reframed** — RESOLVER, using-8-habits, design Step 5, ai-dev-log, session-start hook, README skill table.
+
+Pattern: smaller atomic deletion + stub + validator + ADR PR; cosmetic wiki/README badge cleanup deferred to a follow-up doc-only PR (precedent: `pitimon/claude-governance` PR #25 + #26 — local Markdown formatter rewrites tables on every Edit, producing 140+ lines of unrelated noise).
 
 ---
 
@@ -641,4 +657,4 @@ MIT
 
 ---
 
-_Version: 2.14.1 | Last updated: 2026-05-02_
+_Version: 2.14.2 | Last updated: 2026-05-02_
