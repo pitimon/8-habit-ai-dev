@@ -1,6 +1,7 @@
 # ADR-012: EU AI Act Compliance Toolkit Migration Completion
 
 **Status**: Accepted
+**Implementation**: 2026-05-02 in commit `ed65b97` (v2.14.2 release); metadata closure 2026-05-03 in v2.14.3
 **Date**: 2026-05-02
 **Decision makers**: Pitimon (human) + Claude Opus 4.7 (AI, 1M context)
 **Supersedes**: ADR-005 (EU AI Act Compliance Toolkit, v2.3.0 Flagship)

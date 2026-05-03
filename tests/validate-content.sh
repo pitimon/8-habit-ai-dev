@@ -186,18 +186,9 @@ echo ""
 
 # --- Check 15: v2.14.2 EU AI Act stub (post-migration to claude-governance v3.1.0) ---
 echo "--- Check 15: v2.14.2 EU AI Act stub (post-migration) ---"
-
-# Per ADR-012 (2026-05-02), the EU AI Act compliance toolkit migrated to
-# pitimon/claude-governance v3.1.0. This plugin retains a single redirect
-# stub at skills/eu-ai-act-check/SKILL.md. The deleted files (research,
-# guide, reference) now live in the governance plugin; their content
-# assertions moved there too (governance-side validate-plugin.sh section 6).
-#
-# The stub-mode checks below verify:
-#   - the redirect stub exists
-#   - it points users to the canonical location
-#   - it preserves the NOT LEGAL ADVICE disclaimer (regulatory communication)
-#   - the deleted files are NOT present (catches accidental restore)
+# Per ADR-012 (2026-05-02): EU AI Act toolkit migrated to claude-governance v3.1.0.
+# This plugin retains a redirect stub; deleted files live in governance-side validate-plugin.sh §6.
+# Verifies: stub exists, redirects, preserves NOT LEGAL ADVICE, deleted files absent (catches restore).
 
 EU_STUB="skills/eu-ai-act-check/SKILL.md"
 if [ -f "$EU_STUB" ]; then
@@ -543,12 +534,9 @@ fi
 echo ""
 
 # --- Check 19: Docs freshness vs plugin.json version ---
-# Enforces downstream propagation from plugin.json across all changelog surfaces.
-# Prevents the "stuck at v2.N-5" drift scenario (see issue #106, fix in PR #107).
-# Tightened 2026-04-17 per issue #124 F1+F2 after v2.9.0 + v2.11.0 recurrence:
-# pointer-to-CHANGELOG.md fallback removed (the wiki was passing just by containing
-# the string "CHANGELOG.md" even when the actual entry was missing).
-# See CONTRIBUTING.md § Testing Conventions for rationale.
+# Enforces version propagation across changelog surfaces. Issue #106/#107 (stuck-at-v2.N-5 drift);
+# tightened 2026-04-17 per #124 F1+F2 after v2.9.0+v2.11.0 (pointer-to-CHANGELOG.md fallback removed —
+# wiki was passing on literal string "CHANGELOG.md" even when entry missing). See CONTRIBUTING.md § Testing Conventions.
 echo "--- Check 19: Docs freshness vs plugin.json version ---"
 
 # Extract current version from plugin.json — no pipe, SIGPIPE-safe (see CONTRIBUTING.md)
@@ -564,49 +552,39 @@ else
     fail "README.md does not mention v${current_version} — CHANGELOG.md likely updated but downstream propagation was skipped. See CONTRIBUTING.md § Testing Conventions."
   fi
 
-  # B. CHANGELOG.md must contain a version section header (^## v<version>)
-  # Added 2026-04-17: v2.9.0 (issue #124 F1) and v2.11.0 both shipped without this
-  # entry because nothing asserted it. Root CHANGELOG is authoritative per ADR-004.
+  # B. CHANGELOG.md must have version header ^## v<version> (added 2026-04-17 per #124 F1
+  # after v2.9.0 + v2.11.0 missed entries). Root CHANGELOG is authoritative per ADR-004.
   if grep -q "^## v${current_version}" CHANGELOG.md; then
     pass "CHANGELOG.md contains v${current_version} entry"
   else
     fail "CHANGELOG.md missing '## v${current_version}' section header — backfill before release. See issue #124 F1."
   fi
 
-  # C. docs/wiki/Changelog.md must contain a version section header — pointer-to-CHANGELOG.md
-  # is no longer sufficient (the pointer existed in both v2.9.0 and v2.11.0 misses,
-  # and the old assertion passed purely on the literal string "CHANGELOG.md").
+  # C. docs/wiki/Changelog.md must have ^## v<version>. Pointer-only assertion broke in v2.9.0/v2.11.0
+  # (passed on literal "CHANGELOG.md" string even when entry missing); requires actual entry now.
   if grep -q "^## v${current_version}" docs/wiki/Changelog.md; then
     pass "docs/wiki/Changelog.md contains v${current_version} entry"
   else
     fail "docs/wiki/Changelog.md missing '## v${current_version}' section — pointer-to-CHANGELOG.md no longer sufficient. See issue #124 F2."
   fi
 
-  # D. docs/wiki/Changelog.md badge must match the current version
-  # Added 2026-04-17: v2.11.0 shipped with a stale latest-v2.10.0 badge.
+  # D. docs/wiki/Changelog.md badge must match current version (added 2026-04-17 after v2.11.0 stale-badge ship).
   if grep -q "badge/latest-v${current_version}-blue" docs/wiki/Changelog.md; then
     pass "docs/wiki/Changelog.md badge matches v${current_version}"
   else
     fail "docs/wiki/Changelog.md badge stale — bump 'latest-v…' to v${current_version}."
   fi
 
-  # E + F. SELF-CHECK.md body freshness vs git tag history
-  # Added 2026-04-25 per issue #141: header was v2.13.0 but footer said Previous: 2.7.1
-  # and per-release score list ended at v2.8.0 — 6 releases shipped silently.
-  # Source of truth: git tag -l "v2.*" (v2.x release line; v2.0.0 onwards per #141 decision).
-  # Older v1.x tags predate the SELF-CHECK.md per-release list convention and are
-  # documented elsewhere (see CHANGELOG.md note "For v2.2.0 and earlier, see docs/wiki/Changelog.md").
-  # Dev-env resilience: if no tags available (shallow clone without fetch-tags),
-  # emit WARN and skip — CI has tags (.github/workflows/validate.yml sets fetch-tags: true)
-  # so drift is still caught at merge time.
+  # E + F. SELF-CHECK.md body freshness vs git tag history (added 2026-04-25 per #141
+  # — v2.13.0 footer said Previous: 2.7.1 + per-release list ended at v2.8.0 = 6 silent ships).
+  # Source of truth: git tag -l "v2.*" (v1.x predates per-release convention; see CHANGELOG.md note).
+  # Dev-env: no tags → WARN+skip (CI sets fetch-tags: true so drift still caught at merge).
   all_tags=$(git tag -l "v2.*" 2>/dev/null | sort -V)
   if [ -z "$all_tags" ]; then
     warn "git tag history unavailable — skipping SELF-CHECK.md body freshness (sub-checks E + F). CI sets fetch-tags: true."
   else
-    # E. Footer Previous: version must match the tag preceding current_version.
-    # Two shapes are valid:
-    #   1. Post-release (current_version is tagged): previous = tag before current in sorted list
-    #   2. Pre-release (plugin.json bumped but tag not yet pushed): previous = last tag in sorted list
+    # E. Footer Previous: must match tag before current_version. Two shapes:
+    #   post-release (current tagged) → prior tag in sorted list; pre-release (bumped, not pushed) → last tag.
     if echo "$all_tags" | grep -qx "v${current_version}"; then
       prev_version=$(echo "$all_tags" | awk -v cur="v${current_version}" '
         $0 == cur { print prev; exit }
@@ -624,8 +602,7 @@ else
       fail "SELF-CHECK.md footer stale — expected 'Previous: ${prev_version}' (derived from git tags); update the last line of the file."
     fi
 
-    # F. Per-release score list must have one row per tagged version — no gaps.
-    # Plus: row for current_version must exist even if tag not yet pushed (release-in-progress).
+    # F. Per-release score list: one row per tagged version (no gaps) + row for current_version (release-in-progress safe).
     missing=()
     while IFS= read -r tag; do
       ver="${tag#v}"
@@ -645,12 +622,9 @@ else
     fi
   fi
 
-  # G. README.md "What's New in v<current_version>" section header anchored.
-  # Added 2026-05-02 per issue #157: sub-check A (line 578) only checks bare
-  # version mention, which the badge URL "releases/tag/v<x.y.z>" satisfies even
-  # when the section header is missing. Same bug class as #124 pointer-fallback
-  # loophole — tighter assertion required so README "What's New" cannot drift
-  # like SELF-CHECK.md did before sub-checks E + F (#141/#144).
+  # G. README.md "## What's New in v<current_version>" section header (added 2026-05-02 per #157).
+  # Sub-check A passes on badge URL alone (releases/tag/v<x.y.z>) — same bug class as #124 pointer-fallback.
+  # Tighter assertion prevents README "What's New" drift like SELF-CHECK.md did before #141/#144.
   if grep -q "^## What's New in v${current_version}" README.md; then
     pass "README.md contains '## What's New in v${current_version}' section header"
   else
@@ -660,10 +634,7 @@ fi
 
 echo ""
 
-# ===================================================================
-# Architecture Fitness Functions
-# These track health metrics over time. A BREACH fails the build.
-# ===================================================================
+# --- Architecture Fitness Functions: track health metrics; BREACH fails the build ---
 echo "=== Architecture Fitness Functions ==="
 echo ""
 FITNESS_BREACH=0
@@ -705,8 +676,7 @@ echo ""
 echo "--- F2: Validation Coverage Ratio ---"
 # Count assertable items: skills × 8 checkable properties + agents × 4 + ADRs × 6 + cross-refs
 ASSERTABLE=0
-# Skills: frontmatter(3) + sections(2) + chain(2) + content-depth(2) + handoff(2) = 11 per workflow skill
-# Skills: frontmatter(3) + sections(2) + chain(2) + content-depth(2) = 9 per standalone skill
+# Per-skill checkable items: workflow skills = 11 (frontmatter 3 + sections 2 + chain 2 + content-depth 2 + handoff 2); standalone = 9 (no handoff).
 for skill_dir in skills/*/; do
   [ ! -d "$skill_dir" ] && continue
   sname=$(basename "$skill_dir")
@@ -727,10 +697,7 @@ ASSERTABLE=$((ASSERTABLE + ADR_COUNT * 6))
 # Cross-references: version(3) + readme-skills(1) + load-directives(1) + self-check(1) + size(1)
 ASSERTABLE=$((ASSERTABLE + 7))
 
-# Total assertions = structure script PASS + content script PASS
-# We only know our own PASS count here; structure script runs separately
-# Use combined count from both scripts
-# Read structure script pass count (written by validate-structure.sh)
+# Total assertions = structure PASS (read from /tmp/validate-structure-pass.txt) + this script's PASS.
 STRUCT_ASSERTIONS=157  # fallback if structure script hasn't run
 if [ -f /tmp/validate-structure-pass.txt ]; then
   STRUCT_ASSERTIONS=$(cat /tmp/validate-structure-pass.txt | tr -d ' ')
@@ -765,14 +732,9 @@ for skill_dir in skills/*/; do
   TOTAL_SKILLS=$((TOTAL_SKILLS + 1))
   skill_ok=1
 
-  # Check: frontmatter exists with 3 required fields
-  # Use awk (not sed|head) to avoid SIGPIPE under set -o pipefail when
-  # head closes stdout early — same fix pattern as validate-structure.sh:27.
-  # Triggered by skills/ai-dev-log/SKILL.md body `---` horizontal rule at
-  # line 65 which makes `sed -n '/^---$/,/^---$/p'` emit 187 lines (12
-  # frontmatter + 175 body-past-rule), overflowing head -20 and causing
-  # GNU sed exit 4 "couldn't flush stdout: Broken pipe" on Linux CI while
-  # BSD sed on macOS silently ignores SIGPIPE → intermittent CI failure.
+  # Check: frontmatter exists with 3 required fields. Uses awk (not sed|head) for SIGPIPE safety
+  # under set -o pipefail. Triggered by ai-dev-log/SKILL.md `---` rule at line 65 → sed emits 187 lines,
+  # overflows head -20, GNU sed exit 4 on Linux (BSD sed silent). See validate-structure.sh:27.
   fm=$(awk '/^---$/{c++; print; if(c==2) exit; next} c==1' "$skill_file")
   for field in "name:" "description:" "user-invocable:"; do
     echo "$fm" | grep -q "$field" || skill_ok=0
