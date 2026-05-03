@@ -6,7 +6,7 @@
 **Design**: [./design.md](./design.md) (9 decisions)
 **ADR**: [../../adr/ADR-013-spec-persistence-opt-in.md](../../adr/ADR-013-spec-persistence-opt-in.md)
 
-> **ID linkage convention** (D9 / ADR-013): Each task references the PRD EARS criteria it satisfies and the design Decision(s) it implements. Format: `(PRD-EARS-X, Design-DN)`. This is the dogfood that lets `/consistency-check` run deterministic Coverage + Inconsistency passes against this very PR.
+> **ID linkage convention** (Decision-9 / ADR-013): Each task references the PRD requirements it satisfies and the design Decision(s) it implements. Format: `Task #N implements: Decision-X (FR-Y)`. This is the dogfood that lets `/consistency-check` run deterministic Coverage + Inconsistency passes against this very PR.
 
 ---
 
@@ -14,7 +14,7 @@
 
 ### Phase 1: Skill modifications (parallel-safe — same pattern, 3 files)
 
-#### Task #1 implements: Design-D1, Design-D4 (PRD-EARS-1, 2, 3, 4, 5, 16, 19, 20)
+#### Task #1 implements: Decision-1, Decision-4 (FR-001, FR-002, FR-003, FR-004, FR-005, FR-016, FR-019, FR-020)
 
 **Modify `skills/requirements/SKILL.md`** — add `--persist <slug>` handling.
 
@@ -24,14 +24,14 @@
 - Files: `skills/requirements/SKILL.md` (1 file)
 - Type: parallel-safe with #2 and #3
 
-#### Task #2 implements: Design-D1, Design-D4 (PRD-EARS-1, 2, 3, 4, 5, 16, 19, 20)
+#### Task #2 implements: Decision-1, Decision-4 (FR-001, FR-002, FR-003, FR-004, FR-005, FR-016, FR-019, FR-020)
 
 **Modify `skills/design/SKILL.md`** — same pattern as Task #1, persists to `design.md`.
 
 - Files: `skills/design/SKILL.md` (1 file)
 - Type: parallel-safe with #1 and #3
 
-#### Task #3 implements: Design-D1, Design-D4 (PRD-EARS-1, 2, 3, 4, 5, 16, 19, 20)
+#### Task #3 implements: Decision-1, Decision-4 (FR-001, FR-002, FR-003, FR-004, FR-005, FR-016, FR-019, FR-020)
 
 **Modify `skills/breakdown/SKILL.md`** — same pattern as Task #1, persists to `tasks.md`.
 
@@ -40,7 +40,7 @@
 
 ### Phase 2: New skill (sequential after Phase 1 design pattern locked)
 
-#### Task #4 implements: Design-D2, Design-D5, Design-D6, Design-D8, Design-D9 (PRD-EARS-6, 7, 8, 9, 10, 11, 12, 17, 18)
+#### Task #4 implements: Decision-2, Decision-5, Decision-6, Decision-8, Decision-9 (FR-006, FR-007, FR-008, FR-009, FR-010, FR-011, FR-012, FR-017, FR-018)
 
 **Create `skills/consistency-check/SKILL.md`** — main skill file.
 
@@ -52,7 +52,7 @@
 - Type: parallel-safe with Phase 3
 - Depends on: Phase 1 patterns established (#1, #2, #3) for consistency
 
-#### Task #5 implements: Design-D8 (PRD-EARS-7, 17 supporting docs)
+#### Task #5 implements: Decision-8 (FR-007, FR-017 supporting docs)
 
 **Create `skills/consistency-check/reference.md`** — full output template + examples.
 
@@ -66,7 +66,7 @@
 
 ### Phase 3: Templates + docs (parallel-safe — independent files)
 
-#### Task #6 implements: Design-D9 (PRD-EARS-17 — supports ID-linkage convention)
+#### Task #6 implements: Decision-9 (FR-017 — supports ID-linkage convention)
 
 **Update `guides/templates/prd-template.md`, `adr-template.md`, `task-list-template.md`** — add OPTIONAL ID marker guidance.
 
@@ -97,7 +97,7 @@
 - Files: `CHANGELOG.md` (1 file)
 - Type: parallel-safe
 
-#### Task #10 implements: PRD-EARS-15, scope_in (CONTRIBUTING manual smoke)
+#### Task #10 implements: FR-015, scope_in (CONTRIBUTING manual smoke)
 
 **Update `CONTRIBUTING.md`** — add manual smoke procedure for `/consistency-check` self-test (run skill against `docs/specs/consistency-check/`, expected: low or zero findings).
 
@@ -120,7 +120,7 @@
 
 ### Phase 4: Validators (sequential after Phase 1+2)
 
-#### Task #13 implements: PRD-EARS-13 (existing tests still pass)
+#### Task #13 implements: FR-013 (existing tests still pass)
 
 **Update `tests/validate-structure.sh`** — new checks: `/consistency-check` SKILL.md exists, has correct frontmatter (name, allowed-tools = Read/Glob/Grep only, prev-skill, next-skill); reference.md exists; `docs/specs/consistency-check/{prd,design,tasks}.md` all exist with valid YAML frontmatter (dogfood enforcement per ADR-013 Verification).
 
@@ -128,7 +128,7 @@
 - Type: sequential after #4, #5
 - Depends on: #4, #5 (must exist for checks to pass)
 
-#### Task #14 implements: PRD-EARS-13, PRD-EARS-15 (validator dogfood)
+#### Task #14 implements: FR-013, FR-015 (validator dogfood)
 
 **Update `tests/validate-content.sh`** — new checks: all 3 modified skills (`/requirements`, `/design`, `/breakdown`) document `--persist` in body and frontmatter; `/consistency-check` SKILL.md mentions all 5 passes by name + hybrid eval + severity table; reference.md has output template; CONTRIBUTING.md has manual smoke section; CHANGELOG has the new release entry; CLAUDE.md has the new convention bullet.
 
@@ -138,9 +138,9 @@
 
 ### Phase 5: Self-application (last, dogfood)
 
-#### Task #15 implements: PRD-EARS-15, PRD-EARS-17 (dogfood ID-linkage)
+#### Task #15 implements: FR-015, FR-017 (dogfood ID-linkage)
 
-**Verify `docs/specs/consistency-check/tasks.md` contains `Task #N implements: Decision-X (PRD-EARS-Y)` markers** (already done in this file). After all other tasks complete, manually run `/consistency-check consistency-check` against this very feature's directory; expected: zero findings (or only acceptable advisory items). Document the manual smoke output in PR description as part of test plan.
+**Verify `docs/specs/consistency-check/tasks.md` contains `Task #N implements: Decision-X (FR-Y)` markers** (already done in this file). After all other tasks complete, manually run `/consistency-check consistency-check` against this very feature's directory; expected: zero findings (or only acceptable advisory items). Document the manual smoke output in PR description as part of test plan.
 
 - Files: none (verification + PR description update)
 - Type: sequential, last
@@ -194,10 +194,10 @@
 <!-- SKILL_OUTPUT:breakdown
 task_count: 15
 tasks:
-  - "Task #1: Modify /requirements SKILL.md — add --persist handling (Design-D1,D4; PRD-EARS-1,2,3,4,5,16,19,20)"
+  - "Task #1: Modify /requirements SKILL.md — add --persist handling (Decision-1, Decision-4; FR-001..005, FR-016, FR-019, FR-020)"
   - "Task #2: Modify /design SKILL.md — same pattern"
   - "Task #3: Modify /breakdown SKILL.md — same pattern"
-  - "Task #4: Create skills/consistency-check/SKILL.md — 5 passes, hybrid eval (Design-D2,D5,D6,D8,D9; PRD-EARS-6-12,17,18)"
+  - "Task #4: Create skills/consistency-check/SKILL.md — 5 passes, hybrid eval (Decision-2, Decision-5, Decision-6, Decision-8, Decision-9; FR-006..012, FR-017, FR-018)"
   - "Task #5: Create skills/consistency-check/reference.md — output template + examples"
   - "Task #6: Update 3 templates (prd, adr, task-list) — add OPTIONAL ID marker guidance"
   - "Task #7: Update CLAUDE.md — convention bullet + skills→habits row"
@@ -211,6 +211,6 @@ tasks:
   - "Task #15: Self-apply — run /consistency-check on docs/specs/consistency-check/, document output in PR description"
 dependencies:
   - "Phase 1 (#1-#3) parallel-safe; Phase 2 (#4) after pattern, #5 after #4; Phase 3 (#6-#12) parallel-safe; Phase 4 (#13-#14) sequential after needed inputs; Phase 5 (#15) last"
-  - "ID-linkage dogfood: each task lists Design-DX and PRD-EARS-Y refs for /consistency-check deterministic Coverage+Inconsistency passes"
+  - "ID-linkage dogfood: each task lists Decision-X and FR-NNN refs for /consistency-check deterministic Coverage+Inconsistency passes"
 estimated_complexity: "medium"
 END_SKILL_OUTPUT -->

@@ -45,7 +45,7 @@ Read-only data flow. No mutation of source artifacts. Backwards compatible — w
 
 > **STICKY** decisions are load-bearing. Changing them mid-implementation requires re-running `/design`, not patching mid-build. Decisions marked here cannot be reversed without ADR amendment.
 
-### Decision 1: Persistence trigger mechanism — STICKY
+### Decision-1: Persistence trigger mechanism — STICKY
 
 | Option                                                                | Description                                                   | Pro                                             | Con                                                                        |
 | --------------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------------------- |
@@ -54,11 +54,11 @@ Read-only data flow. No mutation of source artifacts. Backwards compatible — w
 | **C: Auto-detect from cwd**                                           | If invoked while cwd is `docs/specs/<slug>/`, persist there   | Zero-config; "magic" UX                         | Implicit; surprising; hard to debug; tied to shell state                   |
 | **D: Frontmatter directive** in conversation                          | User writes `persist: <slug>` line; skill detects             | No arg parsing; conversational                  | Confusing for users; brittle parsing; not discoverable                     |
 
-**Recommendation: B (`--persist <slug>` flag)** — preserves all 15 PRD EARS criteria including the back-compat invariant (PRD-EARS-2). Skills already document `argument-hint` patterns; flag fits naturally.
+**Recommendation: B (`--persist <slug>` flag)** — preserves all 15 PRD EARS criteria including the back-compat invariant (FR-002). Skills already document `argument-hint` patterns; flag fits naturally.
 
 **Rework cost if changed**: ~70% — every skill modification, every doc reference, every test would change. Definite sticky.
 
-### Decision 2: File naming convention — STICKY
+### Decision-2: File naming convention — STICKY
 
 | Option                                                                     | Description                                   | Pro                                                                   | Con                                                                                               |
 | -------------------------------------------------------------------------- | --------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
@@ -71,7 +71,7 @@ Read-only data flow. No mutation of source artifacts. Backwards compatible — w
 
 **Rework cost if changed**: ~50% — file references, validators, examples. Sticky.
 
-### Decision 5: `/consistency-check` input format — STICKY
+### Decision-5: `/consistency-check` input format — STICKY
 
 | Option                                              | Description                                                            | Pro                                    | Con                                     |
 | --------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------- | --------------------------------------- |
@@ -83,7 +83,7 @@ Read-only data flow. No mutation of source artifacts. Backwards compatible — w
 
 **Rework cost if changed**: ~30% — input parsing only. Borderline sticky → marked sticky for safety.
 
-### Decision 6: Severity assignment per pass — STICKY
+### Decision-6: Severity assignment per pass — STICKY
 
 | Option                                                                                                     | Description                                 | Pro                                               | Con                                                                 |
 | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------- |
@@ -103,7 +103,7 @@ Mapping:
 
 **Rework cost if changed**: ~20% — severity table + tests. Sticky for predictability, not for technical reasons.
 
-### Decision 7: Self-application as smoke test — STICKY
+### Decision-7: Self-application as smoke test — STICKY
 
 | Option                                            | Description                                                                                             | Pro                                | Con                                                                                   |
 | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------- |
@@ -119,15 +119,15 @@ Mapping:
 
 ## Semi-Sticky Decisions (decided here, no user re-confirmation needed)
 
-### Decision 3: SKILL_OUTPUT block placement when persisting
+### Decision-3: SKILL_OUTPUT block placement when persisting
 
 **Decision: Both file AND conversation** (Option B). Preserves `/cross-verify` auto-detect (which reads `SKILL_OUTPUT:requirements` from the PRD), and keeps the conversation-only path identical. Persisted file ends with the same block.
 
-### Decision 4: Conflict policy when target file exists
+### Decision-4: Conflict policy when target file exists
 
-**Decision: Prompt user via AskUserQuestion** (Option A). Three choices: overwrite, write to numbered variant (`prd.v2.md`), or abort. Matches PRD-EARS-3.
+**Decision: Prompt user via AskUserQuestion** (Option A). Three choices: overwrite, write to numbered variant (`prd.v2.md`), or abort. Matches FR-003.
 
-### Decision 8: Reference template format
+### Decision-8: Reference template format
 
 **Decision: Inline in `skills/consistency-check/reference.md`** (Option A) — follows the v2.13+ skill split convention (ADR-009). SKILL.md has summary; reference.md has full output template + examples.
 
@@ -141,25 +141,25 @@ Mapping:
 
 ## Constraints (from PRD-derived)
 
-- **Backward compatibility invariant** (PRD-EARS-2): All existing skills must behave identically to v2.14.3 when `--persist` is not used. Tests for current behavior must pass unchanged.
-- **Read-only analyzer invariant** (PRD-EARS-9): `/consistency-check` `allowed-tools` is `Read, Glob, Grep` only. No Write, no Bash, no Edit. Validator-enforced.
+- **Backward compatibility invariant** (FR-002): All existing skills must behave identically to v2.14.3 when `--persist` is not used. Tests for current behavior must pass unchanged.
+- **Read-only analyzer invariant** (FR-009): `/consistency-check` `allowed-tools` is `Read, Glob, Grep` only. No Write, no Bash, no Edit. Validator-enforced.
 - **Skill ≤800 lines** (existing fitness function): SKILL.md and reference.md each must stay under 800 lines.
 - **Hybrid pass evaluation** (Decision 9 — see below): Each pass uses deterministic structural matching when artifacts contain explicit cross-reference IDs (`FR-NNN`, `Decision-N`, `Task #N`). When IDs are absent, passes that require cross-artifact matching (Coverage, Inconsistency) fall back to LLM semantic comparison and emit an explicit "ID linkage absent — using fuzzy match, results approximate" warning at the top of the report. Drift is always semantic. Ambiguity and Underspec are always deterministic.
 - **Plugin boundary** (per CLAUDE.md): no enforcement, no gating. Findings are advisory only.
 
 ---
 
-## Decision 9 (added post-advisor review): Pass evaluation strategy — STICKY
+## Decision-9 (added post-advisor review): Pass evaluation strategy — STICKY
 
 Resolved an internal contradiction caught by advisor — the original "deterministic only except Drift" claim was inconsistent with how Coverage and Inconsistency actually work without explicit IDs in artifacts.
 
-| Option                 | Approach                                                                                                                        | Pro                                                                                                       | Con                                                                   |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| A: **Hybrid (CHOSEN)** | IDs recommended in templates. If present → deterministic Coverage+Inconsistency. If absent → LLM semantic with explicit warning | Best of both; preserves PRD-EARS-2 back-compat for existing PRDs without IDs; gives users an upgrade path | More complex skill; two code paths per pass                           |
-| B: ID required         | Bake `FR-NNN` / `Decision-N` / `Task #N` into PRD/design/tasks templates as mandatory                                           | Fully deterministic all 5 passes                                                                          | Workflow change to upstream skills; rejects existing PRDs without IDs |
-| C: LLM semantic only   | Relax "deterministic only" claim; accept that 3 of 5 passes are fuzzy                                                           | No template change; ships fastest                                                                         | Non-deterministic; harder to test recall; fuzzy by design             |
+| Option                 | Approach                                                                                                                        | Pro                                                                                                   | Con                                                                   |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| A: **Hybrid (CHOSEN)** | IDs recommended in templates. If present → deterministic Coverage+Inconsistency. If absent → LLM semantic with explicit warning | Best of both; preserves FR-002 back-compat for existing PRDs without IDs; gives users an upgrade path | More complex skill; two code paths per pass                           |
+| B: ID required         | Bake `FR-NNN` / `Decision-N` / `Task #N` into PRD/design/tasks templates as mandatory                                           | Fully deterministic all 5 passes                                                                      | Workflow change to upstream skills; rejects existing PRDs without IDs |
+| C: LLM semantic only   | Relax "deterministic only" claim; accept that 3 of 5 passes are fuzzy                                                           | No template change; ships fastest                                                                     | Non-deterministic; harder to test recall; fuzzy by design             |
 
-**Decision: A (Hybrid)** — confirmed by user 2026-05-03 after advisor surfaced the contradiction. Rationale: preserves PRD-EARS-2 back-compat invariant, doesn't force template rigidity, and gives users an upgrade path. Templates ship with optional ID guidance; users who add IDs get rigor; users who don't get approximate findings with explicit warning.
+**Decision: A (Hybrid)** — confirmed by user 2026-05-03 after advisor surfaced the contradiction. Rationale: preserves FR-002 back-compat invariant, doesn't force template rigidity, and gives users an upgrade path. Templates ship with optional ID guidance; users who add IDs get rigor; users who don't get approximate findings with explicit warning.
 
 **Rework cost if changed**: ~40% — pass implementations + template guidance + tests. Sticky.
 
@@ -196,25 +196,25 @@ Resolved an internal contradiction caught by advisor — the original "determini
 <!-- SKILL_OUTPUT:design
 decision_count: 9
 decisions:
-  - "D1: Persistence trigger = --persist <slug> flag (Option B) — flag precedent verified in /ai-dev-log + /calibrate"
-  - "D2: File naming = prd.md / design.md / tasks.md (spec-kit aligned, Option A)"
-  - "D3: SKILL_OUTPUT placement = both file AND conversation (Option B)"
-  - "D4: Conflict policy = AskUserQuestion prompt (Option A); v1 limitation: requires interactive context, falls back to numbered variant otherwise (PRD-EARS-20)"
-  - "D5: /consistency-check input = slug OR path auto-detect (Option C)"
-  - "D6: Severity = fixed per pass with single-step upgrade (Option A+)"
-  - "D7: Self-application = validator only in v1 (Option B); manual smoke documented in CONTRIBUTING.md"
-  - "D8: Reference template = reference.md per skill split (Option A, ADR-009)"
-  - "D9: Pass evaluation = HYBRID (Option A) — deterministic when ID markers present, LLM semantic + warning when absent"
+  - "Decision-1: Persistence trigger = --persist <slug> flag (Option B) — flag precedent verified in /ai-dev-log + /calibrate"
+  - "Decision-2: File naming = prd.md / design.md / tasks.md (spec-kit aligned, Option A)"
+  - "Decision-3: SKILL_OUTPUT placement = both file AND conversation (Option B)"
+  - "Decision-4: Conflict policy = AskUserQuestion prompt (Option A); v1 limitation: requires interactive context, falls back to numbered variant otherwise (FR-020)"
+  - "Decision-5: /consistency-check input = slug OR path auto-detect (Option C)"
+  - "Decision-6: Severity = fixed per pass with single-step upgrade (Option A+)"
+  - "Decision-7: Self-application = validator only in v1 (Option B); manual smoke documented in CONTRIBUTING.md"
+  - "Decision-8: Reference template = reference.md per skill split (Option A, ADR-009)"
+  - "Decision-9: Pass evaluation = HYBRID (Option A) — deterministic when ID markers present, LLM semantic + warning when absent"
 sticky_decisions:
-  - "D1 (trigger mechanism) — ~70% rework cost"
-  - "D2 (file naming) — ~50% rework cost"
-  - "D5 (input format) — ~30% rework cost"
-  - "D6 (severity per pass) — predictability sticky"
-  - "D7 (self-application test strategy) — borderline sticky"
-  - "D9 (pass evaluation hybrid) — ~40% rework cost"
+  - "Decision-1 (trigger mechanism) — ~70% rework cost"
+  - "Decision-2 (file naming) — ~50% rework cost"
+  - "Decision-5 (input format) — ~30% rework cost"
+  - "Decision-6 (severity per pass) — predictability sticky"
+  - "Decision-7 (self-application test strategy) — borderline sticky"
+  - "Decision-9 (pass evaluation hybrid) — ~40% rework cost"
 constraints:
-  - "Back-compat invariant (PRD-EARS-2): unchanged behavior without --persist"
-  - "Read-only analyzer (PRD-EARS-9): allowed-tools = Read, Glob, Grep only"
+  - "Back-compat invariant (FR-002): unchanged behavior without --persist"
+  - "Read-only analyzer (FR-009): allowed-tools = Read, Glob, Grep only"
   - "Skill ≤800 lines (existing fitness function)"
   - "Hybrid pass evaluation (D9): deterministic when ID markers present, LLM semantic + explicit warning when absent"
   - "Plugin boundary: advisory only, no gating"
