@@ -93,6 +93,26 @@ Create `guides/templates/<name>-template.md`:
 - Placeholder sections (not just headings)
 - Referenced from skills via `Load` directive
 
+## Spec Persistence + Consistency Check (v2.15.0+)
+
+The `--persist <slug>` flag on `/requirements`, `/design`, `/breakdown` writes artifacts to `docs/specs/<slug>/{prd,design,tasks}.md`. The `/consistency-check` skill reads those files to detect cross-artifact drift. Canonical convention: [`guides/persistence-convention.md`](guides/persistence-convention.md). Design rationale: [ADR-013](docs/adr/ADR-013-spec-persistence-opt-in.md).
+
+### Manual smoke test (since skills are not bash-invokable)
+
+After modifying any of `/requirements`, `/design`, `/breakdown`, or `/consistency-check` (or after touching `guides/persistence-convention.md` or its load directives), run this manual smoke test to verify the round trip works:
+
+1. From a Claude Code session in this repo, invoke:
+   ```
+   /8-habit-ai-dev:consistency-check consistency-check
+   ```
+   (Auto-detects: matches `docs/specs/consistency-check/` slug, reads our own dogfood artifacts.)
+2. **Expected output**: 0 CRITICAL/HIGH findings; 0 or few MEDIUM/LOW; `linkage: present` (this PR ships with `FR-NNN`/`Decision-N`/`Task #N` markers).
+3. **If unexpected findings appear**: either the skill's detection logic regressed, OR the dogfood artifacts genuinely drifted (one of `prd.md`/`design.md`/`tasks.md` is out of sync with the others). Check the finding's `suggested action` column.
+
+### Adding ID markers to your own specs
+
+Optional but recommended for deterministic analyzer results. See the OPTIONAL ID linkage callouts at the top of `prd-template.md`, `adr-template.md`, and `task-list-template.md` in `guides/templates/`.
+
 ## Testing Conventions
 
 Test scripts under `tests/` run in GitHub Actions on Linux with `set -o pipefail`. When shelling out, prefer patterns that cannot SIGPIPE.

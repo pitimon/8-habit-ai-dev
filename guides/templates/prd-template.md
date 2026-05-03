@@ -2,6 +2,8 @@
 
 Output template for `/requirements` (Step 1).
 
+> **OPTIONAL ID linkage** (recommended when persisting via `--persist <slug>`): Prefix each EARS criterion with `FR-NNN:` (e.g., `1. [Event-driven] FR-001: When user submits...`). When all artifacts in a `docs/specs/<slug>/` directory use ID markers, `/consistency-check` runs deterministic Coverage and Inconsistency passes. See [ADR-013](../../docs/adr/ADR-013-spec-persistence-opt-in.md).
+
 ## Feature: [Name]
 
 **What**: [1-2 sentences — what are we building?]

@@ -1,10 +1,20 @@
-![Version](https://img.shields.io/badge/latest-v2.14.3-blue)
+![Version](https://img.shields.io/badge/latest-v2.15.0-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.15.0 — Cross-Artifact Consistency Analyzer + Opt-In Spec Persistence (May 2026)
+
+Minor release adding `/consistency-check` (the 18th skill) and an opt-in `--persist <slug>` argument to `/requirements`, `/design`, `/breakdown`. Inspired by github/spec-kit `/analyze`, adapted to our discipline-not-enforcement philosophy ([#165](https://github.com/pitimon/8-habit-ai-dev/issues/165)).
+
+The new `/consistency-check` skill reads persisted `docs/specs/<slug>/{prd,design,tasks}.md` files and runs 5 detection passes — Coverage, Drift, Ambiguity, Underspec, Inconsistency — emitting severity-graded findings (CRITICAL/HIGH/MEDIUM/LOW) with file:line citations. Hybrid evaluation: deterministic when artifacts include `FR-NNN`/`Decision-N`/`Task #N` ID markers (recommended), LLM semantic with explicit warning when absent. Read-only by design — emits findings, never blocks. Boundary preserved: enforcement on persisted artifacts still belongs in `pitimon/claude-governance`.
+
+The persistence half is fully backward compatible: without `--persist`, all three modified skills behave byte-identically to v2.14.3. With `--persist <slug>`, they additionally write outputs to `docs/specs/<slug>/{prd,design,tasks}.md` with YAML frontmatter, while preserving conversation `SKILL_OUTPUT` blocks (`/cross-verify` auto-detect unaffected). Conflict policy: AskUserQuestion prompt → fallback to numbered variant in non-interactive contexts. Slug validation regex `^[a-z0-9][a-z0-9-]{1,63}$` prevents path traversal.
+
+Self-applied dogfood: this release's own `prd.md`, `design.md`, `tasks.md`, and ADR-013 live in `docs/specs/consistency-check/`. Run `/consistency-check consistency-check` against the dogfood as smoke test (manual procedure documented in CONTRIBUTING.md). Skills count: 17 → 18. See [ADR-013](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-013-spec-persistence-opt-in.md) for design rationale, 5 alternatives considered, flag-style argument convention attestation, and hybrid pass evaluation strategy.
 
 ## v2.14.3 — Post-Migration Cleanup + Validator Self-Discipline (May 2026)
 

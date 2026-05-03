@@ -2,6 +2,8 @@
 
 Output template for `/breakdown` (Step 3).
 
+> **OPTIONAL ID linkage** (recommended when persisting via `--persist <slug>`): Format each task as `Task #N implements: Decision-X (FR-Y)` to cite the design decision and PRD requirement it satisfies (e.g., `Task #12 implements: Decision-4 (FR-001, FR-003)`). When all artifacts in a `docs/specs/<slug>/` directory use ID markers, `/consistency-check` runs deterministic Coverage and Inconsistency passes. See [ADR-013](../../docs/adr/ADR-013-spec-persistence-opt-in.md).
+
 ## Feature: [Name]
 
 **Source**: [Link to PRD or design decision]

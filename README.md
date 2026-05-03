@@ -2,10 +2,10 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
-[![Skills](https://img.shields.io/badge/Skills-17-blue)]()
+[![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.14.3-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.14.3)
+[![Version](https://img.shields.io/badge/Version-2.15.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.0)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -141,6 +141,7 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 | Skill                 | Habit               | Purpose                                                                                                                                                                                                |
 | --------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `/cross-verify`       | H1-H8               | 17-question checklist + dimension summary (Body/Mind/Heart/Spirit)                                                                                                                                     |
+| `/consistency-check`  | H5 + H1             | Cross-artifact analyzer — 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency) over persisted PRD↔design↔tasks (v2.15.0, ADR-013)                                                 |
 | `/whole-person-check` | H8: Find Your Voice | 4-dimension assessment (1-5 scale) with AI Blind Spot detection                                                                                                                                        |
 | `/security-check`     | H1: Be Proactive    | Focused OWASP security lens — secrets, injection, auth, deps                                                                                                                                           |
 | `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking                                                                                                                                        |
@@ -317,9 +318,9 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.14.3)
+│   ├── plugin.json                 # Plugin metadata (v2.15.0)
 │   └── marketplace.json            # Marketplace listing
-├── skills/                         # 17 skills (8 workflow + 9 standalone)
+├── skills/                         # 18 skills (8 workflow + 10 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
 │   ├── requirements/SKILL.md       #   Step 1 → H2
 │   ├── design/SKILL.md             #   Step 2 → H8
@@ -329,6 +330,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 │   ├── deploy-guide/SKILL.md       #   Step 6 → H1
 │   ├── monitor-setup/SKILL.md      #   Step 7 → H7
 │   ├── cross-verify/SKILL.md       #   All habits (17Q + dimension summary)
+│   ├── consistency-check/SKILL.md  #   H5+H1: cross-artifact analyzer (v2.15.0, ADR-013)
 │   ├── whole-person-check/SKILL.md #   H8: Body/Mind/Heart/Spirit
 │   ├── security-check/SKILL.md     #   H1: OWASP security lens
 │   ├── reflect/SKILL.md            #   H7: micro-retrospective + lesson persistence
@@ -394,6 +396,19 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
 
 ---
+
+## What's New in v2.15.0
+
+**Theme: spec-kit `/analyze` Inspiration — Cross-Artifact Consistency + Opt-In Spec Persistence** ([#165](https://github.com/pitimon/8-habit-ai-dev/issues/165))
+
+Inspired by github/spec-kit's `/analyze` pattern, adapted to our discipline-not-enforcement philosophy. Three workflow skills (`/requirements`, `/design`, `/breakdown`) gain an opt-in `--persist <slug>` flag that writes their output to `docs/specs/<slug>/{prd,design,tasks}.md` while preserving conversation `SKILL_OUTPUT` blocks (back-compat invariant). The new `/consistency-check` skill reads those files and runs 5 detection passes — Coverage, Drift, Ambiguity, Underspec, Inconsistency — emitting severity-graded findings with file:line citations.
+
+- **Hybrid evaluation** — deterministic when artifacts include `FR-NNN`/`Decision-N`/`Task #N` ID markers (recommended), LLM semantic with explicit warning when absent. PRD-EARS-2 back-compat preserved.
+- **Read-only analyzer** — `allowed-tools: ["Read", "Glob", "Grep"]`. No gating, no enforcement (per plugin boundary doctrine — enforcement still belongs in `claude-governance`).
+- **Self-applied dogfood** — this release's own PRD/design/tasks/ADR live in `docs/specs/consistency-check/`. Run `/consistency-check consistency-check` to verify.
+- **5 alternatives considered** — see [ADR-013](docs/adr/ADR-013-spec-persistence-opt-in.md) for design rationale, flag-style argument convention attestation (`/ai-dev-log`, `/calibrate` precedents), and slug validation regex.
+
+Skills count: 17 → 18. Closes #165.
 
 ## What's New in v2.14.3
 
@@ -671,4 +686,4 @@ MIT
 
 ---
 
-_Version: 2.14.3 | Last updated: 2026-05-03_
+_Version: 2.15.0 | Last updated: 2026-05-03_

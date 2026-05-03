@@ -228,7 +228,7 @@ echo ""
 
 # --- Check 11: allowed-tools field validation ---
 echo "--- Check 11: allowed-tools values are valid tool names ---"
-VALID_TOOLS="Read Glob Grep Bash WebSearch WebFetch Agent Edit Write"
+VALID_TOOLS="Read Glob Grep Bash WebSearch WebFetch Agent Edit Write AskUserQuestion"
 TOOLS_FAIL=0
 for skill_dir in skills/*/; do
   skill_file="${skill_dir}SKILL.md"

@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 2.14.3 | **Date**: 2026-05-03 | **Previous**: 2.14.2 (post-EU AI Act migration)
+**Version**: 2.15.0 | **Date**: 2026-05-03 | **Previous**: 2.14.3 (post-EU AI Act cleanups + validator self-discipline)
 
 Running our own 17-question checklist against the plugin itself. H8 Modeling: "Follow the process always, no shortcuts when unwatched."
 
@@ -172,7 +172,8 @@ The cross-verify score (16/16) measures **plan discipline**. The Whole Person sc
 - v2.14.1: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#157 README "What's New" Drift Guard — external QA found Check 19A passes on badge URL not section header, README "What's New" missing v2.14.0 entry, TOC anchor broken since v2.3.0, architecture tree under-enumerated 4 skills; same bug class as #124/#141 recurring on sibling surface; fix is doc backfill + Check 19 sub-check G anchored grep + Check 20 hardening pinning Find→Fix→Re-Verify loop name and step count — capability-level pattern closed with fitness function not checklist)
 - v2.14.2: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (EU AI Act Migration Completion — second half of cross-plugin migration coordinated with `pitimon/claude-governance` v3.1.0; deleted reference.md + research + mapping guide; rewrote SKILL.md as redirect stub preserving NOT LEGAL ADVICE disclaimer + ADR-012 reference; ADR-005 marked Superseded; Check 15 in validate-content.sh rewritten as stub-mode + negative-restore assertions; cross-refs reframed in RESOLVER, using-8-habits, design Step 5, ai-dev-log, session-start, README skill table; wiki + README badge deferred to follow-up doc-only PR per `pitimon/claude-governance` PR #25 + #26 formatter precedent — boundary correction completes the contract from memory observation #233270, plugin boundary integrity restored)
 - v2.14.3: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#163 Post-Migration Cleanup + Validator Self-Discipline — ADR-012 metadata closure (SELF-CHECK lines 103-104 reframed + `**Implementation**:` field added to ADR-012 header naming commit ed65b97), `.gitignore` created with `/deep-project/` + `/.claude/` entries, `tests/validate-content.sh` trimmed 831 → 793 lines via comment consolidation across Check 15 + Check 19 sub-checks B/C/D/E/F/G + F2 + F3 — logic untouched, 10 checks preserved, PASS count 205 stable; closes credibility gap where validator violated 800-line rule it enforces on skills via Check 5 in validate-structure.sh)
+- v2.15.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#165 Cross-Artifact Consistency Analyzer + Opt-In Spec Persistence — spec-kit `/analyze` inspiration, 18th skill `/consistency-check` (180 lines + reference 149 lines, 5 detection passes, hybrid eval), `--persist <slug>` flag added to `/requirements`+`/design`+`/breakdown` (back-compat invariant preserved), `guides/persistence-convention.md` single-source-of-truth, ADR-013 with 5 alternatives + flag precedent attestation (`/ai-dev-log`, `/calibrate`) + slug validation regex + hybrid pass strategy, dogfood at `docs/specs/consistency-check/{prd,design,tasks}.md`, validator `AskUserQuestion` whitelist + consistency-check TODO-pattern exemption with comment, plugin boundary preserved — read-only advisory analyzer, enforcement still belongs in claude-governance)
 
 ---
 
-_Updated with each release. Previous: 2.14.2 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_
+_Updated with each release. Previous: 2.14.3 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_

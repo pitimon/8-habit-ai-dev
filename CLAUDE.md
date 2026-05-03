@@ -16,7 +16,7 @@ The plugin has three loading mechanisms with distinct timing:
 
 1. **`rules/effective-development.md`** — Auto-loaded into every Claude Code session (via Claude's rules system). Contains the full 8-Habit playbook with Rules, Anti-patterns, and Checkpoints per habit.
 2. **`hooks/session-start.sh`** — Runs at SessionStart (registered in `hooks/hooks.json`). Prints a ≤300-token reminder of the 7-step workflow. Must stay concise — this is injected into every conversation.
-3. **`skills/*/SKILL.md`** — Loaded on-demand when user invokes `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/review-ai`, `/deploy-guide`, `/monitor-setup`, `/cross-verify`, or `/calibrate`.
+3. **`skills/*/SKILL.md`** — Loaded on-demand when user invokes `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/review-ai`, `/deploy-guide`, `/monitor-setup`, `/cross-verify`, `/consistency-check`, or `/calibrate`.
 
 **On-demand loading**: Skills reference habit content via `Load ${CLAUDE_PLUGIN_ROOT}/habits/h*.md` — the habit files are NOT loaded at session start. This keeps the token budget lean.
 
@@ -90,6 +90,7 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 | `/deploy-guide`       | 6    | H1 Be Proactive       | Staging first, rollback ready                                                                                                                           |
 | `/monitor-setup`      | 7    | H7 Sharpen the Saw    | Invest in observability                                                                                                                                 |
 | `/cross-verify`       | All  | H1-H8                 | 17-question checklist + dimension summary                                                                                                               |
+| `/consistency-check`  | —    | H5 + H1               | Cross-artifact analyzer — 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency) over persisted PRD↔design↔tasks (v2.15.0, ADR-013)  |
 | `/whole-person-check` | —    | H8 Find Your Voice    | Body/Mind/Heart/Spirit 4-dimension assessment                                                                                                           |
 | `/security-check`     | —    | H1 Be Proactive       | Focused security review — OWASP Top 10                                                                                                                  |
 | `/using-8-habits`     | —    | H5 + H8               | Onboarding meta-skill + decision tree (v2.4.0)                                                                                                          |
