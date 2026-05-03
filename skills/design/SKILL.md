@@ -4,8 +4,8 @@ description: >
   Produce architecture decisions — DB, auth, API, constraints.
   Use AFTER /requirements and BEFORE /breakdown. Step 2 of 7-step workflow. Maps to H8 (Find Your Voice).
 user-invocable: true
-argument-hint: "[component or system to design]"
-allowed-tools: ["Read", "Glob", "Grep"]
+argument-hint: "[--persist <slug>] [component or system to design]"
+allowed-tools: ["Read", "Glob", "Grep", "Write", "AskUserQuestion"]
 prev-skill: requirements
 next-skill: breakdown
 ---
@@ -99,6 +99,14 @@ next-skill: breakdown
 - **Expects from predecessor** (`/requirements`): PRD summary with scope and success criteria
 - **Produces for successor** (`/breakdown`): Architecture decisions (ADRs), technology choices, constraints
 
+## Optional Persistence (`--persist <slug>`)
+
+When invoked with `--persist <slug>`, this skill writes its design output to `docs/specs/<slug>/design.md` in addition to emitting the conversation `SKILL_OUTPUT:design` block. Without the flag, behavior is byte-identical to v2.14.3 (no file writes).
+
+For the canonical convention (slug regex `^[a-z0-9][a-z0-9-]{1,63}$`, conflict policy, YAML frontmatter format, error message rules, ID-linkage `Decision-N` guidance), load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
+
+ID-linkage tip: when persisting, label each decision as `### Decision-N: <topic>` and cite covered requirements as `Decision-N covers: FR-001, FR-003` to enable deterministic Coverage and Inconsistency passes in `/consistency-check`. IDs are recommended, not required.
+
 ## When to Skip
 
 - Solo bug fix that follows an existing, established pattern
@@ -142,3 +150,4 @@ See [Step 2 wiki page](../../docs/wiki/Step-2-Design.md) for deeper walkthrough,
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/adr-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h8-find-voice.md` for the full H8 principle and examples.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md` when `--persist <slug>` is used (canonical spec for opt-in persistence to `docs/specs/<slug>/design.md`).

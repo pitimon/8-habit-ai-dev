@@ -4,8 +4,8 @@ description: >
   Generate PRD from user intent — define what, why, who, scope, and success criteria.
   Use BEFORE starting any feature. Step 1 of 7-step workflow. Maps to H2 (Begin with End in Mind).
 user-invocable: true
-argument-hint: "[feature description]"
-allowed-tools: ["Read", "Glob", "Grep"]
+argument-hint: "[--persist <slug>] [feature description]"
+allowed-tools: ["Read", "Glob", "Grep", "Write", "AskUserQuestion"]
 prev-skill: research
 next-skill: design
 ---
@@ -77,6 +77,14 @@ next-skill: design
 
 5. **H2 Checkpoint**: "Can I describe what success looks like before writing code?"
 
+## Optional Persistence (`--persist <slug>`)
+
+When invoked with `--persist <slug>`, this skill writes its PRD output to `docs/specs/<slug>/prd.md` in addition to emitting the conversation `SKILL_OUTPUT:requirements` block. Without the flag, behavior is byte-identical to v2.14.3 (no file writes).
+
+For the canonical convention (slug regex `^[a-z0-9][a-z0-9-]{1,63}$`, conflict policy, YAML frontmatter format, error message rules, ID-linkage `FR-NNN` guidance), load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
+
+ID-linkage tip: when persisting, prefix each EARS criterion with `FR-NNN:` (e.g., `1. [Event-driven] FR-001: When user submits...`) to enable deterministic Coverage and Inconsistency passes in `/consistency-check`. IDs are recommended, not required.
+
 ## When to Skip
 
 - Single-line bug fixes with obvious root cause
@@ -125,3 +133,4 @@ Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/prd-template.md` for the output tem
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/interview-protocol.md` for the structured discovery protocol.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h2-begin-with-end.md` for the full H2 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md` when `--persist <slug>` is used (canonical spec for opt-in persistence to `docs/specs/<slug>/prd.md`).

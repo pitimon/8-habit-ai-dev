@@ -4,8 +4,8 @@ description: >
   Decompose feature into atomic tasks — 1 task per agent.
   Use AFTER /design and BEFORE /build-brief. Step 3 of 7-step workflow. Maps to H3 (First Things First).
 user-invocable: true
-argument-hint: "[feature or PRD to decompose]"
-allowed-tools: ["Read", "Glob", "Grep"]
+argument-hint: "[--persist <slug>] [feature or PRD to decompose]"
+allowed-tools: ["Read", "Glob", "Grep", "Write", "AskUserQuestion"]
 prev-skill: design
 next-skill: build-brief
 ---
@@ -88,6 +88,14 @@ next-skill: build-brief
 - **Expects from predecessor** (`/design`): Architecture decisions and constraints
 - **Produces for successor** (`/build-brief`): Prioritized task list with dependencies and file paths
 
+## Optional Persistence (`--persist <slug>`)
+
+When invoked with `--persist <slug>`, this skill writes its task breakdown to `docs/specs/<slug>/tasks.md` in addition to emitting the conversation `SKILL_OUTPUT:breakdown` block. Without the flag, behavior is byte-identical to v2.14.3 (no file writes).
+
+For the canonical convention (slug regex `^[a-z0-9][a-z0-9-]{1,63}$`, conflict policy, YAML frontmatter format, error message rules, ID-linkage `Task #N` guidance), load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
+
+ID-linkage tip: when persisting, format each task as `Task #N implements: Decision-X (FR-Y)` to cite the design decision and PRD requirement it satisfies. This enables deterministic Coverage and Inconsistency passes in `/consistency-check`. IDs are recommended, not required.
+
 ## When to Skip
 
 - Single-file change with no dependencies — nothing to decompose
@@ -130,3 +138,4 @@ Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/task-list-template.md` for the outp
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h3-first-things-first.md` for the full H3 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/orchestration-patterns.md` for worktree isolation and context boundary patterns.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md` when `--persist <slug>` is used (canonical spec for opt-in persistence to `docs/specs/<slug>/tasks.md`).

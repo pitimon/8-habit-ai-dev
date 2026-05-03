@@ -15,9 +15,10 @@ Full 17-skill inventory and cross-plugin composition tables. Loaded from `SKILL.
 - **`/deploy-guide`** (Step 6) — Staging-first deployment with rollback plan. Output: deployment checklist.
 - **`/monitor-setup`** (Step 7) — Health checks, alerting, observability. Output: monitoring configuration.
 
-### Assessment skills (6)
+### Assessment skills (7)
 
 - **`/cross-verify`** — 17-question 8-habit checklist covering all 4 Whole Person dimensions (Body/Mind/Heart/Spirit). Band-based verdict. Run after plans, before PRs.
+- **`/consistency-check`** — Cross-artifact analyzer (v2.15.0, ADR-013). Reads persisted `docs/specs/<slug>/{prd,design,tasks}.md` and runs 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency). Hybrid eval — deterministic when artifacts include `FR-NNN`/`Decision-N`/`Task #N` markers, LLM semantic with explicit warning otherwise. Read-only; advisory only. Use after `/breakdown` (with `--persist <slug>`) and before `/build-brief`.
 - **`/whole-person-check`** — 4-dimension assessment (1-5 scale) with AI Blind Spot detection. Covers Body (discipline), Mind (vision), Heart (passion), Spirit (conscience).
 - **`/security-check`** — Focused OWASP security lens (secrets, injection, auth, deps). Review mode, not a runtime hook.
 - **`/reflect`** — 5-question micro-retrospective (5 min max) with action-item tracking. Run after completing significant work.

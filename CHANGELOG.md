@@ -10,6 +10,37 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.15.0 — Cross-Artifact Consistency Analyzer + Opt-In Spec Persistence (2026-05-03)
+
+Minor release adding `/consistency-check` (the 18th skill) and an opt-in `--persist <slug>` argument to `/requirements`, `/design`, `/breakdown`. Inspired by github/spec-kit `/analyze` ([#165](https://github.com/pitimon/8-habit-ai-dev/issues/165)). Read-only by design; no gating, no enforcement (boundary preserved with `claude-governance`). Hybrid evaluation: deterministic when artifacts use `FR-NNN`/`Decision-N`/`Task #N` ID markers, LLM semantic with explicit warning when absent. Backward compatible — without `--persist`, all three modified skills behave byte-identically to v2.14.3.
+
+### Added
+
+- **`/consistency-check` skill** — `skills/consistency-check/SKILL.md` (180 lines) + `reference.md` (149 lines). 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency). Severity table (CRITICAL/HIGH/MEDIUM/LOW), max 30 findings, file:line citations, `✓ Pass` rows for zero-finding passes (silence forbidden). `allowed-tools: ["Read", "Glob", "Grep"]` only.
+- **`--persist <slug>` opt-in flag** added to `/requirements`, `/design`, `/breakdown`. Writes to `docs/specs/<slug>/{prd,design,tasks}.md` with YAML frontmatter (`feature, step, created, updated, source-issue, source-skill-version`). Conflict policy: AskUserQuestion prompt → fallback to numbered variant in non-interactive contexts. Slug validation regex `^[a-z0-9][a-z0-9-]{1,63}$` prevents path traversal.
+- **`guides/persistence-convention.md`** — single source of truth for the `--persist` convention; loaded on-demand by the 3 modified skills via `${CLAUDE_PLUGIN_ROOT}` directive.
+- **`docs/specs/consistency-check/`** — dogfood directory containing this release's own `prd.md`, `design.md`, `tasks.md` (the analyzer can run against itself for smoke testing).
+- **[ADR-013](docs/adr/ADR-013-spec-persistence-opt-in.md)** — persistence opt-in design decision with 5 alternatives considered, flag-style argument convention precedent attestation (`/ai-dev-log`, `/calibrate`), slug validation regex, and hybrid pass evaluation strategy.
+
+### Changed
+
+- **`/requirements`, `/design`, `/breakdown` SKILL.md** — frontmatter `argument-hint` extended with `[--persist <slug>]`; `allowed-tools` adds `Write` and `AskUserQuestion`. New "Optional Persistence" section in body with ID-linkage tip per skill (`FR-NNN`/`Decision-N`/`Task #N`). Behavior unchanged when flag absent.
+- **`CLAUDE.md`** — Skills list updated to include `/consistency-check`; new row in Skills→Habits Mapping table; on-demand loading list updated.
+- **`README.md`** — Skills badge 17 → 18; version badge 2.14.3 → 2.15.0; new "What's New in v2.15.0" section; structure tree updated.
+
+### Boundary preserved
+
+`/consistency-check` is advisory only — emits findings, never blocks. Enforcement on persisted spec artifacts (e.g., "PRD must have ≥3 EARS criteria to merge") still belongs in `pitimon/claude-governance`. ADR-013 explicitly addresses this in the "Boundary stance" section.
+
+### Verification
+
+- All existing `tests/validate-structure.sh` and `tests/validate-content.sh` checks continue to pass (PRD-EARS-13 invariant)
+- New validator checks added for: `/consistency-check` skill structure, `docs/specs/consistency-check/` dogfood artifact presence + valid frontmatter, `--persist` flag documented in all 3 modified skills
+
+Pattern: spec-kit ideas can be adapted without violating plugin boundary if you keep them advisory and respect the "discipline, not enforcement" doctrine. Verified non-overlap with `claude-governance/spec-driven-dev` (single-spec, no cross-artifact pass).
+
+---
+
 ## v2.14.3 — Post-Migration Cleanup + Validator Self-Discipline (2026-05-03)
 
 Patch release closing post-v2.14.2 metadata drift surfaced by [#163](https://github.com/pitimon/8-habit-ai-dev/issues/163) and applying the 800-line file-size rule the validator enforces on skills to the validator itself.

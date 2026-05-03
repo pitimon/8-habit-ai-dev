@@ -81,8 +81,14 @@ if [ "$LINK_FAIL" -eq 0 ]; then
 fi
 
 # 12c: TODO/FIXME markers in published skills content
+# Exception: skills/consistency-check/ documents the patterns it detects (Ambiguity pass)
+# so literal TODO/FIXME/HACK/XXX strings appear as detection-target documentation, not as
+# unresolved markers. Whitelisted intentionally; see ADR-013 + skills/consistency-check/SKILL.md.
 TODO_FAIL=0
 while read -r f; do
+  case "$f" in
+    skills/consistency-check/*) continue ;;
+  esac
   todo_count=$(grep -ciE '\bTODO\b|\bFIXME\b|\bHACK\b|\bXXX\b' "$f" || true)
   if [ "$todo_count" -gt 0 ]; then
     fail "$f has $todo_count TODO/FIXME/HACK/XXX markers"
@@ -90,7 +96,7 @@ while read -r f; do
   fi
 done < <(find skills/ -name "*.md" -type f 2>/dev/null)
 if [ "$TODO_FAIL" -eq 0 ]; then
-  pass "No TODO/FIXME markers in skills/ content"
+  pass "No TODO/FIXME markers in skills/ content (consistency-check whitelisted — documents detection patterns)"
 fi
 
 # 12d: Empty links [text]() or [](url)

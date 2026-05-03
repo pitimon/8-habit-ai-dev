@@ -2,6 +2,8 @@
 
 Output template for `/design` (Step 2). Based on MADR (Markdown Any Decision Records) format.
 
+> **OPTIONAL ID linkage** (recommended when persisting via `--persist <slug>`): Number decisions as `Decision-N` (e.g., `### Decision-4: Database choice`) and cite covered PRD requirements as `Decision-N covers: FR-001, FR-003`. When all artifacts in a `docs/specs/<slug>/` directory use ID markers, `/consistency-check` runs deterministic Coverage and Inconsistency passes. See [ADR-013](../../docs/adr/ADR-013-spec-persistence-opt-in.md).
+
 ## ADR-NNN: [Decision Title]
 
 **Status**: [Proposed | Accepted | Deprecated | Superseded]
