@@ -63,51 +63,51 @@
 
 ### Persistence half
 
-1. **[Optional]** Where the user passes a persistence argument or flag (e.g., `--persist <feature-slug>`) to `/8-habit-ai-dev:requirements`, `/8-habit-ai-dev:design`, or `/8-habit-ai-dev:breakdown`, the skill SHALL write its full PRD/design/tasks output to `docs/specs/<feature-slug>/{prd,design,tasks}.md` AND emit the `SKILL_OUTPUT` block as before.
+1. **[Optional]** FR-001: Where the user passes a persistence argument or flag (e.g., `--persist <feature-slug>`) to `/8-habit-ai-dev:requirements`, `/8-habit-ai-dev:design`, or `/8-habit-ai-dev:breakdown`, the skill SHALL write its full PRD/design/tasks output to `docs/specs/<feature-slug>/{prd,design,tasks}.md` AND emit the `SKILL_OUTPUT` block as before.
 
-2. **[Ubiquitous]** When persistence is NOT requested, the affected skills SHALL behave exactly as in v2.14.3 — emit `SKILL_OUTPUT` block in conversation only, no file writes.
+2. **[Ubiquitous]** FR-002: When persistence is NOT requested, the affected skills SHALL behave exactly as in v2.14.3 — emit `SKILL_OUTPUT` block in conversation only, no file writes.
 
-3. **[Event-driven]** When a persisted file already exists at the target path, the skill SHALL prompt the user (via AskUserQuestion or equivalent) to choose: overwrite, append revision history, or write to a numbered variant (`prd.v2.md`).
+3. **[Event-driven]** FR-003: When a persisted file already exists at the target path, the skill SHALL prompt the user (via AskUserQuestion or equivalent) to choose: overwrite, append revision history, or write to a numbered variant (`prd.v2.md`).
 
-4. **[Unwanted]** If the target `docs/specs/<feature-slug>/` directory cannot be created (permission denied, read-only filesystem), then the skill SHALL surface the error, fall back to conversation-only output, and continue without aborting.
+4. **[Unwanted]** FR-004: If the target `docs/specs/<feature-slug>/` directory cannot be created (permission denied, read-only filesystem), then the skill SHALL surface the error, fall back to conversation-only output, and continue without aborting.
 
-5. **[Ubiquitous]** All persisted artifact files SHALL include a YAML frontmatter block with: `feature`, `step` (requirements|design|breakdown), `created`, `updated`, `source-issue` (optional), `source-skill-version`.
+5. **[Ubiquitous]** FR-005: All persisted artifact files SHALL include a YAML frontmatter block with: `feature`, `step` (requirements|design|breakdown), `created`, `updated`, `source-issue` (optional), `source-skill-version`.
 
 ### Analyzer half
 
-6. **[Event-driven]** When invoked as `/8-habit-ai-dev:consistency-check <feature-slug>` (or with a directory path), the skill SHALL read all artifact files present in `docs/specs/<feature-slug>/` and run 5 detection passes: Coverage, Drift, Ambiguity, Underspec, Inconsistency.
+6. **[Event-driven]** FR-006: When invoked as `/8-habit-ai-dev:consistency-check <feature-slug>` (or with a directory path), the skill SHALL read all artifact files present in `docs/specs/<feature-slug>/` and run 5 detection passes: Coverage, Drift, Ambiguity, Underspec, Inconsistency.
 
-7. **[Ubiquitous]** The skill SHALL emit findings as a severity-graded table with columns `severity | pass | location | finding | suggested action`. Severities: CRITICAL, HIGH, MEDIUM, LOW. Maximum 30 findings per run (truncate excess with a "+N more, narrow scope" footer).
+7. **[Ubiquitous]** FR-007: The skill SHALL emit findings as a severity-graded table with columns `severity | pass | location | finding | suggested action`. Severities: CRITICAL, HIGH, MEDIUM, LOW. Maximum 30 findings per run (truncate excess with a "+N more, narrow scope" footer).
 
-8. **[Unwanted]** If `docs/specs/<feature-slug>/` does not exist OR contains zero artifact files, then the skill SHALL emit a single CRITICAL finding "No persisted artifacts found — was `--persist <feature-slug>` used during /requirements/design/breakdown?" and exit cleanly.
+8. **[Unwanted]** FR-008: If `docs/specs/<feature-slug>/` does not exist OR contains zero artifact files, then the skill SHALL emit a single CRITICAL finding "No persisted artifacts found — was `--persist <feature-slug>` used during /requirements/design/breakdown?" and exit cleanly.
 
-9. **[State-driven]** While running, the skill SHALL NOT write, edit, or delete any file (read-only by design). The skill's `allowed-tools` SHALL be `Read, Glob, Grep` only.
+9. **[State-driven]** FR-009: While running, the skill SHALL NOT write, edit, or delete any file (read-only by design). The skill's `allowed-tools` SHALL be `Read, Glob, Grep` only.
 
-10. **[Optional]** Where the user has opted in via maturity profile (`~/.claude/habit-profile.md` Significance tier), the skill SHALL emit the dimension summary and band table inline; otherwise it MAY defer to the standard scoring footer.
+10. **[Optional]** FR-010: Where the user has opted in via maturity profile (`~/.claude/habit-profile.md` Significance tier), the skill SHALL emit the dimension summary and band table inline; otherwise it MAY defer to the standard scoring footer.
 
-11. **[Ubiquitous]** Each finding SHALL cite a `file:line` reference in the `location` column when applicable (file-level findings are acceptable when no specific line applies).
+11. **[Ubiquitous]** FR-011: Each finding SHALL cite a `file:line` reference in the `location` column when applicable (file-level findings are acceptable when no specific line applies).
 
-12. **[Unwanted]** If a detection pass finds zero issues in its category, then the skill SHALL emit a "✓ Pass: 0 findings" row for that pass (NOT silence) so absence of evidence is distinguishable from non-execution.
+12. **[Unwanted]** FR-012: If a detection pass finds zero issues in its category, then the skill SHALL emit a "✓ Pass: 0 findings" row for that pass (NOT silence) so absence of evidence is distinguishable from non-execution.
 
 ### Cross-cutting
 
-13. **[Ubiquitous]** Both halves SHALL preserve backward compatibility: every existing test in `tests/validate-structure.sh` and `tests/validate-content.sh` SHALL continue to pass on the modified plugin without modification (new tests may be added; existing tests SHALL NOT be relaxed).
+13. **[Ubiquitous]** FR-013: Both halves SHALL preserve backward compatibility: every existing test in `tests/validate-structure.sh` and `tests/validate-content.sh` SHALL continue to pass on the modified plugin without modification (new tests may be added; existing tests SHALL NOT be relaxed).
 
-14. **[Event-driven]** When the bundled feature ships, ADR-013 SHALL document the persistence-opt-in design decision with at least 3 alternatives considered and rationale for the chosen approach.
+14. **[Event-driven]** FR-014: When the bundled feature ships, ADR-013 SHALL document the persistence-opt-in design decision with at least 3 alternatives considered and rationale for the chosen approach.
 
-15. **[Ubiquitous]** This feature SHALL self-apply: the `docs/specs/consistency-check/` directory containing this PRD SHALL also contain the design.md and tasks.md artifacts produced by the next workflow steps. `/consistency-check` SHALL be runnable manually against itself, with the manual procedure documented in `CONTRIBUTING.md`. (CI invocation deferred — skills cannot be invoked from bash; structural validator confirms artifact presence + frontmatter only.)
+15. **[Ubiquitous]** FR-015: This feature SHALL self-apply: the `docs/specs/consistency-check/` directory containing this PRD SHALL also contain the design.md and tasks.md artifacts produced by the next workflow steps. `/consistency-check` SHALL be runnable manually against itself, with the manual procedure documented in `CONTRIBUTING.md`. (CI invocation deferred — skills cannot be invoked from bash; structural validator confirms artifact presence + frontmatter only.)
 
 ### Added post-advisor review
 
-16. **[Unwanted]** If the user passes a slug that does not match `^[a-z0-9][a-z0-9-]{1,63}$`, then the skill SHALL abort with an error message naming the required pattern and providing an example of a valid slug. (Prevents path traversal, hidden files, shell special chars, excessive length.)
+16. **[Unwanted]** FR-016: If the user passes a slug that does not match `^[a-z0-9][a-z0-9-]{1,63}$`, then the skill SHALL abort with an error message naming the required pattern and providing an example of a valid slug. (Prevents path traversal, hidden files, shell special chars, excessive length.)
 
-17. **[Optional]** Where artifacts in `docs/specs/<slug>/` contain explicit cross-reference ID markers (`FR-NNN`, `Decision-N`, `Task #N`), the Coverage and Inconsistency passes SHALL use deterministic structural matching. Otherwise they SHALL use LLM semantic comparison.
+17. **[Optional]** FR-017: Where artifacts in `docs/specs/<slug>/` contain explicit cross-reference ID markers (`FR-NNN`, `Decision-N`, `Task #N`), the Coverage and Inconsistency passes SHALL use deterministic structural matching. Otherwise they SHALL use LLM semantic comparison.
 
-18. **[Event-driven]** When ANY artifact in `docs/specs/<slug>/` lacks ID markers, the report SHALL emit a single warning at the top: `"ID linkage absent — using fuzzy match for Coverage and Inconsistency; results approximate. See ADR-013 for ID guidance."`
+18. **[Event-driven]** FR-018: When ANY artifact in `docs/specs/<slug>/` lacks ID markers, the report SHALL emit a single warning at the top: `"ID linkage absent — using fuzzy match for Coverage and Inconsistency; results approximate. See ADR-013 for ID guidance."`
 
-19. **[Ubiquitous]** All error messages emitted by the persistence half (directory create failure, slug validation failure, file conflict with no interactive context) SHALL: (a) state what the skill attempted, (b) state what failed and why, (c) state what the user can do next. Generic "error" or "failed" messages are NOT acceptable.
+19. **[Ubiquitous]** FR-019: All error messages emitted by the persistence half (directory create failure, slug validation failure, file conflict with no interactive context) SHALL: (a) state what the skill attempted, (b) state what failed and why, (c) state what the user can do next. Generic "error" or "failed" messages are NOT acceptable.
 
-20. **[Optional]** Where the AskUserQuestion tool is unavailable (non-interactive context, batch invocation), the conflict policy (PRD-EARS-3) SHALL default to writing to a numbered variant (`prd.v2.md`, `prd.v3.md`, ...) rather than prompting, and SHALL emit a warning naming the variant chosen.
+20. **[Optional]** FR-020: Where the AskUserQuestion tool is unavailable (non-interactive context, batch invocation), the conflict policy (FR-003) SHALL default to writing to a numbered variant (`prd.v2.md`, `prd.v3.md`, ...) rather than prompting, and SHALL emit a warning naming the variant chosen.
 
 ---
 
