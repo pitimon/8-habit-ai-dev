@@ -140,6 +140,7 @@ source-skill-version: <plugin version, e.g. 2.15.0>
 - Single-feature analysis only — no cross-feature comparison (out of scope per PRD)
 - No auto-fix or remediation suggestions beyond the `suggested action` column (read-only by design)
 - Numbered variants (`prd.v2.md`, etc.) — analyzer reads the latest version of each, but does not compare across versions
+- Ambiguity pass cannot distinguish backtick-quoted documentation references from unresolved markers. If you need to mention a token like `[NEEDS CLARIFICATION]` or `TBD` in artifact prose without it firing a finding, write it in plain text (e.g., "the NEEDS-CLARIFICATION marker") rather than inside a code span. The analyzer's own dogfood spec hits this false-positive at `docs/specs/consistency-check/prd.md:45` — tracked in [#167](https://github.com/pitimon/8-habit-ai-dev/issues/167).
 
 ## See Also
 
