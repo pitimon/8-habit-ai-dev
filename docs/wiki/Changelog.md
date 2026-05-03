@@ -1,10 +1,20 @@
-![Version](https://img.shields.io/badge/latest-v2.14.2-blue)
+![Version](https://img.shields.io/badge/latest-v2.14.3-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.14.3 — Post-Migration Cleanup + Validator Self-Discipline (May 2026)
+
+Patch release closing [#163](https://github.com/pitimon/8-habit-ai-dev/issues/163) — three small cleanups left in v2.14.2's wake plus applying the validator's own 800-line rule to itself.
+
+- **ADR-012 metadata closure** — `SELF-CHECK.md` reframed two lines describing the deleted EU AI Act research + mapping files as if they still existed; `docs/adr/ADR-012-eu-ai-act-migration-completion.md` status header upgraded with `**Implementation**:` field naming commit `ed65b97` (v2.14.2 release) and the metadata-closure date
+- **`.gitignore`** — created with `/deep-project/` and `/.claude/` entries to gate against accidental `git add .` of cross-plugin checkouts and Claude Code session artifacts
+- **`tests/validate-content.sh` trim** — 831 → 793 lines via comment consolidation across Check 15 (EU AI Act stub explainer), Check 19 sub-check rationales, F2 + F3 explainers; logic untouched, 10 checks preserved, PASS count = 205
+
+Pattern: validator self-discipline — when a fitness function applies to the rest of the codebase, it applies to the validator too.
 
 ## v2.14.2 — EU AI Act Migration Completion (May 2026)
 

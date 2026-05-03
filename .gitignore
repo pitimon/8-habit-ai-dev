@@ -1,0 +1,15 @@
+# Claude Code local session artifacts (settings, agent worktrees, lessons cache)
+/.claude/
+
+# Sibling plugins / scratch dirs (cross-plugin testing artifacts)
+# Example: piercelamb/deep-project clone — not part of this plugin
+/deep-project/
+
+# macOS
+.DS_Store
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*~

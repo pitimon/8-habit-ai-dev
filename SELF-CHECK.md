@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 2.14.2 | **Date**: 2026-05-02 | **Previous**: 2.14.1 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)
+**Version**: 2.14.3 | **Date**: 2026-05-03 | **Previous**: 2.14.2 (post-EU AI Act migration)
 
 Running our own 17-question checklist against the plugin itself. H8 Modeling: "Follow the process always, no shortcuts when unwatched."
 
@@ -100,8 +100,8 @@ v2.4.0 improvements (/using-8-habits meta-skill):
 v2.3.0 improvements (EU AI Act Compliance Toolkit — Flagship feature):
 
 - **`/eu-ai-act-check`** — 9-obligation tiered checklist for EU high-risk AI systems (Articles 9-15). Pre-flight scope check skips if not high-risk or not EU-targeted.
-- **`docs/research/eu-ai-act-obligations.md`** — verified-quote research brief.
-- **`guides/eu-ai-act-mapping.md`** — MUST/SHOULD/COULD tier mapping.
+- **`docs/research/eu-ai-act-obligations.md`** — verified-quote research brief. _(Migrated to `claude-governance` v3.1.0+ in v2.14.2 per ADR-012; deleted from this plugin in commit `ed65b97`.)_
+- **`guides/eu-ai-act-mapping.md`** — MUST/SHOULD/COULD tier mapping. _(Migrated; same reference.)_
 - **`scripts/generate-ai-dev-log.sh`** — Article 11 transparency (AI-assisted dev log from git history).
 - **ADR-005**: EU AI Act compliance toolkit scope + plugin-boundary decision (eventually migrating to `claude-governance`).
 - Spirit dimension strengthened: compliance depth without enforcement theater.
@@ -171,7 +171,8 @@ The cross-verify score (16/16) measures **plan discipline**. The Whole Person sc
 - v2.14.0: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (TOH Framework Inspirations — milestone #15: #151 SKILL_OUTPUT attribution lines + Check 22, #149 argument-driven smart-routing in /using-8-habits, #150 Verification Phase in /review-ai with explicit "guidance only, NOT a hook" boundary qualifier — three workflow-discipline imports from external framework, all stayed within plugin boundary)
 - v2.14.1: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#157 README "What's New" Drift Guard — external QA found Check 19A passes on badge URL not section header, README "What's New" missing v2.14.0 entry, TOC anchor broken since v2.3.0, architecture tree under-enumerated 4 skills; same bug class as #124/#141 recurring on sibling surface; fix is doc backfill + Check 19 sub-check G anchored grep + Check 20 hardening pinning Find→Fix→Re-Verify loop name and step count — capability-level pattern closed with fitness function not checklist)
 - v2.14.2: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (EU AI Act Migration Completion — second half of cross-plugin migration coordinated with `pitimon/claude-governance` v3.1.0; deleted reference.md + research + mapping guide; rewrote SKILL.md as redirect stub preserving NOT LEGAL ADVICE disclaimer + ADR-012 reference; ADR-005 marked Superseded; Check 15 in validate-content.sh rewritten as stub-mode + negative-restore assertions; cross-refs reframed in RESOLVER, using-8-habits, design Step 5, ai-dev-log, session-start, README skill table; wiki + README badge deferred to follow-up doc-only PR per `pitimon/claude-governance` PR #25 + #26 formatter precedent — boundary correction completes the contract from memory observation #233270, plugin boundary integrity restored)
+- v2.14.3: Body 5, Mind 5, Heart 5, Spirit 5 = **5.0** (#163 Post-Migration Cleanup + Validator Self-Discipline — ADR-012 metadata closure (SELF-CHECK lines 103-104 reframed + `**Implementation**:` field added to ADR-012 header naming commit ed65b97), `.gitignore` created with `/deep-project/` + `/.claude/` entries, `tests/validate-content.sh` trimmed 831 → 793 lines via comment consolidation across Check 15 + Check 19 sub-checks B/C/D/E/F/G + F2 + F3 — logic untouched, 10 checks preserved, PASS count 205 stable; closes credibility gap where validator violated 800-line rule it enforces on skills via Check 5 in validate-structure.sh)
 
 ---
 
-_Updated with each release. Previous: 2.14.1 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_
+_Updated with each release. Previous: 2.14.2 (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0)_

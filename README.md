@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-17-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.14.2-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.14.2)
+[![Version](https://img.shields.io/badge/Version-2.14.3-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.14.3)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -317,7 +317,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ```
 8-habit-ai-dev/
 ├── .claude-plugin/
-│   ├── plugin.json                 # Plugin metadata (v2.14.2)
+│   ├── plugin.json                 # Plugin metadata (v2.14.3)
 │   └── marketplace.json            # Marketplace listing
 ├── skills/                         # 17 skills (8 workflow + 9 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
@@ -392,6 +392,20 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Output templates** — structured formats for PRD, ADR, task list, review report, research brief
 - **Dimension mapping** — all 17 cross-verify questions tagged with Body/Mind/Heart/Spirit
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
+
+---
+
+## What's New in v2.14.3
+
+**Theme: Post-Migration Cleanup + Validator Self-Discipline** ([#163](https://github.com/pitimon/8-habit-ai-dev/issues/163))
+
+Patch release closing post-v2.14.2 metadata drift and applying the 800-line file-size rule the validator enforces on skills to the validator itself.
+
+- **ADR-012 metadata closure** — `SELF-CHECK.md` lines 103-104 reframed (described deleted files as if still present); ADR-012 status header upgraded with `Implementation:` field naming commit `ed65b97` (v2.14.2) and metadata-closure date.
+- **`.gitignore` hardening** — created with `/deep-project/` and `/.claude/` entries to gate against accidental `git add .` of third-party plugin clones and Claude Code session artifacts. Working copies preserved locally.
+- **`tests/validate-content.sh` trim** — 831 → 793 lines via comment consolidation across Check 15, Check 19 sub-checks B/C/D/E/F/G, and F2/F3 sections. Logic untouched, total checks unchanged (10), PASS count preserved (205). Closes the credibility gap where the validator violated the 800-line rule it enforces.
+
+Pattern: validator self-discipline — when a fitness function applies to the rest of the codebase, it applies to the validator too. Same shape as v2.14.1's "validator assertion, not checklist" principle.
 
 ---
 
@@ -657,4 +671,4 @@ MIT
 
 ---
 
-_Version: 2.14.2 | Last updated: 2026-05-02_
+_Version: 2.14.3 | Last updated: 2026-05-03_

@@ -10,6 +10,26 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.14.3 — Post-Migration Cleanup + Validator Self-Discipline (2026-05-03)
+
+Patch release closing post-v2.14.2 metadata drift surfaced by [#163](https://github.com/pitimon/8-habit-ai-dev/issues/163) and applying the 800-line file-size rule the validator enforces on skills to the validator itself.
+
+### Fixed
+
+- **ADR-012 metadata closure** — `SELF-CHECK.md` lines 103-104 reframed (described deleted files `docs/research/eu-ai-act-obligations.md` + `guides/eu-ai-act-mapping.md` as if still present); `docs/adr/ADR-012-eu-ai-act-migration-completion.md` status header upgraded with `**Implementation**:` field naming commit `ed65b97` (v2.14.2 release) and the metadata-closure date.
+
+### Added
+
+- **`.gitignore`** — created with `/deep-project/` and `/.claude/` entries to gate against accidental `git add .` of third-party plugin clones (e.g. `piercelamb/deep-project` cross-plugin testing checkouts) and Claude Code session artifacts. Working copies preserved locally.
+
+### Changed
+
+- **`tests/validate-content.sh` trim** — 831 → 793 lines via comment consolidation across Check 15 (EU AI Act stub explainer), Check 19 sub-checks B/C/D/E/F/G (drift-guard rationale blocks), F2 validation coverage explainer, and F3 SIGPIPE-fix explainer. Logic untouched; total checks unchanged (10); PASS count preserved (205). Closes the credibility gap where the validator violated the 800-line rule it enforces on skills (Check 5 in `validate-structure.sh`).
+
+Pattern: validator self-discipline — when a fitness function applies to the rest of the codebase, it applies to the validator too. Same shape as v2.14.1's "validator assertion, not checklist" principle.
+
+---
+
 ## v2.14.2 — EU AI Act Migration Completion (2026-05-02)
 
 Completes the migration of the EU AI Act compliance toolkit from this plugin to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0 per the plugin boundary established in memory observation #233270 (2026-04-07): `8-habit-ai-dev` = workflow discipline; `claude-governance` = compliance enforcement + framework mappings. EU AI Act compliance is a framework mapping, not a workflow step. Original placement here was a boundary error; ADR-005 (the original toolkit ADR) is now marked Superseded by ADR-012 (this migration). See [`pitimon/claude-governance` PR #26](https://github.com/pitimon/claude-governance/pull/26) for the canonical landing.

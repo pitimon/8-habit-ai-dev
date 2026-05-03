@@ -10,7 +10,7 @@
     {
       "name": "8-habit-ai-dev",
       "description": "Anti-Vibe-Coding plugin — 7-step workflow discipline + 8-Habit cross-verification",
-      "version": "2.14.2",
+      "version": "2.14.3",
       "author": {
         "name": "Pitimon",
         "email": "pitimon@thaicloud.ai"
@@ -28,12 +28,7 @@
         "covey",
         "8-habits"
       ],
-      "tags": [
-        "workflow",
-        "quality",
-        "planning",
-        "review"
-      ]
+      "tags": ["workflow", "quality", "planning", "review"]
     }
   ]
 }
