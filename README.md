@@ -39,6 +39,7 @@
 - [Whole Person Assessment](#whole-person-assessment) — Body/Mind/Heart/Spirit + worked example
 - [Agents](#agents) — Read-only reviewers that analyze your work
 - [Architecture](#architecture) — File tree + design decisions
+- [Companion Plugins](#companion-plugins) — Working with `claude-governance` + `devsecops-ai-team`
 
 **Reference**
 
@@ -371,7 +372,8 @@ Both agents use the `sonnet` model for fast, focused analysis.
 │   ├── validate-structure.sh       # Structure validation (13 checks, pure bash)
 │   └── validate-content.sh         # Content validation + fitness functions (v2.2.0)
 ├── docs/
-│   └── adr/                        # Architecture Decision Records
+│   ├── INTEGRATION.md              # Canonical plugin-integration guide (companion plugins)
+│   └── adr/                        # Architecture Decision Records (ADR-001 .. ADR-013)
 │       ├── ADR-001-orchestration-patterns.md
 │       ├── ADR-002-research-modes.md
 │       └── ADR-003-content-validation.md
@@ -394,6 +396,21 @@ Both agents use the `sonnet` model for fast, focused analysis.
 - **Output templates** — structured formats for PRD, ADR, task list, review report, research brief
 - **Dimension mapping** — all 17 cross-verify questions tagged with Body/Mind/Heart/Spirit
 - **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements
+
+---
+
+## Companion Plugins
+
+`8-habit-ai-dev` works **standalone** — no hard dependency. For higher-assurance projects, it composes with two companion plugins (also by pitimon):
+
+| Plugin              | Layer                                                              | When to add                                         |
+| ------------------- | ------------------------------------------------------------------ | --------------------------------------------------- |
+| `claude-governance` | Policy / Enforcement (fitness functions, ADRs, compliance)         | When you need durable policy + audit trail          |
+| `devsecops-ai-team` | Operational tooling (SAST/DAST/SCA/Container/IaC + SBOM/AIBOM/VEX) | When you need automated scans or regulator evidence |
+
+**Single source of truth for integration:** see [`docs/INTEGRATION.md`](docs/INTEGRATION.md) — covers layer map, choosing-your-stack matrix, integration points, Three Loops asymmetry, EU AI Act scope split, and suggested integrated flow.
+
+Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
 
