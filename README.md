@@ -372,7 +372,8 @@ Both agents use the `sonnet` model for fast, focused analysis.
 │   ├── validate-structure.sh       # Structure validation (13 checks, pure bash)
 │   └── validate-content.sh         # Content validation + fitness functions (v2.2.0)
 ├── docs/
-│   └── adr/                        # Architecture Decision Records
+│   ├── INTEGRATION.md              # Canonical plugin-integration guide (companion plugins)
+│   └── adr/                        # Architecture Decision Records (ADR-001 .. ADR-013)
 │       ├── ADR-001-orchestration-patterns.md
 │       ├── ADR-002-research-modes.md
 │       └── ADR-003-content-validation.md

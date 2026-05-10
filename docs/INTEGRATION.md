@@ -50,16 +50,16 @@ progressively as the matrix suggests.
 
 Where this plugin's skills meet companion plugins.
 
-| `8-habit-ai-dev` skill        | Companion plugin & skill                         | Note                                                                                      |
-| ----------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------- |
-| `/eu-ai-act-check`            | `claude-governance /eu-ai-act-check` (canonical) | This plugin's version is a **stub redirect** per `claude-governance` ADR-012 (2026-05-02) |
-| `/security-check` (lens)      | `devsecops /sast-scan, /secret-scan, /sca-scan`  | Checklist + actual tool scans — complementary, not duplicate                              |
-| `/review-ai` (step 5)         | `devsecops /full-pipeline`                       | Step 5 dispatches devsecops scans for evidence                                            |
-| `/design` (step 2)            | `devsecops /threat-model`                        | Design checkpoint includes STRIDE/PASTA threat modeling                                   |
-| `/design` (step 2)            | `claude-governance /create-adr`                  | Architecture decisions captured during design                                             |
-| `/cross-verify`               | `claude-governance /governance-check`            | Habit-based + fitness function gates                                                      |
-| `/requirements`, `/breakdown` | `claude-governance /spec-driven-dev`             | 7-step composes with spec-first                                                           |
-| `/monitor-setup` (step 7)     | `devsecops /siem-export`, `/soar-connect`        | Wire observability into SIEM/SOAR pipelines                                               |
+| `8-habit-ai-dev` skill        | Companion plugin & skill                         | Note                                                                                                                                                                                                        |
+| ----------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/eu-ai-act-check`            | `claude-governance /eu-ai-act-check` (canonical) | This plugin's version is a **stub redirect** per this plugin's [ADR-012](adr/ADR-012-eu-ai-act-migration-completion.md) (outbound migration, 2026-05-02) and `claude-governance` ADR-003 (inbound receiver) |
+| `/security-check` (lens)      | `devsecops /sast-scan, /secret-scan, /sca-scan`  | Checklist + actual tool scans — complementary, not duplicate                                                                                                                                                |
+| `/review-ai` (step 5)         | `devsecops /full-pipeline`                       | Step 5 dispatches devsecops scans for evidence                                                                                                                                                              |
+| `/design` (step 2)            | `devsecops /threat-model`                        | Design checkpoint includes STRIDE/PASTA threat modeling                                                                                                                                                     |
+| `/design` (step 2)            | `claude-governance /create-adr`                  | Architecture decisions captured during design                                                                                                                                                               |
+| `/cross-verify`               | `claude-governance /governance-check`            | Habit-based + fitness function gates                                                                                                                                                                        |
+| `/requirements`, `/breakdown` | `claude-governance /spec-driven-dev`             | 7-step composes with spec-first                                                                                                                                                                             |
+| `/monitor-setup` (step 7)     | `devsecops /siem-export`, `/soar-connect`        | Wire observability into SIEM/SOAR pipelines                                                                                                                                                                 |
 
 ---
 
@@ -77,8 +77,9 @@ Wording verified consistent against `claude-governance/CLAUDE.md` and
 - **In-the-Loop** — Human drives, AI assists (architecture, security boundaries, gate overrides)
 
 **Asymmetry to know:**
-`claude-governance` extends the spine via **ADR-002 Consequence Override**,
-adding a 4-level blast-radius dimension:
+`claude-governance` extends the spine via **[ADR-002: Consequence-Based Authorization](https://github.com/pitimon/claude-governance/blob/main/docs/adr/ADR-002-consequence-based-authorization.md)**,
+adding a 4-level blast-radius dimension (the ADR refers to this as the
+"Consequence Override" rule):
 
 | Consequence  | Description                                           |
 | ------------ | ----------------------------------------------------- |
@@ -102,11 +103,11 @@ security-ops context.
 Three similarly-named skills exist across the plugins. They are **not**
 duplicates — they cover different scopes.
 
-| Skill               | Plugin                          | Scope                                                         |
-| ------------------- | ------------------------------- | ------------------------------------------------------------- |
-| `/eu-ai-act-check`  | `claude-governance` (canonical) | **All 9 obligations** (Articles 9-15)                         |
-| `/eu-ai-act-check`  | `8-habit-ai-dev` (stub)         | **Redirects to governance** per ADR-012 (migrated 2026-05-02) |
-| `/eu-ai-act-assess` | `devsecops-ai-team`             | **Article 10 only** — training data governance (DG-1 to DG-6) |
+| Skill               | Plugin                          | Scope                                                                                                                        |
+| ------------------- | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `/eu-ai-act-check`  | `claude-governance` (canonical) | **All 9 obligations** (Articles 9-15)                                                                                        |
+| `/eu-ai-act-check`  | `8-habit-ai-dev` (stub)         | **Redirects to governance** per this plugin's [ADR-012](adr/ADR-012-eu-ai-act-migration-completion.md) (migrated 2026-05-02) |
+| `/eu-ai-act-assess` | `devsecops-ai-team`             | **Article 10 only** — training data governance (DG-1 to DG-6)                                                                |
 
 When auditing for EU AI Act compliance:
 
@@ -173,8 +174,9 @@ For higher-assurance projects, the recommended order to add plugins is:
 
 ## Related References
 
-- `claude-governance` ADR-002 — Consequence Override (extends Three Loops)
-- `claude-governance` ADR-012 — EU AI Act consolidation (2026-05-02)
+- `claude-governance` [ADR-002: Consequence-Based Authorization](https://github.com/pitimon/claude-governance/blob/main/docs/adr/ADR-002-consequence-based-authorization.md) — extends Three Loops
+- `8-habit-ai-dev` [ADR-012: EU AI Act Migration Completion](adr/ADR-012-eu-ai-act-migration-completion.md) — outbound migration from this plugin (2026-05-02)
+- `claude-governance` [ADR-003: EU AI Act Compliance Toolkit Migration from 8-habit-ai-dev](https://github.com/pitimon/claude-governance/blob/main/docs/adr/ADR-003-eu-ai-act-compliance-toolkit.md) — inbound receiver in governance
 - `8-habit-ai-dev` issue [#170](https://github.com/pitimon/8-habit-ai-dev/issues/170) — this canonical document
 - `claude-governance` issue [#31](https://github.com/pitimon/claude-governance/issues/31) — stub + reciprocal link
 - `devsecops-ai-team` issue [#467](https://github.com/pitimon/devsecops-ai-team/issues/467) — stub + reciprocal link
