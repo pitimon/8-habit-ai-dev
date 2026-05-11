@@ -65,6 +65,64 @@ Testing the workflow-level form on the plugin's own governance loop:
 
 The break-even is low: if the reviewer blocks **one bad proposal per ten**, the pattern pays for itself across typical development velocity.
 
+## Disprove-Mode Disciplines
+
+The Decision Checklist + Cost vs Benefit above cover _whether_ to dispatch the reviewer. The three subsections below cover _how_ to shape the dispatch when the goal is **disprove**, not score — high-stakes irreversible decisions where you want issues surfaced rather than a balanced verdict. Imported from [`addyosmani/agent-skills` — `doubt-driven-development`](https://github.com/addyosmani/agent-skills/blob/main/skills/doubt-driven-development/SKILL.md) (MIT, [PR #139](https://github.com/addyosmani/agent-skills/pull/139)) which formalized these in 2026-05.
+
+### Anti-bias: extract artifact + contract, not the claim (H5)
+
+A fresh-context reviewer biases toward whatever framing you hand them. If you paste your conclusion, you'll get back validation of your conclusion.
+
+**Bad form** (biases the reviewer):
+
+```
+CLAIM: "The new caching layer is thread-safe."
+[paste 200-line diff]
+Please review.
+```
+
+**Good form** (lets the reviewer independently verify):
+
+```
+ARTIFACT: [the diff or function — just the artifact]
+CONTRACT: [the constraints it must satisfy — e.g. "must be thread-safe under read-heavy load per spec §4"]
+```
+
+Pass `ARTIFACT + CONTRACT` only. Hold your `CLAIM` back — that's what the reviewer is supposed to independently re-derive (or refute). Maps to H5: don't accept your own framing as the starting point.
+
+### Iterative review: cap at 3 cycles (H3 + H7)
+
+The default pattern documented above is **single-shot, pre-action**: dispatch the reviewer, get the verdict, act or stop. If you ever depart from that — re-dispatching after edits to converge on an answer (iterative review → fix → re-review) — bound the loop:
+
+- **Cap at 3 cycles.** After cycle 3, escalate to the user / pause for human decision.
+- **Stop early** if a cycle returns only trivial findings (no new actionable issues).
+- **Stop early** if the user issues an override.
+
+The cap prevents reviewer infinite-spiral on contested artifacts; the escalation rule keeps the human in control of the disagreement.
+
+### Adversarial prompt template (H1 + H5)
+
+`@8-habit-reviewer` runs the [17-question checklist](cross-verification.md) and produces a **balanced verdict** (Pass/Fail counts + recommendations). For some decisions — production deploys, schema migrations, public API changes — you want the opposite shape: **disprove-only output**. Dispatch a fresh subagent with **no named agent role** and read-only tools (`Read`, `Glob`, `Grep`) using the prompt below — **not** `@8-habit-reviewer` (whose process is fixed to the 17-question checklist). In Claude Code, this means dispatching a generic Task subagent with the adversarial prompt as the entire instruction (no inherited persona, no checklist load).
+
+```
+Adversarial review. Find what is wrong with this artifact.
+Assume the author is overconfident. Look for:
+- Unstated assumptions
+- Edge cases not handled
+- Hidden coupling or shared state
+- Ways the contract could be violated
+- Existing conventions this might break
+- Failure modes under unexpected input
+
+Do NOT validate. Do NOT summarize. Find issues, or state
+explicitly that you cannot find any after thorough examination.
+
+ARTIFACT: <paste artifact>
+CONTRACT: <paste contract>
+```
+
+Maps to H1 (be proactive — disprove before deploy) + H5 (understand first — don't accept your own framing). Use this _in addition to_ the 17-question dispatch when the decision is irreversible; the two shapes catch different classes of issue.
+
 ## Boundary Note
 
 - **API-level `advisor_20260301`** belongs in projects that call the Claude API directly (e.g., memforge, custom agent loops). It is out of scope for this plugin per [CLAUDE.md](../CLAUDE.md) and the scope decision in [#87](https://github.com/pitimon/8-habit-ai-dev/issues/87).
@@ -73,9 +131,10 @@ The break-even is low: if the reviewer blocks **one bad proposal per ten**, the 
 
 ## Quick Reference
 
-| Pattern            | Solves                                           | Used Before                                    | H-Mapping    |
-| ------------------ | ------------------------------------------------ | ---------------------------------------------- | ------------ |
-| Advisor (workflow) | Context-contaminated proposals on public actions | Filing issues, opening PRs, merging, deploying | H5 + H4 + H1 |
+| Pattern                     | Solves                                                                 | Used Before                                               | H-Mapping    |
+| --------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------- | ------------ |
+| Advisor (workflow)          | Context-contaminated proposals on public actions                       | Filing issues, opening PRs, merging, deploying            | H5 + H4 + H1 |
+| Adversarial (disprove-only) | High-stakes irreversible decisions needing issues surfaced, not scored | Production deploys, schema migrations, public API changes | H1 + H5      |
 
 ## See Also
 
@@ -84,6 +143,7 @@ The break-even is low: if the reviewer blocks **one bad proposal per ten**, the 
 - [`guides/orchestration-patterns.md`](orchestration-patterns.md) — related multi-agent discipline patterns
 - [Issue #87](https://github.com/pitimon/8-habit-ai-dev/issues/87) — original reference note and 2026-04-23 experiential comment
 - [`guides/quick-reference.md`](quick-reference.md) — full 8-Habit rule table
+- Upstream source for the Disprove-Mode Disciplines section: [`addyosmani/agent-skills` — `doubt-driven-development`](https://github.com/addyosmani/agent-skills/blob/main/skills/doubt-driven-development/SKILL.md) (MIT, [PR #139](https://github.com/addyosmani/agent-skills/pull/139))
 
 ---
 
