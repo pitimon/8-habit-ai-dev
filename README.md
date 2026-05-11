@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.15.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.0)
+[![Version](https://img.shields.io/badge/Version-2.15.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.1)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -414,6 +414,20 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
 
+## What's New in v2.15.1
+
+**Theme: Post-Audit Delta — Doubt-Driven Techniques Imported** ([#173](https://github.com/pitimon/8-habit-ai-dev/issues/173), [PR #174](https://github.com/pitimon/8-habit-ai-dev/pull/174))
+
+Single-guide enhancement importing three techniques from [`addyosmani/agent-skills` — `doubt-driven-development`](https://github.com/addyosmani/agent-skills/blob/main/skills/doubt-driven-development/SKILL.md) (MIT, [PR #139](https://github.com/addyosmani/agent-skills/pull/139), upstream 2026-05-07 — published **27 days after** our prior addyosmani audit in PR #111). `guides/advisor-pattern.md` gains a new "Disprove-Mode Disciplines" section with:
+
+- **Anti-CLAIM-bias rule (H5)** — pass `ARTIFACT + CONTRACT` only; hold the CLAIM back so the reviewer independently re-derives it instead of validating your framing.
+- **Iterative-review 3-cycle cap (H3 + H7, conditional)** — bounded loop with user escalation; single-shot pattern is unchanged.
+- **Adversarial prompt template (H1 + H5)** — disprove-only output for irreversible decisions. Dispatches a fresh subagent with **no named role** and read-only tools, **not** `@8-habit-reviewer` (whose 17-question process is fixed).
+
+Honors PR #111's local-maximum lesson: no new skill, agent, or validator. Quick Reference table gains a second row for the adversarial pattern; See Also cites the MIT upstream. Rejected in-scope candidates explicit in #173: new `/doubt-check` skill, `source-driven-development` import, cross-model CLI escalation, agentskills.io frontmatter migration ([ADR-007](docs/adr/ADR-007-agentskills-compatibility-decision.md) NO-GO holds).
+
+Pattern: post-audit delta. When an upstream methodology publishes after a periodic audit, evaluate the delta in isolation rather than triggering a full re-audit.
+
 ## What's New in v2.15.0
 
 **Theme: spec-kit `/analyze` Inspiration — Cross-Artifact Consistency + Opt-In Spec Persistence** ([#165](https://github.com/pitimon/8-habit-ai-dev/issues/165))
@@ -703,4 +717,4 @@ MIT
 
 ---
 
-_Version: 2.15.0 | Last updated: 2026-05-03_
+_Version: 2.15.1 | Last updated: 2026-05-11_

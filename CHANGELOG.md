@@ -10,6 +10,44 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.15.1 — Doubt-Driven Techniques Imported (2026-05-11)
+
+Patch release. Single-guide enhancement to `guides/advisor-pattern.md` importing three techniques from [`addyosmani/agent-skills` — `doubt-driven-development`](https://github.com/addyosmani/agent-skills/blob/main/skills/doubt-driven-development/SKILL.md) (MIT, [PR #139](https://github.com/addyosmani/agent-skills/pull/139), upstream 2026-05-07 — published **27 days after** our prior addyosmani audit in PR #111). Closes [#173](https://github.com/pitimon/8-habit-ai-dev/issues/173) via [PR #174](https://github.com/pitimon/8-habit-ai-dev/pull/174).
+
+### Added
+
+- **`guides/advisor-pattern.md` `## Disprove-Mode Disciplines` section** with three labeled H3 subsections:
+  - **Anti-bias: extract artifact + contract, not the claim (H5)** — codifies "Pass `ARTIFACT + CONTRACT` only, hold the CLAIM back" with bad-form vs good-form examples. Prevents the reviewer from validating the author's framing instead of independently re-deriving it.
+  - **Iterative review: cap at 3 cycles (H3 + H7)** — explicit conditional. Single-shot pre-action dispatch (the default pattern) is unchanged. Cap applies only when re-dispatching after edits, with stop conditions: 3 cycles → escalate, trivial findings, or user override.
+  - **Adversarial prompt template (H1 + H5)** — verbatim-style prompt block instructing reviewer to "Find issues, or state explicitly that you cannot find any. Do NOT validate. Do NOT summarize." **Dispatches a fresh subagent with no named role and read-only tools (`Read`, `Glob`, `Grep`)** — not `@8-habit-reviewer` (whose 17-question process is fixed per `agents/8-habit-reviewer.md:18-24`).
+- **Quick Reference table** — second row added for `Adversarial (disprove-only)` pattern. Distinguishes it from the existing `Advisor (workflow)` row by H-mapping (`H1 + H5` vs `H5 + H4 + H1`) and use case (production deploys, schema migrations, public API changes).
+- **See Also** — bullet citing MIT upstream + PR #139.
+
+### Changed
+
+- `README.md` — badge 2.15.0 → 2.15.1; new "What's New in v2.15.1" section.
+- `SELF-CHECK.md` — header version + Previous; per-release row added for v2.15.1.
+- `docs/wiki/Changelog.md` — badge + new v2.15.1 entry.
+
+### Not in scope (explicit, with rationale)
+
+Honors PR #111's local-maximum lesson: no new skill, agent, or validator. Rejected candidates documented in #173 body:
+
+- ❌ **New `/doubt-check` skill** — duplicates `/cross-verify` + existing `@8-habit-reviewer` dispatch pattern.
+- ❌ **`source-driven-development` import** — duplicates `/research` Evidence Standard + `/build-brief` "read code before writing".
+- ❌ **Cross-model CLI escalation (Gemini/Codex)** — per ADR-006 (Superpowers deferral) and ADR-005 (plugin boundary), out-of-process tool invocation belongs in `claude-governance` or external tooling.
+- ❌ **agentskills.io frontmatter migration** — [ADR-007](docs/adr/ADR-007-agentskills-compatibility-decision.md) NO-GO holds (2026-04-11 decision unchanged).
+
+### Verification
+
+- `bash tests/validate-structure.sh` — 256/256 PASS
+- `bash tests/validate-content.sh` — 214/214 PASS (pre-bump; release-meta checks added below)
+- `@8-habit-reviewer` agent dispatched on PR #174 diff: 14/17 pass + 3 N/A + 0 hard blockers + 3 polish items, **all addressed in-PR** (F1 Quick Reference row, F2 concrete subagent dispatch syntax, F3 missing habit label)
+
+Pattern: **post-audit delta**. When an upstream methodology innovation publishes after a periodic audit, evaluate the delta in isolation rather than triggering a full re-audit. Same shape as v2.7.1's import from this same upstream (1/6 imported then; 3 new techniques imported now, all new since prior audit cutoff).
+
+---
+
 ## v2.15.0 — Cross-Artifact Consistency Analyzer + Opt-In Spec Persistence (2026-05-03)
 
 Minor release adding `/consistency-check` (the 18th skill) and an opt-in `--persist <slug>` argument to `/requirements`, `/design`, `/breakdown`. Inspired by github/spec-kit `/analyze` ([#165](https://github.com/pitimon/8-habit-ai-dev/issues/165)). Read-only by design; no gating, no enforcement (boundary preserved with `claude-governance`). Hybrid evaluation: deterministic when artifacts use `FR-NNN`/`Decision-N`/`Task #N` ID markers, LLM semantic with explicit warning when absent. Backward compatible — without `--persist`, all three modified skills behave byte-identically to v2.14.3.
