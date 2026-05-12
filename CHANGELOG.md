@@ -10,6 +10,40 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.15.4 — Backtick-Aware Ambiguity Pass + Dogfood ID Cleanup (2026-05-12)
+
+Patch release. First true bug-fix in the v2.15.x line — addresses the CRITICAL false-positive surfaced by v2.15.0's dogfood smoke test on 2026-05-03 (#167 filed same day). `/consistency-check` Pass 3 (Ambiguity) now skips tokens inside `` `…` `` inline code spans and triple-backtick fenced blocks. Closes [#167](https://github.com/pitimon/8-habit-ai-dev/issues/167) via [PR #182](https://github.com/pitimon/8-habit-ai-dev/pull/182).
+
+### Added
+
+- **`skills/consistency-check/SKILL.md` Pass 3 "Backtick-context filter (required)" subsection** — pre-strip backtick-quoted segments from each line before applying the `[NEEDS CLARIFICATION]` / `TBD` / `TODO` / `???` / `XXX` token match. Covers single-backtick inline spans + triple-backtick fenced blocks. Rationale: PRDs legitimately mention these tokens as detection-target documentation (e.g., ``"the `[NEEDS CLARIFICATION]` token"``); flagging them as findings would punish writers for documenting the analyzer's own contract.
+- **`tests/validate-content.sh` Check 21** — asserts 3 contract signals in SKILL.md Pass 3: "Backtick-context filter" label, "documentation-references" semantic, "pre-strip" workflow. Prevents future drift back to plain `grep -nE` semantics.
+
+### Changed
+
+- `skills/consistency-check/reference.md` — known-limitation note (line 143 in pre-fix state, citing #167) removed. The limitation was the bug; bug is now fixed.
+- `docs/specs/consistency-check/tasks.md:48` — `Decision-D5` → `Decision-5`; `Decision-D9` → `Decision-9`. Two stale references missed by PR #169's earlier ID canonicalization pass.
+- `README.md` — badge 2.15.3 → 2.15.4; new "What's New in v2.15.4" section.
+- `SELF-CHECK.md` — header version + Previous; per-release row appended for v2.15.4.
+- `docs/wiki/Changelog.md` — badge + new v2.15.4 entry.
+
+### Design
+
+**Option A (backtick-context filter) chosen over Option B (`<!-- consistency-check: skip -->` marker)** — per #167 recommendation: fewer escape hatches, principled, generalizes. Aligns the analyzer's runtime semantics with the validator-side whitelist that already exists for `skills/consistency-check/` content (`tests/validate-content.sh` Check 12c). The two-tier design (validator whitelist for skill prose + analyzer backtick-filter for spec artifacts) is now internally consistent: tokens inside backticks are documentation-references everywhere.
+
+### Pattern
+
+**Bug fix of a feature shipped 9 days ago** — distinct from v2.15.1/2/3 (content additions and convention imports). This is the first true bug-fix patch in the v2.15.x line. Issue surfaced via dogfood smoke test on the day v2.15.0 shipped; fix deferred because the bug is non-blocking (false-positive, not false-negative) and three intervening reflection-driven content patches had priority.
+
+### Verification
+
+- `bash tests/validate-structure.sh` → 256 PASS, 0 FAIL.
+- `bash tests/validate-content.sh` → 217 PASS, 0 FAIL, 1 WARN, 0 fitness breaches.
+- Check 21 fires 3 new pass signals when SKILL.md has the contract.
+- Manual smoke test (per CONTRIBUTING.md): re-run `/consistency-check consistency-check` after merge to confirm `prd.md:45` no longer flagged. (Analyzer is a Claude-runtime skill, not bash-invokable; verification deferred to next maintainer running the smoke test.)
+
+---
+
 ## v2.15.3 — Integrity Commandment #13: Grep-Verify Quotes Before Pasting (2026-05-12)
 
 Patch release. Content-only addition to `guides/integrity-principles.md` closing a verification-discipline gap surfaced during the v2.15.2 reflection (obs #85070, #85071). Two consecutive PR reviews (#174, #177) showed habit-attribution drift from gestalt pattern-matching, and a quote misattribution (`"Magic" behavior` at ADR-013 Alt-2 line 87 wrongly cited to Alt-4) propagated through 4 artifacts before reviewer catch. Closes [#179](https://github.com/pitimon/8-habit-ai-dev/issues/179) via [PR #180](https://github.com/pitimon/8-habit-ai-dev/pull/180).

@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.15.3-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.3)
+[![Version](https://img.shields.io/badge/Version-2.15.4-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.4)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -414,6 +414,19 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
 
+## What's New in v2.15.4
+
+**Theme: Backtick-Aware Ambiguity Pass + Dogfood ID Cleanup** ([#167](https://github.com/pitimon/8-habit-ai-dev/issues/167), [PR #182](https://github.com/pitimon/8-habit-ai-dev/pull/182))
+
+First true bug-fix patch in the v2.15.x line — addresses the CRITICAL false-positive surfaced by v2.15.0's dogfood smoke test 9 days ago. `/consistency-check` Pass 3 (Ambiguity) now skips tokens inside `` `…` `` inline code spans and triple-backtick fenced blocks, aligning the analyzer's runtime semantics with the validator-side whitelist that already exists for `skills/consistency-check/` content (Check 12c).
+
+- **Pass 3 backtick-context filter** (Option A from #167) — pre-strip backtick-quoted segments from each line before applying the `[NEEDS CLARIFICATION]` / `TBD` / `TODO` / `???` / `XXX` token match. Eliminates the `docs/specs/consistency-check/prd.md:45` false-positive where the PRD legitimately mentions the token inside backticks as detection-target documentation. Fewer escape hatches, principled, generalizes — no per-file whitelisting needed.
+- **Known-limitation note removed** from `skills/consistency-check/reference.md` (the limitation was the bug; bug is now fixed).
+- **Dogfood ID residual cleaned** — `tasks.md:48` had two stale `Decision-D5` / `Decision-D9` references missed by PR #169's earlier canonicalization. Aligned to `Decision-N` (no D prefix) per ADR-013.
+- **Validator Check 21 added** (`tests/validate-content.sh`) — asserts 3 contract signals: "Backtick-context filter" label, "documentation-references" semantic, "pre-strip" workflow. Prevents future drift back to plain `grep -nE` semantics.
+
+Pattern: **bug fix of a feature shipped 9 days ago** — distinct shape from v2.15.1/2/3 (content additions and convention imports). Issue surfaced via dogfood smoke test the day v2.15.0 shipped (#167 filed 2026-05-03); fix deferred because the bug is non-blocking (false-positive, not false-negative) and three intervening reflection-driven content patches had priority. The two-tier consistency design (validator whitelist for skill prose + analyzer backtick-filter for spec artifacts) is now internally consistent: tokens inside backticks are documentation-references everywhere.
+
 ## What's New in v2.15.3
 
 **Theme: Integrity Commandment #13 — Grep-Verify Quotes Before Pasting** ([#179](https://github.com/pitimon/8-habit-ai-dev/issues/179), [PR #180](https://github.com/pitimon/8-habit-ai-dev/pull/180))
@@ -745,4 +758,4 @@ MIT
 
 ---
 
-_Version: 2.15.3 | Last updated: 2026-05-12_
+_Version: 2.15.4 | Last updated: 2026-05-12_

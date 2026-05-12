@@ -1,10 +1,16 @@
-![Version](https://img.shields.io/badge/latest-v2.15.3-blue)
+![Version](https://img.shields.io/badge/latest-v2.15.4-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.15.4 — Backtick-Aware Ambiguity Pass + Dogfood ID Cleanup (May 2026)
+
+Patch release. First true bug-fix in the v2.15.x line — addresses the CRITICAL false-positive surfaced by v2.15.0's dogfood smoke test 9 days prior. Closes [#167](https://github.com/pitimon/8-habit-ai-dev/issues/167) via [PR #182](https://github.com/pitimon/8-habit-ai-dev/pull/182).
+
+`/consistency-check` Pass 3 (Ambiguity) gains a "Backtick-context filter (required)" subsection — pre-strip backtick-quoted segments from each line before applying the `[NEEDS CLARIFICATION]` / `TBD` / `TODO` / `???` / `XXX` token match. Covers single-backtick inline spans and triple-backtick fenced blocks. Eliminates the `docs/specs/consistency-check/prd.md:45` false-positive where the PRD legitimately mentions the token inside backticks as detection-target documentation. Option A from #167 (backtick-context filter) chosen over Option B (skip-marker comment): fewer escape hatches, principled, generalizes. Aligns analyzer runtime semantics with the validator-side whitelist that already exists for `skills/consistency-check/` content (`tests/validate-content.sh` Check 12c) — the two-tier design (validator whitelist for skill prose + analyzer backtick-filter for spec artifacts) is now internally consistent. Reference.md known-limitation note removed (the limitation was the bug). F2 residual cleaned: `tasks.md:48` `Decision-D5`/`Decision-D9` → canonical `Decision-5`/`Decision-9` per ADR-013, completing PR #169's earlier canonicalization. Validator Check 21 added asserting 3 contract signals — prevents future drift back to plain `grep -nE` semantics. Validator state: `validate-structure.sh` 256/256 PASS, `validate-content.sh` 217 PASS / 0 FAIL / 0 fitness breaches. Pattern: bug fix of a feature shipped 9 days ago — distinct from v2.15.1/2/3 (content additions and convention imports).
 
 ## v2.15.3 — Integrity Commandment #13: Grep-Verify Quotes Before Pasting (May 2026)
 
