@@ -162,6 +162,15 @@ This catches the "stuck at v2.N-5" scenario at PR time instead of 4 months later
 
 See [issue #108](https://github.com/pitimon/8-habit-ai-dev/issues/108) and [issue #106](https://github.com/pitimon/8-habit-ai-dev/issues/106) for the drift incident that motivated this check.
 
+### Link check (external URLs)
+
+Two GitHub Actions workflows guard against dead links:
+
+- **`.github/workflows/link-check.yml`** — repo-wide markdown link validation. Runs on PR + push to main when any `*.md` file changes. Uses [`lychee`](https://github.com/lycheeverse/lychee) (Rust, fast). Scope: external HTTP/HTTPS URLs across all `*.md` outside `docs/wiki/`. Excludes self-referential URLs to this repo's `main` branch (they only resolve after merge). Issue #172.
+- **`.github/workflows/wiki-linkcheck.yml`** — wiki-specific check. Runs on PR when `docs/wiki/**` changes. Same lychee tool, separate workflow because wiki uses wiki-style `[text](Home)` links that require different resolution rules.
+
+Internal markdown links (relative `.md` paths) are validated by `tests/validate-content.sh` Check 12b — out of scope for the link-check workflows. The two-layer design (CI catches external dead URLs; shell tests catch internal broken paths) covers the full surface without duplication.
+
 ## Version Bumping
 
 Version lives in **4 files** — all must be bumped together:
