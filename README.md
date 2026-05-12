@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.15.5-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.5)
+[![Version](https://img.shields.io/badge/Version-2.15.6-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.6)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -414,6 +414,17 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
 
+## What's New in v2.15.6
+
+**Theme: SKILL_OUTPUT Producer + Consumer Doc Sync** ([#153](https://github.com/pitimon/8-habit-ai-dev/issues/153), [PR #186](https://github.com/pitimon/8-habit-ai-dev/pull/186))
+
+Doc-only patch closing a pair of same-shape drift gaps in `guides/structured-output-protocol.md`. Both stemmed from `/design`'s `SKILL_OUTPUT:design` block being added without doc sync.
+
+- **Producer entry added** — `/design` → `SKILL_OUTPUT:design` now documented between `/requirements` and `/breakdown` (workflow Step 2 placement). Schema matches `skills/design/SKILL.md:128-142` exactly: `decision_count`, `decisions`, `sticky_decisions`, `constraints`, `adr_references`, `article_14_applicable`, `article_14_pass`. Concrete example values match the existing producer style.
+- **Consumer entries added** — Q14 (`decision_count` → third-alternative flag) and Q16 (`sticky_decisions` → WHY-not-captured flag) now documented in the Consumer Skills section. Q4 extended with the design-block cross-check (`decision_count` vs `success_criteria_count`). All 5 SKILL_OUTPUT-consuming questions from `skills/cross-verify/SKILL.md:35-41` are now mirrored in the guide.
+
+Pattern: **producer + consumer doc-sync-as-a-pair** — adding a producer without documenting where its keys are consumed creates the same "confusion point" the issue cites. Strict-scope fix would have shipped half the gap; H4 + H1 closure fixes both halves in one PR.
+
 ## What's New in v2.15.5
 
 **Theme: Repo-Wide Link-Check CI Gate** ([#172](https://github.com/pitimon/8-habit-ai-dev/issues/172), [PR #184](https://github.com/pitimon/8-habit-ai-dev/pull/184))
@@ -772,4 +783,4 @@ MIT
 
 ---
 
-_Version: 2.15.5 | Last updated: 2026-05-12_
+_Version: 2.15.6 | Last updated: 2026-05-13_
