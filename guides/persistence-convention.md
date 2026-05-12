@@ -96,6 +96,59 @@ For maximum rigor when running `/consistency-check`, persisted artifacts SHOULD 
 
 When IDs are present, `/consistency-check` runs deterministic Coverage and Inconsistency passes. When absent, it falls back to LLM semantic comparison and emits an explicit warning at the top of its report. IDs are RECOMMENDED, not REQUIRED.
 
+## Current State File (Optional, User-Owned)
+
+In addition to the 3 skill-managed artifacts above, this convention recommends a **4th file** for capturing **where the work stands right now** (running state, not immutable spec):
+
+```
+docs/specs/<slug>/current-state.md
+```
+
+**User-owned, manual.** No plugin skill writes to this file — the user creates and maintains it manually. It exists to solve the **resume-after-context-loss** problem: when `/clear`, `/compact`, or a session crash flushes conversation context, this file is the fine-grained task-level anchor the next session reads to continue without re-explanation.
+
+**Frontmatter exemption (explicit)**: unlike the skill-managed artifacts above (`prd.md` / `design.md` / `tasks.md`), `current-state.md` is user-owned and **not** subject to the [YAML frontmatter](#yaml-frontmatter) MUST. The file is free-form Markdown using the template below — no `feature`/`step`/`created`/`updated` fields required (a `Last updated` line in the body is sufficient).
+
+### Template
+
+```markdown
+# Current State — <feature name>
+
+**Doing now**: <specific task/sub-task currently active, e.g. "Task #4 — implement GET /users/:id endpoint">
+**Blocked on / stuck at**: <what's holding it up, or "nothing" / "waiting for review">
+**Next**: <the immediate next action when this completes>
+**Last updated**: <ISO 8601 datetime>
+```
+
+### Why a separate file rather than a section in `tasks.md`
+
+Re-running `/breakdown --persist <slug>` is legitimate when scope changes and a re-breakdown is needed. The [Conflict policy](#conflict-policy) above triggers and either overwrites `tasks.md` or writes to a numbered variant. A hand-maintained `## Current State` H2 inside `tasks.md` would be at risk either way — overwrite loses it; numbered variant splits user-edited state from skill-regenerated tasks. Isolating Current State in its own user-owned file (no skill writer) eliminates the ownership conflict.
+
+### Granularity vs `hooks/session-start.sh`
+
+`hooks/session-start.sh` already detects which `--persist` artifacts exist and nudges the **next workflow step** (e.g. `prd.md` present → suggest `/design`). That's **step-level** resume awareness.
+
+`current-state.md` is **task-level** resume awareness — which specific task is in flight, what blocker, what immediate next action. The two are complementary; both can be used together.
+
+### `/consistency-check` exclusion (explicit)
+
+`/consistency-check` does **NOT** analyze `current-state.md`. Informal running state is out of scope for cross-artifact consistency passes, which operate on the PRD ↔ design ↔ tasks immutable specs. The exclusion is by design — running state changes constantly and would create noise in drift/coverage analysis.
+
+## Auto-Update Recipe (User-Side, Optional)
+
+To keep `current-state.md` honest without remembering to update it each time, users can adopt a CLAUDE.md rule in their own `~/.claude/CLAUDE.md` or project `CLAUDE.md`:
+
+```markdown
+## After completing any task:
+
+1. Update `docs/specs/<slug>/current-state.md` — what's doing now, blockers, next action, last-updated timestamp
+2. Update data contracts in `docs/specs/<slug>/design.md` if any interface changed
+3. Never claim "done" without updating `current-state.md` first
+```
+
+**Plugin does not enforce this.** [ADR-013 Alternative 4](../docs/adr/ADR-013-spec-persistence-opt-in.md) rejected plugin-side auto-persist as violating the no-build philosophy ("skills are read-only guidance"; always-writing skills create unintended file artifacts) — that decision stands. The recipe above is **user-side adoption**: the user opts into the discipline by adding the rule to their own CLAUDE.md. The plugin teaches the pattern; the user owns enforcement.
+
+This split honors the plugin boundary: workflow discipline lives here, runtime enforcement lives in `claude-governance` (or in user CLAUDE.md hooks for self-enforcement).
+
 ## Verification
 
 To verify the convention is working:
@@ -106,3 +159,9 @@ ls docs/specs/add-user-login/
 head -10 docs/specs/add-user-login/prd.md  # frontmatter visible
 grep "SKILL_OUTPUT:requirements" docs/specs/add-user-login/prd.md  # block present
 ```
+
+---
+
+## Attribution
+
+The "Current State File" + "Auto-Update Recipe" sections paraphrase a community pattern from the Thai-language article _"ผมไม่เคยกลัว /clear กับ /compact"_, which proposes a single `spec.md` with 4 sections (architecture / done / todo / current state) auto-updated via a CLAUDE.md rule. This plugin imports the **current-state save-point** insight and the **auto-update recipe** template as a 4th user-owned file rather than collapsing onto a single file — the existing 3-file skill-managed model is better suited to `/consistency-check`'s cross-artifact passes (PRD ↔ design ↔ tasks). See [#176](https://github.com/pitimon/8-habit-ai-dev/issues/176).
