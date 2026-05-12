@@ -1,10 +1,18 @@
-![Version](https://img.shields.io/badge/latest-v2.15.1-blue)
+![Version](https://img.shields.io/badge/latest-v2.15.2-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.15.2 — Current State Save-Point Convention (May 2026)
+
+Patch release. Convention-only addition to `guides/persistence-convention.md` importing a community-article save-point pattern (Thai-language article _"ผมไม่เคยกลัว /clear กับ /compact"_) as a user-owned 4th file. Closes [#176](https://github.com/pitimon/8-habit-ai-dev/issues/176) via [PR #177](https://github.com/pitimon/8-habit-ai-dev/pull/177).
+
+Three new sections in `guides/persistence-convention.md`: **`## Current State File (Optional, User-Owned)`** (recommends `docs/specs/<slug>/current-state.md` with template doing-now / stuck-at / next / last-updated; user-owned, no plugin skill writes; frontmatter-exempt; `/consistency-check` explicitly excluded), **`## Auto-Update Recipe (User-Side, Optional)`** (CLAUDE.md rule template the user adopts — plugin does NOT enforce per ADR-013 Alt-4: no-build philosophy + unintended file artifacts), and **`## Attribution`** (credits the article + #176).
+
+Solves the resume-after-context-loss problem (`/clear`, `/compact`, session crash) at **task level** — complements `hooks/session-start.sh:83-115`'s step-level artifact-detection nudges (Issue #119, v2.7.0). Habit mapping: H5 + H3 for Current State File; H1 for Auto-Update Recipe. Honors PR #111's local-maximum lesson: no new skill, no new agent, no validator change, no DAG change. Validator state: `validate-structure.sh` 256/256 PASS, `validate-content.sh` 0 fitness breaches. `@8-habit-reviewer` pre-merge: 17/17 PASS + 2 polish items both addressed in-PR. Pattern: **community-article convention-only import** — distinct shape from v2.15.1's upstream-skill extract; the article has no canonical PR/commit to cite, attribution is paraphrased title + issue link.
 
 ## v2.15.1 — Doubt-Driven Techniques Imported (May 2026)
 

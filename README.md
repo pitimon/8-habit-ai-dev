@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.15.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.1)
+[![Version](https://img.shields.io/badge/Version-2.15.2-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.2)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -414,6 +414,20 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
 
+## What's New in v2.15.2
+
+**Theme: Current State Save-Point Convention** ([#176](https://github.com/pitimon/8-habit-ai-dev/issues/176), [PR #177](https://github.com/pitimon/8-habit-ai-dev/pull/177))
+
+Convention-only addition to `guides/persistence-convention.md` importing a community-article save-point pattern (Thai-language article _"ผมไม่เคยกลัว /clear กับ /compact"_) as a user-owned 4th file. No new skill, no new agent, no validator change, no DAG change.
+
+- **`## Current State File (Optional, User-Owned)`** — recommends `docs/specs/<slug>/current-state.md` with template (doing-now / stuck-at / next / last-updated). User-owned (no plugin skill writes), frontmatter-exempt, `/consistency-check` explicitly excluded. Solves resume-after-context-loss (`/clear`, `/compact`, crash) at **task level** — complements `hooks/session-start.sh`'s step-level artifact-detection nudges. Habit mapping: H5 + H3.
+- **`## Auto-Update Recipe (User-Side, Optional)`** — CLAUDE.md rule template users can adopt in their own `~/.claude/CLAUDE.md` or project `CLAUDE.md`. **Plugin does not enforce** — preserves [ADR-013 Alt-4](docs/adr/ADR-013-spec-persistence-opt-in.md) invariant (no-build philosophy: skills are read-only guidance). Habit mapping: H1.
+- **`## Attribution`** — credits the community article + `#176` for traceability.
+
+Rejected in-scope candidates explicit in #176 body: single-file `spec.md` format (breaking change), plugin-side auto-persist (ADR-013 Alt-4), data contracts as new section (already covered by `/design` Step 4), new `/save-point` skill (duplicates `/reflect`), single-file priming command (`session-start.sh:83-115` already detects 3-file model).
+
+Pattern: **community-article convention-only import** — distinct shape from v2.15.1's upstream-skill extract (addyosmani PR #139). Article has no canonical PR/commit to cite; paraphrased title + issue link is the maximum achievable attribution.
+
 ## What's New in v2.15.1
 
 **Theme: Post-Audit Delta — Doubt-Driven Techniques Imported** ([#173](https://github.com/pitimon/8-habit-ai-dev/issues/173), [PR #174](https://github.com/pitimon/8-habit-ai-dev/pull/174))
@@ -717,4 +731,4 @@ MIT
 
 ---
 
-_Version: 2.15.1 | Last updated: 2026-05-11_
+_Version: 2.15.2 | Last updated: 2026-05-12_
