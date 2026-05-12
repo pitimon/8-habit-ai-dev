@@ -1,10 +1,16 @@
-![Version](https://img.shields.io/badge/latest-v2.15.2-blue)
+![Version](https://img.shields.io/badge/latest-v2.15.3-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.15.3 — Integrity Commandment #13: Grep-Verify Quotes Before Pasting (May 2026)
+
+Patch release. Content-only addition to `guides/integrity-principles.md` closing a verification-discipline gap surfaced during the v2.15.2 reflection. Two consecutive PR reviews (#174, #177) showed habit-attribution drift from gestalt pattern-matching, and a quote misattribution (`"Magic" behavior` at ADR-013 Alt-2 line 87 wrongly cited to Alt-4) propagated through 4 artifacts before reviewer catch. Closes [#179](https://github.com/pitimon/8-habit-ai-dev/issues/179) via [PR #180](https://github.com/pitimon/8-habit-ai-dev/pull/180).
+
+New commandment **#13**: _"Never paste a verbatim quote without grep-verifying its source."_ Scope: ADR citations, habit principle claims (H1-H8 attributions), scare-quoted external phrases, observation IDs, prior-conversation paraphrases presented as direct quotes. Title updated 12→13; mapping table row extended `5-7, 13 (Honesty)` → H8 Find Voice / Spirit (conscience); 3 live cross-references synced (README architecture-tree comment, `/review-ai` load directive). Historical entries (v1.9.0 release line, v2.0.0 CHANGELOG delta, SELF-CHECK v1.9.0 improvements section) intentionally preserved as period record — editing them would itself violate commandment #4 (evidence) and #5 (paths). Dogfooding moment: drafting #13 caught its own meta-violation pre-commit — initial `"magic behavior"` (lowercase) self-corrected to `"Magic" behavior` (capitalized) to match ADR-013:87 exactly. Pattern: **commandment growth driven by reflection-detected internal drift across ≥2 sessions** — distinct from v2.15.1 upstream-import and v2.15.2 community-article convention-import. Validator state: `validate-structure.sh` 256/256 PASS.
 
 ## v2.15.2 — Current State Save-Point Convention (May 2026)
 

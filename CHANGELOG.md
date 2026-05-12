@@ -10,6 +10,44 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.15.3 — Integrity Commandment #13: Grep-Verify Quotes Before Pasting (2026-05-12)
+
+Patch release. Content-only addition to `guides/integrity-principles.md` closing a verification-discipline gap surfaced during the v2.15.2 reflection (obs #85070, #85071). Two consecutive PR reviews (#174, #177) showed habit-attribution drift from gestalt pattern-matching, and a quote misattribution (`"Magic" behavior` at ADR-013 Alt-2 line 87 wrongly cited to Alt-4) propagated through 4 artifacts before reviewer catch. Closes [#179](https://github.com/pitimon/8-habit-ai-dev/issues/179) via [PR #180](https://github.com/pitimon/8-habit-ai-dev/pull/180).
+
+### Added
+
+- **`guides/integrity-principles.md` commandment #13** — _"Never paste a verbatim quote without grep-verifying its source."_ Added under Honesty & Accuracy section. Covers ADR citations, habit principle claims (H1-H8 attributions), scare-quoted external phrases, observation IDs, and prior-conversation paraphrases presented as direct quotes. Why-statement cites the concrete v2.15.2 incident with line-number evidence; Instead-statement specifies the grep workflow (`Source: docs/adr/ADR-013.md:87`).
+
+### Changed
+
+- `guides/integrity-principles.md` — title "The 12 Commandments" → "The 13 Commandments"; mapping table row extended `5-7 (Honesty)` → `5-7, 13 (Honesty)` mapping to H8 Find Voice / Spirit (conscience).
+- `README.md` — badge 2.15.2 → 2.15.3; architecture-tree comment "12 AI Integrity Commandments" → "13"; new "What's New in v2.15.3" section.
+- `skills/review-ai/SKILL.md` — load directive "the 12 commandments" → "the 13 commandments".
+- `SELF-CHECK.md` — header version + Previous; per-release row appended for v2.15.3.
+
+### Intentionally preserved as historical record (not changed)
+
+- `SELF-CHECK.md` v1.9.0 improvements section (line 140) — records what shipped in v1.9.0.
+- `README.md` v1.9.0 release line (line 617) — release-history entry.
+- `CHANGELOG.md` v2.0.0 deltas entry (line 464) — release-history entry.
+
+Editing historical records would itself violate commandment #5 (file paths/names) and #4 (verified evidence) — the period record stays accurate.
+
+### Pattern
+
+**Commandment growth driven by reflection-detected internal drift across ≥2 sessions** — distinct from v2.15.1 upstream-import (addyosmani) and v2.15.2 community-article convention-import (Thai save-point article). Trigger is internal cross-session pattern, not external publication.
+
+### Dogfooding moment
+
+Drafting commandment #13 caught its own meta-violation pre-commit: initial text quoted `"magic behavior"` (lowercase, two-word) but ADR-013:87 actually says `"Magic" behavior` (capitalized, scare-quote on single word). Self-corrected, demonstrating the rule applies to its own writing.
+
+### Verification
+
+- `bash tests/validate-structure.sh` → 256 PASS, 0 FAIL.
+- Grep-verified `"Magic" behavior` at `docs/adr/ADR-013-spec-persistence-opt-in.md:87` under Alt-2 header at line 85.
+
+---
+
 ## v2.15.2 — Current State Save-Point Convention (2026-05-12)
 
 Patch release. Convention-only addition to `guides/persistence-convention.md` importing a community-article save-point pattern (Thai-language article _"ผมไม่เคยกลัว /clear กับ /compact"_) as a user-owned 4th file. Closes [#176](https://github.com/pitimon/8-habit-ai-dev/issues/176) via [PR #177](https://github.com/pitimon/8-habit-ai-dev/pull/177).
