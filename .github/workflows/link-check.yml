@@ -9,9 +9,11 @@ name: Link Check
 # wiki-style link semantics). Internal markdown links (relative .md paths)
 # are validated by tests/validate-content.sh Check 12b — out of scope here.
 #
-# Self-referential URLs to this repo's main branch are excluded — they only
-# resolve after the PR merges and would otherwise produce false-positives
-# on every fresh PR.
+# Self-referential URLs are excluded for the same chicken-and-egg reason:
+# `(blob|tree|raw)/main/` only resolves after PR merges, and `releases/tag/vX.Y.Z`
+# only resolves after the release PR merges and the tag is pushed. Both would
+# otherwise produce false-positives on every fresh release PR (the README badge
+# points to the not-yet-existing release tag).
 #
 # Private cross-repo URLs are excluded — the workflow's GITHUB_TOKEN is scoped
 # to this repo only and cannot authenticate against pitimon/memforge or
@@ -51,7 +53,7 @@ jobs:
             --max-concurrency 4
             --scheme https
             --scheme http
-            --exclude '^https://github\.com/pitimon/8-habit-ai-dev/(blob|tree|raw)/main/'
+            --exclude '^https://github\.com/pitimon/8-habit-ai-dev/(blob|tree|raw)/main/|^https://github\.com/pitimon/8-habit-ai-dev/releases/tag/'
             --exclude '^https://github\.com/pitimon/(memforge|devsecops-ai-team)(/|$)'
             --exclude-path ./docs/wiki
             './**/*.md'

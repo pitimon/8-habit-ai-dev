@@ -1,10 +1,18 @@
-![Version](https://img.shields.io/badge/latest-v2.15.4-blue)
+![Version](https://img.shields.io/badge/latest-v2.15.5-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.15.5 — Repo-Wide Link-Check CI Gate + Real Link-Rot Fixes (May 2026)
+
+Patch release. Adds `.github/workflows/link-check.yml` — repo-wide markdown link validation using lychee. Triggers on PR + push to main when any `**/*.md` changes. Closes [#172](https://github.com/pitimon/8-habit-ai-dev/issues/172) via [PR #184](https://github.com/pitimon/8-habit-ai-dev/pull/184).
+
+Scope: external HTTP/HTTPS URLs across all `*.md` outside `docs/wiki/` (wiki covered by separate workflow). Excludes self-referential `pitimon/8-habit-ai-dev/(blob|tree|raw)/main/` URLs (only resolve post-merge) and private cross-repo refs to `pitimon/memforge` + `pitimon/devsecops-ai-team` (workflow `GITHUB_TOKEN` is scoped to this repo only; cannot authenticate against other private repos). `claude-governance` is public and stays in scope. Internal markdown links remain validated by `tests/validate-content.sh` Check 12b — two-layer design (CI for external, shell for internal) covers full surface without duplication.
+
+First CI run on PR #184 caught 3 real link-rot issues: README.md typo `claud-mem-me` → `memforge` (repo doesn't exist under typo'd name), ADR-005:137 dead EU AI Act Service Desk URL (EC restructured path; ADR-005 is Superseded per ADR-012, preserved as historical reference text with note), and `pitimon/devsecops-ai-team/issues/467` 404 due to private-repo CI token scope (added to exclude pattern with rationale). CONTRIBUTING.md gains "Link check (external URLs)" subsection under Testing Conventions documenting both workflows + the two-layer design. Pattern: **CI gate that immediately proves its own value** — link rot was already happening silently; the gate catches it at PR time vs when users report broken navigation. The 8-habit-reviewer recommendation from the 3-plugin integration audit is now enforced. Validator state: `validate-structure.sh` 256/256 PASS, `validate-content.sh` 217 PASS / 0 FAIL / 0 fitness breaches; link-check CI run after fixes: PASS.
 
 ## v2.15.4 — Backtick-Aware Ambiguity Pass + Dogfood ID Cleanup (May 2026)
 

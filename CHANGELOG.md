@@ -10,6 +10,56 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.15.5 — Repo-Wide Link-Check CI Gate + Real Link-Rot Fixes (2026-05-12)
+
+Patch release. Adds a new CI gate (lychee link-check workflow) that immediately caught 3 real link-rot issues on its first run. Closes [#172](https://github.com/pitimon/8-habit-ai-dev/issues/172) via [PR #184](https://github.com/pitimon/8-habit-ai-dev/pull/184).
+
+### Added
+
+- **`.github/workflows/link-check.yml`** — repo-wide markdown link validation using [`lychee`](https://github.com/lycheeverse/lychee) (Rust, fast). Triggers on PR + push to main when any `**/*.md` changes. Scope: external HTTP/HTTPS URLs across all `*.md` outside `docs/wiki/` (wiki has its own workflow). Pinned to same lychee-action commit SHA as `wiki-linkcheck.yml` (`8646ba30...` v2) for single-source-of-truth across both workflows.
+- **`CONTRIBUTING.md` "Link check (external URLs)" subsection** under Testing Conventions — documents both link-check workflows and the two-layer design (CI for external URLs, shell tests for internal paths).
+
+### Changed
+
+- `README.md:666` — typo `https://github.com/pitimon/claud-mem-me` (repo doesn't exist) → `https://github.com/pitimon/memforge` (correct name). Real bug caught by the first CI run.
+- `docs/adr/ADR-005-eu-ai-act-compliance-toolkit.md:137` — dead EU URL `https://ai-act-service-desk.ec.europa.eu/en/ai-act/` (404 as of 2026-05; EC restructured the service desk path). Since ADR-005 is Superseded (per ADR-012), preserved as historical reference text with note explaining the URL state. No canonical replacement available without separate research.
+- `README.md` — badge 2.15.4 → 2.15.5; new "What's New in v2.15.5" section.
+- `SELF-CHECK.md` — header version + Previous; per-release row appended for v2.15.5.
+- `docs/wiki/Changelog.md` — badge + new v2.15.5 entry.
+
+### Design
+
+**Two-layer link validation**:
+
+- **External URLs (CI)**: lychee workflows catch dead HTTP/HTTPS URLs (cross-repo refs, external docs, EC sites, etc.)
+- **Internal paths (shell)**: `tests/validate-content.sh` Check 12b catches broken relative `.md` paths
+
+Clean separation, no duplication. Wiki has its own workflow because wiki-style `[text](Home)` links require different resolution rules.
+
+**Excluded URLs**:
+
+- `pitimon/8-habit-ai-dev/(blob|tree|raw)/main/` — self-referential URLs only resolve after PR merges; would otherwise false-positive on every fresh PR.
+- `pitimon/(memforge|devsecops-ai-team)` — private repos; workflow's `GITHUB_TOKEN` is scoped to this repo only and cannot authenticate against other private repos. These URLs are author-verified at write time; CI cannot re-verify them.
+- `claude-governance` is **public and stays in scope** — caught real cross-repo link rot during development.
+
+### Pattern
+
+**CI gate that immediately proves its own value** — the first run on PR #184 caught 3 real link-rot issues:
+
+1. README.md `claud-mem-me` typo (memforge repo name)
+2. ADR-005 dead EC AI Act Service Desk URL
+3. `pitimon/devsecops-ai-team/issues/467` 404 due to private-repo CI token scope (added to exclude list)
+
+The 8-habit-reviewer recommendation from the 3-plugin integration audit (PR #171 here, PR #32 in claude-governance, PR #468 in devsecops-ai-team) is now enforced. Link rot was already happening silently; the gate catches it at PR time instead of when users report broken navigation.
+
+### Verification
+
+- `bash tests/validate-structure.sh` → 256 PASS, 0 FAIL.
+- `bash tests/validate-content.sh` → 217 PASS, 0 FAIL, 0 fitness breaches.
+- Link-check CI on PR #184 → **PASS** (after 3 real fixes applied).
+
+---
+
 ## v2.15.4 — Backtick-Aware Ambiguity Pass + Dogfood ID Cleanup (2026-05-12)
 
 Patch release. First true bug-fix in the v2.15.x line — addresses the CRITICAL false-positive surfaced by v2.15.0's dogfood smoke test on 2026-05-03 (#167 filed same day). `/consistency-check` Pass 3 (Ambiguity) now skips tokens inside `` `…` `` inline code spans and triple-backtick fenced blocks. Closes [#167](https://github.com/pitimon/8-habit-ai-dev/issues/167) via [PR #182](https://github.com/pitimon/8-habit-ai-dev/pull/182).
