@@ -352,7 +352,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ├── guides/
 │   ├── cross-verification.md       # 17-point checklist detail
 │   ├── whole-person-rubrics.md     # 4-dimension maturity rubrics
-│   ├── integrity-principles.md    # 12 AI Integrity Commandments
+│   ├── integrity-principles.md    # 13 AI Integrity Commandments
 │   ├── quick-reference.md          # 19 prioritized rules (scannable)
 │   ├── situation-map.md            # 15 situations → right habit/skill
 │   ├── orchestration-patterns.md   # Multi-agent orchestration (v2.0.0)

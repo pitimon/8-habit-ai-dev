@@ -197,5 +197,5 @@ See [Step 5 wiki page](../../docs/wiki/Step-5-Review-AI.md) for deeper walkthrou
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/review-report-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md` for the full H4 principle and examples.
-Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards (the 12 commandments).
+Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards (the 13 commandments).
 Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.

@@ -4,7 +4,7 @@
 
 These commandments define what AI-assisted development must **never** do. Rules tell you what TO do; integrity commandments tell you what NEVER to do. Violations are non-negotiable — no exceptions for "small changes" or "obvious fixes."
 
-## The 12 Commandments
+## The 13 Commandments
 
 ### Evidence & Verification
 
@@ -45,6 +45,12 @@ These commandments define what AI-assisted development must **never** do. Rules 
 - **Why**: "This function handles authentication" might be true, but if you haven't read it, it's a guess
 - **Instead**: Mark uncertainty: "Based on the name, this likely handles auth — needs verification"
 
+**13. Never paste a verbatim quote without grep-verifying its source.**
+
+- **Why**: Plausible recollection of external text propagates errors silently. In v2.15.2 a `"Magic" behavior` scare-quote was attributed to ADR-013 Alt-4 (actual source: Alt-2, line 87); the misattribution survived through 4 artifacts before reviewer catch. Habit principle names match by gestalt, not by source text — observed in two consecutive PR reviews (#174, #177) where habit claims were corrected by reviewer pre-commit
+- **Instead**: Before pasting any quoted text — ADR citations, habit principle wording, scare-quoted phrases, external doc references, observation IDs — run `grep` against the source file and cite line numbers. `Source: docs/adr/ADR-013.md:87` beats "I recall it says...". When citing a habit (H1-H8), grep `rules/effective-development.md` to confirm the principle text matches your claim
+- **Scope**: ADR citations, habit principle claims, scare-quoted external text, observation IDs, prior-conversation paraphrases presented as direct quotes
+
 ### Process Discipline
 
 **8. Never skip security checks for "small changes."**
@@ -77,7 +83,7 @@ These commandments define what AI-assisted development must **never** do. Rules 
 | Commandment           | Primary Habit                           | Dimension |
 | --------------------- | --------------------------------------- | --------- |
 | 1-4 (Evidence)        | H4: Win-Win — honest feedback           | Heart     |
-| 5-7 (Honesty)         | H8: Find Voice — conscience             | Spirit    |
+| 5-7, 13 (Honesty)     | H8: Find Voice — conscience             | Spirit    |
 | 8-10 (Process)        | H1: Be Proactive — prevent, don't react | Body      |
 | 11-12 (Communication) | H4: Win-Win — Emotional Bank Account    | Heart     |
 
