@@ -10,6 +10,38 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.15.6 — SKILL_OUTPUT Producer + Consumer Doc Sync (2026-05-13)
+
+Patch release. Doc-only fix closing a pair of same-shape drift gaps in `guides/structured-output-protocol.md`. Both stemmed from `/design`'s `SKILL_OUTPUT:design` block being added without doc sync. Closes [#153](https://github.com/pitimon/8-habit-ai-dev/issues/153) via [PR #186](https://github.com/pitimon/8-habit-ai-dev/pull/186).
+
+### Added
+
+- **`/design` producer entry** in `guides/structured-output-protocol.md` "Producer Skills" section, inserted between `/requirements` and `/breakdown` (workflow Step 2 placement matching skill DAG order). Schema mirrors `skills/design/SKILL.md:128-142` exactly: `decision_count`, `decisions`, `sticky_decisions`, `constraints`, `adr_references`, `article_14_applicable`, `article_14_pass`. Concrete example values match the existing producer style.
+- **Q14 and Q16 consumer entries** in the "Consumer Skills" section — Q14 reads `decision_count` to flag third-alternative gaps, Q16 reads `sticky_decisions` to flag missing WHY captures.
+
+### Changed
+
+- `guides/structured-output-protocol.md` Q4 description extended with the design-block cross-check (`decision_count` vs `success_criteria_count`). All 5 SKILL_OUTPUT-consuming questions from `skills/cross-verify/SKILL.md:35-41` are now mirrored in the guide.
+- `README.md` — badge 2.15.5 → 2.15.6; new "What's New in v2.15.6" section; footer date 2026-05-13.
+- `SELF-CHECK.md` — header version + Previous; per-release row appended for v2.15.6.
+- `docs/wiki/Changelog.md` — badge + new v2.15.6 entry.
+
+### Pattern
+
+**Producer + consumer doc-sync-as-a-pair** — adding the producer alone would have shipped half the gap and itself created the "confusion point" the issue cites (H4 + H1). Strict-scope fix would have been incomplete; minimal scope expansion closes both halves in a single PR.
+
+### Source
+
+Originally surfaced by `8-habit-reviewer` cross-verification of PR #152 (the #151 attribution-line implementation) as a pre-existing gap out of scope for #151. Filed as a 5-minute follow-up; held in backlog until 2026-05-13 batch.
+
+### Verification
+
+- `bash tests/validate-structure.sh` → 256 PASS, 0 FAIL.
+- `bash tests/validate-content.sh` → 217 PASS, 0 FAIL, 0 fitness breaches.
+- Link-check CI PASS (release-tag exclude from v2.15.5 prevents the chicken-and-egg failure on release PRs).
+
+---
+
 ## v2.15.5 — Repo-Wide Link-Check CI Gate + Real Link-Rot Fixes (2026-05-12)
 
 Patch release. Adds a new CI gate (lychee link-check workflow) that immediately caught 3 real link-rot issues on its first run. Closes [#172](https://github.com/pitimon/8-habit-ai-dev/issues/172) via [PR #184](https://github.com/pitimon/8-habit-ai-dev/pull/184).

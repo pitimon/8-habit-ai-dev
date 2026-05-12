@@ -1,10 +1,16 @@
-![Version](https://img.shields.io/badge/latest-v2.15.5-blue)
+![Version](https://img.shields.io/badge/latest-v2.15.6-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.15.6 — SKILL_OUTPUT Producer + Consumer Doc Sync (May 2026)
+
+Patch release. Doc-only fix closing a pair of same-shape drift gaps in `guides/structured-output-protocol.md`. Both stemmed from `/design`'s `SKILL_OUTPUT:design` block being added without doc sync. Closes [#153](https://github.com/pitimon/8-habit-ai-dev/issues/153) via [PR #186](https://github.com/pitimon/8-habit-ai-dev/pull/186).
+
+Producer entry: `/design` → `SKILL_OUTPUT:design` inserted between `/requirements` and `/breakdown` (workflow Step 2 placement). Schema matches `skills/design/SKILL.md:128-142` exactly with all 7 keys; concrete example values match existing producer style. Consumer entries: Q14 (`decision_count` → third-alternative flag) + Q16 (`sticky_decisions` → WHY-not-captured flag); Q4 extended with design-block cross-check. All 5 SKILL_OUTPUT-consuming questions from `skills/cross-verify/SKILL.md:35-41` now mirrored in the guide. Pattern: **producer + consumer doc-sync-as-a-pair** — strict-scope producer-only fix would have created the "confusion point" the issue cites (H4 + H1). Minimal scope expansion closes both halves in one PR. Originally surfaced by `8-habit-reviewer` cross-verification of PR #152 (#151 attribution implementation). Validator state: `validate-structure.sh` 256/256 PASS, `validate-content.sh` 217 PASS / 0 FAIL / 0 fitness breaches.
 
 ## v2.15.5 — Repo-Wide Link-Check CI Gate + Real Link-Rot Fixes (May 2026)
 
