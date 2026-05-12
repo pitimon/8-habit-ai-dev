@@ -134,7 +134,7 @@ Per the Three Loops governance model:
 
 - **Regulation (EU) 2024/1689**: Official EU AI Act text (CELEX:32024R1689)
 - **EU AI Act Implementation Timeline**: https://artificialintelligenceact.eu/implementation-timeline/
-- **EC AI Act Service Desk**: https://ai-act-service-desk.ec.europa.eu/en/ai-act/
+- **EC AI Act Service Desk** (historical reference — original URL `https://ai-act-service-desk.ec.europa.eu/en/ai-act/` returns 404 as of 2026-05; EC restructured the service desk path)
 - **Internal research**: `docs/research/eu-ai-act-obligations.md` (verified quotes per article)
 - **User guide**: `guides/eu-ai-act-mapping.md`
 - **Issue #57**: v2.3.0 flagship S1 EU AI Act compliance toolkit

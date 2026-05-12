@@ -13,6 +13,12 @@ name: Link Check
 # resolve after the PR merges and would otherwise produce false-positives
 # on every fresh PR.
 #
+# Private cross-repo URLs are excluded — the workflow's GITHUB_TOKEN is scoped
+# to this repo only and cannot authenticate against pitimon/memforge or
+# pitimon/devsecops-ai-team (both private). These URLs are author-verified at
+# write time; CI cannot re-verify them. claude-governance is public and IS
+# checked (caught a real moved-doc bug pre-merge during dogfood).
+#
 # Issue: pitimon/8-habit-ai-dev#172
 
 on:
@@ -46,6 +52,7 @@ jobs:
             --scheme https
             --scheme http
             --exclude '^https://github\.com/pitimon/8-habit-ai-dev/(blob|tree|raw)/main/'
+            --exclude '^https://github\.com/pitimon/(memforge|devsecops-ai-team)(/|$)'
             --exclude-path ./docs/wiki
             './**/*.md'
           fail: true
