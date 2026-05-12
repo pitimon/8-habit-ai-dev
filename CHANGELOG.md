@@ -10,6 +10,45 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.15.2 — Current State Save-Point Convention (2026-05-12)
+
+Patch release. Convention-only addition to `guides/persistence-convention.md` importing a community-article save-point pattern (Thai-language article _"ผมไม่เคยกลัว /clear กับ /compact"_) as a user-owned 4th file. Closes [#176](https://github.com/pitimon/8-habit-ai-dev/issues/176) via [PR #177](https://github.com/pitimon/8-habit-ai-dev/pull/177).
+
+### Added
+
+- **`guides/persistence-convention.md` `## Current State File (Optional, User-Owned)` section** (lines 99-132) — documents the recommended 4th file `docs/specs/<slug>/current-state.md` with template (doing-now / stuck-at / next / last-updated), regeneration-safety rationale (why a separate file rather than appending to `tasks.md`), and explicit `/consistency-check` exclusion (informal running state is out of scope for cross-artifact consistency passes). **User-owned, no plugin skill writes to it** — eliminates the ownership conflict that would arise from co-locating hand-edits with a skill-regeneratable file. Frontmatter-exempt (template is free-form Markdown).
+- **`guides/persistence-convention.md` `## Auto-Update Recipe (User-Side, Optional)` section** (lines 134-148) — CLAUDE.md rule template users can adopt in their own `~/.claude/CLAUDE.md` or project `CLAUDE.md`. **Plugin does NOT enforce** — preserves [ADR-013 Alternative 4](docs/adr/ADR-013-spec-persistence-opt-in.md) invariant (no-build philosophy: "skills are read-only guidance"; always-writing skills create unintended file artifacts).
+- **`guides/persistence-convention.md` `## Attribution` section** (lines 161-165) — credits the community article + #176 issue. Paraphrased title + issue link is the maximum achievable attribution (no canonical URL exists for the article).
+
+### Changed
+
+- `README.md` — badge 2.15.1 → 2.15.2; new "What's New in v2.15.2" section.
+- `SELF-CHECK.md` — header version + Previous; per-release row appended for v2.15.2.
+- `docs/wiki/Changelog.md` — badge + new v2.15.2 entry.
+
+### Not in scope (explicit, with rationale)
+
+Honors PR #111's local-maximum lesson: no new skill, no new agent, no validator change, no skill-graph DAG change. The one new file (`current-state.md`) is convention-only — user-owned, plugin teaches the pattern, user owns enforcement. Rejected candidates documented in #176 body:
+
+- ❌ **Single-file `spec.md` format** — breaking change to ADR-013's 3-file model; trades `/consistency-check` cross-artifact analysis for resume convenience.
+- ❌ **Plugin-side auto-persist hook** — ADR-013 Alt-4 explicitly rejected (no-build philosophy + unintended file artifacts).
+- ❌ **Data contracts as new section** — already covered by `/design` Step 4 "Define the contracts".
+- ❌ **New `/save-point` or `/resume` skill** — duplicates `/reflect` invocation pattern; user maintains `current-state.md` manually.
+- ❌ **Single-file priming command** — `hooks/session-start.sh:83-115` already detects all 3 skill-managed artifacts and nudges next skill (Issue #119, v2.7.0).
+
+### Verification
+
+- `bash tests/validate-structure.sh` — 256/256 PASS
+- `bash tests/validate-content.sh` — PASS, 0 FAIL, 0 fitness breaches
+- `@8-habit-reviewer` agent dispatched on PR #177 diff pre-merge: 17/17 PASS + 2 polish items, **both addressed in-PR** (F1 ADR-013 Alt-4 quote accuracy — "magic behavior" was actually Alt-2's wording; F2 frontmatter MUST scope ambiguity — explicit exemption added)
+- `guides/persistence-convention.md` final size: 167 lines (cap 220; +58 net lines)
+
+### Pattern
+
+**Community-article convention-only import** — distinct shape from v2.15.1's upstream-skill extract (addyosmani PR #139). The article has no canonical PR/commit to cite — attribution is paraphrased title + issue link. Same minimal-scope discipline as the doubt-driven import: identify the one genuine gap, document the convention, reject everything else with rationale.
+
+---
+
 ## v2.15.1 — Doubt-Driven Techniques Imported (2026-05-11)
 
 Patch release. Single-guide enhancement to `guides/advisor-pattern.md` importing three techniques from [`addyosmani/agent-skills` — `doubt-driven-development`](https://github.com/addyosmani/agent-skills/blob/main/skills/doubt-driven-development/SKILL.md) (MIT, [PR #139](https://github.com/addyosmani/agent-skills/pull/139), upstream 2026-05-07 — published **27 days after** our prior addyosmani audit in PR #111). Closes [#173](https://github.com/pitimon/8-habit-ai-dev/issues/173) via [PR #174](https://github.com/pitimon/8-habit-ai-dev/pull/174).
