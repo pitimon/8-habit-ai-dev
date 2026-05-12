@@ -539,6 +539,42 @@ else
 fi
 echo ""
 
+# --- Check 21: /consistency-check Pass 3 backtick-aware contract (Issue #167) ---
+# Asserts the Ambiguity pass spec includes the backtick-context filter rule.
+# Prevents regression where SKILL.md drifts back to plain `grep -nE` semantics
+# and the analyzer's own dogfood (docs/specs/consistency-check/prd.md:45) gets
+# falsely flagged as an unresolved [NEEDS CLARIFICATION] marker.
+echo "--- Check 21: /consistency-check Pass 3 backtick-aware contract ---"
+CC_SKILL="skills/consistency-check/SKILL.md"
+CC_FAIL=0
+if [ -f "$CC_SKILL" ]; then
+  # Backtick-context filter label present
+  if grep -q "Backtick-context filter" "$CC_SKILL"; then
+    pass "$CC_SKILL Pass 3 has 'Backtick-context filter' label"
+  else
+    fail "$CC_SKILL Pass 3 missing 'Backtick-context filter' label (Issue #167)"
+    CC_FAIL=$((CC_FAIL + 1))
+  fi
+  # Documentation-references semantic stated (vs unresolved markers)
+  if grep -q "documentation-references" "$CC_SKILL"; then
+    pass "$CC_SKILL Pass 3 states tokens-in-backticks are documentation-references"
+  else
+    fail "$CC_SKILL Pass 3 missing 'documentation-references' semantic (Issue #167)"
+    CC_FAIL=$((CC_FAIL + 1))
+  fi
+  # Pre-strip workflow specified (the actionable contract)
+  if grep -q "pre-strip" "$CC_SKILL"; then
+    pass "$CC_SKILL Pass 3 specifies pre-strip workflow"
+  else
+    fail "$CC_SKILL Pass 3 missing 'pre-strip' workflow contract (Issue #167)"
+    CC_FAIL=$((CC_FAIL + 1))
+  fi
+else
+  fail "$CC_SKILL not found"
+  CC_FAIL=$((CC_FAIL + 1))
+fi
+echo ""
+
 # --- Check 19: Docs freshness vs plugin.json version ---
 # Enforces version propagation across changelog surfaces. Issue #106/#107 (stuck-at-v2.N-5 drift);
 # tightened 2026-04-17 per #124 F1+F2 after v2.9.0+v2.11.0 (pointer-to-CHANGELOG.md fallback removed —
