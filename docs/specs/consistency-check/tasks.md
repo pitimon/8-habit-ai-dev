@@ -45,7 +45,7 @@
 **Create `skills/consistency-check/SKILL.md`** — main skill file.
 
 - Frontmatter: `name: consistency-check`, `argument-hint: "<slug> | <path-to-spec-dir>"`, `allowed-tools: ["Read", "Glob", "Grep"]`, `prev-skill: any`, `next-skill: any`, `user-invocable: true`
-- Body: input resolution (slug-OR-path auto-detect per Decision-D5), 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency) with hybrid eval per Decision-D9, severity table (Coverage=HIGH, Drift=CRITICAL, Ambiguity=MEDIUM, Underspec=LOW, Inconsistency=HIGH), max 30 findings, ✓ Pass row for zero-finding passes, file:line citations
+- Body: input resolution (slug-OR-path auto-detect per Decision-5), 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency) with hybrid eval per Decision-9, severity table (Coverage=HIGH, Drift=CRITICAL, Ambiguity=MEDIUM, Underspec=LOW, Inconsistency=HIGH), max 30 findings, ✓ Pass row for zero-finding passes, file:line citations
 - ID-linkage warning: emit at top when any artifact lacks markers
 - Empty-dir handling: single CRITICAL finding, exit cleanly
 - Files: `skills/consistency-check/SKILL.md` (1 file new)

@@ -119,6 +119,8 @@ If the report has 0 CRITICAL/HIGH findings, the bundle is ready for `/build-brie
 - `TBD`, `TODO`, `???`, `XXX` → MEDIUM
 - `<placeholder>` patterns (e.g., `<insert here>`) → MEDIUM
 
+**Backtick-context filter (required)**: Tokens inside `` `…` `` inline code spans are treated as documentation-references, not unresolved markers. Before applying the token match above, pre-strip backtick-quoted segments from each line; only check the remaining plain-text. Rationale: PRDs legitimately mention these tokens as detection-target documentation (e.g., ``"the `[NEEDS CLARIFICATION]` token"``); flagging them as findings would punish writers for documenting the analyzer's own contract. This rule applies to single-backtick inline spans and triple-backtick fenced code blocks; it does NOT apply to plain-text occurrences elsewhere on the same line.
+
 ### Pass 4: Underspec
 
 **Purpose**: Every design decision should have rationale + at least 2 alternatives considered.
