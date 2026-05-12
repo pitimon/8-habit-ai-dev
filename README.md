@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.15.4-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.4)
+[![Version](https://img.shields.io/badge/Version-2.15.5-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.5)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -414,6 +414,20 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
 
+## What's New in v2.15.5
+
+**Theme: Repo-Wide Link-Check CI Gate** ([#172](https://github.com/pitimon/8-habit-ai-dev/issues/172), [PR #184](https://github.com/pitimon/8-habit-ai-dev/pull/184))
+
+CI gate addition + 2 real link-rot fixes surfaced by the new gate on its first run.
+
+- **`.github/workflows/link-check.yml`** — new GitHub Actions workflow using [lychee](https://github.com/lycheeverse/lychee) (Rust, fast). Triggers on PR + push to main when any `**/*.md` changes. Scope: external HTTP/HTTPS URLs across all `*.md` outside `docs/wiki/` (wiki has its own workflow). Internal markdown links remain covered by `tests/validate-content.sh` Check 12b — two-layer design covers full surface without duplication.
+- **Self-referential + private cross-repo URLs excluded** — `pitimon/8-habit-ai-dev/(blob|tree|raw)/main/` (only resolves post-merge), `pitimon/(memforge|devsecops-ai-team)` (private repos; workflow's GITHUB_TOKEN is scoped to this repo only and cannot authenticate against other private repos). `claude-governance` is public and stays in scope.
+- **README.md typo fix** — `https://github.com/pitimon/claud-mem-me` (missing 'e', repo doesn't exist) → `https://github.com/pitimon/memforge` (correct name). Real bug caught by the first CI run.
+- **ADR-005:137 dead URL fix** — `https://ai-act-service-desk.ec.europa.eu/en/ai-act/` returns 404 (EC restructured the service desk path). Since ADR-005 is Superseded (per ADR-012), preserved as historical reference text with note explaining the URL state.
+- **CONTRIBUTING.md "Link check (external URLs)" subsection** under Testing Conventions documenting both link-check workflows and the two-layer design.
+
+Pattern: **CI gate that immediately proves its own value** — the first run on PR #184 caught 3 real link-rot issues (1 typo, 1 EC URL change, 1 private-repo CI-token scope constraint). Demonstrates that link rot was already happening silently; the new gate catches it at PR time instead of when users report broken navigation. The 8-habit-reviewer recommendation from the 3-plugin integration audit is now enforced.
+
 ## What's New in v2.15.4
 
 **Theme: Backtick-Aware Ambiguity Pass + Dogfood ID Cleanup** ([#167](https://github.com/pitimon/8-habit-ai-dev/issues/167), [PR #182](https://github.com/pitimon/8-habit-ai-dev/pull/182))
@@ -758,4 +772,4 @@ MIT
 
 ---
 
-_Version: 2.15.4 | Last updated: 2026-05-12_
+_Version: 2.15.5 | Last updated: 2026-05-12_
