@@ -54,6 +54,28 @@ success_criteria_count: 3
 END_SKILL_OUTPUT -->
 ```
 
+### `/design` → `SKILL_OUTPUT:design`
+
+```
+[/design] COMPLETE SKILL_OUTPUT:design
+<!-- SKILL_OUTPUT:design
+decision_count: 4
+decisions:
+  - "PostgreSQL for persistence"
+  - "REST API with versioned endpoints"
+  - "JWT for authentication"
+  - "Redis for session cache"
+sticky_decisions:
+  - "PostgreSQL — >50% rework to change"
+constraints:
+  - "Must support 10k concurrent users"
+adr_references:
+  - "ADR-007: Database choice"
+article_14_applicable: false
+article_14_pass: n/a
+END_SKILL_OUTPUT -->
+```
+
 ### `/breakdown` → `SKILL_OUTPUT:breakdown`
 
 ```
@@ -96,9 +118,11 @@ When `/cross-verify` runs, it should:
 
 1. Search for `<!-- SKILL_OUTPUT:` blocks in recent files (PRD, task list, review report) in the current directory
 2. If blocks found, auto-populate evidence for relevant questions:
-   - **Q4** (success criteria): Check `ears_count > 0` and `success_criteria_count > 0` from requirements block
+   - **Q4** (success criteria): Check `ears_count > 0` and `success_criteria_count > 0` from requirements block; cross-check `decision_count` from design block against `success_criteria_count` — flag if decisions don't cover all criteria
    - **Q5** (test plan): Check `test_coverage_checked: true` from review block
    - **Q8** (scope creep): Compare `task_count` from breakdown vs `ears_count` from requirements — flag if `task_count > ears_count * 3` (one requirement typically decomposes into 1-3 tasks)
+   - **Q14** (third alternative): Extract `decision_count` from design block — flag if only 1 option was presented (no third alternative considered)
+   - **Q16** (sticky decisions): Extract `sticky_decisions` from design block — flag if 0 sticky decisions in a design with >3 decisions (WHY not captured)
 3. If no blocks found, fall back to manual assessment (current behavior)
 4. Report which blocks were found and which were missing
 
