@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.15.2-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.2)
+[![Version](https://img.shields.io/badge/Version-2.15.3-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.3)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -414,6 +414,20 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
 
+## What's New in v2.15.3
+
+**Theme: Integrity Commandment #13 — Grep-Verify Quotes Before Pasting** ([#179](https://github.com/pitimon/8-habit-ai-dev/issues/179), [PR #180](https://github.com/pitimon/8-habit-ai-dev/pull/180))
+
+Content-only addition to `guides/integrity-principles.md` closing a verification-discipline gap surfaced during the v2.15.2 reflection. Two consecutive PR reviews (#174, #177) showed the same error shape — habit-attribution drift from gestalt pattern-matching — and a separate quote misattribution (`"Magic" behavior` at ADR-013 Alt-2 line 87 wrongly cited to Alt-4) propagated through 4 artifacts before reviewer catch. Both errors are preventable with a single grep step before pasting external text.
+
+- **Commandment #13** under Honesty & Accuracy — covers ADR citations, habit principle claims, scare-quoted external phrases, observation IDs, prior-conversation paraphrases presented as direct quotes. Pattern: `Source: docs/adr/ADR-013.md:87` beats "I recall it says…"
+- Mapping table extended: `5-7, 13 (Honesty)` → H8 Find Voice / Spirit (conscience)
+- 3 live cross-references synced: title `12 → 13`, README architecture-tree comment, `/review-ai` load directive. Historical entries (v1.9.0 release line, v2.0.0 CHANGELOG delta, SELF-CHECK v1.9.0 improvements section) intentionally preserved as period record.
+
+Dogfooding moment: drafting #13 caught its own meta-violation — initial text quoted `"magic behavior"` (lowercase, two-word) but ADR-013:87 actually says `"Magic" behavior` (capitalized, scare-quote on single word). Self-corrected before commit, demonstrating the rule applies to its own writing.
+
+Pattern: **commandment growth driven by reflection-detected pattern** — distinct from upstream-import (v2.15.1) and community-article convention-import (v2.15.2). The trigger is internal drift detection across ≥2 sessions, not external publication.
+
 ## What's New in v2.15.2
 
 **Theme: Current State Save-Point Convention** ([#176](https://github.com/pitimon/8-habit-ai-dev/issues/176), [PR #177](https://github.com/pitimon/8-habit-ai-dev/pull/177))
@@ -731,4 +745,4 @@ MIT
 
 ---
 
-_Version: 2.15.2 | Last updated: 2026-05-12_
+_Version: 2.15.3 | Last updated: 2026-05-12_
