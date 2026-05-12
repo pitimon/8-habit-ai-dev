@@ -663,7 +663,7 @@ The cross-verification exists for planning reviews, not as a gate for every comm
 
 ## Origin
 
-This framework was developed while building [MemForge](https://github.com/pitimon/claud-mem-me) — a production AI memory system with 15 services, 154K+ observations, and a 3-node Docker Swarm cluster. Over 910 man-day-equivalents of AI-assisted development, these habits emerged from real mistakes:
+This framework was developed while building [MemForge](https://github.com/pitimon/memforge) — a production AI memory system with 15 services, 154K+ observations, and a 3-node Docker Swarm cluster. Over 910 man-day-equivalents of AI-assisted development, these habits emerged from real mistakes:
 
 - **H1**: A deploy bypassed staging and went straight to production (now there's a mandatory staging-first rule)
 - **H4**: Code reviews were skipped "just this once" — 2 CRITICAL and 3 HIGH issues shipped (now review-before-commit is enforced)

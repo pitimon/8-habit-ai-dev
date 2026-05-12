@@ -1,0 +1,60 @@
+name: Link Check
+
+# Repo-wide markdown link validation. Catches dead external/cross-repo URLs
+# (e.g., the GitHub links in docs/INTEGRATION.md that span the 3-plugin
+# integration: pitimon/claude-governance, pitimon/devsecops-ai-team).
+#
+# Scope: external HTTP/HTTPS URLs across all *.md files outside docs/wiki/
+# (wiki is covered by .github/workflows/wiki-linkcheck.yml with its own
+# wiki-style link semantics). Internal markdown links (relative .md paths)
+# are validated by tests/validate-content.sh Check 12b — out of scope here.
+#
+# Self-referential URLs to this repo's main branch are excluded — they only
+# resolve after the PR merges and would otherwise produce false-positives
+# on every fresh PR.
+#
+# Private cross-repo URLs are excluded — the workflow's GITHUB_TOKEN is scoped
+# to this repo only and cannot authenticate against pitimon/memforge or
+# pitimon/devsecops-ai-team (both private). These URLs are author-verified at
+# write time; CI cannot re-verify them. claude-governance is public and IS
+# checked (caught a real moved-doc bug pre-merge during dogfood).
+#
+# Issue: pitimon/8-habit-ai-dev#172
+
+on:
+  pull_request:
+    paths:
+      - "**/*.md"
+      - ".github/workflows/link-check.yml"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.md"
+      - ".github/workflows/link-check.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  linkcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Run lychee on repo markdown (excludes docs/wiki/ — already covered)
+        uses: lycheeverse/lychee-action@8646ba30535128ac92d33dfc9133794bfdd9b411 # v2
+        with:
+          args: >-
+            --no-progress
+            --verbose
+            --max-concurrency 4
+            --scheme https
+            --scheme http
+            --exclude '^https://github\.com/pitimon/8-habit-ai-dev/(blob|tree|raw)/main/'
+            --exclude '^https://github\.com/pitimon/(memforge|devsecops-ai-team)(/|$)'
+            --exclude-path ./docs/wiki
+            './**/*.md'
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
