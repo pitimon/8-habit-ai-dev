@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.15.6-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.6)
+[![Version](https://img.shields.io/badge/Version-2.15.7-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.6)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -414,6 +414,18 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
 
+## What's New in v2.15.7
+
+**Theme: Vendor Portability Discipline for Managed Agent Platforms** ([#188](https://github.com/pitimon/8-habit-ai-dev/issues/188), [PR #189](https://github.com/pitimon/8-habit-ai-dev/pull/189))
+
+Doc-only patch responding to the industry move toward managed-agent runtime features (cross-session memory, self-evaluation against outcomes, built-in orchestration) — Claude Managed Agents, OpenAI Assistants, Bedrock Agents. Names the discipline that keeps users portable when adopting these features.
+
+- **New `guides/vendor-portability.md`** — vendor-neutral guide structured around three principles: persist artifacts outside the vendor (repo = source of truth), treat managed memory as cache not source of truth, separate discipline (portable) from runtime (vendor-specific). Selection checklist framed as the `/cross-verify` Q14 "third alternative" exercise — managed vs. self-hosted is rarely binary, and hybrid with explicit persistence discipline is often the better answer.
+- **`llms.txt` indexing** under Philosophy section, alongside `integrity-principles.md`.
+- **Habit mapping** — H8 (Voice — architectural autonomy stays human-owned), H1 (Proactive — prevent lock-in before migration pain), H4 (Win-Win Emotional Bank Account — artifacts that inform the next person, canonical framing per `habits/h4-win-win.md`), H7 (Sharpen the Saw — reproducibility = PC over P).
+
+Pattern: **discipline answer to a runtime trend** — 8-habit framework is intentionally vendor-neutral markdown. When platforms add convenience features that create lock-in, the framework responds with discipline guidance, not by replicating the feature. Plugin boundary preserved: this is workflow discipline, not enforcement (which belongs in `claude-governance`). 8-habit-reviewer pre-commit pass caught a Commandment #13 violation (Q14 mislabeled as "External dependencies" — actual text is "third alternative beyond the obvious options") — corrected before merge, demonstrating the integrity discipline applies to its own writing.
+
 ## What's New in v2.15.6
 
 **Theme: SKILL_OUTPUT Producer + Consumer Doc Sync** ([#153](https://github.com/pitimon/8-habit-ai-dev/issues/153), [PR #186](https://github.com/pitimon/8-habit-ai-dev/pull/186))
@@ -783,4 +795,4 @@ MIT
 
 ---
 
-_Version: 2.15.6 | Last updated: 2026-05-13_
+_Version: 2.15.7 | Last updated: 2026-05-15_
