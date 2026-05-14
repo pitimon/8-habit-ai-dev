@@ -10,6 +10,48 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.15.7 — Vendor Portability Discipline for Managed Agent Platforms (2026-05-15)
+
+Patch release. Doc-only addition responding to the industry move toward managed-agent runtime features (cross-session memory, self-evaluation against outcomes, built-in orchestration) from Claude Managed Agents, OpenAI Assistants, Bedrock Agents. Closes [#188](https://github.com/pitimon/8-habit-ai-dev/issues/188) via [PR #189](https://github.com/pitimon/8-habit-ai-dev/pull/189).
+
+### Added
+
+- **`guides/vendor-portability.md`** — vendor-neutral discipline guide (~90 lines) structured around three principles:
+  1. Persist artifacts outside the vendor (repo = source of truth, managed memory = derived view)
+  2. Treat managed memory as cache, not source of truth (regulators ask for traceable artifacts, not vendor summaries)
+  3. Separate discipline (portable) from runtime (vendor-specific)
+- **Selection checklist** framed as the `/cross-verify` Q14 "third alternative beyond the obvious options" exercise — artifact persistence, exit cost, data residency, reproducibility, audit trail, fallback path.
+- **`llms.txt` indexing** under Philosophy section, alongside `integrity-principles.md`.
+
+### Changed
+
+- `README.md` — badge 2.15.6 → 2.15.7; new "What's New in v2.15.7" section; footer date 2026-05-15.
+- `SELF-CHECK.md` — version header 2.15.6 → 2.15.7; new v2.15.7 honesty-notes row (Body 5, Mind 5, Heart 5, Spirit 5 = 5.0); footer previous-version pointer 2.15.5 → 2.15.6.
+
+### Habit Mapping
+
+- **H8 (Voice)** — architectural autonomy stays human-owned, Spirit dimension primary anchor
+- **H1 (Proactive)** — prevent lock-in before migration pain, Body dimension
+- **H4 (Win-Win, Emotional Bank Account)** — artifacts that inform the next person, Heart dimension (canonical framing per `habits/h4-win-win.md`, not a stretch to "audit-ready")
+- **H7 (Sharpen the Saw)** — reproducibility = PC investment over P output, Mind dimension
+
+Full Whole Person 4-dimension coverage (Body, Mind, Heart, Spirit).
+
+### Integrity Note
+
+8-habit-reviewer pre-commit dispatch caught a Commandment #13 violation: the initial draft mislabeled `/cross-verify` Q14 as "External dependencies" but the actual question text per `guides/cross-verification.md:45` is "Have I considered a third alternative beyond the obvious options?". The H4 mapping was also reframed from the stretch "audit-ready record" to the canonical "artifacts that inform the next person." Both fixes happened pre-commit, demonstrating the integrity discipline applies to its own writing.
+
+### Pattern
+
+**Discipline answer to a runtime trend.** When platforms add convenience features that create lock-in risk, the framework responds with discipline guidance, not by replicating the feature. Plugin boundary preserved — workflow discipline lives here; enforcement hooks and compliance framework mapping live in `pitimon/claude-governance`.
+
+### Validator State
+
+- `tests/validate-structure.sh` — 256/256 PASS
+- `tests/validate-content.sh` — 217 PASS / 0 FAIL / 1 WARN / 0 fitness breaches
+
+---
+
 ## v2.15.6 — SKILL_OUTPUT Producer + Consumer Doc Sync (2026-05-13)
 
 Patch release. Doc-only fix closing a pair of same-shape drift gaps in `guides/structured-output-protocol.md`. Both stemmed from `/design`'s `SKILL_OUTPUT:design` block being added without doc sync. Closes [#153](https://github.com/pitimon/8-habit-ai-dev/issues/153) via [PR #186](https://github.com/pitimon/8-habit-ai-dev/pull/186).

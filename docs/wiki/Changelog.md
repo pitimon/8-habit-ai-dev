@@ -1,10 +1,16 @@
-![Version](https://img.shields.io/badge/latest-v2.15.6-blue)
+![Version](https://img.shields.io/badge/latest-v2.15.7-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.15.7 — Vendor Portability Discipline for Managed Agent Platforms (May 2026)
+
+Patch release. Doc-only addition responding to the industry move toward managed-agent runtime features (cross-session memory, self-evaluation against outcomes, built-in orchestration) from Claude Managed Agents, OpenAI Assistants, Bedrock Agents. Closes [#188](https://github.com/pitimon/8-habit-ai-dev/issues/188) via [PR #189](https://github.com/pitimon/8-habit-ai-dev/pull/189).
+
+New `guides/vendor-portability.md` (~90 lines) structured around three principles: persist artifacts outside the vendor (repo = source of truth), treat managed memory as cache not source of truth, separate discipline (portable) from runtime (vendor-specific). Selection checklist framed as the `/cross-verify` Q14 "third alternative beyond the obvious options" exercise — managed vs. self-hosted is rarely binary, and hybrid with explicit persistence discipline is often the better answer. Habit mapping: H8 (Voice, architectural autonomy / Spirit) primary anchor, H1 (Proactive, prevent lock-in / Body), H4 (Win-Win, Emotional Bank Account / Heart — canonical framing per `habits/h4-win-win.md`), H7 (Sharpen the Saw, reproducibility = PC over P / Mind) — full Whole Person 4-dimension coverage. `llms.txt` indexed under Philosophy section. Plugin boundary preserved — workflow discipline lives here; enforcement hooks and compliance framework mapping live in `pitimon/claude-governance`. 8-habit-reviewer pre-commit dispatch caught a Commandment #13 violation: initial draft mislabeled Q14 as "External dependencies" but actual text per `guides/cross-verification.md:45` is "third alternative beyond the obvious options" — corrected before merge, demonstrating the integrity discipline applies to its own writing. Pattern: **discipline answer to a runtime trend** — framework responds to vendor convergence not by replicating features but by naming the portability discipline that keeps users vendor-neutral. Validator state: `validate-structure.sh` 256/256 PASS, `validate-content.sh` 217 PASS / 0 FAIL / 1 WARN / 0 fitness breaches.
 
 ## v2.15.6 — SKILL_OUTPUT Producer + Consumer Doc Sync (May 2026)
 
