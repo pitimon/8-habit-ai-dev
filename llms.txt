@@ -23,6 +23,7 @@ Repo: https://github.com/pitimon/8-habit-ai-dev
 - [rules/effective-development.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/rules/effective-development.md): Covey's 8 Habits translated into Claude + human collaboration standards.
 - [habits/](https://github.com/pitimon/8-habit-ai-dev/tree/main/habits): Per-habit deep dives loaded on demand by skills.
 - [guides/integrity-principles.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/integrity-principles.md): Evidence standards for reviews, cross-verification, and reflection.
+- [guides/vendor-portability.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/vendor-portability.md): Discipline for staying portable when adopting managed-agent platforms (memory, self-evaluation, orchestration).
 
 ## Compliance
 
