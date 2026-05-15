@@ -81,37 +81,36 @@ After the 6 questions are answered, persist the reflection as a lesson file for 
 4. **Confirm**: Print a one-line confirmation: `Lesson saved: ~/.claude/lessons/<filename>`
 5. **Graceful failure**: If the write fails (permissions, disk full), warn the user but do NOT block the reflection output. The conversation-level reflection is more valuable than persistence.
 
-## Step 7: Consolidation check (periodic)
+## Step 7: Consolidation (automatic when count > 10)
 
-After saving the lesson file, check if lessons need consolidation. Inspired by Claude Code's auto-dream 4-phase consolidation pattern (Orient → Gather → Consolidate → Prune) — applied here as manual guidance, not automation.
+After saving the lesson file, run the 4-phase consolidation cycle automatically. No separate `/reflect consolidate` invocation is needed when there are no deletions to approve.
 
 1. **Count lessons**: `Glob ~/.claude/lessons/*.md`
-2. **If count ≤ 10**: Skip — not enough lessons to consolidate yet.
-3. **If count > 10**: Print a consolidation nudge:
+2. **If count ≤ 10**: Skip — not enough lessons yet.
+3. **If count > 10**: Run the 4-phase cycle inline:
 
-   > **Consolidation suggested** — You have [N] lesson files. Consider running:
-   > `/reflect consolidate` to merge duplicates and prune stale lessons.
+   | Phase           | Action                                                                                                                                                                                        | Tools      |
+   | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+   | **Orient**      | Glob all lesson files, read frontmatter (first 10 lines each) to build inventory. Note which are already-consolidated arcs (`consolidates:` in frontmatter — skip these as merge candidates). | Glob, Read |
+   | **Gather**      | Group by `tags` overlap and `project` match. Flag same-incident candidates (same project + same day + overlapping tags).                                                                      | Grep       |
+   | **Consolidate** | Evaluate each group with 2+ lessons. See branching logic below.                                                                                                                               | Read       |
+   | **Prune**       | Only if merges were approved: delete superseded files, keep merged files.                                                                                                                     | Bash       |
 
-4. **If the user runs `/reflect consolidate`** (argument = "consolidate"):
+   **Branching on Consolidate result**:
+   - **No merges proposed** (all candidates are distinct incidents anchored to specific events — per INDEX maintenance rule "same theme across incidents = keep separate"): Update `~/.claude/lessons/INDEX.md` additively — refresh count, last-updated date, add new lesson entries to project sections and theme clusters, update By-habit table. Print one-line summary: `Consolidation: no merges. INDEX.md updated — [N] lessons, [K] new entries.`
 
-   Run the 4-phase cycle on `~/.claude/lessons/`:
+   - **Merges proposed** (genuine duplicates detected): Present the full merge plan — which files merge, what the combined insight is, which files would be deleted. **STOP. Do not write or delete anything until the user gives explicit approval.** This is In-the-Loop per governance (ADR-002) — deletion is irreversible.
 
-   | Phase | Action | Tools |
-   |-------|--------|-------|
-   | **Orient** | Glob all lesson files, Read frontmatter (first 10 lines each) to build inventory | Glob, Read |
-   | **Gather** | Group lessons by `tags` overlap and `project` match | Grep |
-   | **Consolidate** | For each group with 2+ lessons: propose a merged lesson that combines insights, resolves contradictions, and keeps the most recent "do differently" actions. Present merge plan to user for approval before writing. | Read |
-   | **Prune** | After user approves merges: delete superseded lesson files, keep merged files | Bash |
+   **Human approval gate**: Required ONLY when deletions are proposed. INDEX-only updates (additive, non-destructive) run automatically without prompting.
 
-   **Human approval gate**: The consolidate phase MUST show the merge plan and get explicit user approval before deleting any files. This is In-the-Loop per governance — deletion is irreversible.
+4. **If the user runs `/reflect consolidate` explicitly** (argument = "consolidate"): Same 4-phase cycle with verbose output — print the full Consolidation Report (Before/After/Merged/Pruned/Kept) regardless of whether merges were found.
 
-   Output after consolidation:
    ```
    ## Consolidation Report
    **Before**: [N] lesson files
    **After**: [M] lesson files
-   **Merged**: [list of merged groups]
-   **Pruned**: [list of deleted files]
+   **Merged**: [list of merged groups, or "none"]
+   **Pruned**: [list of deleted files, or "none"]
    **Kept unchanged**: [list]
    ```
 
@@ -127,7 +126,7 @@ After saving the lesson file, check if lessons need consolidation. Inspired by C
 - [ ] Action item has an owner and deadline (or explicitly "none needed")
 - [ ] Skill effectiveness signal captured (Q6) — up to one "most useful" and one "least useful/confusing" skill, or "n/a"
 - [ ] Lesson file persisted to `~/.claude/lessons/` (or warning printed if write failed)
-- [ ] Consolidation check performed if lesson count > 10
+- [ ] Consolidation auto-ran when count > 10: INDEX.md updated (no merges) or merge plan surfaced for approval (deletions proposed)
 - [ ] Took no more than 5 minutes
 
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h7-sharpen-saw.md` for the full H7 principle and examples.
