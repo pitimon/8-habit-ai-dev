@@ -10,6 +10,29 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.15.8 — `/reflect` Auto-Consolidation: One-Command Flow (2026-05-16)
+
+UX patch. Removes the two-step `/reflect` → `/reflect consolidate` friction. Closes [#191](https://github.com/pitimon/8-habit-ai-dev/issues/191) via [PR #192](https://github.com/pitimon/8-habit-ai-dev/pull/192).
+
+### Changed
+
+- **`skills/reflect/SKILL.md` Step 7** — "Consolidation check (periodic)" → "Consolidation (automatic when count > 10)". When `count > 10`, the 4-phase cycle (Orient → Gather → Consolidate → Prune) now runs inline after every `/reflect`, instead of printing a nudge and waiting for a separate invocation.
+  - **No merges found**: `~/.claude/lessons/INDEX.md` updated automatically (additive, non-destructive). Prints 1-line summary: `Consolidation: no merges. INDEX.md updated — [N] lessons, [K] new entries.`
+  - **Deletions proposed**: cycle stops, presents full merge plan, gates on explicit user approval (In-the-Loop per ADR-002 — deletion is irreversible).
+  - **Explicit `/reflect consolidate`** argument still works with verbose Consolidation Report output.
+- **Definition of Done bullet 5** — "Consolidation check performed if lesson count > 10" → "Consolidation auto-ran when count > 10: INDEX.md updated (no merges) or merge plan surfaced for approval (deletions proposed)". Now testable with two concrete outcomes.
+
+### Pattern
+
+**PC² — invest in the capability that builds capability.** The reflection loop is the system that captures lessons; reducing friction in that loop is H7 applied to H7 itself. Root cause: threshold 10 that mature repos cross quickly, making the nudge fire every `/reflect`. Fix makes auto-run safe for the common case (additive INDEX update) while preserving the gate for the rare case (irreversible deletions).
+
+### Validator State
+
+- `tests/validate-structure.sh` — 256/256 PASS
+- `tests/validate-content.sh` — 217 PASS / 0 FAIL / 1 WARN / 0 fitness breaches
+
+---
+
 ## v2.15.7 — Vendor Portability Discipline for Managed Agent Platforms (2026-05-15)
 
 Patch release. Doc-only addition responding to the industry move toward managed-agent runtime features (cross-session memory, self-evaluation against outcomes, built-in orchestration) from Claude Managed Agents, OpenAI Assistants, Bedrock Agents. Closes [#188](https://github.com/pitimon/8-habit-ai-dev/issues/188) via [PR #189](https://github.com/pitimon/8-habit-ai-dev/pull/189).
