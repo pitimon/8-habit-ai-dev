@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.15.7-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.6)
+[![Version](https://img.shields.io/badge/Version-2.15.8-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.6)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -414,6 +414,19 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
 
+## What's New in v2.15.8
+
+**Theme: `/reflect` Auto-Consolidation — One-Command Flow** ([#191](https://github.com/pitimon/8-habit-ai-dev/issues/191), [PR #192](https://github.com/pitimon/8-habit-ai-dev/pull/192))
+
+UX patch removing the two-step friction in the reflection loop. Step 7 of `/reflect` now runs the 4-phase consolidation cycle automatically after saving each lesson file, instead of printing a nudge and waiting for a separate `/reflect consolidate` invocation.
+
+- **Auto-run when `count > 10`** — Orient → Gather → Consolidate runs inline. No merges found → `~/.claude/lessons/INDEX.md` updated automatically + 1-line summary printed. Done in a single command.
+- **Human-approval gate preserved** — If genuine duplicates are detected (merges/deletions proposed), the cycle stops and presents a plan for explicit approval before writing or deleting anything. In-the-Loop per ADR-002 — deletion is irreversible.
+- **Explicit `/reflect consolidate` still works** — Same 4-phase cycle with verbose Consolidation Report output (Before/After/Merged/Pruned/Kept), for manual runs when full detail is needed.
+- **Definition of Done updated** — "Consolidation auto-ran" replaces "Consolidation check performed" — the new bullet is testable with two concrete outcomes.
+
+Pattern: **PC² — invest in the capability that builds capability.** The reflection loop is the system that captures lessons; reducing friction in that loop is H7 applied to H7 itself. Root cause was a threshold (10) that mature repos cross quickly — the fix makes auto-run safe for the common case (INDEX update, non-destructive) while keeping the gate for the rare case (deletions).
+
 ## What's New in v2.15.7
 
 **Theme: Vendor Portability Discipline for Managed Agent Platforms** ([#188](https://github.com/pitimon/8-habit-ai-dev/issues/188), [PR #189](https://github.com/pitimon/8-habit-ai-dev/pull/189))
@@ -795,4 +808,4 @@ MIT
 
 ---
 
-_Version: 2.15.7 | Last updated: 2026-05-15_
+_Version: 2.15.8 | Last updated: 2026-05-16_

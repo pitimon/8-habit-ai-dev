@@ -1,10 +1,16 @@
-![Version](https://img.shields.io/badge/latest-v2.15.7-blue)
+![Version](https://img.shields.io/badge/latest-v2.15.8-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.15.8 — `/reflect` Auto-Consolidation: One-Command Flow (May 2026)
+
+UX patch. Step 7 of `/reflect` now runs the 4-phase consolidation cycle automatically when `count > 10` — no separate `/reflect consolidate` invocation needed. Closes [#191](https://github.com/pitimon/8-habit-ai-dev/issues/191) via [PR #192](https://github.com/pitimon/8-habit-ai-dev/pull/192).
+
+No merges found → `~/.claude/lessons/INDEX.md` updated automatically + 1-line summary. Deletions proposed → cycle stops for explicit user approval (In-the-Loop per ADR-002 preserved). Explicit `/reflect consolidate` argument retained for verbose output. DoD bullet updated to testable outcome. Pattern: **PC² — H7 applied to H7 itself**. Root cause was threshold 10 that mature repos cross quickly — auto-run is safe for the common case (additive INDEX update), gate preserved for the rare case (irreversible deletions). Validator state: validate-structure.sh 256/256 PASS, validate-content.sh 217 PASS / 0 FAIL / 1 WARN / 0 fitness breaches.
 
 ## v2.15.7 — Vendor Portability Discipline for Managed Agent Platforms (May 2026)
 
