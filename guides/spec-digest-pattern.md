@@ -41,7 +41,7 @@ Copy this into `SPEC.md` at the project root. Fill the four sections. Keep it �
 
 Single-page reference. Read this first when starting a new session.
 
-> **Rule** (per [CLAUDE.md](CLAUDE.md)): every completed task updates §4 (Current state) and §3 (Backlog). Never claim "done" without updating this file.
+> **Rule** (per `CLAUDE.md`): every completed task updates §4 (Current state) and §3 (Backlog). Never claim "done" without updating this file.
 
 ---
 
@@ -49,21 +49,21 @@ Single-page reference. Read this first when starting a new session.
 
 <One paragraph summarizing what this system is + where it runs.>
 
-- **Detailed runbook / ops** → [PLAYBOOK.md](PLAYBOOK.md)
-- **Data contracts / API shapes** → [CONTRACTS.md](CONTRACTS.md)
-- **Lessons & post-mortems** → [LESSONS.md](LESSONS.md)
-- **Per-event history** → [CHANGELOG.md](CHANGELOG.md)
-- <Add project-specific pointers here.>
+- **Detailed runbook / ops** → `PLAYBOOK.md`
+- **Data contracts / API shapes** → `CONTRACTS.md`
+- **Lessons & post-mortems** → `LESSONS.md`
+- **Per-event history** → `CHANGELOG.md`
+- <Add project-specific pointers here. Wrap each filename in Markdown link syntax in your own copy if you want clickable references — kept as plain backticked names here so the template stays portable.>
 
 ## 2. Decisions snapshot (pointer)
 
 The N most load-bearing decisions. Each row = one line + canonical source. Keep ≤ 10 rows — if it grows, prune to the most active.
 
-| #   | Decision          | Why               | Source                  |
-| --- | ----------------- | ----------------- | ----------------------- |
-| D1  | <terse statement> | <terse rationale> | [`<file>:<line>`](file) |
+| #   | Decision          | Why               | Source          |
+| --- | ----------------- | ----------------- | --------------- |
+| D1  | <terse statement> | <terse rationale> | `<file>:<line>` |
 
-Per-event history: [CHANGELOG.md](CHANGELOG.md). Root-cause post-mortems: [LESSONS.md](LESSONS.md).
+Per-event history: `CHANGELOG.md`. Root-cause post-mortems: `LESSONS.md`.
 
 ## 3. Live backlog
 
@@ -131,10 +131,10 @@ The Decisions table (§2) is the highest-value section after §4. Treat it as a 
 - Cap at 10 rows — if you exceed, prune the least active (the original ADR lives on; the digest is just the pointer)
 - Use `file:line` links for runtime decisions encoded in code; use ADR links for architectural decisions encoded in docs
 
-Example row format:
+Example row format (linkify filenames in your own copy if you want clickable refs — backticks here keep the template portable across renderers):
 
 ```markdown
-| D1 | **IP address = idempotency key** (not name) | Vendor-default names collide ("Proxmox VE" × 20) | [`promote.py:100-114`](sync/promote.py) + [LESSONS §22](LESSONS.md) |
+| D1 | **IP address = idempotency key** (not name) | Vendor-default names collide ("Proxmox VE" × 20) | `sync/promote.py:100-114` + `LESSONS.md §22` |
 ```
 
 ## Promotion to a skill (deferred)
