@@ -10,6 +10,39 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.16.2 — `/save-spec` Round-3 Polish + Guide Check 2 BSD-awk Fix (Adopter #3 dogfood) (2026-05-17)
+
+Patch release. Adopter #3 dogfood pass on `/save-spec` (first round using **real skill execution** rather than docs review) surfaced 1 correctness bug + 1 friction enhancement; pre-PR self-test (per the same-day DoD-must-execute action item from `~/.claude/lessons/2026-05-17-maturity-ladder-dogfood-arc-v2-16-1.md`) surfaced 1 additional verification-command bug. All 3 fixed in this PR. Closes [#203](https://github.com/pitimon/8-habit-ai-dev/issues/203).
+
+### Fixed
+
+- **F1 (MEDIUM bug)** — Scaffolded `SPEC.md` shipped with 6 literal angle-bracket placeholder sites (`<One paragraph summarizing …>`, `<terse statement>`, `<Active backlog item …>`, `<terse note + timestamp>`, `<Specific task/sub-task active right now …>`, `<Optional: command sequence …>`) contradicting the read-first-context purpose of the pattern. Fixed via hybrid approach: §2/§3 skip-stub rows now use plain prose italic markers (`_no decisions seeded yet — add the first one when it lands_`); §1 narrative + §4 fill-required sites use `<!-- TODO: … -->` HTML comments (invisible at render, visible to editor). `tests/validate-content.sh` Check 12c whitelist extended to `skills/save-spec/` with Exception 2 comment.
+- **F3 (MEDIUM, surfaced by pre-PR self-test, not by adopter)** — `guides/spec-digest-pattern.md` Check 2's `awk '/^## 4\. Current state/,/^## /'` range collapses to 1 line on BSD awk (macOS default) because the end-regex `^## ` matches the start line `## 4. Current state` too. All macOS adopters running the published verification command had a silently-failing Check 2. Replaced with `sed -n '/^## 4\. Current state/,/^## /p'` which has consistent cross-platform semantics. Backstory: this regression was introduced in v2.15.9 (#197 N1 fix migrated from `grep -A1` → `awk` to fix blank-line-after-heading); the awk fix had its own bug.
+
+### Added
+
+- **F2 (LOW-MEDIUM enhancement)** — `/save-spec [project-name] [target-dir]` now accepts an optional second positional argument for the target directory. Pre-flight check, Glob detection, Write, and summary all operate on `<target-dir>` when supplied (defaults to cwd otherwise). Multi-repo portfolio adopters no longer need a per-repo session switch. PRD FR-013 scope-clarified; new FR-017 added for target-dir semantics.
+
+### Changed
+
+- **W2 (doc softening)** — N2 timestamp section in `skills/save-spec/reference.md` updated with verified-working note. Adopter #3 fresh-session scaffold on `~/va+pentest` produced `2026-05-17T22:46:06+07:00` (correct Bangkok offset, NOT the `+00:00` fallback v2.16.1 warned about). The warning is now framed as "documented escape-hatch, not expected outcome in normal use."
+
+### Positive verifications from Adopter #3 (no changes needed)
+
+- **W1**: N3 free-text affordance (Q2 "Other") works end-to-end in real use
+- **W2**: N2 timestamp produced correct local offset
+- **W3**: Refusal-path safety guard works (verified via pre-existing SPEC.md test)
+
+### Validator state
+
+`validate-structure.sh` 268/268 PASS; `validate-content.sh` 219+ PASS / 0 FAIL / 1 WARN / 0 fitness breaches.
+
+### Pattern
+
+**DoD-must-execute principle empirically validated within 24h of being coined.** The v2.16.1 `/reflect` lesson (`~/.claude/lessons/2026-05-17-maturity-ladder-dogfood-arc-v2-16-1.md`) Q5 action item said: "literal execution of verification commands before any new-skill PR opens." On this v2.16.2 PR, that pre-PR self-test caught F3 — a BSD-awk regression that no static review (validators, 8-habit-reviewer, manual diff) would have surfaced. Same-day discovery, same-day fix, no waiting for external adopter to hit the bug on macOS shells. The action item caught its own first regression test. **Lesson loop closed in a single day.**
+
+---
+
 ## v2.16.1 — `/save-spec` Phase 1 Polish (Adopter #2 dogfood) (2026-05-17)
 
 Patch release. Adopter #2 dogfood pass on the v2.16.0 `/save-spec` skill surfaced 1 correctness bug + 3 quality items — all four fixed in this PR. Closes [#201](https://github.com/pitimon/8-habit-ai-dev/issues/201).

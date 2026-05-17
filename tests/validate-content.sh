@@ -81,13 +81,18 @@ if [ "$LINK_FAIL" -eq 0 ]; then
 fi
 
 # 12c: TODO/FIXME markers in published skills content
-# Exception: skills/consistency-check/ documents the patterns it detects (Ambiguity pass)
+# Exception 1: skills/consistency-check/ documents the patterns it detects (Ambiguity pass)
 # so literal TODO/FIXME/HACK/XXX strings appear as detection-target documentation, not as
 # unresolved markers. Whitelisted intentionally; see ADR-013 + skills/consistency-check/SKILL.md.
+# Exception 2: skills/save-spec/ uses `<!-- TODO: ... -->` HTML comments as the scaffold
+# template's user-fill placeholders (F1 fix per issue #203 — replaces literal angle-bracket
+# placeholders that shipped unfilled). These are intentional fill-me-in signals visible to
+# the editor and invisible at render, NOT unresolved code markers.
 TODO_FAIL=0
 while read -r f; do
   case "$f" in
     skills/consistency-check/*) continue ;;
+    skills/save-spec/*) continue ;;
   esac
   todo_count=$(grep -ciE '\bTODO\b|\bFIXME\b|\bHACK\b|\bXXX\b' "$f" || true)
   if [ "$todo_count" -gt 0 ]; then

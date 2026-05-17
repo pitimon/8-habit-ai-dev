@@ -17,7 +17,7 @@ Single-page reference. Read this first when starting a new session.
 
 ## 1. Architecture (pointer)
 
-<One paragraph summarizing what this system is + where it runs.>
+<!-- TODO: one paragraph summarizing what this system is + where it runs -->
 
 <§1-bullets — one bullet per confirmed pointer-target file. Empty set → single template-stub bullet from the empty-set example below.>
 
@@ -43,11 +43,11 @@ Per-event history: `CHANGELOG.md`. Root-cause post-mortems: `LESSONS.md`.
 **Read this section first after `/clear` or `/compact`.**
 
 > **Last updated**: <RFC 3339 timestamp with local timezone offset, e.g. 2026-05-17T20:44:23+07:00>
-> **Last apply / commit / deploy event**: <terse note + timestamp>
+> **Last apply / commit / deploy event**: <!-- TODO: terse note + timestamp of last apply/deploy/commit event -->
 
 ### What's happening now
 
-<Specific task/sub-task active right now, with file paths and progress.>
+<!-- TODO: specific task/sub-task active right now, with file paths and progress -->
 
 ### Stuck / waiting on
 
@@ -63,7 +63,7 @@ cat SPEC.md # this file
 
 \`\`\`
 
-<Optional: command sequence to resume the in-flight work, e.g. health check + next step.>
+<!-- Optional: command sequence to resume the in-flight work, e.g. health check + next step -->
 ```
 
 ### Template-stub rows for empty sets
@@ -81,14 +81,16 @@ When the user skips §1 / §2 / §3 seeding, the corresponding section gets a si
 - **§2 empty stub** (one row):
 
   ```markdown
-  | D1 | <terse statement> | <terse rationale> | `<file>:<line>` |
+  | D1 | _no decisions seeded yet — add the first one when it lands_ | — | — |
   ```
 
 - **§3 empty stub** (one bullet):
 
   ```markdown
-  - [ ] <Active backlog item — what + where + blocker if any>
+  - [ ] _no backlog items yet — add the first when surfaced_
   ```
+
+  > **F1 fix (v2.16.2, [#203](https://github.com/pitimon/8-habit-ai-dev/issues/203))**: §1 narrative + §2 + §3 + §4 placeholder sites previously used literal angle-bracket markers like `<terse statement>` and `<Active backlog item — …>`. Adopter #3 dogfood report showed these shipped unfilled in the scaffolded output, contradicting the read-first-context purpose (a reader picking up the file cold couldn't distinguish defaults-to-keep from placeholder-must-fill). Hybrid fix: §2/§3 skip-stubs now use plain prose self-describing italic markers (`_no decisions seeded yet — add …_`); §1 narrative + §4 fill-required sites use `<!-- TODO: … -->` HTML comments (invisible at render, visible to editor — signals "TODO" without polluting the rendered page). The §4 "Optional: command sequence …" line is also now an HTML comment.
 
 ## Canonical refusal message (Decision-3)
 
@@ -176,8 +178,8 @@ The skill's `allowed-tools` array does NOT include `Bash` — Process step 5 can
 
 **Reliability profile**:
 
-- ✅ When the session has a `<system-reminder>` providing current local time + timezone (the default Claude Code behavior), the substituted timestamp will match the user's local time with the correct offset.
-- ⚠️ When that injection is absent (custom runtime, non-interactive batch, certain MCP-only contexts), Claude may fall back to a default offset — most likely `+00:00` (UTC) — or, in degenerate cases, a hallucinated offset. The skill cannot detect this failure mode at scaffold time.
+- ✅ When the session has a `<system-reminder>` providing current local time + timezone (the default Claude Code behavior), the substituted timestamp will match the user's local time with the correct offset. **Verified working in v2.16.1 Adopter #3 dogfood** (issue [#203](https://github.com/pitimon/8-habit-ai-dev/issues/203) W2 — fresh-session scaffold in `~/va+pentest` produced `2026-05-17T22:46:06+07:00`, correct Bangkok offset).
+- ⚠️ When that injection is absent (custom runtime, non-interactive batch, certain MCP-only contexts), Claude may fall back to a default offset — most likely `+00:00` (UTC) — or, in degenerate cases, a hallucinated offset. The skill cannot detect this failure mode at scaffold time. **This is the documented escape-hatch, not the expected outcome in normal use.**
 
 **Adopter guidance**: after running `/save-spec`, glance at the `**Last updated**` line in §4. If the offset doesn't match your local timezone, edit it manually with the correct value. This is a one-time fix on the freshly scaffolded file — subsequent §4 updates are driven by the CLAUDE.md auto-update recipe (which is also Claude-generated and inherits the same reliability profile).
 

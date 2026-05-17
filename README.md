@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.16.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.16.1)
+[![Version](https://img.shields.io/badge/Version-2.16.2-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.16.2)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -415,6 +415,19 @@ Both agents use the `sonnet` model for fast, focused analysis.
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
+
+## What's New in v2.16.2
+
+**Theme: `/save-spec` Round-3 polish + Guide Check 2 BSD-awk fix (Adopter #3 dogfood)** ([#203](https://github.com/pitimon/8-habit-ai-dev/issues/203))
+
+Patch release. Adopter #3 dogfood pass on `/save-spec` (first round from **real skill execution**, not docs review) surfaced 1 correctness bug + 1 friction enhancement; the pre-PR self-test (DoD-must-execute action item from same-day /reflect lesson) surfaced 1 additional verification-command bug. All 3 fixed.
+
+- **F1 (MEDIUM bug, fixed)** — Scaffolded `SPEC.md` shipped 6 literal angle-bracket placeholder sites contradicting the read-first-context purpose. Hybrid fix: §2/§3 skip-stubs use plain prose italic markers; §1 narrative + §4 fill-required sites use `<!-- TODO: ... -->` HTML comments (invisible at render, visible to editor).
+- **F2 (LOW-MEDIUM enhancement)** — `/save-spec [project-name] [target-dir]` accepts optional second positional argument. Multi-repo portfolio adopters no longer need a per-repo session switch.
+- **F3 (MEDIUM bonus, surfaced by pre-PR self-test)** — Guide's Check 2 awk range collapsed to 1 line on BSD awk (macOS default) because the end-regex matched the start line. Replaced with `sed -n` (consistent cross-platform). All macOS adopters silently affected since v2.15.9.
+- **W2 (doc softening)** — N2 timestamp warning reframed; Adopter #3 verified correct Bangkok offset in real use.
+
+Pattern: **DoD-must-execute principle empirically validated within 24h of being coined.** The v2.16.1 /reflect action item caught F3 — a BSD-awk regression no static review would have surfaced. Lesson loop closed same day.
 
 ## What's New in v2.16.1
 
@@ -851,4 +864,4 @@ MIT
 
 ---
 
-_Version: 2.16.1 | Last updated: 2026-05-17_
+_Version: 2.16.2 | Last updated: 2026-05-17_
