@@ -1,10 +1,22 @@
-![Version](https://img.shields.io/badge/latest-v2.16.2-blue)
+![Version](https://img.shields.io/badge/latest-v2.16.3-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.16.3 — `/save-spec` Round-5 Arc-Close Polish (Adopter #2 closure pass) (May 2026)
+
+Patch release. Adopter #2 closure pass on the 5-round v2.16.x QA arc surfaced 1 MEDIUM bug + 2 LOW items + an arc-close meta. All 3 fixed; arc closed per Adopter #2 recommendation. Closes [#205](https://github.com/pitimon/8-habit-ai-dev/issues/205).
+
+**R5-3 (MEDIUM bug, fixed)**: Scaffolded SPEC.md §2 markdown table rendered broken on every empty-decisions scaffold because reference.md:30 blank line separated alignment row from `<§2-rows>` substitution. Initial fix (delete blank + add HTML-comment assembly directive) failed because the formatter persistently re-wedged blanks around HTML-blocks AND `<...>` markers. Final fix uses table-row-shaped substitution marker (`| §2-rows-ASSEMBLY-DIRECTIVE | ... |`) so the formatter sees it as a real data row. New validate-content.sh Check 12c.1 regression check added with formatter-padding-tolerant regex.
+
+**R5-1 (LOW-MEDIUM doc, fixed)**: Template assembly markers visually identical to F1-class pre-fix placeholders — risked future-contributor confusion. Fixed by consolidating the assembly-directive intent INTO the marker text with explicit `ASSEMBLY-DIRECTIVE` phrase + "NEVER appears in output" language.
+
+**R5-2 (LOW doc, fixed)**: FR-017 error template used write-failure register for pre-flight path-validation. Added new canonical pre-flight error template ("Directory not found: <target-dir>...") with correct register. FR-017 wired to new template; SKILL.md Process step 1 updated.
+
+Pattern: **formatter-vs-substitution-marker arms race resolved via table-row-shaped marker** — when a marker must be adjacent to a formatter-stable construct, make the marker itself look like that construct. DoD-must-execute self-test caught zero bugs this round (previous round caught F3 BSD-awk regression); convergence is the expected pattern when discipline holds. Validator state: validate-structure.sh 268/268 PASS, validate-content.sh 220+ PASS / 0 FAIL / 1 WARN / 0 fitness breaches. **5-round arc closed** per Adopter #2 recommendation; round 6 deferred unless a third independent adopter surfaces friction.
 
 ## v2.16.2 — `/save-spec` Round-3 Polish + Guide Check 2 BSD-awk Fix (Adopter #3 dogfood) (May 2026)
 

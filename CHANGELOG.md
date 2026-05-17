@@ -10,6 +10,32 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.16.3 — `/save-spec` Round-5 Arc-Close Polish (Adopter #2 closure pass) (2026-05-18)
+
+Patch release. Adopter #2 closure pass on the 5-round v2.16.x QA arc surfaced 1 MEDIUM bug + 2 LOW items + an arc-close meta-recommendation. All 3 fixed; arc closed per Adopter #2 recommendation (defer round 6 unless a third independent adopter surfaces friction). Closes [#205](https://github.com/pitimon/8-habit-ai-dev/issues/205).
+
+### Fixed
+
+- **R5-3 (MEDIUM bug)** — Scaffolded `SPEC.md` §2 markdown table rendered broken on every empty-decisions scaffold. `reference.md:30` blank line separated the alignment row from the `<§2-rows>` substitution marker; GitHub / mdast-based renderers treated this as a degenerate header-only table + a stray-pipe paragraph. Initial fix attempted with standalone HTML-comment assembly directive, but the project formatter (Prettier-class) persistently re-wedged blank lines around both HTML-blocks AND `<...>` markers. Final fix uses a **table-row-shaped substitution marker** (`| §2-rows-ASSEMBLY-DIRECTIVE | ... | ... | ... |`) so the formatter sees it as a real data row and doesn't pad it. Generator replaces this row with actual rows at scaffold time. New `tests/validate-content.sh` Check 12c.1 added as a regression check with a formatter-padding-tolerant alignment-row regex.
+- **R5-1 (LOW-MEDIUM doc)** — Template assembly markers at `reference.md` §1/§2/§3 substitution sites previously used `<§N-...>` angle-bracket syntax visually identical to F1-class pre-fix placeholders, risking future-contributor confusion ("didn't we fix these?"). Fixed by consolidating the assembly-directive intent INTO the marker text itself with an explicit `ASSEMBLY-DIRECTIVE` capitalized phrase + "NEVER appears in output — replaced by generator at scaffold time" language. §1/§3 use the angle-bracket form (formatter-tolerant in list contexts); §2 uses the table-row form (formatter-required in table contexts).
+- **R5-2 (LOW doc)** — FR-017 (target-dir validation) error template previously reused the Decision-4 Write-failure template ("Tried to create SPEC.md at..."), giving an adopter who typos a target-dir path permission/disk troubleshooting wording instead of "directory not found" guidance. Added a new **Canonical pre-flight error template** section to `reference.md` with the adopter-correct register ("Directory not found: <target-dir>..."). FR-017 wired to point at the new template, NOT Decision-4. SKILL.md Process step 1 updated to emit the pre-flight error before any Glob/Write call.
+
+### Validator state
+
+`validate-structure.sh` 268/268 PASS; `validate-content.sh` 220+ PASS / 0 FAIL / 1 WARN / 0 fitness breaches.
+
+### Pattern
+
+**Formatter-vs-substitution-marker arms race resolved via table-row-shaped marker.** When a template marker must be adjacent to a markdown construct that the formatter treats as stable (like table data rows), make the marker itself look like that construct. The formatter then treats it as a peer of the surrounding structure, not as an HTML-block to pad. The standalone-HTML-comment approach assumed the formatter would respect the comment as a paragraph-class block; the formatter consistently treated it as something to pad. The marker had to assimilate to the surrounding structure to win.
+
+**DoD-must-execute self-test caught zero bugs this round.** The action item from `~/.claude/lessons/2026-05-17-maturity-ladder-dogfood-arc-v2-16-1.md` was executed against synthesized v2.16.3 scaffold output — all 5 verification commands pass, F1 / R5-1 / R5-3 regression checks all pass. The previous round (v2.16.2) the self-test caught F3 (BSD-awk regression); this round it confirmed clean. The system is now systematically preventing what it previously discovered reactively — convergence is the expected pattern when the discipline holds.
+
+### Sibling closure
+
+5-round adopter-maintainer rhythm closed per Adopter #2 recommendation. Rounds 1–5: #197 (closed in v2.16.0), #201 (closed in v2.16.1), #203 (closed in v2.16.2), this issue #205 (closed in v2.16.3). Round 6 deferred unless a third independent adopter (outside `netbox-sit` + `claude-all/netbird-sit`) surfaces real friction.
+
+---
+
 ## v2.16.2 — `/save-spec` Round-3 Polish + Guide Check 2 BSD-awk Fix (Adopter #3 dogfood) (2026-05-17)
 
 Patch release. Adopter #3 dogfood pass on `/save-spec` (first round using **real skill execution** rather than docs review) surfaced 1 correctness bug + 1 friction enhancement; pre-PR self-test (per the same-day DoD-must-execute action item from `~/.claude/lessons/2026-05-17-maturity-ladder-dogfood-arc-v2-16-1.md`) surfaced 1 additional verification-command bug. All 3 fixed in this PR. Closes [#203](https://github.com/pitimon/8-habit-ai-dev/issues/203).

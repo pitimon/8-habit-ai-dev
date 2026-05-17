@@ -104,6 +104,31 @@ if [ "$TODO_FAIL" -eq 0 ]; then
   pass "No TODO/FIXME markers in skills/ content (consistency-check whitelisted — documents detection patterns)"
 fi
 
+# 12c.1: R5-3 regression — save-spec §2 template alignment row + substitution must be adjacent
+# Standard Markdown table requires the row after the alignment row to be a data row (no blank
+# line between). The skill's template uses an HTML-comment + substitution marker pattern that
+# the generator replaces — the marker MUST sit directly under the alignment row, or every
+# scaffolded SPEC.md ships with a broken §2 table. Issue #205 R5-3.
+SAVESPEC_REF="skills/save-spec/reference.md"
+if [ -f "$SAVESPEC_REF" ]; then
+  # Find the §2 alignment row line number; the very next non-comment, non-blank line must be
+  # either a data row (starts with `|`) or the substitution marker (starts with `<`).
+  # Flexible match — formatter may widen column padding so any 4-column alignment
+  # row with --- in each cell qualifies. The §2 table is the only one in this file
+  # with exactly 4 columns of dashes, so first match is the right one.
+  align_line=$(grep -nE '^\|[[:space:]-]+\|[[:space:]-]+\|[[:space:]-]+\|[[:space:]-]+\|[[:space:]]*$' "$SAVESPEC_REF" | grep -E ':\|[[:space:]]+-{3}' | head -1 | cut -d: -f1)
+  if [ -n "$align_line" ]; then
+    # Check the next two lines: line N+1 may be an HTML comment; the data-or-marker line MUST
+    # NOT be preceded by a blank line.
+    next_line=$(sed -n "$((align_line + 1))p" "$SAVESPEC_REF")
+    if [ -z "$next_line" ] || [[ "$next_line" =~ ^[[:space:]]*$ ]]; then
+      fail "R5-3 regression: $SAVESPEC_REF §2 alignment row at line $align_line is followed by a BLANK line; scaffolded SPEC.md §2 table will render broken (issue #205)"
+    else
+      pass "R5-3 regression check: $SAVESPEC_REF §2 alignment row is followed by a non-blank line (table renders correctly)"
+    fi
+  fi
+fi
+
 # 12d: Empty links [text]() or [](url)
 EMPTY_LINK_FAIL=0
 while read -r f; do

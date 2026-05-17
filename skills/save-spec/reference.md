@@ -19,16 +19,15 @@ Single-page reference. Read this first when starting a new session.
 
 <!-- TODO: one paragraph summarizing what this system is + where it runs -->
 
-<§1-bullets — one bullet per confirmed pointer-target file. Empty set → single template-stub bullet from the empty-set example below.>
+<§1-bullets ASSEMBLY-DIRECTIVE — one bullet per confirmed pointer-target file. Empty set → single template-stub bullet from the empty-set example below. NEVER appears in output — replaced by the generator at scaffold time.>
 
 ## 2. Decisions snapshot (pointer)
 
 The N most load-bearing decisions. Each row = one line + canonical source. Keep ≤ 10 rows — if it grows, prune to the most active.
 
-| #   | Decision | Why | Source |
-| --- | -------- | --- | ------ |
-
-<§2-rows — one row per parsed decision. Empty set → single template-stub row.>
+| #                          | Decision                    | Why                                  | Source                                                                                                                                                                                                                                                                         |
+| -------------------------- | --------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| §2-rows-ASSEMBLY-DIRECTIVE | one row per parsed decision | empty set → single template-stub row | replaced by the generator at scaffold time — NEVER appears in output. R5-3 critical: must be table-row-shaped (starts with `\|`) so the formatter does NOT wedge blank lines around it; the alignment row above + this row must be adjacent or Markdown table rendering breaks |
 
 Per-event history: `CHANGELOG.md`. Root-cause post-mortems: `LESSONS.md`.
 
@@ -36,7 +35,7 @@ Per-event history: `CHANGELOG.md`. Root-cause post-mortems: `LESSONS.md`.
 
 **The only place backlog is maintained.** Stale items are deleted from day 1 — once a §3 item is captured in a changelog entry, ADR, or the §2 decisions snapshot, **delete** it from the backlog the same day.
 
-<§3-bullets — one [ ] bullet per parsed item. Empty set → single [ ] template-stub bullet.>
+<§3-bullets ASSEMBLY-DIRECTIVE — one [ ] bullet per parsed item. Empty set → single [ ] template-stub bullet. NEVER appears in output — replaced by the generator at scaffold time.>
 
 ## 4. Current state — save point
 
@@ -132,6 +131,26 @@ Substitution semantics:
 - `<error-class>` — POSIX error class (e.g. `EACCES`, `ENOSPC`, `EROFS`)
 - `<error-message>` — the underlying error string surfaced by the `Write` tool
 - `<suggested-action>` — context-specific hint (one short imperative sentence; the `Typical fixes` line follows always)
+
+## Canonical pre-flight error template (FR-017, target-dir validation)
+
+Used by Process step 1 when the user supplied a `[target-dir]` positional argument but the path does not exist or is not a directory. **Pre-flight-validation register — distinct from the Write-failure register above** (R5-2 fix, v2.16.3, [#205](https://github.com/pitimon/8-habit-ai-dev/issues/205)). An adopter who typos a path needs "directory not found" wording, not "tried to create" wording that suggests permission/disk troubleshooting.
+
+```
+Directory not found: <target-dir>
+
+Check the path and re-run `/save-spec <project-name> <target-dir>`. The
+target-dir positional argument must be an existing directory; the skill does
+not create directories on the user's behalf.
+
+No changes were made.
+```
+
+Substitution:
+
+- `<target-dir>` — the literal path the user supplied as the second positional argument
+
+Wire-up: FR-017 in `docs/specs/save-spec/prd.md` points at this template (not the Decision-4 Write-failure template). The skill emits this verbatim and stops before any Write attempt.
 
 ## Skip-sentinels (Decision-2)
 
