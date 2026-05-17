@@ -66,7 +66,7 @@ The two deployment modes are **disjoint in practice**: a repo picks one based on
 
 2. **[Event-driven] FR-002**: When the user invokes `/save-spec` (with or without a positional project-name argument), the skill shall first check whether `SPEC.md` exists at the current working directory.
 
-3. **[Unwanted] FR-003**: If `SPEC.md` already exists at the project root, then the skill shall refuse to overwrite, emit the message "`SPEC.md` already exists at `<absolute-path>`. Phase 1 of `/save-spec` is generator-only — edit the file directly, or wait for the Phase 2 `--update` flag. No changes were made.", and stop. The skill shall not invoke the `Write` tool in this branch.
+3. **[Unwanted] FR-003**: If `SPEC.md` already exists at the project root, then the skill shall refuse to overwrite, emit the canonical refusal message defined in `skills/save-spec/reference.md` (Decision-3, "Canonical refusal message" section — verbatim text with `<absolute-path>` substitution), and stop. The skill shall not invoke the `Write` tool in this branch. (Single source of truth: `reference.md`. Paraphrased inline drafts in earlier versions of this PRD were a drift hazard — see N4 in [#201](https://github.com/pitimon/8-habit-ai-dev/issues/201).)
 
 4. **[Event-driven] FR-004**: When the user invokes `/save-spec` and `SPEC.md` does not exist, the skill shall use `Glob` to detect the presence of the candidate pointer-target files at the project root: `PLAYBOOK.md`, `CONTRACTS.md`, `LESSONS.md`, `CHANGELOG.md`, `README.md` (case-sensitive).
 

@@ -43,13 +43,13 @@ The 8 steps below are the runtime contract — each step maps to specific FRs fr
 
 3. **Gather user input** (FR-005, FR-006, FR-007, FR-008, FR-016) — Ask the user **at most 4 questions** via `AskUserQuestion`:
    - **Q1 (skip if positional argument supplied to the skill)**: project name — free-text via the "Other" affordance, with two preset options (`current directory name`, `manual entry`)
-   - **Q2**: §1 pointer confirmation — multi-select over the glob matches from step 2; default selection = all matches. If step 2 found nothing, skip Q2 silently.
+   - **Q2**: §1 pointer confirmation — multi-select over the glob matches from step 2; default selection = all matches. Also accepts the "Other" free-text affordance with a newline-separated list of project-specific paths for repos using non-canonical naming (e.g. ops/infra repos with `server-state.md`, `runbooks/ops-runbook.md`, `playbooks/change-management.md`). If step 2 found nothing AND the user provides no Other entries, skip Q2 silently. (N3 — issue [#201](https://github.com/pitimon/8-habit-ai-dev/issues/201).)
    - **Q3**: §2 decisions to seed — options `[skip, provide]`. If the user picks `provide` they supply a comma-separated list via "Other" free-text (≤3 decisions; surplus truncated).
    - **Q4**: §3 backlog items to seed — same shape as Q3.
 
 4. **Parse user input** — Apply these rules:
    - Project name: literal text from Q1 (or positional argument if supplied).
-   - §1 selection: the list of confirmed filenames from Q2.
+   - §1 selection: the list of confirmed filenames from Q2's multi-select. If Q2 also received "Other" free-text, split that text on newlines, trim each line, drop empty lines, and append each non-empty entry to the §1 list as a project-specific path (no `[ -e ]` runtime check — the skill cannot Bash; trust the adopter's input). Deduplicate against the multi-select picks (case-sensitive path match).
    - §2 / §3 input: treat as **skip** if the answer matches any skip-sentinel from `reference.md` (`skip`, `none`, `nothing`, `n/a`, empty/whitespace-only). Otherwise split free-text on `,` or `;`, trim each piece, take the first ≤3 non-empty items.
 
 5. **Construct SPEC.md content** — Fill the template from `reference.md`:

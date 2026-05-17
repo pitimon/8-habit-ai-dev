@@ -10,6 +10,32 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.16.1 — `/save-spec` Phase 1 Polish (Adopter #2 dogfood) (2026-05-17)
+
+Patch release. Adopter #2 dogfood pass on the v2.16.0 `/save-spec` skill surfaced 1 correctness bug + 3 quality items — all four fixed in this PR. Closes [#201](https://github.com/pitimon/8-habit-ai-dev/issues/201).
+
+### Fixed
+
+- **N1 (MEDIUM bug)** — `skills/save-spec/reference.md` §1 empty stub previously used `` `<filename>.md` `` which Check 4's backtick-path grep (`grep -oE '\`[^\`]+\.(md|sh|py|yaml|yml|json)\`'`) extracted as the literal string `<filename>.md`. The downstream `[ -e ]`check failed, emitting`MISS <filename>.md`and making the Definition of Done's claim that "output passes the 5 verification commands from`guides/spec-digest-pattern.md`" provably false on the default scaffold. The stub now reads `_§1 is empty — add project-specific pointers (one path per bullet) as the repo grows._`with no backticked`.md` path — Check 4 finds no candidate paths and exits cleanly. DoD claim is now true.
+- **N4 (LOW doc drift)** — `docs/specs/save-spec/prd.md` FR-003 previously included an inline paraphrased version of the refusal message that diverged from the canonical version in `skills/save-spec/reference.md`. Future-maintainer drift hazard. FR-003 now references `reference.md` (Decision-3) as the single source of truth.
+
+### Changed
+
+- **N2 (LOW)** — `skills/save-spec/reference.md` Timestamp section now documents the reliability profile of the LLM-generated `**Last updated**` substitution. The skill's `allowed-tools` does not include `Bash`, so Process step 5 cannot invoke `date(1)`; the timestamp value is substituted by Claude from session-injected `<system-reminder>Current:</system-reminder>` context. When that injection is absent (custom runtime / non-interactive batch), output may carry `+00:00` or a wrong offset. Adopter guidance added: verify the offset after scaffold, edit manually if wrong. Phase 2 may add `Bash` if adopter feedback shows unreliability.
+- **N3 (LOW UX)** — `skills/save-spec/SKILL.md` Process step 3 Q2 now accepts an "Other (free-text)" affordance for newline-separated project-specific paths. Motivated by ops/infra repos using non-canonical naming (`server-state.md`, `playbooks/change-management.md`, `runbooks/ops-runbook.md`) that have zero overlap with the 5 canonical glob names. Process step 4 parse rule extended to split-on-newlines, trim, dedup against multi-select picks, and append. `reference.md` Example F added.
+
+### Validator state
+
+`validate-structure.sh` 268/268 PASS; `validate-content.sh` 219+ PASS / 0 FAIL / 1 WARN / 0 fitness breaches.
+
+### Pattern
+
+**Patch-release dogfood discipline** — adopter #2 dogfood report (#201) surfaced N1 in under 2 hours after the v2.16.0 release. Correctness fix shipped same day. The dogfood feedback loop is faster than the original promotion-criteria gathering because the skill itself enables more rapid scaffold-and-test iterations. The Phase 2 commitment ladder remains visible — N2 timestamp reliability + N3 UX both have explicit Phase 2 hooks if feedback warrants escalation.
+
+Sibling closure: [#197](https://github.com/pitimon/8-habit-ai-dev/issues/197) is now closeable — all 5 of its items were addressed in v2.16.0 + #198. The /save-spec Adopter #2 dogfood pass (this issue) is the natural continuation, scoped to the new skill rather than the original guide.
+
+---
+
 ## v2.16.0 — `/save-spec` Skill — Phase 1 Minimum Viable (2026-05-17)
 
 Minor version bump (new skill). Promotes the v2.15.9 spec-digest-pattern guide to a user-invocable skill after all three documented promotion criteria were met. Closes [#199](https://github.com/pitimon/8-habit-ai-dev/issues/199).

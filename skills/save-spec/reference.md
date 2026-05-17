@@ -73,8 +73,10 @@ When the user skips §1 / §2 / §3 seeding, the corresponding section gets a si
 - **§1 empty stub** (one bullet):
 
   ```markdown
-  - **Detail file** → `<filename>.md` (add project-specific pointers here, one path per bullet so the verification grep can resolve them)
+  - _§1 is empty — add project-specific pointers (one path per bullet) as the repo grows._
   ```
+
+  > **N1 fix (v2.16.1, [#201](https://github.com/pitimon/8-habit-ai-dev/issues/201))**: the previous stub used `` `<filename>.md` `` which Check 4's backtick-path grep extracted as `<filename>.md` (literal angle brackets), failing `[ -e ]` and emitting `MISS  <filename>.md`. The Definition of Done's claim that "output passes the 5 verification commands" was provably false on the default scaffold. The stub above uses plain prose with no backticked `.md` path, so Check 4 finds no candidate paths to resolve and exits cleanly.
 
 - **§2 empty stub** (one row):
 
@@ -168,6 +170,21 @@ POSIX `date` recipe (the skill itself does not invoke Bash — this is for refer
 
 Rationale: humans reading their own save-point file see their own time; the offset preserves auditability. The canonical record (CHANGELOG / git log) is the source of truth for global ordering — §4's timestamp is the session-resume hint, not the audit log.
 
+### N2 timestamp limitation (v2.16.1, [#201](https://github.com/pitimon/8-habit-ai-dev/issues/201))
+
+The skill's `allowed-tools` array does NOT include `Bash` — Process step 5 cannot invoke `date(1)` to obtain an authoritative current-time-with-offset string. The timestamp value is instead substituted by Claude using its session-injected current-time context (typically the `<system-reminder>Current: <date> <time> <timezone></system-reminder>` block that Claude Code injects at session start).
+
+**Reliability profile**:
+
+- ✅ When the session has a `<system-reminder>` providing current local time + timezone (the default Claude Code behavior), the substituted timestamp will match the user's local time with the correct offset.
+- ⚠️ When that injection is absent (custom runtime, non-interactive batch, certain MCP-only contexts), Claude may fall back to a default offset — most likely `+00:00` (UTC) — or, in degenerate cases, a hallucinated offset. The skill cannot detect this failure mode at scaffold time.
+
+**Adopter guidance**: after running `/save-spec`, glance at the `**Last updated**` line in §4. If the offset doesn't match your local timezone, edit it manually with the correct value. This is a one-time fix on the freshly scaffolded file — subsequent §4 updates are driven by the CLAUDE.md auto-update recipe (which is also Claude-generated and inherits the same reliability profile).
+
+**Phase 2 consideration**: if adopter feedback shows the LLM-clock substitution is unreliable in practice, Phase 2 may add `Bash` to `allowed-tools` (with a narrowly scoped matcher) and invoke `date +%Y-%m-%dT%H:%M:%S%z` directly. That would require a Decision-10 validator update to allow `Bash` in the pinned array. Not in scope for Phase 1.
+
+The POSIX `date` recipe documented above remains "for reference" — useful when an adopter is correcting a wrong-offset substitution by hand.
+
 ## Parse examples (Decision-9)
 
 How free-text user input from Process step 3 → Q3 / Q4 turns into §2 rows or §3 bullets after step 4 parsing.
@@ -221,6 +238,20 @@ User input to Q3: ` foo  ;  bar , baz`
 Parsing: split on `,` or `;` → `["  foo  ", "  bar ", " baz "]`. Trim → `["foo", "bar", "baz"]`. Take first 3 → all 3.
 
 Result: §2 = 3 rows, content `foo`, `bar`, `baz`.
+
+### Example F — Q2 non-canonical pointer paths via "Other" (v2.16.1, N3)
+
+User input to Q2: multi-select picks `README.md` (canonical match from glob), AND "Other" free-text:
+
+```
+netbird-sit/server-state.md
+netbird-sit/playbooks/change-management.md
+netbird-sit/runbooks/ops-runbook.md
+```
+
+Parsing: multi-select list = `["README.md"]`. Other free-text split on newlines, trimmed, non-empty → 3 entries. Deduplicate against multi-select picks (no overlap with `README.md`). Final §1 set = `["README.md", "netbird-sit/server-state.md", "netbird-sit/playbooks/change-management.md", "netbird-sit/runbooks/ops-runbook.md"]`.
+
+Result: §1 = 4 bullets (one path per bullet). The skill does NOT validate that the Other paths exist on disk — Phase 1 cannot Bash. Adopters supplying nonexistent paths get bullets pointing at paths that fail Check 4 verification; the skill writes what was asked.
 
 ## Rationale links to issue #199 open-question defaults
 
