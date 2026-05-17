@@ -53,7 +53,7 @@ Single-page reference. Read this first when starting a new session.
 - **Data contracts / API shapes** → `CONTRACTS.md`
 - **Lessons & post-mortems** → `LESSONS.md`
 - **Per-event history** → `CHANGELOG.md`
-- <Add project-specific pointers here. Wrap each filename in Markdown link syntax in your own copy if you want clickable references — kept as plain backticked names here so the template stays portable.>
+- <Add project-specific pointers here. Wrap each filename in Markdown link syntax in your own copy if you want clickable references — kept as plain backticked names here so the template stays portable. **One path per bullet** — comma-listing siblings (`a.md`, `b.md`, `c.md` on one line) defeats the verification grep at the bottom of this guide; expand them into separate bullets even if they share a category.>
 
 ## 2. Decisions snapshot (pointer)
 
@@ -67,10 +67,10 @@ Per-event history: `CHANGELOG.md`. Root-cause post-mortems: `LESSONS.md`.
 
 ## 3. Live backlog
 
-**The only place backlog is maintained.** Stale items are deleted, not archived.
+**The only place backlog is maintained.** Stale items are deleted from day 1 — once a §3 item is captured in a changelog entry, ADR, or the §2 decisions snapshot, **delete** it from the backlog the same day. Do not let §3 become a done-list — that responsibility belongs to your changelog or detail file. The "stale" threshold is _exists in canonical form elsewhere_, not _more than N days old_. The `[x] ~~<shipped>~~` example below is illustrative only; in practice the row gets deleted once the canonical record exists.
 
 - [ ] <Active backlog item — what + where + blocker if any>
-- [x] ~~<Shipped item, with date + source link>~~
+- [x] ~~<Shipped item, with date + source link — delete this row once it lands in CHANGELOG or §2>~~
 
 ## 4. Current state — save point
 
@@ -107,11 +107,25 @@ To keep `SPEC.md` honest without remembering, add this to the project's `CLAUDE.
 
 1. Update `SPEC.md` §4 (Current state) — what changed, what's next, last-updated timestamp
 2. Update `SPEC.md` §3 (Backlog) — check off completed items, add new ones surfaced
-3. Update data contracts in the file referenced from `SPEC.md` §1 if any interface changed
+3. Update the relevant pointer-target file from `SPEC.md` §1 if any operational fact changed (data contracts, runbooks, server state, changelog entries, etc. — whatever the §1 pointers actually point to in your repo archetype)
 4. Never claim "done" without updating `SPEC.md` first
 ```
 
 **Plugin does not enforce this.** Same boundary as the feature-spec mode auto-update recipe ([`persistence-convention.md`](./persistence-convention.md#auto-update-recipe-user-side-optional)) — the plugin teaches the pattern; the user owns enforcement via their own CLAUDE.md rule.
+
+## Adopting alongside doc-blocker hooks
+
+If your repo runs a PreToolUse hook that blocks `.md` file operations (e.g. policies preventing untracked planning-doc sprawl), §4 save-point updates will collide with the hook on every task. The hook category typically conflates two distinct operations:
+
+- **Create-new** `.md` file (`Write` to a path that does not yet exist or is not git-tracked) — what the hook is meant to prevent
+- **Edit-tracked** `.md` file (`Write`/`Edit` against a committed path) — legitimate SPEC.md updates, CHANGELOG entries, runbook revisions
+
+Two postures:
+
+1. **Allowlist `SPEC.md` specifically in the hook config** — quickest fix, but a per-file allowlist doesn't scale across other doc-update workflows (`current-state.md`, CHANGELOG entries, runbook revisions, ADR drafts) that share the same friction shape.
+2. **Wait for / upgrade to a hook that distinguishes Write-new vs Edit-tracked** — the architectural fix lives in the hook layer (runtime enforcement), not in this guide (workflow discipline). Tracked at [pitimon/claude-governance#34](https://github.com/pitimon/claude-governance/issues/34).
+
+Adopters with hardened doc-blocker hooks: expect this friction until the hook ecosystem catches up. The discipline lives here; the runtime fix belongs in `claude-governance` per the plugin boundary.
 
 ## What this pattern is NOT
 
@@ -156,13 +170,22 @@ To verify a `SPEC.md` follows this pattern:
 grep -E '^## [1-4]\.' SPEC.md | wc -l   # expect 4
 
 # Save-point hint present in §4?
-grep -A1 '## 4. Current state' SPEC.md | grep -i 'clear.*compact'
+# (awk range — robust against blank-line-after-heading per markdownlint MD022;
+# the older `grep -A1` would miss the hint if your §4 has the standard blank line)
+awk '/^## 4\. Current state/,/^## /' SPEC.md | grep -i 'clear.*compact'
 
 # Last-updated timestamp present?
 grep -E 'Last updated' SPEC.md
 
-# Pointers actually resolve?
+# Pointers actually resolve? (bracket-paren link syntax for backticked label)
 grep -oE '\]\([^)]+\.md\)' SPEC.md | sed 's/[])(]//g' | xargs -I{} ls {}
+
+# Pointers actually resolve? (Backtick syntax — `path.md`; the template default)
+# Carve-out: paths starting with `/` are treated as documentation references
+# (remote-only paths in ops repos), not local files. One path per backtick-span.
+grep -oE '`[^`]+\.(md|sh|py|yaml|yml|json)`' SPEC.md | sed 's/`//g' | sort -u | while read p; do
+  if [ -e "$p" ] || [[ "$p" =~ ^/ ]]; then echo "OK    $p"; else echo "MISS  $p"; fi
+done
 ```
 
 ---
