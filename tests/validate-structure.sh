@@ -587,6 +587,74 @@ if [ "$ATTR_FAIL" -eq 0 ]; then
 fi
 echo ""
 
+# --- Check 23: /save-spec skill canonical contract pins ---
+# Pin Decision-7 (8-step Process) + Decision-8 (frontmatter array) + canonical-string
+# phrases (Decision-3 refusal + Decision-4 error) per docs/specs/save-spec/design.md.
+# Drift in any of these requires a new /design cycle (sticky decision).
+echo "--- Check 23: /save-spec skill canonical contract pins ---"
+SAVE_SPEC="skills/save-spec/SKILL.md"
+SAVE_SPEC_REF="skills/save-spec/reference.md"
+SAVE_SPEC_FAIL=0
+
+if [ ! -f "$SAVE_SPEC" ]; then
+  fail "Check 23: $SAVE_SPEC missing"
+  SAVE_SPEC_FAIL=$((SAVE_SPEC_FAIL + 1))
+else
+  # Frontmatter pins
+  if ! grep -q '^name: save-spec$' "$SAVE_SPEC"; then
+    fail "Check 23: $SAVE_SPEC frontmatter name != save-spec"
+    SAVE_SPEC_FAIL=$((SAVE_SPEC_FAIL + 1))
+  fi
+  if ! grep -q '^user-invocable: true$' "$SAVE_SPEC"; then
+    fail "Check 23: $SAVE_SPEC frontmatter user-invocable != true"
+    SAVE_SPEC_FAIL=$((SAVE_SPEC_FAIL + 1))
+  fi
+  if ! grep -qE '^allowed-tools: \["Read", "Write", "Glob", "AskUserQuestion"\]$' "$SAVE_SPEC"; then
+    fail "Check 23: $SAVE_SPEC allowed-tools != [Read, Write, Glob, AskUserQuestion]"
+    SAVE_SPEC_FAIL=$((SAVE_SPEC_FAIL + 1))
+  fi
+  if ! grep -q '^prev-skill: any$' "$SAVE_SPEC"; then
+    fail "Check 23: $SAVE_SPEC prev-skill != any"
+    SAVE_SPEC_FAIL=$((SAVE_SPEC_FAIL + 1))
+  fi
+  if ! grep -q '^next-skill: any$' "$SAVE_SPEC"; then
+    fail "Check 23: $SAVE_SPEC next-skill != any"
+    SAVE_SPEC_FAIL=$((SAVE_SPEC_FAIL + 1))
+  fi
+  # Decision-7: 8-step Process count
+  process_steps=$(awk '/^## Process/,/^## [^P]/' "$SAVE_SPEC" | grep -cE '^[0-9]+\. \*\*' || true)
+  if [ "$process_steps" -ne 8 ]; then
+    fail "Check 23: $SAVE_SPEC Process section has $process_steps steps (Decision-7 pins 8)"
+    SAVE_SPEC_FAIL=$((SAVE_SPEC_FAIL + 1))
+  fi
+fi
+
+if [ ! -f "$SAVE_SPEC_REF" ]; then
+  fail "Check 23: $SAVE_SPEC_REF missing"
+  SAVE_SPEC_FAIL=$((SAVE_SPEC_FAIL + 1))
+else
+  # Decision-3 canonical first-line phrase (refusal — lives in reference.md per design)
+  if ! grep -q 'SPEC.md already exists at' "$SAVE_SPEC_REF"; then
+    fail "Check 23: $SAVE_SPEC_REF missing Decision-3 refusal phrase 'SPEC.md already exists at'"
+    SAVE_SPEC_FAIL=$((SAVE_SPEC_FAIL + 1))
+  fi
+  # Decision-4 canonical first-line phrase (error — lives in reference.md per design)
+  if ! grep -q 'Tried to create SPEC.md at' "$SAVE_SPEC_REF"; then
+    fail "Check 23: $SAVE_SPEC_REF missing Decision-4 error phrase 'Tried to create SPEC.md at'"
+    SAVE_SPEC_FAIL=$((SAVE_SPEC_FAIL + 1))
+  fi
+  # Decision-2 documentation pin (skip-sentinels list must be present)
+  if ! grep -q '^Skip-sentinels:' "$SAVE_SPEC_REF"; then
+    fail "Check 23: $SAVE_SPEC_REF missing 'Skip-sentinels:' pin (Decision-2)"
+    SAVE_SPEC_FAIL=$((SAVE_SPEC_FAIL + 1))
+  fi
+fi
+
+if [ "$SAVE_SPEC_FAIL" -eq 0 ]; then
+  pass "/save-spec canonical contract pins intact (frontmatter, 8-step Process, refusal + error phrases, skip-sentinels)"
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"

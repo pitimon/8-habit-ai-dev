@@ -10,6 +10,40 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.16.0 — `/save-spec` Skill — Phase 1 Minimum Viable (2026-05-17)
+
+Minor version bump (new skill). Promotes the v2.15.9 spec-digest-pattern guide to a user-invocable skill after all three documented promotion criteria were met. Closes [#199](https://github.com/pitimon/8-habit-ai-dev/issues/199).
+
+### Added
+
+- **`skills/save-spec/SKILL.md`** (new, ~180 lines) — user-invoked Phase 1 minimum viable skill that scaffolds a project-root `SPEC.md` following the spec-digest-pattern archetype. Frontmatter: `allowed-tools: ["Read", "Write", "Glob", "AskUserQuestion"]`, `prev-skill: any`, `next-skill: any` (standalone). Generator-only — refuses to overwrite an existing `SPEC.md`. 8-step Process section is the runtime contract (Decision-7 sticky).
+- **`skills/save-spec/reference.md`** (new, ~200 lines) — canonical artifacts: full SPEC.md output template, Decision-3 refusal message (verbatim), Decision-4 3-line error template (verbatim with substitution markers), Decision-2 skip-sentinels list (`skip`, `none`, `nothing`, `n/a`, empty), Decision-6 5-name glob set (case-sensitive exact match: `PLAYBOOK.md`, `CONTRACTS.md`, `LESSONS.md`, `CHANGELOG.md`, `README.md`), Decision-5 RFC 3339 strict timestamp format, 5 parse examples (skip / single item / max items / surplus truncation / mixed delimiters), rationale links to issue #199 open-question defaults.
+- **`tests/validate-structure.sh` Check 23** — pins `/save-spec` canonical contract (8 assertions): frontmatter name + user-invocable + allowed-tools array + prev/next-skill, Process step count = 8, Decision-3 refusal phrase present in reference.md, Decision-4 error phrase present in reference.md, Decision-2 skip-sentinels documentation pin.
+- **`skills/RESOLVER.md`** — 3 new trigger phrases for `/save-spec`: `"scaffold a SPEC.md"`, `"save-point file for this repo"`, `"set up a project digest"`.
+- **README.md** — `/save-spec` row in Assessment Skills table; `What's New in v2.16.0` section.
+- **docs/specs/save-spec/{prd,design,tasks}.md** — dogfooded PRD/design/tasks triad persisted via `--persist save-spec` during the design phase. Persisted artifacts ran through `/consistency-check save-spec` (0 CRITICAL, 0 HIGH, 4 LOW for missing alternatives markers in Decisions 7–10; LOW accepted as informational).
+
+### Changed
+
+- **`guides/spec-digest-pattern.md`** — "Promotion to a skill (deferred)" section rewritten to "Promoted to `/save-spec` in v2.16.0". Adds the explicit scope-resolution statement: the two deployment modes (feature-spec via `--persist <slug>` and project-orientation hub via root `SPEC.md`) are disjoint in practice; multi-mode repos are out of scope for tooling. Closes promotion criterion 2 in writing.
+- **`docs/adr/ADR-013-spec-persistence-opt-in.md`** — appends a 2026-05-17 follow-up note inside the existing addendum, recording that `/save-spec` shipped within the existing ADR scope (user-invoked write stays outside Alt-4 auto-write-hook rejection). **No change to the original Decision section.**
+
+### Pattern
+
+**Promotion via maturity ladder, not aesthetic preference.** v2.15.9 documented the spec-digest pattern as a guide + explicit promotion criteria (n=2 adoption / scope resolved / friction lesson). v2.16.0 ships the skill **only after** the criteria were objectively met:
+
+1. ✅ n=2 independent adoption: `netbox-sit` + `claude-all/netbird-sit` (via Adopter #2 report at #197)
+2. ✅ Scope resolved in writing: the two-modes-are-disjoint paragraph in `guides/spec-digest-pattern.md`
+3. ✅ Friction lesson captured: `~/.claude/lessons/2026-05-17-spec-digest-pattern-v2-15-9.md` + #197 verification command edge cases + doc-blocker hook collision
+
+This is the canonical example of decision-driven, data-backed feature promotion in this plugin. The next escalation (Phase 2 `--update`) is similarly gated on Phase 1 adoption feedback.
+
+### Validator state
+
+`validate-structure.sh` 266/266 PASS (Check 23 adds 8 assertions to the v2.15.9 baseline of 256); `validate-content.sh` 217+ PASS / 0 FAIL / 1 WARN / 0 fitness breaches.
+
+---
+
 ## v2.15.9 — Project-Orientation Hub Mode Documentation (2026-05-17)
 
 Docs-only patch. Closes [#194](https://github.com/pitimon/8-habit-ai-dev/issues/194) via [PR #195](https://github.com/pitimon/8-habit-ai-dev/pull/195).

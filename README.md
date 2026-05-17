@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.15.9-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.6)
+[![Version](https://img.shields.io/badge/Version-2.16.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.16.0)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -151,6 +151,7 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 | `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 17 skills + decision tree for "which skill next?"                                                                                                                          |
 | `/eu-ai-act-check`    | H1 + H8 (Spirit)    | Redirect stub — migrated to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0+ on 2026-05-02 (ADR-012). Install that plugin for the canonical 9-obligation checklist. |
 | `/ai-dev-log`         | H4 + H1             | Generate AI-assisted dev log from git history for audit trail                                                                                                                                          |
+| `/save-spec`          | H8 + H2             | Scaffold a project-root `SPEC.md` digest (project-orientation hub mode); generator-only Phase 1, refuses to overwrite existing files (v2.16.0)                                                         |
 
 ---
 
@@ -414,6 +415,21 @@ Both agents use the `sonnet` model for fast, focused analysis.
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
+
+## What's New in v2.16.0
+
+**Theme: `/save-spec` skill — project-orientation hub mode promoted from guide to skill** ([#199](https://github.com/pitimon/8-habit-ai-dev/issues/199))
+
+Minor version bump (new skill). All three v2.15.9 promotion criteria met after Adopter #2 report ([#197](https://github.com/pitimon/8-habit-ai-dev/issues/197)):
+
+- **`/save-spec`** (new, Phase 1 minimum viable) — user-invoked skill that scaffolds a project-root `SPEC.md` following the spec-digest-pattern archetype. Hybrid auto-detect: globs for `PLAYBOOK.md`, `CONTRACTS.md`, `LESSONS.md`, `CHANGELOG.md`, `README.md` and asks the user to confirm §1 pointers. AskUserQuestion seeds project name, up to 3 §2 decisions, up to 3 §3 backlog items. §4 gets a timestamped template-stub. Refuses to overwrite an existing `SPEC.md` (Phase 2 `--update` deferred). Emits the CLAUDE.md auto-update recipe stanza to conversation only — does NOT modify your `CLAUDE.md`.
+- **Scope question closed in writing** — `guides/spec-digest-pattern.md` now states explicitly that feature-spec mode (`--persist <slug>`) and project-orientation hub mode (root `SPEC.md`) are disjoint in practice; multi-mode repos are out of scope for tooling. Both n=2 adopters used project-orientation mode standalone.
+- **ADR-013 follow-up addendum** — clarifies that the v2.16.0 `/save-spec` promotion stays within the existing ADR scope (user-invoked write is outside Alt-4's auto-write-hook rejection). No new ADR required.
+- **`tests/validate-structure.sh` Check 23** — pins the canonical contract for `/save-spec`: frontmatter array, 8-step Process count (Decision-7 sticky), Decision-3 refusal phrase, Decision-4 error phrase, Decision-2 skip-sentinels documentation. Drift requires a new `/design` cycle.
+
+Pattern: **promotion via maturity ladder, not aesthetic preference.** v2.15.9 documented the pattern + deferred the skill with explicit promotion criteria; v2.16.0 ships the skill only after the criteria were objectively met (n=2 adoption + scope resolved + friction lesson captured). Decision-driven, data-backed.
+
+Dogfood: the PRD/design/tasks for this skill itself were persisted via `--persist save-spec` (the convention `/save-spec` does NOT use — feature-spec mode dogfooding project-orientation tooling), then `/consistency-check save-spec` ran clean (0 CRITICAL, 0 HIGH, 4 LOW for missing alternatives markers in 4 design decisions — accepted as informational).
 
 ## What's New in v2.15.9
 
@@ -822,4 +838,4 @@ MIT
 
 ---
 
-_Version: 2.15.9 | Last updated: 2026-05-17_
+_Version: 2.16.0 | Last updated: 2026-05-17_

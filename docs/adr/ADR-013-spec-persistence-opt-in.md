@@ -158,3 +158,9 @@ The rejections do **NOT** cover:
 **Scope statement**: ADR-013 governs the **feature-spec mode** (`docs/specs/<slug>/{prd,design,tasks,current-state}.md`). The complementary **project-orientation hub mode** is documented in [`guides/spec-digest-pattern.md`](../../guides/spec-digest-pattern.md) and is **pattern documentation only** (no skill, no hook, no enforcement). Both modes can coexist; most projects pick one based on archetype.
 
 **No change to the original decision.** The opt-in `--persist <slug>` convention, slug validation, conflict policy, frontmatter requirement, and ID-linkage guidance from the Decision section all stand unchanged.
+
+### 2026-05-17 follow-up: `/save-spec` promoted in v2.16.0
+
+The deferred `/save-spec` skill (anticipated by this addendum's second bullet under "did NOT cover") shipped in v2.16.0 as Phase 1 minimum viable — see [`skills/save-spec/SKILL.md`](../../skills/save-spec/SKILL.md). The promotion-criterion-2 scope question ("project-root `SPEC.md` vs per-slug `current-state.md` in multi-feature repos") was closed in writing via the scope-resolution statement in [`guides/spec-digest-pattern.md`](../../guides/spec-digest-pattern.md) (the two modes are disjoint in practice; multi-mode repos are out of scope for tooling). The user-invoked-write nature of `/save-spec` remains outside this ADR's Alternative 4 rejection scope (which targets always-on auto-write hooks).
+
+Design discussion + ship traceability: [#199](https://github.com/pitimon/8-habit-ai-dev/issues/199) (design), [#198](https://github.com/pitimon/8-habit-ai-dev/pull/198) (v2.15.x friction-fix predecessor), and the PRD/design/tasks triad at [`docs/specs/save-spec/`](../specs/save-spec/) (persisted via `--persist save-spec` — dogfooding the convention this ADR established).
