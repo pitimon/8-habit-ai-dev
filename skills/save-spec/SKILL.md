@@ -35,9 +35,10 @@ next-skill: any
 
 The 8 steps below are the runtime contract — each step maps to specific FRs from `docs/specs/save-spec/prd.md`. Execute in order.
 
-1. **Pre-flight** (FR-002, FR-003) — Resolve the **target directory**: if the user supplied a second positional argument, that path is the target directory; otherwise the target is the current working directory. The target directory IS the "project root" for the rest of the Process (F2 — issue [#203](https://github.com/pitimon/8-habit-ai-dev/issues/203)). Check whether `SPEC.md` exists at `<target-dir>/SPEC.md`.
-   - If it exists: emit the **refusal message** from `reference.md` (verbatim, substituting `<absolute-path>` with the resolved `<target-dir>/SPEC.md`) and **STOP**. Do **NOT** call `Write` in this branch.
-   - If it does not exist: proceed to step 2.
+1. **Pre-flight** (FR-002, FR-003, FR-017) — Resolve the **target directory**: if the user supplied a second positional argument, that path is the target directory; otherwise the target is the current working directory. The target directory IS the "project root" for the rest of the Process (F2 — issue [#203](https://github.com/pitimon/8-habit-ai-dev/issues/203)).
+   - **If a `[target-dir]` was supplied but the path does not exist or is not a directory** (FR-017): emit the **pre-flight error template** from `reference.md` (verbatim, substituting `<target-dir>` with the user's literal input) and **STOP**. Do **NOT** call `Write` or `Glob` in this branch. (Distinct register from the Decision-4 Write-failure template — R5-2 fix per issue [#205](https://github.com/pitimon/8-habit-ai-dev/issues/205).)
+   - Check whether `SPEC.md` exists at `<target-dir>/SPEC.md`. If it exists: emit the **refusal message** from `reference.md` (verbatim, substituting `<absolute-path>` with the resolved `<target-dir>/SPEC.md`) and **STOP**. Do **NOT** call `Write` in this branch.
+   - If `<target-dir>` is valid AND `SPEC.md` does not exist: proceed to step 2.
 
 2. **Detect pointer-target files** (FR-004) — Use `Glob` on `<target-dir>` for the 5 canonical filenames (case-sensitive exact match): `PLAYBOOK.md`, `CONTRACTS.md`, `LESSONS.md`, `CHANGELOG.md`, `README.md`. Collect the set of files that exist. Empty match set is acceptable — proceed.
 

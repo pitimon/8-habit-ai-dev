@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.16.2-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.16.2)
+[![Version](https://img.shields.io/badge/Version-2.16.3-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.16.3)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -415,6 +415,20 @@ Both agents use the `sonnet` model for fast, focused analysis.
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
+
+## What's New in v2.16.3
+
+**Theme: `/save-spec` Round-5 arc-close polish (Adopter #2 closure pass)** ([#205](https://github.com/pitimon/8-habit-ai-dev/issues/205))
+
+Patch release. Adopter #2 closure pass on the 5-round v2.16.x QA arc surfaced 1 MEDIUM bug + 2 LOW items + an arc-close meta. All 3 fixed; arc closed per Adopter #2 recommendation.
+
+- **R5-3 (MEDIUM bug, fixed)** — Scaffolded `SPEC.md` §2 markdown table rendered broken on every empty-decisions scaffold (`reference.md:30` blank line separated alignment row from substitution marker). Final fix uses table-row-shaped substitution marker because the formatter persistently re-wedged blanks around HTML-blocks AND `<...>` markers. New validator Check 12c.1 regression check added.
+- **R5-1 (LOW-MEDIUM doc, fixed)** — Template assembly markers consolidated to explicit `ASSEMBLY-DIRECTIVE` phrasing + "NEVER appears in output" language; visually distinct from F1-class pre-fix placeholders.
+- **R5-2 (LOW doc, fixed)** — FR-017 target-dir validation now uses a separate pre-flight error template ("Directory not found: …") with correct register, not the Decision-4 Write-failure wording.
+
+Pattern: **formatter-vs-substitution-marker arms race resolved via table-row-shaped marker.** When a marker must be adjacent to a formatter-stable construct, make the marker itself look like that construct. DoD-must-execute self-test caught **zero bugs this round** — convergence is the expected pattern when discipline holds.
+
+**5-round arc closed** per Adopter #2 recommendation. Rounds 1–5: #197 → v2.16.0; #201 → v2.16.1; #203 → v2.16.2; #205 → v2.16.3. Round 6 deferred unless a third independent adopter surfaces friction.
 
 ## What's New in v2.16.2
 
@@ -864,4 +878,4 @@ MIT
 
 ---
 
-_Version: 2.16.2 | Last updated: 2026-05-17_
+_Version: 2.16.3 | Last updated: 2026-05-18_
