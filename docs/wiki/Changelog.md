@@ -1,10 +1,28 @@
-![Version](https://img.shields.io/badge/latest-v2.15.9-blue)
+![Version](https://img.shields.io/badge/latest-v2.16.0-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.16.0 — `/save-spec` Skill — Phase 1 Minimum Viable (May 2026)
+
+Minor version bump (new skill). Promotes the v2.15.9 spec-digest-pattern guide to a user-invocable skill after all three documented promotion criteria were objectively met. Closes [#199](https://github.com/pitimon/8-habit-ai-dev/issues/199).
+
+New `skills/save-spec/SKILL.md` (~180 lines) — Phase 1 minimum viable user-invoked skill that scaffolds a project-root `SPEC.md` digest. Frontmatter: `allowed-tools: [Read, Write, Glob, AskUserQuestion]`, `prev-skill: any`, `next-skill: any` (standalone). Generator-only — refuses to overwrite an existing `SPEC.md` (Phase 2 `--update` deferred). 8-step Process section is the runtime contract pinned by new validator Check 23 (Decision-7 sticky). Hybrid auto-detect globs 5 canonical pointer-target files (`PLAYBOOK.md`, `CONTRACTS.md`, `LESSONS.md`, `CHANGELOG.md`, `README.md`, case-sensitive) and asks the user to confirm §1 inclusion. 4-prompt interactive flow (project name + §1 multi-select + §2 comma-separated free-text + §3 comma-separated free-text) with skip-sentinels (`skip`, `none`, `nothing`, `n/a`, empty). §4 timestamp uses RFC 3339 strict with local timezone offset. Emits CLAUDE.md auto-update recipe stanza to conversation only — does NOT modify your `CLAUDE.md` (FR-014, FR-015 design invariants).
+
+Companion artifacts: `skills/save-spec/reference.md` (~200 lines) with the verbatim refusal message + 3-line error template + skip-sentinels list + glob set + 5 parse examples + rationale links to issue #199 open-question defaults. New `tests/validate-structure.sh` Check 23 with 8 assertions pinning frontmatter array + 8-step Process count + canonical-phrase presence in reference.md. `skills/RESOLVER.md` gets 3 trigger phrases (`"scaffold a SPEC.md"`, `"save-point file for this repo"`, `"set up a project digest"`). `guides/spec-digest-pattern.md` "Promotion to a skill (deferred)" section rewritten to "Promoted to `/save-spec` in v2.16.0" with the explicit scope-resolution statement (the two deployment modes are disjoint in practice; multi-mode repos out of scope for tooling). `docs/adr/ADR-013-spec-persistence-opt-in.md` receives a 2026-05-17 follow-up note inside the existing addendum (user-invoked write stays outside Alt-4 auto-write-hook rejection — no new ADR required).
+
+Dogfood: the PRD/design/tasks for this skill itself were persisted via `--persist save-spec` (the feature-spec convention — cross-mode dogfooding the project-orientation tooling). `/consistency-check save-spec` ran clean (0 CRITICAL, 0 HIGH, 0 MEDIUM, 4 LOW — accepted as informational per Significance profile avoid-documentation-gold-plating stance).
+
+Promotion criteria status (all three met, the deferred-skill criterion-driven ship pattern):
+
+1. **n=2 independent adoption** — `netbox-sit` (the canonical empirical artifact in v2.15.9) + `claude-all/netbird-sit` (Adopter #2 report via [#197](https://github.com/pitimon/8-habit-ai-dev/issues/197))
+2. **Scope question resolved in writing** — the two-modes-are-disjoint paragraph in `guides/spec-digest-pattern.md`
+3. **Friction lesson captured** — `~/.claude/lessons/2026-05-17-spec-digest-pattern-v2-15-9.md` + #197 adopter friction items 2.1–2.3 + 4
+
+Validator state: validate-structure.sh 266/266 PASS, validate-content.sh 217+ PASS / 0 FAIL / 1 WARN / 0 fitness breaches. Pattern: **promotion via maturity ladder, not aesthetic preference** — the v2.15.9 deferral made the next escalation step falsifiable; v2.16.0 ships only because the criteria were objectively met, with documented evidence per criterion.
 
 ## v2.15.9 — Project-Orientation Hub Mode Documentation (May 2026)
 

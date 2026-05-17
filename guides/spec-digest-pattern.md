@@ -151,15 +151,21 @@ Example row format (linkify filenames in your own copy if you want clickable ref
 | D1 | **IP address = idempotency key** (not name) | Vendor-default names collide ("Proxmox VE" × 20) | `sync/promote.py:100-114` + `LESSONS.md §22` |
 ```
 
-## Promotion to a skill (deferred)
+## Promoted to `/save-spec` in v2.16.0
 
-A user-invoked `/save-spec <slug>` skill that generates/updates this digest from existing files is plausible but **not shipped**. Promotion criteria, per the working-with-pitimon "minimal additions, user-demand-driven" stance:
+The `/save-spec` skill ships in v2.16.0 as Phase 1 minimum viable — see [`skills/save-spec/SKILL.md`](../skills/save-spec/SKILL.md) and the design discussion at [#199](https://github.com/pitimon/8-habit-ai-dev/issues/199). All three promotion criteria documented in earlier versions of this section were met:
 
-1. ≥ 2 independent projects adopt the digest pattern from this guide
-2. The scope question (project-root `SPEC.md` vs per-slug `current-state.md` in multi-feature repos) has a resolved answer in writing
-3. There is at least one captured `/reflect` lesson naming "manually maintaining the digest was tedious" or equivalent friction signal
+1. ✅ **≥ 2 independent projects adopted the digest pattern** — `netbox-sit` (May 17, the canonical empirical artifact referenced in this guide) and `claude-all/netbird-sit` (May 17, Adopter #2 report at [#197](https://github.com/pitimon/8-habit-ai-dev/issues/197))
+2. ✅ **Scope question resolved in writing** — see the [scope-resolution statement](#scope-resolution-feature-spec-mode-and-project-orientation-hub-mode-are-disjoint) below
+3. ✅ **`/reflect` lesson captures maintenance friction** — `~/.claude/lessons/2026-05-17-spec-digest-pattern-v2-15-9.md` + adopter friction items in [#197](https://github.com/pitimon/8-habit-ai-dev/issues/197) (verification command edge cases + doc-blocker hook collision)
 
-Until those three signals exist, the guide is the canonical form. Track adoption in [#194](https://github.com/pitimon/8-habit-ai-dev/issues/194) and downstream issues.
+Phase 1 scope is generator-only — `/save-spec` refuses to overwrite an existing `SPEC.md` and instructs the user to edit manually. Phase 2 (`--update` flag for in-place §4 refresh) is deferred pending Phase 1 adoption feedback.
+
+### Scope resolution — feature-spec mode and project-orientation hub mode are disjoint
+
+The two deployment modes documented in this guide (feature-spec via `--persist <slug>` per [`persistence-convention.md`](./persistence-convention.md); project-orientation hub via root `SPEC.md` per this guide) are **disjoint in practice** — a repo picks one based on archetype and does not mix them. Multi-mode repos (using both `--persist` and root `SPEC.md` together) are **out of scope for tooling** — `/consistency-check` operates only on feature-spec artifacts in `docs/specs/<slug>/`; `/save-spec` operates only on the project-root `SPEC.md`. Both adopters in the n=2 evidence base (netbox-sit, netbird-sit) used project-orientation mode standalone — no observed need to support mixing. If a future repo legitimately needs both, that requirement re-opens the scope question and would be handled by a new design cycle, not by retrofitting either skill.
+
+Historical context: this guide was first added in [#194](https://github.com/pitimon/8-habit-ai-dev/issues/194) (v2.15.9) with the deferral note. Adopter #2 friction fixes shipped in [#198](https://github.com/pitimon/8-habit-ai-dev/pull/198). The skill promotion shipped in v2.16.0 via [#199](https://github.com/pitimon/8-habit-ai-dev/issues/199).
 
 ## Verification
 

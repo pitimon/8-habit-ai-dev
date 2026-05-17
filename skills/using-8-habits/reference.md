@@ -15,7 +15,7 @@ Full 17-skill inventory and cross-plugin composition tables. Loaded from `SKILL.
 - **`/deploy-guide`** (Step 6) — Staging-first deployment with rollback plan. Output: deployment checklist.
 - **`/monitor-setup`** (Step 7) — Health checks, alerting, observability. Output: monitoring configuration.
 
-### Assessment skills (7)
+### Assessment skills (8)
 
 - **`/cross-verify`** — 17-question 8-habit checklist covering all 4 Whole Person dimensions (Body/Mind/Heart/Spirit). Band-based verdict. Run after plans, before PRs.
 - **`/consistency-check`** — Cross-artifact analyzer (v2.15.0, ADR-013). Reads persisted `docs/specs/<slug>/{prd,design,tasks}.md` and runs 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency). Hybrid eval — deterministic when artifacts include `FR-NNN`/`Decision-N`/`Task #N` markers, LLM semantic with explicit warning otherwise. Read-only; advisory only. Use after `/breakdown` (with `--persist <slug>`) and before `/build-brief`.
@@ -24,6 +24,7 @@ Full 17-skill inventory and cross-plugin composition tables. Loaded from `SKILL.
 - **`/reflect`** — 5-question micro-retrospective (5 min max) with action-item tracking. Run after completing significant work.
 - **`/calibrate`** — Writes `~/.claude/habit-profile.md` so skills adapt verbosity to user maturity (v2.6.0).
 - **`/workflow`** — Guided walkthrough of the 7-step workflow. Prompts at each step to invoke or skip.
+- **`/save-spec`** — Scaffold a project-root `SPEC.md` digest (project-orientation hub mode per `guides/spec-digest-pattern.md`). Phase 1 minimum viable (v2.16.0) — generator-only; refuses to overwrite existing `SPEC.md`. Use when the repo fits operational/infra/integration archetype (not feature-spec mode).
 
 ### Meta / transparency skills (3)
 
