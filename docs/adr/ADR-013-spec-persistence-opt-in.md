@@ -137,3 +137,24 @@ This ADR is satisfied when:
 - [ ] `tests/validate-content.sh` includes a check that `docs/specs/consistency-check/{prd,design,tasks}.md` exists and has valid frontmatter (dogfood enforcement)
 - [ ] CHANGELOG records the new opt-in convention
 - [ ] CLAUDE.md "Key Conventions" section adds a bullet for the new convention
+
+---
+
+## Addendum — 2026-05-17: scope clarification (feature-spec mode only)
+
+**Trigger**: issue [#194](https://github.com/pitimon/8-habit-ai-dev/issues/194) surfaced a real-world `SPEC.md` artifact (`scanopy/netbox-sit/SPEC.md`, 153 lines) using a single project-root digest pointing to project-specific detail files — a shape this ADR's Alternative 1 / Alternative 4 rejections did **not** evaluate.
+
+**Clarification**: the rejections in this ADR cover:
+
+1. Merging `prd.md` + `design.md` + `tasks.md` into one file under `docs/specs/<slug>/` (Alt-1 — breaks `/consistency-check`)
+2. Always-on PostToolUse auto-write of any spec file (Alt-4 — violates no-build philosophy)
+3. A new `/save-point` or `/resume` skill that duplicates `/reflect` (CHANGELOG v2.15.0)
+
+The rejections do **NOT** cover:
+
+- A **project-root `SPEC.md` digest** that points to project-specific detail files (e.g. `PLAYBOOK.md`, `CONTRACTS.md`) and acts as a save point for `/clear` / `/compact` — this is a different deployment archetype ("project-orientation hub mode"), not a competing format within the feature-spec mode this ADR governs.
+- A **user-invoked** `/save-spec <slug>` skill (analogous to `/reflect` or `/requirements --persist`) that would generate/update such a digest. This remains deferred pending a second independent adoption signal — see promotion criteria in [`guides/spec-digest-pattern.md`](../../guides/spec-digest-pattern.md#promotion-to-a-skill-deferred).
+
+**Scope statement**: ADR-013 governs the **feature-spec mode** (`docs/specs/<slug>/{prd,design,tasks,current-state}.md`). The complementary **project-orientation hub mode** is documented in [`guides/spec-digest-pattern.md`](../../guides/spec-digest-pattern.md) and is **pattern documentation only** (no skill, no hook, no enforcement). Both modes can coexist; most projects pick one based on archetype.
+
+**No change to the original decision.** The opt-in `--persist <slug>` convention, slug validation, conflict policy, frontmatter requirement, and ID-linkage guidance from the Decision section all stand unchanged.

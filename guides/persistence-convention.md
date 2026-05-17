@@ -106,6 +106,8 @@ docs/specs/<slug>/current-state.md
 
 **User-owned, manual.** No plugin skill writes to this file — the user creates and maintains it manually. It exists to solve the **resume-after-context-loss** problem: when `/clear`, `/compact`, or a session crash flushes conversation context, this file is the fine-grained task-level anchor the next session reads to continue without re-explanation.
 
+> **Project archetype note**: this convention is the **feature-spec mode** — per-feature persistence under `docs/specs/<slug>/`. For single-system / operational / infrastructure repos where one project-root `SPEC.md` digest pointing to project-specific detail files fits better, see the complementary [`spec-digest-pattern.md`](./spec-digest-pattern.md) (project-orientation hub mode). The two modes can coexist but most projects pick one.
+
 **Frontmatter exemption (explicit)**: unlike the skill-managed artifacts above (`prd.md` / `design.md` / `tasks.md`), `current-state.md` is user-owned and **not** subject to the [YAML frontmatter](#yaml-frontmatter) MUST. The file is free-form Markdown using the template below — no `feature`/`step`/`created`/`updated` fields required (a `Last updated` line in the body is sufficient).
 
 ### Template
