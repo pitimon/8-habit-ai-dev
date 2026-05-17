@@ -24,7 +24,7 @@ Full 17-skill inventory and cross-plugin composition tables. Loaded from `SKILL.
 - **`/reflect`** — 5-question micro-retrospective (5 min max) with action-item tracking. Run after completing significant work.
 - **`/calibrate`** — Writes `~/.claude/habit-profile.md` so skills adapt verbosity to user maturity (v2.6.0).
 - **`/workflow`** — Guided walkthrough of the 7-step workflow. Prompts at each step to invoke or skip.
-- **`/save-spec`** — Scaffold a project-root `SPEC.md` digest (project-orientation hub mode per `guides/spec-digest-pattern.md`). Phase 1 minimum viable (v2.16.0) — generator-only; refuses to overwrite existing `SPEC.md`. Use when the repo fits operational/infra/integration archetype (not feature-spec mode).
+- **`/save-spec`** — **Deployment-mode helper (orthogonal to the 7-step workflow)**. Scaffolds a project-root `SPEC.md` digest when the repo fits the project-orientation hub mode (per `guides/spec-digest-pattern.md`). Phase 1 minimum viable (v2.16.0) — generator-only; refuses to overwrite existing `SPEC.md`. Use when the repo fits operational/infra/integration archetype (not feature-spec mode). **Skip if you already have a memory-MCP (`claude-mem`/`memforge`) active AND a short `CLAUDE.md`** — see `skills/save-spec/SKILL.md` "When to Skip" for the overlap analysis (v2.16.4, #207). Skill-category-wise belongs with `/calibrate` + `/reflect` (state-write skills run on user demand), not with assessment skills that produce conversation-only output.
 
 ### Meta / transparency skills (3)
 

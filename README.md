@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.16.3-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.16.3)
+[![Version](https://img.shields.io/badge/Version-2.16.4-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.16.4)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -139,19 +139,19 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 
 ### Assessment Skills (Use Anytime)
 
-| Skill                 | Habit               | Purpose                                                                                                                                                                                                |
-| --------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `/cross-verify`       | H1-H8               | 17-question checklist + dimension summary (Body/Mind/Heart/Spirit)                                                                                                                                     |
-| `/consistency-check`  | H5 + H1             | Cross-artifact analyzer — 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency) over persisted PRD↔design↔tasks (v2.15.0, ADR-013)                                                 |
-| `/whole-person-check` | H8: Find Your Voice | 4-dimension assessment (1-5 scale) with AI Blind Spot detection                                                                                                                                        |
-| `/security-check`     | H1: Be Proactive    | Focused OWASP security lens — secrets, injection, auth, deps                                                                                                                                           |
-| `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking                                                                                                                                        |
-| `/workflow`           | All                 | Guided 7-step walkthrough — invoke or skip each step                                                                                                                                                   |
-| `/calibrate`          | H8: Find Your Voice | Self-assessment (5-7 questions) → writes `~/.claude/habit-profile.md` so other skills adapt verbosity to your maturity level                                                                           |
-| `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 17 skills + decision tree for "which skill next?"                                                                                                                          |
-| `/eu-ai-act-check`    | H1 + H8 (Spirit)    | Redirect stub — migrated to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0+ on 2026-05-02 (ADR-012). Install that plugin for the canonical 9-obligation checklist. |
-| `/ai-dev-log`         | H4 + H1             | Generate AI-assisted dev log from git history for audit trail                                                                                                                                          |
-| `/save-spec`          | H8 + H2             | Scaffold a project-root `SPEC.md` digest (project-orientation hub mode); generator-only Phase 1, refuses to overwrite existing files (v2.16.0)                                                         |
+| Skill                 | Habit               | Purpose                                                                                                                                                                                                                                                                                                                        |
+| --------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `/cross-verify`       | H1-H8               | 17-question checklist + dimension summary (Body/Mind/Heart/Spirit)                                                                                                                                                                                                                                                             |
+| `/consistency-check`  | H5 + H1             | Cross-artifact analyzer — 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency) over persisted PRD↔design↔tasks (v2.15.0, ADR-013)                                                                                                                                                                         |
+| `/whole-person-check` | H8: Find Your Voice | 4-dimension assessment (1-5 scale) with AI Blind Spot detection                                                                                                                                                                                                                                                                |
+| `/security-check`     | H1: Be Proactive    | Focused OWASP security lens — secrets, injection, auth, deps                                                                                                                                                                                                                                                                   |
+| `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking                                                                                                                                                                                                                                                                |
+| `/workflow`           | All                 | Guided 7-step walkthrough — invoke or skip each step                                                                                                                                                                                                                                                                           |
+| `/calibrate`          | H8: Find Your Voice | Self-assessment (5-7 questions) → writes `~/.claude/habit-profile.md` so other skills adapt verbosity to your maturity level                                                                                                                                                                                                   |
+| `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 17 skills + decision tree for "which skill next?"                                                                                                                                                                                                                                                  |
+| `/eu-ai-act-check`    | H1 + H8 (Spirit)    | Redirect stub — migrated to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0+ on 2026-05-02 (ADR-012). Install that plugin for the canonical 9-obligation checklist.                                                                                                                         |
+| `/ai-dev-log`         | H4 + H1             | Generate AI-assisted dev log from git history for audit trail                                                                                                                                                                                                                                                                  |
+| `/save-spec`          | H8 + H2             | **Deployment-mode helper (not a workflow step)** — scaffold a project-root `SPEC.md` digest when the repo fits the project-orientation hub mode. Generator-only Phase 1 (v2.16.0); refuses to overwrite. **Skip if you already have a memory-MCP + short `CLAUDE.md`** (v2.16.4 — see `/save-spec` "When to Skip" for details) |
 
 ---
 
@@ -415,6 +415,20 @@ Both agents use the `sonnet` model for fast, focused analysis.
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
+
+## What's New in v2.16.4
+
+**Theme: `/save-spec` suite-positioning honesty patch (Adopter #2 third-repo dogfood)** ([#207](https://github.com/pitimon/8-habit-ai-dev/issues/207))
+
+Docs-only patch. Adopter #2's third-repo dogfood (operational VA/PT workspace with `claude-mem` active + 284-line `CLAUDE.md`) surfaced two real overlap cases the docs didn't acknowledge. P1 + P2 ship; P3 explicitly deferred per adopter recommendation.
+
+- **P1 (docs only)** — `skills/save-spec/SKILL.md` "When to Skip" gains a memory-MCP-overlap entry: skip if you already have `claude-mem`/`memforge` active AND a short `CLAUDE.md` (<150 lines), because §4 (Current state) becomes the only net-value section over what you already have.
+- **P2 (docs only)** — Suite-positioning clarification across SKILL.md + README + using-8-habits/reference.md: `/save-spec` is a **deployment-mode helper orthogonal to the 7-step workflow**, alongside `/calibrate` + `/reflect` as state-write skills run on user demand (NOT alongside assessment skills).
+- **P3 (defer)** — `--skip-empty-sections` flag explicitly deferred per adopter recommendation pending demand signal.
+
+Pattern: **H8 Conscience applied to marketing copy** — the SKILL.md's own H8 Checkpoint admitted "the value depends on the user's habit of updating it"; this release extends that honesty to "When to Skip".
+
+**Arc-close criterion validated**: v2.16.3 said "round 6 deferred unless 3rd adopter surfaces friction" — that condition triggered within ~2 hours of v2.16.3 release. Pattern continues at n=3 evidence base. Adopter's `/cross-verify` on the issue: 13/15 = 86.7%. Maintainer's `/cross-verify` on implementation posture: 15/15 = 100%.
 
 ## What's New in v2.16.3
 
@@ -878,4 +892,4 @@ MIT
 
 ---
 
-_Version: 2.16.3 | Last updated: 2026-05-18_
+_Version: 2.16.4 | Last updated: 2026-05-18_
