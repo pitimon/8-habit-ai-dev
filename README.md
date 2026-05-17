@@ -158,16 +158,17 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 
 Start from **your situation**, not the skill name.
 
-| I want to...                      | Start with      | Then                        | Habit                   |
-| --------------------------------- | --------------- | --------------------------- | ----------------------- |
-| Build a new feature from scratch  | `/requirements` | `/design` → `/breakdown`    | H2: Define done first   |
-| Review code before committing     | `/review-ai`    | `/security-check` if needed | H4: Never skip review   |
-| Understand an unfamiliar codebase | `/research`     | `/build-brief`              | H5: Read before writing |
-| Deploy to production              | `/deploy-guide` | `/monitor-setup`            | H1: Staging first       |
-| Assess overall project health     | `/cross-verify` | `/whole-person-check`       | All 8 habits            |
-| Fix a production bug              | `/build-brief`  | Reproduce first             | H5: Understand first    |
-| Something feels off about a plan  | `/cross-verify` | Check dimension scores      | H1-H8                   |
-| Learn the full workflow           | `/workflow`     | (guided walkthrough)        | All                     |
+| I want to...                      | Start with                                                                                                                                                                                                          | Then                              | Habit                   |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ----------------------- |
+| Build a new feature from scratch  | `/requirements`                                                                                                                                                                                                     | `/design` → `/breakdown`          | H2: Define done first   |
+| Review code before committing     | `/review-ai`                                                                                                                                                                                                        | `/security-check` if needed       | H4: Never skip review   |
+| Understand an unfamiliar codebase | `/research`                                                                                                                                                                                                         | `/build-brief`                    | H5: Read before writing |
+| Deploy to production              | `/deploy-guide`                                                                                                                                                                                                     | `/monitor-setup`                  | H1: Staging first       |
+| Assess overall project health     | `/cross-verify`                                                                                                                                                                                                     | `/whole-person-check`             | All 8 habits            |
+| Fix a production bug              | `/build-brief`                                                                                                                                                                                                      | Reproduce first                   | H5: Understand first    |
+| Something feels off about a plan  | `/cross-verify`                                                                                                                                                                                                     | Check dimension scores            | H1-H8                   |
+| Learn the full workflow           | `/workflow`                                                                                                                                                                                                         | (guided walkthrough)              | All                     |
+| Survive `/clear` and `/compact`   | See [`guides/spec-digest-pattern.md`](guides/spec-digest-pattern.md) (project-orientation hub) or [`current-state.md`](guides/persistence-convention.md#current-state-file-optional-user-owned) (feature-spec mode) | Adopt one based on repo archetype | H5: Understand first    |
 
 ### Recommended Paths
 
