@@ -1,10 +1,18 @@
-![Version](https://img.shields.io/badge/latest-v2.15.8-blue)
+![Version](https://img.shields.io/badge/latest-v2.15.9-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.15.9 — Project-Orientation Hub Mode Documentation (May 2026)
+
+Docs-only patch. Closes [#194](https://github.com/pitimon/8-habit-ai-dev/issues/194) via [PR #195](https://github.com/pitimon/8-habit-ai-dev/pull/195).
+
+Documents a second spec-persistence deployment mode (**project-orientation hub**) as complement to v2.15.2's feature-spec mode. No new skill, no hook, no enforcement — pattern documentation only.
+
+New `guides/spec-digest-pattern.md` (~180 lines) documents the project-root `SPEC.md` digest archetype: §1 Architecture (pointer), §2 Decisions snapshot (compact ADR digest table), §3 Live backlog, §4 Current state save point ("Read this section first after `/clear` or `/compact`"). Template paraphrased from a production artifact (`scanopy/netbox-sit/SPEC.md`, 153 lines) that independently arrived at this four-section shape after repeated `/clear`/`/compact` flushing pain. ADR-013 receives an additive 2026-05-17 addendum clarifying its rejections (Alt-1 unified prd+design+tasks merge, Alt-4 always-on auto-write hook, CHANGELOG v2.15.0 `/save-point` skill rejection) cover the **feature-spec mode** specifically; the digest-layer-above-detail-files archetype is a different deployment mode those alternatives did not evaluate. `/save-spec <slug>` skill explicitly deferred pending ≥2 independent project adoption signal per working-with-pitimon "minimal additions, user-demand-driven" stance + PR #111 local-maximum lesson. Cross-links from `guides/persistence-convention.md` (the two modes are complementary) + `README.md` Use Cases row "Survive `/clear` and `/compact`". 8-habit-reviewer pre-commit dispatch caught nested-fence rendering issue (outer ` ```markdown ` collapsed `\`\`\`bash`to literal text); fixed to 4-backtick outer fence. Post-merge CI surfaced`validate-content.sh` Check 12b false-positive: link resolver flagged 8 template-internal placeholder links inside the code block as broken because the regex is not backtick-aware — template rewritten to use backticked filenames (`` `PLAYBOOK.md` ``, `` `CONTRACTS.md` ``, etc) instead of bracket-paren link syntax with a note for the copy-paster. Same fix applied to Decisions table example row. Validator state: validate-structure.sh 256/256 PASS, validate-content.sh 216 PASS / 0 FAIL / 1 WARN / 0 fitness breaches. Pattern: **empirical-evidence-driven discipline addition** — real-world artifact from another session revealed a deployment mode the plugin did not document; plan was revised twice (after reviewer + advisor) to match commitment level to evidence strength; deferred skill criterion makes the next escalation decision data-driven rather than aesthetic.
 
 ## v2.15.8 — `/reflect` Auto-Consolidation: One-Command Flow (May 2026)
 
