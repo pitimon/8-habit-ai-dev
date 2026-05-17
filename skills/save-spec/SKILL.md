@@ -8,7 +8,7 @@ description: >
   Maps to H8 (Find Your Voice — pick the deployment mode that fits your repo)
   + H2 (Begin with End in Mind — establish the save point on day 1).
 user-invocable: true
-argument-hint: "[project-name]"
+argument-hint: "[project-name] [target-dir]"
 allowed-tools: ["Read", "Write", "Glob", "AskUserQuestion"]
 prev-skill: any
 next-skill: any
@@ -35,11 +35,11 @@ next-skill: any
 
 The 8 steps below are the runtime contract — each step maps to specific FRs from `docs/specs/save-spec/prd.md`. Execute in order.
 
-1. **Pre-flight** (FR-002, FR-003) — Check whether `SPEC.md` exists at the project root (current working directory).
-   - If it exists: emit the **refusal message** from `reference.md` (verbatim, substituting `<absolute-path>` with the real path) and **STOP**. Do **NOT** call `Write` in this branch.
+1. **Pre-flight** (FR-002, FR-003) — Resolve the **target directory**: if the user supplied a second positional argument, that path is the target directory; otherwise the target is the current working directory. The target directory IS the "project root" for the rest of the Process (F2 — issue [#203](https://github.com/pitimon/8-habit-ai-dev/issues/203)). Check whether `SPEC.md` exists at `<target-dir>/SPEC.md`.
+   - If it exists: emit the **refusal message** from `reference.md` (verbatim, substituting `<absolute-path>` with the resolved `<target-dir>/SPEC.md`) and **STOP**. Do **NOT** call `Write` in this branch.
    - If it does not exist: proceed to step 2.
 
-2. **Detect pointer-target files** (FR-004) — Use `Glob` on the project root for the 5 canonical filenames (case-sensitive exact match): `PLAYBOOK.md`, `CONTRACTS.md`, `LESSONS.md`, `CHANGELOG.md`, `README.md`. Collect the set of files that exist. Empty match set is acceptable — proceed.
+2. **Detect pointer-target files** (FR-004) — Use `Glob` on `<target-dir>` for the 5 canonical filenames (case-sensitive exact match): `PLAYBOOK.md`, `CONTRACTS.md`, `LESSONS.md`, `CHANGELOG.md`, `README.md`. Collect the set of files that exist. Empty match set is acceptable — proceed.
 
 3. **Gather user input** (FR-005, FR-006, FR-007, FR-008, FR-016) — Ask the user **at most 4 questions** via `AskUserQuestion`:
    - **Q1 (skip if positional argument supplied to the skill)**: project name — free-text via the "Other" affordance, with two preset options (`current directory name`, `manual entry`)
@@ -57,9 +57,9 @@ The 8 steps below are the runtime contract — each step maps to specific FRs fr
    - §1 = one bullet per confirmed pointer (one path per bullet — required for the verification grep). Empty set → single template-stub bullet from `reference.md`.
    - §2 = one row per parsed decision, formatted as `| D<N> | <statement> | <rationale> | <source> |` with placeholder text where the user supplied a single string. Empty set → single template-stub row.
    - §3 = one `[ ] <item>` bullet per parsed item. Empty set → single template-stub bullet.
-   - §4 = `**Last updated**: <ISO 8601 datetime with timezone offset>` (RFC 3339 strict, e.g. `2026-05-17T20:44:23+07:00`), `**Last apply / commit / deploy event**: <terse note + timestamp>` placeholder, "What's happening now" placeholder, "Stuck / waiting on: nothing" default, "Next session entry point" code block with `cat SPEC.md` + comment.
+   - §4 = `**Last updated**: <ISO 8601 datetime with timezone offset>` (RFC 3339 strict, e.g. `2026-05-17T20:44:23+07:00`); `**Last apply / commit / deploy event**:` followed by an HTML-comment TODO marker; "What's happening now" body is an HTML-comment TODO marker; "Stuck / waiting on: nothing" default; "Next session entry point" code block with `cat SPEC.md` + comment; the trailing "Optional command sequence" line is an HTML comment. **No literal angle-bracket placeholders in the rendered output** (F1 fix — issue [#203](https://github.com/pitimon/8-habit-ai-dev/issues/203)). See `reference.md` template for exact wording.
 
-6. **Write SPEC.md** (FR-010, FR-012) — Call `Write` with the absolute path `<cwd>/SPEC.md` and the assembled content. **Do NOT include YAML frontmatter** — `SPEC.md` is a user-owned file per `guides/persistence-convention.md:108-109` and is exempt from the frontmatter requirement.
+6. **Write SPEC.md** (FR-010, FR-012) — Call `Write` with the absolute path `<target-dir>/SPEC.md` (per step 1's resolution; `<cwd>/SPEC.md` if no `[target-dir]` was supplied) and the assembled content. **Do NOT include YAML frontmatter** — `SPEC.md` is a user-owned file per `guides/persistence-convention.md:108-109` and is exempt from the frontmatter requirement.
    - If the `Write` fails: emit the **3-part error message** from `reference.md` (verbatim, with `<absolute-path>`, `<error-class>`, `<error-message>`, `<suggested-action>` substituted) and **STOP**. Do not retry.
 
 7. **Emit CLAUDE.md recipe stanza** (FR-011, FR-014, FR-015) — After a successful `Write`, print to conversation (NOT to any file):
@@ -67,7 +67,7 @@ The 8 steps below are the runtime contract — each step maps to specific FRs fr
    - The recipe stanza in a fenced markdown code block, copied verbatim from `guides/spec-digest-pattern.md` (the "CLAUDE.md auto-update rule (user-side)" section).
    - **Do NOT invoke `Edit` or `Write` against `CLAUDE.md`** — emission is conversation-only.
 
-8. **Confirm completion** — Print exactly one summary line in this shape: `Created SPEC.md at <absolute-path> with N pointer(s) in §1, M decision(s) in §2, K backlog item(s) in §3.` Use the actual counts. End the skill.
+8. **Confirm completion** — Print exactly one summary line in this shape: `Created SPEC.md at <absolute-path> with N pointer(s) in §1, M decision(s) in §2, K backlog item(s) in §3.` `<absolute-path>` is the resolved write target from step 6 (target-dir or cwd). Use the actual counts. End the skill.
 
 ## Definition of Done
 

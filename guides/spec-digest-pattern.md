@@ -176,9 +176,10 @@ To verify a `SPEC.md` follows this pattern:
 grep -E '^## [1-4]\.' SPEC.md | wc -l   # expect 4
 
 # Save-point hint present in §4?
-# (awk range — robust against blank-line-after-heading per markdownlint MD022;
-# the older `grep -A1` would miss the hint if your §4 has the standard blank line)
-awk '/^## 4\. Current state/,/^## /' SPEC.md | grep -i 'clear.*compact'
+# (sed range — robust against blank-line-after-heading per markdownlint MD022,
+# AND robust on BSD awk where the awk-range equivalent collapses to 1 line on
+# macOS because the start- and end-regexes both match the §4 header line)
+sed -n '/^## 4\. Current state/,/^## /p' SPEC.md | grep -i 'clear.*compact'
 
 # Last-updated timestamp present?
 grep -E 'Last updated' SPEC.md

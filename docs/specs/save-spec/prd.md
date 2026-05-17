@@ -86,13 +86,15 @@ The two deployment modes are **disjoint in practice**: a repo picks one based on
 
 12. **[Unwanted] FR-012**: If the `Write` tool fails for any reason (permission denied, disk full, read-only filesystem), then the skill shall emit a 3-part error message conforming to `guides/persistence-convention.md:71-77`: (a) what was attempted ("Tried to create `SPEC.md` at `<absolute-path>`"), (b) what failed and why (the underlying error code and message), (c) what the user can do next (e.g. "Check write permissions on the parent directory or change to a writable working directory and re-run `/save-spec`"). The skill shall stop without retrying.
 
-13. **[Ubiquitous] FR-013**: The skill shall NEVER write `SPEC.md` (or any other file) to a path under `docs/specs/` — it operates strictly on the project root.
+13. **[Ubiquitous] FR-013**: The skill shall NEVER write `SPEC.md` (or any other file) to a path under `docs/specs/` — it operates strictly on the project root, where "project root" is the target directory resolved per FR-017 (the second positional argument if supplied, otherwise the current working directory).
 
 14. **[Ubiquitous] FR-014**: The skill shall NOT emit a `SKILL_OUTPUT:save-spec` HTML comment block. `SPEC.md` is not consumed by `/cross-verify` or `/consistency-check`.
 
 15. **[Ubiquitous] FR-015**: The skill shall NOT invoke the `Edit` tool against the project `CLAUDE.md` or any other file outside of the single `Write` call that creates `SPEC.md`. The CLAUDE.md recipe stanza is emitted to conversation only (per FR-011).
 
-16. **[Optional] FR-016**: Where the user supplies a positional project-name argument to `/save-spec`, the skill shall skip the project-name `AskUserQuestion` (FR-006) and use the argument value directly.
+16. **[Optional] FR-016**: Where the user supplies a positional project-name argument to `/save-spec` (the first positional slot), the skill shall skip the project-name `AskUserQuestion` (FR-006) and use the argument value directly.
+
+17. **[Optional] FR-017**: Where the user supplies a second positional argument to `/save-spec`, the skill shall resolve that path as the **target directory** for the scaffold. All subsequent file operations (pre-flight existence check from FR-002, glob detection from FR-004, write from FR-010, summary from step 8) shall operate on `<target-dir>` instead of the current working directory. If `<target-dir>` does not exist or is not a directory, the skill shall emit the standard 3-part error message (per FR-012, with `<target-dir>` substituted into the "Tried to create SPEC.md at …" location). (F2 — issue [#203](https://github.com/pitimon/8-habit-ai-dev/issues/203) — adopter-portfolio quality-of-life: multi-repo adopters no longer need a per-repo session switch to scaffold each.)
 
 ## Plugin boundary check
 

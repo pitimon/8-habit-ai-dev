@@ -1,10 +1,26 @@
-![Version](https://img.shields.io/badge/latest-v2.16.1-blue)
+![Version](https://img.shields.io/badge/latest-v2.16.2-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.16.2 — `/save-spec` Round-3 Polish + Guide Check 2 BSD-awk Fix (Adopter #3 dogfood) (May 2026)
+
+Patch release. Adopter #3 dogfood pass on `/save-spec` (first round from real skill execution rather than docs review) surfaced 1 correctness bug + 1 friction enhancement; pre-PR self-test surfaced 1 additional verification-command bug. All 3 fixed in this PR. Closes [#203](https://github.com/pitimon/8-habit-ai-dev/issues/203).
+
+**F1 (MEDIUM bug, fixed)**: Scaffolded SPEC.md shipped with 6 literal angle-bracket placeholder sites contradicting the read-first-context purpose. Fixed via hybrid approach — §2/§3 skip-stub rows use plain prose italic markers (`_no decisions seeded yet — add the first one when it lands_`); §1 narrative + §4 fill-required sites use `<!-- TODO: … -->` HTML comments (invisible at render, visible to editor). `tests/validate-content.sh` Check 12c whitelist extended to `skills/save-spec/`.
+
+**F2 (LOW-MEDIUM enhancement)**: `/save-spec [project-name] [target-dir]` now accepts an optional second positional argument. Multi-repo portfolio adopters no longer need a per-repo session switch. PRD FR-013 scope-clarified; new FR-017 added.
+
+**F3 (MEDIUM bonus, surfaced by pre-PR self-test)**: `guides/spec-digest-pattern.md` Check 2's `awk '/^## 4\. Current state/,/^## /'` collapses to 1 line on BSD awk (macOS default) because the end-regex `^## ` matches the start line. All macOS adopters running the published verification command had a silently-failing Check 2. Replaced with `sed -n '/^## 4\. Current state/,/^## /p'` (consistent cross-platform). Regression introduced in v2.15.9 (#197 N1 fix migrated from `grep -A1` → `awk`).
+
+**W2 (doc softening)**: N2 timestamp warning reframed — Adopter #3 fresh-session scaffold produced correct Bangkok offset; the `+00:00` fallback is the "documented escape-hatch, not expected outcome in normal use."
+
+**Positive verifications from Adopter #3**: W1 N3 free-text affordance works end-to-end, W2 N2 timestamp correct in real use, W3 refusal-path safety guard works.
+
+Validator state: validate-structure.sh 268/268 PASS, validate-content.sh 219+ PASS / 0 FAIL / 1 WARN / 0 fitness breaches. Pattern: **DoD-must-execute principle empirically validated within 24h of being coined** — the same-day /reflect action item caught F3 (a BSD-awk regression no static review would have surfaced). Lesson loop closed in a single day.
 
 ## v2.16.1 — `/save-spec` Phase 1 Polish (Adopter #2 dogfood) (May 2026)
 
