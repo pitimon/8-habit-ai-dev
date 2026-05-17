@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.15.8-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.6)
+[![Version](https://img.shields.io/badge/Version-2.15.9-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.15.6)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -415,6 +415,19 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
 
+## What's New in v2.15.9
+
+**Theme: Project-Orientation Hub Mode Documentation** ([#194](https://github.com/pitimon/8-habit-ai-dev/issues/194), [PR #195](https://github.com/pitimon/8-habit-ai-dev/pull/195))
+
+Docs-only patch. Documents a second spec-persistence deployment mode as complement to v2.15.2's feature-spec mode. No new skill, no hook, no enforcement.
+
+- **`guides/spec-digest-pattern.md`** (new, ~180 lines) — project-root `SPEC.md` digest with §1 Architecture (pointer), §2 Decisions snapshot (compact ADR digest table), §3 Live backlog, §4 Current state save point ("Read this section first after `/clear` or `/compact`"). Template paraphrased from a production artifact (`scanopy/netbox-sit/SPEC.md`, 153 lines) that independently arrived at this four-section shape after repeated `/clear`/`/compact` flushing pain.
+- **ADR-013 addendum** — additive 2026-05-17 note clarifying ADR-013's rejections (Alt-1 unified spec.md merge, Alt-4 always-on auto-write hook, CHANGELOG v2.15.0 `/save-point` skill rejection) cover the feature-spec mode specifically. The digest-layer-above-detail-files archetype is a different deployment mode those alternatives did not evaluate. **No change to the original Decision section.**
+- **Cross-links** — `guides/persistence-convention.md` notes the two modes are complementary; `README.md` Use Cases table gets a "Survive `/clear` and `/compact`" row.
+- **`/save-spec <slug>` skill** — explicitly deferred until ≥2 independent project adoptions, per working-with-pitimon "minimal additions, user-demand-driven" stance + PR #111 local-maximum lesson. Promotion criteria documented in the new guide.
+
+Pattern: **empirical-evidence-driven discipline addition**. A real-world artifact from another session revealed a deployment mode the plugin did not document. The plan was revised twice (after `8-habit-reviewer` flagged write-vs-read scope, after advisor flagged n=1 commitment level) before settling on guide-first as the right commitment for the available evidence.
+
 ## What's New in v2.15.8
 
 **Theme: `/reflect` Auto-Consolidation — One-Command Flow** ([#191](https://github.com/pitimon/8-habit-ai-dev/issues/191), [PR #192](https://github.com/pitimon/8-habit-ai-dev/pull/192))
@@ -809,4 +822,4 @@ MIT
 
 ---
 
-_Version: 2.15.8 | Last updated: 2026-05-16_
+_Version: 2.15.9 | Last updated: 2026-05-17_

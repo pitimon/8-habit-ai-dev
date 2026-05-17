@@ -10,6 +10,36 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.15.9 — Project-Orientation Hub Mode Documentation (2026-05-17)
+
+Docs-only patch. Closes [#194](https://github.com/pitimon/8-habit-ai-dev/issues/194) via [PR #195](https://github.com/pitimon/8-habit-ai-dev/pull/195).
+
+Documents a second spec-persistence deployment mode (project-orientation hub) as complement to v2.15.2's feature-spec mode. No new skill, no hook, no enforcement.
+
+### Added
+
+- **`guides/spec-digest-pattern.md`** (~180 lines) — template + when-to-use + CLAUDE.md auto-update rule snippet + "What this pattern is NOT" section + Decisions-table formatting guidance + deferred-skill promotion criteria + verification commands. Template paraphrased from production artifact `scanopy/netbox-sit/SPEC.md` (153 lines) that independently arrived at the four-section save-point shape after repeated `/clear` and `/compact` flushes.
+
+### Changed
+
+- **`docs/adr/ADR-013-spec-persistence-opt-in.md`** — appended 2026-05-17 addendum clarifying ADR-013's scope. Its rejections (Alt-1 unified prd+design+tasks merge, Alt-4 always-on auto-write hook, CHANGELOG v2.15.0 `/save-point` skill rejection) cover the feature-spec mode specifically; the project-orientation digest layer above existing detail files is a different archetype those alternatives did not evaluate. **No change to the original Decision section.**
+- **`guides/persistence-convention.md`** — cross-link note in the "Current State File" section pointing to the new guide and clarifying the two modes are complementary.
+- **`README.md`** — one new row in "Use Cases" table: "Survive `/clear` and `/compact`".
+
+### Deferred
+
+- `/save-spec <slug>` skill — explicitly deferred until ≥2 independent project adoptions, per working-with-pitimon "minimal additions, user-demand-driven" stance + PR #111 local-maximum lesson. Promotion criteria documented in the new guide.
+
+### Pattern
+
+**Empirical-evidence-driven discipline addition**. A real-world artifact from another session revealed a deployment mode the plugin did not document. The plan was revised twice (after `8-habit-reviewer` flagged write-vs-read scope, after advisor flagged n=1 commitment level) before settling on the guide-first path that matches the evidence strength. The deferred skill criterion ("watch for ≥2 independent adoptions") makes the next escalation decision data-driven rather than aesthetic.
+
+### Validator state
+
+`validate-structure.sh` 256/256 PASS; `validate-content.sh` 216 PASS / 0 FAIL / 1 WARN / 0 fitness breaches. Post-merge CI surfaced a Check 12b false-positive (link resolver not backtick-aware) — template rewritten to use backticked filenames instead of bracket-paren link syntax with a note for the copy-paster.
+
+---
+
 ## v2.15.8 — `/reflect` Auto-Consolidation: One-Command Flow (2026-05-16)
 
 UX patch. Removes the two-step `/reflect` → `/reflect consolidate` friction. Closes [#191](https://github.com/pitimon/8-habit-ai-dev/issues/191) via [PR #192](https://github.com/pitimon/8-habit-ai-dev/pull/192).
