@@ -1,10 +1,22 @@
-![Version](https://img.shields.io/badge/latest-v2.16.3-blue)
+![Version](https://img.shields.io/badge/latest-v2.16.4-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.16.4 — `/save-spec` Suite-Positioning Honesty Patch (Adopter #2 third-repo dogfood) (May 2026)
+
+Docs-only patch. Adopter #2's third-repo dogfood (operational VA/PT workspace with `claude-mem` active + 284-line `CLAUDE.md`) surfaced two real overlap cases the `/save-spec` docs didn't acknowledge. P1 + P2 ship; P3 explicitly deferred per adopter recommendation. Closes [#207](https://github.com/pitimon/8-habit-ai-dev/issues/207).
+
+**P1 (docs only) — SKILL.md "When to Skip" + memory-MCP-overlap entry**: Memory-MCP active (`claude-mem`/`memforge`) + short `CLAUDE.md` (<150 lines / scannable in <30s) already solves the post-`/clear` save-point problem the skill was designed for. In that combination, §4 is the only net-value section; writing a short `## Current state` into `CLAUDE.md` is the lower-friction path.
+
+**P2 (docs only) — Suite positioning across 3 files**: SKILL.md gains "Suite positioning (not a workflow step)" section framing the skill as a deployment-mode helper orthogonal to the 7-step workflow, alongside `/calibrate` + `/reflect` as state-write skills (NOT alongside assessment skills). README skill-table row + using-8-habits/reference.md row both reclassified.
+
+**P3 (feature — explicitly deferred)**: `--skip-empty-sections` flag deferred per adopter recommendation pending demand signal.
+
+Pattern: **H8 Conscience applied to marketing copy** — the skill's own H8 Checkpoint admitted "the value depends on the user's habit of updating it"; this release extends that honesty to "When to Skip". Arc-close criterion (v2.16.3: "round 6 deferred unless 3rd adopter surfaces friction") validated — condition triggered within ~2 hours of v2.16.3 release. Pattern continues at n=3 evidence base. Adopter's /cross-verify: 13/15 = 86.7%. Maintainer's /cross-verify on implementation posture: 15/15 = 100%. Validator state: validate-structure.sh 268/268 PASS, validate-content.sh 220+ PASS / 0 FAIL / 1 WARN / 0 fitness breaches.
 
 ## v2.16.3 — `/save-spec` Round-5 Arc-Close Polish (Adopter #2 closure pass) (May 2026)
 

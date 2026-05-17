@@ -30,6 +30,13 @@ next-skill: any
 - Repo uses the **feature-spec mode** (`docs/specs/<slug>/{prd,design,tasks,current-state}.md`). Use `/requirements --persist`, `/design --persist`, `/breakdown --persist` instead.
 - `SPEC.md` already exists at the project root — Phase 1 is generator-only; edit it manually or wait for Phase 2 `--update`.
 - One-off scripts / single-file repos where a digest adds no value.
+- **Memory-MCP already active** (`claude-mem`, `memforge`, or equivalent with SessionStart context injection) AND your existing `CLAUDE.md` is short enough to scan in <30 seconds (a ~150-line threshold is a reasonable rule of thumb). In that combination, §1 (architecture) is already covered by `CLAUDE.md`'s top section and §4 (Current state save-point) is already covered by the memory-MCP's chronological injection — more faithfully than a human-curated §4, because the memory layer captures what _actually happened_ in the last session, not what the operator remembered to write down. §4 is the only section providing net value over what you already have; consider writing a short `## Current state` section directly into `CLAUDE.md` instead of scaffolding a separate file. (Surfaced by Adopter #2's third-repo dogfood — issue [#207](https://github.com/pitimon/8-habit-ai-dev/issues/207). The skill's H8 Checkpoint already acknowledges "the value depends on the user's habit of updating it" — this skip entry extends that honesty to the upstream question of whether the scaffold is worth maintaining at all.)
+
+### Suite positioning (not a workflow step)
+
+`/save-spec` is a **deployment-mode helper** — orthogonal to the 7-step workflow (`/research` → `/requirements` → `/design` → `/breakdown` → `/build-brief` → `/review-ai` → `/deploy-guide` → `/monitor-setup`). It does not chain in/out of any workflow step (`prev-skill: any`, `next-skill: any`). Pick it when you've decided the repo fits the project-orientation hub deployment mode (see `guides/spec-digest-pattern.md`), independent of where you are in any feature-work cycle.
+
+Skill-category-wise, it sits with `/calibrate` (writes `~/.claude/habit-profile.md`) and `/reflect` (writes `~/.claude/lessons/`) as a **state-write skill that runs on user demand**, NOT with assessment skills like `/cross-verify` or `/whole-person-check` that produce conversation-only output. (Suite-positioning clarification from Adopter #2's third-repo cross-verify — [#207](https://github.com/pitimon/8-habit-ai-dev/issues/207).)
 
 ## Process
 

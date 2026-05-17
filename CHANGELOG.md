@@ -10,6 +10,37 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.16.4 — `/save-spec` Suite-Positioning Honesty Patch (Adopter #2 third-repo dogfood) (2026-05-18)
+
+Docs-only patch. Adopter #2's third-repo dogfood (operational VA/PT workspace with `claude-mem` active + 284-line `CLAUDE.md`) surfaced two real overlap cases the `/save-spec` docs didn't acknowledge. P1 + P2 ship; P3 explicitly deferred per adopter recommendation. Closes [#207](https://github.com/pitimon/8-habit-ai-dev/issues/207).
+
+### Changed
+
+- **P1 (docs only) — `skills/save-spec/SKILL.md` "When to Skip"**: Added entry acknowledging that **memory-MCP active (`claude-mem`/`memforge`) + short `CLAUDE.md` (<150 lines / scannable in <30s)** combination already solves the post-`/clear` save-point problem `/save-spec` was designed for. In that combination, §4 (Current state) is the only section providing net value over what the adopter already has; writing a short `## Current state` section directly into `CLAUDE.md` is the lower-friction path. The skill's own H8 Checkpoint already admits "the value depends on the user's habit of updating it"; this entry extends that honesty to the upstream question of whether the scaffold is worth maintaining at all.
+- **P2 (docs only) — Suite positioning clarification across 3 files**: `skills/save-spec/SKILL.md` gains a new "Suite positioning (not a workflow step)" section explicitly framing the skill as a **deployment-mode helper orthogonal to the 7-step workflow** (`prev-skill: any` / `next-skill: any`), alongside `/calibrate` (writes `~/.claude/habit-profile.md`) + `/reflect` (writes `~/.claude/lessons/`) as **state-write skills run on user demand** — NOT alongside assessment skills like `/cross-verify` or `/whole-person-check` that produce conversation-only output. `README.md` skill-table row + `skills/using-8-habits/reference.md` row both reclassified to lead with this framing. `skills/RESOLVER.md` triggers verified unchanged (user-invocation intent unchanged; only skip-criteria changed).
+
+### Deferred
+
+- **P3 (feature — explicitly deferred)** — adopter proposed a `--skip-empty-sections` flag for the operational-repo case where §2/§3 stay empty post-scaffold. Adopter explicitly recommended NOT shipping this now ("fix the docs first, see if anyone actually requests this"). Defer per adopter recommendation.
+
+### Pattern
+
+**H8 Conscience applied to marketing copy.** The skill's own H8 Checkpoint admitted "the value depends on the user's habit of updating it." The adopter's report extended that honesty to "When to Skip" — over-promising in marketing is the same anti-pattern the H8 checkpoint guards against in operations. Docs that overstate value in the "Use it when" direction need to balance with the "Skip it when" direction.
+
+### Arc-close criterion validation
+
+v2.16.3 said: "Round 6 deferred unless a third independent adopter (outside `netbox-sit` + `netbird-sit`) surfaces real friction." That condition triggered **within ~2 hours** of the v2.16.3 release — Adopter #2 immediately ran the new release in their operational VA/PT workspace (third repo) and filed #207. The arc-close criterion was correct; the timing estimate was over-optimistic. Pattern continues at **n=3 evidence base**.
+
+### Validator state
+
+`validate-structure.sh` 268/268 PASS; `validate-content.sh` 220+ PASS / 0 FAIL / 1 WARN / 0 fitness breaches.
+
+### Convergence
+
+Adopter's own `/cross-verify` on this issue: 13/15 = 86.7% "Mostly ready". Maintainer's `/cross-verify` on the implementation posture (ship P1+P2, defer P3): 15/15 = 100% "Well-prepared". Adopter modest; maintainer agrees. Proceed with confidence.
+
+---
+
 ## v2.16.3 — `/save-spec` Round-5 Arc-Close Polish (Adopter #2 closure pass) (2026-05-18)
 
 Patch release. Adopter #2 closure pass on the 5-round v2.16.x QA arc surfaced 1 MEDIUM bug + 2 LOW items + an arc-close meta-recommendation. All 3 fixed; arc closed per Adopter #2 recommendation (defer round 6 unless a third independent adopter surfaces friction). Closes [#205](https://github.com/pitimon/8-habit-ai-dev/issues/205).
