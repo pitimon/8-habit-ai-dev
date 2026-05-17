@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.16.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.16.0)
+[![Version](https://img.shields.io/badge/Version-2.16.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.16.1)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -415,6 +415,19 @@ Both agents use the `sonnet` model for fast, focused analysis.
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
 
 ---
+
+## What's New in v2.16.1
+
+**Theme: `/save-spec` Phase 1 polish — Adopter #2 dogfood fixes** ([#201](https://github.com/pitimon/8-habit-ai-dev/issues/201))
+
+Patch release. Adopter #2 dogfood pass on the v2.16.0 `/save-spec` skill surfaced 1 correctness bug + 3 quality items — all four fixed in this single PR.
+
+- **N1 (MEDIUM bug, fixed)** — §1 empty stub previously used `` `<filename>.md` `` which Check 4's backtick-path grep extracted as `<filename>.md` (literal angle brackets), making the Definition of Done's "passes 5 verification commands" claim provably false on the default scaffold. Stub now reads `_§1 is empty — add project-specific pointers as the repo grows._` with no backticked .md path. DoD claim is now true.
+- **N2 (LOW, documented)** — Timestamp reliability profile documented. The skill (no `Bash`) substitutes the `**Last updated**` value from Claude's session-injected current-time context; when absent, output may carry `+00:00` or a wrong offset. Adopters: verify offset after scaffold, edit manually if wrong. Phase 2 hook for adding `Bash` if feedback warrants.
+- **N3 (LOW UX, fixed)** — Q2 (§1 pointer confirmation) now accepts an "Other (free-text)" affordance for newline-separated project-specific paths. Motivated by ops/infra repos with non-canonical naming (`server-state.md`, `playbooks/change-management.md`, `runbooks/ops-runbook.md`).
+- **N4 (LOW doc, fixed)** — PRD FR-003 deduplicated against reference.md Decision-3. Single source of truth.
+
+Pattern: **patch-release dogfood discipline** — the adopter report surfaced N1 in <2 hours after v2.16.0; same-day correctness fix. Sibling closure: [#197](https://github.com/pitimon/8-habit-ai-dev/issues/197) now closeable — all 5 of its items addressed in v2.16.0 + #198.
 
 ## What's New in v2.16.0
 
@@ -838,4 +851,4 @@ MIT
 
 ---
 
-_Version: 2.16.0 | Last updated: 2026-05-17_
+_Version: 2.16.1 | Last updated: 2026-05-17_

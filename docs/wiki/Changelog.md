@@ -1,10 +1,24 @@
-![Version](https://img.shields.io/badge/latest-v2.16.0-blue)
+![Version](https://img.shields.io/badge/latest-v2.16.1-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.16.1 — `/save-spec` Phase 1 Polish (Adopter #2 dogfood) (May 2026)
+
+Patch release. Adopter #2 dogfood pass on the v2.16.0 `/save-spec` skill surfaced 1 correctness bug + 3 quality items — all four fixed in this single PR. Closes [#201](https://github.com/pitimon/8-habit-ai-dev/issues/201).
+
+**N1 (MEDIUM bug, fixed)**: §1 empty stub previously used `` `<filename>.md` `` which Check 4's backtick-path grep extracted as `<filename>.md` (literal angle brackets), failing `[ -e ]` and emitting `MISS  <filename>.md`. The Definition of Done's claim that "output passes the 5 verification commands" was provably false on the default scaffold. Fixed by changing the stub to plain prose `_§1 is empty — add project-specific pointers as the repo grows._` with no backticked .md path.
+
+**N2 (LOW, documented)**: Timestamp reliability profile documented in reference.md. The skill (no `Bash` in `allowed-tools`) generates the `**Last updated**` value by substituting Claude's session-injected current-time context; when that injection is absent the output may carry `+00:00` or a wrong offset. Adopter guidance added: verify offset after scaffold, edit manually if wrong. Phase 2 may add `Bash` if feedback shows unreliability.
+
+**N3 (LOW UX, fixed)**: Q2 (§1 pointer confirmation) now accepts an "Other (free-text)" affordance for newline-separated project-specific paths. Motivated by ops/infra repos using non-canonical naming (`server-state.md`, `playbooks/change-management.md`, `runbooks/ops-runbook.md`) that have zero overlap with the 5 canonical glob names. SKILL.md Process step 3 + step 4 parse rule extended; reference.md Example F added to show the parse flow.
+
+**N4 (LOW doc drift, fixed)**: PRD FR-003 deduplicated against `reference.md` Decision-3. FR-003 previously included a paraphrased inline version of the refusal message that diverged from the canonical version in reference.md — future-maintainer drift hazard. FR-003 now references reference.md as the single source of truth.
+
+Validator state: `validate-structure.sh` 268/268 PASS, `validate-content.sh` 219+ PASS / 0 FAIL / 1 WARN / 0 fitness breaches. Sibling closure: [#197](https://github.com/pitimon/8-habit-ai-dev/issues/197) is now closeable — all 5 of its items were addressed in v2.16.0 + #198. Pattern: **patch-release dogfood discipline** — the adopter #2 report surfaced N1 in <2 hours after the v2.16.0 release; correctness fix shipped same day; the dogfood feedback loop is faster than the original promotion-criteria gathering.
 
 ## v2.16.0 — `/save-spec` Skill — Phase 1 Minimum Viable (May 2026)
 
