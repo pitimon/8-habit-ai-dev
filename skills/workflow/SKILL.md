@@ -72,3 +72,9 @@ Produce a completion summary:
 - [ ] Each step was either invoked or skipped with a documented reason
 - [ ] Completion summary produced showing all 7 steps
 - [ ] No step skipped without justification
+
+## See Also (Cross-Plugin)
+
+- **Looking for security scan orchestration**, not the 7-step development workflow? Invoke **`/security-workflow`** from the companion plugin `devsecops-ai-team` (v10.12.0+). It auto-detects project context, runs a recipe-based scan pipeline (webapp / container / IaC / quick / compliance), and chains results through compliance mapping and a security gate. Different skill, different scope — both invocable in the same session.
+- _Naming note_: in devsecops v10.11.x and earlier this skill was named `/workflow`. It was renamed to `/security-workflow` in v10.12.0 to resolve the cross-plugin collision with this skill. The old `/workflow` continues to work as a deprecation stub through devsecops v10.x and is removed in v11.0.0 (see devsecops ADR-014).
+- See [`docs/INTEGRATION.md`](../../docs/INTEGRATION.md) for the full integration matrix between this plugin, `devsecops-ai-team`, and `claude-governance`.

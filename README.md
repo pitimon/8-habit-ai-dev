@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.16.4-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.16.4)
+[![Version](https://img.shields.io/badge/Version-2.16.5-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.16.5)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -412,7 +412,26 @@ Both agents use the `sonnet` model for fast, focused analysis.
 
 **Single source of truth for integration:** see [`docs/INTEGRATION.md`](docs/INTEGRATION.md) — covers layer map, choosing-your-stack matrix, integration points, Three Loops asymmetry, EU AI Act scope split, and suggested integrated flow.
 
-Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.10.0.
+Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
+
+> **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
+
+---
+
+## What's New in v2.16.5
+
+**Theme: Companion announcement — devsecops `/workflow` → `/security-workflow`** (paired release)
+
+Docs-only patch. Closes the paired-announcement promise from `devsecops-ai-team` v10.12.0's CHANGELOG. The cross-plugin `/workflow` naming collision has been resolved by devsecops renaming its skill to `/security-workflow`.
+
+- **`docs/INTEGRATION.md`** — devsecops peg bumped 10.10.0 → 10.12.0+ with inline rename note
+- **`skills/workflow/SKILL.md`** — new "See Also (Cross-Plugin)" footer pointing users who meant scan-orchestration to devsecops's `/security-workflow`
+- **`README.md` Companion Plugins** — updated tested-version peg + naming-note callout
+- Companion PR `devsecops-ai-team` v10.12.1 (paired) adds devsecops's symmetric "Companion Plugins" README section + skill-level "See also" callouts in `/eu-ai-act-assess` and `/security-workflow`
+
+Pattern captured: companion-announcement step is now part of Definition of Done for any cross-plugin slash-command rename. See post-release lesson `cross-plugin-companion-announcement-pattern` in `~/.claude/lessons/`.
+
+H4 (Win-Win) reciprocity — every interaction is a deposit; closing this promise is a deposit to users tracking both plugins.
 
 ---
 
@@ -892,4 +911,4 @@ MIT
 
 ---
 
-_Version: 2.16.4 | Last updated: 2026-05-18_
+_Version: 2.16.5 | Last updated: 2026-05-20_

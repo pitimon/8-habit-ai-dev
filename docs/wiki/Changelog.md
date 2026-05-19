@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.16.4-blue)
+![Version](https://img.shields.io/badge/latest-v2.16.5-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.16.5 — Companion Announcement: devsecops `/workflow` → `/security-workflow` (May 2026)
+
+Docs-only patch closing the paired-announcement promise from `devsecops-ai-team` v10.12.0's CHANGELOG. The cross-plugin `/workflow` naming collision has been resolved by devsecops renaming its skill to `/security-workflow`; this plugin's `/workflow` (the 7-step Covey practice) keeps the generic name. `docs/INTEGRATION.md` peg bumped 10.10.0 → 10.12.0+; `skills/workflow/SKILL.md` gains "See Also" footer pointing scan-orchestration seekers to devsecops; README companion-plugins section refreshed. Pattern captured: companion-announcement step is now part of DoD for any cross-plugin slash-command rename.
 
 ## v2.16.4 — `/save-spec` Suite-Positioning Honesty Patch (Adopter #2 third-repo dogfood) (May 2026)
 

@@ -10,6 +10,30 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.16.5 — Companion Announcement: devsecops `/workflow` → `/security-workflow` (2026-05-20)
+
+Docs-only patch. Closes the paired-announcement promise from `devsecops-ai-team` v10.12.0's CHANGELOG: the cross-plugin `/workflow` naming collision has been resolved by devsecops renaming its skill to `/security-workflow`. This release updates the integration peg, surfaces the rename in this plugin's `/workflow` SKILL.md, and refreshes the README companion-plugin table.
+
+### Changed
+
+- **`docs/INTEGRATION.md` "Tested versions"** — devsecops-ai-team peg bumped 10.10.0 → 10.12.0+ (stale by 2 releases — v10.11.0 `/runner-audit`, v10.11.1 QA patch, v10.12.0 `/workflow` rename, v10.12.1 cross-refs). Inline note explains: in devsecops v10.12.0, `/workflow` was renamed to `/security-workflow` to resolve the collision with this plugin's `/workflow` (the 7-step Covey practice). Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x; removed in v11.0.0 per devsecops ADR-014.
+- **`skills/workflow/SKILL.md` "See also" footer (new)** — When user invokes `/workflow` and meant "scan-orchestration workflow" instead of the 7-step development workflow, they're now pointed to devsecops's `/security-workflow` directly from the SKILL.md (not buried in INTEGRATION.md). Reduces user-mental-model mismatch.
+- **`README.md` Companion Plugins section** — devsecops-ai-team tested-version peg bumped 10.10.0 → 10.12.0+; added one-line note on the `/security-workflow` rename for users searching by old name.
+
+### Why
+
+`devsecops-ai-team` v10.12.0 (2026-05-20) shipped with a CHANGELOG line: _"A paired note will be published in 8-habit-ai-dev's next release explaining that the cross-plugin conflict is now resolved."_ This release fulfills that commitment. H4 (Win-Win) reciprocity — every interaction is a deposit; closing this promise is a deposit to users who track both plugins.
+
+### Companion release
+
+- **`devsecops-ai-team` v10.12.1** (paired with this release) — adds devsecops's symmetric "Companion Plugins" README section (mentions 8-habit-ai-dev + claude-governance) plus skill-level "See also" callouts in `/eu-ai-act-assess` (points to claude-governance `/eu-ai-act-check` for Article 14) and `/security-workflow` (points back to this plugin's `/workflow`).
+
+### Pattern captured
+
+Companion-announcement step is now part of the Definition of Done for any cross-plugin slash-command rename — not a follow-up task. See post-release `/reflect` lesson `cross-plugin-companion-announcement-pattern` in `~/.claude/lessons/`.
+
+---
+
 ## v2.16.4 — `/save-spec` Suite-Positioning Honesty Patch (Adopter #2 third-repo dogfood) (2026-05-18)
 
 Docs-only patch. Adopter #2's third-repo dogfood (operational VA/PT workspace with `claude-mem` active + 284-line `CLAUDE.md`) surfaced two real overlap cases the `/save-spec` docs didn't acknowledge. P1 + P2 ship; P3 explicitly deferred per adopter recommendation. Closes [#207](https://github.com/pitimon/8-habit-ai-dev/issues/207).
