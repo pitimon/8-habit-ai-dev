@@ -6,9 +6,9 @@
 
 **Tested versions:**
 
-- `8-habit-ai-dev` 2.15.0
+- `8-habit-ai-dev` 2.16.5
 - `claude-governance` 3.3.0
-- `devsecops-ai-team` 10.10.0
+- `devsecops-ai-team` 10.12.0+ (`/workflow` was renamed to `/security-workflow` in v10.12.0 to resolve a cross-plugin naming collision with this plugin's `/workflow`; legacy `/workflow` continues to work in devsecops as a deprecation stub through v10.x, removed in v11.0.0 — see devsecops ADR-014. Skill-level cross-references landed in v10.12.1.)
 
 ---
 
