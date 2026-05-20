@@ -26,6 +26,14 @@ Full 17-skill inventory and cross-plugin composition tables. Loaded from `SKILL.
 - **`/workflow`** — Guided walkthrough of the 7-step workflow. Prompts at each step to invoke or skip.
 - **`/save-spec`** — **Deployment-mode helper (orthogonal to the 7-step workflow)**. Scaffolds a project-root `SPEC.md` digest when the repo fits the project-orientation hub mode (per `guides/spec-digest-pattern.md`). Phase 1 minimum viable (v2.16.0) — generator-only; refuses to overwrite existing `SPEC.md`. Use when the repo fits operational/infra/integration archetype (not feature-spec mode). **Skip if you already have a memory-MCP (`claude-mem`/`memforge`) active AND a short `CLAUDE.md`** — see `skills/save-spec/SKILL.md` "When to Skip" for the overlap analysis (v2.16.4, #207). Skill-category-wise belongs with `/calibrate` + `/reflect` (state-write skills run on user demand), not with assessment skills that produce conversation-only output.
 
+### External prior-art bundle (3, v2.17.0 — inspired by [9arm-skills](https://github.com/thananon/9arm-skills))
+
+These three skills fill gaps the 7-step workflow doesn't address — engineering record-keeping, outsider review, audience reshape. They are standalone (any/any handoff), invoked on demand, and never block the workflow chain.
+
+- **`/post-mortem`** — Canonical engineering RCA writeup of a fixed-and-validated bug. Refuses to draft without 4 inputs (reliable repro, known root cause, identified fix, validated outcome). Engineer-audience artifact; code identifiers welcome. Pairs with `/reflect` — that captures the 5-min micro-retro signal, this captures the canonical bug record. Maps to H4 + H7.
+- **`/scrutinize`** — Outsider-perspective end-to-end review of a plan, PR, or proposed change. Step 1 (Intent) mandates a simpler-alternative pass before line-by-line review; Steps 2-4 trace the actual call graph (not just the diff). Pairs with `/review-ai` — that catches security/quality/perf on the diff, this asks whether the change should exist and traces the architectural seams. Maps to H5 + H8.
+- **`/management-talk`** — Channel-aware audience reshape. Same engineering content → JIRA comment / Slack post / async standup / email / meeting talking-points. Strips function names, file paths, SHAs. Keeps JIRA keys, PR numbers, product/workload identifiers. Pairs after `/post-mortem` (engineering record → leadership reframe) or `/reflect` (retro → status update). Maps to H4 + H6.
+
 ### Meta / transparency skills (3)
 
 - **`/using-8-habits`** (this skill) — Onboarding navigation. Explains the 7-step workflow and all 17 skills.
