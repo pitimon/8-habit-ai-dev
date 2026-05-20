@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
-[![Skills](https://img.shields.io/badge/Skills-18-blue)]()
+[![Skills](https://img.shields.io/badge/Skills-22-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
 [![Version](https://img.shields.io/badge/Version-2.17.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.17.0)
@@ -436,6 +436,20 @@ A 2026-05-20 Deep-mode audit of [mattpocock/skills](https://github.com/mattpococ
 **Spec chain** (persisted): `docs/specs/mattpocock-t1-v2-17-0/{prd,design,tasks}.md`. **Research brief** (source): `~/.claude/plans/deep-https-github-com-mattpocock-skills-glimmering-prism.md` (13/14 sources verified by `research-verifier` agent).
 
 H5 (Understand First) + H7 (Sharpen Saw) — external audit as renewal discipline.
+
+### Companion bundle — 3 discipline-skill ports from [thananon/9arm-skills](https://github.com/thananon/9arm-skills)
+
+A 2026-05-20 Deep-mode research pass evaluated 4 candidate skills from `9arm-skills` (700★, no LICENSE — patterns adapted, not copied). Three ship as new standalone skills filling gaps the 7-step workflow doesn't address; one (`/debug-mantra`) filtered out (ceremony-heavy "recite verbatim" pattern conflicts with Significance profile + `rules/effective-development.md` H1 anti-pattern guidance).
+
+- **`/post-mortem`** (H4 + H7) — canonical engineering RCA writeup. Refuses to draft without 4 inputs (reliable repro, known root cause, identified fix, validated outcome). Engineer-audience artifact; code identifiers welcome. Pairs with `/reflect` — that captures 5-min micro-retro signal; this captures canonical bug record for grep-back-in-6-months future-you.
+- **`/scrutinize`** (H5 + H8) — outsider-perspective end-to-end review. Step 1 (Intent) mandates a simpler-alternative pass before line-by-line review; Steps 2–4 trace the actual call graph not just the diff. Pairs with `/review-ai` — that catches security/quality/perf on the diff; this asks whether the change should exist at all.
+- **`/management-talk`** (H4 + H6) — channel-aware audience reshape. Same engineering content → JIRA / Slack / standup / email / meeting. Strips function/file/SHA, keeps JIRA keys / PR numbers / workload identifiers. Pairs after `/post-mortem` (engineering record → leadership reframe) or `/reflect` (retro → status update).
+
+All 3 standalone (`prev/next-skill: any`), invoked on demand, never block the 7-step chain. Plugin total: **22 skills**.
+
+**Research brief** (source): `~/.claude/plans/deep-https-github-com-thananon-9arm-skil-misty-taco.md` (Deep mode, `research-verifier` agent confirmed citation integrity + 3 inaccuracies corrected).
+
+H5 (Understand First) — outsider audit found patterns 8-habit could absorb. H6 (Synergize) — adapt-not-copy fuses 9arm discipline patterns with 8-habit conventions (`prev-skill`/`next-skill` handoff, Habit map, bilingual title).
 
 ---
 
