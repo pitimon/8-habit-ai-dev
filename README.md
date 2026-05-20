@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-18-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.16.5-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.16.5)
+[![Version](https://img.shields.io/badge/Version-2.17.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.17.0)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -415,6 +415,24 @@ Both agents use the `sonnet` model for fast, focused analysis.
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
+
+---
+
+## What's New in v2.17.0
+
+**Theme: External prior-art audit — 4 patterns adopted from mattpocock/skills as forward guardrails** ([ADR-014](docs/adr/ADR-014-external-prior-art-audit.md))
+
+A 2026-05-20 Deep-mode audit of [mattpocock/skills](https://github.com/mattpocock/skills) (95.5k★, MIT) evaluated 10 candidate patterns. Four ship as additive guardrails; three explicitly deferred; three rejected and catalogued in the new `docs/out-of-scope/`. Honest framing: all 4 adoptions ship without prior friction-signal evidence — they are **forward guardrails, not fixes for observed weakness**. ADR-014 records this discipline for future audits.
+
+- **P1 AGENT-BRIEF template** — new `guides/templates/agent-brief-template.md` (habit-mapped, ≤120 lines): durable issue spec for backlog-bound work; behavioral-not-procedural rule preserved. Referenced from `/breakdown` Handoff.
+- **P3 `disable-model-invocation: true`** — applied to `/save-spec` and `/ai-dev-log` (deterministic scaffolders). **Honest disclosure**: per [anthropics/claude-code#22345](https://github.com/anthropics/claude-code/issues/22345) (OPEN), plugin skills don't currently honor this field — declaration is intent-marking until #22345 closes.
+- **P4-lite `docs/out-of-scope/`** — new directory with 3 seed entries (brainstorm-removal, agentskills no-go, EU AI Act migration). Per-decision rejection rationale; distinct from ADRs (verbs: "we DID decide X" vs "we deliberately WON'T do Y"). CONTRIBUTING.md explains the distinction.
+- **P5 description rubric** — new validator Check 25 in `tests/validate-structure.sh`: SKILL.md `description` ≤1024 chars + trigger phrase from empirically-grounded set (Use when / Use AFTER / Use BEFORE / Use to / Use for / Use as / Read this first / Assess / migrated). Activates as forward guardrail; pre-shipment audit found 0/19 drift.
+- **Validator additions**: Check 24 (`disable-model-invocation` value validation), Check 25 (description rubric). Pure bash; zero new dependencies.
+
+**Spec chain** (persisted): `docs/specs/mattpocock-t1-v2-17-0/{prd,design,tasks}.md`. **Research brief** (source): `~/.claude/plans/deep-https-github-com-mattpocock-skills-glimmering-prism.md` (13/14 sources verified by `research-verifier` agent).
+
+H5 (Understand First) + H7 (Sharpen Saw) — external audit as renewal discipline.
 
 ---
 
@@ -911,4 +929,4 @@ MIT
 
 ---
 
-_Version: 2.16.5 | Last updated: 2026-05-20_
+_Version: 2.17.0 | Last updated: 2026-05-20_

@@ -7,6 +7,7 @@ description: >
 user-invocable: true
 argument-hint: "[--since YYYY-MM-DD] [--repo path] [--out file]"
 allowed-tools: ["Read", "Glob", "Grep", "Bash"]
+disable-model-invocation: true
 prev-skill: any
 next-skill: any
 ---
