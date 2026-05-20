@@ -38,6 +38,14 @@ Pick the row whose trigger matches the user intent, then read the cited SKILL.md
 | `"retrospective"`, `"what did we learn"`, `"post-task reflection"`                     | [`skills/reflect/SKILL.md`](reflect/SKILL.md)                                 | 6-question micro-retrospective + persistent lesson file                                                                                                                     |
 | `"scaffold a SPEC.md"`, `"save-point file for this repo"`, `"set up a project digest"` | [`skills/save-spec/SKILL.md`](save-spec/SKILL.md)                             | Scaffold a project-root SPEC.md following the spec-digest-pattern (v2.16.0, project-orientation hub mode; generator-only)                                                   |
 
+## External Prior-Art Bundle (v2.17.0 — inspired by 9arm-skills)
+
+| Trigger                                                                                       | Skill                                                         | Purpose                                                                                                                                                                                    |
+| --------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `"write the post-mortem"`, `"RCA"`, `"document this fix"`, `"close out this bug"`             | [`skills/post-mortem/SKILL.md`](post-mortem/SKILL.md)         | Canonical engineering RCA writeup — root cause, mechanism, fix, validation. Refuses to draft without 4 inputs (reliable repro, known cause, identified fix, validated outcome). H4 + H7    |
+| `"scrutinize"`, `"sanity-check"`, `"second opinion"`, `"outsider review"`, `"audit approach"` | [`skills/scrutinize/SKILL.md`](scrutinize/SKILL.md)           | Outsider-perspective end-to-end review — questions whether the change should exist (Step 1) before line-by-line; traces full call graph not just the diff. H5 + H8                         |
+| `"for management"`, `"slack version"`, `"exec summary"`, `"standup note"`, `"VP email"`       | [`skills/management-talk/SKILL.md`](management-talk/SKILL.md) | Channel-aware audience reshape — engineer-to-engineer content → JIRA / Slack / standup / email / meeting. Strips function/file/SHA, keeps JIRA keys / PR numbers / workload names. H4 + H6 |
+
 ## Meta / Onboarding
 
 | Trigger                                                               | Skill                                                       | Purpose                                                                      |
