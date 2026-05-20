@@ -10,6 +10,51 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.17.0 — External Prior-Art Audit: 4 mattpocock/skills Patterns as Forward Guardrails (2026-05-20)
+
+A 2026-05-20 Deep-mode audit of [mattpocock/skills](https://github.com/mattpocock/skills) (95.5k★, MIT, 14 published skills) evaluated 10 candidate patterns and shipped 4 as additive guardrails. Honest framing recorded in [ADR-014](docs/adr/ADR-014-external-prior-art-audit.md): all 4 adoptions ship **without prior friction-signal evidence** — they are forward guardrails, not fixes for observed weakness. Future external-pattern audits must apply a friction-first lens per ADR-014's discipline.
+
+### Added
+
+- **`guides/templates/agent-brief-template.md`** (P1) — habit-mapped AGENT-BRIEF template (≤120 lines) for backlog-bound issues. Adds H2 "Success criteria" + H8 "Why this matters" sections; preserves mattpocock's behavioral-not-procedural durability rule. Referenced from `/breakdown` Handoff.
+- **`docs/out-of-scope/`** (P4-lite) — new directory with 3 seed entries (brainstorm-removed.md, agentskills-no-go.md, eu-ai-act-migrated.md). Per-decision rejection rationale with YAML frontmatter schema (`date`, `originating-decision`, `rejected-because`). Each ≤200 words with "If reconsidering, read these conditions first" durability anchor.
+- **`docs/adr/ADR-014-external-prior-art-audit.md`** — records the audit framework (Tier 1/2/3), 4 adoptions, 3 rejections (P6/P7/P9), 3 deferrals (P2/P8/P10), R1 harness behavior verification, and the honest-framing discipline.
+- **`docs/specs/mattpocock-t1-v2-17-0/`** — persisted spec chain (`prd.md`, `design.md`, `tasks.md`) for the bundle.
+- **`tests/validate-structure.sh` Check 24** — validates `disable-model-invocation` is a well-formed YAML boolean when declared (FR-002). Field is OPTIONAL.
+- **`tests/validate-structure.sh` Check 25** — SKILL.md description rubric: ≤1024 chars + trigger phrase from empirically-grounded set (Use when / Use AFTER / Use BEFORE / Use to / Use for / Use as / Read this first / Assess / migrated). Pre-shipment audit found 0/19 drift (FR-003).
+- **`CONTRIBUTING.md` "Adding an Out-of-Scope Entry"** — explains ADR-vs-OOS verb distinction and OOS frontmatter schema. R3 mitigation per ADR-014.
+
+### Changed
+
+- **`skills/save-spec/SKILL.md` frontmatter** (P3, FR-001a) — added `disable-model-invocation: true`. **Honest disclosure**: per [anthropics/claude-code#22345](https://github.com/anthropics/claude-code/issues/22345) (OPEN since 2026-02-01), plugin skills don't currently honor this field — declaration is intent-marking until #22345 closes. Two related regressions (#26251, #43875) verified CLOSED before shipping.
+- **`skills/ai-dev-log/SKILL.md` frontmatter** (P3, FR-001b) — same flag added; same harness-honor caveat applies.
+- **`skills/breakdown/SKILL.md` Handoff section** (FR-006 narrowed) — added always-link reference to `agent-brief-template.md` for backlog-bound tasks. PRD's event-driven framing narrowed to ubiquitous during /design (Decision-4); narrowing documented in design.md.
+
+### Rejected (Tier 3 — documented in docs/out-of-scope/ or ADR-014)
+
+- **P6 inline doc updates during skill** — conflicts with read-only skill principle (ADR-009).
+- **P7 CONTEXT.md / CONTEXT-MAP.md** — overlaps `/save-spec` §1 + `spec-digest-pattern.md`; risks governance drift (ADR-013).
+- **P9 lazy file creation** — redundant with `/save-spec` refusal-to-overwrite behavior.
+
+### Deferred (Tier 2)
+
+- **P2 LANGUAGE.md vocabulary** — worth doing eventually; separate research brief if maintainer chooses.
+- **P8 two-axis review split** — needs n≥2 adopter friction signal per maturity ladder before promotion.
+- **P10 tracer-bullet vocabulary** — `/breakdown` already says "atomic"; marginal value.
+
+### Why
+
+External-source audit as Sharpen-the-Saw (H7) discipline. The advisor pattern review (transcript 2026-05-20) flagged that the original framing was "what novel patterns does mattpocock have?" rather than "what friction do we have?" — ADR-014 records this lesson explicitly and the v2.17.0 release ships forward guardrails with honest disclosure rather than retrofit a friction-first audit.
+
+### Verification
+
+- All 4 validator suites green: `validate-structure.sh` (293 PASS / 0 FAIL), `validate-content.sh`, `test-skill-graph.sh`, `test-verbosity-hook.sh`
+- R1 harness verification done before shipping (issue status checked)
+- 13/14 citations in source brief verified by `research-verifier` agent (Deep-mode gate)
+- Cross-verify dogfooded on the bundle at /requirements stage: 92.8% Well-prepared band
+
+---
+
 ## v2.16.5 — Companion Announcement: devsecops `/workflow` → `/security-workflow` (2026-05-20)
 
 Docs-only patch. Closes the paired-announcement promise from `devsecops-ai-team` v10.12.0's CHANGELOG: the cross-plugin `/workflow` naming collision has been resolved by devsecops renaming its skill to `/security-workflow`. This release updates the integration peg, surfaces the rename in this plugin's `/workflow` SKILL.md, and refreshes the README companion-plugin table.

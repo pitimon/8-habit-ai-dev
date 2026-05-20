@@ -655,6 +655,99 @@ if [ "$SAVE_SPEC_FAIL" -eq 0 ]; then
 fi
 echo ""
 
+# --- Check 24: disable-model-invocation field value validation (FR-002) ---
+# When the disable-model-invocation field is present in a SKILL.md frontmatter,
+# its value MUST be a YAML boolean: "true" or "false" (no quotes, lowercase).
+# Field is OPTIONAL — skills without it pass; the check only validates value
+# when the field IS declared. Per anthropics/claude-code#22345 (OPEN) the field
+# is currently honored only for user-defined skills (not plugin skills); declaring
+# it stays well-formed for when #22345 closes. See ADR-014.
+echo "--- Check 24: disable-model-invocation field value validation ---"
+DMI_FAIL=0
+for skill_dir in skills/*/; do
+  skill_file="${skill_dir}SKILL.md"
+  [ ! -f "$skill_file" ] && continue
+  skill_name=$(basename "$skill_dir")
+
+  dmi_value=$(awk '/^---$/{c++; if(c==2) exit; next} c==1 && sub(/^disable-model-invocation:[[:space:]]*/, ""){print; exit}' "$skill_file")
+  if [ -z "$dmi_value" ]; then
+    continue  # field not declared — OK, it's optional
+  fi
+  if [ "$dmi_value" = "true" ] || [ "$dmi_value" = "false" ]; then
+    pass "$skill_name — disable-model-invocation: $dmi_value (valid boolean)"
+  else
+    fail "$skill_name — disable-model-invocation: '$dmi_value' is not a YAML boolean (true|false)"
+    DMI_FAIL=$((DMI_FAIL + 1))
+  fi
+done
+if [ "$DMI_FAIL" -eq 0 ]; then
+  pass "all disable-model-invocation declarations are well-formed booleans"
+fi
+echo ""
+
+# --- Check 25: SKILL.md description rubric (FR-003) ---
+# Per skill, the description field MUST satisfy:
+#   (a) collapsed length <= 1024 chars (Anthropic SKILL.md description budget)
+#   (b) contains at least one trigger phrase from the empirically-grounded set:
+#       Use when | Use AFTER | Use BEFORE | Use to | Use for | Use as
+#       Read this first | Assess | migrated
+# The trigger-phrase set was derived from a 2026-05-20 audit of all 19 skills
+# (P5 sweep, Decision-1 in docs/specs/mattpocock-t1-v2-17-0/design.md) — all
+# 19 currently pass at activation time. Check activates as a forward guardrail
+# against regression, not as a fix for observed weakness (zero drift at start).
+echo "--- Check 25: SKILL.md description rubric (≤1024 chars + trigger phrase) ---"
+RUBRIC_FAIL=0
+for skill_dir in skills/*/; do
+  skill_file="${skill_dir}SKILL.md"
+  [ ! -f "$skill_file" ] && continue
+  skill_name=$(basename "$skill_dir")
+
+  # Extract description — handles both single-line and YAML block-scalar (description: >) form.
+  # State machine: enter on description:, accumulate body lines until next top-level key.
+  # awk (no pipe) avoids SIGPIPE under set -o pipefail — see Check 1 header comment.
+  desc=$(awk '
+    /^description:/ {
+      sub(/^description:[[:space:]]*>?[[:space:]]*/, "")
+      in_desc=1
+      buf=$0
+      next
+    }
+    in_desc && /^[a-zA-Z][a-zA-Z0-9_-]*:/ { in_desc=0 }
+    in_desc {
+      gsub(/^[[:space:]]+/, "")
+      buf = buf " " $0
+    }
+    END { print buf }
+  ' "$skill_file" | tr -s ' ' | sed 's/^ //;s/ $//')
+
+  if [ -z "$desc" ]; then
+    fail "$skill_name — description field empty or missing"
+    RUBRIC_FAIL=$((RUBRIC_FAIL + 1))
+    continue
+  fi
+
+  # (a) length check
+  desc_len=${#desc}
+  if [ "$desc_len" -gt 1024 ]; then
+    fail "$skill_name — description length $desc_len exceeds 1024 chars (FR-003a)"
+    RUBRIC_FAIL=$((RUBRIC_FAIL + 1))
+    continue
+  fi
+
+  # (b) trigger phrase check
+  if ! echo "$desc" | grep -qE "(Use when|Use AFTER|Use BEFORE|Use to|Use for|Use as|Read this first|Assess|migrated)"; then
+    fail "$skill_name — description lacks trigger phrase from rubric set (FR-003b)"
+    RUBRIC_FAIL=$((RUBRIC_FAIL + 1))
+    continue
+  fi
+
+  pass "$skill_name — description ${desc_len}c + trigger phrase present"
+done
+if [ "$RUBRIC_FAIL" -eq 0 ]; then
+  pass "all SKILL.md descriptions satisfy rubric (FR-003)"
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"

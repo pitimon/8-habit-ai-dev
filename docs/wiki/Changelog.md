@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.16.5-blue)
+![Version](https://img.shields.io/badge/latest-v2.17.0-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.17.0 — External Prior-Art Audit: mattpocock/skills Patterns (May 2026)
+
+Adopts 4 patterns from [mattpocock/skills](https://github.com/mattpocock/skills) as forward guardrails: P1 AGENT-BRIEF template, P3 `disable-model-invocation` frontmatter, P4-lite `docs/out-of-scope/` catalog, P5 description rubric (validator Checks 24+25). Honest framing in [ADR-014](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-014-external-prior-art-audit.md): all 4 ship without prior friction-signal evidence — future audits must apply friction-first lens. Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.16.5 — Companion Announcement: devsecops `/workflow` → `/security-workflow` (May 2026)
 

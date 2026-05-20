@@ -93,6 +93,37 @@ Create `guides/templates/<name>-template.md`:
 - Placeholder sections (not just headings)
 - Referenced from skills via `Load` directive
 
+## Adding an Out-of-Scope Entry (v2.17.0+)
+
+`docs/out-of-scope/` records decisions **not** to ship something. New entries go there when:
+
+- A pattern, skill, or framework was evaluated and explicitly rejected
+- We want future contributors (or future-us) to find the rationale before re-proposing
+- The decision deserves preservation but isn't an architectural commitment
+
+### ADR vs Out-of-Scope — different verbs, different audiences
+
+| Artifact                      | Verb / framing                                   | Example                                                |
+| ----------------------------- | ------------------------------------------------ | ------------------------------------------------------ |
+| `docs/adr/ADR-NNN-*.md`       | "We DID decide X" — architectural commitment     | ADR-013 spec-persistence opt-in: this is how it works  |
+| `docs/out-of-scope/<name>.md` | "We deliberately WON'T do Y" — rejected proposal | brainstorm-removed: Superpowers already does it better |
+
+If your decision is "we built X and here's why" → ADR.
+If your decision is "we considered X and rejected it" → out-of-scope entry.
+When in doubt: ADRs are forward-looking commitments; out-of-scope entries are protective fences.
+
+### Format (per ADR-014 / Decision-2)
+
+```yaml
+---
+date: <ISO 8601 date>
+originating-decision: <ADR-NNN ref>
+rejected-because: <one-line, ≤140 chars>
+---
+```
+
+Body (≤200 words): why we won't, what this prevents, **and** an "If reconsidering, read these conditions first" bullet list — the conditions under which we'd re-open. See existing entries in `docs/out-of-scope/` for shape.
+
 ## Spec Persistence + Consistency Check (v2.15.0+)
 
 The `--persist <slug>` flag on `/requirements`, `/design`, `/breakdown` writes artifacts to `docs/specs/<slug>/{prd,design,tasks}.md`. The `/consistency-check` skill reads those files to detect cross-artifact drift. Canonical convention: [`guides/persistence-convention.md`](guides/persistence-convention.md). Design rationale: [ADR-013](docs/adr/ADR-013-spec-persistence-opt-in.md).

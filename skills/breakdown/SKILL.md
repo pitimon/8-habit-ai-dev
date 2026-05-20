@@ -87,6 +87,7 @@ next-skill: build-brief
 
 - **Expects from predecessor** (`/design`): Architecture decisions and constraints
 - **Produces for successor** (`/build-brief`): Prioritized task list with dependencies and file paths
+- **Backlog-bound tasks**: When a task in the produced list will sit ≥7 days before pickup (or filer ≠ picker), recommend filing as a GitHub issue using [`guides/templates/agent-brief-template.md`](../../guides/templates/agent-brief-template.md) — durable issue spec that survives context drift. Habit-mapped variant of the pattern from [mattpocock/skills](https://github.com/mattpocock/skills).
 
 ## Optional Persistence (`--persist <slug>`)
 
