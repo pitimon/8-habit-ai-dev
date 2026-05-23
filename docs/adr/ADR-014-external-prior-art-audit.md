@@ -3,7 +3,7 @@
 **Status**: Accepted
 **Date**: 2026-05-20
 **Decision makers**: Pitimon (human) + Claude Opus 4.7 (AI, 1M context)
-**Related**: [ADR-006 Audience Honesty](./ADR-006-audience-honesty-and-superpowers-deferral.md), [ADR-007 agentskills NO-GO](./ADR-007-agentskills-compatibility-decision.md), [ADR-009 Skill Split Convention](./ADR-009-skill-split-convention.md), [ADR-012 EU AI Act Migration](./ADR-012-eu-ai-act-migration-completion.md), [ADR-013 Spec Persistence](./ADR-013-spec-persistence-opt-in.md)
+**Related**: [ADR-006 Audience Honesty](./ADR-006-audience-honesty-and-superpowers-deferral.md), [ADR-007 agentskills NO-GO](./ADR-007-agentskills-compatibility-decision.md), [ADR-009 Skill Split Convention](./ADR-009-skill-split-convention.md), [ADR-012 EU AI Act Migration](./ADR-012-eu-ai-act-migration-completion.md), [ADR-013 Spec Persistence](./ADR-013-spec-persistence-opt-in.md), [ADR-015 /diagnose Adoption + n=1 Framing](./ADR-015-diagnose-skill-adoption-and-n1-framing.md) (first reactive application of this doctrine), [ADR-016 T2 Bag Drop-Date](./ADR-016-t2-bag-drop-date-eviction-policy.md) (eviction policy for the T2 bag established here)
 **Source brief**: `~/.claude/plans/deep-https-github-com-mattpocock-skills-glimmering-prism.md` (Deep mode, 13/14 sources verified)
 **Source spec chain**: `docs/specs/mattpocock-t1-v2-17-0/{prd,design,tasks}.md`
 **External source audited**: <https://github.com/mattpocock/skills> (MIT, ~95.5k★, 14 published skills)
