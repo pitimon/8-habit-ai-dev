@@ -46,6 +46,12 @@ Pick the row whose trigger matches the user intent, then read the cited SKILL.md
 | `"scrutinize"`, `"sanity-check"`, `"second opinion"`, `"outsider review"`, `"audit approach"` | [`skills/scrutinize/SKILL.md`](scrutinize/SKILL.md)           | Outsider-perspective end-to-end review — questions whether the change should exist (Step 1) before line-by-line; traces full call graph not just the diff. H5 + H8                         |
 | `"for management"`, `"slack version"`, `"exec summary"`, `"standup note"`, `"VP email"`       | [`skills/management-talk/SKILL.md`](management-talk/SKILL.md) | Channel-aware audience reshape — engineer-to-engineer content → JIRA / Slack / standup / email / meeting. Strips function/file/SHA, keeps JIRA keys / PR numbers / workload names. H4 + H6 |
 
+## External Prior-Art Bundle (v2.18.0 — friction-driven mattpocock adoption)
+
+| Trigger                                                                                                 | Skill                                           | Purpose                                                                                                                                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `"diagnose"`, `"debug this"`, `"investigate this bug"`, `"reproduce the failure"`, `"why is X failing"` | [`skills/diagnose/SKILL.md`](diagnose/SKILL.md) | Active bug investigation — 6-phase methodology (feedback-loop → reproduce → hypothesise → instrument → fix-with-regression-test → cleanup). Phase 1 (feedback-loop) enforced before hypothesis. Hands off to `/post-mortem`. Adapt-with-attribution from mattpocock/skills SHA `b8be62ff` (ADR-015 — n=1 friction-driven). H1 + H5 |
+
 ## Meta / Onboarding
 
 | Trigger                                                               | Skill                                                       | Purpose                                                                      |

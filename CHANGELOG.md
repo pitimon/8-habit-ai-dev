@@ -10,6 +10,48 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.18.0 — `/diagnose` Skill: Friction-Driven External Adoption (2026-05-23)
+
+Ships a single new skill — `/diagnose` — as a **friction-driven** external prior-art adoption from [mattpocock/skills](https://github.com/mattpocock/skills) SHA [`b8be62ff`](https://github.com/mattpocock/skills/tree/b8be62ffacb0118fa3eaa29a0923c87c8c11985c). Honest framing recorded in [ADR-015](docs/adr/ADR-015-diagnose-skill-adoption-and-n1-framing.md): the friction signal is **n=1, below ADR-014's preferred n≥2 bar**, but unusually strong — a first-person retrospective in `~/.claude/lessons/2026-04-12-compression-worker-420-investigation.md` explicitly states _"Most useful: n/a (no 8-habit skills invoked during the fix session)"_ and _"Could have been found in 5 minutes [via SQL comparison] vs 30 minutes of log analysis"_.
+
+### New skill — `/diagnose` (H1 + H5)
+
+6-phase active bug investigation methodology — closes the documented gap between `/research` (too broad — investigates solution space) and `/post-mortem` (too late — assumes fix landed).
+
+- **Phase 1 — Build feedback loop**: fast (<10s ideal, <60s max), deterministic pass/fail signal. The critical phase; if a loop cannot be built, skill surfaces blocker and recommends bisect/ablation/telemetry alternatives instead of proceeding to hypothesis generation.
+- **Phase 2 — Reproduce**: confirm ≥80% repro rate; flaky bugs return to Phase 1 for loop stabilization.
+- **Phase 3 — Hypothesise**: 3–5 ranked falsifiable hypotheses with verbatim template _"If X causes it, then changing Y will make the bug disappear"_ — quoted verbatim from mattpocock source for methodology fidelity.
+- **Phase 4 — Instrument**: one variable per probe, uniquely-tagged debug output (`[DIAG-A]`, `[DIAG-B]`...) for mechanical Phase 6 cleanup; debuggers preferred over logs.
+- **Phase 5 — Fix + regression test**: regression test written BEFORE the fix, at the correct architectural seam (not the symptom site).
+- **Phase 6 — Cleanup + handoff**: grep-clean unique probe tags; restore ablation subsystems; hand off to `/post-mortem` for the durable engineering record.
+
+`prev-skill: any, next-skill: post-mortem`. Bash tool included with read-only scope guardrail (Phase 1 feedback-loop construction: `bun test`, `pytest -x`, `curl`, `playwright test`). Skip rule for single-line typos, stack-trace-obvious bugs, lint/format errors, and rename refactors documented in SKILL.md.
+
+### Adapt-with-attribution strategy ([design.md Decision-5](docs/specs/diagnose-skill-v2-18-0/design.md))
+
+- `skills/diagnose/SKILL.md` (1202 words, well under F3 ≤2000 limit) — 6 phases in 8-habit voice with explicit H1+H5 habit map + checkpoint + skip rule + handoff
+- `skills/diagnose/reference.md` — full mattpocock prior-art notes with SHA-pinned source URL, per-phase concrete examples (web app / Node test / Python fixture / Playwright snippets), 3 false-positive patterns from the compression-worker-420 lesson, MIT license attribution
+
+### Honest framing forward — friction-first audit precedent
+
+[ADR-015](docs/adr/ADR-015-diagnose-skill-adoption-and-n1-framing.md) sets a precedent for **friction-first** external prior-art adoption (vs ADR-014's pattern-first inheritance):
+
+- Future external-pattern proposals must cite an explicit n≥1 friction signal in this codebase
+- Pattern attractiveness alone is insufficient justification
+- ADR-015 enumerates 4 future-reversal conditions: zero recorded uses at 6 months → consider deprecation; n≥2 friction → validates retroactively; user confusion vs `/post-mortem` → revise boundary; upstream SHA churn → re-audit
+
+### Spec chain & research brief
+
+- **Spec chain (persisted)**: `docs/specs/diagnose-skill-v2-18-0/{prd,design,tasks}.md` — PRD has 14 EARS criteria (FR-001..014), design has 5 decisions (3 sticky), tasks lists 8 atomic items with full FR-coverage matrix
+- **Research brief (source)**: `~/.claude/plans/deep-mattpocock-skills-second-pass-2026-05-23.md` — Deep-mode `/research`, 12/14 sources verified by `research-verifier` agent, all source URLs SHA-pinned for citation-rot resistance
+- **Cross-verify (research)**: 8/11 applicable = 72.7% raw, 90.9% after Body fixes (SHA pinned + brief persisted + lesson capture deferred to post-merge `/reflect`)
+- **Cross-verify (PRD)**: 13/13 applicable = 100%, all 4 dimensions at 100%, Body rebounded from 25% (research) to 100%
+- **Consistency-check** (PRD ↔ design ↔ tasks): 0 CRITICAL/HIGH/MEDIUM findings, 1 LOW (Decision-5 marker format — fixed before T1)
+
+Plugin total: **23 skills**. H1 (Be Proactive) + H5 (Seek First to Understand).
+
+---
+
 ## v2.17.0 — External Prior-Art Audit: 4 mattpocock/skills Patterns as Forward Guardrails (2026-05-20)
 
 A 2026-05-20 Deep-mode audit of [mattpocock/skills](https://github.com/mattpocock/skills) (95.5k★, MIT, 14 published skills) evaluated 10 candidate patterns and shipped 4 as additive guardrails. Honest framing recorded in [ADR-014](docs/adr/ADR-014-external-prior-art-audit.md): all 4 adoptions ship **without prior friction-signal evidence** — they are forward guardrails, not fixes for observed weakness. Future external-pattern audits must apply a friction-first lens per ADR-014's discipline.

@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.17.0-blue)
+![Version](https://img.shields.io/badge/latest-v2.18.0-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.18.0 — `/diagnose` Skill: Friction-Driven External Adoption (May 2026)
+
+Adds `/diagnose` — 6-phase active bug investigation skill — as a **friction-driven** external prior-art adoption from [mattpocock/skills](https://github.com/mattpocock/skills) SHA `b8be62ff`. Closes the gap between `/research` (too broad) and `/post-mortem` (too late). Phase 1 (build feedback loop) is enforced before hypothesis generation. Hands off to `/post-mortem` once the fix lands. Honest framing in [ADR-015](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-015-diagnose-skill-adoption-and-n1-framing.md): n=1 friction signal (lesson `2026-04-12-compression-worker-420-investigation.md` first-person absent-skill admission), below ADR-014's n≥2 preferred bar but unusually strong. Sets precedent for friction-first external prior-art adoption. Plugin total: 23 skills. Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.17.0 — External Prior-Art Audit: mattpocock/skills Patterns (May 2026)
 
