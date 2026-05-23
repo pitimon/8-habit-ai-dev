@@ -3,7 +3,7 @@
 **Status**: Accepted
 **Date**: 2026-05-23
 **Decision makers**: Pitimon (human) + Claude Opus 4.7 (AI, 1M context)
-**Related**: [ADR-014 External Prior-Art Audit](./ADR-014-external-prior-art-audit.md) (parent doctrine), [ADR-009 Skill Split Convention](./ADR-009-skill-split-convention.md) (SKILL.md + reference.md precedent), [ADR-013 Spec Persistence](./ADR-013-spec-persistence-opt-in.md) (PRD/design/tasks linkage), [ADR-012 EU AI Act Migration](./ADR-012-eu-ai-act-migration-completion.md) (referenced in Article 14 checkpoint)
+**Related**: [ADR-014 External Prior-Art Audit](./ADR-014-external-prior-art-audit.md) (parent doctrine), [ADR-009 Skill Split Convention](./ADR-009-skill-split-convention.md) (SKILL.md + reference.md precedent), [ADR-013 Spec Persistence](./ADR-013-spec-persistence-opt-in.md) (PRD/design/tasks linkage), [ADR-012 EU AI Act Migration](./ADR-012-eu-ai-act-migration-completion.md) (referenced in Article 14 checkpoint), [ADR-016 T2 Bag Drop-Date](./ADR-016-t2-bag-drop-date-eviction-policy.md) (eviction policy for deferred candidates; this ADR's `/diagnose` was the first to escape the bag via friction signal before the policy existed)
 **Source research brief**: `~/.claude/plans/deep-mattpocock-skills-second-pass-2026-05-23.md` (Deep mode, 12/14 sources verified by `research-verifier` agent)
 **Source spec chain**: `docs/specs/diagnose-skill-v2-18-0/{prd,design,tasks}.md`
 **External source audited**: <https://github.com/mattpocock/skills> SHA [`b8be62ffacb0118fa3eaa29a0923c87c8c11985c`](https://github.com/mattpocock/skills/tree/b8be62ffacb0118fa3eaa29a0923c87c8c11985c) (MIT, ~95.5k★)
