@@ -748,6 +748,44 @@ if [ "$RUBRIC_FAIL" -eq 0 ]; then
 fi
 echo ""
 
+# --- Check 26: Pattern 3 — imperative-with-reason hygiene (WARNING ONLY) ---
+# Per ADR-017 (Anthropic Pattern 3 forward guardrail) — skills with heavy
+# soft-language usage (should/consider/may/might/could) but no paired reason
+# markers (MUST/NEVER/ALWAYS/DO NOT/Why:/Rationale:/because) risk producing
+# ambiguous guidance. Anthropic's pptx/SKILL.md models the pattern: hard
+# imperatives explain WHY ("NEVER use accent lines — these are a hallmark of
+# AI-generated slides; use whitespace instead").
+# Warning-only — does NOT fail build. Tracks the partial-coverage reality
+# while ADR-016 drop date 2026-11-23 acts as the safety net.
+echo "--- Check 26: imperative-with-reason hygiene (WARNING ONLY, ADR-017) ---"
+P3_WARN=0
+for skill_dir in skills/*/; do
+  skill_file="${skill_dir}SKILL.md"
+  [ ! -f "$skill_file" ] && continue
+  skill_name=$(basename "$skill_dir")
+
+  # Count soft-language verbs (lowercase, word-bounded).
+  # grep -c always prints count but exits 1 on zero matches; capture exit
+  # via outer || so the var doesn't end up as "0\n0".
+  soft_count=$(grep -cwE '(should|consider|may|might|could)' "$skill_file" 2>/dev/null) || soft_count=0
+  # Count hard imperatives + reason markers (mixed case).
+  hard_count=$(grep -cwE '(MUST|NEVER|ALWAYS|Why:|Rationale:|because)' "$skill_file" 2>/dev/null) || hard_count=0
+
+  # Threshold: 4+ soft verbs without any hard/reason pairing → warn.
+  # 4 is empirically derived: skills with ≤3 soft verbs (e.g. /requirements at 0, /workflow at 0)
+  # tend to be deterministic-register; 4+ soft verbs with zero pairing signal genuinely loose guidance.
+  if [ "$soft_count" -ge 4 ] && [ "$hard_count" -eq 0 ]; then
+    echo "  WARN: $skill_name — $soft_count soft verbs, 0 reason markers (consider MUST/NEVER + Why: pairing per ADR-017)"
+    P3_WARN=$((P3_WARN + 1))
+  else
+    pass "$skill_name — soft=$soft_count reason-markers=$hard_count (Check 26 hygiene OK)"
+  fi
+done
+if [ "$P3_WARN" -gt 0 ]; then
+  echo "  (Check 26 informational: $P3_WARN skills flagged — non-blocking; ADR-016 drop date 2026-11-23 if no friction signal accumulates)"
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"

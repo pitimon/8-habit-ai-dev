@@ -111,12 +111,14 @@ If the fix needs to touch multiple files, ask whether you've found the right sea
 
 ### Phase 6 — Cleanup & Handoff to `/post-mortem`
 
-- Run the Phase 1 feedback loop one more time — confirm green
-- Remove all probes by grepping the unique tags from Phase 4 (`grep -rE 'DIAG-[A-Z]'`)
-- Restore any temporarily disabled subsystems from ablation work
-- Run the full test suite to catch unrelated breakage
+- **MUST re-run the Phase 1 feedback loop and confirm it now reports green.** **Why**: a fix that compiles and a fix that solves the original bug are different things. Anthropic's `pptx/SKILL.md` (~line 243) frames the rule directly: "Do not declare success until you've completed at least one fix-and-verify cycle." Without this re-run, "Phase 5 wrote a test and the fix passes the test" can still ship a regression that the original feedback loop catches but the regression test doesn't.
+- **MUST remove all probes** by grepping the unique tags from Phase 4 (`grep -rE 'DIAG-[A-Z]'`). **Why**: probe residue contaminates future diagnoses (false-positive matches) and ships diagnostic logging to users.
+- **MUST restore any temporarily disabled subsystems** from ablation work. **Why**: ablation is a diagnostic technique, not a fix; shipping with a subsystem off is a silent feature regression.
+- **MUST run the full test suite** to catch unrelated breakage. **Why**: a fix that touches the right seam can still break callers the regression test didn't enumerate.
 
 Then invoke `/post-mortem` for the engineering record. This skill's job ends when the fix is validated; `/post-mortem` writes the durable artifact for future-you.
+
+**NEVER declare diagnose complete on first-render results.** Anthropic's pptx skill states it bluntly (~line 206): "Your first render is almost never correct." Re-run Phase 1 even when the regression test passes — that's the verification the regression test cannot itself provide.
 
 ---
 
@@ -142,6 +144,7 @@ If either answer is "no", loop back to the relevant phase. The cost of an extra 
 - [ ] Phase 4 probes were one-variable-at-a-time, uniquely tagged
 - [ ] Phase 5 regression test written BEFORE the fix, located at the architectural seam
 - [ ] Phase 6 cleanup grep returned zero residual probes
+- [ ] **Phase 6 re-run of Phase 1 feedback loop confirmed green** (not just regression test passing)
 - [ ] `/post-mortem` ready to be invoked
 
 ## Further Reading
