@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-23-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.18.2-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.2)
+[![Version](https://img.shields.io/badge/Version-2.18.3-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.2)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -421,6 +421,18 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.18.3
+
+**Theme: Anthropic engineering doctrine audit guide — defensive citation surface for ADR-018 "Earn each line"** ([guide](guides/anthropic-engineering-doctrine-audit.md))
+
+Adds `guides/anthropic-engineering-doctrine-audit.md` cataloguing which Anthropic / Karpathy / Claude Code engineering blog patterns are **already operational** in the plugin (Table 1: 12 rows) vs **evaluated and deferred** (Table 2: 7 rows). Closes a documented [ADR-018](docs/adr/ADR-018-memory-layer-activation.md) gap: without the catalogue, future blog-reading contributors re-propose adopted patterns. Complements [ADR-017](docs/adr/ADR-017-anthropic-skill-patterns-audit.md) (narrower `github.com/anthropics/skills` 5-pattern audit).
+
+- **N6 reclassification** — original `/research` brief proposed "skill description routing audit" as T1 with "weak n=1". `@8-habit-reviewer` cross-verify flagged cherry-picking: the cited 2026-04-22 lesson records `skills/RESOLVER.md` as a proactive discoverability feature (issue #135), not a friction patch. N6 sits at T2 in the guide with explicit rationale — H8 modeling deposit (apply friction-first to ourselves the same way we apply it to incoming proposals).
+- **Consumer-doctrine bump** — `guides/**` is consumer-doctrine per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md), so v2.18.3 patch bump + CHANGELOG are mandatory (not elective). Validator Check 27 confirmed pre-push.
+- **Scope reduction** — original execution plan included CLAUDE.md "Proposed" entries and `/audit-skill-descriptions` skill design; both dropped per reviewer findings (HIGH redundancy + CRITICAL cherry-picking). Single-PR scope ships.
+
+PR closes [#231](https://github.com/pitimon/8-habit-ai-dev/issues/231).
 
 ## What's New in v2.18.2
 
@@ -995,4 +1007,4 @@ MIT
 
 ---
 
-_Version: 2.18.2 | Last updated: 2026-05-24_
+_Version: 2.18.3 | Last updated: 2026-05-24_

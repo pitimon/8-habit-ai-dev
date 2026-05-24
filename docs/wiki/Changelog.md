@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.18.2-blue)
+![Version](https://img.shields.io/badge/latest-v2.18.3-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.18.3 — Anthropic Engineering Doctrine Audit Guide (May 2026)
+
+Adds [`guides/anthropic-engineering-doctrine-audit.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/anthropic-engineering-doctrine-audit.md) as a defensive citation surface for the [ADR-018](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-018-memory-layer-activation.md) "Earn each line" doctrine. Catalogues 12 already-adopted patterns from Anthropic / Karpathy / Claude Code engineering blog corpus (Table 1) and 7 evaluated patterns (Table 2). N6 (skill description routing audit) reclassified from T1 → T2 after `@8-habit-reviewer` cross-verify flagged cherry-picking — the cited 2026-04-22 lesson records `skills/RESOLVER.md` as proactive feature (issue #135), not friction patch. H8 modeling deposit: apply friction-first to ourselves the same way we apply it to incoming proposals. Complements [ADR-017](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-017-anthropic-skill-patterns-audit.md) (narrower `github.com/anthropics/skills` 5-pattern audit). Consumer-doctrine bump per [ADR-019](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-019-doctrine-only-scope-refinement.md) — `guides/**` is consumer-facing reference content. PR closes [#231](https://github.com/pitimon/8-habit-ai-dev/issues/231). Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.18.2 — ADR-019 Doctrine-Only Scope Refinement + Check 27 (May 2026)
 

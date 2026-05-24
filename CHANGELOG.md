@@ -10,6 +10,31 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.18.3 — Anthropic Engineering Doctrine Audit Guide (2026-05-24)
+
+Adds `guides/anthropic-engineering-doctrine-audit.md` as a **defensive citation surface** for the [ADR-018](docs/adr/ADR-018-memory-layer-activation.md) "Earn each line" doctrine. Closes a documented gap: without a catalogue of which Anthropic / Karpathy / Claude Code engineering blog patterns are already adopted vs evaluated-and-deferred, future contributors reading those posts re-propose patterns as new — wasting cycles and risking selective re-adoption under social pressure.
+
+### What ships
+
+- **`guides/anthropic-engineering-doctrine-audit.md`** — Table 1 (12 already-adopted patterns with file/ADR citations) + Table 2 (7 evaluated patterns: N1-N5 from original brief + N6 reclassified to T2 after cross-verify + N7 the guide itself marked T1 Adopted). Maintenance rule, habit mapping (H4 + H5 + H8), self-check.
+- **Cross-references**: [ADR-017](docs/adr/ADR-017-anthropic-skill-patterns-audit.md) (narrower `github.com/anthropics/skills` 5-pattern audit) + [ADR-015](docs/adr/ADR-015-diagnose-skill-adoption-and-n1-framing.md) (friction-first doctrine the guide applies) + [ADR-016](docs/adr/ADR-016-t2-bag-drop-date-eviction-policy.md) (T2 drop-date eviction) + [ADR-018](docs/adr/ADR-018-memory-layer-activation.md) (Earn each line — the gap closed) + [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md) (consumer-doctrine classification this PR honors).
+
+### Why bump for v2.18.3
+
+`guides/**` is **consumer-doctrine** per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md) line 99 — referenced by skills via `Load` directives, even when the file itself is reference content. Adding a new guide file is consumer-facing per Check 27, so version bump + CHANGELOG are mandatory, not elective. Patch grain (v2.18.2 → v2.18.3) matches: documentation-only addition, no skill behavior change, backwards-compatible.
+
+### Honest framing — N6 reclassification recorded in the guide
+
+The `/research` Deep+Audit brief (`~/.claude/plans/https-vibecodingthailand-com-blog-anthro-tranquil-rocket.md`) originally proposed N6 (skill description routing audit) as T1 with "weak n=1" evidence — `skills/RESOLVER.md` exists. `@8-habit-reviewer` cross-verify (2026-05-24) flagged this as **cherry-picking**: the 2026-04-22 lesson records `RESOLVER.md` as a proactive discoverability feature (issue #135), not a friction patch. By [ADR-015](docs/adr/ADR-015-diagnose-skill-adoption-and-n1-framing.md)'s standard ("unusually strong... first-person retrospective admission"), the evidence is n=0, not n=1. N6 sits at T2 in the guide with explicit rationale documenting the reclassification — the H8 modeling deposit: we apply friction-first to ourselves the same way we apply it to incoming proposals.
+
+### Cross-verify trail
+
+Reviewer scored 11/17 pass, 1 CRITICAL (N6 cherry-picking) + 2 HIGH (Step 1+2 redundancy + meta anti-pattern) + 3 MEDIUM (commit type, DoD measurability, Option D vs doctrine). All addressed by scope reduction from 3 PRs to 1 PR + N6 reclassification. Original execution plan included CLAUDE.md "Proposed" entries (Step 1) and `/audit-skill-descriptions` skill design (Step 3) — both dropped per reviewer findings.
+
+PR closes issue [#231](https://github.com/pitimon/8-habit-ai-dev/issues/231).
+
+---
+
 ## v2.18.2 — ADR-019 Doctrine-Only Scope Refinement + Check 27 (2026-05-24)
 
 Refines [ADR-017 §C5](docs/adr/ADR-017-anthropic-skill-patterns-audit.md) doctrine-only rule. The implicit assumption "doctrine ⇒ contributor-only" was about to break at the next PR — [ADR-018 §"Context"](docs/adr/ADR-018-memory-layer-activation.md) explicitly names `rules/effective-development.md` (~200 lines, auto-loaded into every consumer session) as the next "Earn each line" audit target. Under the original §C5, that audit would have shipped as "doctrine-only" → no bump, no CHANGELOG → silent user-facing behavioral shift.
