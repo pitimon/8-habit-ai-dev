@@ -213,6 +213,17 @@ Version lives in **4 files** — all must be bumped together:
 
 `tests/validate-structure.sh` enforces consistency across all four — CI fails if any drifts. See [issue #106](https://github.com/pitimon/8-habit-ai-dev/issues/106) for the drift incident that motivated the SELF-CHECK.md addition.
 
+## Release Checklist
+
+Before bumping the version files above and tagging a release, run through this list. Each item is a forcing function against drift — skipping any item is how dormancy starts (see ADR-018 §"Context" for the 13-month dormancy precedent that motivated this checklist).
+
+- [ ] Run [`SKILL-EFFECTIVENESS.md`](SKILL-EFFECTIVENESS.md) tally update per its §"Maintainer update protocol" — grep Q6 across new lessons since last tally, increment counters, refresh `Last updated` + `Lessons analyzed`, note any new trends or zero-signal skills. ADR-018 Edge #1, anti-dormancy mechanism per issue [#227](https://github.com/pitimon/8-habit-ai-dev/issues/227).
+- [ ] CHANGELOG entry added (or explicitly marked doctrine-only per ADR-017 §C5).
+- [ ] Version bumped in all 4 files (see "Version Bumping" above) — `tests/validate-structure.sh` will fail CI if any drifts.
+- [ ] `README.md` "What's New" mentions the bumped version (Check 19 enforces this).
+
+**ADR-018 reversal trigger**: if the SKILL-EFFECTIVENESS tally is not updated for ≥2 release cycles, ADR-018 itself enters reversal review per its Forward-Guardrail Sunset criteria. This checklist's existence is part of the proof-of-life mechanism.
+
 ## Quality Checklist
 
 Before submitting:
