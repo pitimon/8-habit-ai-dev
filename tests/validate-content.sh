@@ -651,7 +651,7 @@ else
   # — v2.13.0 footer said Previous: 2.7.1 + per-release list ended at v2.8.0 = 6 silent ships).
   # Source of truth: git tag -l "v2.*" (v1.x predates per-release convention; see CHANGELOG.md note).
   # Dev-env: no tags → WARN+skip (CI sets fetch-tags: true so drift still caught at merge).
-  all_tags=$(git tag -l "v2.*" 2>/dev/null | sort -V)
+  all_tags=$(git tag -l "v2.*" 2>/dev/null | sort -V || echo "")
   if [ -z "$all_tags" ]; then
     warn "git tag history unavailable — skipping SELF-CHECK.md body freshness (sub-checks E + F). CI sets fetch-tags: true."
   else
