@@ -10,6 +10,44 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.18.4 — Skill Authoring Guide (2026-05-24)
+
+Adds `guides/skill-authoring.md` as a Tier 1 forward guardrail closing two gaps surfaced by a 2026-05-24 audit of Vibe Coding Thailand's _"คู่มือสร้าง Claude Skills ให้เก่งกว่าคนทั่วไป"_ article (a summary of Ben AI's YouTube framework):
+
+- **N1 — Pre-Building Preparation absent.** 23 skills exist; the only authoring artifact was `CONTRIBUTING.md §"Adding a New Skill"` (a structural template, not a methodology). The reference-doc-first habit Ben AI promotes had no home in the project.
+- **P2 — Objective conflated with trigger.** Existing skills treat the `description` frontmatter (a trigger phrase enforced by Check 25) and the `**Habit**: H?` annotation (a label) as substitutes for a dedicated Objective.
+
+### Cross-verify reconciliation
+
+The source brief (`~/.claude/plans/https-vibecodingthailand-com-blog-claude-vivid-wave.md`) first draft recommended "ship nothing" on friction-first grounds. The `8-habit-ai-dev:8-habit-reviewer` cross-verify scored that draft **12/17** and identified the same selective-strictness shape that rescued the [ADR-017](docs/adr/ADR-017-anthropic-skill-patterns-audit.md) draft four days earlier (lesson `~/.claude/lessons/2026-05-24-anthropic-5-pattern-audit-adr-017.md:25-26,33`). [ADR-014](docs/adr/ADR-014-external-prior-art-audit.md) (4 patterns) and ADR-017 (P3) both shipped forward guardrails with zero documented friction signal; refusing this one on the same evidence bar would apply a stricter standard than the project's two most recent ADRs. The revised verdict applies the precedent consistently.
+
+This is the **second consecutive 2026-05-24 rescue** from "ship nothing" by 8-habit-reviewer cross-verify, both driven by inconsistent application of ADR-014 precedent.
+
+### What ships
+
+- **`guides/skill-authoring.md`** — ~300 lines covering: (a) Pre-Building Preparation pattern with concrete reference-doc workflow; (b) canonical SKILL.md skeleton including a dedicated `## Objective` section explicitly distinguished from the Check 25 trigger-rubric `description` and the `**Habit**: H?` label; (c) authoring lifecycle wiring `/research` → reference docs → SKILL.md → `/reflect` → SKILL-EFFECTIVENESS feedback loop per [ADR-018](docs/adr/ADR-018-memory-layer-activation.md); (d) cross-references to ADR-009/014/017/018/019 + `guides/advisor-pattern.md` + `guides/anthropic-engineering-doctrine-audit.md` + `guides/ears-notation.md` + `guides/persistence-convention.md` + `CONTRIBUTING.md §"Adding a New Skill"`.
+- **`CONTRIBUTING.md` template diff** — inserts `## Objective` section to the skill skeleton (after `**Habit**:` line, before `## Process`) + adds pointer to the new guide at the section head.
+- **`docs/adr/ADR-020-skill-authoring-guide.md`** — Tier 1 forward-guardrail ship per ADR-014/017 precedent; T2 deferrals (N2 multi-option HITL ≥5; N4b per-skill `examples.md` extension) with drop date 2026-11-24; T3 rejections (N3 iteration-cycle framing — low-value; N4a self-modifying skills — same charter conflict ADR-017 used for Anthropic Pattern 4). Forward-Guardrail Sunset 2026-11-24 per ADR-017 mechanism (**not** [ADR-016](docs/adr/ADR-016-t2-bag-drop-date-eviction-policy.md) eviction, which scopes only to never-shipped T2 items).
+- **`SKILL-EFFECTIVENESS.md`** — v2.18.4 release-pulse note per [ADR-018](docs/adr/ADR-018-memory-layer-activation.md) anti-dormancy forcing function. No false-claim tally bump; release-pulse honors the discipline.
+- **`docs/specs/skill-authoring-guide-235/prd.md`** — persisted PRD with 12 FR-NNN EARS criteria for `/consistency-check` future use.
+- **README badge URL drift fix** — pre-existing inconsistency (badge text `2.18.3` while URL pointed to `releases/tag/v2.18.2`) corrected to `v2.18.4` → `v2.18.4` as part of this bump.
+
+### Why bump for v2.18.4
+
+`guides/**` is **consumer-doctrine** per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md) line 99 — referenced by skills via `Load` directives. Adding a new guide file is consumer-facing per Check 27, so version bump + CHANGELOG are mandatory, not elective. Patch grain (v2.18.3 → v2.18.4) matches: documentation-only addition, no skill behavior change, backwards-compatible.
+
+### Reversal criteria
+
+If by **2026-11-24** none of the following has occurred, consider reversion via separate amendment ADR:
+
+- ≥1 `/reflect` lesson cites the guide as having helped during skill authoring
+- ≥1 contributor PR references the guide
+- A new skill lands with reference docs drafted before SKILL.md (the pattern operationalized)
+
+PR closes [#235](https://github.com/pitimon/8-habit-ai-dev/issues/235).
+
+---
+
 ## v2.18.3 — Anthropic Engineering Doctrine Audit Guide (2026-05-24)
 
 Adds `guides/anthropic-engineering-doctrine-audit.md` as a **defensive citation surface** for the [ADR-018](docs/adr/ADR-018-memory-layer-activation.md) "Earn each line" doctrine. Closes a documented gap: without a catalogue of which Anthropic / Karpathy / Claude Code engineering blog patterns are already adopted vs evaluated-and-deferred, future contributors reading those posts re-propose patterns as new — wasting cycles and risking selective re-adoption under social pressure.

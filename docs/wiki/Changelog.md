@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.18.3-blue)
+![Version](https://img.shields.io/badge/latest-v2.18.4-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.18.4 — Skill Authoring Guide (May 2026)
+
+Adds [`guides/skill-authoring.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/skill-authoring.md) documenting Ben AI's Pre-Building Preparation pattern + canonical SKILL.md skeleton with a dedicated `## Objective` section + authoring lifecycle (`/research` → reference docs → SKILL.md → `/reflect` → SKILL-EFFECTIVENESS feedback). Closes N1 (no discoverable authoring methodology — 23 skills but only structural template in CONTRIBUTING.md) + P2 (Objective conflated with the Check 25 trigger-rubric `description`). Triggered by 2026-05-24 audit of Vibe Coding Thailand's "คู่มือสร้าง Claude Skills ให้เก่งกว่าคนทั่วไป" article. Cross-verify reconciliation: `@8-habit-reviewer` scored the brief's first "ship nothing" draft 12/17 and identified the same selective-strictness pattern that rescued the [ADR-017](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-017-anthropic-skill-patterns-audit.md) draft four days earlier; revised verdict applies [ADR-014](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-014-external-prior-art-audit.md) "ship with zero friction as forward guardrail" precedent consistently. [ADR-020](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-020-skill-authoring-guide.md) records the Tier 1 ship + Forward-Guardrail Sunset 2026-11-24. CONTRIBUTING.md template diff inserts `## Objective` section in the skill skeleton. Consumer-doctrine bump per [ADR-019](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-019-doctrine-only-scope-refinement.md). PR closes [#235](https://github.com/pitimon/8-habit-ai-dev/issues/235). Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.18.3 — Anthropic Engineering Doctrine Audit Guide (May 2026)
 
