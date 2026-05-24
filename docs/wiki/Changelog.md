@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.18.0-blue)
+![Version](https://img.shields.io/badge/latest-v2.18.1-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.18.1 — Anthropic Skills 5-Pattern Audit: Tier 1 P3 Ship + Check 26 (May 2026)
+
+User-prompted Deep+Audit `/research` evaluated 23 skills against [github.com/anthropics/skills](https://github.com/anthropics/skills) (`skills/{pdf,pptx,docx}`) 5 SKILL.md patterns. [ADR-017](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-017-anthropic-skill-patterns-audit.md) records Tier 1 P3 ship (Check 26 warning-only validator + `/scrutinize` Operating Rules MUST/NEVER+Why blocks + `/diagnose` Phase 6 MUST re-verify); Pattern 4 (embedded scripts) out-of-scope per plugin charter; Pattern 5 split (T2 bag drop 2026-11-23 + companion [pitimon/claude-governance#37](https://github.com/pitimon/claude-governance/issues/37) for runtime hook). 8-habit-reviewer cross-verify caught selective-strictness asymmetry vs ADR-014 precedent (4 patterns shipped with zero friction 4 days earlier) and forced reconciliation paragraph before PR. Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.18.0 — `/diagnose` Skill: Friction-Driven External Adoption (May 2026)
 

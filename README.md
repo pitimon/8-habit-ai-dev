@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-22-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.18.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.0)
+[![Version](https://img.shields.io/badge/Version-2.18.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.1)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -419,6 +419,25 @@ Both agents use the `sonnet` model for fast, focused analysis.
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
+
+---
+
+## What's New in v2.18.1
+
+**Theme: Anthropic skills 5-pattern audit — Tier 1 P3 ship, P4 OOS, P5 T2** ([ADR-017](docs/adr/ADR-017-anthropic-skill-patterns-audit.md))
+
+A user-prompted Deep+Audit `/research` evaluated 23 skills against [github.com/anthropics/skills](https://github.com/anthropics/skills) (specifically `skills/{pdf,pptx,docx}`) 5 SKILL.md patterns. Pattern 1 + 2 already shipped via ADR-014 Check 25 and ADR-009 split convention. Pattern 3 (NEVER/MUST + reason) promoted to Tier 1 as a forward guardrail consistent with ADR-014 precedent. Pattern 4 (embedded `scripts/`) out-of-scope per plugin charter. Pattern 5 (fix-verify loop) split: language-nudge half deferred to T2 bag with drop date 2026-11-23 per ADR-016, runtime-hook half filed as companion [pitimon/claude-governance#37](https://github.com/pitimon/claude-governance/issues/37).
+
+- **`tests/validate-structure.sh` Check 26** (warning-only) — flags skills with ≥4 soft-language verbs (`should`/`consider`/`may`/`might`/`could`) and 0 reason markers (`MUST`/`NEVER`/`ALWAYS`/`Why:`/`Rationale:`/`because`). Currently flags `/post-mortem` + `/reflect` as informational (discretion-heavy register; non-blocking). Validator suite: 357 PASS / 0 FAIL.
+- **`/scrutinize` Operating Rules** — 6 MUST/NEVER + Why blocks added, replacing soft phrasings. Rationale per each rule (e.g., "**NEVER rubber-stamp.** Why: rubber-stamps appear identical to genuine "I traced everything" — the reader cannot tell which one happened").
+- **`/diagnose` Phase 6 cleanup** — hardened with MUST re-run Phase 1 feedback loop, citing Anthropic pptx ~line 243 ("Do not declare success until you've completed at least one fix-and-verify cycle"). New Definition of Done checkbox.
+- **`docs/out-of-scope/anthropic-pattern-4-scripts.md`** — preserves Pattern 4 (embedded scripts) rejection rationale per plugin charter ("Skills are read-only guidance — they tell Claude how to approach a task, they do not modify files themselves").
+
+**Honest framing**: 8-habit-reviewer cross-verify pushed back on the original "documentation-only" recommendation, surfacing that ADR-014 itself shipped 4 patterns 4 days earlier with the same zero-friction score as forward guardrails. Holding Anthropic patterns to a stricter standard would be selective strictness (H8/Spirit work-avoidance). The reconciliation paragraph in the research brief documents the resolution. All Tier 1 shipments inherit ADR-016 drop date 2026-11-23 — if no friction signal accumulates by then, Check 26 + skill edits drop per the cost-of-correction asymmetry gate.
+
+**Citation precision** (recorded for future readers): the triggering Thai-language blog cited Anthropic skills under a `document-skills/` URL prefix (real path: `skills/`) and 4/7 pptx line numbers off by 40-61 lines. Quoted text is verbatim correct; URL/line precision is not.
+
+PR [#219](https://github.com/pitimon/8-habit-ai-dev/pull/219) merged as `8540f9e`. Companion issue [pitimon/claude-governance#37](https://github.com/pitimon/claude-governance/issues/37) tracks the cross-plugin H6 deposit.
 
 ---
 
@@ -963,4 +982,4 @@ MIT
 
 ---
 
-_Version: 2.18.0 | Last updated: 2026-05-23_
+_Version: 2.18.1 | Last updated: 2026-05-24_
