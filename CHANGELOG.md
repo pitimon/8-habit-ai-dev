@@ -10,6 +10,39 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.18.5 — PRD Calibration Checkpoint (2026-05-24)
+
+Adds a `4a. Calibrate numeric ceilings against precedent` sub-step to `skills/requirements/SKILL.md` Process. Closes [#237](https://github.com/pitimon/8-habit-ai-dev/issues/237) — action item from lesson `~/.claude/lessons/2026-05-24-v218-4-skill-authoring-double-rescue.md` §5 catching FR-007 (ADR-020) PRD-vs-reality drift before merge in v2.18.4.
+
+### What ships
+
+- **`skills/requirements/SKILL.md`** — new sub-step 4a (7 lines added) with the 4-step calibration sequence: (1) identify closest precedent by artifact type; (2) measure body excluding YAML frontmatter via `awk '/^---$/{c++; next} c>=2' <file> | wc -l`; (3) set the ceiling at `precedent_max × 1.20`, citing the FR-007 case study; (4) opt-out with a one-line FR comment when no precedent exists or the cap is set by a different constraint (hook token budget, validator string limit).
+- **`guides/templates/prd-template.md`** — adds a calibrated-ceiling FR example to the Success Criteria section showing `≤180 lines (+20% from ADR-017 ~150)` versus the uncalibrated `≤50 lines` form that triggered the FR-007 amendment.
+
+### Why this matters
+
+The v2.18.4 ship caught FR-007 (`docs/adr/ADR-020-skill-authoring-guide.md` ceiling) at ≤50 lines body in the persisted PRD when the ADR-017 precedent template (Context, Tier Framework, Options Considered, Honest Framing, Sunset, T2 Bag, OOS, Constraints, Consequences) lands at ~150 lines and ADR-020 itself shipped at ~120 lines. The PRD persisted to `docs/specs/skill-authoring-guide-235/prd.md` would have contaminated future `/consistency-check` runs as a permanent false-drift signal until amended. The `8-habit-reviewer` pre-PR pass caught the drift reactively; this checkpoint moves the catch upstream into the authoring step itself (H1 Be Proactive · H5 Seek First to Understand · H7 Sharpen the Saw).
+
+### Out of scope (per issue #237)
+
+- No automated enforcement (no validator extension, no PreToolUse hook) — runtime enforcement belongs in `pitimon/claude-governance` per plugin boundary (memory obs #233270).
+- No retroactive PRD audit — existing PRDs in `docs/specs/` not in scope; only changes the authoring discipline going forward.
+- Not extended to non-numeric FR fields — the friction case is specifically numeric ceilings on markdown artifacts.
+
+### Validator state
+
+`tests/validate-structure.sh` green (Check 25 description ≤1024 chars + trigger phrase preserved; Check 26 imperative-with-reason hygiene satisfied via `because` marker; Check 27 consumer-doctrine bump enforced on `skills/` + `guides/` edits; Check 9 word budget — `requirements/SKILL.md` body ~1.0K words, well within 200-2000 range).
+
+### Consumer-doctrine bump
+
+`skills/**` + `guides/**` edits per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md). Patch bump v2.18.4 → v2.18.5 atomic across `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `README.md` badge + footer, `SELF-CHECK.md` header. Backwards-compatible (additive sub-step, no changed default behavior).
+
+### Forward-Guardrail Sunset 2026-11-24
+
+Per ADR-017 mechanism. Reversal criteria: no `/reflect` lesson cites the checkpoint; no calibrated FR in subsequent persisted PRDs; the FR-007 case remains the only friction signal. If sunset triggers, revert sub-step 4a; the case study + template example remain as authoring lore.
+
+---
+
 ## v2.18.4 — Skill Authoring Guide (2026-05-24)
 
 Adds `guides/skill-authoring.md` as a Tier 1 forward guardrail closing two gaps surfaced by a 2026-05-24 audit of Vibe Coding Thailand's _"คู่มือสร้าง Claude Skills ให้เก่งกว่าคนทั่วไป"_ article (a summary of Ben AI's YouTube framework):
