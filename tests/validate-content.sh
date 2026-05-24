@@ -605,6 +605,73 @@ else
 fi
 echo ""
 
+# --- Check 22: /requirements step 4a body-measure awk correctness (Issue #239) ---
+# v2.18.5 shipped a frontmatter-stripping awk in skills/requirements/SKILL.md step 4a
+# that returned 0 for ADRs/guides (no YAML frontmatter), contradicting the sub-step's
+# own case study. v2.18.6 replaces it with a frontmatter-aware variant: strip only
+# when NR==1 starts with ---; otherwise count whole body. This check runs the
+# prescribed command against representative files and asserts the body count matches
+# expected — closes the regression-gap explicitly named in #239 ("tests/** was untouched").
+echo "--- Check 22: /requirements step 4a awk body-measure correctness (Issue #239) ---"
+REQ_SKILL="skills/requirements/SKILL.md"
+REQ_FAIL=0
+if [ -f "$REQ_SKILL" ]; then
+  # Assert the SKILL.md text carries the frontmatter-aware variant, not the v2.18.5 broken form.
+  if grep -q "NR==1 && \$0==\"---\"{f=1; next} f && \$0==\"---\"{f=0; next} !f" "$REQ_SKILL"; then
+    pass "$REQ_SKILL step 4a uses frontmatter-aware awk variant (#239 fix present)"
+  else
+    fail "$REQ_SKILL step 4a missing frontmatter-aware awk variant — Issue #239 regression"
+    REQ_FAIL=$((REQ_FAIL + 1))
+  fi
+  # Assert the deprecated v2.18.5 form is no longer present (regression guard).
+  if grep -qE "awk '/\^---\\\$/\{c\+\+; next\} c>=2'" "$REQ_SKILL"; then
+    fail "$REQ_SKILL step 4a still contains the broken v2.18.5 awk variant (returns 0 for ADRs/guides) — Issue #239"
+    REQ_FAIL=$((REQ_FAIL + 1))
+  else
+    pass "$REQ_SKILL step 4a free of the v2.18.5 broken awk variant"
+  fi
+
+  # Run the prescribed awk against representative files and assert body counts.
+  # Expected values derived from `wc -l` (frontmatter-less files) or `wc -l` minus frontmatter lines (skills).
+  # Files chosen to cover all three artifact types named in step 4a step 1:
+  #   - ADR (no frontmatter, leading `# ADR-NNN: ...`) — case-study precedent
+  #   - guide (no frontmatter, leading `# Title`)
+  #   - skill (YAML frontmatter delimited by `---` on lines 1 and N)
+  RECEIPTS_FAIL=0
+  while IFS='|' read -r f expected; do
+    [ -z "$f" ] && continue
+    if [ ! -f "$f" ]; then
+      fail "Check 22 receipt file missing: $f"
+      RECEIPTS_FAIL=$((RECEIPTS_FAIL + 1))
+      continue
+    fi
+    actual=$(awk 'NR==1 && $0=="---"{f=1; next} f && $0=="---"{f=0; next} !f' "$f" | wc -l | tr -d ' ')
+    if [ "$actual" = "$expected" ]; then
+      pass "Check 22 receipt: $f body=$actual (expected $expected)"
+    else
+      fail "Check 22 receipt: $f body=$actual but expected $expected — #239 awk drift"
+      RECEIPTS_FAIL=$((RECEIPTS_FAIL + 1))
+    fi
+  # WARNING: editing any of the 5 files below requires updating the expected body count.
+  # Re-measure with: awk 'NR==1 && $0=="---"{f=1; next} f && $0=="---"{f=0; next} !f' <file> | wc -l
+  # ADR-016 is included to lock in the "mid-body `---` thematic breaks are body" behavior
+  # (broken v2.18.5 awk returned 157 by counting from the 2nd thematic break; fix returns 205 = full body).
+  done <<'EOF_RECEIPTS'
+docs/adr/ADR-016-t2-bag-drop-date-eviction-policy.md|205
+docs/adr/ADR-017-anthropic-skill-patterns-audit.md|152
+docs/adr/ADR-018-memory-layer-activation.md|145
+guides/cross-verification.md|95
+skills/requirements/SKILL.md|131
+EOF_RECEIPTS
+  if [ "$RECEIPTS_FAIL" -gt 0 ]; then
+    REQ_FAIL=$((REQ_FAIL + RECEIPTS_FAIL))
+  fi
+else
+  fail "$REQ_SKILL not found"
+  REQ_FAIL=$((REQ_FAIL + 1))
+fi
+echo ""
+
 # --- Check 19: Docs freshness vs plugin.json version ---
 # Enforces version propagation across changelog surfaces. Issue #106/#107 (stuck-at-v2.N-5 drift);
 # tightened 2026-04-17 per #124 F1+F2 after v2.9.0+v2.11.0 (pointer-to-CHANGELOG.md fallback removed —

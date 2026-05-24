@@ -77,7 +77,7 @@ next-skill: design
 
    **4a. Calibrate numeric ceilings against precedent** — when an EARS criterion sets an upper bound on lines/words/characters of a markdown artifact (ADR, guide, skill), follow this sequence before writing the ceiling:
    1. Identify the closest precedent in repo by artifact type: ADR ceiling → search `docs/adr/ADR-0*.md`; guide ceiling → search `guides/*.md`; skill ceiling → search `skills/*/SKILL.md`
-   2. Measure body excluding YAML frontmatter: `awk '/^---$/{c++; next} c>=2' <file> | wc -l`
+   2. Measure body, stripping YAML frontmatter only when the file actually starts with `---`: `awk 'NR==1 && $0=="---"{f=1; next} f && $0=="---"{f=0; next} !f' <file> | wc -l` — ADRs and guides (no frontmatter) get a full `wc -l`-style count; skills (frontmatter-leading) get the body-only count. Mid-body `---` thematic breaks are correctly counted as body
    3. Set the FR ceiling at `precedent_max × 1.20`, because aspirational round numbers contaminate `/consistency-check` runs once the artifact lands at its actual required size. Case: FR-007 in `docs/specs/skill-authoring-guide-235/prd.md` shipped at ≤50 lines against an ADR-017 precedent of ~150 lines and required pre-merge amendment to ≤150 (lesson `2026-05-24-v218-4-skill-authoring-double-rescue.md` §5; issue [#237](https://github.com/pitimon/8-habit-ai-dev/issues/237))
    4. **Opt-out**: when no precedent exists (genuinely novel artifact type), or when the cap is set by a different constraint (hook token budget, validator string limit, etc.), declare the rationale in a one-line FR comment instead of measuring
 

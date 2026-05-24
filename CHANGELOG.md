@@ -10,6 +10,64 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.18.6 — Step 4a awk Made Frontmatter-Aware (2026-05-24)
+
+Fast-follow fix to v2.18.5 (shipped ~1h earlier) closing issue [#239](https://github.com/pitimon/8-habit-ai-dev/issues/239) — a QA pass on v2.18.5 caught that the step 4a body-measure command returned `0` for files without YAML frontmatter (ADRs and guides — 2 of the 3 artifact types the same sub-step names), directly contradicting the release's own case study (ADR-017 ~150 lines).
+
+### Root cause
+
+`skills/requirements/SKILL.md:80` (v2.18.5) prescribed `awk '/^---$/{c++; next} c>=2' <file> | wc -l` which counts lines after the **2nd** `^---$` — correct for YAML-frontmatter files (the two `---` delimit the frontmatter) but broken for files that start with `# Title` or `# ADR-NNN: ...`:
+
+- ADRs: no frontmatter → counted from 2nd stray `---` thematic break onward, usually `0`
+- Guides: no frontmatter → same, usually `0`
+- Skills: have frontmatter → correct ✓
+
+### Fix
+
+`skills/requirements/SKILL.md:80` now uses a frontmatter-aware variant: `awk 'NR==1 && $0=="---"{f=1; next} f && $0=="---"{f=0; next} !f' <file> | wc -l` — strips frontmatter only when the file actually starts with `---`; otherwise counts the whole body. Mid-body `---` thematic breaks are correctly counted as body.
+
+### Receipts (v2.18.6 tree)
+
+| File                                             | broken v2.18.5 awk | fixed v2.18.6 awk | `wc -l` total |
+| ------------------------------------------------ | ------------------ | ----------------- | ------------- |
+| `docs/adr/ADR-017-*.md` (case study)             | 0                  | **152** ✓         | 152           |
+| `docs/adr/ADR-018-*.md`                          | 2                  | **145** ✓         | 145           |
+| `docs/adr/ADR-016-*.md` (≥2 thematic breaks)     | 157                | **205** ✓         | 205           |
+| `guides/cross-verification.md`                   | 0                  | **95** ✓          | 95            |
+| `skills/requirements/SKILL.md` (has frontmatter) | 131                | **131** ✓         | 142           |
+
+### Regression test — `tests/validate-content.sh` Check 22
+
+Closes the gap #239 explicitly named (_"`tests/**` was untouched, so no validator caught it"_):
+
+- Grep-asserts SKILL.md step 4a carries the new awk variant
+- Grep-asserts SKILL.md step 4a is free of the broken v2.18.5 form
+- Runs the prescribed awk against 5 representative files spanning all 3 artifact types (ADR ×3, guide ×1, skill ×1) and asserts body counts match expected (ADR-016 → 205, ADR-017 → 152, ADR-018 → 145, `cross-verification.md` → 95, `requirements/SKILL.md` → 131)
+- ADR-016 locks in the "mid-body `---` thematic breaks are body" behavior — broken v2.18.5 awk returned 157 by counting from the 2nd thematic break; fix returns 205 (full body)
+- Heredoc carries a warning comment: editing any of the 5 receipt files requires re-measuring the expected count
+
+Adds 7 new PASS assertions to the validator suite (282 PASS / 0 FAIL post-fix).
+
+### Lesson and meta-pattern
+
+Prescribed commands embedded in skill prose are **production guidance** and need regression tests, the same way runtime code does. v2.18.5 shipped an advisory `awk` snippet with all 4 validator suites green because no validator was reading the snippet's actual output — the structural validators check shape, not snippet-correctness. Check 22 establishes the precedent that future `awk`/`grep`/`jq` snippets in skill prose ship with a paired assertion.
+
+This is the v2.18.5 ship's own H7 Sharpen-the-Saw beat: invest in the test that would have caught the bug, not just in the bug fix. For the plugin overall, the "tests" surface is structural validators (not pytest-style unit tests), but **every prescribed command in skill prose deserves a paired assertion** — the rule generalizes beyond the awk case.
+
+### Template clarification
+
+`guides/templates/prd-template.md` Success Criteria section gains a one-line note that ADR/guide precedents have no frontmatter (body count = `wc -l`); only skills strip frontmatter. Calibrated example updated to cite ADR-017's exact 152-line measurement instead of the "~150" approximation.
+
+### Consumer-doctrine bump
+
+`skills/**` + `guides/**` touched (consumer-doctrine, MUST bump per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md)); `tests/**` is contributor-doctrine (no bump required, but rides the consumer bump in the same PR). Patch grain v2.18.5 → v2.18.6 atomic across `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `README.md`, `SELF-CHECK.md`.
+
+### Forward-Guardrail Sunset
+
+Inherits v2.18.5's 2026-11-24 sunset on step 4a itself. If sunset triggers, revert sub-step 4a and Check 22 together.
+
+---
+
 ## v2.18.5 — PRD Calibration Checkpoint (2026-05-24)
 
 Adds a `4a. Calibrate numeric ceilings against precedent` sub-step to `skills/requirements/SKILL.md` Process. Closes [#237](https://github.com/pitimon/8-habit-ai-dev/issues/237) — action item from lesson `~/.claude/lessons/2026-05-24-v218-4-skill-authoring-double-rescue.md` §5 catching FR-007 (ADR-020) PRD-vs-reality drift before merge in v2.18.4.
