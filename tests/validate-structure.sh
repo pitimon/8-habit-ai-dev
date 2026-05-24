@@ -786,6 +786,47 @@ if [ "$P3_WARN" -gt 0 ]; then
 fi
 echo ""
 
+# --- Check 27: Consumer-doctrine bump enforcement (ADR-019) ---
+# Consumer-doctrine paths (rules/, skills/, hooks/, habits/, guides/, agents/) reach
+# plugin consumers at runtime. Changes there MUST be accompanied by a version bump in
+# the 4 version files, even if the change is "doctrine refinement" in spirit. Contributor-
+# doctrine paths (docs/, CLAUDE.md, CONTRIBUTING.md, .github/, SELF-CHECK.md, tests/)
+# do not — they preserve ADR-017 §C5 intent. See ADR-019 for full rationale and tables.
+echo "--- Check 27: consumer-doctrine bump enforcement (ADR-019) ---"
+
+LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+if [ -z "$LAST_TAG" ]; then
+  # No tag yet — first release in the repo. Skip the check entirely.
+  pass "no release tag yet — Check 27 skipped (no baseline to compare)"
+else
+  DIFF_BASE="$LAST_TAG"
+  CHANGED=$(git diff --name-only "$DIFF_BASE"..HEAD 2>/dev/null || echo "")
+
+  if [ -z "$CHANGED" ]; then
+    pass "no file changes since $LAST_TAG — Check 27 trivially passes"
+  else
+    # Match any path under consumer-doctrine top-level dirs.
+    CONSUMER_TOUCHED=$(echo "$CHANGED" | grep -E '^(rules|skills|hooks|habits|guides|agents)/' || true)
+
+    if [ -z "$CONSUMER_TOUCHED" ]; then
+      pass "contributor-doctrine only since $LAST_TAG — no bump required (ADR-019)"
+    else
+      # Consumer-doctrine paths touched — version MUST have bumped since $LAST_TAG.
+      LAST_RELEASE_VERSION=$(echo "$LAST_TAG" | sed 's/^v//')
+      CURRENT_VERSION=$(grep '"version"' .claude-plugin/plugin.json | head -1 | sed 's/.*"version": *"\([^"]*\)".*/\1/')
+
+      if [ "$CURRENT_VERSION" = "$LAST_RELEASE_VERSION" ]; then
+        fail "Check 27: consumer-doctrine paths changed since $LAST_TAG but version not bumped (still $CURRENT_VERSION). Cite ADR-019 (consumer-doctrine PRs require bump + CHANGELOG)."
+        echo "  Consumer-doctrine paths touched:"
+        echo "$CONSUMER_TOUCHED" | sed 's/^/    - /'
+      else
+        pass "consumer-doctrine touched + version bumped $LAST_RELEASE_VERSION → $CURRENT_VERSION (ADR-019 satisfied)"
+      fi
+    fi
+  fi
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"
