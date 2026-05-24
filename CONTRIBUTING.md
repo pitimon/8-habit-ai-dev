@@ -8,6 +8,8 @@ This is a **philosophy-first** plugin. Skills provide guidance, not automation. 
 
 ## Adding a New Skill
 
+> Methodology + Pre-Building Preparation pattern: [`guides/skill-authoring.md`](guides/skill-authoring.md). Read it before drafting a new SKILL.md — this section is the structural template; the guide is the rationale + lifecycle.
+
 ### 1. Create the directory
 
 ```
@@ -34,6 +36,10 @@ next-skill: <skill-name|none|any>
 # [Title] ([Thai translation])
 
 **Habit**: H[N] — [Habit Name] | **Anti-pattern**: [What this skill prevents]
+
+## Objective
+
+[One sentence stating the outcome the user gets from invoking this skill. Distinct from the frontmatter `description` (trigger phrase, enforced by Check 25) and the Habit tag (label). See `guides/skill-authoring.md` §"Why Objective is a section, not a tagline".]
 
 ## Process
 

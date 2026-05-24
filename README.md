@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-23-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.18.3-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.2)
+[![Version](https://img.shields.io/badge/Version-2.18.4-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.4)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -421,6 +421,20 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.18.4
+
+**Theme: Skill authoring guide — close N1+P2 gaps from Vibe Coding Thailand audit** ([guide](guides/skill-authoring.md), [ADR-020](docs/adr/ADR-020-skill-authoring-guide.md))
+
+Adds `guides/skill-authoring.md` documenting (a) Ben AI's Pre-Building Preparation pattern (draft reference docs collaboratively before opening SKILL.md), (b) the canonical SKILL.md skeleton including a dedicated `## Objective` section (distinct from the trigger-rubric `description` enforced by Check 25 and the `**Habit**: H?` label), (c) the authoring lifecycle wiring `/research` → reference docs → SKILL.md → `/reflect` → SKILL-EFFECTIVENESS feedback. Triggered by a 2026-05-24 audit of Vibe Coding Thailand's "คู่มือสร้าง Claude Skills ให้เก่งกว่าคนทั่วไป" article.
+
+- **N1 (Pre-Building Preparation)** — closed via the new guide. 23 skills exist but no discoverable authoring methodology existed; `CONTRIBUTING.md` template was structural-only.
+- **P2 (Objective conflated with trigger)** — closed via `CONTRIBUTING.md` template diff (new `## Objective` section in the skill skeleton) + matching skeleton in the guide.
+- **Cross-verify reconciliation** — the source brief's first draft recommended "ship nothing" on friction-first grounds. `@8-habit-reviewer` scored it 12/17 and identified the same selective-strictness pattern that rescued the ADR-017 draft four days earlier. Revised verdict applies [ADR-014](docs/adr/ADR-014-external-prior-art-audit.md) / [ADR-017](docs/adr/ADR-017-anthropic-skill-patterns-audit.md) "ship with zero friction as forward guardrail" precedent consistently.
+- **Sunset 2026-11-24** — per ADR-020 §"Forward-Guardrail Sunset" (ADR-017 mechanism, not ADR-016 eviction). Reversal criteria: no `/reflect` cite, no contributor PR reference, no new skill using the Pre-Building Preparation pattern.
+- **Consumer-doctrine bump** — `guides/**` edit per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md); patch bump v2.18.3 → v2.18.4 atomic across 4 files; Check 27 passes.
+
+PR closes [#235](https://github.com/pitimon/8-habit-ai-dev/issues/235).
 
 ## What's New in v2.18.3
 
@@ -1007,4 +1021,4 @@ MIT
 
 ---
 
-_Version: 2.18.3 | Last updated: 2026-05-24_
+_Version: 2.18.4 | Last updated: 2026-05-24_
