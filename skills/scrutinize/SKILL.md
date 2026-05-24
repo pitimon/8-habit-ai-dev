@@ -117,12 +117,12 @@ What this scrutinize did that `/review-ai` would not:
 
 ## Operating Rules
 
-- **No rubber-stamps.** "LGTM" is not an output. If you genuinely find nothing, say what you traced and what you checked, so the user can judge whether your review covered the surface they cared about.
-- **Cite or it didn't happen.** Every claim about the code references a specific path, file, or line. No vague "this might break under load."
-- **Distinguish claim from verification.** "The PR says X" and "I traced X and confirmed / refuted it" are different — keep them separate in the output.
-- **One simpler-alternative pass is mandatory.** Even on small changes, spend one breath asking if the whole thing is necessary. Skip only if the user explicitly says "don't question scope."
-- **Don't pad with style nits when there's a structural problem.** If step 1 or step 2 surfaces a real issue, lead with it; defer nits or drop them.
-- **No flattery, no hedging.** "This is a great PR but..." adds nothing. State the finding.
+- **NEVER rubber-stamp.** "LGTM" is not an output. **Why**: rubber-stamps appear identical to genuine "I traced everything and it looked fine" — the reader cannot tell which one happened. If you genuinely find nothing, state what you traced and what you checked so the reader can judge coverage.
+- **MUST cite evidence per claim.** Every claim about the code references a specific path, file, or line. **Why**: vague "this might break under load" claims are unactionable — the author cannot fix what they cannot locate.
+- **MUST distinguish claim from verification.** "The PR says X" and "I traced X and confirmed / refuted it" are different — keep them separate in the output. **Why**: collapsing them hides whether the reviewer actually verified or just restated the PR.
+- **MUST run one simpler-alternative pass (Step 1).** Even on small changes, spend one breath asking if the whole thing is necessary. **Why**: Step 1 is where the highest-leverage finding lives (scope removal). Skipping it converts scrutinize into a diff-local review and degrades to `/review-ai`. Skip only if the user explicitly says "don't question scope."
+- **NEVER pad with style nits when there's a structural problem.** **Why**: ordering style ahead of a Step 1 or Step 2 finding signals priorities are wrong; the author fixes the cheap nit and misses the load-bearing issue.
+- **NEVER flatter, NEVER hedge.** "This is a great PR but..." adds nothing. **Why**: flattery dilutes signal-to-noise; hedging makes findings unactionable.
 
 ## Handoff
 
