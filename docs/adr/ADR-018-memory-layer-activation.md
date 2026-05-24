@@ -111,18 +111,18 @@ A secondary finding: **"Earn each line"** prescription from the corpus (rules mu
 
 ### Deferred to follow-up PRs (Edges #2, #3 — ADR records the decision, execution is separate work)
 
-- [ ] PR template includes `predicted_uses` and `validation_window` fields documented as optional, with example. **Filed as issue** before merge.
-- [ ] `CLAUDE.md` main body ≤ 80 lines (excluding `Proposed` section). **Filed as issue** before merge.
-- [ ] Each rule in CLAUDE.md main body cites a lesson, ADR, or memory obs ID. **Filed as issue** before merge.
-- [ ] Next release PR checklist includes "Run SKILL-EFFECTIVENESS tally update." **Filed as issue** before merge.
+- [x] PR template includes `predicted_uses` and `validation_window` fields documented as optional, with example. Shipped via [#225](https://github.com/pitimon/8-habit-ai-dev/issues/225) → `.github/PULL_REQUEST_TEMPLATE.md`.
+- [x] `CLAUDE.md` main body ≤ 80 lines (excluding `Proposed` section). Shipped via [#226](https://github.com/pitimon/8-habit-ai-dev/issues/226) (80 lines exact, 2 uncited rules moved to Proposed with 2026-11-24 drop date).
+- [x] Each rule in CLAUDE.md main body cites a lesson, ADR, or memory obs ID. Shipped via [#226](https://github.com/pitimon/8-habit-ai-dev/issues/226).
+- [x] Next release PR checklist includes "Run SKILL-EFFECTIVENESS tally update." Shipped via [#227](https://github.com/pitimon/8-habit-ai-dev/issues/227) → `CONTRIBUTING.md` §"Release Checklist".
 
 ### PR completion checklist (this merge)
 
 - [x] Lesson file dogfooded (`~/.claude/lessons/2026-05-24-notebook-agent-harness-audit-adr018.md` saved — Edge #1 hypothesis tested on live session before ADR ratification).
 - [x] INDEX.md updated additively (43 lessons, 8-habit-ai-dev project section 10 → 11).
 - [x] ADR Validation section marks Edge #1 as ratified by output (not just promised).
-- [ ] Follow-up issues filed for Edges #2-3 + release-checklist note.
-- [ ] CHANGELOG entry added if doctrine-only commits warrant it (per ADR-017 §C5 doctrine compliance rule).
+- [x] Follow-up issues filed for Edges #2-3 + release-checklist note (issues #225, #226, #227 — all closed in the follow-up PR).
+- [x] CHANGELOG entry added if doctrine-only commits warrant it (decision: doctrine-only per ADR-017 §C5, no entry — recorded for PR #224 and reaffirmed for the #225-227 follow-up PR).
 
 ## Forward-Guardrail Sunset (per ADR-017 convention)
 
