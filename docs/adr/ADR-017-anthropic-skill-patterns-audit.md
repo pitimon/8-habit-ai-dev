@@ -22,7 +22,7 @@ A user-prompted audit (2026-05-24) examined Anthropic's official `github.com/ant
 
 The `8-habit-ai-dev:8-habit-reviewer` cross-verify pushed back on the brief's original "documentation-only" recommendation. The H5 push-back was load-bearing: ADR-014 shipped 4 patterns four days earlier with zero documented friction signal as forward guardrails (ADR-014 §"Honest Framing" lines 52-63). Applying a stricter standard to Anthropic patterns than to mattpocock patterns would be selective strictness.
 
-The brief was revised to promote P3 to Tier 1 as a forward guardrail consistent with ADR-014 precedent. ADR-016's drop-date eviction policy (2026-11-23) acts as the safety net.
+The brief was revised to promote P3 to Tier 1 as a forward guardrail consistent with ADR-014 precedent. A **review-checkpoint of 2026-11-23** is set for this ADR's Tier 1 shipments (see §"Forward-Guardrail Sunset" below) — this is an inline mechanism owned by ADR-017, **not** the ADR-016 eviction mechanism (which scopes strictly to T2 bag candidates never shipped). Only this ADR's **T2 entry** (the P5 fix-verify extension to `/diagnose`/`/scrutinize`/`/security-check`) uses ADR-016's mechanism directly, because that entry IS a T2 candidate.
 
 ## Tier Framework Applied (from ADR-014)
 
@@ -42,7 +42,7 @@ The brief was revised to promote P3 to Tier 1 as a forward guardrail consistent 
 
 ### Option B — Tier 1 P3 ship as forward guardrail (chosen)
 
-- **Description**: Promote Pattern 3 (NEVER/MUST + reason) to Tier 1. Add warning-only Check 26. Edit 2 high-consequence skills (`/scrutinize`, `/diagnose` Phase 6). Keep Pattern 4 OOS, Pattern 5 split (T2 language nudge + claude-governance companion runtime hook). Apply ADR-016 drop date 2026-11-23 to all forward guardrails.
+- **Description**: Promote Pattern 3 (NEVER/MUST + reason) to Tier 1. Add warning-only Check 26. Edit 2 high-consequence skills (`/scrutinize`, `/diagnose` Phase 6). Keep Pattern 4 OOS, Pattern 5 split (T2 language nudge + claude-governance companion runtime hook). Set a forward-guardrail review-checkpoint of 2026-11-23 (inline mechanism — see §"Forward-Guardrail Sunset"; distinct from ADR-016's T2-bag eviction which applies only to the P5 T2 entry).
 - **Pro**: Consistent with ADR-014 precedent (forward guardrails with zero friction signal); resolves the H5/H7/H8 push-backs from cross-verify; ships reusable Production Capability (Check 26); preserves friction-first safety net via drop date.
 - **Con**: ~3-4 hours implementation; 2 skill text edits change runtime behavior (mitigated by warning-only validator + drop date eviction).
 
@@ -56,23 +56,41 @@ The brief was revised to promote P3 to Tier 1 as a forward guardrail consistent 
 
 ## Decision — Per-Pattern Verdict
 
-| #     | Pattern                           | Verdict                       | Mechanism                                                                                                                                                                                                                                                       |
-| ----- | --------------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1** | Description = trigger instruction | **Already shipped** (ADR-014) | Check 25 enforces ≤1024 chars + trigger phrase. 23/23 pass.                                                                                                                                                                                                     |
-| **2** | SKILL.md = table of contents      | **Already shipped** (ADR-009) | `Load ${CLAUDE_PLUGIN_ROOT}/...` directive pattern. 5/23 split when >1500 words; 18/23 below threshold.                                                                                                                                                         |
-| **3** | NEVER/MUST + reason               | **Tier 1 ship**               | New Check 26 (warning-only) + targeted skill edits on `/scrutinize`, `/diagnose`. ADR-016 drop date 2026-11-23.                                                                                                                                                 |
-| **4** | Embedded scripts                  | **Tier 3 reject**             | Conflicts with plugin charter ("skills are read-only guidance"). File `docs/out-of-scope/anthropic-pattern-4-scripts.md`.                                                                                                                                       |
-| **5** | Bug-hunt / fix-verify loop        | **Tier 2 split**              | Language nudge half deferred (extension to `/diagnose`, `/scrutinize`, `/security-check` needs friction citation). Runtime hook half filed as companion issue in `pitimon/claude-governance` per plugin boundary. ADR-016 drop date 2026-11-23 for the T2 half. |
+| #     | Pattern                           | Verdict                       | Mechanism                                                                                                                                                                                                                                                                                           |
+| ----- | --------------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1** | Description = trigger instruction | **Already shipped** (ADR-014) | Check 25 enforces ≤1024 chars + trigger phrase. 23/23 pass.                                                                                                                                                                                                                                         |
+| **2** | SKILL.md = table of contents      | **Already shipped** (ADR-009) | `Load ${CLAUDE_PLUGIN_ROOT}/...` directive pattern. 5/23 split when >1500 words; 18/23 below threshold.                                                                                                                                                                                             |
+| **3** | NEVER/MUST + reason               | **Tier 1 ship**               | New Check 26 (warning-only) + targeted skill edits on `/scrutinize` (Check 26-flagged) and `/diagnose` Phase 6 (proactive Pattern-5-adjacent edit, not Check 26-driven). Forward-guardrail review-checkpoint 2026-11-23 (see §"Forward-Guardrail Sunset" — inline mechanism, not ADR-016 eviction). |
+| **4** | Embedded scripts                  | **Tier 3 reject**             | Conflicts with plugin charter ("skills are read-only guidance"). File `docs/out-of-scope/anthropic-pattern-4-scripts.md`.                                                                                                                                                                           |
+| **5** | Bug-hunt / fix-verify loop        | **Tier 2 split**              | Language nudge half deferred (extension to `/diagnose`, `/scrutinize`, `/security-check` needs friction citation). Runtime hook half filed as companion issue in `pitimon/claude-governance` per plugin boundary. ADR-016 drop date 2026-11-23 for the T2 half.                                     |
 
 ## Honest Framing — Forward Guardrail Consistent with ADR-014 Precedent
 
 Per ADR-014's pattern, this audit records that P3 ships with **no first-person friction signal** in the codebase at decision time:
 
-| Pattern adopted (Tier 1)         | Pre-shipment friction signal                                                                                                                                                                                        | Post-shipment intent                                                                                                                                                                                                                          |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **P3 Check 26 + targeted edits** | None observed — searched `~/.claude/lessons/` (empty), `SKILL-EFFECTIVENESS.md` (0 lessons analyzed), git log, project docs, memory. 3 skills flagged by Check 26 at activation (post-mortem, reflect, scrutinize). | Forward guardrail — extending the ADR-014 Check 25 precedent (description rubric) to imperative-with-reason hygiene. If no friction signal accumulates by 2026-11-23, Check 26 + this ADR drop per ADR-016 cost-of-correction asymmetry gate. |
+| Pattern adopted (Tier 1)         | Pre-shipment friction signal                                                                                                                                                                                                                                                                                                                                | Post-shipment intent                                                                                                                                                                                                                                                                                                                                 |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **P3 Check 26 + targeted edits** | None observed — searched `~/.claude/lessons/` (empty), `SKILL-EFFECTIVENESS.md` (0 lessons analyzed), git log, project docs, memory. Check 26 flagged 3 skills at activation (post-mortem, reflect, scrutinize); 2 remain flagged post-edit (post-mortem, reflect) because this ADR's `/scrutinize` edit added the reason-markers Check 26 was looking for. | Forward guardrail — extending the ADR-014 Check 25 precedent (description rubric) to imperative-with-reason hygiene. If no friction signal accumulates by 2026-11-23, consider reverting Check 26 + the targeted skill edits via a separate amendment (see §"Forward-Guardrail Sunset" — this ADR's own inline mechanism, **not** ADR-016 eviction). |
 
-The 8-habit-reviewer specifically tested whether this brief was using friction-first doctrine as work-avoidance (H8/Spirit challenge). It was, before the revision. The revision promotes P3 to Tier 1 to match the precedent set by ADR-014's 4 shippped patterns, all of which had identical (zero) friction scores.
+The 8-habit-reviewer specifically tested whether this brief was using friction-first doctrine as work-avoidance (H8/Spirit challenge). It was, before the revision. The revision promotes P3 to Tier 1 to match the precedent set by ADR-014's 4 shipped patterns, all of which had identical (zero) friction scores.
+
+## Forward-Guardrail Sunset (inline mechanism owned by this ADR)
+
+This ADR's **Tier 1 shipments** (Check 26 + the `/scrutinize` and `/diagnose` skill edits) carry a **review-checkpoint of 2026-11-23**. If no friction signal accumulates by that date, the maintainer should consider reverting them via a **separate amendment ADR** (not this one — ADRs are immutable record).
+
+**This is NOT the ADR-016 eviction mechanism**. ADR-016's mechanism (and the cost-of-correction asymmetry gate it formalizes) is scoped strictly to **T2 bag candidates that were never shipped** — its eviction branch is literally "Evict, do not ship." Applying it to already-shipped features would un-ship them, a path ADR-016 does not define. The #215→#216 contraction of ADR-016 (4 amendments → 1) deliberately narrowed its scope; this ADR honors that narrowing rather than re-expanding it.
+
+**Reversal criteria for this ADR's Tier 1 items** (any of the following at the checkpoint date):
+
+- Zero documented uses of Check 26 catching a real soft-language regression in the 6 months since activation
+- `/scrutinize` Operating Rules + `/diagnose` Phase 6 hardening have not been cited in any `/reflect` lesson or post-mortem as having helped
+- A friction signal emerges that suggests the hardening actively hurts (e.g., users report the imperatives feel preachy without adding clarity)
+
+**Non-reversal criteria** (any of the following = keep shipped):
+
+- ≥1 documented case where Check 26 caught a soft-language drift in a new skill PR
+- ≥1 case where the hardened `/diagnose` Phase 6 re-verify caught a "declared success prematurely" pattern
+- The hardening proves additive (no friction reports) — keep as forward guardrail until next external-pattern audit re-evaluates
 
 ## T2 Bag — Deferred Adoptions (per ADR-016 drop-date eviction policy)
 
@@ -93,10 +111,10 @@ P5 **runtime enforcement** (a PostToolUse hook that gates declarations of succes
 ## Constraints Honored
 
 - **C1 (Zero-dep invariant)**: Check 26 is pure bash, no new dependencies.
-- **C2 (Sweep-first ordering)**: Check 26 is warning-only at activation; 3 pre-existing flags (post-mortem, reflect, scrutinize) are documented in this ADR rather than silently fixed.
+- **C2 (Sweep-first ordering)**: Check 26 is warning-only at activation. 3 skills flagged at activation snapshot (post-mortem, reflect, scrutinize); `/scrutinize` was flagged then resolved by this ADR's Operating Rules edit (added MUST/NEVER + Why reason-markers Check 26 was looking for). **2 remain flagged post-edit** (post-mortem, reflect) as informational warnings — documented rather than silently fixed; their register is intentionally discretion-heavy (retrospective and reflection skills), and no friction signal motivates hardening them now.
 - **C3 (Charter integrity)**: P4 rejection preserves the read-only-guidance principle.
 - **C4 (Plugin boundary)**: P5 runtime half filed in `claude-governance`, not implemented here.
-- **C5 (No version bump for doctrine-only commits)**: This ADR + OOS file are documentation; no plugin.json bump required. If skill edits are included in the same PR, the touched skill files do not move the version — Check 4 enforces atomic version-sync across 4 files only when plugin.json bumps.
+- **C5 (Version-bump rule from ADR-016)**: ADR-016 §C5 forbids version bumps for **doctrine-only** commits. This ADR + the OOS file alone would have been doctrine-only and warranted no bump. However, PR #219 also shipped **user-facing skill edits** (`/scrutinize` Operating Rules + `/diagnose` Phase 6) which marketplace clients need to pull — making C5 inapplicable. v2.18.1 was therefore released as a patch bump (PR #220), correctly distinguishing this from the doctrine-only ship that ADR-016 itself was (no bump after PR #217). Check 4 in `tests/validate-structure.sh` enforces atomic version-sync across 4 files when plugin.json bumps.
 
 ## Citation Precision Caveat (recorded for future readers)
 
@@ -115,7 +133,8 @@ The quoted text is verbatim correct in all 7 citations. The substance of the 5-p
 - [x] OOS file `docs/out-of-scope/anthropic-pattern-4-scripts.md` created
 - [x] Companion issue in `pitimon/claude-governance` filed for P5 runtime hook
 - [x] Targeted skill edits on `/scrutinize` and `/diagnose` (Phase 6 re-verify) demonstrate the pattern; not a full sweep
-- [x] ADR-016 drop date 2026-11-23 applied to all forward guardrails shipped here
+- [x] Forward-guardrail review-checkpoint 2026-11-23 set for Tier 1 shipments (inline mechanism, see §"Forward-Guardrail Sunset")
+- [x] ADR-016 eviction mechanism applied **only** to the P5 T2 entry (its in-scope use), not to shipped items
 
 ## Consequences
 
@@ -129,5 +148,5 @@ The quoted text is verbatim correct in all 7 citations. The substance of the 5-p
 **Negative / Honest disclosure**:
 
 - Check 26 is warning-only; aggregate skill-language hygiene depends on maintainer reading the warnings, not on CI enforcement
-- P5 T2 entry adds 1 to the eviction inventory (now 7 total) — ADR-016 review checkpoint at 12 months may need to re-tier if drop dates pile up
-- The P3 forward guardrail relies on the same speculative uplift framing as ADR-014's 4 patterns — if those patterns prove decorative, this ADR's adoption may need re-evaluation at the 2026-11-23 checkpoint
+- P5 T2 entry adds 1 to the ADR-016 eviction inventory (now 7 total) — ADR-016 review checkpoint at 12 months may need to re-tier if drop dates pile up
+- The P3 forward guardrail relies on the same speculative uplift framing as ADR-014's 4 patterns — if those patterns prove decorative, this ADR's adoption may need re-evaluation at the 2026-11-23 review-checkpoint per §"Forward-Guardrail Sunset" (separate amendment ADR required for reversal — ADR-016 eviction does not apply to shipped items)
