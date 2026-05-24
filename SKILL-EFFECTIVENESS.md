@@ -43,35 +43,62 @@ When updating this file:
 
 ## Current tally
 
-**Last updated**: 2026-04-11 (initial state, ships with v2.6.1)
-**Lessons analyzed**: 0
-**Status**: Awaiting data — no user reflections captured since Q6 was added
+**Last updated**: 2026-05-24 (per ADR-018 memory-layer activation — first real-data harvest after 13-month dormancy)
+**Lessons analyzed**: 43 (35 with primary 8-habit skill signal · 4 explicit `n/a` · 4 cited non-8-habit skills/agents only)
+**Status**: First-pass tally complete. Signal is real but skewed — heavy left tail on three skills, 12 skills remain at 0.
 
-| Skill | Most useful | Least useful / confusing | Trend notes |
-|---|---|---|---|
-| `/research` | 0 | 0 | — |
-| `/requirements` | 0 | 0 | — |
-| `/design` | 0 | 0 | — |
-| `/breakdown` | 0 | 0 | — |
-| `/build-brief` | 0 | 0 | — |
-| `/review-ai` | 0 | 0 | — |
-| `/deploy-guide` | 0 | 0 | — |
-| `/monitor-setup` | 0 | 0 | — |
-| `/cross-verify` | 0 | 0 | — |
-| `/whole-person-check` | 0 | 0 | — |
-| `/security-check` | 0 | 0 | — |
-| `/using-8-habits` | 0 | 0 | — |
-| `/eu-ai-act-check` | 0 | 0 | — |
-| `/ai-dev-log` | 0 | 0 | — |
-| `/reflect` | 0 | 0 | — |
-| `/calibrate` | 0 | 0 | — |
-| `/workflow` | 0 | 0 | — |
+| Skill                           | Most useful   | Least useful / confusing | Trend notes                                                                                                                                                                                                                                                                                                                              |
+| ------------------------------- | ------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/research`                     | 5             | 0                        | Compare mode + Audit mode cited as load-bearing in 4 of 5 — comparison-matrix discipline catches duplication before re-proposing already-rejected mechanics                                                                                                                                                                              |
+| `/requirements`                 | 0             | 0                        | No data — typically skipped for sub-3-files-changed; expected n=low                                                                                                                                                                                                                                                                      |
+| `/design`                       | 1             | 2                        | ⚠️ Negative-net signal (1 most, 2 least). Friction theme: "2+ options expectation feels ceremonial when prior locks force the decision" + "produces full architecture before upstream premises verified". Not enough data for action (threshold n≥5 negative); watch over next 3 releases. See `/design` ADR if invoked                  |
+| `/breakdown`                    | 2             | 0                        | Atomic task decomposition + verification-command-per-task discipline cited positively                                                                                                                                                                                                                                                    |
+| `/build-brief`                  | 1             | 1                        | Even split. Negative cite: "redundant in solo flows where same agent plans + implements". Consider marking optional rather than default for post-`/design` solo flows                                                                                                                                                                    |
+| `/review-ai`                    | 0             | 0                        | No data — review work delegated to `8-habit-reviewer` agent or external `/code-review`, not the workflow skill                                                                                                                                                                                                                           |
+| `/deploy-guide`                 | 0             | 0                        | No data                                                                                                                                                                                                                                                                                                                                  |
+| `/monitor-setup`                | 0             | 0                        | No data                                                                                                                                                                                                                                                                                                                                  |
+| `/cross-verify`                 | **13**        | 1                        | **Dominant signal — most-cited skill across all data**. Wins cited: NaN bug catch, demand-validation forcing, 14/14 PRDs PASS, domain-pack specificity (infra), Body-dimension 25% imbalance surfaced durability gap. One negative: "checklist lacks infra-reality / production-env question" (drove `cross-verify-packs/infra.md` pack) |
+| `/whole-person-check`           | 0             | 0                        | No data — Body/Mind/Heart/Spirit decomposition is referenced via `/cross-verify` (Q15) but the skill itself rarely invoked standalone                                                                                                                                                                                                    |
+| `/security-check`               | 0             | 0                        | No data                                                                                                                                                                                                                                                                                                                                  |
+| `/using-8-habits`               | 0             | 0                        | No data — onboarding meta-skill, low expected n for established users                                                                                                                                                                                                                                                                    |
+| `/eu-ai-act-check`              | 0             | 0                        | Migrated to `claude-governance` v3.1.0+ per ADR-012; redirect stub remains here. Not expected to accumulate signal locally                                                                                                                                                                                                               |
+| `/ai-dev-log`                   | 0             | 0                        | No data                                                                                                                                                                                                                                                                                                                                  |
+| `/reflect`                      | 0             | 0                        | The data-source skill itself — not typically cited as "most useful" because users don't reflect on `/reflect`                                                                                                                                                                                                                            |
+| `/calibrate`                    | 0             | 0                        | One-time onboarding; low expected n                                                                                                                                                                                                                                                                                                      |
+| `/workflow`                     | 0             | 0                        | Guided walkthrough; low expected n once workflow internalized                                                                                                                                                                                                                                                                            |
+| `/scrutinize` (v2.18.0+)        | 0             | 0                        | Recent addition — data window too short                                                                                                                                                                                                                                                                                                  |
+| `/consistency-check` (v2.15.0+) | 0             | 0                        | No data                                                                                                                                                                                                                                                                                                                                  |
+| `/diagnose` (v2.18.0+)          | 1 (secondary) | 0                        | Cited as close-second to `/cross-verify` in cross-plugin drift session (5/24); "cheap probes caught two real LOW-severity bugs post-publish"                                                                                                                                                                                             |
+| `/post-mortem` (v2.18.0+)       | 0             | 0                        | No data                                                                                                                                                                                                                                                                                                                                  |
+| `/save-spec` (v2.16.0+)         | 1             | 0                        | "Clean generator, intentional user-enforced design boundary" (5/20)                                                                                                                                                                                                                                                                      |
+| `/management-talk` (v2.18.0+)   | 0             | 0                        | No data                                                                                                                                                                                                                                                                                                                                  |
 
-**Total skills tracked**: 17 (matches v2.6.0+ skill count)
+**Total skills tracked**: 23 (v2.18.1 skill count)
+
+## Adjacent signal — not tracked above but observed
+
+- **`8-habit-reviewer` agent**: cited as primary or co-primary 5 times — paired with `/cross-verify` as the "structural-completeness + content-substance" defensive layer. Strong signal that the agent (separate context window) is doing real work beyond the in-context skill
+- **`advisor` (tool, not skill)**: cited as primary or co-primary 8+ times across the data — pattern: advisor-then-reviewer-then-revise cadence. Not in this plugin (it's a Claude Code primitive), but the dependency relationship is strong enough to note
+- **`n/a` ratio**: 4 of 43 explicitly n/a. Common pattern: tactical Out-of-Loop bug-fix work where no 7-step skill applied. Suggests current data slightly _over-represents_ planning-stage skills vs daily/tactical work
+
+## AHE benchmark context (for future trend interpretation)
+
+Per the _Observability-Driven Automatic Evolution of Coding-Agent Harnesses_ paper benchmarked in the 2026-05-24 audit (ADR-018):
+
+- **Memory** transfers across tasks at 75.3% pass@1
+- **Tools** transfer at 73.0%
+- **Middleware** transfers at 71.9%
+- **System Prompt** alone _regresses_ to 67.4% (vs seed 69.7%)
+
+This file IS the project's Memory layer. The strong `/cross-verify` signal makes sense in that frame — it's a tool/middleware-class primitive (structural completeness check), not a prose-level rule. The 12 zero-signal skills warrant attention not for deprecation but to understand which are tool-class vs prompt-class — prompt-class skills with no signal should justify their CLAUDE.md / SKILL.md weight under ADR-018's "Earn each line" pass.
 
 ## Action items (from trend analysis)
 
-_None yet — awaiting data accumulation._
+> **`/design` watch (low-priority, n=3, below threshold)**: 1 positive vs 2 negative citations. Pattern: "2+ options ceremony when prior decisions lock the answer" + "full architecture before upstream verified". _Not action-yet_ (threshold n≥5 negative within rolling 3-release window per protocol §6). Watch over v2.18.2 → v2.20.x; if negative reaches n≥5 without offsetting positives, `/skill-improve` cycle focusing on "skip-when-forced-choice" gating + "design-after-research-not-before" sequence note.
+
+> **12 zero-signal skills** (`/requirements`, `/review-ai`, `/deploy-guide`, `/monitor-setup`, `/whole-person-check`, `/security-check`, `/using-8-habits`, `/ai-dev-log`, `/reflect`, `/calibrate`, `/workflow`, `/consistency-check`, `/post-mortem`, `/management-talk`, `/scrutinize`): not deprecation candidates yet — many are expected-low-n by design (onboarding, one-time, recent addition). Add a `last-citation-date` column in next tally update to distinguish "never cited" from "expected low n". Use ADR-018 PR template `predicted_uses` going forward to prevent new zero-signal skills from shipping without explicit rationale.
+
+> **`/reflect` Q6 reliability concern**: 4 of 43 lessons skipped Q6 entirely or used non-parseable wording. Q6 self-reports also exhibit confirmation bias (the writer of the lesson is often the same person who chose the skill — favors skills used). Action: future Q6 refinement should consider "which skill did NOT trigger when it should have" angle to surface negative signal more aggressively.
 
 Future entries here will look like:
 
