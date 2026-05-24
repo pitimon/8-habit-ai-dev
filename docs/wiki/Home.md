@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-2.10.0-blue) ![Skills](https://img.shields.io/badge/skills-17-green) ![License](https://img.shields.io/badge/license-MIT-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange) ![Review](https://img.shields.io/badge/external_review-9.5%2F10-gold)
+![Version](https://img.shields.io/badge/version-2.18.1-blue) ![Skills](https://img.shields.io/badge/skills-23-green) ![License](https://img.shields.io/badge/license-MIT-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange) ![Review](https://img.shields.io/badge/external_review-9.5%2F10-gold)
 
 # 8-Habit AI Dev
 
@@ -16,9 +16,9 @@ AI-assisted coding is fast but often undisciplined: missing requirements, skippe
 
 |                       |                                                                                                           |
 | --------------------- | --------------------------------------------------------------------------------------------------------- |
-| **17 skills**         | 7 workflow + 5 assessment + 2 meta + 2 compliance + 1 orchestrator                                        |
+| **23 skills**         | 8 workflow + 5 assessment + 3 meta + 2 debug + 2 compliance + 3 helpers (orchestrator/spec/audience)      |
 | **8 Habits**          | Covey's 7 + The 8th, adapted for AI-assisted development                                                  |
-| **9 ADRs**            | Every non-trivial decision documented                                                                     |
+| **17 ADRs**           | Every non-trivial decision documented                                                                     |
 | **4 maturity levels** | [Dependence → Independence → Interdependence → Significance](Maturity-Model)                              |
 | **Zero dependencies** | Pure markdown — no npm, no build step                                                                     |
 | **EU AI Act ready**   | First Claude Code plugin with [compliance toolkit](Skills-Reference#compliance--audit-skills)             |
@@ -72,13 +72,29 @@ Legend:  [O] optional   [H] human checkpoint   [!] NEVER SKIP
 
 **Assessment** — run at any point for deeper analysis:
 
-| Skill                                                        | Purpose                                         |
-| ------------------------------------------------------------ | ----------------------------------------------- |
-| [`/cross-verify`](Skills-Reference#cross-verify)             | 17-question 8-Habit checklist                   |
-| [`/whole-person-check`](Skills-Reference#whole-person-check) | Body/Mind/Heart/Spirit balance                  |
-| [`/security-check`](Skills-Reference#security-check)         | OWASP Top 10 focused review                     |
-| [`/reflect`](Skills-Reference#reflect)                       | Post-task retrospective with lesson persistence |
-| [`/workflow`](Skills-Reference#workflow)                     | Interactive guided walkthrough                  |
+| Skill                                                        | Purpose                                                        |
+| ------------------------------------------------------------ | -------------------------------------------------------------- |
+| [`/cross-verify`](Skills-Reference#cross-verify)             | 17-question 8-Habit checklist                                  |
+| [`/whole-person-check`](Skills-Reference#whole-person-check) | Body/Mind/Heart/Spirit balance                                 |
+| [`/security-check`](Skills-Reference#security-check)         | OWASP Top 10 focused review                                    |
+| [`/scrutinize`](Skills-Reference#scrutinize)                 | Outsider-perspective review — questions if change should exist |
+| [`/consistency-check`](Skills-Reference#consistency-check)   | Cross-artifact drift detection (PRD ↔ design ↔ tasks)          |
+| [`/reflect`](Skills-Reference#reflect)                       | Post-task retrospective with lesson persistence                |
+| [`/workflow`](Skills-Reference#workflow)                     | Interactive guided walkthrough                                 |
+
+**Debug Discipline** — active investigation + post-fix record:
+
+| Skill                                          | Purpose                                                |
+| ---------------------------------------------- | ------------------------------------------------------ |
+| [`/diagnose`](Skills-Reference#diagnose)       | 6-phase active bug investigation (feedback-loop first) |
+| [`/post-mortem`](Skills-Reference#post-mortem) | Canonical RCA writeup after a validated fix lands      |
+
+**Spec & Communication** — helpers orthogonal to the 7-step workflow:
+
+| Skill                                                  | Purpose                                          |
+| ------------------------------------------------------ | ------------------------------------------------ |
+| [`/save-spec`](Skills-Reference#save-spec)             | Scaffold project-root SPEC.md orientation hub    |
+| [`/management-talk`](Skills-Reference#management-talk) | Reshape engineer content for leadership channels |
 
 **Meta & Onboarding** — learn and adapt:
 
@@ -107,7 +123,7 @@ Legend:  [O] optional   [H] human checkpoint   [!] NEVER SKIP
 ## Reference
 
 - **[8 Habits](Habits-Reference)** — the full playbook
-- **[Skills Catalog](Skills-Reference)** — all 17 skills, when to use each
+- **[Skills Catalog](Skills-Reference)** — all 23 skills, when to use each
 - **[Architecture](Architecture)** — how the plugin works internally
 - **[Maturity Model](Maturity-Model)** — adaptive guidance levels
 - **[Vibe Coding vs Structured](Vibe-Coding-vs-Structured)** — side-by-side comparison
