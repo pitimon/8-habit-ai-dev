@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.18.1-blue)
+![Version](https://img.shields.io/badge/latest-v2.18.2-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.18.2 — ADR-019 Doctrine-Only Scope Refinement + Check 27 (May 2026)
+
+Refines [ADR-017 §C5](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-017-anthropic-skill-patterns-audit.md) doctrine-only rule. [ADR-019](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-019-doctrine-only-scope-refinement.md) splits doctrine-only into **contributor-doctrine** (no bump — `docs/adr/`, `CLAUDE.md`, `CONTRIBUTING.md`, `.github/`, `tests/`, `SELF-CHECK.md`) and **consumer-doctrine** (MUST bump + CHANGELOG — `rules/`, `skills/`, `hooks/`, `habits/`, `guides/`, `agents/`). Closes the silent-shift gap that would have hit `rules/effective-development.md`'s next audit (per [ADR-018](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-018-memory-layer-activation.md) §"Context"). `tests/validate-structure.sh` Check 27 enforces the rule mechanically: detects consumer-doctrine paths changed since last release tag; fails CI if version-4-files unchanged. Bumped electively (PR was contributor-doctrine only) to signal CI behavior change to contributors. Validator state: 358 PASS / 0 FAIL. Forward-Guardrail Sunset 2026-11-24 per ADR-017 convention. Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.18.1 — Anthropic Skills 5-Pattern Audit: Tier 1 P3 Ship + Check 26 (May 2026)
 

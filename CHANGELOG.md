@@ -10,6 +10,32 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.18.2 — ADR-019 Doctrine-Only Scope Refinement + Check 27 (2026-05-24)
+
+Refines [ADR-017 §C5](docs/adr/ADR-017-anthropic-skill-patterns-audit.md) doctrine-only rule. The implicit assumption "doctrine ⇒ contributor-only" was about to break at the next PR — [ADR-018 §"Context"](docs/adr/ADR-018-memory-layer-activation.md) explicitly names `rules/effective-development.md` (~200 lines, auto-loaded into every consumer session) as the next "Earn each line" audit target. Under the original §C5, that audit would have shipped as "doctrine-only" → no bump, no CHANGELOG → silent user-facing behavioral shift.
+
+### What ships
+
+- **[ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md)** — splits doctrine-only into:
+  - **Contributor-doctrine** (no bump): `CLAUDE.md`, `CONTRIBUTING.md`, `docs/adr/**`, `docs/out-of-scope/**`, `docs/wiki/**`, `.github/**`, `SELF-CHECK.md`, `AGENTS.md`, `llms.txt`, `tests/**`. Preserves ADR-017 §C5 intent.
+  - **Consumer-doctrine** (MUST bump + CHANGELOG, even if "doctrine refinement" in spirit): `rules/**`, `skills/**`, `hooks/**`, `habits/**`, `guides/**`, `agents/**`. Closes the gap.
+- **`tests/validate-structure.sh` Check 27** — compares diff against last release tag; if any consumer-doctrine path changed AND version-4-files unchanged → FAIL with ADR-019 citation. Skipped if no tag exists (first-release case). 358 PASS / 0 FAIL.
+- **ADR-017 §C5 cross-reference note** — refined, not replaced. Original §C5 text preserved; pointer to ADR-019 added.
+
+### Why bump for v2.18.2
+
+This PR touches only contributor-doctrine paths (`docs/adr/`, `tests/`, `CHANGELOG.md`, version-4-files). Under ADR-019's own classification, no bump is required. **The bump is elective** — introducing a new validator check is a meta-change to CI behavior that contributors should be signalled. Patch grain (v2.18.1 → v2.18.2) matches: doctrine refinement + internal CI enhancement, no skill/runtime change, backwards-compatible.
+
+### Forward-Guardrail Sunset
+
+Per ADR-017 convention, ADR-019 reviewed **2026-11-24**. Reversal criteria: check fires 0 times in 6 months (too conservative), check bypassed without amending the ADR (too rigid), or no consumer-doctrine PR shipped at all (speculation). Non-reversal: ≥1 consumer-doctrine audit shipped with check-driven bump (proves the rule does real work).
+
+### Plugin boundary
+
+Stays in `8-habit-ai-dev` — internal CI / workflow discipline. No runtime hook, no enforcement gate, no claude-governance involvement.
+
+---
+
 ## v2.18.1 — Anthropic Skills 5-Pattern Audit: Tier 1 P3 Ship + Check 26 (2026-05-24)
 
 User-prompted Deep+Audit `/research` evaluated 23 skills against [github.com/anthropics/skills](https://github.com/anthropics/skills) (`skills/{pdf,pptx,docx}`) 5 SKILL.md patterns. Decision recorded in [ADR-017](docs/adr/ADR-017-anthropic-skill-patterns-audit.md): Pattern 1 + 2 already shipped (ADR-014 Check 25 + ADR-009); Pattern 3 promoted to Tier 1 as forward guardrail consistent with ADR-014 precedent; Pattern 4 out-of-scope per plugin charter; Pattern 5 split T2 + cross-plugin.
