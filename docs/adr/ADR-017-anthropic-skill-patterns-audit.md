@@ -32,6 +32,28 @@ The brief was revised to promote P3 to Tier 1 as a forward guardrail consistent 
 | **T2** | Plausible value but needs evidence or non-trivial change                      | **Defer** with ADR-016 drop date             |
 | **T3** | Conflicts with existing architectural principle, redundant, or no fit         | **Reject**, document in `docs/out-of-scope/` |
 
+## Options Considered
+
+### Option A — Documentation-only deposit (original brief recommendation)
+
+- **Description**: File GH issue + OOS file for Pattern 4 + record Patterns 3 and 5 in T2 bag with drop date 2026-11-23. No skill edits, no validator extension.
+- **Pro**: Lowest risk, ~1 hour, strictly compliant with "friction-first" interpretation that no observed friction = no Tier 1 action.
+- **Con**: 8-habit-reviewer cross-verify flagged this as H8/Spirit failure ("selective strictness reads as work-avoidance"). H5 misreads ADR-014: ADR-014 itself shipped 4 patterns 4 days earlier with the same zero-friction score as forward guardrails, so applying a stricter standard to Anthropic patterns is selective. Also fails H7 — pure documentation decays where ADR-014 paired adoption with validator (Check 25).
+
+### Option B — Tier 1 P3 ship as forward guardrail (chosen)
+
+- **Description**: Promote Pattern 3 (NEVER/MUST + reason) to Tier 1. Add warning-only Check 26. Edit 2 high-consequence skills (`/scrutinize`, `/diagnose` Phase 6). Keep Pattern 4 OOS, Pattern 5 split (T2 language nudge + claude-governance companion runtime hook). Apply ADR-016 drop date 2026-11-23 to all forward guardrails.
+- **Pro**: Consistent with ADR-014 precedent (forward guardrails with zero friction signal); resolves the H5/H7/H8 push-backs from cross-verify; ships reusable Production Capability (Check 26); preserves friction-first safety net via drop date.
+- **Con**: ~3-4 hours implementation; 2 skill text edits change runtime behavior (mitigated by warning-only validator + drop date eviction).
+
+### Option C — Tier 1 P3 + P5 full ship
+
+- **Description**: Above plus extend `/review-ai` fix-verify loop to `/diagnose`, `/scrutinize`, `/security-check`; implement claude-governance PostToolUse hook directly.
+- **Pro**: Highest pattern coverage; full reviewer recommendation.
+- **Con**: ~5-6 hours; methodology changes affect runtime register on 3 skills (Heart dimension risk — turns coaching tools into enforcement gates); cross-plugin implementation skips boundary discipline (PostToolUse hook in this repo violates plugin boundary per memory obs #233270).
+
+**Selected: Option B** — matches the ADR-014 precedent (forward guardrails when friction-low, drop date as safety net), respects plugin boundary (P5 runtime half filed cross-plugin not implemented here), and pairs adoption with validator extension per the established Check-25 pattern.
+
 ## Decision — Per-Pattern Verdict
 
 | #     | Pattern                           | Verdict                       | Mechanism                                                                                                                                                                                                                                                       |
