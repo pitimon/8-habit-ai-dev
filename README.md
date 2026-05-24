@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
-[![Skills](https://img.shields.io/badge/Skills-22-blue)]()
+[![Skills](https://img.shields.io/badge/Skills-23-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
 [![Version](https://img.shields.io/badge/Version-2.18.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.1)
@@ -12,7 +12,7 @@
 
 > **"ทำเสร็จ ≠ ทำดี"** — Shipping code is not the same as shipping _good_ code.
 >
-> AI coding tools are powerful — but "build me X" without requirements, review, or staging creates fast, fragile code. This plugin adds the discipline AI lacks: **17 skills** across a **7-step workflow**, grounded in **Covey's 8 Habits** of effective development.
+> AI coding tools are powerful — but "build me X" without requirements, review, or staging creates fast, fragile code. This plugin adds the discipline AI lacks: **23 skills** across a **7-step workflow**, grounded in **Covey's 8 Habits** of effective development.
 
 ---
 
@@ -28,7 +28,7 @@
 
 - [Design Principle](#design-principle) — Thin harness, fat skills
 - [7-Step Workflow](#the-7-step-workflow) — Visual pipeline from research to monitoring
-- [Skills Reference](#skills-reference) — All 17 skills with habit mappings
+- [Skills Reference](#skills-reference) — All 23 skills with habit mappings
 - [Use Cases](#use-cases-which-skill-when) — Common scenarios and recommended paths
 - [The 8 Habits](#the-8-habits) — Principles behind the workflow
 - [Maturity Model](#the-maturity-model) — Dependence to Significance
@@ -100,7 +100,7 @@ claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 **New to the plugin?** Start with `/workflow` for a guided walkthrough, or see [Use Cases](#use-cases-which-skill-when) to find the right skill for your situation.
 
-Two commands to install. The plugin loads a session reminder and makes 17 skills available.
+Two commands to install. The plugin loads a session reminder and makes 23 skills available.
 
 ---
 
@@ -148,7 +148,7 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 | `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `/workflow`           | All                 | Guided 7-step walkthrough — invoke or skip each step                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `/calibrate`          | H8: Find Your Voice | Self-assessment (5-7 questions) → writes `~/.claude/habit-profile.md` so other skills adapt verbosity to your maturity level                                                                                                                                                                                                                                                                                                                                                                 |
-| `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 17 skills + decision tree for "which skill next?"                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 23 skills + decision tree for "which skill next?"                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `/eu-ai-act-check`    | H1 + H8 (Spirit)    | Redirect stub — migrated to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0+ on 2026-05-02 (ADR-012). Install that plugin for the canonical 9-obligation checklist.                                                                                                                                                                                                                                                                                       |
 | `/ai-dev-log`         | H4 + H1             | Generate AI-assisted dev log from git history for audit trail                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `/save-spec`          | H8 + H2             | **Deployment-mode helper (not a workflow step)** — scaffold a project-root `SPEC.md` digest when the repo fits the project-orientation hub mode. Generator-only Phase 1 (v2.16.0); refuses to overwrite. **Skip if you already have a memory-MCP + short `CLAUDE.md`** (v2.16.4 — see `/save-spec` "When to Skip" for details)                                                                                                                                                               |
@@ -327,7 +327,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ├── .claude-plugin/
 │   ├── plugin.json                 # Plugin metadata (v2.15.0)
 │   └── marketplace.json            # Marketplace listing
-├── skills/                         # 18 skills (8 workflow + 10 standalone)
+├── skills/                         # 23 skills (8 workflow + 15 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
 │   ├── requirements/SKILL.md       #   Step 1 → H2
 │   ├── design/SKILL.md             #   Step 2 → H8
@@ -900,7 +900,7 @@ Every habit in this plugin exists because **skipping it caused real damage**.
 
 ## FAQ
 
-**Q: Do I need to use all 17 skills for every task?**
+**Q: Do I need to use all 23 skills for every task?**
 No. Start with `/requirements` before building and `/review-ai` before committing. Those two alone eliminate most Vibe Coding problems. Add more skills as they feel natural. See [Use Cases](#use-cases-which-skill-when).
 
 **Q: What is "Vibe Coding"?**

@@ -39,7 +39,7 @@ Responsibilities:
 
 ### Layer 3: Skills (on-demand)
 
-17 skills in `skills/*/SKILL.md`, loaded only when the user invokes them (e.g., `/requirements`, `/design`). Each skill has YAML frontmatter:
+23 skills in `skills/*/SKILL.md`, loaded only when the user invokes them (e.g., `/requirements`, `/design`). Each skill has YAML frontmatter:
 
 ```yaml
 ---
