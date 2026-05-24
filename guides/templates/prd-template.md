@@ -30,8 +30,8 @@ Output template for `/requirements` (Step 1).
 
 > **Numeric-ceiling FR example (calibrated)** — per `skills/requirements/SKILL.md` step 4a, when a criterion sets an upper bound on lines/words/characters of a markdown artifact, calibrate the ceiling against the closest precedent (+20%), not against an aspirational round number:
 >
-> _Good_: `FR-007: ADR-XXX.md body ≤180 lines, excluding frontmatter (calibrated from ADR-017 precedent of ~150 lines).`
-> _Bad_: `FR-007: ADR-XXX.md body ≤50 lines.` (Contaminates `/consistency-check` once the artifact lands at its actual required size — see [#237](https://github.com/pitimon/8-habit-ai-dev/issues/237).)
+> _Good_: `FR-007: ADR-XXX.md body ≤180 lines (calibrated from ADR-017 precedent of 152 lines × 1.20).`
+> _Bad_: `FR-007: ADR-XXX.md body ≤50 lines.` (Contaminates `/consistency-check` once the artifact lands at its actual required size — see [#237](https://github.com/pitimon/8-habit-ai-dev/issues/237). ADR/guide precedents have no YAML frontmatter, so the body count equals `wc -l` of the file; only `skills/*/SKILL.md` strips frontmatter — see [#239](https://github.com/pitimon/8-habit-ai-dev/issues/239).)
 
 ## Definition of Done
 

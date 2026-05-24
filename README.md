@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-23-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.18.5-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.5)
+[![Version](https://img.shields.io/badge/Version-2.18.6-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.6)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -421,6 +421,20 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.18.6
+
+**Theme: v2.18.5 fast-follow fix — body-measure `awk` made frontmatter-aware so ADRs and guides count correctly** ([skill](skills/requirements/SKILL.md), [test](tests/validate-content.sh))
+
+QA on v2.18.5 (issue [#239](https://github.com/pitimon/8-habit-ai-dev/issues/239)) caught a correctness defect in the freshly-shipped step 4a body-measure command: `awk '/^---$/{c++; next} c>=2'` returned `0` for files without YAML frontmatter (ADRs, guides) — 2 of the 3 artifact types the same sub-step names. A contributor following 4a literally on an ADR precedent (the case study's own example) would measure `0` instead of ~150 → set the FR ceiling at `0 × 1.20 = 0`, defeating the calibration the sub-step exists to enforce.
+
+- **Awk fix** — `skills/requirements/SKILL.md:80` now uses `awk 'NR==1 && $0=="---"{f=1; next} f && $0=="---"{f=0; next} !f'` which strips frontmatter only when the file actually starts with `---`. Verified: ADR-017 → 152, ADR-018 → 145, `cross-verification.md` → 95, `requirements/SKILL.md` → 131 (frontmatter correctly stripped, mid-body `---` thematic breaks correctly counted as body).
+- **Regression test** — `tests/validate-content.sh` Check 22 closes the gap explicitly named in #239 (_"tests/\*\* was untouched, so no validator caught it"_): runs the prescribed awk against 4 representative files spanning all 3 artifact types and asserts body counts match expected; also grep-checks that SKILL.md carries the new variant and is free of the broken v2.18.5 form.
+- **Template note** — `guides/templates/prd-template.md` clarifies that ADR/guide precedents have no frontmatter (body count = `wc -l`), only skills strip; cites #239 for the rationale.
+- **Consumer-doctrine bump** — `skills/**` edit per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md); patch bump v2.18.5 → v2.18.6 atomic across 4 files; Check 27 passes.
+- **Lesson** — prescribed commands embedded in skill prose are production guidance and need regression tests, the same way runtime code does. The plugin's "tests" surface is structural validators, not unit tests in the pytest sense; Check 22 establishes the precedent that future `awk`/`grep`/`jq` snippets in skill prose ship with a paired assertion.
+
+PR closes [#239](https://github.com/pitimon/8-habit-ai-dev/issues/239).
 
 ## What's New in v2.18.5
 
@@ -1035,4 +1049,4 @@ MIT
 
 ---
 
-_Version: 2.18.5 | Last updated: 2026-05-24_
+_Version: 2.18.6 | Last updated: 2026-05-24_

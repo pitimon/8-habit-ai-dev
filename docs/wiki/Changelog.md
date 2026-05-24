@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.18.5-blue)
+![Version](https://img.shields.io/badge/latest-v2.18.6-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.18.6 — Step 4a awk Made Frontmatter-Aware (May 2026)
+
+Fast-follow fix to v2.18.5 (shipped ~1h earlier) closing issue [#239](https://github.com/pitimon/8-habit-ai-dev/issues/239) — a QA pass on v2.18.5 caught that the step 4a body-measure command (`awk '/^---$/{c++; next} c>=2'`) returned `0` for files without YAML frontmatter, contradicting the release's own ADR-017 ~150-line case study. [`skills/requirements/SKILL.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/requirements/SKILL.md) step 4a step 2 now uses a frontmatter-aware variant (`awk 'NR==1 && $0=="---"{f=1; next} f && $0=="---"{f=0; next} !f'`) that strips frontmatter only when the file actually starts with `---`; otherwise counts the whole body. Verified: ADR-017 → 152, ADR-018 → 145, `cross-verification.md` → 95, `requirements/SKILL.md` → 131. [`tests/validate-content.sh`](https://github.com/pitimon/8-habit-ai-dev/blob/main/tests/validate-content.sh) Check 22 closes the gap #239 explicitly named (_"`tests/**` was untouched"_) — runs the prescribed awk against 4 representative files and asserts body counts match. Establishes the precedent that future `awk`/`grep`/`jq` snippets in skill prose ship with a paired assertion. Consumer-doctrine bump per [ADR-019](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-019-doctrine-only-scope-refinement.md). Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.18.5 — PRD Calibration Checkpoint (May 2026)
 
