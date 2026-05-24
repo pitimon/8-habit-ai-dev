@@ -10,6 +10,34 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.18.1 — Anthropic Skills 5-Pattern Audit: Tier 1 P3 Ship + Check 26 (2026-05-24)
+
+User-prompted Deep+Audit `/research` evaluated 23 skills against [github.com/anthropics/skills](https://github.com/anthropics/skills) (`skills/{pdf,pptx,docx}`) 5 SKILL.md patterns. Decision recorded in [ADR-017](docs/adr/ADR-017-anthropic-skill-patterns-audit.md): Pattern 1 + 2 already shipped (ADR-014 Check 25 + ADR-009); Pattern 3 promoted to Tier 1 as forward guardrail consistent with ADR-014 precedent; Pattern 4 out-of-scope per plugin charter; Pattern 5 split T2 + cross-plugin.
+
+### What ships
+
+- **`tests/validate-structure.sh` Check 26** (warning-only) — flags skills with ≥4 soft-language verbs (`should`/`consider`/`may`/`might`/`could`) and 0 reason markers (`MUST`/`NEVER`/`ALWAYS`/`Why:`/`Rationale:`/`because`). Currently flags `/post-mortem` + `/reflect` informationally (discretion-heavy register; non-blocking). Validator: 357 PASS / 0 FAIL.
+- **`/scrutinize` Operating Rules** — 6 MUST/NEVER + Why blocks replacing soft phrasings (e.g., "**NEVER rubber-stamp.** Why: rubber-stamps appear identical to genuine reviews — the reader cannot tell which one happened").
+- **`/diagnose` Phase 6** — hardened with MUST re-run Phase 1 feedback loop, citing Anthropic pptx ~line 243 ("Do not declare success until you've completed at least one fix-and-verify cycle"). New Definition of Done checkbox.
+- **`docs/out-of-scope/anthropic-pattern-4-scripts.md`** — Pattern 4 (embedded scripts) rejection rationale preserved per ADR-014 P4-lite OOS catalog. Charter conflict: skills are read-only guidance, not tooling.
+- **`docs/adr/ADR-017-anthropic-skill-patterns-audit.md`** — full decision record with 3 options considered (A documentation-only, B chosen, C P3+P5 full scope rejected).
+
+### Honest framing
+
+8-habit-reviewer cross-verify pushed back on the original "documentation-only" recommendation: ADR-014 itself shipped 4 patterns 4 days earlier with the same zero-friction score as forward guardrails. Holding Anthropic patterns to a stricter standard would be selective strictness. Reconciliation paragraph in the research brief documents the resolution. All Tier 1 shipments inherit ADR-016 drop date 2026-11-23 — if no friction signal accumulates, Check 26 + skill edits drop per the cost-of-correction asymmetry gate.
+
+### Citation precision
+
+Triggering Thai-language blog cited Anthropic skills under `document-skills/` URL prefix (real path: `skills/`) and 4/7 pptx line numbers off by 40-61 lines (likely older commit). Quoted text is verbatim correct; URL/line precision is not. Recorded for future readers.
+
+### Cross-plugin H6 deposit
+
+Pattern 5 runtime enforcement (PostToolUse hook) belongs in `claude-governance` per plugin boundary. Companion issue: [pitimon/claude-governance#37](https://github.com/pitimon/claude-governance/issues/37). Tracks the cross-plugin half; this release ships only the language-nudge half (and only `/scrutinize` + `/diagnose` — extension to `/security-check` deferred to T2 bag pending n=1 friction).
+
+PR [#219](https://github.com/pitimon/8-habit-ai-dev/pull/219) merged as `8540f9e`. Issue [#218](https://github.com/pitimon/8-habit-ai-dev/issues/218) closed with H4 deposit summary.
+
+---
+
 ## v2.18.0 — `/diagnose` Skill: Friction-Driven External Adoption (2026-05-23)
 
 Ships a single new skill — `/diagnose` — as a **friction-driven** external prior-art adoption from [mattpocock/skills](https://github.com/mattpocock/skills) SHA [`b8be62ff`](https://github.com/mattpocock/skills/tree/b8be62ffacb0118fa3eaa29a0923c87c8c11985c). Honest framing recorded in [ADR-015](docs/adr/ADR-015-diagnose-skill-adoption-and-n1-framing.md): the friction signal is **n=1, below ADR-014's preferred n≥2 bar**, but unusually strong — a first-person retrospective in `~/.claude/lessons/2026-04-12-compression-worker-420-investigation.md` explicitly states _"Most useful: n/a (no 8-habit skills invoked during the fix session)"_ and _"Could have been found in 5 minutes [via SQL comparison] vs 30 minutes of log analysis"_.
