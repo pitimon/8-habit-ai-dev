@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.18.4-blue)
+![Version](https://img.shields.io/badge/latest-v2.18.5-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.18.5 — PRD Calibration Checkpoint (May 2026)
+
+Adds a `4a. Calibrate numeric ceilings against precedent` sub-step to [`skills/requirements/SKILL.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/requirements/SKILL.md) Process. When an EARS criterion sets an upper bound on lines/words/characters of a markdown artifact (ADR, guide, skill), the skill now nudges the author to identify the closest precedent (`docs/adr/ADR-0*.md`, `guides/*.md`, or `skills/*/SKILL.md` by artifact type), measure the body excluding YAML frontmatter (`awk '/^---$/{c++; next} c>=2' <file> | wc -l`), and set the ceiling at `precedent_max × 1.20` — because aspirational round numbers contaminate `/consistency-check` runs once the artifact lands at its actual required size. Opt-out preserved when no precedent exists or the cap is set by a different constraint (hook token budget, validator string limit). Closes [#237](https://github.com/pitimon/8-habit-ai-dev/issues/237) — action item from lesson `~/.claude/lessons/2026-05-24-v218-4-skill-authoring-double-rescue.md` §5 catching FR-007 (ADR-020) PRD-vs-reality drift before merge in v2.18.4. Plugin-boundary respected — no validator extension, no PreToolUse hook (runtime enforcement belongs in [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) per memory obs #233270). Consumer-doctrine bump per [ADR-019](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-019-doctrine-only-scope-refinement.md). Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.18.4 — Skill Authoring Guide (May 2026)
 

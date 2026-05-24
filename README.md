@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-23-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.18.4-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.4)
+[![Version](https://img.shields.io/badge/Version-2.18.5-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.5)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -421,6 +421,20 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.18.5
+
+**Theme: PRD calibration checkpoint — measure precedent before setting numeric ceilings on markdown artifacts** ([skill](skills/requirements/SKILL.md), [template](guides/templates/prd-template.md))
+
+Adds a `4a. Calibrate numeric ceilings against precedent` step to `/requirements` Process. When an EARS criterion sets an upper bound on lines/words/characters of a markdown artifact (ADR, guide, skill), the skill now nudges the author to identify the closest precedent (`docs/adr/ADR-0*.md` for ADR ceilings, `guides/*.md` for guide ceilings, `skills/*/SKILL.md` for skill ceilings), measure the body excluding YAML frontmatter (`awk '/^---$/{c++; next} c>=2' <file> | wc -l`), and set the ceiling at `precedent_max × 1.20` — because aspirational round numbers contaminate `/consistency-check` runs once the artifact lands at its actual required size.
+
+- **Case study** — FR-007 in `docs/specs/skill-authoring-guide-235/prd.md` shipped at ≤50 lines body against an ADR-017 precedent of ~150 lines and required pre-merge amendment to ≤150. The `8-habit-reviewer` cross-verify caught it as PRD-vs-reality drift; future runs will contaminate `/consistency-check` signal until amended (lesson `~/.claude/lessons/2026-05-24-v218-4-skill-authoring-double-rescue.md` §5).
+- **Opt-out** preserved — when no precedent exists (genuinely novel artifact type), or when the cap is set by a different constraint (hook token budget, validator string limit), declare the rationale in a one-line FR comment instead of measuring.
+- **Template example** — `guides/templates/prd-template.md` Success Criteria section now shows a calibrated vs. uncalibrated FR-007 example side by side.
+- **Plugin-boundary respected** — no validator extension, no PreToolUse hook (runtime enforcement belongs in `pitimon/claude-governance`); this ship is authoring-discipline only.
+- **Consumer-doctrine bump** — `skills/**` and `guides/**` edits per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md); patch bump v2.18.4 → v2.18.5 atomic across 4 files; Check 27 passes.
+
+PR closes [#237](https://github.com/pitimon/8-habit-ai-dev/issues/237).
 
 ## What's New in v2.18.4
 
@@ -1021,4 +1035,4 @@ MIT
 
 ---
 
-_Version: 2.18.4 | Last updated: 2026-05-24_
+_Version: 2.18.5 | Last updated: 2026-05-24_

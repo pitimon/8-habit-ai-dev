@@ -28,6 +28,11 @@ Output template for `/requirements` (Step 1).
 2. [Verifiable condition]
 3. [Verifiable condition]
 
+> **Numeric-ceiling FR example (calibrated)** — per `skills/requirements/SKILL.md` step 4a, when a criterion sets an upper bound on lines/words/characters of a markdown artifact, calibrate the ceiling against the closest precedent (+20%), not against an aspirational round number:
+>
+> _Good_: `FR-007: ADR-XXX.md body ≤180 lines, excluding frontmatter (calibrated from ADR-017 precedent of ~150 lines).`
+> _Bad_: `FR-007: ADR-XXX.md body ≤50 lines.` (Contaminates `/consistency-check` once the artifact lands at its actual required size — see [#237](https://github.com/pitimon/8-habit-ai-dev/issues/237).)
+
 ## Definition of Done
 
 - [ ] [What must be true before this feature is "done"]
