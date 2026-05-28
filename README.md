@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-23-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.18.6-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.6)
+[![Version](https://img.shields.io/badge/Version-2.18.7-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.7)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -421,6 +421,19 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.18.7
+
+**Theme: dynamic-workflow positioning — Opus 4.8's orchestration engine is `claude-governance`'s; the fan-out _discipline_ is ours** ([guide](guides/orchestration-patterns.md), [ADR](docs/adr/ADR-021-dynamic-workflow-positioning.md))
+
+Opus 4.8 ships a **dynamic workflow** capability — a deterministic engine that spawns parallel sub-agents. It collides by name and philosophy with the plugin's `/workflow` skill (a human-gated 7-step discipline). A 4-probe repo audit (issue [#241](https://github.com/pitimon/8-habit-ai-dev/issues/241)) settled the layering.
+
+- **Pattern 4: Fan-Out Discipline** — `guides/orchestration-patterns.md` gains a when/when-not-to-fan-out gate keyed to habits (H6 Synergize _reinforces_; H1/H3/H5/H8 are in _tension_), plus an Article 14 oversight checklist (preserve Understand / Override / Stop under autonomous fan-out). Delegates the _how_ to existing Patterns 1-3 — no duplication.
+- **ADR-021** — disambiguates `/workflow` (discipline) from the Opus 4.8 engine, and quotes the CLAUDE.md boundary rule verbatim: the **engine** (runtime + agent-spawn authorization) belongs to `claude-governance`; only the fan-out **discipline** lives here. Prevents future engine-wrapping skills from violating the boundary.
+- **Forward-guardrail framing** — ships with zero first-person friction signal (the collision is structural, surfaced by audit); sunset 2026-11-24 with explicit reversal criterion, per the ADR-014/017/020 precedent.
+- **Consumer-doctrine bump** — `guides/` edit per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md); patch bump v2.18.6 → v2.18.7 atomic across 4 files.
+
+PR closes [#241](https://github.com/pitimon/8-habit-ai-dev/issues/241).
 
 ## What's New in v2.18.6
 
@@ -1049,4 +1062,4 @@ MIT
 
 ---
 
-_Version: 2.18.6 | Last updated: 2026-05-24_
+_Version: 2.18.7 | Last updated: 2026-05-29_

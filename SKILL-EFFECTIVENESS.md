@@ -43,7 +43,7 @@ When updating this file:
 
 ## Current tally
 
-**Last updated**: 2026-05-24 (per ADR-018 memory-layer activation — first real-data harvest after 13-month dormancy)
+**Last updated**: 2026-05-29 (v2.18.7 release-pulse check per ADR-018 anti-dormancy forcing function — no new `/reflect` lessons since the 2026-05-24 harvest; counts unchanged. The v2.18.7 work itself produces a lesson candidate (advisor reversed a new-guide instinct toward extending an existing guide) but is not yet written as a `/reflect` artifact, so it is not counted here.)
 **Lessons analyzed**: 43 (35 with primary 8-habit skill signal · 4 explicit `n/a` · 4 cited non-8-habit skills/agents only)
 **Status**: First-pass tally complete. Signal is real but skewed — heavy left tail on three skills, 12 skills remain at 0.
 

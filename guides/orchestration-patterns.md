@@ -109,13 +109,65 @@ Ship feature → notice orchestration friction → enhance /breakdown with workt
 
 ---
 
+## Pattern 4: Fan-Out Discipline — When to Invoke a Dynamic Workflow
+
+**Problem**: A harness-level **dynamic workflow engine** (e.g. Opus 4.8's Workflow tool — deterministic scripts that spawn `parallel()` / `pipeline()` sub-agents) makes autonomous fan-out cheap. Cheap is not the same as appropriate. Spinning up a dozen agents on work that needed one focused pass trades architectural clarity for throughput — and that trade is invisible until the merge.
+
+> **Disambiguation**: This plugin's `/workflow` skill is a _human-gated discipline_ (7 steps, each Announce → Ask → record). Opus 4.8's _dynamic workflow_ is an _execution engine_. They are different layers. The engine itself — runtime coordination + which agent is authorized to spawn what — is a `claude-governance` concern, not an `8-habit-ai-dev` one (CLAUDE.md rule of thumb: "runtime hook … formal decision-authorization model → `claude-governance`"). What lives **here** is only the _discipline_ of deciding when fan-out serves the work. Full positioning: [ADR-021](../docs/adr/ADR-021-dynamic-workflow-positioning.md).
+
+**Solution**: Before invoking the engine, run the work through the habit lens. Fan-out **reinforces** H6 (Synergize — "use parallel agents for independent tasks") but is in **tension** with four habits; let those decide whether to fan out or stay single-threaded:
+
+| Habit                     | Fan-out effect | Gate before fanning out                                                                                |
+| ------------------------- | -------------- | ------------------------------------------------------------------------------------------------------ |
+| **H6 Synergize**          | ✅ Reinforces  | Tasks are genuinely independent (disjoint file sets per Pattern 1) — fan-out is the canonical win      |
+| **H1 Be Proactive**       | ⚠️ Tension     | Cross-cutting effects ("trace ALL callers") are mapped first — each agent sees only its slice          |
+| **H3 First Things First** | ⚠️ Tension     | You are finishing N things, not starting N half-things — bounded count, defined merge contract         |
+| **H5 Understand First**   | ⚠️ Tension     | Shared understanding exists _before_ parallel writing — agents read context (Pattern 2) before editing |
+| **H8 Find Your Voice**    | ⚠️ Tension     | Architecture/scope stays human-owned — fan-out executes a decided plan, it does not _make_ the plan    |
+
+**Decision checklist**:
+
+1. Is the work decomposable into independent slices (Pattern 1 `parallel-safe` / `parallel-worktree`)? If not → single-threaded.
+2. Have cross-cutting effects been traced once, centrally, before splitting (H1)? If not → trace first.
+3. Is the count bounded and each agent's merge contract defined (H3 + Pattern 2)? If not → scope first.
+4. Is the architecture already decided by a human (H8)? Fan-out runs a plan; it does not author one. If not → `/design` first.
+
+**Oversight under fan-out (Article 14 oversight _principle_ — Understand / Override / Stop)**:
+
+This is the discipline cue, not the compliance obligation. The EU AI Act Article 14 compliance checklist and its enforcement live in `claude-governance` (`skills/eu-ai-act-check/`, per [ADR-012](../docs/adr/ADR-012-eu-ai-act-migration-completion.md)); here we only borrow the _principle_ to keep human control intact while fanning out. Autonomous fan-out makes the "stop button" and human comprehension harder — keep all three intact:
+
+| Capability     | How to preserve under fan-out                                                                 |
+| -------------- | --------------------------------------------------------------------------------------------- |
+| **Understand** | Log what each agent is doing (label + phase); a summary the human can read, not a black box   |
+| **Override**   | Findings/outputs are proposals to review, not auto-merged work — human confirms before commit |
+| **Stop**       | The run is interruptible; a runaway fan-out has a bound (count cap, budget) the human set     |
+
+**When to use**: Any `/breakdown` that tempts you toward "just fan out everything," or before authoring a dynamic-workflow script. Patterns 1-3 cover _how_ to orchestrate once you have decided to; Pattern 4 is the _whether/when_ gate.
+
+**Example**:
+
+```
+# Appropriate fan-out (H6 reinforced, gates pass):
+4 independent doc files to lint → disjoint sets, no cross-cutting logic,
+architecture N/A, outputs reviewed → parallel() over 4 agents.
+
+# Inappropriate fan-out (H1/H3 fail):
+"Refactor the auth flow across 8 files" → shared call graph, cross-cutting
+effects unmapped → trace callers in ONE pass first; do not split blind.
+```
+
+**Source**: Repo audit 2026-05-29 (4-probe scan of skills / ADRs / plugin boundary / habit rules), [issue #241](https://github.com/pitimon/8-habit-ai-dev/issues/241). Engine-vs-discipline boundary: [ADR-021](../docs/adr/ADR-021-dynamic-workflow-positioning.md).
+
+---
+
 ## Quick Reference
 
-| Pattern             | Solves                           | Used In        | H-Mapping |
-| ------------------- | -------------------------------- | -------------- | --------- |
-| Worktree Isolation  | Merge conflicts in parallel work | `/breakdown`   | H3 + H6   |
-| Context Boundaries  | Context pollution between agents | `/build-brief` | H5        |
-| Meta-System Mindset | Neglecting workflow improvement  | `/reflect`     | H7        |
+| Pattern             | Solves                                    | Used In               | H-Mapping         |
+| ------------------- | ----------------------------------------- | --------------------- | ----------------- |
+| Worktree Isolation  | Merge conflicts in parallel work          | `/breakdown`          | H3 + H6           |
+| Context Boundaries  | Context pollution between agents          | `/build-brief`        | H5                |
+| Meta-System Mindset | Neglecting workflow improvement           | `/reflect`            | H7                |
+| Fan-Out Discipline  | Fanning out when one focused pass was due | `/breakdown` / script | H6 vs H1·H3·H5·H8 |
 
 ## Attribution
 

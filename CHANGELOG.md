@@ -10,6 +10,25 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.18.7 — Dynamic Workflow Positioning (2026-05-29)
+
+Positions the plugin against Opus 4.8's new **dynamic workflow** capability — a deterministic engine that spawns parallel sub-agents — which collides by name and philosophy with the plugin's human-gated `/workflow` skill. A 4-probe repo audit (issue [#241](https://github.com/pitimon/8-habit-ai-dev/issues/241)) settled the layering: the **engine** belongs to `claude-governance`; the fan-out **discipline** belongs here.
+
+### Shipped
+
+- **`guides/orchestration-patterns.md` Pattern 4: Fan-Out Discipline** — a when/when-not-to-fan-out gate keyed to habits (H6 Synergize reinforces; H1/H3/H5/H8 in tension) + an Article 14 oversight checklist (preserve Understand / Override / Stop under autonomous fan-out). Delegates the _how_ to existing Patterns 1-3 (no duplication); adds a Quick Reference row.
+- **`docs/adr/ADR-021-dynamic-workflow-positioning.md`** — disambiguates `/workflow` (discipline) from the Opus 4.8 engine and quotes the CLAUDE.md boundary rule verbatim so the ADR does not over-claim. Engine (runtime + agent-spawn authorization) → `claude-governance`; discipline → here.
+
+### Framing
+
+Forward guardrail with **zero first-person friction signal** — the collision is structural (new upstream capability + same word as `/workflow`), surfaced by audit, not yet by a `/reflect` lesson. Sunset **2026-11-24** with explicit reversal criterion, per the ADR-014/017/020 precedent.
+
+### Doctrine
+
+Consumer-doctrine bump per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md) (`guides/` edit MUST bump) — patch bump v2.18.6 → v2.18.7 atomic across 4 files. PR closes [#241](https://github.com/pitimon/8-habit-ai-dev/issues/241).
+
+---
+
 ## v2.18.6 — Step 4a awk Made Frontmatter-Aware (2026-05-24)
 
 Fast-follow fix to v2.18.5 (shipped ~1h earlier) closing issue [#239](https://github.com/pitimon/8-habit-ai-dev/issues/239) — a QA pass on v2.18.5 caught that the step 4a body-measure command returned `0` for files without YAML frontmatter (ADRs and guides — 2 of the 3 artifact types the same sub-step names), directly contradicting the release's own case study (ADR-017 ~150 lines).
