@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.18.6-blue)
+![Version](https://img.shields.io/badge/latest-v2.18.7-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.18.7 — Dynamic Workflow Positioning (May 2026)
+
+Positions the plugin against Opus 4.8's new **dynamic workflow** capability — a deterministic engine that spawns parallel sub-agents — which collides by name and philosophy with the plugin's human-gated `/workflow` skill. A 4-probe repo audit (issue [#241](https://github.com/pitimon/8-habit-ai-dev/issues/241)) settled the layering: the **engine** (runtime + agent-spawn authorization) belongs to `claude-governance`; the fan-out **discipline** belongs here. [`guides/orchestration-patterns.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/orchestration-patterns.md) gains **Pattern 4: Fan-Out Discipline** — a when/when-not-to-fan-out gate keyed to habits (H6 Synergize reinforces; H1/H3/H5/H8 in tension) plus an Article 14 oversight checklist (preserve Understand / Override / Stop), delegating the _how_ to existing Patterns 1-3. [`docs/adr/ADR-021`](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-021-dynamic-workflow-positioning.md) disambiguates `/workflow` (discipline) from the engine and quotes the CLAUDE.md boundary rule verbatim. Forward guardrail with zero friction signal; sunset 2026-11-24. Consumer-doctrine bump per [ADR-019](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-019-doctrine-only-scope-refinement.md). Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.18.6 — Step 4a awk Made Frontmatter-Aware (May 2026)
 
