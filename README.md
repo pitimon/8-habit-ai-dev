@@ -76,6 +76,8 @@ We follow the **"Thin Harness, Fat Skills"** pattern — the session hook is bou
 
 The same principle is documented independently by Garry Tan (President & CEO, Y Combinator) in his 2026 essay [_"Thin Harness, Fat Skills"_](https://github.com/garrytan/gbrain/blob/master/docs/ethos/THIN_HARNESS_FAT_SKILLS.md) and shipped in [gbrain](https://github.com/garrytan/gbrain). We arrived at it from workflow discipline; he arrived at it from building a brain — same conclusion.
 
+The same shift is happening industry-wide under the name **Spec-Driven Development (SDD)**: after "vibe coding" entered the vocabulary in early 2025, tools like GitHub spec-kit, AWS Kiro, and Tessl emerged to generate code from specs. Those are spec-first _tooling_ — this plugin is spec-first _discipline_: tool-agnostic guidance that helps any of them (or none of them) produce better specs in the first place. It adds no enforcement and spawns no role-agents — that is the companion [`claude-governance`](https://github.com/pitimon/claude-governance). We arrived here from workflow discipline; they arrived from building codegen tools — same discipline layer, different delivery.
+
 ---
 
 ## Quick Start
