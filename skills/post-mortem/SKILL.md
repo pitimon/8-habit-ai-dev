@@ -85,7 +85,7 @@ What allowed this bug to reach the branch / release / customer. Pick the real re
 - CI gap (no test exercises this path / configuration).
 - Latent code (correct when written, broken by a later change in a different file).
 - Workload gap (no real input reached this code path until now).
-- Incomplete prior fix (defensive check hid the symptom; root cause untouched).
+- Incomplete prior fix, or **overturned** root cause (defensive check hid the symptom; or the **earlier** diagnosis was **wrong**, later reversed).
 - Review miss (the change was reviewable; the implication wasn't).
 
 If the honest answer is "no good reason — we should have caught this," say so. **Blameless** — describe the gap, not the person.

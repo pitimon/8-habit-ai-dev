@@ -10,6 +10,25 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.18.8 — Independent-Source Verification (2026-05-30)
+
+Adds the **discipline** that the first real fan-out use exposed (follow-up to [#243](https://github.com/pitimon/8-habit-ai-dev/issues/243), built on #241/ADR-021): catching a _confident-but-wrong root cause_ that survives every author-side gate because each gate reuses the same single contaminated observation. Lived case (memforge): a version read from `docker exec` ("stale config from buildx cache") survived `advisor`, a review pass, a merged PR, and a written `/reflect` lesson — until an independent probe (`docker run` on the image) contradicted it and surfaced the real cause: a bind-mount overriding the image. Boundary-safe per [ADR-021](docs/adr/ADR-021-dynamic-workflow-positioning.md) — the **discipline** lives here; the fan-out **engine** stays in `claude-governance`.
+
+### Shipped
+
+- **`guides/independent-source-verification.md`** (new, canonical) — the case study + rule: a root cause from a single observation source is unverified; confirm it from an _independent_ source (different tool/command/vantage) and **reconcile** contradictions rather than pick. Carries the reusable tell (`docker run <img>` ≠ `docker exec <container>` → a mount overrides the image) and a second non-docker instance (an OCR misread propagating through 4 artifacts) proving the discipline generalizes. Cited by all six edits below so they share one stable source.
+- **Six gap edits** — `skills/diagnose` (Phase 4 independent-source verification + DoD item), `skills/cross-verify` (Q12 extended + a diagnosis-reconciliation callout), `skills/post-mortem` (§7 "overturned root cause" reason), `skills/reflect` (Q2 "did a prior diagnosis prove wrong?" sub-prompt), `guides/orchestration-patterns.md` (Pattern 4 diagnostic-escalation trigger), `guides/advisor-pattern.md` ("is all evidence single-source?" check for the gate that failed here).
+
+### Discipline applied to its own rollout
+
+`8-habit-reviewer` (disprove-mode, single ADR-021 question) caught one **DRIFT** — Pattern 4 text drifting toward owning the fan-out engine, the same #241-class boundary confusion — and confirmed **CLEAN** after reword (independence-of-source is the rule; fan-out is one optional delivery mechanism). Gap 3 was folded into the existing Q12 rather than renumbering the canonical 17-question checklist (avoids cascading into scoring bands, README, and llms.txt). Gap 4 tripped the 2000-word convention-consistency fitness cap on `post-mortem`, so the addition was merged into an adjacent bullet rather than padding the skill — the fitness function working as designed.
+
+### Doctrine
+
+Consumer-doctrine bump per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md) (`guides/` + `skills/` edits MUST bump) — patch bump v2.18.7 → v2.18.8 atomic across 4 files. PR closes [#243](https://github.com/pitimon/8-habit-ai-dev/issues/243).
+
+---
+
 ## v2.18.7 — Dynamic Workflow Positioning (2026-05-29)
 
 Positions the plugin against Opus 4.8's new **dynamic workflow** capability — a deterministic engine that spawns parallel sub-agents — which collides by name and philosophy with the plugin's human-gated `/workflow` skill. A 4-probe repo audit (issue [#241](https://github.com/pitimon/8-habit-ai-dev/issues/241)) settled the layering: the **engine** belongs to `claude-governance`; the fan-out **discipline** belongs here.
