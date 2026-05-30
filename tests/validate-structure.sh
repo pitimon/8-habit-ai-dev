@@ -272,11 +272,24 @@ done
 # Extract skill names from README table rows matching | `/skill-name`
 README_SKILLS=""
 while IFS= read -r line; do
-  sname=$(echo "$line" | sed -n 's/.*`\/\([a-z0-9-]*\)`.*/\1/p')
+  # Anchor to the first table column (^| `/skill`) — a greedy `.*`\/...` would
+  # match the LAST `/skill` reference in a row that mentions several, picking the
+  # wrong skill name (Issue #214, surfaced via /diagnose dogfood on PR #213).
+  sname=$(echo "$line" | sed -n 's/^| *`\/\([a-z0-9-]*\)`.*/\1/p')
   [ -n "$sname" ] && README_SKILLS="$README_SKILLS $sname"
 done < <(grep '| `/[a-z]' README.md 2>/dev/null)
 # Deduplicate
 README_SKILLS=$(echo "$README_SKILLS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+
+# Regression fixture for Issue #214: a row mentioning 3 skills must yield the
+# FIRST-column skill, not the last. Fails loudly if the greedy regex regresses.
+_c12_row='| `/firstskill` | H1 | mentions `/secondskill` and `/thirdskill` |'
+_c12_got=$(echo "$_c12_row" | sed -n 's/^| *`\/\([a-z0-9-]*\)`.*/\1/p')
+if [ "$_c12_got" = "firstskill" ]; then
+  pass "Check 12 regex anchored to first column (Issue #214 regression guard)"
+else
+  fail "Check 12 regex regressed (#214): picked '$_c12_got' instead of 'firstskill'"
+fi
 
 XREF_FAIL=0
 # Check: every directory skill is in README
