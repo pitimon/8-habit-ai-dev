@@ -33,7 +33,7 @@ From `CLAUDE.md` § Plugin Boundary:
 
 Applied to SDD: the **discipline of producing a good spec before code** (the H5/H2 habits — understand first, begin with the end in mind) is `8-habit-ai-dev`'s domain. The **mechanism that turns a spec into code** (spec-kit, Kiro, Tessl) is external-tool domain. The **enforcement of the spec as a gate** is `claude-governance`'s domain. `8-habit-ai-dev` is **tool-agnostic discipline** — it helps a team produce a better spec for _any_ of those tools, or none.
 
-Honest one-line claim: **8-habit supplies the spec-first _discipline_ half of SDD; the codegen half is external tooling and the enforcement half is the companion stack.**
+Honest one-line claim: **8-habit supplies the spec-first _discipline_ layer of SDD; the codegen layer is external tooling and the enforcement layer is the companion stack.**
 
 What this plugin does **not** do, and must not start doing under SDD framing:
 
@@ -87,7 +87,7 @@ Non-reversal (any one = keep): ≥1 PR/issue cites it to reject a codegen/agent-
 - **C1 (Zero-dep invariant)**: ADR + blog are pure markdown; no new dependencies.
 - **C2 (Charter integrity)**: Content is read-only reference per `CLAUDE.md` § Architecture; external tools are _referenced_, never wrapped — preserving guidance-only.
 - **C3 (Plugin boundary)**: The boundary verdict is the point — codegen → external tools; enforcement → `claude-governance`; only spec-first _discipline_ lands here. No hook added.
-- **C4 (Version-bump rule per [ADR-019](./ADR-019-doctrine-only-scope-refinement.md))**: `docs/adr/**` and `docs/blog/**` are contributor-doctrine → no bump, no CHANGELOG; Check 27 confirms.
+- **C4 (Version-bump rule per [ADR-019](./ADR-019-doctrine-only-scope-refinement.md))**: `docs/adr/**` is listed as contributor-doctrine in ADR-019's table. `docs/blog/**` is not enumerated there, but Check 27's consumer-doctrine regex (`^(rules|skills|hooks|habits|guides|agents)/`) excludes it by construction → no bump, no CHANGELOG. (Authority for the blog path is the Check 27 regex, not ADR-019's table — the table should add `docs/blog/**` in a future ADR-019 amendment for completeness.)
 - **C5 (External-claim honesty per [ADR-014](./ADR-014-external-prior-art-audit.md))**: every external fact in this ADR was verified against a primary source during the research brief; stats are quoted precisely (Gartner "projects canceled," not "agents demoted"); no star counts inlined (staleness-safe).
 
 ## Self-Check
