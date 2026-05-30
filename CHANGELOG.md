@@ -10,6 +10,24 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.18.9 — Diagnose Worked-Example Polish (2026-05-30)
+
+Craft follow-up to v2.18.8, closing a Heart-dimension gap a `/whole-person-check` flagged: the independent-source verification step in `/diagnose` Phase 4 told the reader _what_ to do, but the copy-pasteable _how_ lived one click away in the guide.
+
+### Shipped
+
+- **`skills/diagnose` Phase 4** — adds a runnable worked example (`docker run <img>` vs `docker exec <ctr>`, compare-and-flag-divergence) plus a one-line generalization so the technique transfers beyond docker (compile-from-source vs installed package; DB row vs API response; two log vantages): _read the claim twice from sources that can't share the same mistake, and only believe it when they agree._
+
+### Boundary
+
+Independence-of-source stays the rule; the example contains **zero** agent-orchestration vocabulary (no `parallel()`/`spawn`/`orchestrate`), so the ADR-021 engine boundary is intact — fan-out engine stays in `claude-governance`. Diagnose stays under the 2000-word F3 cap (1493 → 1585); Gap 2's AC (#243) is preserved.
+
+### Doctrine
+
+Consumer-doctrine bump per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md) (`skills/` edit MUST bump) — patch bump v2.18.8 → v2.18.9 atomic across 4 files.
+
+---
+
 ## v2.18.8 — Independent-Source Verification (2026-05-30)
 
 Adds the **discipline** that the first real fan-out use exposed (follow-up to [#243](https://github.com/pitimon/8-habit-ai-dev/issues/243), built on #241/ADR-021): catching a _confident-but-wrong root cause_ that survives every author-side gate because each gate reuses the same single contaminated observation. Lived case (memforge): a version read from `docker exec` ("stale config from buildx cache") survived `advisor`, a review pass, a merged PR, and a written `/reflect` lesson — until an independent probe (`docker run` on the image) contradicted it and surfaced the real cause: a bind-mount overriding the image. Boundary-safe per [ADR-021](docs/adr/ADR-021-dynamic-workflow-positioning.md) — the **discipline** lives here; the fan-out **engine** stays in `claude-governance`.

@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.18.8-blue)
+![Version](https://img.shields.io/badge/latest-v2.18.9-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.18.9 — Diagnose Worked-Example Polish (May 2026)
+
+Craft follow-up to v2.18.8, closing a Heart-dimension gap a `/whole-person-check` flagged. `/diagnose` Phase 4's independent-source verification step gains a copy-pasteable worked example (`docker run <img>` vs `docker exec <ctr>`, compare-and-flag-divergence) plus a one-line generalization — _read the claim twice from sources that can't share the same mistake, and believe it only when they agree_ — so a first-time user internalizes the technique without leaving the skill. Boundary-safe per [ADR-021](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-021-dynamic-workflow-positioning.md): independence-of-source, zero agent-orchestration vocabulary. Consumer-doctrine bump per [ADR-019](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-019-doctrine-only-scope-refinement.md). Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.18.8 — Independent-Source Verification (May 2026)
 

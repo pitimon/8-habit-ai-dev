@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-23-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.18.8-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.8)
+[![Version](https://img.shields.io/badge/Version-2.18.9-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.9)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -422,18 +422,16 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
-## What's New in v2.18.8
+## What's New in v2.18.9
 
-**Theme: independent-source verification — catch a confident-but-wrong root cause before every author-side gate ratifies it** ([guide](guides/independent-source-verification.md))
+**Theme: a copy-pasteable worked example for `/diagnose`'s independent-source check** ([guide](guides/independent-source-verification.md))
 
-A lived case (memforge, 2026-05-29/30): a wrong root cause read from a single tool (`docker exec`) survived `advisor`, a review pass, a merged PR, and a written `/reflect` lesson — all reused the same contaminated observation. An independent probe (`docker run` on the image) contradicted it and surfaced the real cause (a bind-mount overriding the image). Issue [#243](https://github.com/pitimon/8-habit-ai-dev/issues/243) folds the transferable **discipline** into the skills the author already runs — boundary-safe per [ADR-021](docs/adr/ADR-021-dynamic-workflow-positioning.md) (discipline here, fan-out **engine** stays in `claude-governance`).
+A craft follow-up to v2.18.8. The independent-source verification step shipped in v2.18.8 told the reader _what_ to do; v2.18.9 adds a worked one-liner showing _how_ — so a first-time `/diagnose` user internalizes the technique without leaving the skill.
 
-- **New `guides/independent-source-verification.md`** — the canonical case study + rule: a root cause believed from a single observation source is unverified; confirm it from an _independent_ source (different tool/command/vantage) and reconcile contradictions rather than pick. Cited by the six skill/guide edits so they share one stable source.
-- **Six gap edits** — `diagnose` (Phase 4 + DoD), `cross-verify` (Q12 + a diagnosis-reconciliation callout), `post-mortem` (§7 "overturned root cause"), `reflect` (Q2 "did a prior diagnosis prove wrong?"), `orchestration-patterns.md` (Pattern 4 diagnostic-escalation trigger), and `advisor-pattern.md` (the gate that failed here — "is all evidence single-source?").
-- **Boundary-reviewed** — `8-habit-reviewer` caught one DRIFT (Pattern 4 text drifting toward owning the fan-out engine) and confirmed CLEAN after reword; the discipline applied to its own rollout.
-- **Consumer-doctrine bump** — `guides/` + `skills/` edits per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md); patch bump v2.18.7 → v2.18.8 atomic across 4 files.
+- **`skills/diagnose` Phase 4** — gains a runnable example (`docker run <img>` vs `docker exec <ctr>`, compare-and-flag-divergence) plus a one-line generalization (compile-from-source vs installed package; DB row vs API response): _read the claim twice from sources that can't share the same mistake, and only believe it when they agree._ Boundary-safe per [ADR-021](docs/adr/ADR-021-dynamic-workflow-positioning.md) — independence-of-source, not agent orchestration.
+- **Consumer-doctrine bump** — `skills/` edit per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md); patch bump v2.18.8 → v2.18.9 atomic across 4 files.
 
-PR closes [#243](https://github.com/pitimon/8-habit-ai-dev/issues/243).
+For the v2.18.8 discipline this builds on, see [CHANGELOG.md](CHANGELOG.md). PR closes the `/whole-person-check` Heart-dimension follow-up.
 
 ## What's New in v2.18.6
 
@@ -1062,4 +1060,4 @@ MIT
 
 ---
 
-_Version: 2.18.8 | Last updated: 2026-05-30_
+_Version: 2.18.9 | Last updated: 2026-05-30_
