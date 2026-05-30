@@ -99,6 +99,16 @@ If a probe falsifies a hypothesis: remove it, mark the hypothesis dead, move to 
 
 **Verify the located cause from an independent source.** A root cause confirmed by the _same_ tool that first observed it is still single-source. Re-observe it with a **different tool, command, or vantage** — not necessarily in parallel. When the two sources disagree, **reconcile** the contradiction before fixing; do not pick the reading that fits your hypothesis. The classic tell: `docker run <img>` (the image) and `docker exec <container>` (the running container) reporting **different versions** means a mount is overriding the image — the bug is in the deploy, not the build. See [`independent-source-verification.md`](../../guides/independent-source-verification.md).
 
+Worked example — re-read the **same fact** from a probe independent of your first, then compare:
+
+```sh
+a=$(docker run --rm --entrypoint sh "$IMG" -c 'grep VERSION /app/config.ts')  # the image
+b=$(docker exec "$CTR" grep VERSION /app/config.ts)                           # the running container
+[ "$a" = "$b" ] || echo "DIVERGENCE → a mount overrides the image: image=$a running=$b"
+```
+
+The shape is general (compile-from-source vs installed package; DB row vs API response; two log vantages): _read the claim twice from sources that can't share the same mistake, and only believe it when they agree._
+
 ### Phase 5 — Fix with Regression Test
 
 **Write the regression test BEFORE the fix.**
