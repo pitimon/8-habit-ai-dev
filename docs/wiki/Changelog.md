@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.18.7-blue)
+![Version](https://img.shields.io/badge/latest-v2.18.8-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.18.8 — Independent-Source Verification (May 2026)
+
+Adds the **discipline** the first real fan-out use exposed (follow-up to [#243](https://github.com/pitimon/8-habit-ai-dev/issues/243), built on #241/ADR-021): catching a _confident-but-wrong root cause_ that survives every author-side gate because each gate reuses the same single contaminated observation. Lived case (memforge) — a version read from `docker exec` survived `advisor`, a review pass, a merged PR, and a `/reflect` lesson, until an independent probe (`docker run` on the image) contradicted it and surfaced a bind-mount overriding the image. New canonical [`guides/independent-source-verification.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/independent-source-verification.md) holds the case study + rule (confirm a root cause from an _independent_ source; reconcile contradictions rather than pick) and is cited by six gap edits to `diagnose`, `cross-verify`, `post-mortem`, `reflect`, `orchestration-patterns.md`, and `advisor-pattern.md`. Boundary-safe per [ADR-021](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-021-dynamic-workflow-positioning.md) — discipline here, fan-out engine in `claude-governance`; `8-habit-reviewer` caught one boundary DRIFT (Pattern 4 re-owning the engine) and confirmed CLEAN after reword. Consumer-doctrine bump per [ADR-019](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-019-doctrine-only-scope-refinement.md). Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.18.7 — Dynamic Workflow Positioning (May 2026)
 

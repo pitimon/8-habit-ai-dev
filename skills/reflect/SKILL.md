@@ -30,7 +30,7 @@ Reinforce good practices. What should we keep doing?
 
 ### 2. What surprised me?
 
-Surface hidden complexity. What did we not expect?
+Surface hidden complexity. What did we not expect? Sub-prompt: did a **prior diagnosis** or shipped **fix prove wrong** this session — what evidence **reversed** it? A root cause that was confident-but-wrong is a high-value surprise to capture; this signal feeds `SKILL-EFFECTIVENESS.md`. See [`independent-source-verification.md`](../../guides/independent-source-verification.md).
 
 ### 3. What would I do differently?
 

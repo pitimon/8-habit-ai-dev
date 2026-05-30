@@ -123,6 +123,10 @@ CONTRACT: <paste contract>
 
 Maps to H1 (be proactive — disprove before deploy) + H5 (understand first — don't accept your own framing). Use this _in addition to_ the 17-question dispatch when the decision is irreversible; the two shapes catch different classes of issue.
 
+### When the artifact under review is a diagnosis (not a proposal)
+
+The anti-bias rules above assume the **proposal** may be over-confident, so the reviewer re-derives the claim from artifact + contract. But when the artifact under review **is a root-cause diagnosis**, there is no artifact divergence to catch — every gate inherits the author's one observation, so a confident-but-wrong cause is ratified unanimously. Add the check both the balanced and disprove shapes miss: **does all evidence for this root cause come from a single source or tool?** If yes, require an independent-source confirmation (a different tool/command/vantage) _before_ ratifying, and reconcile any contradiction rather than picking the reading that fits. See [`independent-source-verification.md`](independent-source-verification.md).
+
 ## Boundary Note
 
 - **API-level `advisor_20260301`** belongs in projects that call the Claude API directly (e.g., memforge, custom agent loops). It is out of scope for this plugin per [CLAUDE.md](../CLAUDE.md) and the scope decision in [#87](https://github.com/pitimon/8-habit-ai-dev/issues/87).

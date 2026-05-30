@@ -61,14 +61,14 @@ Run through this checklist. Flag any item that fails.
 
 ### Public Victory (Collaboration)
 
-| #   | Habit          | Dimension | Question                                                                    |
-| --- | -------------- | --------- | --------------------------------------------------------------------------- |
-| 9   | H4: Win-Win    | Heart     | Will issue closures include rationale, not just "fixed"?                    |
-| 10  | H4: Win-Win    | Heart     | Do error messages help the next developer understand AND fix the problem?   |
-| 11  | H5: Understand | Mind      | Have I read the existing code in the affected area before writing new code? |
-| 12  | H5: Understand | Mind      | If fixing a bug, have I reproduced it first?                                |
-| 13  | H6: Synergize  | Heart     | Are independent tasks running in parallel instead of sequentially?          |
-| 14  | H6: Synergize  | Mind      | Have I considered a third alternative beyond the obvious options?           |
+| #   | Habit          | Dimension | Question                                                                                                                                   |
+| --- | -------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 9   | H4: Win-Win    | Heart     | Will issue closures include rationale, not just "fixed"?                                                                                   |
+| 10  | H4: Win-Win    | Heart     | Do error messages help the next developer understand AND fix the problem?                                                                  |
+| 11  | H5: Understand | Mind      | Have I read the existing code in the affected area before writing new code?                                                                |
+| 12  | H5: Understand | Mind      | If fixing a bug, have I reproduced it first — and confirmed the root cause from an **independent** source (not the same tool/observation)? |
+| 13  | H6: Synergize  | Heart     | Are independent tasks running in parallel instead of sequentially?                                                                         |
+| 14  | H6: Synergize  | Mind      | Have I considered a third alternative beyond the obvious options?                                                                          |
 
 ### Renewal & Significance
 
@@ -77,6 +77,8 @@ Run through this checklist. Flag any item that fails.
 | 15  | H7: Sharpen Saw | Body      | After this task, will I capture what I learned (script, doc, or issue)? |
 | 16  | H8: Voice       | Spirit    | Do I understand WHY this task matters, not just WHAT needs to be done?  |
 | 17  | H8: Voice       | Spirit    | Does this work empower the next person who touches this code?           |
+
+> **When the subject under review is a diagnosis or root cause** (not a plan or code change), add one reconciliation check before scoring Q12: could this root cause be **confidently wrong**? Confirm it by an **independent method** — a different tool, command, or vantage, not the same observation — and **reconcile** conflicting evidence before proceeding. Author-side gates all share your evidence, so only an independent source can diverge from it. See [`independent-source-verification.md`](../../guides/independent-source-verification.md).
 
 ## Confidence Levels (Optional — for high-stakes reviews)
 

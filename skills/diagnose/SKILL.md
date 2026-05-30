@@ -97,6 +97,8 @@ Test **one variable per probe**. Prefer debuggers (single-step, inspect state) o
 
 If a probe falsifies a hypothesis: remove it, mark the hypothesis dead, move to the next. If a probe confirms: narrow further until you've located the **architectural seam** where the real bug pattern lives — not just the symptom site.
 
+**Verify the located cause from an independent source.** A root cause confirmed by the _same_ tool that first observed it is still single-source. Re-observe it with a **different tool, command, or vantage** — not necessarily in parallel. When the two sources disagree, **reconcile** the contradiction before fixing; do not pick the reading that fits your hypothesis. The classic tell: `docker run <img>` (the image) and `docker exec <container>` (the running container) reporting **different versions** means a mount is overriding the image — the bug is in the deploy, not the build. See [`independent-source-verification.md`](../../guides/independent-source-verification.md).
+
 ### Phase 5 — Fix with Regression Test
 
 **Write the regression test BEFORE the fix.**
@@ -142,6 +144,7 @@ If either answer is "no", loop back to the relevant phase. The cost of an extra 
 - [ ] Phase 2 reproduction confirmed at ≥80% rate
 - [ ] Phase 3 produced 3–5 ranked falsifiable hypotheses with explicit predictions
 - [ ] Phase 4 probes were one-variable-at-a-time, uniquely tagged
+- [ ] Phase 4 root cause confirmed from an independent source (different tool/command/vantage); any contradiction reconciled, not picked
 - [ ] Phase 5 regression test written BEFORE the fix, located at the architectural seam
 - [ ] Phase 6 cleanup grep returned zero residual probes
 - [ ] **Phase 6 re-run of Phase 1 feedback loop confirmed green** (not just regression test passing)

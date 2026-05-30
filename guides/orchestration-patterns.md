@@ -142,6 +142,8 @@ This is the discipline cue, not the compliance obligation. The EU AI Act Article
 | **Override**   | Findings/outputs are proposals to review, not auto-merged work — human confirms before commit |
 | **Stop**       | The run is interruptible; a runaway fan-out has a bound (count cap, budget) the human set     |
 
+**Diagnostic-escalation trigger** (a distinct reason to demand an independent source): The gates above ask whether _planned_ work is independently decomposable. A separate trigger is _verification_ — when a **wrong root cause** is plausible (the leading hypothesis's fix doesn't fully explain the symptom, or you acted on a diagnosis read from a single tool), **re-probe from an independent source** (a different tool, command, or vantage) specifically to **overturn** it. Fan-out is _one_ way to gather those independent probes — a sequential second probe is another; the value is not throughput but independence. Contradictory outputs (e.g. `docker run <img>` vs `docker exec <container>` reporting different versions) must be reconciled, not picked. A confident-but-wrong root cause that survived `advisor` + a review pass + a merged PR has been overturned exactly this way. Boundary: the portable _discipline_ is independent-source verification (see [`independent-source-verification.md`](independent-source-verification.md)); the fan-out engine itself stays in `claude-governance` (ADR-021).
+
 **When to use**: Any `/breakdown` that tempts you toward "just fan out everything," or before authoring a dynamic-workflow script. Patterns 1-3 cover _how_ to orchestrate once you have decided to; Pattern 4 is the _whether/when_ gate.
 
 **Example**:

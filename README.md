@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-23-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.18.7-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.7)
+[![Version](https://img.shields.io/badge/Version-2.18.8-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.8)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -422,18 +422,18 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
-## What's New in v2.18.7
+## What's New in v2.18.8
 
-**Theme: dynamic-workflow positioning — Opus 4.8's orchestration engine is `claude-governance`'s; the fan-out _discipline_ is ours** ([guide](guides/orchestration-patterns.md), [ADR](docs/adr/ADR-021-dynamic-workflow-positioning.md))
+**Theme: independent-source verification — catch a confident-but-wrong root cause before every author-side gate ratifies it** ([guide](guides/independent-source-verification.md))
 
-Opus 4.8 ships a **dynamic workflow** capability — a deterministic engine that spawns parallel sub-agents. It collides by name and philosophy with the plugin's `/workflow` skill (a human-gated 7-step discipline). A 4-probe repo audit (issue [#241](https://github.com/pitimon/8-habit-ai-dev/issues/241)) settled the layering.
+A lived case (memforge, 2026-05-29/30): a wrong root cause read from a single tool (`docker exec`) survived `advisor`, a review pass, a merged PR, and a written `/reflect` lesson — all reused the same contaminated observation. An independent probe (`docker run` on the image) contradicted it and surfaced the real cause (a bind-mount overriding the image). Issue [#243](https://github.com/pitimon/8-habit-ai-dev/issues/243) folds the transferable **discipline** into the skills the author already runs — boundary-safe per [ADR-021](docs/adr/ADR-021-dynamic-workflow-positioning.md) (discipline here, fan-out **engine** stays in `claude-governance`).
 
-- **Pattern 4: Fan-Out Discipline** — `guides/orchestration-patterns.md` gains a when/when-not-to-fan-out gate keyed to habits (H6 Synergize _reinforces_; H1/H3/H5/H8 are in _tension_), plus an Article 14 oversight checklist (preserve Understand / Override / Stop under autonomous fan-out). Delegates the _how_ to existing Patterns 1-3 — no duplication.
-- **ADR-021** — disambiguates `/workflow` (discipline) from the Opus 4.8 engine, and quotes the CLAUDE.md boundary rule verbatim: the **engine** (runtime + agent-spawn authorization) belongs to `claude-governance`; only the fan-out **discipline** lives here. Prevents future engine-wrapping skills from violating the boundary.
-- **Forward-guardrail framing** — ships with zero first-person friction signal (the collision is structural, surfaced by audit); sunset 2026-11-24 with explicit reversal criterion, per the ADR-014/017/020 precedent.
-- **Consumer-doctrine bump** — `guides/` edit per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md); patch bump v2.18.6 → v2.18.7 atomic across 4 files.
+- **New `guides/independent-source-verification.md`** — the canonical case study + rule: a root cause believed from a single observation source is unverified; confirm it from an _independent_ source (different tool/command/vantage) and reconcile contradictions rather than pick. Cited by the six skill/guide edits so they share one stable source.
+- **Six gap edits** — `diagnose` (Phase 4 + DoD), `cross-verify` (Q12 + a diagnosis-reconciliation callout), `post-mortem` (§7 "overturned root cause"), `reflect` (Q2 "did a prior diagnosis prove wrong?"), `orchestration-patterns.md` (Pattern 4 diagnostic-escalation trigger), and `advisor-pattern.md` (the gate that failed here — "is all evidence single-source?").
+- **Boundary-reviewed** — `8-habit-reviewer` caught one DRIFT (Pattern 4 text drifting toward owning the fan-out engine) and confirmed CLEAN after reword; the discipline applied to its own rollout.
+- **Consumer-doctrine bump** — `guides/` + `skills/` edits per [ADR-019](docs/adr/ADR-019-doctrine-only-scope-refinement.md); patch bump v2.18.7 → v2.18.8 atomic across 4 files.
 
-PR closes [#241](https://github.com/pitimon/8-habit-ai-dev/issues/241).
+PR closes [#243](https://github.com/pitimon/8-habit-ai-dev/issues/243).
 
 ## What's New in v2.18.6
 
@@ -1062,4 +1062,4 @@ MIT
 
 ---
 
-_Version: 2.18.7 | Last updated: 2026-05-29_
+_Version: 2.18.8 | Last updated: 2026-05-30_
