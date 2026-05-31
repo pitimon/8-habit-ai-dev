@@ -21,6 +21,12 @@ name: Link Check
 # write time; CI cannot re-verify them. claude-governance is public and IS
 # checked (caught a real moved-doc bug pre-merge during dogfood).
 #
+# The root-level `plugin` symlink exists for Codex marketplace compatibility.
+# Exclude it so glob expansion does not recurse through plugin/plugin/...
+#
+# Gartner newsroom links are excluded because they return 403 to GitHub-hosted
+# link checkers while remaining human-readable in browsers.
+#
 # Issue: pitimon/8-habit-ai-dev#172
 
 on:
@@ -55,7 +61,9 @@ jobs:
             --scheme http
             --exclude '^https://github\.com/pitimon/8-habit-ai-dev/(blob|tree|raw)/main/|^https://github\.com/pitimon/8-habit-ai-dev/releases/tag/'
             --exclude '^https://github\.com/pitimon/(memforge|devsecops-ai-team)(/|$)'
+            --exclude '^https://www\.gartner\.com/en/newsroom/press-releases/'
             --exclude-path ./docs/wiki
+            --exclude-path ./plugin
             './**/*.md'
           fail: true
         env:
