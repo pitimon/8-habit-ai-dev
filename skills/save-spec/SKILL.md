@@ -10,7 +10,7 @@ description: >
 user-invocable: true
 argument-hint: "[project-name] [target-dir]"
 allowed-tools: ["Read", "Write", "Glob", "AskUserQuestion"]
-disable-model-invocation: true
+disable-model-invocation: false
 prev-skill: any
 next-skill: any
 ---

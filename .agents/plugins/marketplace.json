@@ -1,0 +1,20 @@
+{
+  "name": "pitimon-8-habit-ai-dev",
+  "interface": {
+    "displayName": "8-Habit AI Dev"
+  },
+  "plugins": [
+    {
+      "name": "8-habit-ai-dev",
+      "source": {
+        "source": "local",
+        "path": "./plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

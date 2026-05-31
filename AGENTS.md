@@ -4,12 +4,13 @@ This is your install + operating protocol. Claude Code reads `./CLAUDE.md` autom
 
 ## What this is
 
-A Claude Code plugin that adds **workflow discipline** to AI-assisted development — 17 on-demand markdown skills across a 7-step workflow grounded in Covey's 8 Habits. The plugin is markdown only: no build system, no runtime code, no dependencies. Skills are **read-only guidance** — they tell an agent _how_ to approach a task; they never edit files on their own.
+A Claude Code and Codex plugin that adds **workflow discipline** to AI-assisted development — 23 on-demand markdown skills across a 7-step workflow grounded in Covey's 8 Habits. The plugin is markdown only: no build system, no runtime code, no dependencies. Skills are **read-only guidance** — they tell an agent _how_ to approach a task; they never edit files on their own.
 
 ## Install
 
 - **Claude Code**: `claude plugin marketplace add pitimon/8-habit-ai-dev && claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev`
-- **Other agent platforms**: `git clone https://github.com/pitimon/8-habit-ai-dev` then load `skills/<name>/SKILL.md` via your platform's skill-loading mechanism (Codex `skill` tool, Cursor Rules, Windsurf memories, Aider `--read`, etc.). The skill _content_ is identical across platforms — only the invocation differs. Consult your tool's documentation for the exact command.
+- **Codex**: `codex plugin marketplace add pitimon/8-habit-ai-dev && codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev`
+- **Other agent platforms**: `git clone https://github.com/pitimon/8-habit-ai-dev` then load `skills/<name>/SKILL.md` via your platform's skill-loading mechanism (Cursor Rules, Windsurf memories, Aider `--read`, Continue, etc.). The skill _content_ is identical across platforms — only the invocation differs. Consult your tool's documentation for the exact command.
 
 ## Read this order
 

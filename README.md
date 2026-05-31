@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-23-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.18.9-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.18.9)
+[![Version](https://img.shields.io/badge/Version-2.19.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.19.0)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -82,14 +82,21 @@ The same shift is happening industry-wide under the name **Spec-Driven Developme
 
 ## Quick Start
 
-**Install:**
+**Install for Claude Code:**
 
 ```bash
 claude plugin marketplace add pitimon/8-habit-ai-dev
 claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
 ```
 
-**Use** (restart Claude Code, then invoke any skill):
+**Install for Codex:**
+
+```bash
+codex plugin marketplace add pitimon/8-habit-ai-dev
+codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
+```
+
+**Use** (restart your agent, then invoke any skill by name or matching intent):
 
 ```
 /requirements       # Before you build anything
@@ -98,11 +105,11 @@ claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
 /whole-person-check # Assess Body/Mind/Heart/Spirit balance
 ```
 
-**Verify installation**: After restarting, you should see `## 8-Habit AI Dev Active` in the session banner with the 7-step workflow reminder.
+**Verify Claude Code installation**: After restarting, you should see `## 8-Habit AI Dev Active` in the session banner with the 7-step workflow reminder. For Codex, run `codex plugin list` and confirm `8-habit-ai-dev@pitimon-8-habit-ai-dev` is installed.
 
 **New to the plugin?** Start with `/workflow` for a guided walkthrough, or see [Use Cases](#use-cases-which-skill-when) to find the right skill for your situation.
 
-Two commands to install. The plugin loads a session reminder and makes 23 skills available.
+Two commands to install per platform. Claude Code also loads a session reminder; both platforms make 23 skills available.
 
 ---
 
@@ -329,6 +336,10 @@ Both agents use the `sonnet` model for fast, focused analysis.
 ├── .claude-plugin/
 │   ├── plugin.json                 # Plugin metadata (v2.15.0)
 │   └── marketplace.json            # Marketplace listing
+├── .codex-plugin/
+│   └── plugin.json                 # Native Codex plugin metadata (v2.19.0)
+├── .agents/plugins/
+│   └── marketplace.json            # Native Codex marketplace listing
 ├── skills/                         # 23 skills (8 workflow + 15 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
 │   ├── requirements/SKILL.md       #   Step 1 → H2
@@ -423,6 +434,18 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.19.0
+
+**Theme: native Codex plugin packaging** ([ADR-023](docs/adr/ADR-023-codex-native-packaging.md))
+
+The same markdown-only workflow discipline now installs natively in Codex. This release adds Codex packaging without rewriting the skills or adding runtime enforcement.
+
+- **Codex manifest** — `.codex-plugin/plugin.json` exposes the existing `skills/` directory with Codex interface metadata.
+- **Codex marketplace** — `.agents/plugins/marketplace.json` lets users install from the Git repo with `codex plugin marketplace add pitimon/8-habit-ai-dev` then `codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev`. It points to `./plugin`, a symlink back to the repo root, because Codex ignores root-path marketplace entries.
+- **Codex ingestion compatibility** — `/ai-dev-log` and `/save-spec` now declare `disable-model-invocation: false`; ADR-014 already recorded the previous `true` flag as decorative for Claude plugin skills, while Codex rejects `true` during validation.
+- **Validator coverage** — `tests/validate-structure.sh` now checks Codex packaging exists, keeps `.codex-plugin/plugin.json` version-aligned with the Claude package, and treats Codex packaging as consumer-doctrine for bump enforcement.
+- **Version convention** — release version now lives in 5 files: Claude manifest, Claude marketplace, Codex manifest, README, and SELF-CHECK.
 
 ## What's New in v2.18.9
 
@@ -993,7 +1016,7 @@ Linters check syntax. CI checks tests. This plugin checks _process_ — did you 
 Thai: "Done is not done well." Completing a task (ทำเสร็จ) is not the same as completing it with quality (ทำดี). This principle is the plugin's core identity — speed without discipline creates debt.
 
 **Q: Can I use this without Claude Code?**
-The skills require Claude Code's plugin system. However, the underlying principles work with any AI tool. See [Alternative Setup](#alternative-setup-without-plugin) to load just the rules file, or read the `habits/` files as standalone guides.
+Yes. v2.19.0 adds native Codex packaging via `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json`. Other agent platforms can still load `skills/<name>/SKILL.md` manually; start at [AGENTS.md](AGENTS.md).
 
 **Q: What are the "Whole Person dimensions"?**
 Covey's model: Body (discipline/quality), Mind (vision/architecture), Heart (passion/craft/empathy), Spirit (conscience/ethics/security). AI excels at Body and Mind but systematically neglects Heart and Spirit. See [Whole Person Assessment](#whole-person-assessment).
@@ -1030,7 +1053,7 @@ Yes, deliberately. The opinions come from 910 man-day-equivalents of production 
 
 ## Alternative Setup (Without Plugin)
 
-If you prefer not to install the plugin, you can use the rules file directly:
+If you prefer not to install the plugin in Claude Code or Codex, you can use the rules file directly:
 
 ```bash
 # Install rules only (no skills, no hooks)
@@ -1039,7 +1062,7 @@ curl -sL https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/rules/eff
   -o ~/.claude/rules/effective-development.md
 ```
 
-This auto-loads the 8-Habit principles into every Claude Code session without the skills or hooks.
+This auto-loads the 8-Habit principles into every Claude Code session without the skills or hooks. For other agents, load [AGENTS.md](AGENTS.md), then use [skills/RESOLVER.md](skills/RESOLVER.md) to pick the right `SKILL.md`.
 
 ---
 
@@ -1062,4 +1085,4 @@ MIT
 
 ---
 
-_Version: 2.18.9 | Last updated: 2026-05-30_
+_Version: 2.19.0 | Last updated: 2026-05-31_

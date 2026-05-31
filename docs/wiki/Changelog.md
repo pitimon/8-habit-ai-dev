@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.18.9-blue)
+![Version](https://img.shields.io/badge/latest-v2.19.0-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.19.0 — Native Codex Plugin Packaging (May 2026)
+
+Adds first-class Codex packaging while preserving the existing Claude Code package. New files: `.codex-plugin/plugin.json` points Codex at the existing `skills/` directory with interface metadata; `.agents/plugins/marketplace.json` exposes the repo as marketplace `pitimon-8-habit-ai-dev` so users can run `codex plugin marketplace add pitimon/8-habit-ai-dev` followed by `codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev`. The marketplace points to `./plugin`, a symlink back to the repo root, because Codex ignores root-path marketplace entries. [ADR-023](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-023-codex-native-packaging.md) records the packaging decision and boundary: same read-only markdown skills, no runtime enforcement, Claude hooks remain Claude-only. Codex ingestion compatibility sets `/ai-dev-log` and `/save-spec` `disable-model-invocation` to `false` because Codex rejects `true` and ADR-014 already marked it decorative for Claude plugin skills. `tests/validate-structure.sh` now checks Codex packaging presence, required fields, version alignment, and treats Codex packaging paths as consumer-doctrine for bump enforcement. Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.18.9 — Diagnose Worked-Example Polish (May 2026)
 
@@ -470,10 +474,11 @@ This plugin follows [semantic versioning](https://semver.org/):
 - **Minor** — new skills, new habits content, backward-compatible additions
 - **Patch** — documentation fixes, typo corrections, clarifications
 
-Version is tracked in four files that must bump together (enforced by `tests/validate-structure.sh`):
+Version is tracked in five files that must bump together (enforced by `tests/validate-structure.sh`):
 
 - `.claude-plugin/plugin.json`
 - `.claude-plugin/marketplace.json`
+- `.codex-plugin/plugin.json`
 - `README.md` (badge + footer)
 - `SELF-CHECK.md` header
 

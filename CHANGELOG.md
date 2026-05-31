@@ -10,6 +10,24 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.19.0 — Native Codex Plugin Packaging (2026-05-31)
+
+Adds first-class Codex packaging so the same markdown-only skill system can be installed with Codex's plugin marketplace flow, not only loaded manually via `AGENTS.md`.
+
+### Shipped
+
+- **`.codex-plugin/plugin.json`** — native Codex plugin manifest pointing at the existing `skills/` directory, with Codex `interface` metadata, default prompts, author/repository/license fields, and version aligned to the Claude package.
+- **`.agents/plugins/marketplace.json`** — Codex marketplace descriptor named `pitimon-8-habit-ai-dev`, with plugin source path `"./plugin"`. `plugin` is a symlink to the repo root because Codex marketplace discovery ignores root-path entries (`"."` / `"./"`). Install flow: `codex plugin marketplace add pitimon/8-habit-ai-dev` then `codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev`.
+- **`docs/adr/ADR-023-codex-native-packaging.md`** — records the packaging decision and keeps the boundary explicit: Codex gets the same read-only markdown skills; Claude-specific hooks remain Claude packaging; no runtime enforcement added.
+- **Codex ingestion compatibility** — `disable-model-invocation` on `/ai-dev-log` and `/save-spec` is set to `false`. ADR-014 already marked the previous `true` declarations as decorative for Claude plugin skills; Codex validation rejects `true`, so compatibility wins until both platforms support the field consistently.
+- **Validator coverage** — `tests/validate-structure.sh` now checks Codex manifest/marketplace presence, required fields, and version alignment. Check 27 treats `.codex-plugin/**` and `.agents/plugins/marketplace.json` as consumer-doctrine paths requiring a bump.
+
+### Versioning
+
+The release convention expands from 4 to 5 version-bearing files: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `.codex-plugin/plugin.json`, `README.md`, and `SELF-CHECK.md`.
+
+Minor bump because this is a new install surface for a new consumer platform; existing Claude Code behavior is unchanged.
+
 ## v2.18.9 — Diagnose Worked-Example Polish (2026-05-30)
 
 Craft follow-up to v2.18.8, closing a Heart-dimension gap a `/whole-person-check` flagged: the independent-source verification step in `/diagnose` Phase 4 told the reader _what_ to do, but the copy-pasteable _how_ lived one click away in the guide.

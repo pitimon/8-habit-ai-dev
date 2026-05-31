@@ -84,17 +84,18 @@ done
 echo ""
 
 # --- Check 4: Version consistency ---
-echo "--- Check 4: Version consistency across 3 files ---"
+echo "--- Check 4: Version consistency across 4 manifests/docs ---"
 v_plugin=$(grep '"version"' .claude-plugin/plugin.json 2>/dev/null | head -1 | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
 v_marketplace=$(grep '"version"' .claude-plugin/marketplace.json 2>/dev/null | head -1 | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
+v_codex=$(grep '"version"' .codex-plugin/plugin.json 2>/dev/null | head -1 | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
 v_readme=$(grep 'Version:' README.md 2>/dev/null | head -1 | sed 's/.*Version: \([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\).*/\1/')
 
-if [ -z "$v_plugin" ] || [ -z "$v_marketplace" ] || [ -z "$v_readme" ]; then
-  fail "Could not extract version from one or more files (plugin=$v_plugin, marketplace=$v_marketplace, readme=$v_readme)"
-elif [ "$v_plugin" = "$v_marketplace" ] && [ "$v_plugin" = "$v_readme" ]; then
-  pass "All 3 files have version $v_plugin"
+if [ -z "$v_plugin" ] || [ -z "$v_marketplace" ] || [ -z "$v_codex" ] || [ -z "$v_readme" ]; then
+  fail "Could not extract version from one or more files (claude=$v_plugin, marketplace=$v_marketplace, codex=$v_codex, readme=$v_readme)"
+elif [ "$v_plugin" = "$v_marketplace" ] && [ "$v_plugin" = "$v_codex" ] && [ "$v_plugin" = "$v_readme" ]; then
+  pass "All 4 manifests/docs have version $v_plugin"
 else
-  fail "Version mismatch: plugin.json=$v_plugin, marketplace.json=$v_marketplace, README.md=$v_readme"
+  fail "Version mismatch: claude plugin.json=$v_plugin, claude marketplace.json=$v_marketplace, codex plugin.json=$v_codex, README.md=$v_readme"
 fi
 echo ""
 
@@ -799,13 +800,14 @@ if [ "$P3_WARN" -gt 0 ]; then
 fi
 echo ""
 
-# --- Check 27: Consumer-doctrine bump enforcement (ADR-019) ---
-# Consumer-doctrine paths (rules/, skills/, hooks/, habits/, guides/, agents/) reach
+# --- Check 27: Consumer-doctrine bump enforcement (ADR-019 + ADR-023) ---
+# Consumer-doctrine paths (rules/, skills/, hooks/, habits/, guides/, agents/,
+# .codex-plugin/, .agents/plugins/marketplace.json) reach
 # plugin consumers at runtime. Changes there MUST be accompanied by a version bump in
-# the 4 version files, even if the change is "doctrine refinement" in spirit. Contributor-
+# the version-bearing files, even if the change is "doctrine refinement" in spirit. Contributor-
 # doctrine paths (docs/, CLAUDE.md, CONTRIBUTING.md, .github/, SELF-CHECK.md, tests/)
 # do not — they preserve ADR-017 §C5 intent. See ADR-019 for full rationale and tables.
-echo "--- Check 27: consumer-doctrine bump enforcement (ADR-019) ---"
+echo "--- Check 27: consumer-doctrine bump enforcement (ADR-019 + ADR-023) ---"
 
 LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
 if [ -z "$LAST_TAG" ]; then
@@ -818,8 +820,8 @@ else
   if [ -z "$CHANGED" ]; then
     pass "no file changes since $LAST_TAG — Check 27 trivially passes"
   else
-    # Match any path under consumer-doctrine top-level dirs.
-    CONSUMER_TOUCHED=$(echo "$CHANGED" | grep -E '^(rules|skills|hooks|habits|guides|agents)/' || true)
+    # Match any path under consumer-doctrine top-level dirs plus native Codex packaging.
+    CONSUMER_TOUCHED=$(echo "$CHANGED" | grep -E '^((rules|skills|hooks|habits|guides|agents)/|\.codex-plugin/|\.agents/plugins/marketplace\.json$)' || true)
 
     if [ -z "$CONSUMER_TOUCHED" ]; then
       pass "contributor-doctrine only since $LAST_TAG — no bump required (ADR-019)"
@@ -829,14 +831,70 @@ else
       CURRENT_VERSION=$(grep '"version"' .claude-plugin/plugin.json | head -1 | sed 's/.*"version": *"\([^"]*\)".*/\1/')
 
       if [ "$CURRENT_VERSION" = "$LAST_RELEASE_VERSION" ]; then
-        fail "Check 27: consumer-doctrine paths changed since $LAST_TAG but version not bumped (still $CURRENT_VERSION). Cite ADR-019 (consumer-doctrine PRs require bump + CHANGELOG)."
+        fail "Check 27: consumer-doctrine paths changed since $LAST_TAG but version not bumped (still $CURRENT_VERSION). Cite ADR-019/ADR-023 (consumer-doctrine PRs require bump + CHANGELOG)."
         echo "  Consumer-doctrine paths touched:"
         echo "$CONSUMER_TOUCHED" | sed 's/^/    - /'
       else
-        pass "consumer-doctrine touched + version bumped $LAST_RELEASE_VERSION → $CURRENT_VERSION (ADR-019 satisfied)"
+        pass "consumer-doctrine touched + version bumped $LAST_RELEASE_VERSION → $CURRENT_VERSION (ADR-019/ADR-023 satisfied)"
       fi
     fi
   fi
+fi
+echo ""
+
+# --- Check 28: Native Codex plugin packaging ---
+echo "--- Check 28: native Codex plugin packaging (ADR-023) ---"
+CODEX_FAIL=0
+CODEX_PLUGIN=".codex-plugin/plugin.json"
+CODEX_MARKETPLACE=".agents/plugins/marketplace.json"
+
+if [ -f "$CODEX_PLUGIN" ]; then
+  pass "$CODEX_PLUGIN exists"
+else
+  fail "$CODEX_PLUGIN missing"
+  CODEX_FAIL=$((CODEX_FAIL + 1))
+fi
+
+if [ -f "$CODEX_MARKETPLACE" ]; then
+  pass "$CODEX_MARKETPLACE exists"
+else
+  fail "$CODEX_MARKETPLACE missing"
+  CODEX_FAIL=$((CODEX_FAIL + 1))
+fi
+
+if [ -f "$CODEX_PLUGIN" ]; then
+  for field in '"name": "8-habit-ai-dev"' '"skills": "./skills/"' '"interface"' '"defaultPrompt"'; do
+    if grep -q "$field" "$CODEX_PLUGIN"; then
+      pass "$CODEX_PLUGIN contains $field"
+    else
+      fail "$CODEX_PLUGIN missing $field"
+      CODEX_FAIL=$((CODEX_FAIL + 1))
+    fi
+  done
+fi
+
+if [ -L "plugin" ]; then
+  target=$(readlink "plugin")
+  if [ "$target" = "." ]; then
+    pass "plugin symlink points to repo root (Codex marketplace child path)"
+  else
+    fail "plugin symlink points to '$target' (expected '.')"
+    CODEX_FAIL=$((CODEX_FAIL + 1))
+  fi
+else
+  fail "plugin symlink missing (Codex marketplace needs a child source path)"
+  CODEX_FAIL=$((CODEX_FAIL + 1))
+fi
+
+if [ -f "$CODEX_MARKETPLACE" ]; then
+  for field in '"name": "pitimon-8-habit-ai-dev"' '"path": "./plugin"' '"installation": "AVAILABLE"' '"authentication": "ON_INSTALL"'; do
+    if grep -q "$field" "$CODEX_MARKETPLACE"; then
+      pass "$CODEX_MARKETPLACE contains $field"
+    else
+      fail "$CODEX_MARKETPLACE missing $field"
+      CODEX_FAIL=$((CODEX_FAIL + 1))
+    fi
+  done
 fi
 echo ""
 

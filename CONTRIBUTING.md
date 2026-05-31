@@ -195,7 +195,7 @@ Audit any new shell pipeline for the same shape: any `<file-reader> | <filter> |
 - **`README.md`** must mention the current version from `.claude-plugin/plugin.json` (typically in the "What's New" section)
 - **`docs/wiki/Changelog.md`** must either mention the current version OR contain a relative link to `CHANGELOG.md` (pointer-based design per ADR-004)
 
-This catches the "stuck at v2.N-5" scenario at PR time instead of 4 months later when someone notices the README looks ancient. When you bump the version in `plugin.json` + `marketplace.json` + `README.md` + `SELF-CHECK.md` (the 4-file convention enforced by `validate-structure.sh`), Check 19 verifies you also wrote release notes in the user-facing surfaces. If your release is a pure pointer (e.g., wiki just links back to root `CHANGELOG.md` without its own entry), that satisfies the check — duplication is not required.
+This catches the "stuck at v2.N-5" scenario at PR time instead of 4 months later when someone notices the README looks ancient. When you bump the version in the Claude manifest, Claude marketplace, Codex manifest, `README.md`, and `SELF-CHECK.md` (the 5-file convention enforced by `validate-structure.sh`), Check 19 verifies you also wrote release notes in the user-facing surfaces. If your release is a pure pointer (e.g., wiki just links back to root `CHANGELOG.md` without its own entry), that satisfies the check — duplication is not required.
 
 See [issue #108](https://github.com/pitimon/8-habit-ai-dev/issues/108) and [issue #106](https://github.com/pitimon/8-habit-ai-dev/issues/106) for the drift incident that motivated this check.
 
@@ -210,14 +210,15 @@ Internal markdown links (relative `.md` paths) are validated by `tests/validate-
 
 ## Version Bumping
 
-Version lives in **4 files** — all must be bumped together:
+Version lives in **5 files** — all must be bumped together:
 
 - `.claude-plugin/plugin.json`
 - `.claude-plugin/marketplace.json`
+- `.codex-plugin/plugin.json`
 - `README.md` footer
 - `SELF-CHECK.md` header (line 3: `**Version**: ... | **Previous**: ...`)
 
-`tests/validate-structure.sh` enforces consistency across all four — CI fails if any drifts. See [issue #106](https://github.com/pitimon/8-habit-ai-dev/issues/106) for the drift incident that motivated the SELF-CHECK.md addition.
+`tests/validate-structure.sh` enforces consistency across all five — CI fails if any drifts. See [issue #106](https://github.com/pitimon/8-habit-ai-dev/issues/106) for the drift incident that motivated the SELF-CHECK.md addition and [ADR-023](docs/adr/ADR-023-codex-native-packaging.md) for the Codex manifest addition.
 
 ## Release Checklist
 
@@ -225,7 +226,7 @@ Before bumping the version files above and tagging a release, run through this l
 
 - [ ] Run [`SKILL-EFFECTIVENESS.md`](SKILL-EFFECTIVENESS.md) tally update per its §"Maintainer update protocol" — grep Q6 across new lessons since last tally, increment counters, refresh `Last updated` + `Lessons analyzed`, note any new trends or zero-signal skills. ADR-018 Edge #1, anti-dormancy mechanism per issue [#227](https://github.com/pitimon/8-habit-ai-dev/issues/227).
 - [ ] CHANGELOG entry added (or explicitly marked doctrine-only per ADR-017 §C5).
-- [ ] Version bumped in all 4 files (see "Version Bumping" above) — `tests/validate-structure.sh` will fail CI if any drifts.
+- [ ] Version bumped in all 5 files (see "Version Bumping" above) — `tests/validate-structure.sh` will fail CI if any drifts.
 - [ ] `README.md` "What's New" mentions the bumped version (Check 19 enforces this).
 
 **ADR-018 reversal trigger**: if the SKILL-EFFECTIVENESS tally is not updated for ≥2 release cycles, ADR-018 itself enters reversal review per its Forward-Guardrail Sunset criteria. This checklist's existence is part of the proof-of-life mechanism.
