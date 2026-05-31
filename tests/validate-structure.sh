@@ -898,6 +898,81 @@ if [ -f "$CODEX_MARKETPLACE" ]; then
 fi
 echo ""
 
+# --- Check 29: Codex runtime compatibility docs ---
+echo "--- Check 29: Codex runtime compatibility docs (ADR-024) ---"
+CODEX_DOC_FAIL=0
+COMPAT_DOC="docs/compatibility-matrix.md"
+CODEX_GUIDE="docs/codex-integration.md"
+CODEX_ADR="docs/adr/ADR-024-codex-runtime-adapter-boundary.md"
+
+for f in "$COMPAT_DOC" "$CODEX_GUIDE" "$CODEX_ADR"; do
+  if [ -f "$f" ]; then
+    pass "$f exists"
+  else
+    fail "$f missing"
+    CODEX_DOC_FAIL=$((CODEX_DOC_FAIL + 1))
+  fi
+done
+
+if [ -f "$COMPAT_DOC" ]; then
+  for phrase in "Claude Code" "Codex" "Other agents" "Claude hooks" "Runtime enforcement" "Markdown skills"; do
+    if grep -q "$phrase" "$COMPAT_DOC"; then
+      pass "$COMPAT_DOC contains '$phrase'"
+    else
+      fail "$COMPAT_DOC missing '$phrase'"
+      CODEX_DOC_FAIL=$((CODEX_DOC_FAIL + 1))
+    fi
+  done
+fi
+
+if [ -f "$CODEX_GUIDE" ]; then
+  for phrase in "Codex Runtime Contract" "codex plugin add" "Claude hook" "adapter layer" "AGENTS.md" "skills/RESOLVER.md"; do
+    if grep -q "$phrase" "$CODEX_GUIDE"; then
+      pass "$CODEX_GUIDE contains '$phrase'"
+    else
+      fail "$CODEX_GUIDE missing '$phrase'"
+      CODEX_DOC_FAIL=$((CODEX_DOC_FAIL + 1))
+    fi
+  done
+fi
+
+if [ -f "$CODEX_ADR" ]; then
+  for phrase in "adapter boundary" "runtime enforcement" "ADR-023"; do
+    if grep -q "$phrase" "$CODEX_ADR"; then
+      pass "$CODEX_ADR contains '$phrase'"
+    else
+      fail "$CODEX_ADR missing '$phrase'"
+      CODEX_DOC_FAIL=$((CODEX_DOC_FAIL + 1))
+    fi
+  done
+fi
+
+if [ -f README.md ] && grep -q "docs/compatibility-matrix.md" README.md && grep -q "docs/codex-integration.md" README.md; then
+  pass "README.md links Codex compatibility docs"
+else
+  fail "README.md missing Codex compatibility doc links"
+  CODEX_DOC_FAIL=$((CODEX_DOC_FAIL + 1))
+fi
+
+if [ -f AGENTS.md ] && grep -q "docs/compatibility-matrix.md" AGENTS.md && grep -q "docs/codex-integration.md" AGENTS.md; then
+  pass "AGENTS.md links Codex compatibility docs"
+else
+  fail "AGENTS.md missing Codex compatibility doc links"
+  CODEX_DOC_FAIL=$((CODEX_DOC_FAIL + 1))
+fi
+
+if [ -f llms.txt ] && grep -q "compatibility-matrix.md" llms.txt && grep -q "codex-integration.md" llms.txt; then
+  pass "llms.txt indexes Codex compatibility docs"
+else
+  fail "llms.txt missing Codex compatibility doc links"
+  CODEX_DOC_FAIL=$((CODEX_DOC_FAIL + 1))
+fi
+
+if [ "$CODEX_DOC_FAIL" -eq 0 ]; then
+  pass "Codex runtime compatibility contract documented and indexed"
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"

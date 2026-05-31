@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-23-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.19.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.19.0)
+[![Version](https://img.shields.io/badge/Version-2.19.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.19.1)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -43,7 +43,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v2142) — Version history
+- [What's New](#whats-new-in-v2191) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [FAQ](#faq) — Common questions answered
@@ -109,7 +109,7 @@ codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 **New to the plugin?** Start with `/workflow` for a guided walkthrough, or see [Use Cases](#use-cases-which-skill-when) to find the right skill for your situation.
 
-Two commands to install per platform. Claude Code also loads a session reminder; both platforms make 23 skills available.
+Two commands to install per platform. Claude Code also loads a session reminder; both platforms make 23 skills available. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md) and [Codex integration guide](docs/codex-integration.md): Codex gets native packaging and the same markdown skills, not Claude hook execution or runtime enforcement.
 
 ---
 
@@ -434,6 +434,18 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.19.1
+
+**Theme: Codex runtime compatibility contract** ([ADR-024](docs/adr/ADR-024-codex-runtime-adapter-boundary.md))
+
+v2.19.0 made Codex installation native. v2.19.1 makes the runtime promise explicit: this plugin is complete as a cross-agent markdown workflow-discipline system, but it does not claim Claude runtime feature parity inside Codex.
+
+- **Compatibility matrix** — [`docs/compatibility-matrix.md`](docs/compatibility-matrix.md) documents what works in Claude Code, Codex, and other markdown-capable agents.
+- **Codex integration guide** — [`docs/codex-integration.md`](docs/codex-integration.md) gives the Codex install, verify, routing, and release-flow contract.
+- **ADR-024** — defines the future adapter boundary: routing, validation, release reconciliation, and curated memory deposit are acceptable adapter responsibilities; policy enforcement, compliance execution, irreversible-action auth, and orchestration engines stay outside the markdown skill core.
+- **Validator coverage** — `tests/validate-structure.sh` Check 29 pins the compatibility docs and entrypoint links so the boundary cannot silently drift.
+- **Entrypoint sync** — README, `AGENTS.md`, and `llms.txt` now point Codex users to the same compatibility contract.
 
 ## What's New in v2.19.0
 
@@ -1085,4 +1097,4 @@ MIT
 
 ---
 
-_Version: 2.19.0 | Last updated: 2026-05-31_
+_Version: 2.19.1 | Last updated: 2026-05-31_

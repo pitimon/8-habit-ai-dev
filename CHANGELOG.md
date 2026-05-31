@@ -10,6 +10,24 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.19.1 — Codex Runtime Compatibility Contract (2026-05-31)
+
+Clarifies the post-v2.19.0 Codex story: native Codex packaging means Codex can install and use the same markdown skills, not that Claude-specific hooks or runtime behavior now execute inside Codex.
+
+### Shipped
+
+- **`docs/compatibility-matrix.md`** — documents the runtime contract across Claude Code, Codex, and other markdown-capable agents: shared skills and workflow guidance are portable; Claude hooks, hook-based verbosity, and runtime enforcement are not portable runtime behavior.
+- **`docs/codex-integration.md`** — gives Codex users the install, verify, routing, release-flow, and optional adapter guidance in one place.
+- **`docs/adr/ADR-024-codex-runtime-adapter-boundary.md`** — records the adapter boundary: future Codex automation may route intents, open skills, run validators, reconcile releases, and write curated memory; policy enforcement, compliance execution, irreversible-action authorization, and orchestration engines stay outside the markdown skill core.
+- **Validator coverage** — `tests/validate-structure.sh` Check 29 pins the compatibility docs and requires README, `AGENTS.md`, and `llms.txt` to index them.
+- **Entrypoint sync** — README, `AGENTS.md`, and `llms.txt` now point Codex users to the same compatibility contract; `llms.txt` also corrects the skill count from 17 to 23.
+
+### Versioning
+
+Patch bump because this tightens the Codex runtime contract and adds validation without changing the 23 skills or adding runtime enforcement.
+
+---
+
 ## v2.19.0 — Native Codex Plugin Packaging (2026-05-31)
 
 Adds first-class Codex packaging so the same markdown-only skill system can be installed with Codex's plugin marketplace flow, not only loaded manually via `AGENTS.md`.

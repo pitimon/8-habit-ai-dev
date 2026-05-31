@@ -1,0 +1,83 @@
+# Codex Integration Guide
+
+This guide explains how to use `8-habit-ai-dev` from Codex without overstating runtime parity with Claude Code.
+
+## Install
+
+```bash
+codex plugin marketplace add pitimon/8-habit-ai-dev
+codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
+```
+
+Verify with:
+
+```bash
+codex plugin list
+```
+
+## Codex Runtime Contract
+
+Codex integration promises:
+
+- Codex can install the plugin through the native marketplace flow.
+- Codex can load the same 23 markdown skills from `skills/`.
+- Codex should start from `AGENTS.md`, then use `skills/RESOLVER.md` to select a skill.
+- Codex should treat `CLAUDE.md` as architecture reference, not as automatically loaded runtime state.
+- Codex should treat Obsidian or other memory systems as external curated memory, not as the plugin's internal state.
+
+Codex integration does not promise:
+
+- Claude hook execution.
+- automatic verbosity adaptation from `hooks/session-start.sh`.
+- runtime enforcement gates.
+- policy authorization.
+- dynamic sub-agent orchestration.
+- compliance framework execution.
+
+Those belong in companion tooling or a future adapter layer.
+
+## Recommended Codex Flow
+
+1. Read `AGENTS.md` for the operating protocol.
+2. Read `skills/RESOLVER.md` for intent-to-skill routing.
+3. Load the cited `skills/<name>/SKILL.md`.
+4. Follow the skill's process and Definition of Done.
+5. For high-risk work, run `/cross-verify`, `/review-ai`, `/security-check`, or `/scrutinize` as appropriate.
+6. For release work, reconcile GitHub Releases and git tags before updating release docs.
+
+## Optional Adapter Layer
+
+If Codex runtime automation is needed later, keep it outside the markdown skill core. Acceptable adapter responsibilities:
+
+- suggest a skill from user intent,
+- open the relevant `SKILL.md`,
+- remind the user to run review before commit,
+- run repository validators,
+- reconcile releases,
+- write curated project memory after completed work.
+
+Adapter responsibilities that do not belong in this plugin core:
+
+- policy enforcement,
+- secret scanning gates,
+- irreversible-action authorization,
+- runtime orchestration engines,
+- compliance certification checks.
+
+## Source of Truth
+
+| Topic | Source of truth |
+| --- | --- |
+| Skill behavior | `skills/*/SKILL.md` |
+| Skill routing | `skills/RESOLVER.md` |
+| Cross-agent entrypoint | `AGENTS.md` |
+| Claude Code architecture | `CLAUDE.md` |
+| Codex packaging | `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json` |
+| Official releases | GitHub Releases + git tags |
+| Durable project memory | curated Obsidian notes, if configured |
+
+## Related
+
+- [Runtime Compatibility Matrix](compatibility-matrix.md)
+- [ADR-023: Native Codex Plugin Packaging](adr/ADR-023-codex-native-packaging.md)
+- [ADR-024: Codex Runtime Adapter Boundary](adr/ADR-024-codex-runtime-adapter-boundary.md)

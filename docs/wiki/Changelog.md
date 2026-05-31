@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.19.0-blue)
+![Version](https://img.shields.io/badge/latest-v2.19.1-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.19.1 — Codex Runtime Compatibility Contract (May 2026)
+
+Clarifies the runtime promise after v2.19.0's native Codex packaging. Codex can install the plugin and load the same 23 markdown skills, but that does not imply Claude hook execution or runtime enforcement inside Codex. New [`docs/compatibility-matrix.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/compatibility-matrix.md) documents the Claude Code / Codex / other-agent boundary; new [`docs/codex-integration.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/codex-integration.md) gives Codex install, verify, routing, release-flow, and adapter guidance. [`ADR-024`](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-024-codex-runtime-adapter-boundary.md) records the adapter boundary: future Codex automation may route intents, open skills, run validators, reconcile releases, and write curated memory; policy enforcement, compliance execution, irreversible-action authorization, and orchestration engines stay outside the markdown skill core. `tests/validate-structure.sh` Check 29 pins the compatibility docs and entrypoint links. Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.19.0 — Native Codex Plugin Packaging (May 2026)
 

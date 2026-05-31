@@ -17,7 +17,14 @@ A Claude Code and Codex plugin that adds **workflow discipline** to AI-assisted 
 1. **`./AGENTS.md`** (this file) — install + operating protocol.
 2. [`./CLAUDE.md`](./CLAUDE.md) — architecture reference, skill authoring conventions, plugin boundary with `claude-governance`.
 3. [`./skills/RESOLVER.md`](./skills/RESOLVER.md) — phrase-to-path skill dispatcher. Read first for any task; pick the row matching user intent, then read the cited `SKILL.md`.
-4. If new to the workflow: invoke `/workflow` for a guided 7-step walkthrough, or `/using-8-habits` for the decision tree.
+4. [`./docs/compatibility-matrix.md`](./docs/compatibility-matrix.md) and [`./docs/codex-integration.md`](./docs/codex-integration.md) — runtime boundary for Codex and other non-Claude agents.
+5. If new to the workflow: invoke `/workflow` for a guided 7-step walkthrough, or `/using-8-habits` for the decision tree.
+
+## Codex runtime contract
+
+Codex installs the same 23 markdown skills through native plugin packaging and uses `AGENTS.md` + `skills/RESOLVER.md` as the operating path. `CLAUDE.md` remains a reference document for Codex, not automatically loaded runtime state.
+
+Claude-specific hooks in `hooks/` are not Codex runtime behavior. If Codex automation is added later, keep it as an adapter layer around the markdown skills: routing, opening the right skill, running validators, reconciling releases, and writing curated memory are in scope; policy enforcement, irreversible-action authorization, compliance execution, and dynamic orchestration engines are not.
 
 ## Trust boundary
 
