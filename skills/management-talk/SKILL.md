@@ -90,9 +90,6 @@ The audience scans 10 of these in 30 seconds. Front-load the verb.
 
 - 1–3 lines, max.
 - Pattern: _"\<state\> \<thing\>. \<owner if not me\>. \<next\>."_
-- Examples:
-  - _"Fixed verbosity-adaptation regression on fresh installs (Issue #92). PR #95 in review. Backport to v2.16.6 next."_
-  - _"Still chasing the `/research` ordering bug. Reproducer reliable now; bisecting. No ETA yet."_
 - No bullets, no bolded labels. The format **is** the sentence.
 
 ### Email — internal exec / cross-team
@@ -111,35 +108,23 @@ You're going to _say_ this, not show it.
 - Bullet list, max one short clause per bullet.
 - Order is the order you'll speak in.
 - Include the numbers/keys you want to reference out loud, in the bullet itself.
-- Skip prose. _"Fresh-install users got the wrong verbosity."_ / _"Root cause: hook swallowed an error."_ / _"Fix in PR #95."_ / _"Backport to v2.16.6 once it lands."_
+- Skip prose. _"Fresh-install users got the wrong verbosity."_ / _"Fix in PR #95."_
 
 ## Worked Example — Same bug, three channels
 
-**Engineering source** (`/post-mortem` output for Issue #92, the hook false-pass bug):
+**Engineering source** (Issue #92):
 
-> **Root cause.** `hooks/session-start.sh:42` wrapped `cat ~/.claude/habit-profile.md` in `|| true`. On fresh installs the file is absent, `cat` exited 1, `|| true` swallowed it, and the hook reported `status: ready` while emitting no verbosity directive. Downstream skills defaulted to Dependence-level verbosity for Significance-profile users.
+> **Root cause.** `hooks/session-start.sh:42` swallowed a missing-profile error and reported ready without emitting a verbosity directive. Fresh-install users got the most verbose skill output.
 
 ### As a JIRA comment
 
-> **Status: Fixed pending merge.** Bug found, fix validated, PR up for review.
->
-> **Impact:** Users on fresh installs were getting full-ceremony output from skills like `/research`, regardless of their calibration profile. Affects every first-time user — calibration ran fine, but the verbosity adaptation didn't actually apply.
->
-> **What broke:** The session-start hook silently swallowed an error when reading the user's calibration profile. When the file was absent (typical first-run state), the hook reported success but emitted no verbosity directive, so skills defaulted to the most verbose mode.
->
-> **Why now:** Latent since v2.7.0 when verbosity adaptation shipped. Every fresh-install user hit it, but no error surfaced — so it accumulated as "the plugin is just chatty" rather than a bug report.
->
-> **Owner:** @pitimon. PR #95.
->
-> **Next steps:** code review → merge → release v2.16.6 with the fix.
->
-> **Workaround:** Run `/calibrate` once to populate the profile file. After that, verbosity adapts correctly until the fix ships.
+> **Status: Fixed pending merge.** Fresh-install users were getting full-ceremony output because the session-start hook silently swallowed a missing-profile error. Owner: @pitimon, PR #95. Next: review, merge, release v2.16.6. Workaround: run `/calibrate` once.
 
 ### As a Slack post
 
 > **Verbosity adaptation broken on fresh installs is fixed pending merge.** (Issue #92)
 >
-> - Hook swallowed a missing-profile error → skills defaulted to full ceremony → every first-time user was affected. Latent since v2.7.0.
+> - Missing-profile error was swallowed, so first-time users got full-ceremony output.
 > - Owner: @pitimon, PR #95 in review.
 > - Workaround until merge: run `/calibrate` once.
 
@@ -147,7 +132,43 @@ You're going to _say_ this, not show it.
 
 > Fixed verbosity-adaptation regression on fresh installs (Issue #92). PR #95 in review. Backport to v2.16.6 next.
 
-What changed between channels: same diagnosis, same owner, same next step. JIRA gets every block. Slack drops "why now" and the workaround detail. Standup keeps just state + key + owner + next. **None of them mention `session-start.sh:42` or `|| true`.**
+Same story; no file path, line number, or shell expression leaks.
+
+## Worked Example — Operational Incident Closure, four channels
+
+**Engineering source** (WorkerDown):
+
+> WorkerDown fired after an Alertmanager template change. The worker was healthy; Alertmanager read an old mounted template while the repo had the fix. Live template reconciled, only Alertmanager restarted, test notification verified. PR #214. No customer impact.
+
+### As a Slack post
+
+> **WorkerDown alert noise is closed; no customer workload impact.**
+>
+> - Alertmanager read an old mounted template while the repo had the fix.
+> - Live template reconciled, targeted restart verified, normal alert resolution confirmed.
+> - Tracking: PR #214.
+
+### As a standup note
+
+> Closed WorkerDown alert-noise incident. Alertmanager template drift reconciled, targeted service restart verified, PR #214 documents the fix.
+
+### As an email
+
+> **Subject:** WorkerDown alert noise closed after Alertmanager template drift fix
+>
+> Hi all,
+>
+> The WorkerDown alert-noise incident is closed. The worker was healthy; Alertmanager read an old mounted notification template while the repo had the corrected version. There was no customer impact.
+>
+> We reconciled the live template, restarted only Alertmanager, sent a test notification, and confirmed alerts now resolve normally. PR #214 documents the fix.
+
+### As meeting talking-points
+
+> - WorkerDown alert was noise, not worker outage.
+> - Cause: Alertmanager live template drifted from repo source of truth.
+> - Fix: reconciled template and restarted only Alertmanager.
+> - Verified: test notification sent and alert resolution confirmed.
+> - Tracking: PR #214.
 
 ## Source Material
 

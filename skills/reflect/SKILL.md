@@ -46,7 +46,13 @@ One specific, assigned action with a deadline. Not "we should improve testing" b
 
 ### 6. Skill effectiveness signal
 
-Which 8-habit skill was **most useful** this session, and which was **least useful or confusing**? Answer "n/a" if no skills were invoked (e.g., quick fix outside the 7-step workflow). This signal feeds `SKILL-EFFECTIVENESS.md` during periodic maintainer review — H7 applied to the plugin itself. Do not overthink it: name up to one skill per side, or "n/a".
+Capture three fields:
+
+- `most_useful`: Which 8-habit skill was most useful this session?
+- `least_or_confusing`: Which skill was least useful or confusing?
+- `missed_skill`: Which skill should have been invoked but was missed until later?
+
+Answer "n/a" for any field that does not apply (e.g., quick fix outside the 7-step workflow). This signal feeds `SKILL-EFFECTIVENESS.md` during periodic maintainer review — H7 applied to the plugin itself. Do not overthink it: name up to one skill per field, or "n/a".
 
 ## Output
 
@@ -62,7 +68,7 @@ Which 8-habit skill was **most useful** this session, and which was **least usef
 | 3 | Do differently | [brief answer] |
 | 4 | Reusable pattern | [brief answer or "none this time"] |
 | 5 | Action item | [specific action] — **Owner**: [who] — **By**: [date] |
-| 6 | Skill effectiveness | Most useful: [skill or "n/a"] · Least/confusing: [skill or "n/a"] |
+| 6 | Skill effectiveness | most_useful: [skill or "n/a"] · least_or_confusing: [skill or "n/a"] · missed_skill: [skill or "n/a"] |
 ```
 
 ## Step 6: Persist Lesson (automatic)
@@ -77,7 +83,7 @@ After the 6 questions are answered, persist the reflection as a lesson file for 
    - `project`: basename of the current working directory
    - `tags`: 2-5 keywords extracted from the reflection answers (domain, technology, pattern)
    - `habit`: the primary habit that applied during this task (if identifiable)
-   - Body: the 6-question answers from the reflection output, including the `## Skill effectiveness` section (Q6) which is parsed during periodic maintainer review for `SKILL-EFFECTIVENESS.md`
+   - Body: the 6-question answers from the reflection output, including the `## Skill effectiveness` section (Q6) with `most_useful`, `least_or_confusing`, and `missed_skill` fields. These fields are parsed during periodic maintainer review for `SKILL-EFFECTIVENESS.md`; keep the missed-skill signal intact during consolidation.
 4. **Confirm**: Print a one-line confirmation: `Lesson saved: ~/.claude/lessons/<filename>`
 5. **Graceful failure**: If the write fails (permissions, disk full), warn the user but do NOT block the reflection output. The conversation-level reflection is more valuable than persistence.
 
@@ -122,9 +128,10 @@ After saving the lesson file, run the 4-phase consolidation cycle automatically.
 
 ## Definition of Done
 
-- [ ] All 6 questions answered (even if briefly; Q6 can be "n/a")
+- [ ] All 6 questions answered (even if briefly; each Q6 field can be "n/a")
 - [ ] Action item has an owner and deadline (or explicitly "none needed")
-- [ ] Skill effectiveness signal captured (Q6) — up to one "most useful" and one "least useful/confusing" skill, or "n/a"
+- [ ] Skill effectiveness signal captured (Q6) — `most_useful`, `least_or_confusing`, and `missed_skill` each names up to one skill or "n/a"
+- [ ] Lesson/consolidation preserves the missed-skill field for future skill-effectiveness review
 - [ ] Lesson file persisted to `~/.claude/lessons/` (or warning printed if write failed)
 - [ ] Consolidation auto-ran when count > 10: INDEX.md updated (no merges) or merge plan surfaced for approval (deletions proposed)
 - [ ] Took no more than 5 minutes

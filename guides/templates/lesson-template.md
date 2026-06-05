@@ -37,8 +37,9 @@ habit: "H[N]"
 [Specific action] — **Owner**: [who] — **By**: [date]
 
 ## Skill effectiveness
-**Most useful**: [skill name, e.g., `/cross-verify`, or "n/a" if no skills invoked]
-**Least useful / confusing**: [skill name, or "n/a"]
+most_useful: [skill name, e.g., `/cross-verify`, or "n/a" if no skills invoked]
+least_or_confusing: [skill name, or "n/a"]
+missed_skill: [skill name that should have been invoked earlier, or "n/a"]
 ```
 
 ## Field Descriptions

@@ -10,6 +10,27 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.19.2 — Operational Doctrine Patch from Open Issues (2026-06-06)
+
+Ships the conservative doctrine-only slice from open issues #252, #254, #255, and #256. This release deliberately does not add a new operational-state skill; #250, #251, and #253 remain deferred for the broader operational model/design pass.
+
+### Shipped
+
+- **`/deploy-guide`** — adds a deploy-type classifier before rollout planning (`image build`, `mounted config/template`, `Swarm config`, `full stack`, `source-of-truth drift`, `force-update only`, `no deploy`) and qualifies the config-only skip rule so runtime-impacting config still gets deploy planning.
+- **`/security-check`** — expands its trigger surface to alerting/email templates, SMTP, webhooks, notification links, Docker/Kubernetes/Compose/Swarm config, env/secret interpolation, mounted config, rendered config, and source-of-truth drift.
+- **`/reflect`** — preserves the six-question contract while splitting Q6 into `most_useful`, `least_or_confusing`, and `missed_skill`; the lesson template and DoD now preserve missed-skill signals for `SKILL-EFFECTIVENESS.md` review.
+- **`/management-talk`** — adds an operational incident closure worked example using generic WorkerDown/Alertmanager source material, rendered for Slack, standup, email, and meeting talking points while stripping file/SHA/command detail.
+
+### Boundary
+
+Markdown doctrine only: no runtime automation, policy enforcement, cloud operation execution, or operational-state engine was added. The plugin remains portable workflow guidance.
+
+### Versioning
+
+Patch bump because this is consumer-facing doctrine in `skills/` and `guides/templates/`, per ADR-019.
+
+---
+
 ## v2.19.1 — Codex Runtime Compatibility Contract (2026-05-31)
 
 Clarifies the post-v2.19.0 Codex story: native Codex packaging means Codex can install and use the same markdown skills, not that Claude-specific hooks or runtime behavior now execute inside Codex.
@@ -1019,7 +1040,7 @@ Closes #157.
 
 ## v2.14.0 — TOH Framework Inspirations (2026-05-02)
 
-Minor release closing milestone [#15](https://github.com/pitimon/8-habit-ai-dev/milestone/15) — three workflow-discipline imports from [Toh Framework](https://github.com/Nathanphop/Toh-Framework) (an "AI-Orchestration Driven Development" framework for solo SaaS builders). Cross-pollination filtered through the plugin-boundary rule: workflow discipline lands here; enforcement and project-state persistence routed to `claude-governance` ([pitimon/claude-governance#24](https://github.com/pitimon/claude-governance/issues/24) for 7-file memory system).
+Minor release closing milestone [#15](https://github.com/pitimon/8-habit-ai-dev/milestone/15) — three workflow-discipline imports from Toh Framework (`Nathanphop/Toh-Framework`, now unavailable) (an "AI-Orchestration Driven Development" framework for solo SaaS builders). Cross-pollination filtered through the plugin-boundary rule: workflow discipline lands here; enforcement and project-state persistence routed to `claude-governance` ([pitimon/claude-governance#24](https://github.com/pitimon/claude-governance/issues/24) for 7-file memory system).
 
 ### Added
 
