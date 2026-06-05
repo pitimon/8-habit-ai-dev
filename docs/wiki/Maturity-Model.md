@@ -66,7 +66,7 @@ The adaptation happens at session start, not per-skill:
 
 1. `hooks/session-start.sh` reads `~/.claude/habit-profile.md`
 2. Emits a level-specific directive into session context
-3. All 23 skills automatically adapt their verbosity — **zero per-skill changes needed**
+3. All 24 skills automatically adapt their verbosity — **zero per-skill changes needed**
 
 This means a single calibration affects every skill invocation for the rest of the session. The canonical adaptation rules are in [`guides/verbosity-adaptation.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/verbosity-adaptation.md).
 

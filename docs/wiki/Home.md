@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-2.18.1-blue) ![Skills](https://img.shields.io/badge/skills-23-green) ![License](https://img.shields.io/badge/license-MIT-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange) ![Review](https://img.shields.io/badge/external_review-9.5%2F10-gold)
+![Version](https://img.shields.io/badge/version-2.20.0-blue) ![Skills](https://img.shields.io/badge/skills-24-green) ![License](https://img.shields.io/badge/license-MIT-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange) ![Review](https://img.shields.io/badge/external_review-9.5%2F10-gold)
 
 # 8-Habit AI Dev
 
@@ -16,9 +16,9 @@ AI-assisted coding is fast but often undisciplined: missing requirements, skippe
 
 |                       |                                                                                                           |
 | --------------------- | --------------------------------------------------------------------------------------------------------- |
-| **23 skills**         | 8 workflow + 5 assessment + 3 meta + 2 debug + 2 compliance + 3 helpers (orchestrator/spec/audience)      |
+| **24 skills**         | 8 workflow + 16 standalone skills for review, security, ops, debugging, compliance, and communication     |
 | **8 Habits**          | Covey's 7 + The 8th, adapted for AI-assisted development                                                  |
-| **17 ADRs**           | Every non-trivial decision documented                                                                     |
+| **24 ADRs**           | Every non-trivial decision documented                                                                     |
 | **4 maturity levels** | [Dependence → Independence → Interdependence → Significance](Maturity-Model)                              |
 | **Zero dependencies** | Pure markdown — no npm, no build step                                                                     |
 | **EU AI Act ready**   | First Claude Code plugin with [compliance toolkit](Skills-Reference#compliance--audit-skills)             |
@@ -123,7 +123,7 @@ Legend:  [O] optional   [H] human checkpoint   [!] NEVER SKIP
 ## Reference
 
 - **[8 Habits](Habits-Reference)** — the full playbook
-- **[Skills Catalog](Skills-Reference)** — all 23 skills, when to use each
+- **[Skills Catalog](Skills-Reference)** — all 24 skills, when to use each
 - **[Architecture](Architecture)** — how the plugin works internally
 - **[Maturity Model](Maturity-Model)** — adaptive guidance levels
 - **[Vibe Coding vs Structured](Vibe-Coding-vs-Structured)** — side-by-side comparison

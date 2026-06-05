@@ -1,6 +1,6 @@
 # Skills Catalog
 
-All **23 skills** shipped through `8-habit-ai-dev` v2.18.1. Skills are **read-only guidance** — they tell Claude how to approach a task, they do not modify files themselves.
+All **24 skills** shipped through `8-habit-ai-dev` v2.20.0. Skills are **read-only guidance** — they tell Claude how to approach a task, they do not modify files themselves.
 
 > [!TIP]
 > Not sure which skill to use? Type `/using-8-habits` for an interactive decision tree, or see the [quick-select matrix](#quick-select-matrix) below.
@@ -61,6 +61,14 @@ Cross-artifact consistency analyzer — runs 5 detection passes (Coverage, Drift
 - **Habit**: H5 Understand First + H1 Be Proactive
 - **When to use**: After `/requirements`, `/design`, `/breakdown` have been run with `--persist <slug>` to catch drift before code
 - **Source**: [`skills/consistency-check/SKILL.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/consistency-check/SKILL.md)
+
+### `/operational-state` {#operational-state}
+
+Operational finding classifier — chooses Watch, Fix Candidate, Active Incident, Resolved, Handoff, Known Accepted Issue, False Positive, or Self-Resolved before action. Maps evidence, allowed/prohibited actions, approval gates, required artifacts, escalation criteria, and closure criteria.
+
+- **Habit**: H1 Be Proactive + H5 Understand First + H8 Find Your Voice
+- **When to use**: Before mutating or closing an operational finding, especially recovered-but-recurring signals, Running-but-unhealthy workloads, source-of-truth drift, accepted known issues, or ownership handoffs
+- **Source**: [`skills/operational-state/SKILL.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/operational-state/SKILL.md)
 
 ### `/reflect` {#reflect}
 
@@ -124,7 +132,7 @@ Learn the plugin and adapt it to your style.
 
 ### `/using-8-habits` {#using-8-habits}
 
-Onboarding meta-skill — explains the 8 habits, all 23 skills, and provides a decision tree for "which skill next?". Includes a complete walkthrough example (password-reset feature).
+Onboarding meta-skill — explains the 8 habits, all 24 skills, and provides a decision tree for "which skill next?". Includes a complete walkthrough example (password-reset feature).
 
 - **Habit**: H5 Understand First + H8 Find Your Voice
 - **When to use**: First time using the plugin, or when unsure which skill applies
@@ -178,6 +186,7 @@ Generates an AI-assisted development log from `git log` + `Co-Authored-By` trail
 | Deploy safely to production              | [`/deploy-guide`](Step-6-Deploy-Guide)                                 |
 | Question whether the change should exist | [`/scrutinize`](#scrutinize)                                           |
 | Catch drift between PRD↔design↔tasks     | [`/consistency-check`](#consistency-check)                             |
+| Classify an operational finding          | [`/operational-state`](#operational-state)                             |
 | Investigate a bug from feedback-loop     | [`/diagnose`](#diagnose)                                               |
 | Write the engineering record post-fix    | [`/post-mortem`](#post-mortem)                                         |
 | Scaffold a project orientation hub       | [`/save-spec`](#save-spec)                                             |
