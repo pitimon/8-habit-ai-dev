@@ -18,7 +18,16 @@ next-skill: monitor-setup
 
 1. **Check existing deploy infrastructure**: Read deploy scripts, CI/CD configs, docker-compose files, Makefiles — understand what's already automated.
 
-2. **Staging first** (ALWAYS):
+2. **Classify the deploy type before planning rollout**:
+   - `image build` — artifact/image changes; deploy the new artifact through staging first.
+   - `mounted config/template` — runtime reads a file mounted from host/volume; plan config render, sync, service reload/restart, and verification.
+   - `Swarm config` — `docker config`/secret object changes; plan config object replacement plus service update.
+   - `full stack` — compose/stack topology changes; plan broader blast radius and rollback.
+   - `source-of-truth drift` — repo/template says one thing but live runtime reads another; reconcile before deploy.
+   - `force-update only` — no artifact/config change, but scheduler needs a controlled restart; still needs health/rollback checks.
+   - `no deploy` — truly non-runtime work.
+
+3. **Staging first** (ALWAYS when deploy type has runtime impact):
 
    ```
    Step 1: Build artifacts (images, bundles)
@@ -28,19 +37,21 @@ next-skill: monitor-setup
    Step 5: QA on production (verify version, health, features)
    ```
 
-3. **Pre-deploy checklist**:
+4. **Pre-deploy checklist**:
    - [ ] All tests pass
    - [ ] Code review completed
    - [ ] Version bumped (if applicable)
    - [ ] Environment variables validated
    - [ ] Rollback plan documented
 
-4. **Rollback plan** (MUST have before deploying):
+5. **Rollback plan** (MUST have before deploying):
    - How to revert to previous version
    - How long rollback takes
    - What data might be affected
 
-5. **H1 Checkpoint**: "Do I have a plan for when this fails, not just when it succeeds?"
+6. **Config-only example**: Alertmanager email template mounted into a Swarm service is not a "no deploy" change. If the live container reads `/etc/alertmanager/templates/*.tmpl`, plan template render, config/object replacement or host sync, targeted service update/reload, and a notification smoke test. Avoid a full stack redeploy unless topology changed; it can restart unrelated services and expand blast radius.
+
+7. **H1 Checkpoint**: "Do I have a plan for when this fails, not just when it succeeds?"
 
 ## Anti-Patterns
 
@@ -58,10 +69,11 @@ next-skill: monitor-setup
 
 - Local development environment only — no deployment involved
 - CI/CD pipeline already handles the full staging→production flow automatically
-- Documentation-only or config-only change with no runtime impact
+- Documentation-only or config-only change with no runtime impact. If a config/template/env change alters live behavior, classify it and plan the runtime update.
 
 ## Definition of Done
 
+- [ ] Deploy type classified before rollout plan is chosen
 - [ ] Staging deploy verified — health endpoint returns correct version
 - [ ] Rollback plan documented with specific steps and time estimate
 - [ ] Post-deploy health check confirmed (smoke test passed)

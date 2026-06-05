@@ -53,11 +53,25 @@ Cognitive load research confirms: reviewing for 5 concerns simultaneously degrad
    - [ ] CORS configured restrictively (not wildcard)
    - [ ] Rate limiting on auth endpoints
    - [ ] Content security policy headers configured
+   - [ ] Alerting/email templates, SMTP settings, webhooks, notification links, Docker/Kubernetes/Compose/Swarm config, and env/secret interpolation do not expose secrets or widen runtime access
+   - Verify mounted config paths, rendered templates, and live source-of-truth when config can drift from repo state
 
 7. **Dependencies** (MEDIUM):
    - [ ] No known vulnerable dependencies (check lockfiles)
    - [ ] Dependencies pinned to specific versions
    - [ ] No unnecessary dependencies added
+
+## When to Use
+
+- Auth, authorization, secrets, input handling, dependency, or OWASP Top 10 review.
+- Alerting/email templates, SMTP, webhooks, notification links, and incident-notification content.
+- Docker, Kubernetes, Compose, Swarm, CI/CD, env interpolation, mounted config, rendered config, or source-of-truth drift that can affect secrets, auth, deploy behavior, or runtime exposure.
+
+## Infrastructure Prompts
+
+- **Mounted config**: Does the live service read this file from the image, host, volume, Swarm config, or Kubernetes object?
+- **Source-of-truth drift**: Does the repo/template match the running config, or can a local mount override it?
+- **Rendered config**: After interpolation, do URLs, credentials, notification targets, and links still avoid secret leakage and unintended exposure?
 
 ## Output
 
@@ -78,11 +92,11 @@ Cognitive load research confirms: reviewing for 5 concerns simultaneously degrad
 
 - Pure documentation or markdown changes
 - Changes to test files only (no production code)
-- CI/CD config changes with no secret handling
+- CI/CD or config changes only when they do not touch secrets, auth, deploy behavior, or runtime exposure
 
 ## Definition of Done
 
-- [ ] All 6 categories checked with verification commands run
+- [ ] All 7 categories checked with verification commands run
 - [ ] Zero CRITICAL findings remaining
 - [ ] Each finding has a specific fix with verification method
 - [ ] Verdict rendered (CLEAR/WARNINGS/BLOCKED)

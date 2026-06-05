@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-23-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.19.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.19.1)
+[![Version](https://img.shields.io/badge/Version-2.19.2-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.19.2)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -434,6 +434,17 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.19.2
+
+**Theme: operational doctrine patch from open issues**
+
+v2.19.2 tightens four existing skills for operational incidents without adding runtime automation or a new operational-state skill. It ships the low-risk doctrine from issues #252, #254, #255, and #256 while leaving the broader operational model issues for a separate design pass.
+
+- **`/deploy-guide`** — adds a deploy-type classifier before rollout planning and clarifies that config/template changes with runtime impact still need deploy planning.
+- **`/security-check`** — expands the trigger surface to alerting/email templates, SMTP, webhooks, container/orchestrator config, env interpolation, mounted config, rendered config, and source-of-truth drift.
+- **`/reflect`** — keeps the six-question contract while splitting Q6 into `most_useful`, `least_or_confusing`, and `missed_skill` so missed-skill signals survive lesson consolidation.
+- **`/management-talk`** — adds an operational incident closure example rendered as Slack, standup, email, and meeting talking points.
 
 ## What's New in v2.19.1
 
@@ -867,7 +878,7 @@ Pattern: validator assertion, not checklist — when QA surfaces the same drift 
 
 **Theme: TOH Framework Inspirations** ([milestone #15](https://github.com/pitimon/8-habit-ai-dev/milestone/15))
 
-Three workflow-discipline imports from [Toh Framework](https://github.com/Nathanphop/Toh-Framework) (an "AI-Orchestration Driven Development" framework for solo SaaS builders), filtered through plugin-boundary rule (3/10 candidates imported, 7 rejected with route-elsewhere reasoning).
+Three workflow-discipline imports from Toh Framework (`Nathanphop/Toh-Framework`, now unavailable) (an "AI-Orchestration Driven Development" framework for solo SaaS builders), filtered through plugin-boundary rule (3/10 candidates imported, 7 rejected with route-elsewhere reasoning).
 
 - **`SKILL_OUTPUT` attribution lines** ([#151](https://github.com/pitimon/8-habit-ai-dev/issues/151), [PR #152](https://github.com/pitimon/8-habit-ai-dev/pull/152)) — visible `[/<skill>] COMPLETE SKILL_OUTPUT:<type>` directly above each HTML comment in 4 emitter skills (design, breakdown, requirements, review-ai). Status markers `COMPLETE` / `PARTIAL` / `FAILED` (text-only, no emoji). New `validate-structure.sh` Check 22 enforces format (BSD-safe via `grep -B1`). `cross-verify` parser unaffected. Inspired by Toh's Agent Announcement format.
 - **Argument-driven smart-routing for `/using-8-habits`** ([#149](https://github.com/pitimon/8-habit-ai-dev/issues/149), [PR #154](https://github.com/pitimon/8-habit-ai-dev/pull/154)) — `/using-8-habits "<intent>"` returns ≤3 ranked skills + reasoning + alternatives + a single direct question instead of the full narrative tree. Reads `~/.claude/habit-profile.md` for verbosity tier (dependence → independence → interdependence → significance) and recent `~/.claude/lessons/` for context. **Activates** existing `argument-hint` frontmatter — no new skill file. Inspired by Toh's `/toh` Smart Command (reshape: extend rather than wrap).
@@ -1097,4 +1108,4 @@ MIT
 
 ---
 
-_Version: 2.19.1 | Last updated: 2026-05-31_
+_Version: 2.19.2 | Last updated: 2026-06-06_

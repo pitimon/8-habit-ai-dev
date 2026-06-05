@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.19.1-blue)
+![Version](https://img.shields.io/badge/latest-v2.19.2-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.19.2 — Operational Doctrine Patch from Open Issues (June 2026)
+
+Ships a conservative doctrine-only patch from issues #252, #254, #255, and #256 without adding a new operational-state skill. `/deploy-guide` now classifies deploy type before rollout planning and treats runtime-impacting config/template changes as deploy work. `/security-check` now includes alerting/email templates, SMTP, webhooks, notification links, container/orchestrator config, env interpolation, mounted config, rendered config, and source-of-truth drift. `/reflect` keeps six questions but splits Q6 into `most_useful`, `least_or_confusing`, and `missed_skill`, with the lesson template preserving missed-skill signals. `/management-talk` adds a generic WorkerDown/Alertmanager closure example rendered for Slack, standup, email, and meeting talking points. Broader operational-model issues #250, #251, and #253 remain deferred. Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.19.1 — Codex Runtime Compatibility Contract (May 2026)
 
@@ -250,7 +254,7 @@ Closes #157.
 
 ## v2.14.0 — TOH Framework Inspirations (May 2026)
 
-Minor release closing milestone [#15](https://github.com/pitimon/8-habit-ai-dev/milestone/15) — three workflow-discipline imports from [Toh Framework](https://github.com/Nathanphop/Toh-Framework) (an "AI-Orchestration Driven Development" framework for solo SaaS builders). Cross-pollination filtered through plugin-boundary: workflow discipline here, project-state persistence routed to `claude-governance`.
+Minor release closing milestone [#15](https://github.com/pitimon/8-habit-ai-dev/milestone/15) — three workflow-discipline imports from Toh Framework (`Nathanphop/Toh-Framework`, now unavailable) (an "AI-Orchestration Driven Development" framework for solo SaaS builders). Cross-pollination filtered through plugin-boundary: workflow discipline here, project-state persistence routed to `claude-governance`.
 
 - **SKILL_OUTPUT attribution lines** ([#151](https://github.com/pitimon/8-habit-ai-dev/issues/151), [PR #152](https://github.com/pitimon/8-habit-ai-dev/pull/152)) — `[/<skill>] COMPLETE SKILL_OUTPUT:<type>` directly above each HTML comment in the 4 emitter skills. Status markers `COMPLETE` / `PARTIAL` / `FAILED` (text-only). New **Check 22** in `validate-structure.sh`; `cross-verify` parser unaffected. Inspired by Toh's Agent Announcement format.
 - **Argument-driven smart-routing for `/using-8-habits`** ([#149](https://github.com/pitimon/8-habit-ai-dev/issues/149), [PR #154](https://github.com/pitimon/8-habit-ai-dev/pull/154)) — `/using-8-habits "<intent>"` returns ≤3 ranked skills + reasoning + alternatives + one direct question, instead of the full narrative tree. Reads `~/.claude/habit-profile.md` for verbosity and recent `~/.claude/lessons/` for context. Activates existing `argument-hint` frontmatter — no new skill file. Inspired by Toh's `/toh` Smart Command (reshape: extend rather than wrap).
