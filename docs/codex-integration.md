@@ -15,12 +15,28 @@ Verify with:
 codex plugin list
 ```
 
+## Update
+
+Codex installs plugins from configured marketplace snapshots. Refresh the Git marketplace snapshot before checking for current plugin metadata:
+
+```bash
+codex plugin marketplace upgrade pitimon-8-habit-ai-dev
+codex plugin list
+```
+
+If a local cache appears stale, reinstall from the refreshed snapshot:
+
+```bash
+codex plugin remove 8-habit-ai-dev@pitimon-8-habit-ai-dev
+codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
+```
+
 ## Codex Runtime Contract
 
 Codex integration promises:
 
 - Codex can install the plugin through the native marketplace flow.
-- Codex can load the same 23 markdown skills from `skills/`.
+- Codex can load the same 24 markdown skills from `skills/`.
 - Codex should start from `AGENTS.md`, then use `skills/RESOLVER.md` to select a skill.
 - Codex should treat `CLAUDE.md` as architecture reference, not as automatically loaded runtime state.
 - Codex should treat Obsidian or other memory systems as external curated memory, not as the plugin's internal state.
