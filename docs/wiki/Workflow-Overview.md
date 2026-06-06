@@ -25,7 +25,7 @@ Legend:  [O] optional   [H] human checkpoint   [!] NEVER SKIP
    [!] 5 · /review-ai       H4 Win-Win       audit before commit
         │
         ▼
-   [H] 6 · /deploy-guide    H1 Proactive     staging first, rollback ready
+   [H] 6 · /deploy-guide    H1 Proactive     staging, rollback, reconcile
         │
         ▼
    [O] 7 · /monitor-setup   H7 Sharpen Saw   observe after deploy
@@ -39,7 +39,7 @@ Legend:  [O] optional   [H] human checkpoint   [!] NEVER SKIP
 | 3    | [`/breakdown`](Step-3-Breakdown)         | H3 First Things First | Atomic task list              | Optional          |
 | 4    | [`/build-brief`](Step-4-Build-Brief)     | H5 Understand First   | Implementation brief per task | Optional          |
 | 5    | [`/review-ai`](Step-5-Review-AI)         | H4 Win-Win            | Code review findings          | **Required**      |
-| 6    | [`/deploy-guide`](Step-6-Deploy-Guide)   | H1 Be Proactive       | Deploy plan + rollback        | **Required**      |
+| 6    | [`/deploy-guide`](Step-6-Deploy-Guide)   | H1 Be Proactive       | Deploy + rollback + reconciliation | **Required**      |
 | 7    | [`/monitor-setup`](Step-7-Monitor-Setup) | H7 Sharpen the Saw    | Observability config          | Optional          |
 
 ## Handoff Contracts

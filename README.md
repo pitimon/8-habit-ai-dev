@@ -178,7 +178,7 @@ Start from **your situation**, not the skill name.
 | Build a new feature from scratch  | `/requirements`                                                                                                                                                                                                     | `/design` → `/breakdown`          | H2: Define done first   |
 | Review code before committing     | `/review-ai`                                                                                                                                                                                                        | `/security-check` if needed       | H4: Never skip review   |
 | Understand an unfamiliar codebase | `/research`                                                                                                                                                                                                         | `/build-brief`                    | H5: Read before writing |
-| Deploy to production              | `/deploy-guide`                                                                                                                                                                                                     | `/monitor-setup`                  | H1: Staging first       |
+| Deploy / provider canary        | `/deploy-guide`                                                                                                                                                                                                     | `/monitor-setup`                  | H1: Stage, rollback, reconcile |
 | Assess overall project health     | `/cross-verify`                                                                                                                                                                                                     | `/whole-person-check`             | All 8 habits            |
 | Classify an operational finding   | `/operational-state`                                                                                                                                                                                                | `/deploy-guide` or `/post-mortem` | H1 + H5 + H8            |
 | Fix a production bug              | `/build-brief`                                                                                                                                                                                                      | Reproduce first                   | H5: Understand first    |
@@ -349,7 +349,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 │   ├── breakdown/SKILL.md          #   Step 3 → H3 (orchestration classification)
 │   ├── build-brief/SKILL.md        #   Step 4 → H5 (context boundaries)
 │   ├── review-ai/SKILL.md          #   Step 5 → H4 (4-level verdict)
-│   ├── deploy-guide/SKILL.md       #   Step 6 → H1
+│   ├── deploy-guide/SKILL.md       #   Step 6 → H1 (staging, rollback, reconciliation)
 │   ├── monitor-setup/SKILL.md      #   Step 7 → H7
 │   ├── cross-verify/SKILL.md       #   All habits (17Q + dimension summary)
 │   ├── consistency-check/SKILL.md  #   H5+H1: spec + incident/config consistency (v2.20.1)

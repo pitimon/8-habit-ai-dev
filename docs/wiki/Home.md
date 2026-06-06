@@ -78,7 +78,7 @@ Legend:  [O] optional   [H] human checkpoint   [!] NEVER SKIP
 | [`/whole-person-check`](Skills-Reference#whole-person-check) | Body/Mind/Heart/Spirit balance                                 |
 | [`/security-check`](Skills-Reference#security-check)         | OWASP Top 10 focused review                                    |
 | [`/scrutinize`](Skills-Reference#scrutinize)                 | Outsider-perspective review — questions if change should exist |
-| [`/consistency-check`](Skills-Reference#consistency-check)   | Cross-artifact drift detection (PRD ↔ design ↔ tasks)          |
+| [`/consistency-check`](Skills-Reference#consistency-check)   | Spec artifact and incident/config hotfix drift detection       |
 | [`/reflect`](Skills-Reference#reflect)                       | Post-task retrospective with lesson persistence                |
 | [`/workflow`](Skills-Reference#workflow)                     | Interactive guided walkthrough                                 |
 
