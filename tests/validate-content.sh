@@ -769,6 +769,15 @@ else
   else
     fail "README.md missing '## What's New in v${current_version}' section header — sub-check A passed on badge URL but the user-facing upgrade-discovery surface is stale. Add the section between the existing 'Zero dependencies' block and the previous '## What's New in v...' entry. See issue #157."
   fi
+
+  # H. README.md version badge must match current version. v2.21.0 initially updated the
+  # "What's New" section and footer but left the top badge pointing at v2.20.2.
+  if grep -q "badge/Version-${current_version}-brightgreen" README.md &&
+     grep -q "releases/tag/v${current_version}" README.md; then
+    pass "README.md version badge matches v${current_version}"
+  else
+    fail "README.md version badge stale — bump both badge text and release link to v${current_version}."
+  fi
 fi
 
 echo ""
