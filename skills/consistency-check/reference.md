@@ -42,6 +42,78 @@ Summary: 6 findings | CRITICAL: 2 | HIGH: 2 | MEDIUM: 1 | LOW: 1 | linkage: abse
 | finding          | One sentence describing what's wrong                               | Be specific. Name IDs (FR-NNN, Decision-N) when known.                             |
 | suggested action | One imperative sentence                                            | Tell the user what to do. Avoid "consider" — be direct.                            |
 
+## Incident/Config Hotfix Mode
+
+Use this mode when there is no persisted `docs/specs/<slug>/` bundle, but the work still needs consistency across an operational symptom, evidence, root cause, change text, deploy path, and live verification.
+
+### Inputs
+
+- Reported symptom or alert text
+- Reproduced evidence, alert history, logs, metrics, or rendered config
+- Root-cause evidence from an independent source where possible
+- PR/change summary and actual diff/change description
+- Changelog, release note, or issue closure text when present
+- Deploy path and live verification after rollout
+- Related operational state classification when a separate issue remains
+
+### Checks
+
+| Check | Drift to flag |
+| ----- | ------------- |
+| Symptom matches evidence | Alert/issue text describes a symptom that was not reproduced or is only inferred |
+| Root cause verified | Cause is asserted from one source only, or evidence proves correlation but not cause |
+| PR/change text matches actual fix | PR claims a broad fix while the diff only changes wording, routing, config, or restart behavior |
+| Changelog/release notes do not overclaim | Release text says "resolved" when verification only proves "alert quiet" or "one path fixed" |
+| Deploy notes match actual path | Notes say image deploy while actual rollout was mounted config, Swarm config, restart, or no deploy |
+| Live verification proves original symptom resolved | Verification checks a secondary health signal but not the original alert/user-facing symptom |
+| Related state is classified | Separate operational state is hidden instead of named as Watch, Handoff, Known Accepted Issue, or Active Incident |
+
+### Output Template
+
+```
+## Incident/Config Consistency Report
+**Subject**: <issue/PR/incident/config>
+**Mode**: incident/config hotfix
+**Artifacts read**: <issue, PR, changelog, deploy note, alert, live check>
+
+| symptom | evidence | root cause | fix | verification | drift |
+| ------- | -------- | ---------- | --- | ------------ | ----- |
+| <reported symptom> | <reproduced or alert evidence> | <verified cause> | <actual PR/change> | <live proof> | <CLEAN | MISSING_EVIDENCE | OVERCLAIM | SCOPE_MISMATCH | DEPLOY_DRIFT | ADJACENT_STATE_UNCLASSIFIED> |
+
+Summary: <CLEAN or N drift findings> | unresolved related state: <none | state + owner>
+```
+
+### Drift Labels
+
+| Label | Meaning |
+| ----- | ------- |
+| `CLEAN` | Claims, fix, deploy path, and verification align |
+| `MISSING_EVIDENCE` | A symptom, cause, or verification claim lacks direct evidence |
+| `OVERCLAIM` | PR/changelog/closure text claims more than evidence proves |
+| `SCOPE_MISMATCH` | Fix addresses a narrower or different issue than the symptom/root cause |
+| `DEPLOY_DRIFT` | Claimed deploy path differs from the actual runtime change path |
+| `ADJACENT_STATE_UNCLASSIFIED` | Related operational state remains but is not classified or handed off |
+
+### Worked Example 3 — WorkerDown / Alertmanager Hotfix
+
+Scenario: an operator receives repeated `WorkerDown` notifications. The PR says "fix WorkerDown alert noise", the changelog says "WorkerDown resolved", and the deploy note says "released worker image". Actual evidence shows a stale Alertmanager template rendered the wrong notification link while a staging worker was also stopped.
+
+```
+## Incident/Config Consistency Report
+**Subject**: WorkerDown notification/config hotfix
+**Mode**: incident/config hotfix
+**Artifacts read**: issue, PR body, changelog entry, deploy note, Alertmanager rendered config, live worker check
+
+| symptom | evidence | root cause | fix | verification | drift |
+| ------- | -------- | ---------- | --- | ------------ | ----- |
+| WorkerDown email points responders to the wrong investigation path | Alertmanager rendered config shows stale notification link; alert history shows WorkerDown firing | Notification template drift in live Alertmanager config; separate staging worker is stopped | PR updates template source and deploy note restarts Alertmanager config; staging worker restart tracked separately | Test notification renders the corrected link; production Alertmanager config checksum matches source | CLEAN for notification fix; ADJACENT_STATE_UNCLASSIFIED until staging worker state is classified |
+| Staging worker is not running | Service check shows missing/stopped worker | Worker process not scheduled/running in staging | Not fixed by the template PR | No healthy staging worker verification in this PR | SCOPE_MISMATCH if changelog says all WorkerDown causes resolved |
+
+Summary: 2 drift findings | unresolved related state: classify staging worker via /operational-state before closure
+```
+
+Good closure text says the notification/config drift is fixed and separately classifies the staging worker state. Bad closure text says "WorkerDown resolved" without proving the worker symptom itself is gone.
+
 ## Truncation
 
 When findings exceed 30, emit the top 30 by severity (CRITICAL first, then HIGH, etc.) and append:

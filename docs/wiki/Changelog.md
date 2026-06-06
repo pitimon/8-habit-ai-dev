@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.20.0-blue)
+![Version](https://img.shields.io/badge/latest-v2.20.1-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.20.1 — Incident/Config Consistency-Lite (June 2026)
+
+Extends `/consistency-check` with a lightweight incident/config hotfix mode for operational PRs and closure notes that do not have persisted `docs/specs/<slug>/` artifacts. The mode checks symptom, evidence, root cause, actual fix, deploy path, live verification, and drift in one short table; flags overclaiming PR/changelog text, missing evidence, scope mismatch, deploy drift, and unclassified adjacent operational state; and routes unresolved related findings to `/operational-state`. Includes a generic WorkerDown/Alertmanager alert/config hotfix example. No new skill, runtime enforcement, cloud execution, or automatic issue/alert mutation added. Closes [#253](https://github.com/pitimon/8-habit-ai-dev/issues/253). Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.20.0 — Operational State Model (June 2026)
 

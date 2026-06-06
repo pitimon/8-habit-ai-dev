@@ -10,6 +10,28 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.20.1 — Incident/Config Consistency-Lite (2026-06-06)
+
+Extends `/consistency-check` with a lightweight incident/config hotfix mode for operational PRs and closure notes that do not have persisted `docs/specs/<slug>/` artifacts. This closes issue #253 while keeping the broader production canary workflow (#250) separate.
+
+### Shipped
+
+- **Incident/config hotfix mode** — `/consistency-check` now supports issue, PR, changelog, deploy, alert, and verification material when no persisted PRD/design/tasks bundle exists.
+- **Hotfix consistency table** — the mode emits `symptom | evidence | root cause | fix | verification | drift`.
+- **Drift labels** — flags missing evidence, overclaiming PR/changelog text, fix-scope mismatch, deploy-path drift, and unclassified adjacent operational state.
+- **Operational-state handoff** — unresolved related findings are explicitly classified or routed to `/operational-state` before closure.
+- **Worked example** — `skills/consistency-check/reference.md` includes a generic WorkerDown/Alertmanager alert/config hotfix example.
+
+### Boundary
+
+Markdown guidance only: no runtime enforcement, no new skill, no cloud operation execution, and no automatic issue or alert mutation were added.
+
+### Versioning
+
+Patch bump because this is a consumer-facing doctrine update to an existing skill without changing plugin inventory.
+
+---
+
 ## v2.20.0 — Operational State Model (2026-06-06)
 
 Adds `/operational-state`, a new read-only skill for classifying operational findings before acting, mutating shared infrastructure, or closing a ticket. This closes issue #251 and keeps #250 (production canary workflow) and #253 (incident/config consistency-lite) as follow-on work that can build on the state vocabulary.
