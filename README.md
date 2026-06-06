@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.1)
+[![Version](https://img.shields.io/badge/Version-2.21.2-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.2)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -464,6 +464,16 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.21.2
+
+**Theme: Codex installed-cache validator context**
+
+v2.21.2 fixes a false validation failure when `tests/validate-structure.sh` is run from Codex's installed plugin cache.
+
+- **Installed-cache shape** — Check 28 now treats a missing `plugin -> .` symlink as expected only under `~/.codex/plugins/cache/...`, where Codex has already copied the plugin root.
+- **Source/marketplace strictness preserved** — source and marketplace snapshots still require `plugin -> .` because `.agents/plugins/marketplace.json` points at `./plugin`.
+- **Docs clarified** — `docs/codex-integration.md` and `docs/compatibility-matrix.md` now explain when to validate source/marketplace publishability versus installed-cache user artifacts.
 
 ## What's New in v2.21.1
 
@@ -1198,4 +1208,4 @@ MIT
 
 ---
 
-_Version: 2.21.1 | Last updated: 2026-06-06_
+_Version: 2.21.2 | Last updated: 2026-06-06_

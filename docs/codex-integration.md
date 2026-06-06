@@ -31,6 +31,15 @@ codex plugin remove 8-habit-ai-dev@pitimon-8-habit-ai-dev
 codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
 ```
 
+## Validation Contexts
+
+`tests/validate-structure.sh` is valid in both the source/marketplace checkout and the installed Codex cache, but one packaging invariant is context-specific:
+
+- In source or marketplace snapshots, `plugin -> .` must exist because `.agents/plugins/marketplace.json` points at `./plugin`.
+- In the Codex installed cache under `~/.codex/plugins/cache/...`, the install root is already the plugin root, so Codex may omit the `plugin -> .` symlink. The validator treats that as expected installed-cache shape, not as a packaging regression.
+
+Run source/marketplace validation when checking publishability. Run installed-cache validation when checking the shipped user artifact.
+
 ## Codex Runtime Contract
 
 Codex integration promises:

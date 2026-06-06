@@ -10,6 +10,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.2 — Codex Installed-Cache Validator Context (2026-06-06)
+
+### Fixed
+
+- Fix `tests/validate-structure.sh` Check 28 when run from Codex's installed plugin cache. The validator now keeps `plugin -> .` mandatory in source/marketplace snapshots, but treats the missing symlink as expected under `~/.codex/plugins/cache/...`, where Codex has already copied the plugin root. Closes issue #278.
+
+### Documentation
+
+- Clarify the Codex source/marketplace versus installed-cache validation boundary in `docs/codex-integration.md` and `docs/compatibility-matrix.md`.
+
 ## v2.21.1 — Cross-Agent Evidence Discipline (2026-06-06)
 
 ### Documentation

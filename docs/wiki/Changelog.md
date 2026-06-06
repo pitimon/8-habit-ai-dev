@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.1-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.2-blue)
 
 # Changelog
 
@@ -6,6 +6,18 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.2 · Codex Installed-Cache Validator Context
+
+Fixes the Codex installed-cache validator context without changing skill behavior.
+
+Visible documentation points:
+
+- `tests/validate-structure.sh` now accepts the installed-cache shape where Codex omits `plugin -> .` because the installed root is already the plugin root.
+- Source and marketplace snapshots still require `plugin -> .` for publishability, because the Codex marketplace descriptor points at `./plugin`.
+- `docs/codex-integration.md` explains when to run source/marketplace validation versus installed-cache validation.
+
+Boundary: packaging validation and documentation only. No runtime enforcement, marketplace behavior change, skill behavior change, or Claude hook port to Codex.
 
 ## v2.21.1 · Cross-Agent Evidence Discipline
 

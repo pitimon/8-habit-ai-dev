@@ -83,6 +83,7 @@ Docs and plugin packaging changes should include real behavior proof when they a
 - validator output from `tests/validate-structure.sh`, `tests/validate-content.sh`, `tests/test-skill-graph.sh`, and `tests/test-verbosity-hook.sh`;
 - `node scripts/generate-skill-catalog.js --check` when skill metadata or generated discovery surfaces are touched;
 - `claude plugin list` or `codex plugin list` when package manifests, marketplace docs, install instructions, or cache-refresh behavior changes;
+- Codex source/marketplace and installed-cache validator output when Codex packaging shape changes, because `plugin -> .` is required before install but may be absent after install;
 - exact wiki/docs links for new user-facing pages.
 
 Do not use secrets, customer-sensitive raw data, private incident transcripts, or unverifiable summaries as release evidence.
