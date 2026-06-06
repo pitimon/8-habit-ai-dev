@@ -65,7 +65,7 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 | `/breakdown`          | 3    | H3 First Things First | Atomic tasks, no scope creep                                                                                                    |
 | `/build-brief`        | 4    | H5 Understand First   | Read code before writing                                                                                                        |
 | `/review-ai`          | 5    | H4 Win-Win            | Actionable feedback                                                                                                             |
-| `/deploy-guide`       | 6    | H1 Be Proactive       | Staging first, rollback ready                                                                                                   |
+| `/deploy-guide`       | 6    | H1 Be Proactive       | Staging first, rollback ready, provider canary reconciliation                                                                     |
 | `/monitor-setup`      | 7    | H7 Sharpen the Saw    | Invest in observability                                                                                                         |
 | `/cross-verify`       | All  | H1-H8                 | 17-question checklist + dimension summary                                                                                       |
 | `/consistency-check`  | —    | H5 + H1               | Spec artifact analyzer + incident/config hotfix consistency-lite (v2.20.1, [ADR-013](docs/adr/ADR-013-spec-persistence-opt-in.md)) |

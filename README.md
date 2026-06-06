@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.20.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.20.1)
+[![Version](https://img.shields.io/badge/Version-2.20.2-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.20.2)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -43,7 +43,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v2201) — Version history
+- [What's New](#whats-new-in-v2202) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [FAQ](#faq) — Common questions answered
@@ -143,7 +143,7 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 | `/breakdown`     | 3    | H3: Put First Things First   | Decompose into atomic tasks, prioritize by importance                                                       |
 | `/build-brief`   | 4    | H5: Seek First to Understand | Problem statement gate + context brief before implementing                                                  |
 | `/review-ai`     | 5    | H4: Think Win-Win            | 4-level verdict (PASS/CONCERNS/REWORK/FAIL) + dimension balance                                             |
-| `/deploy-guide`  | 6    | H1: Be Proactive             | Staging-first deployment with rollback plan                                                                 |
+| `/deploy-guide`  | 6    | H1: Be Proactive             | Staging-first deployment with rollback, plus provider reconciliation gates for production canaries          |
 | `/monitor-setup` | 7    | H7: Sharpen the Saw          | Set up health checks, alerting, error tracking                                                              |
 
 ### Assessment Skills (Use Anytime)
@@ -437,6 +437,18 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.20.2
+
+**Theme: production canary reconciliation gates** ([#250](https://github.com/pitimon/8-habit-ai-dev/issues/250))
+
+Extends `/deploy-guide` with a production canary / capacity-change template for provider-managed infrastructure where a human can choose a canary but the cloud provider may mutate a different eligible resource.
+
+- **Deploy type classifier** — adds `production canary / capacity change` for EKS nodegroups, ASGs, Kubernetes nodes, and similar provider-managed work.
+- **Approval gates** — separates cordon, observation, drain, provider-side change, reconciliation, and postcheck gates.
+- **Provider reconciliation** — compares planned target vs actual provider-selected target and checks desired/min/max, schedulable capacity, all nodes Ready, and no unintended `SchedulingDisabled` nodes.
+- **Closure discipline** — distinguishes provider scale/update success from canary reconciliation success.
+- **Evidence wording** — adds a production ops closure snippet for intended canary, provider-selected target, reconciliation state, mitigation readiness, and `/operational-state` handoff.
 
 ## What's New in v2.20.1
 
@@ -1134,4 +1146,4 @@ MIT
 
 ---
 
-_Version: 2.20.1 | Last updated: 2026-06-06_
+_Version: 2.20.2 | Last updated: 2026-06-06_

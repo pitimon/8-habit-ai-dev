@@ -10,6 +10,28 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.20.2 — Production Canary Reconciliation Gates (2026-06-06)
+
+Extends `/deploy-guide` with a production canary / capacity-change template for provider-managed infrastructure where the operator can pick a canary but the cloud provider may mutate a different eligible target. This closes issue #250.
+
+### Shipped
+
+- **Deploy type classifier** — adds `production canary / capacity change` for EKS nodegroups, ASGs, Kubernetes nodes, and similar provider-managed work.
+- **Canary phases** — documents precheck, cordon approval, observation, drain approval, provider-side change approval, reconciliation, and postcheck/evidence closure.
+- **Provider reconciliation gate** — compares planned target vs actual provider-selected target; checks desired/min/max, schedulable capacity, all nodes Ready, no unintended `SchedulingDisabled` nodes, and whether the original canary needs uncordon/follow-up.
+- **Rollback/mitigation coverage** — requires pre-scale rollback/mitigation readiness and post-scale mitigation evidence.
+- **Production ops wording** — adds an evidence snippet that distinguishes scale/update success from reconciliation success and routes unresolved state to `/operational-state`.
+
+### Boundary
+
+Markdown guidance only: no cloud operation execution, no policy enforcement, no Kubernetes/ASG automation, and no runtime state engine were added.
+
+### Versioning
+
+Patch bump because this is a consumer-facing doctrine update to an existing skill without changing plugin inventory.
+
+---
+
 ## v2.20.1 — Incident/Config Consistency-Lite (2026-06-06)
 
 Extends `/consistency-check` with a lightweight incident/config hotfix mode for operational PRs and closure notes that do not have persisted `docs/specs/<slug>/` artifacts. This closes issue #253 while keeping the broader production canary workflow (#250) separate.

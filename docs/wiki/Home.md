@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-2.20.1-blue) ![Skills](https://img.shields.io/badge/skills-24-green) ![License](https://img.shields.io/badge/license-MIT-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange) ![Review](https://img.shields.io/badge/external_review-9.5%2F10-gold)
+![Version](https://img.shields.io/badge/version-2.20.2-blue) ![Skills](https://img.shields.io/badge/skills-24-green) ![License](https://img.shields.io/badge/license-MIT-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange) ![Review](https://img.shields.io/badge/external_review-9.5%2F10-gold)
 
 # 8-Habit AI Dev
 
@@ -51,7 +51,7 @@ Legend:  [O] optional   [H] human checkpoint   [!] NEVER SKIP
    [!] 5 · /review-ai       H4 Win-Win       audit before commit
         │
         ▼
-   [H] 6 · /deploy-guide    H1 Proactive     staging first, rollback ready
+   [H] 6 · /deploy-guide    H1 Proactive     staging first, rollback, reconcile
         │
         ▼
    [O] 7 · /monitor-setup   H7 Sharpen Saw   observe after deploy
@@ -65,7 +65,7 @@ Legend:  [O] optional   [H] human checkpoint   [!] NEVER SKIP
 | 3    | [`/breakdown`](Step-3-Breakdown)         | H3    | Atomic tasks, no scope creep       |
 | 4    | [`/build-brief`](Step-4-Build-Brief)     | H5    | Context before coding              |
 | 5    | [`/review-ai`](Step-5-Review-AI)         | H4    | Audit before commit                |
-| 6    | [`/deploy-guide`](Step-6-Deploy-Guide)   | H1    | Staging first, rollback ready      |
+| 6    | [`/deploy-guide`](Step-6-Deploy-Guide)   | H1    | Staging first, rollback, reconcile |
 | 7    | [`/monitor-setup`](Step-7-Monitor-Setup) | H7    | Observe after deploy               |
 
 ## Beyond the Workflow

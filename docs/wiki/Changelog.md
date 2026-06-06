@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.20.1-blue)
+![Version](https://img.shields.io/badge/latest-v2.20.2-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.20.2 — Production Canary Reconciliation Gates (June 2026)
+
+Extends `/deploy-guide` with a production canary / capacity-change template for provider-managed infrastructure where the operator can pick a canary but the cloud provider may mutate a different eligible target. Adds precheck, cordon approval, observation, drain approval, provider-side change approval, reconciliation, and postcheck/evidence closure phases. The reconciliation gate compares planned target vs actual provider-selected target; checks desired/min/max, schedulable capacity, all nodes Ready, no unintended `SchedulingDisabled` nodes, and whether the original canary needs uncordon or follow-up. Evidence wording distinguishes provider scale/update success from canary reconciliation success and routes unresolved state to `/operational-state`. No cloud execution, policy enforcement, Kubernetes/ASG automation, or runtime state engine added. Closes [#250](https://github.com/pitimon/8-habit-ai-dev/issues/250). Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.20.1 — Incident/Config Consistency-Lite (June 2026)
 

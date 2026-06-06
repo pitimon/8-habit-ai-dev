@@ -11,6 +11,7 @@ Produce a staging-first deploy plan with a **rollback ready to paste**. Prevents
 - Any deploy touching production
 - Any database migration
 - Any config change to shared infrastructure
+- Any production canary or provider-managed capacity change, such as nodegroup/ASG scale-down
 
 ## When to skip
 
@@ -23,7 +24,8 @@ Produce a staging-first deploy plan with a **rollback ready to paste**. Prevents
 3. Define staging **verification** — health check, smoke test, feature verify
 4. Produce **production steps** (only after staging QA passes)
 5. Produce **rollback procedure** — copy-pasteable commands
-6. Produce **post-deploy verification**
+6. For provider-managed canaries, add reconciliation gates: planned target vs actual provider-selected target, desired/min/max alignment, schedulable capacity, and no unintended `SchedulingDisabled` nodes
+7. Produce **post-deploy verification**
 
 ## Output
 
@@ -34,6 +36,7 @@ A deploy plan document containing:
 - **Staging QA** — verification checklist (health, feature, smoke test)
 - **Production** — numbered command list (only after staging QA passes)
 - **Rollback (ready to paste)** — copy-pasteable commands inside a fenced block
+- **Canary reconciliation** — planned target, actual provider target, scale/update status, scheduling state, and mitigation path
 - **Post-deploy verification** — checklist
 
 ## Rules
@@ -41,6 +44,7 @@ A deploy plan document containing:
 - **Never** combine build + deploy in one step for production
 - **Never** skip staging
 - **Never** deploy on a Friday afternoon without explicit reason
+- **Never** call a provider scale-down complete until Kubernetes scheduling state is reconciled
 
 ## Handoff
 
