@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.3-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.4-blue)
 
 # Changelog
 
@@ -6,6 +6,18 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.4 · Release Decision Gate
+
+Adds explicit release classification so maintainers choose release now, bundle later, or no release before version files change.
+
+Visible documentation points:
+
+- `/deploy-guide` now includes a plugin release decision gate.
+- `CONTRIBUTING.md` mirrors the same three categories in the release checklist.
+- `tests/validate-content.sh` pins the gate so the workflow does not drift back into implicit release decisions.
+
+Boundary: markdown workflow guidance and validation only. No runtime enforcement, marketplace behavior change, skill automation, or Claude hook port to Codex.
 
 ## v2.21.3 · Codex Project Context Files
 

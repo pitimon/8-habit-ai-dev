@@ -672,6 +672,22 @@ else
 fi
 echo ""
 
+# --- Check 23: /deploy-guide release decision gate ---
+echo "--- Check 23: /deploy-guide release decision gate ---"
+DEPLOY_SKILL="skills/deploy-guide/SKILL.md"
+if [ -f "$DEPLOY_SKILL" ]; then
+  for phrase in "Plugin release decision gate" "Release now" "Bundle later" "No release" "do not bump version files"; do
+    if grep -q "$phrase" "$DEPLOY_SKILL"; then
+      pass "$DEPLOY_SKILL has release gate phrase '$phrase'"
+    else
+      fail "$DEPLOY_SKILL missing release gate phrase '$phrase'"
+    fi
+  done
+else
+  fail "$DEPLOY_SKILL not found"
+fi
+echo ""
+
 # --- Check 19: Docs freshness vs plugin.json version ---
 # Enforces version propagation across changelog surfaces. Issue #106/#107 (stuck-at-v2.N-5 drift);
 # tightened 2026-04-17 per #124 F1+F2 after v2.9.0+v2.11.0 (pointer-to-CHANGELOG.md fallback removed —
