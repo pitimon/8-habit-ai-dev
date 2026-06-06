@@ -49,10 +49,12 @@ For link validation, rely on the wiki link-check workflow or run the same tool l
 - No unbalanced code fences.
 - No overclaiming language.
 - Operational updates remain visible when relevant.
+- User-facing doctrine, install, packaging, generated catalog, or compatibility changes include real behavior proof: validator output, generated catalog freshness, install/list evidence when relevant, and explicit not-tested notes.
 - The PR states that the change is docs-only if no package behavior changed.
 
 ## See Also
 
 - [Architecture](Architecture)
+- [Limitations](Limitations)
 - [Changelog](Changelog)
 - [Troubleshooting](Troubleshooting)

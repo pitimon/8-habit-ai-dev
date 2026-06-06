@@ -18,9 +18,11 @@ This matrix documents what `8-habit-ai-dev` promises across agent runtimes. It i
 | Hook-based verbosity adaptation | Claude Code only | Not runtime-integrated | Not runtime-integrated |
 | `disable-model-invocation` intent marker | Decorative for current plugin skills per ADR-014 | Must remain Codex-ingestible | Varies |
 | `docs/data/skills.json` generated catalog | Yes, documentation/export metadata | Yes, documentation/export metadata | Yes, if the platform can read JSON |
+| Install/update verification | `claude plugin list` | `codex plugin list` after marketplace refresh | Platform-specific |
+| Real behavior proof for releases | Claude installed version + validators + docs links | Codex installed version/cache path + validators + docs links | Concrete load/use evidence from the host platform |
+| Durable project memory | External curated memory | External curated memory | External curated memory |
 | Runtime enforcement gates | No, use `claude-governance` | No, use adapter or companion tooling | Varies |
 | Compliance framework implementation | Redirects/delegates to `claude-governance` | Redirects/delegates to `claude-governance` | Varies |
-| Obsidian project memory | External curated memory | External curated memory | External curated memory |
 
 ## Platform Contracts
 
@@ -58,6 +60,34 @@ Other agent platforms can consume the plugin as structured markdown:
 4. Load the cited `SKILL.md` through the platform's native instruction mechanism.
 
 The skill content is portable; the runtime packaging is not.
+
+## Runtime and Plugin Comparison
+
+Use this table when deciding where a behavior belongs. The shared product is the markdown skill corpus; each host decides how to load, display, and optionally wrap it.
+
+| Area | Shared plugin core | Claude Code surface | Codex surface | Other-agent surface |
+| --- | --- | --- | --- | --- |
+| Skill behavior | `skills/*/SKILL.md` prose and Definition of Done | Loaded through Claude plugin skills | Loaded through Codex plugin skills | Loaded manually or through that platform's skill/rules mechanism |
+| Skill routing | `skills/RESOLVER.md` and frontmatter descriptions | May also be aided by Claude UX | Codex should read resolver + matching `SKILL.md` | Platform-specific dispatcher or manual selection |
+| Entry context | `README.md`, docs, `llms.txt` | `CLAUDE.md` is the primary auto-loaded reference | `AGENTS.md` is the operating protocol | `AGENTS.md` + `llms.txt` |
+| Packaging | Portable markdown and manifests | `.claude-plugin/` | `.codex-plugin/plugin.json` + `.agents/plugins/marketplace.json` | Git clone, raw URLs, or platform-specific import |
+| Hooks | Not part of the shared skill core | `hooks/` can run in Claude Code | Not executed | Not executed unless a separate adapter implements equivalent behavior |
+| Memory | Not internal plugin state | External memory systems may be used by the agent | External memory systems may be used by the agent | External memory systems may be used by the agent |
+| Enforcement | Out of scope | Route to `claude-governance` or another companion | Route to `claude-governance` or a future adapter | Platform-specific, outside this plugin |
+| Release evidence | Validators, generated catalog freshness, docs links | Add `claude plugin list` evidence when install behavior changes | Add `codex plugin list` and marketplace/cache evidence when install behavior changes | Add concrete host load/use evidence |
+
+## Evidence and Release Proof
+
+Docs and plugin packaging changes should include real behavior proof when they affect what users install, load, or trust. Useful evidence includes:
+
+- validator output from `tests/validate-structure.sh`, `tests/validate-content.sh`, `tests/test-skill-graph.sh`, and `tests/test-verbosity-hook.sh`;
+- `node scripts/generate-skill-catalog.js --check` when skill metadata or generated discovery surfaces are touched;
+- `claude plugin list` or `codex plugin list` when package manifests, marketplace docs, install instructions, or cache-refresh behavior changes;
+- exact wiki/docs links for new user-facing pages.
+
+Do not use secrets, customer-sensitive raw data, private incident transcripts, or unverifiable summaries as release evidence.
+
+For product boundaries that should stay visible to users, see the wiki [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations).
 
 ## Frontmatter Contract
 

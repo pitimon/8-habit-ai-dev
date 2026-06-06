@@ -10,6 +10,14 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## Unreleased
+
+### Documentation
+
+- Add Headroom-inspired cross-agent evidence discipline docs: a wiki Limitations page, expanded runtime/plugin comparison and release-evidence guidance, and real-behavior-proof contribution/release checklist language. Tracks issues #273, #274, and #275.
+
+---
+
 ## v2.21.0 — Cross-Agent Discovery and Portability Contract (2026-06-06)
 
 Adds a conservative discovery/export layer inspired by `cosmicstack-labs/mercury-agent-skills`, adapted to this plugin's Claude Code + Codex portability boundary. This closes the v2.21.0 milestone scope for issues #267, #268, #269, and #270.

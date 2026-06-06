@@ -372,6 +372,7 @@ if [ -d "docs/wiki" ]; then
     "Step-7-Monitor-Setup.md"
     "Habits-Reference.md"
     "Skills-Reference.md"
+    "Limitations.md"
     "Vibe-Coding-vs-Structured.md"
     "FAQ.md"
     "Troubleshooting.md"
