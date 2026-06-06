@@ -10,11 +10,15 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## Unreleased
+## v2.21.1 — Cross-Agent Evidence Discipline (2026-06-06)
 
 ### Documentation
 
-- Add Headroom-inspired cross-agent evidence discipline docs: a wiki Limitations page, expanded runtime/plugin comparison and release-evidence guidance, and real-behavior-proof contribution/release checklist language. Tracks issues #273, #274, and #275.
+- Add Headroom-inspired cross-agent evidence discipline docs: a wiki Limitations page, expanded runtime/plugin comparison and release-evidence guidance, and real-behavior-proof contribution/release checklist language. Closes issues #273, #274, and #275 via PR #276.
+
+### Maintenance
+
+- Update `SKILL-EFFECTIVENESS.md` for the release checklist: harvest one previously untallied `/whole-person-check` signal and add the missing `/operational-state` row so the report covers all 24 current skills.
 
 ---
 
