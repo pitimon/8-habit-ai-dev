@@ -15,7 +15,7 @@
 | **Task decomposition** | One giant prompt               | `/breakdown` — atomic tasks, Q2 prioritized        |
 | **Before coding**      | Straight to code generation    | `/build-brief` — read existing code first          |
 | **Review**             | "Looks good, commit it"        | `/review-ai` + `/security-check` + `/cross-verify` |
-| **Deploy**             | Push to prod directly          | `/deploy-guide` — staging first, rollback ready    |
+| **Deploy**             | Push to prod directly          | `/deploy-guide` — staging first, rollback planned, provider state reconciled |
 | **After deploy**       | Forget about it                | `/monitor-setup` — observe and learn               |
 | **Reflection**         | None                           | `/reflect` — capture lessons                       |
 
