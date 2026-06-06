@@ -40,9 +40,11 @@ Improve next iteration. If starting over, what would change?
 
 Extract for the team. Is there a script, template, or approach worth sharing?
 
+Sub-prompt: did the AI workflow itself reveal a reusable cost/health pattern — repeated loops, retries without new evidence, context compaction that needed verification, missing audit trail, or next-session recovery gaps?
+
 ### 5. Action item
 
-One specific, assigned action with a deadline. Not "we should improve testing" but "create a test template for API endpoints by Friday."
+One specific, assigned action with a deadline. Not "we should improve testing" but "create a test template for API endpoints by Friday." If AI-work cost was unhealthy, make the action concrete: add a handoff note, add a validator, shorten a prompt, or preserve a recovery artifact. Do not add runtime budget enforcement in this plugin.
 
 ### 6. Skill effectiveness signal
 
@@ -130,6 +132,7 @@ After saving the lesson file, run the 4-phase consolidation cycle automatically.
 
 - [ ] All 6 questions answered (even if briefly; each Q6 field can be "n/a")
 - [ ] Action item has an owner and deadline (or explicitly "none needed")
+- [ ] AI-work cost/health signal considered under Q4/Q5 using observable evidence only
 - [ ] Skill effectiveness signal captured (Q6) — `most_useful`, `least_or_confusing`, and `missed_skill` each names up to one skill or "n/a"
 - [ ] Lesson/consolidation preserves the missed-skill field for future skill-effectiveness review
 - [ ] Lesson file persisted to `~/.claude/lessons/` (or warning printed if write failed)

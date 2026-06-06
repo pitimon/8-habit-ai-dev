@@ -96,6 +96,23 @@ next-skill: <skill-name|none|any>
 Load `${CLAUDE_PLUGIN_ROOT}/[reference-file].md` for detailed guidance.
 ```
 
+## Frontmatter compatibility matrix
+
+Frontmatter is the narrowest shared contract between Claude Code, Codex, and other markdown-capable agents. Keep it stable and small; the body and referenced guides carry the rich doctrine.
+
+| Field | Status | Meaning | Portability rule |
+| --- | --- | --- | --- |
+| `name` | Required | Skill identifier | Must match `skills/<name>/`. |
+| `description` | Required | Trigger/routing prose | Third-person, concrete trigger phrases, <=1024 collapsed characters. |
+| `user-invocable` | Required | Whether users may invoke the skill directly | Use a YAML boolean. Existing public skills use `true`. |
+| `argument-hint` | Recommended | Operator hint for expected arguments | UX hint only; not a parser contract. |
+| `allowed-tools` | Required | Tools the skill may need | Keep minimal and portable; do not treat as universal permission enforcement. |
+| `prev-skill` | Required | Workflow predecessor | Concrete skill name, `none`, or `any`. |
+| `next-skill` | Required | Workflow successor | Concrete skill name, `none`, or `any`. |
+| `disable-model-invocation` | Optional | Intent marker for deterministic skills | Keep Codex-ingestible; current plugin declarations are `false` pending compatible runtime support. |
+
+Do not add registry fields such as `category` or `tags` just because another skill ecosystem uses them. If a future generated catalog needs more data, derive it from existing content first; add frontmatter only when there is an in-repo consumer, validator coverage, and a compatibility note.
+
 ### Why Objective is a section, not a tagline
 
 The three fields above the Objective do **different jobs**:

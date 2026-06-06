@@ -24,6 +24,7 @@ Based on Miller's Law (5-9 items per group) and Kubernetes/Git cheat sheet patte
 | H4    | Error messages: explain what went wrong + how to fix    | Error messages that just say "failed"          | Opaque errors cost hours of debugging downstream            |
 | H6    | Run independent tasks in parallel                       | Sequential execution when parallel is possible | 37% time saved by identifying independent work              |
 | H5    | Reproduce bugs before fixing them                       | Apply a fix without verifying the bug          | Fix might suppress symptom while leaving root cause         |
+| H7    | Watch for AI loops, retries, compaction, and missing audit trail | Treat long AI sessions as free | Hidden process cost becomes repeated waste and weak handoff |
 
 ## MEDIUM — When Applicable
 
@@ -46,10 +47,10 @@ Based on Miller's Law (5-9 items per group) and Kubernetes/Git cheat sheet patte
 ## Quick Stats
 
 - **CRITICAL**: 5 rules — always, no exceptions
-- **HIGH**: 6 rules — do most of the time
+- **HIGH**: 7 rules — do most of the time
 - **MEDIUM**: 5 rules — when applicable
 - **LOW**: 3 rules — nice to have
-- **Total**: 19 rules covering all 8 habits
+- **Total**: 20 rules covering all 8 habits
 
 ---
 

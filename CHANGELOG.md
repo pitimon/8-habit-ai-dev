@@ -10,6 +10,28 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.0 — Cross-Agent Discovery and Portability Contract (2026-06-06)
+
+Adds a conservative discovery/export layer inspired by `cosmicstack-labs/mercury-agent-skills`, adapted to this plugin's Claude Code + Codex portability boundary. This closes the v2.21.0 milestone scope for issues #267, #268, #269, and #270.
+
+### Shipped
+
+- **Frontmatter compatibility contract** — `CONTRIBUTING.md`, `guides/skill-authoring.md`, and `docs/compatibility-matrix.md` now document required, optional, cross-agent, and Codex-ingestible `SKILL.md` frontmatter fields.
+- **Generated skill catalog** — `docs/data/skills.json` is generated from `skills/*/SKILL.md` by `scripts/generate-skill-catalog.js` for cross-agent discovery. `llms.txt` and `docs/codex-integration.md` now point to it.
+- **Catalog freshness validation** — `tests/validate-structure.sh` Check 30 runs `node scripts/generate-skill-catalog.js --check` so catalog drift fails CI.
+- **Handoff integrity guidance** — `guides/structured-output-protocol.md` adds a compact handoff note pattern for current state, decisions, assumptions, evidence, confidence, next skill, and rejection path.
+- **AI-work budget/health checkpoint** — `/review-ai`, `/reflect`, and `guides/quick-reference.md` now surface observable signals such as loops, retries, context compaction, audit evidence, and next-session recoverability.
+
+### Boundary
+
+Markdown guidance and generated documentation metadata only: no runtime dispatcher, no Claude hook port to Codex, no budget enforcement, no policy gate, no compliance certification, and no agent-to-agent orchestration protocol. Scripts and validators are dependency-free and intended to run across macOS, Linux, and WSL.
+
+### Versioning
+
+Minor bump because this adds a new cross-agent discovery artifact and consumer-facing guidance across `guides/`, `skills/`, `docs/`, and validation.
+
+---
+
 ## v2.20.2 — Production Canary Reconciliation Gates (2026-06-06)
 
 Extends `/deploy-guide` with a production canary / capacity-change template for provider-managed infrastructure where the operator can pick a canary but the cloud provider may mutate a different eligible target. This closes issue #250.

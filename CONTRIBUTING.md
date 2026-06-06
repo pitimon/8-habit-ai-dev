@@ -74,6 +74,34 @@ Load `${CLAUDE_PLUGIN_ROOT}/[reference-file].md` for detailed guidance.
 - **Definition of Done**: 3-5 verifiable checkbox items per skill
 - **When to Skip**: 3-4 honest conditions — prevent compliance theater
 
+### 4. Frontmatter Compatibility Contract
+
+Every `skills/<name>/SKILL.md` frontmatter block must stay valid for both Claude Code and Codex ingestion. The skill body is the portable source of truth; runtime-specific behavior belongs in packaging docs or adapter tooling.
+
+| Field | Required | Cross-agent contract | Notes |
+| --- | --- | --- | --- |
+| `name` | Yes | Claude Code, Codex, other markdown skill loaders | Must match the directory name exactly. |
+| `description` | Yes | Claude Code, Codex | Trigger text, not the skill objective. Keep under 1024 collapsed characters and include concrete trigger phrases. |
+| `user-invocable` | Yes | Claude Code, Codex | Boolean flag used by plugin consumers and validators. Current skills use `true`. |
+| `argument-hint` | Recommended | Claude Code, Codex | Human/operator hint only. Do not encode runtime semantics here. |
+| `allowed-tools` | Yes | Claude Code, Codex-readable | Keep minimal. Tool names document what the skill may need; they are not a universal permission system across runtimes. |
+| `prev-skill` | Yes | Claude Code, Codex-readable | Workflow graph metadata. Use a concrete skill, `none`, or `any`. |
+| `next-skill` | Yes | Claude Code, Codex-readable | Workflow graph metadata. Use a concrete skill, `none`, or `any`. |
+| `disable-model-invocation` | Optional | Must remain Codex-ingestible | Current plugin values are `false` where present. Do not set `true` until Claude Code and Codex support compatible semantics. |
+
+Do not add `category`, `tags`, or third-party registry fields unless there is a documented in-repo consumer and a validator. The generated catalog derives workflow and habit metadata from existing fields/body text instead of expanding the frontmatter surface.
+
+### 5. Generated Skill Catalog
+
+`docs/data/skills.json` is generated from `skills/*/SKILL.md` for cross-agent discovery. Update it whenever skill frontmatter changes:
+
+```bash
+node scripts/generate-skill-catalog.js
+node scripts/generate-skill-catalog.js --check
+```
+
+The catalog is documentation/export metadata only. It must not imply Claude hooks run under Codex, and it must not become a runtime dispatcher or enforcement engine.
+
 ## Adding a Habit File
 
 Create `habits/h[N]-[name].md` with this structure:

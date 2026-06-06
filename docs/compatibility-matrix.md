@@ -17,6 +17,7 @@ This matrix documents what `8-habit-ai-dev` promises across agent runtimes. It i
 | Claude hooks in `hooks/` | Yes | No direct runtime compatibility | No direct runtime compatibility |
 | Hook-based verbosity adaptation | Claude Code only | Not runtime-integrated | Not runtime-integrated |
 | `disable-model-invocation` intent marker | Decorative for current plugin skills per ADR-014 | Must remain Codex-ingestible | Varies |
+| `docs/data/skills.json` generated catalog | Yes, documentation/export metadata | Yes, documentation/export metadata | Yes, if the platform can read JSON |
 | Runtime enforcement gates | No, use `claude-governance` | No, use adapter or companion tooling | Varies |
 | Compliance framework implementation | Redirects/delegates to `claude-governance` | Redirects/delegates to `claude-governance` | Varies |
 | Obsidian project memory | External curated memory | External curated memory | External curated memory |
@@ -57,6 +58,32 @@ Other agent platforms can consume the plugin as structured markdown:
 4. Load the cited `SKILL.md` through the platform's native instruction mechanism.
 
 The skill content is portable; the runtime packaging is not.
+
+## Frontmatter Contract
+
+`skills/*/SKILL.md` frontmatter is a shared compatibility surface. Keep it conservative:
+
+| Field | Claude Code | Codex | Portability note |
+| --- | --- | --- | --- |
+| `name` | Required | Required | Must match the skill directory. |
+| `description` | Required | Required | Trigger/routing prose; not a runtime command. |
+| `user-invocable` | Required | Required | Boolean metadata consumed by validators and plugin surfaces. |
+| `argument-hint` | Supported as UX hint | Supported as UX hint | Do not encode runtime-only behavior. |
+| `allowed-tools` | Documents intended tools | Documents intended tools | Tool names are not a universal cross-runtime permission system. |
+| `prev-skill` / `next-skill` | Workflow graph metadata | Workflow graph metadata | Used by docs, validators, and agents reading the skill graph. |
+| `disable-model-invocation` | Decorative for current plugin skills per ADR-014 | Must remain ingestible | Current values stay `false`; do not set `true` without a new compatibility decision. |
+
+The generated catalog at `docs/data/skills.json` is derived from this contract. It is an index for discovery, not a runtime dispatcher.
+
+## Host Platform Contract
+
+Repository validators and generators should work on macOS, Linux, and WSL:
+
+- Prefer dependency-free scripts.
+- Use `bash` for shell validators and keep compatibility with macOS bash 3.x.
+- Avoid `sed | ... | head` file-reading pipelines under `pipefail`; use the documented `awk` pattern in `CONTRIBUTING.md`.
+- For JSON generation, prefer a small Node script over hand-built shell string concatenation.
+- Do not hardcode macOS-only paths, Linux-only commands such as GNU `timeout`, or WSL-specific filesystem assumptions.
 
 ## Boundary Rules
 
