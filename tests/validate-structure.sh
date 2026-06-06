@@ -848,6 +848,12 @@ echo "--- Check 28: native Codex plugin packaging (ADR-023) ---"
 CODEX_FAIL=0
 CODEX_PLUGIN=".codex-plugin/plugin.json"
 CODEX_MARKETPLACE=".agents/plugins/marketplace.json"
+CODEX_INSTALLED_CACHE=0
+case "$(pwd -P)" in
+  */.codex/plugins/cache/*)
+    CODEX_INSTALLED_CACHE=1
+    ;;
+esac
 
 if [ -f "$CODEX_PLUGIN" ]; then
   pass "$CODEX_PLUGIN exists"
@@ -882,6 +888,8 @@ if [ -L "plugin" ]; then
     fail "plugin symlink points to '$target' (expected '.')"
     CODEX_FAIL=$((CODEX_FAIL + 1))
   fi
+elif [ "$CODEX_INSTALLED_CACHE" -eq 1 ]; then
+  pass "plugin symlink omitted in Codex installed cache (source/marketplace-only child path)"
 else
   fail "plugin symlink missing (Codex marketplace needs a child source path)"
   CODEX_FAIL=$((CODEX_FAIL + 1))
