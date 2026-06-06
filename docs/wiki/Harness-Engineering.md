@@ -21,6 +21,10 @@ In English: the harness routes and loads context; the skills carry the process d
 
 This design keeps the plugin portable across Claude Code, Codex, and other agents that can consume markdown.
 
+## Covey Link
+
+The harness stays thin because the durable discipline lives in the skills. That mirrors the plugin's Covey adaptation: habits are not runtime gates; they are repeatable practices for defining intent, making decisions, reviewing work, deploying carefully, and improving the system after each cycle.
+
 ## What Belongs Here
 
 - Skill selection and reading.
@@ -47,5 +51,6 @@ If it is thinking discipline, it can live in a skill. If it is runtime authority
 ## See Also
 
 - [Architecture](Architecture)
+- [Habits Reference](Habits-Reference#origin-and-adaptation)
 - [Skills Reference](Skills-Reference)
 - [Workflow Overview](Workflow-Overview)
