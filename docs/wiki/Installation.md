@@ -47,6 +47,20 @@ codex plugin list
 
 Codex should use `AGENTS.md` as the operating entrypoint, then route user intent through `skills/RESOLVER.md` to the relevant `skills/<name>/SKILL.md`.
 
+Update the configured Git marketplace snapshot:
+
+```bash
+codex plugin marketplace upgrade pitimon-8-habit-ai-dev
+codex plugin list
+```
+
+If the local plugin cache appears stale, remove and add the plugin again:
+
+```bash
+codex plugin remove 8-habit-ai-dev@pitimon-8-habit-ai-dev
+codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
+```
+
 ## What Installs
 
 | Surface | Claude Code | Codex |

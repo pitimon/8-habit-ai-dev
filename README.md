@@ -111,6 +111,32 @@ codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 Two commands to install per platform. Claude Code also loads a session reminder; both platforms make 24 skills available. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md) and [Codex integration guide](docs/codex-integration.md): Codex gets native packaging and the same markdown skills, not Claude hook execution or runtime enforcement.
 
+### Keeping the plugin updated
+
+This plugin is maintained through regular releases. Check the [GitHub Releases](https://github.com/pitimon/8-habit-ai-dev/releases), the [wiki changelog](https://github.com/pitimon/8-habit-ai-dev/wiki/Changelog), or the "What's New" sections below to see recent changes.
+
+**Claude Code:**
+
+```bash
+claude plugin update 8-habit-ai-dev@pitimon-8-habit-ai-dev
+```
+
+Restart Claude Code after updating so hook and skill changes are loaded.
+
+**Codex:**
+
+```bash
+codex plugin marketplace upgrade pitimon-8-habit-ai-dev
+codex plugin list
+```
+
+Codex installs from a marketplace snapshot. Refresh the marketplace snapshot first, then verify the installed plugin is still present. If a local cache ever looks stale, remove and add the plugin again:
+
+```bash
+codex plugin remove 8-habit-ai-dev@pitimon-8-habit-ai-dev
+codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
+```
+
 ---
 
 ## The 7-Step Workflow
