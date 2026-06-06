@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.0-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.1-blue)
 
 # Changelog
 
@@ -6,6 +6,19 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.1 · Cross-Agent Evidence Discipline
+
+Adds explicit limitations and release-evidence guidance for cross-agent users.
+
+Visible documentation points:
+
+- New [Limitations](Limitations) page explaining where the plugin helps, what it does not enforce, and what evidence belongs in PR/release proof.
+- `docs/compatibility-matrix.md` now compares shared markdown skills, Claude Code packaging, Codex packaging, hooks, memory, enforcement, and release evidence.
+- `CONTRIBUTING.md` now asks PRs that affect user-facing doctrine, install, release, generated catalog, or runtime-boundary surfaces to include real behavior proof.
+- `tests/validate-structure.sh` now keeps the Limitations page in the required wiki skeleton.
+
+Boundary: documentation and release discipline only. No runtime enforcement, package behavior change, marketplace behavior change, or Claude hook port to Codex.
 
 ## v2.21.0 · Cross-Agent Discovery and Portability Contract
 
