@@ -1,14 +1,15 @@
 ### 8-Habit AI Dev
 
-_Structured AI development_
+_Workflow discipline for AI-assisted development_
 
-**Get Started**
+**Start**
 
 - [Home](Home)
 - [Installation](Installation)
 - [Getting Started](Getting-Started)
+- [Troubleshooting](Troubleshooting)
 
-**7-Step Workflow**
+**Workflow**
 
 - [Overview](Workflow-Overview)
 - [0 · Research](Step-0-Research)
@@ -20,21 +21,21 @@ _Structured AI development_
 - [6 · Deploy Guide](Step-6-Deploy-Guide)
 - [7 · Monitor Setup](Step-7-Monitor-Setup)
 
-**Concepts**
+**Operations**
 
-- [Architecture](Architecture)
-- [Maturity Model](Maturity-Model)
-- [8 Habits](Habits-Reference)
-- [Vibe Coding vs Structured](Vibe-Coding-vs-Structured)
-- [Harness Engineering](Harness-Engineering)
+- [Skills Reference](Skills-Reference)
+- [Troubleshooting](Troubleshooting)
+- [Changelog](Changelog)
 
 **Reference**
 
-- [Skills Catalog](Skills-Reference)
-- [FAQ](FAQ)
-- [Troubleshooting](Troubleshooting)
+- [Habits Reference](Habits-Reference)
+- [Maturity Model](Maturity-Model)
+- [Architecture](Architecture)
+- [Vibe Coding vs Structured](Vibe-Coding-vs-Structured)
+- [Harness Engineering](Harness-Engineering)
 
 **Project**
 
-- [Changelog](Changelog)
+- [FAQ](FAQ)
 - [Contributing to Wiki](Contributing-to-Wiki)

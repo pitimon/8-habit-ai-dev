@@ -1,84 +1,99 @@
 # Troubleshooting
 
-Common issues and fixes. If your problem is not listed, [open an issue](https://github.com/pitimon/8-habit-ai-dev/issues).
+Use this page when installation, skill routing, wiki sync, or validation does not behave as expected.
 
 ## Installation
 
-### The session-start banner does not appear
+### Claude Code Banner Does Not Appear
 
-**Symptom**: No `## 8-Habit AI Dev Active` block at the top of the conversation.
+Checks:
 
-**Checks**:
+1. Confirm the plugin is installed: `claude plugin list`.
+2. Start a new Claude Code session; hooks run at session start.
+3. Confirm the plugin package includes `hooks/session-start.sh`.
+4. If installed from a local checkout, confirm the hook is executable.
 
-1. Confirm installation: `claude plugin list` should show `8-habit-ai-dev@pitimon-8-habit-ai-dev`
-2. Restart Claude Code — the session hook runs at session start, not mid-session
-3. Check `hooks/hooks.json` is loaded — if you cloned the plugin manually, ensure the `hooks/` directory is intact
-4. Verify `hooks/session-start.sh` is executable: `chmod +x hooks/session-start.sh`
+Codex users should not expect this banner because Codex does not run Claude hooks.
 
-### `plugin install` fails with "marketplace not found"
+### Marketplace Not Found
 
-Run `claude plugin marketplace add pitimon/8-habit-ai-dev` **first**, then `claude plugin install ...`. See [Installation](Installation).
+Add the marketplace before installing:
 
-### Skills do not appear when I type `/`
+```bash
+claude plugin marketplace add pitimon/8-habit-ai-dev
+```
 
-- Restart Claude Code after installation
-- Confirm the plugin is enabled: `claude plugin list`
-- The skills autoload on first invocation — try typing `/workflow` directly
+For Codex:
+
+```bash
+codex plugin marketplace add pitimon/8-habit-ai-dev
+```
+
+### Skills Do Not Appear
+
+Checks:
+
+1. Verify plugin installation with your runtime's plugin list command.
+2. Start a fresh session.
+3. Invoke a known skill directly, such as `/workflow` or `/requirements`.
+4. For Codex, confirm `AGENTS.md` and `skills/RESOLVER.md` are available to the runtime.
 
 ## Workflow
 
-### `/review-ai` says "no diff to review"
+### `/review-ai` Reports No Diff
 
-You have no staged or unstaged changes. Run it **after** writing code, not before.
+There are no local changes for the skill to inspect. Run it after generating or editing code, or pass the relevant diff or PR context.
 
-### `/design` only gives me one option
+### `/design` Gives Only One Option
 
-The skill requires **at least 2 options with trade-offs**. If Claude produced only one, re-prompt: _"Show me at least 2 alternatives with pros and cons for each decision."_ See [Step 2 · Design](Step-2-Design).
+Ask for alternatives explicitly: "Show at least two viable options with trade-offs and a recommendation." Architecture decisions should not be hidden inside a single path.
 
-### `/breakdown` produces tasks that touch >5 files
+### `/breakdown` Produces Large Tasks
 
-Tasks are too big. Re-prompt: _"Break task N down further — each task must touch at most 5 files."_
+Ask it to split the task until each item is independently reviewable and has a clear validation step.
 
-### I keep skipping `/review-ai`
+## Operations
 
-Add a git pre-commit hook or CI gate that blocks commits without a recorded review. The rule is **never skip review**, no matter how small.
+### A Finding Recovered By Itself
 
-## Cross-verify
+Use `/operational-state` before closing it. Recovered is not always fixed; the skill helps distinguish self-resolved, false positive, accepted known issue, handoff, and active incident states.
 
-### `/cross-verify` fails with "no plan to verify"
+### A Config Hotfix Has No Spec Bundle
 
-`/cross-verify` expects an implementation plan or a draft commit. Run it **after** `/breakdown` and **before** committing, or pass the file path explicitly.
+Use `/consistency-check` incident/config mode. It checks symptom, evidence, root cause, actual fix, deploy path, and live verification without requiring persisted PRD/design/task artifacts.
 
-### The 17-question checklist feels like overkill for a 3-line fix
+### A Provider Canary Changed A Different Target
 
-It is. Skip `/cross-verify` for trivial fixes; use it for anything touching >3 files or affecting architecture.
+Use `/deploy-guide` reconciliation gates. Compare planned target, provider-selected target, desired/min/max capacity, readiness, scheduling state, and follow-up action before calling the rollout complete.
 
 ## Wiki
 
-### My wiki edit disappeared
+### Wiki Edit Disappeared
 
-You edited via the GitHub Wiki web UI. **The wiki is a build artifact** — source lives in `docs/wiki/` and web edits are overwritten on the next sync. See [Contributing to Wiki](Contributing-to-Wiki) for the correct workflow.
+The wiki is generated from `docs/wiki/`. Edit the repository file and open a PR instead of editing the GitHub Wiki web UI directly.
 
-### Wiki sync Action failed with "wiki not found"
+### Wiki Sync Failed
 
-Enable the wiki on the repository first: **Settings → Features → Wikis** → check. Then seed a stub `Home` page via the web UI once. After that, the Action takes over.
+Confirm the repository wiki is enabled and the sync workflow has permission to push to the wiki repository. Then inspect the failing action log.
 
-### `lychee` link-check fails on a new PR
+### Link Check Failed
 
-A link in `docs/wiki/**/*.md` is broken. Check the Action log for the specific URL. Fix the link or add it to a `lychee.toml` allowlist if it is a known flaky external URL.
+Check the link-check workflow output. Fix broken external URLs or update the allowlist only for known flaky URLs.
 
-## Validation scripts
+## Validation
 
-### `tests/validate-structure.sh` fails after adding a new skill
+Run local validation from the repository root:
 
-The script expects every skill to have: `SKILL.md` with valid frontmatter, matching directory name, and allowed `allowed-tools` values. Run the script output — it points at the exact file and line.
+```bash
+git diff --check
+bash tests/validate-structure.sh
+bash tests/validate-content.sh
+```
 
-### `tests/validate-content.sh` fails on fitness functions
+If a validator fails, read the first failure carefully; later failures often cascade.
 
-The three fitness functions enforce limits on skill complexity, content depth, and cross-reference integrity. See [ADR-003](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-003-content-validation.md) for details and thresholds.
+## See Also
 
-## Still stuck?
-
-- **FAQ**: [FAQ](FAQ)
-- **Open an issue**: [github.com/pitimon/8-habit-ai-dev/issues](https://github.com/pitimon/8-habit-ai-dev/issues)
-- **Source**: [github.com/pitimon/8-habit-ai-dev](https://github.com/pitimon/8-habit-ai-dev)
+- [Installation](Installation)
+- [FAQ](FAQ)
+- [Contributing to Wiki](Contributing-to-Wiki)

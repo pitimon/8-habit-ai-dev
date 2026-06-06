@@ -1,98 +1,83 @@
 # Getting Started
 
+This walkthrough shows the smallest useful way to use `8-habit-ai-dev`: define the work, make the architecture decision explicit, implement with context, review before commit, and plan deployment before production.
+
 > [!TIP]
-> This walkthrough takes **~10 minutes**. Have a small feature from your backlog ready — a real one works best.
+> Use a real small feature. The workflow is clearer when the output matters.
 
-Your first structured feature. This walkthrough shows how the 7-step workflow replaces "just ask Claude to build X."
+## 1. Define The Work
 
-## Before you start
-
-- [Install the plugin](Installation)
-- Have a small feature idea in mind (a real one from your backlog is best)
-
-## The walkthrough
-
-### 1 · State your intent
-
-Open Claude Code in your project and describe what you want:
-
-```
+```text
 /requirements I need to add a rate limiter to our /api/search endpoint
 ```
 
-Claude produces a PRD summary: **What · Why · Who · In scope · Out of scope · Success criteria · Definition of Done**. Review and correct anything that does not match your intent — this is your first human checkpoint.
+Expected output: a short PRD with purpose, users, scope, out-of-scope items, success criteria, and Definition of Done.
 
-> [!TIP]
-> If the problem space is unclear, start with `/research` (Step 0) instead.
+Human checkpoint: correct the intent before any code is written.
 
-### 2 · Decide architecture
+## 2. Decide Architecture
 
-```
+```text
 /design
 ```
 
-Claude presents **at least 2 options with trade-offs** for each key decision (algorithm, storage, failure mode). **You decide** — AI proposes, human disposes. For decisions affecting >3 files or changing public API, an ADR is recorded.
+Expected output: at least two viable options with trade-offs for important decisions. The AI proposes; the human chooses.
 
-### 3 · Break the work down
+Use an ADR when the decision affects architecture, public API, persistent data, security, or more than a small local change.
 
-```
+## 3. Break The Work Down
+
+```text
 /breakdown
 ```
 
-Claude produces an atomic task list: each task is 1 sentence, touches ≤5 files, with explicit dependencies and priority (Covey's Quadrants Q1–Q4). Q4 tasks are eliminated. Parallel-safe tasks are marked.
+Expected output: atomic tasks with dependencies, priorities, and scope boundaries. Tasks should be small enough to review and test independently.
 
-### 4 · Brief each task before coding
+## 4. Build With Context
 
-```
+```text
 /build-brief
 ```
 
-For each task, Claude **reads existing code first** (H5 — Seek First to Understand), then produces an implementation brief: files to touch, patterns to follow, edge cases to handle. Only now does implementation begin.
+Expected output: a task brief based on existing code, local patterns, edge cases, and files likely to change.
 
-### 5 · Review before commit
+Only implement after the agent has read the relevant code.
 
-```
+## 5. Review Before Commit
+
+```text
 /review-ai
 ```
 
-Claude audits the generated code for security, completeness, and adherence to the brief. **Never commit without this step** — it is your last chance to catch AI hallucinations, missing error handling, and scope creep.
+Expected output: findings ordered by severity, with concrete fixes. This is the default review step for AI-generated work.
 
-Optional deeper lenses:
+Add focused checks when needed:
 
-- `/security-check` — focused OWASP Top 10 review
-- `/cross-verify` — full 17-question 8-Habit checklist
-- `/whole-person-check` — Body/Mind/Heart/Spirit balance
+- `/security-check` for auth, secrets, user input, dependencies, config, or infrastructure changes.
+- `/cross-verify` for larger plans or pre-PR confidence.
+- `/scrutinize` when the question is whether the change should exist at all.
 
-### 6 · Deploy with rollback
+## 6. Plan Deployment
 
+```text
+/deploy-guide production
 ```
-/deploy-guide
-```
 
-Staging first, always. Claude produces a step-by-step deploy plan with verification commands and a rollback procedure ready to paste.
+Expected output: staging steps, production steps, rollback commands, verification, and post-deploy checks.
 
-### 7 · Observe after deploy
+For provider-managed canaries or capacity changes, the guide also asks you to reconcile the planned target with the provider-selected target before calling the change complete.
 
-```
+## 7. Observe And Reflect
+
+```text
 /monitor-setup
-```
-
-Set up error tracking, alerts, and health checks. H7 — Sharpen the Saw: invest in observability so you learn from production.
-
-### 8 · Reflect
-
-```
 /reflect
 ```
 
-5 questions, 5 minutes. What worked? What surprised you? What would you do differently? Capture the lesson before the context evaporates.
+Expected output: monitoring gaps closed, runbook updates identified, and a short lesson captured for future work.
 
-## When to skip steps
+## When To Use Less
 
-Not every change needs all 7 steps. See [Workflow Overview → When to Skip](Workflow-Overview#when-to-skip). Single-line bug fixes, formatting, and dependency bumps typically skip Steps 0–4 and go straight to `/review-ai`.
+Small, obvious fixes usually do not need every step. They still need `/review-ai`, and production-impacting changes still need `/deploy-guide`.
 
-## Next
-
-- **[Workflow Overview](Workflow-Overview)** — the full picture
-- **[8 Habits Reference](Habits-Reference)** — the principles behind each step
-- **[Vibe Coding vs Structured](Vibe-Coding-vs-Structured)** — why this matters
+See [Workflow Overview](Workflow-Overview) for skip guidance.

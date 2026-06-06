@@ -1,59 +1,40 @@
 # Step 3 · Breakdown
 
-**Command**: `/breakdown [feature]` · **Habit**: H3 Put First Things First · **Previous**: [Step 2 · Design](Step-2-Design) · **Next**: [Step 4 · Build Brief](Step-4-Build-Brief)
+`/breakdown` decomposes approved work into small, ordered tasks that can be implemented and reviewed without hidden scope creep.
 
-## Purpose
+| Field | Value |
+| --- | --- |
+| Command | `/breakdown [design or requirements]` |
+| Habit | H3 Put First Things First |
+| Previous | [Step 2 · Design](Step-2-Design) |
+| Next | [Step 4 · Build Brief](Step-4-Build-Brief) |
 
-Decompose a feature into atomic tasks — 1 task per focused unit of work. Prevents "one giant prompt that tries to do everything at once."
+## Use This When
 
-## When to use
+- The work spans multiple files or phases.
+- Tasks need dependencies, sequencing, or parallelization decisions.
+- You want to separate required work from optional ideas.
 
-- Any feature with >1 distinct concern
-- Any work that could be parallelized
-- Any time you're tempted to write a 500-word prompt
+## Skip When
 
-## When to skip
-
-- Single-file change with no dependencies
-- Bug fix with single touch point
-- Tasks already broken down in an external tracker
-
-## Process
-
-1. Read PRD and design decisions from previous steps
-2. Decompose — each task in 1 sentence, ≤5 files, explicit dependencies
-3. Prioritize by Covey's Quadrants: **Q2 > Q1 > Q3**, eliminate Q4 (gold-plating)
-4. Classify orchestration: `sequential`, `parallel-safe`, `parallel-worktree`
-5. Apply the **Lazy Parallelism Gate** — only parallelize when the cost of coordination is less than the wall-clock savings
+- The change is a single, obvious edit.
+- A reviewed task list already exists and is still current.
 
 ## Output
 
-```
-| # | Task | Files | Depends | Type | Q |
-```
+- Atomic tasks.
+- Dependencies and ordering.
+- Priority by importance, not novelty.
+- Explicit exclusions for out-of-scope work.
+- Suggested validation per task.
 
 ## Handoff
 
-- **Expects**: Architecture decisions from `/design`
-- **Produces for `/build-brief`**: Prioritized task list with dependencies and file paths
+`/build-brief` should receive one task at a time, with dependencies and expected validation clear.
 
-## Token-Efficient Parallel Design (v2.8.0)
+## See Also
 
-When designing `parallel-safe` or `parallel-worktree` tasks, optimize for prompt cache sharing:
-
-- **Maximize shared context** — group tasks that read the same files so their `/build-brief` prefixes overlap (~90% token savings)
-- **Minimize divergence point** — task-specific instructions go LAST in the agent prompt; everything before is the cached shared prefix
-- **Avoid redundant reads** — include shared files in the brief once rather than having each agent read them independently
-
-Most valuable for 3+ parallel tasks. For 2 tasks, the optimization overhead rarely pays off.
-
-## H3 Checkpoint
-
-> [!IMPORTANT]
-> _"Am I doing what's important, or what's interesting?"_
-
-## See also
-
-- [Source: `skills/breakdown/SKILL.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/breakdown/SKILL.md)
-- [Orchestration patterns guide](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/orchestration-patterns.md)
-- [Habits Reference → H3](Habits-Reference#habit-3-put-first-things-first)
+- [Workflow Overview](Workflow-Overview)
+- [Step 4 · Build Brief](Step-4-Build-Brief)
+- [Habits Reference](Habits-Reference#habit-3-put-first-things-first)
+- [Source skill](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/breakdown/SKILL.md)

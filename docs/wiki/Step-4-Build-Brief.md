@@ -1,62 +1,40 @@
 # Step 4 · Build Brief
 
-**Command**: `/build-brief [task]` · **Habit**: H5 Seek First to Understand · **Previous**: [Step 3 · Breakdown](Step-3-Breakdown) · **Next**: [Step 5 · Review AI](Step-5-Review-AI)
+`/build-brief` prepares implementation by reading the existing code and turning one task into a concrete engineering brief.
 
-## Purpose
+| Field | Value |
+| --- | --- |
+| Command | `/build-brief [task]` |
+| Habit | H5 Seek First to Understand |
+| Previous | [Step 3 · Breakdown](Step-3-Breakdown) |
+| Next | [Step 5 · Review AI](Step-5-Review-AI) |
 
-Produce a context-rich implementation brief **before** Claude writes any code. Forces the "read first, write second" discipline that separates expert engineers from vibe coders.
+## Use This When
 
-## When to use
+- A task is ready to implement.
+- The agent needs to inspect local code before writing.
+- Existing patterns, tests, or integration points matter.
 
-- Before every non-trivial task from the breakdown
-- When the file you're editing has >100 lines you haven't read
-- When the task touches an unfamiliar module
+## Skip When
 
-## When to skip
-
-- Single-file bugfix in code you wrote this session
-- Formatting / obvious mechanical changes
-
-## Process
-
-0. **Problem statement gate** (required) — state the problem in 1 sentence
-1. **Read existing code** — files the task will touch, plus their callers
-2. **Identify patterns** to follow (naming, error handling, testing style)
-3. **List edge cases** — null inputs, permissions, concurrency, failure modes
-4. **Produce the brief** — files to touch, functions to add/modify, test plan
+- The edit is trivial and the relevant context is already visible.
+- The task is documentation-only and no repo pattern discovery is needed.
 
 ## Output
 
-```
-## Brief: [Task]
-**Problem**: 1 sentence
-**Files to touch**: [list]
-**Existing patterns**: [observations]
-**Edge cases**: [list]
-**Test plan**: [what to verify]
-**Rollback**: [if applicable]
-```
+- Files likely to change.
+- Existing patterns to follow.
+- Edge cases and failure modes.
+- Test and validation commands.
+- Implementation constraints.
 
 ## Handoff
 
-- **Expects**: A task from `/breakdown`
-- **Produces for `/review-ai`**: Implemented code with a brief to review against
+`/review-ai` should receive the implemented diff plus the brief, so review can check whether the code matches the intended task.
 
-## Context Survival (v2.8.0)
+## See Also
 
-Claude Code uses a 4-layer context compression pipeline that progressively removes older content as the context window fills. Briefs written early in a session may be summarized or removed mid-implementation. To survive compression:
-
-- **Front-load critical info** — success criteria, constraints, and file paths at the TOP
-- **Keep briefs under ~4,000 tokens** — longer briefs are prime compression targets; split into per-phase briefs instead
-- **Stable content first, volatile last** — architecture decisions at the top, task specifics at the bottom (mirrors prompt cache stability)
-- **Self-contained references** — "see file X at line Y" instead of pasting large code blocks
-
-## H5 Checkpoint
-
-> [!IMPORTANT]
-> _"Have I read enough of the existing code to make good judgments here?"_
-
-## See also
-
-- [Source: `skills/build-brief/SKILL.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/build-brief/SKILL.md)
-- [Habits Reference → H5](Habits-Reference#habit-5-seek-first-to-understand)
+- [Workflow Overview](Workflow-Overview)
+- [Step 5 · Review AI](Step-5-Review-AI)
+- [Habits Reference](Habits-Reference#habit-5-seek-first-to-understand)
+- [Source skill](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/build-brief/SKILL.md)

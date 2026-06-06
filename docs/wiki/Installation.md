@@ -1,61 +1,65 @@
 # Installation
 
-Two commands, zero dependencies. The plugin is pure markdown — no `npm install`, no build step.
+Install `8-habit-ai-dev` through the plugin marketplace for your agent runtime. The package is markdown-only: no dependency install, build step, or application service is required.
 
-## Prerequisites
+> [!NOTE]
+> Claude Code and Codex use different package surfaces. Both load the same `skills/` content, but Codex does not run Claude hooks.
 
-- [Claude Code](https://claude.com/claude-code) installed and authenticated
-- Git (for plugin marketplace cloning)
-
-## Install
+## Claude Code
 
 ```bash
 claude plugin marketplace add pitimon/8-habit-ai-dev
 claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
 ```
 
-That's it. Restart Claude Code (or start a new session) to load the plugin.
+Start a new Claude Code session after installation. The session banner should include `8-Habit AI Dev Active` and a short 7-step workflow reminder.
 
-## Verify
+Verify:
 
-Inside Claude Code, you should see the session-start banner:
-
-```
-## 8-Habit AI Dev Active
-7-Step Workflow (not Vibe Coding):
-0. /research — Investigate before specifying (H5)
-...
+```bash
+claude plugin list
 ```
 
-List available skills:
-
-```
-/workflow
-```
-
-If the banner does not appear, see [Troubleshooting](Troubleshooting).
-
-## Update
+Update:
 
 ```bash
 claude plugin update 8-habit-ai-dev@pitimon-8-habit-ai-dev
 ```
 
-## Uninstall
+Uninstall:
 
 ```bash
 claude plugin uninstall 8-habit-ai-dev@pitimon-8-habit-ai-dev
 ```
 
-## What gets installed
+## Codex
 
-- **Skills** (loaded on demand):
-  - _Workflow_: `/research`, `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/review-ai`, `/deploy-guide`, `/monitor-setup`
-  - _Assessment_: `/cross-verify`, `/whole-person-check`, `/security-check`, `/reflect`, `/workflow`
-  - _Meta_: `/using-8-habits`, `/calibrate`
-  - _Compliance_: `/eu-ai-act-check`, `/ai-dev-log`
-- **Rules** (auto-loaded every session): `rules/effective-development.md` — the full 8-Habit playbook
-- **Session hook**: ≤300-token reminder of the 7-step workflow
-- **Agent**: `8-habit-reviewer` — read-only cross-verification agent
+```bash
+codex plugin marketplace add pitimon/8-habit-ai-dev
+codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
+```
 
-Next: **[Getting Started](Getting-Started)**.
+Verify:
+
+```bash
+codex plugin list
+```
+
+Codex should use `AGENTS.md` as the operating entrypoint, then route user intent through `skills/RESOLVER.md` to the relevant `skills/<name>/SKILL.md`.
+
+## What Installs
+
+| Surface | Claude Code | Codex |
+| --- | --- | --- |
+| 24 markdown skills | Yes | Yes |
+| 7-step workflow guidance | Yes | Yes |
+| Claude session hook | Yes | No |
+| Hook-based verbosity reminder | Yes | No |
+| Runtime enforcement | No | No |
+| Compliance certification | No | No |
+
+## Next
+
+- [Getting Started](Getting-Started)
+- [Workflow Overview](Workflow-Overview)
+- [Troubleshooting](Troubleshooting)

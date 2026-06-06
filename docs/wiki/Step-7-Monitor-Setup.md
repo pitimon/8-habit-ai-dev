@@ -1,53 +1,40 @@
 # Step 7 · Monitor Setup
 
-**Command**: `/monitor-setup [project]` · **Habit**: H7 Sharpen the Saw · **Previous**: [Step 6 · Deploy Guide](Step-6-Deploy-Guide)
+`/monitor-setup` closes the loop after deploy by making the new behavior observable and supportable.
 
-## Purpose
+| Field | Value |
+| --- | --- |
+| Command | `/monitor-setup [project or feature]` |
+| Habit | H7 Sharpen the Saw |
+| Previous | [Step 6 · Deploy Guide](Step-6-Deploy-Guide) |
+| Next | [Step 0 · Research](Step-0-Research) for the next cycle |
 
-Set up error tracking, alerting, and health checks so you **learn from production**. The final step closes the loop between deploy and the next planning cycle.
+## Use This When
 
-## When to use
+- A service, feature, integration, or operational workflow has been deployed.
+- An incident revealed missing logs, metrics, alerts, or runbook detail.
+- You need evidence that production is healthy after change.
 
-- After a new service is deployed
-- When adding a new critical feature to an existing service
-- When an incident reveals a monitoring gap
+## Skip When
 
-## When to skip
-
-- Internal tools with zero users (use judgment — often you still want basic health)
-- Ephemeral preview deploys
-
-## Process
-
-1. Read existing monitoring — don't duplicate what's already wired up
-2. Define the **4 golden signals**: latency, traffic, errors, saturation
-3. Add or verify:
-   - `/health` endpoint (liveness + readiness)
-   - Structured logging with correlation IDs
-   - Error tracking (Sentry, Rollbar, etc.)
-   - Metrics export (Prometheus, OpenTelemetry)
-   - Alerts on SLO breach
-4. Document the runbook: "If X alerts fire, do Y"
+- The change cannot affect runtime behavior.
+- Existing monitoring already covers the new behavior and this has been verified.
 
 ## Output
 
-- Monitoring config (code + infra)
-- Alert rules
-- Runbook entry for this feature
-- Dashboard link
+- Health checks or readiness checks to add or verify.
+- Logging, metrics, and tracing gaps.
+- Alerting thresholds or ownership notes.
+- Dashboard and runbook updates.
+- Follow-up items for the next planning cycle.
 
 ## Handoff
 
-- **Expects**: A deployed service from `/deploy-guide`
-- **Produces for the next cycle**: Production feedback that informs the next `/research` or `/requirements`
+The next `/research` or `/requirements` cycle should receive real production feedback rather than assumptions.
 
-## H7 Checkpoint
+## See Also
 
-> [!IMPORTANT]
-> _"Am I investing in future capability, or just grinding out output?"_
-
-## See also
-
-- [Source: `skills/monitor-setup/SKILL.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/monitor-setup/SKILL.md)
-- [Habits Reference → H7](Habits-Reference#habit-7-sharpen-the-saw)
-- Next cycle: [Step 0 · Research](Step-0-Research)
+- [Workflow Overview](Workflow-Overview)
+- [Step 6 · Deploy Guide](Step-6-Deploy-Guide)
+- [Habits Reference](Habits-Reference#habit-7-sharpen-the-saw)
+- [Source skill](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/monitor-setup/SKILL.md)

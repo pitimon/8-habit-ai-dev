@@ -1,54 +1,45 @@
 # Step 5 · Review AI
 
-**Command**: `/review-ai [files or diff]` · **Habit**: H4 Think Win-Win · **Previous**: [Step 4 · Build Brief](Step-4-Build-Brief) · **Next**: [Step 6 · Deploy Guide](Step-6-Deploy-Guide)
+`/review-ai` audits AI-generated work before commit. It prioritizes correctness, security, scope control, and whether the implementation matches the brief.
 
-## Purpose
+| Field | Value |
+| --- | --- |
+| Command | `/review-ai [diff or PR]` |
+| Habit | H4 Think Win-Win |
+| Previous | [Step 4 · Build Brief](Step-4-Build-Brief) |
+| Next | [Step 6 · Deploy Guide](Step-6-Deploy-Guide) |
 
-Audit AI-generated code **before** commit. This is the non-negotiable step — never skip it, no matter how small the change feels.
+## Use This When
 
-## When to use
+- AI generated code, docs, config, tests, or release material.
+- You are preparing a commit or PR.
+- You are reviewing another agent's output.
 
-- **Always** — after any code generation, before any commit
-- Before opening a PR
-- Before merging someone else's AI-generated contribution
+## Skip When
 
-## When to skip
-
-- **Never.** Every other step has legitimate skip cases. Review does not.
-
-## Process
-
-1. Get the diff: `git diff --name-only HEAD` and `git diff HEAD`
-2. Review against the brief from Step 4 — did the implementation match?
-3. Check for AI hallucinations: nonexistent APIs, wrong function signatures, fabricated imports
-4. Security pass: secrets, injection, auth bypass, unsafe deserialization, SSRF
-5. Error handling: null/empty inputs, permission denied, partial failures
-6. Scope creep: did Claude add features nobody asked for?
-7. Test coverage: are new code paths tested?
+Do not skip this step for AI-generated work. For tiny non-AI edits, use normal human judgment.
 
 ## Output
 
-Findings categorized **CRITICAL · HIGH · MEDIUM · LOW** with actionable fixes. Fix all CRITICAL and HIGH before committing.
+- Findings ordered by severity.
+- File and line references where possible.
+- Concrete fixes for each blocking issue.
+- Residual risks or test gaps.
+- Clear pass/fail review posture.
 
-## Complementary lenses
+## Complementary Checks
 
-Run these **in addition** to `/review-ai` for deeper coverage:
-
-- [`/security-check`](Skills-Reference#security-check) — focused OWASP Top 10
-- [`/cross-verify`](Skills-Reference#cross-verify) — 17-question 8-Habit checklist
-- [`/whole-person-check`](Skills-Reference#whole-person-check) — Body/Mind/Heart/Spirit balance
+- `/security-check` for auth, input, secrets, dependency, config, or infrastructure risk.
+- `/cross-verify` for broader 8-Habit readiness.
+- `/scrutinize` when intent and necessity should be challenged.
 
 ## Handoff
 
-- **Expects**: Implemented code + brief from `/build-brief`
-- **Produces for `/deploy-guide`**: Reviewed, fix-applied code ready to deploy
+`/deploy-guide` should receive reviewed changes, validation results, and known residual risks.
 
-## H4 Checkpoint
+## See Also
 
-> [!IMPORTANT]
-> _"Does this interaction leave the next developer better informed and more capable?"_
-
-## See also
-
-- [Source: `skills/review-ai/SKILL.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/review-ai/SKILL.md)
-- [Habits Reference → H4](Habits-Reference#habit-4-think-win-win)
+- [Workflow Overview](Workflow-Overview)
+- [Skills Reference](Skills-Reference#review-ai)
+- [Habits Reference](Habits-Reference#habit-4-think-win-win)
+- [Source skill](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/review-ai/SKILL.md)
