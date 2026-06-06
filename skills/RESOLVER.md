@@ -22,7 +22,7 @@ Pick the row whose trigger matches the user intent, then read the cited SKILL.md
 | `"split into tasks"`, `"atomic tasks"`, decomposing a feature for parallel agents    | [`skills/breakdown/SKILL.md`](breakdown/SKILL.md)         | Step 3 — atomic tasks, 1 task per agent (H3)                                          |
 | `"context before coding"`, `"brief me on this task"`, starting an atomic task        | [`skills/build-brief/SKILL.md`](build-brief/SKILL.md)     | Step 4 — context-rich implementation brief per task (H5)                              |
 | `"audit AI code"`, `"review before commit"`, after AI writes code and before staging | [`skills/review-ai/SKILL.md`](review-ai/SKILL.md)         | Step 5 — audit AI-generated code for security, quality, completeness (H4)             |
-| `"deploy to staging"`, `"ship this safely"`, production deploy planning              | [`skills/deploy-guide/SKILL.md`](deploy-guide/SKILL.md)   | Step 6 — staging-first deploy with rollback plan (H1)                                 |
+| `"deploy to staging"`, `"ship this safely"`, production deploy planning, `"production canary"`, `"nodegroup scale-down"`, `"SchedulingDisabled"` | [`skills/deploy-guide/SKILL.md`](deploy-guide/SKILL.md)   | Step 6 — staging-first deploy with rollback plan plus provider reconciliation gates (H1) |
 | `"set up monitoring"`, `"error tracking"`, observability after deploy                | [`skills/monitor-setup/SKILL.md`](monitor-setup/SKILL.md) | Step 7 — error tracking, alerting, health checks (H7)                                 |
 
 ## Assessment Skills

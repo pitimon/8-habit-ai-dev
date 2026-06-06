@@ -12,7 +12,7 @@ Full 24-skill inventory and cross-plugin composition tables. Loaded from `SKILL.
 - **`/breakdown`** (Step 3) — Decompose into atomic tasks. Orchestration classification (sequential/parallel-safe/parallel-worktree). Output: task list with dependencies.
 - **`/build-brief`** (Step 4) — Read existing code BEFORE writing new code. Produces context brief per task. Output: implementation brief.
 - **`/review-ai`** (Step 5) — 4-level verdict (PASS/CONCERNS/REWORK/FAIL) with dimension balance check. Output: review report.
-- **`/deploy-guide`** (Step 6) — Staging-first deployment with rollback plan. Output: deployment checklist.
+- **`/deploy-guide`** (Step 6) — Staging-first deployment with rollback plan. Includes production canary / capacity-change reconciliation gates for provider-managed work. Output: deployment checklist.
 - **`/monitor-setup`** (Step 7) — Health checks, alerting, observability. Output: monitoring configuration.
 
 ### Assessment skills (8)

@@ -1,6 +1,6 @@
 # Skills Catalog
 
-All **24 skills** shipped through `8-habit-ai-dev` v2.20.1. Skills are **read-only guidance** — they tell Claude how to approach a task, they do not modify files themselves.
+All **24 skills** shipped through `8-habit-ai-dev` v2.20.2. Skills are **read-only guidance** — they tell Claude how to approach a task, they do not modify files themselves.
 
 > [!TIP]
 > Not sure which skill to use? Type `/using-8-habits` for an interactive decision tree, or see the [quick-select matrix](#quick-select-matrix) below.
@@ -15,7 +15,7 @@ All **24 skills** shipped through `8-habit-ai-dev` v2.20.1. Skills are **read-on
 | 3   | [`/breakdown`](Step-3-Breakdown)         | H3    | Decompose work into atomic tasks                         |
 | 4   | [`/build-brief`](Step-4-Build-Brief)     | H5    | Before coding each task — read existing code first       |
 | 5   | [`/review-ai`](Step-5-Review-AI)         | H4    | **Always** before committing AI-generated code           |
-| 6   | [`/deploy-guide`](Step-6-Deploy-Guide)   | H1    | Staging-first deploys with rollback plan                 |
+| 6   | [`/deploy-guide`](Step-6-Deploy-Guide)   | H1    | Staging-first deploys with rollback and provider reconciliation |
 | 7   | [`/monitor-setup`](Step-7-Monitor-Setup) | H7    | Observability after deploy                               |
 
 ## Assessment Skills
@@ -183,7 +183,7 @@ Generates an AI-assisted development log from `git log` + `Co-Authored-By` trail
 | Check EU AI Act compliance               | [`/eu-ai-act-check`](#eu-ai-act-check)                                 |
 | Generate AI audit trail                  | [`/ai-dev-log`](#ai-dev-log)                                           |
 | Capture lessons after a task             | [`/reflect`](#reflect)                                                 |
-| Deploy safely to production              | [`/deploy-guide`](Step-6-Deploy-Guide)                                 |
+| Deploy safely to production or run a provider canary | [`/deploy-guide`](Step-6-Deploy-Guide)                                 |
 | Question whether the change should exist | [`/scrutinize`](#scrutinize)                                           |
 | Catch drift between PRD↔design↔tasks or incident/config hotfix claims | [`/consistency-check`](#consistency-check)                             |
 | Classify an operational finding          | [`/operational-state`](#operational-state)                             |
