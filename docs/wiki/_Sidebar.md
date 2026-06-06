@@ -32,6 +32,7 @@ _Workflow discipline for AI-assisted development_
 - [Habits Reference](Habits-Reference)
 - [Maturity Model](Maturity-Model)
 - [Architecture](Architecture)
+- [Limitations](Limitations)
 - [Vibe Coding vs Structured](Vibe-Coding-vs-Structured)
 - [Harness Engineering](Harness-Engineering)
 

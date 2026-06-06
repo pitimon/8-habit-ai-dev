@@ -43,9 +43,10 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v2202) — Version history
+- [What's New](#whats-new-in-v2210) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
+- [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
 - [FAQ](#faq) — Common questions answered
 - [Glossary](#glossary) — Key terms defined
 - [Alternative Setup](#alternative-setup-without-plugin) | [Contributing](#contributing) | [License](#license)
@@ -109,7 +110,7 @@ codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 **New to the plugin?** Start with `/workflow` for a guided walkthrough, or see [Use Cases](#use-cases-which-skill-when) to find the right skill for your situation.
 
-Two commands to install per platform. Claude Code also loads a session reminder; both platforms make 24 skills available. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md) and [Codex integration guide](docs/codex-integration.md): Codex gets native packaging and the same markdown skills, not Claude hook execution or runtime enforcement.
+Two commands to install per platform. Claude Code also loads a session reminder; both platforms make 24 skills available. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md), [Codex integration guide](docs/codex-integration.md), and wiki [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations): Codex gets native packaging and the same markdown skills, not Claude hook execution or runtime enforcement.
 
 ### Keeping the plugin updated
 

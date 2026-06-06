@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-2.20.2-blue) ![Skills](https://img.shields.io/badge/skills-24-green) ![License](https://img.shields.io/badge/license-MIT-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange)
+![Version](https://img.shields.io/badge/version-2.21.0-blue) ![Skills](https://img.shields.io/badge/skills-24-green) ![License](https://img.shields.io/badge/license-MIT-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange)
 
 # 8-Habit AI Dev
 
@@ -16,6 +16,7 @@
 | Choose the right skill | [Skills Reference](Skills-Reference) |
 | Understand the full process | [Workflow Overview](Workflow-Overview) |
 | Recover from common issues | [Troubleshooting](Troubleshooting) |
+| Understand boundaries | [Limitations](Limitations) |
 
 ## What You Get
 
@@ -43,17 +44,17 @@ Use the full workflow for larger features, unclear domains, architecture changes
 
 ## Current Release Focus
 
-Version `v2.20.2` keeps the plugin's markdown-only boundary while improving operational guidance:
+Version `v2.21.0` keeps the plugin's markdown-only boundary while improving cross-agent discovery:
 
-- `/operational-state` classifies operational findings before action.
-- `/consistency-check` includes incident/config hotfix drift checks.
-- `/deploy-guide` includes reconciliation gates for provider-managed canaries and capacity changes.
+- `docs/data/skills.json` exports generated skill metadata for cross-agent discovery.
+- The frontmatter compatibility contract now documents Claude Code, Codex, and portable markdown expectations.
+- `/review-ai` and `/reflect` include AI-work health and audit-evidence checkpoints.
 
 ## Compatibility Boundary
 
 Claude Code and Codex both consume the same markdown skills. Claude Code also has Claude-specific hooks and session reminders. Codex uses `AGENTS.md`, the Codex plugin manifest, and the same `skills/` directory; it does not run Claude hooks.
 
-For details, see [Architecture](Architecture), [Installation](Installation), and the repository compatibility docs.
+For details, see [Architecture](Architecture), [Limitations](Limitations), [Installation](Installation), and the repository compatibility docs.
 
 ## Reference
 
@@ -62,4 +63,5 @@ For details, see [Architecture](Architecture), [Installation](Installation), and
 - [Habits Reference](Habits-Reference) - includes the Covey origin and engineering adaptation
 - [Maturity Model](Maturity-Model)
 - [Architecture](Architecture)
+- [Limitations](Limitations)
 - [Changelog](Changelog)

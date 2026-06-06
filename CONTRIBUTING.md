@@ -227,6 +227,23 @@ This catches the "stuck at v2.N-5" scenario at PR time instead of 4 months later
 
 See [issue #108](https://github.com/pitimon/8-habit-ai-dev/issues/108) and [issue #106](https://github.com/pitimon/8-habit-ai-dev/issues/106) for the drift incident that motivated this check.
 
+### Real behavior proof
+
+For user-facing doctrine, packaging, install, release, generated catalog, or cross-agent runtime-boundary changes, include a **Real behavior proof** section in the PR body. Unit tests and source diffs are necessary, but they are not enough by themselves when the user-facing surface is a plugin install, wiki page, or generated discovery artifact.
+
+Good proof for this repo includes:
+
+- exact validator commands and pass summaries,
+- `node scripts/generate-skill-catalog.js --check` when skill metadata or discovery docs are touched,
+- `claude plugin list` output when Claude plugin install/update behavior changes,
+- `codex plugin list` output after `codex plugin marketplace upgrade pitimon-8-habit-ai-dev` when Codex packaging or cache-refresh behavior changes,
+- links to the exact README, wiki, compatibility, or integration page changed,
+- a short "not tested" note for any host platform you did not verify.
+
+Do not use secrets, tokens, credentials, private customer evidence, raw incident transcripts, or sensitive local memory captures as proof. Redact or summarize operational evidence before it enters GitHub.
+
+This is documentation discipline, not a new enforcement hook. If a future contributor proposes turning this checklist into a runtime gate, route that design to `claude-governance` or a separate adapter first.
+
 ### Link check (external URLs)
 
 Two GitHub Actions workflows guard against dead links:
@@ -256,6 +273,7 @@ Before bumping the version files above and tagging a release, run through this l
 - [ ] CHANGELOG entry added (or explicitly marked doctrine-only per ADR-017 §C5).
 - [ ] Version bumped in all 5 files (see "Version Bumping" above) — `tests/validate-structure.sh` will fail CI if any drifts.
 - [ ] `README.md` "What's New" mentions the bumped version (Check 19 enforces this).
+- [ ] Real behavior proof captured for changed user surfaces: validators, generated catalog freshness, install/list evidence when packaging changed, and explicit "not tested" notes.
 
 **ADR-018 reversal trigger**: if the SKILL-EFFECTIVENESS tally is not updated for ≥2 release cycles, ADR-018 itself enters reversal review per its Forward-Guardrail Sunset criteria. This checklist's existence is part of the proof-of-life mechanism.
 
@@ -270,3 +288,4 @@ Before submitting:
 - [ ] Habit mapping is documented
 - [ ] No hardcoded secrets or sensitive patterns
 - [ ] File under 800 lines
+- [ ] PR includes real behavior proof when the change affects install, release, packaging, generated docs/catalogs, or cross-agent runtime expectations
