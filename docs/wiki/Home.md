@@ -59,7 +59,7 @@ For details, see [Architecture](Architecture), [Installation](Installation), and
 
 - [Workflow Overview](Workflow-Overview)
 - [Skills Reference](Skills-Reference)
-- [Habits Reference](Habits-Reference)
+- [Habits Reference](Habits-Reference) - includes the Covey origin and engineering adaptation
 - [Maturity Model](Maturity-Model)
 - [Architecture](Architecture)
 - [Changelog](Changelog)

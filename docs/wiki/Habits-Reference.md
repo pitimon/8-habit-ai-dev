@@ -15,6 +15,24 @@ The plugin adapts Covey's 8 Habits into concrete engineering behaviors for AI-as
 | H7 Sharpen the Saw | Improve the system after each cycle | `/monitor-setup`, `/reflect`, `/post-mortem` |
 | H8 Find Your Voice | Keep judgment, conscience, and architecture human-led | `/design`, `/whole-person-check`, `/calibrate` |
 
+## Origin And Adaptation
+
+The source inspiration is Stephen R. Covey's _The 7 Habits of Highly Effective People_ and _The 8th Habit_. This plugin is not official FranklinCovey training material; it is an engineering adaptation that uses the habit structure to make AI-assisted development more deliberate and reviewable.
+
+FranklinCovey describes the 7 Habits as a framework that moves people from dependence and independence toward interdependence, organized around Private Victory, Public Victory, and Renewal. In this plugin, that becomes a development workflow:
+
+| Covey frame | Plugin adaptation | Example skills |
+| --- | --- | --- |
+| Private Victory, Habits 1-3 | Manage the work before asking AI to generate output | `/deploy-guide`, `/requirements`, `/breakdown` |
+| Public Victory, Habits 4-6 | Make collaboration, review, and handoff explicit | `/review-ai`, `/management-talk`, `/cross-verify` |
+| Renewal, Habit 7 | Improve the system after each cycle | `/monitor-setup`, `/reflect`, `/post-mortem` |
+| The 8th Habit | Keep human voice, conscience, and judgment visible | `/design`, `/whole-person-check`, `/calibrate` |
+
+The 8th Habit's "voice" idea maps especially well to AI-assisted development. In this plugin, voice means the human still owns architecture, purpose, conscience, and irreversible decisions. "Inspire others to find theirs" becomes reusable skills, clear docs, useful review comments, management-ready summaries, and lessons that help the next developer.
+
+> [!NOTE]
+> The adaptation is intentionally conservative: Covey provides the human-effectiveness frame; the plugin translates that frame into markdown guidance, not runtime enforcement or compliance certification.
+
 ## Habit 1 · Be Proactive {#habit-1-be-proactive}
 
 Act on what you can control before a problem becomes an incident.
@@ -100,3 +118,5 @@ In practice:
 - [Workflow Overview](Workflow-Overview)
 - [Skills Reference](Skills-Reference)
 - [Maturity Model](Maturity-Model)
+- [FranklinCovey: The 7 Habits of Highly Effective People](https://www.franklincovey.com/courses/the-7-habits/)
+- [FranklinCovey book page: The 7 Habits](https://www.franklincovey.com/books/the-7-habits-of-highly-effective-people/)
