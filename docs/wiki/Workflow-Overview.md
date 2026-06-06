@@ -94,6 +94,6 @@ These skills complement the pipeline and can run at any point:
 
 ## See also
 
-- **[Skills Catalog](Skills-Reference)** — all 23 skills with when-to-use guidance
+- **[Skills Catalog](Skills-Reference)** — all 24 skills with when-to-use guidance
 - **[Habits Reference](Habits-Reference)**
 - **[Vibe Coding vs Structured](Vibe-Coding-vs-Structured)**

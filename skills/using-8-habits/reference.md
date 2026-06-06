@@ -1,8 +1,8 @@
 # Using 8-Habits — Reference
 
-Full 17-skill inventory and cross-plugin composition tables. Loaded from `SKILL.md` when the user needs the complete catalog beyond the 7-step workflow summary.
+Full 24-skill inventory and cross-plugin composition tables. Loaded from `SKILL.md` when the user needs the complete catalog beyond the 7-step workflow summary.
 
-## All 17 Skills (full inventory)
+## All 24 Skills (full inventory)
 
 ### Workflow skills (8)
 
@@ -19,6 +19,7 @@ Full 17-skill inventory and cross-plugin composition tables. Loaded from `SKILL.
 
 - **`/cross-verify`** — 17-question 8-habit checklist covering all 4 Whole Person dimensions (Body/Mind/Heart/Spirit). Band-based verdict. Run after plans, before PRs.
 - **`/consistency-check`** — Cross-artifact analyzer (v2.15.0, ADR-013). Reads persisted `docs/specs/<slug>/{prd,design,tasks}.md` and runs 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency). Hybrid eval — deterministic when artifacts include `FR-NNN`/`Decision-N`/`Task #N` markers, LLM semantic with explicit warning otherwise. Read-only; advisory only. Use after `/breakdown` (with `--persist <slug>`) and before `/build-brief`.
+- **`/operational-state`** — Operational finding classifier. Chooses Watch, Fix Candidate, Active Incident, Resolved, Handoff, Known Accepted Issue, False Positive, or Self-Resolved before action. Maps evidence, allowed/prohibited actions, approval gates, artifacts, escalation criteria, and closure criteria. Use before mutating or closing operational findings.
 - **`/whole-person-check`** — 4-dimension assessment (1-5 scale) with AI Blind Spot detection. Covers Body (discipline), Mind (vision), Heart (passion), Spirit (conscience).
 - **`/security-check`** — Focused OWASP security lens (secrets, injection, auth, deps). Review mode, not a runtime hook.
 - **`/reflect`** — 5-question micro-retrospective (5 min max) with action-item tracking. Run after completing significant work.
@@ -37,7 +38,7 @@ These three skills fill gaps the 7-step workflow doesn't address — engineering
 
 ### Meta / transparency skills (3)
 
-- **`/using-8-habits`** (this skill) — Onboarding navigation. Explains the 7-step workflow and all 17 skills.
+- **`/using-8-habits`** (this skill) — Onboarding navigation. Explains the 7-step workflow and all 24 skills.
 - **`/ai-dev-log`** — Generate AI-assisted development log from git history + Co-Authored-By trailers. Transparency artifact, framework-agnostic.
 - **`/eu-ai-act-check`** — Redirect stub. Migrated to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0 on 2026-05-02 (see ADR-012). Install that plugin alongside this one for the canonical 9-obligation checklist.
 

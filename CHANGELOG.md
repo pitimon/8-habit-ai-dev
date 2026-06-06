@@ -10,6 +10,27 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.20.0 — Operational State Model (2026-06-06)
+
+Adds `/operational-state`, a new read-only skill for classifying operational findings before acting, mutating shared infrastructure, or closing a ticket. This closes issue #251 and keeps #250 (production canary workflow) and #253 (incident/config consistency-lite) as follow-on work that can build on the state vocabulary.
+
+### Shipped
+
+- **`/operational-state`** — classifies findings as `Watch`, `Fix Candidate`, `Active Incident`, `Resolved`, `Handoff`, `Known Accepted Issue`, `False Positive`, or `Self-Resolved`.
+- **State matrix reference** — `skills/operational-state/reference.md` maps each state to required evidence, allowed/prohibited actions, approval requirements, artifacts, escalation criteria, and closure criteria.
+- **Operational guardrails** — documents that Running is not healthy, recovered is not fixed, source-of-truth drift stays visible, report hygiene is not a production mutation, and adjacent unresolved state must not be hidden.
+- **Routing and docs** — updates `skills/RESOLVER.md`, `/using-8-habits`, README, wiki skill catalog, `llms.txt`, and Claude/Codex manifests for 24 skills.
+
+### Boundary
+
+Markdown guidance only: no runtime state engine, policy enforcement, cloud operation execution, alert suppression automation, or automatic production writes were added. Production/shared-infrastructure mutations still require explicit human approval and the appropriate deploy/rollback workflow.
+
+### Versioning
+
+Minor bump because this adds a new consumer-facing skill in `skills/`, per the existing new-skill release convention and ADR-019 consumer-doctrine rule.
+
+---
+
 ## v2.19.2 — Operational Doctrine Patch from Open Issues (2026-06-06)
 
 Ships the conservative doctrine-only slice from open issues #252, #254, #255, and #256. This release deliberately does not add a new operational-state skill; #250, #251, and #253 remain deferred for the broader operational model/design pass.

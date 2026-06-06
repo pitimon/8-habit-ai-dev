@@ -1,10 +1,14 @@
-![Version](https://img.shields.io/badge/latest-v2.19.2-blue)
+![Version](https://img.shields.io/badge/latest-v2.20.0-blue)
 
 # Changelog
 
 Release history for `8-habit-ai-dev`. This page summarizes notable changes; the authoritative sources are [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) (v2.3.0+), the [GitHub releases page](https://github.com/pitimon/8-habit-ai-dev/releases), and the [git tag history](https://github.com/pitimon/8-habit-ai-dev/tags).
 
 > Full detail for v2.3.0 and later lives in the root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md). This wiki page summarizes recent versions and keeps v2.2.0 and earlier for continuity.
+
+## v2.20.0 — Operational State Model (June 2026)
+
+Adds `/operational-state`, a new read-only skill for classifying operational findings before action. It chooses between `Watch`, `Fix Candidate`, `Active Incident`, `Resolved`, `Handoff`, `Known Accepted Issue`, `False Positive`, and `Self-Resolved`, then maps the state to required evidence, allowed/prohibited actions, approval gates, artifacts, escalation criteria, and closure criteria. Guardrails make the operational semantics explicit: Running is not healthy, recovered is not fixed, source-of-truth drift stays visible, report hygiene is not a production mutation, and adjacent unresolved state must not be hidden. Boundary remains markdown guidance only: no runtime state engine, policy enforcement, cloud execution, alert suppression automation, or automatic production writes. Closes [#251](https://github.com/pitimon/8-habit-ai-dev/issues/251); #250 and #253 remain follow-on work. Full detail in root [`CHANGELOG.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.19.2 — Operational Doctrine Patch from Open Issues (June 2026)
 

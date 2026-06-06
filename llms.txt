@@ -1,6 +1,6 @@
 # 8-habit-ai-dev
 
-> A Claude Code and Codex plugin that adds workflow discipline to AI-assisted development. 23 on-demand skills across a 7-step workflow, grounded in Covey's 8 Habits. Cross-agent: installable in Claude Code and Codex, usable by any agent platform that can load markdown skills.
+> A Claude Code and Codex plugin that adds workflow discipline to AI-assisted development. 24 on-demand skills across a 7-step workflow, grounded in Covey's 8 Habits. Cross-agent: installable in Claude Code and Codex, usable by any agent platform that can load markdown skills.
 
 Repo: https://github.com/pitimon/8-habit-ai-dev
 
@@ -17,7 +17,7 @@ Repo: https://github.com/pitimon/8-habit-ai-dev
 
 ## Skills
 
-- [skills/](https://github.com/pitimon/8-habit-ai-dev/tree/main/skills): 23 skill directories, each with `SKILL.md`. Read `skills/RESOLVER.md` first to pick the right one.
+- [skills/](https://github.com/pitimon/8-habit-ai-dev/tree/main/skills): 24 skill directories, each with `SKILL.md`. Read `skills/RESOLVER.md` first to pick the right one.
 - [CLAUDE.md § Skills → Habits Mapping](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/CLAUDE.md): Step-indexed skill table mapping each skill to a Covey habit.
 
 ## Philosophy

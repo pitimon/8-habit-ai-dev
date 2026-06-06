@@ -69,6 +69,7 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 | `/monitor-setup`      | 7    | H7 Sharpen the Saw    | Invest in observability                                                                                                         |
 | `/cross-verify`       | All  | H1-H8                 | 17-question checklist + dimension summary                                                                                       |
 | `/consistency-check`  | —    | H5 + H1               | Cross-artifact analyzer (v2.15.0, [ADR-013](docs/adr/ADR-013-spec-persistence-opt-in.md))                                       |
+| `/operational-state`  | —    | H1 + H5 + H8          | Classify operational findings before action: Watch, Fix Candidate, Active Incident, Resolved, Handoff, Known Accepted Issue      |
 | `/whole-person-check` | —    | H8 Find Your Voice    | Body/Mind/Heart/Spirit 4-dimension assessment                                                                                   |
 | `/security-check`     | —    | H1 Be Proactive       | Focused security review — OWASP Top 10                                                                                          |
 | `/using-8-habits`     | —    | H5 + H8               | Onboarding meta-skill + decision tree (v2.4.0)                                                                                  |

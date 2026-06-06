@@ -1,7 +1,7 @@
 ---
 name: using-8-habits
 description: >
-  Onboarding meta-skill — explains the 7-step workflow, all 17 skills, and the
+  Onboarding meta-skill — explains the 7-step workflow, all 24 skills, and the
   decision tree for "which skill next?". Read this first when starting with
   8-habit-ai-dev. Maps to H5 (Seek First to Understand) + H8 (Empower next person).
 user-invocable: true
@@ -15,7 +15,7 @@ next-skill: any
 
 **Habit**: H5 (Seek First to Understand — read before acting) + H8 (Find Your Voice — empower the next person)
 
-**Purpose**: First skill to invoke when you're new to 8-habit-ai-dev, or when you're unsure which skill fits your current task. Explains the 7-step workflow, all 17 skills, and provides a decision tree for "which skill next?". When invoked with an argument (a free-text intent like `/using-8-habits "I need to verify what we built last week"`), switches to ranked-recommendation mode — see [Smart-routing mode](#smart-routing-mode-when-invoked-with-argument) below.
+**Purpose**: First skill to invoke when you're new to 8-habit-ai-dev, or when you're unsure which skill fits your current task. Explains the 7-step workflow, all 24 skills, and provides a decision tree for "which skill next?". When invoked with an argument (a free-text intent like `/using-8-habits "I need to verify what we built last week"`), switches to ranked-recommendation mode — see [Smart-routing mode](#smart-routing-mode-when-invoked-with-argument) below.
 
 ## When to Use This Skill
 
@@ -40,7 +40,7 @@ next-skill: any
 4. **`/research`** — investigate before specifying when the problem is new (H5)
 5. **`/reflect`** — 5-question micro-retrospective after completing significant work (H7)
 
-The other 12 skills are **optional depth** for specific situations — architecture-heavy work (`/design`), transparency logs (`/ai-dev-log`), onboarding (this skill), etc. EU AI Act compliance migrated to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0 (see ADR-012); install that plugin alongside this one for the canonical `/eu-ai-act-check`. Running all 17 skills for every task is theater. Pick what fits.
+The other 19 skills are **optional depth** for specific situations — architecture-heavy work (`/design`), operational finding classification (`/operational-state`), transparency logs (`/ai-dev-log`), onboarding (this skill), etc. EU AI Act compliance migrated to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0 (see ADR-012); install that plugin alongside this one for the canonical `/eu-ai-act-check`. Running all 24 skills for every task is theater. Pick what fits.
 
 **Honest framing**: if you're doing a single-line bug fix, rename refactor, or dependency bump — run `/review-ai` and skip the rest. Run more skills as the scope grows.
 
@@ -51,7 +51,7 @@ The other 12 skills are **optional depth** for specific situations — architect
 **Three skill categories**:
 
 1. **Workflow skills** (Steps 0-7) — the 7-step chain, used roughly in order for new features
-2. **Assessment skills** — invoke anytime to review quality (cross-verify, whole-person-check, security-check, reflect)
+2. **Assessment skills** — invoke anytime to review quality or operational state (cross-verify, operational-state, whole-person-check, security-check, reflect)
 3. **Meta skills** — navigation + transparency (workflow, using-8-habits, ai-dev-log)
 
 ## The 7-Step Workflow
@@ -73,9 +73,9 @@ Each step maps to a Covey habit. The habit explains WHY the step matters.
 
 **The chain is opt-in, not forced**. Every skill has a `next-skill` field in its frontmatter pointing to the default successor, but you can jump, skip, or loop as needed. The honest skip rule: if you can justify skipping a step out loud, skip it. If you can't, run it.
 
-For the full inventory of all 17 skills organized by category, see the reference file below.
+For the full inventory of all 24 skills organized by category, see the reference file below.
 
-Load `${CLAUDE_PLUGIN_ROOT}/skills/using-8-habits/reference.md` for the full 17-skill inventory and cross-plugin composition tables.
+Load `${CLAUDE_PLUGIN_ROOT}/skills/using-8-habits/reference.md` for the full 24-skill inventory and cross-plugin composition tables.
 
 ## Decision Tree: Which Skill Next?
 

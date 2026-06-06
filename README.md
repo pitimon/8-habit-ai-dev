@@ -2,17 +2,17 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
-[![Skills](https://img.shields.io/badge/Skills-23-blue)]()
+[![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.19.2-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.19.2)
+[![Version](https://img.shields.io/badge/Version-2.20.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.20.0)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
 
 > **"ทำเสร็จ ≠ ทำดี"** — Shipping code is not the same as shipping _good_ code.
 >
-> AI coding tools are powerful — but "build me X" without requirements, review, or staging creates fast, fragile code. This plugin adds the discipline AI lacks: **23 skills** across a **7-step workflow**, grounded in **Covey's 8 Habits** of effective development.
+> AI coding tools are powerful — but "build me X" without requirements, review, or staging creates fast, fragile code. This plugin adds the discipline AI lacks: **24 skills** across a **7-step workflow**, grounded in **Covey's 8 Habits** of effective development.
 
 ---
 
@@ -28,7 +28,7 @@
 
 - [Design Principle](#design-principle) — Thin harness, fat skills
 - [7-Step Workflow](#the-7-step-workflow) — Visual pipeline from research to monitoring
-- [Skills Reference](#skills-reference) — All 23 skills with habit mappings
+- [Skills Reference](#skills-reference) — All 24 skills with habit mappings
 - [Use Cases](#use-cases-which-skill-when) — Common scenarios and recommended paths
 - [The 8 Habits](#the-8-habits) — Principles behind the workflow
 - [Maturity Model](#the-maturity-model) — Dependence to Significance
@@ -43,7 +43,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v2191) — Version history
+- [What's New](#whats-new-in-v2200) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [FAQ](#faq) — Common questions answered
@@ -109,7 +109,7 @@ codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 **New to the plugin?** Start with `/workflow` for a guided walkthrough, or see [Use Cases](#use-cases-which-skill-when) to find the right skill for your situation.
 
-Two commands to install per platform. Claude Code also loads a session reminder; both platforms make 23 skills available. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md) and [Codex integration guide](docs/codex-integration.md): Codex gets native packaging and the same markdown skills, not Claude hook execution or runtime enforcement.
+Two commands to install per platform. Claude Code also loads a session reminder; both platforms make 24 skills available. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md) and [Codex integration guide](docs/codex-integration.md): Codex gets native packaging and the same markdown skills, not Claude hook execution or runtime enforcement.
 
 ---
 
@@ -152,12 +152,13 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 | --------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `/cross-verify`       | H1-H8               | 17-question checklist + dimension summary (Body/Mind/Heart/Spirit)                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | `/consistency-check`  | H5 + H1             | Cross-artifact analyzer — 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency) over persisted PRD↔design↔tasks (v2.15.0, ADR-013)                                                                                                                                                                                                                                                                                                                                       |
+| `/operational-state`  | H1 + H5 + H8        | **Operational finding classifier** — choose Watch, Fix Candidate, Active Incident, Resolved, Handoff, Known Accepted Issue, False Positive, or Self-Resolved before action. Maps evidence, allowed/prohibited actions, approval gates, artifacts, escalation criteria, and closure criteria. Read-only guidance; no runtime state engine or production mutation.                                                                                                                                   |
 | `/whole-person-check` | H8: Find Your Voice | 4-dimension assessment (1-5 scale) with AI Blind Spot detection                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `/security-check`     | H1: Be Proactive    | Focused OWASP security lens — secrets, injection, auth, deps                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `/reflect`            | H7: Sharpen the Saw | 5-question micro-retrospective (5 min max) with action tracking                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `/workflow`           | All                 | Guided 7-step walkthrough — invoke or skip each step                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `/calibrate`          | H8: Find Your Voice | Self-assessment (5-7 questions) → writes `~/.claude/habit-profile.md` so other skills adapt verbosity to your maturity level                                                                                                                                                                                                                                                                                                                                                                 |
-| `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 23 skills + decision tree for "which skill next?"                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `/using-8-habits`     | H5 + H8             | Onboarding meta-skill — all 24 skills + decision tree for "which skill next?"                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `/eu-ai-act-check`    | H1 + H8 (Spirit)    | Redirect stub — migrated to [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0+ on 2026-05-02 (ADR-012). Install that plugin for the canonical 9-obligation checklist.                                                                                                                                                                                                                                                                                       |
 | `/ai-dev-log`         | H4 + H1             | Generate AI-assisted dev log from git history for audit trail                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `/save-spec`          | H8 + H2             | **Deployment-mode helper (not a workflow step)** — scaffold a project-root `SPEC.md` digest when the repo fits the project-orientation hub mode. Generator-only Phase 1 (v2.16.0); refuses to overwrite. **Skip if you already have a memory-MCP + short `CLAUDE.md`** (v2.16.4 — see `/save-spec` "When to Skip" for details)                                                                                                                                                               |
@@ -179,6 +180,7 @@ Start from **your situation**, not the skill name.
 | Understand an unfamiliar codebase | `/research`                                                                                                                                                                                                         | `/build-brief`                    | H5: Read before writing |
 | Deploy to production              | `/deploy-guide`                                                                                                                                                                                                     | `/monitor-setup`                  | H1: Staging first       |
 | Assess overall project health     | `/cross-verify`                                                                                                                                                                                                     | `/whole-person-check`             | All 8 habits            |
+| Classify an operational finding   | `/operational-state`                                                                                                                                                                                                | `/deploy-guide` or `/post-mortem` | H1 + H5 + H8            |
 | Fix a production bug              | `/build-brief`                                                                                                                                                                                                      | Reproduce first                   | H5: Understand first    |
 | Something feels off about a plan  | `/cross-verify`                                                                                                                                                                                                     | Check dimension scores            | H1-H8                   |
 | Learn the full workflow           | `/workflow`                                                                                                                                                                                                         | (guided walkthrough)              | All                     |
@@ -340,7 +342,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 │   └── plugin.json                 # Native Codex plugin metadata (v2.19.0)
 ├── .agents/plugins/
 │   └── marketplace.json            # Native Codex marketplace listing
-├── skills/                         # 23 skills (8 workflow + 15 standalone)
+├── skills/                         # 24 skills (8 workflow + 16 standalone)
 │   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
 │   ├── requirements/SKILL.md       #   Step 1 → H2
 │   ├── design/SKILL.md             #   Step 2 → H8
@@ -351,6 +353,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 │   ├── monitor-setup/SKILL.md      #   Step 7 → H7
 │   ├── cross-verify/SKILL.md       #   All habits (17Q + dimension summary)
 │   ├── consistency-check/SKILL.md  #   H5+H1: cross-artifact analyzer (v2.15.0, ADR-013)
+│   ├── operational-state/SKILL.md  #   H1+H5+H8: operational state classifier (v2.20.0)
 │   ├── whole-person-check/SKILL.md #   H8: Body/Mind/Heart/Spirit
 │   ├── security-check/SKILL.md     #   H1: OWASP security lens
 │   ├── reflect/SKILL.md            #   H7: micro-retrospective + lesson persistence
@@ -434,6 +437,17 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.20.0
+
+**Theme: operational state model for incident and daily-fix work** ([#251](https://github.com/pitimon/8-habit-ai-dev/issues/251))
+
+Adds `/operational-state`, a read-only skill for classifying operational findings before acting or closing them. It keeps production users out of the false binary of "fix now" vs "done" by naming explicit states and evidence thresholds.
+
+- **`/operational-state`** — classifies findings as `Watch`, `Fix Candidate`, `Active Incident`, `Resolved`, `Handoff`, `Known Accepted Issue`, `False Positive`, or `Self-Resolved`.
+- **State-to-action mapping** — each state names required evidence, allowed/prohibited actions, approval gates, artifacts, escalation criteria, and closure criteria.
+- **Operational guardrails** — "Running is not healthy", "recovered is not fixed", source-of-truth drift stays visible, and report hygiene is separated from production mutations.
+- **Boundary** — markdown guidance only: no runtime state engine, policy enforcement, cloud execution, or automatic production writes.
 
 ## What's New in v2.19.2
 
@@ -1026,7 +1040,7 @@ Every habit in this plugin exists because **skipping it caused real damage**.
 
 ## FAQ
 
-**Q: Do I need to use all 23 skills for every task?**
+**Q: Do I need to use all 24 skills for every task?**
 No. Start with `/requirements` before building and `/review-ai` before committing. Those two alone eliminate most Vibe Coding problems. Add more skills as they feel natural. See [Use Cases](#use-cases-which-skill-when).
 
 **Q: What is "Vibe Coding"?**
@@ -1108,4 +1122,4 @@ MIT
 
 ---
 
-_Version: 2.19.2 | Last updated: 2026-06-06_
+_Version: 2.20.0 | Last updated: 2026-06-06_
