@@ -10,6 +10,17 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.3 — Codex Project Context Files (2026-06-06)
+
+### Documentation
+
+- Add repo-local Codex context files: `DOMAIN.md`, `SPEC.md`, `.codex/README.md`, `docs/adr/README.md`, and ADR-025. These give Codex and other non-Claude agents concise session re-entry context while preserving `CLAUDE.md` as Claude Code's architecture reference.
+- Update `AGENTS.md` and `llms.txt` so local and remote agents can discover the new context files.
+
+### Boundary
+
+- Documentation and session ergonomics only. No skill behavior change, runtime enforcement, marketplace behavior change, or Claude hook port to Codex.
+
 ## v2.21.2 — Codex Installed-Cache Validator Context (2026-06-06)
 
 ### Fixed
