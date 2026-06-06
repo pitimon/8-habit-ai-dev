@@ -1,81 +1,52 @@
 # FAQ
 
-## Is this a framework or a runnable app?
+This page answers common questions about what `8-habit-ai-dev` does, where its boundaries are, and how to choose the right workflow depth.
 
-Neither. It is a **Claude Code plugin** — structured markdown files that Claude Code loads at runtime. There is no build system, no dependencies, nothing to install beyond `claude plugin install`.
+## What Is This Plugin?
 
-## Do I have to run all 7 steps every time?
+It is a markdown guidance plugin for AI-assisted development. It provides 24 skills, a 7-step workflow, and review habits for Claude Code and Codex.
 
-No. See [Workflow Overview → When to Skip](Workflow-Overview#when-to-skip). Small changes skip most steps; the only step you should **never** skip is `/review-ai` (Step 5).
+## Does It Enforce Policy?
 
-## Why not just let Claude decide architecture?
+No. It gives prompts, checklists, handoffs, and review structure. Runtime enforcement, irreversible-action authorization, compliance frameworks, and dynamic orchestration engines belong in companion tooling such as `claude-governance`.
 
-Architecture decisions are hard to reverse and often require context that lives in people's heads — org priorities, team skills, operational constraints, past incidents. AI can propose options well, but the judgment call should belong to a human who will live with the consequences. See [H8 Find Your Voice](Habits-Reference#habit-8-find-your-voice-and-inspire-others).
+## Does Codex Run The Claude Hooks?
 
-## How is this different from just using `CLAUDE.md`?
+No. Codex can install the plugin and load the same markdown skills, but Claude hooks in `hooks/` are Claude Code-specific.
 
-`CLAUDE.md` is static guidance. This plugin adds:
+## Which Skill Should I Start With?
 
-- **Skills** — on-demand, step-specific playbooks loaded only when invoked
-- **Session hook** — a lean workflow reminder injected at session start
-- **Cross-verify agent** — independent 17-question checklist
-- **Handoff contracts** — each skill declares what it expects and produces
+| Situation | Skill |
+| --- | --- |
+| New feature | `/requirements` |
+| Unclear domain | `/research` |
+| Architecture choice | `/design` |
+| Before commit | `/review-ai` |
+| Production deploy | `/deploy-guide` |
+| Operational finding | `/operational-state` |
+| Bug investigation | `/diagnose` |
 
-You can (and should) combine the two: put project-specific context in `CLAUDE.md`, and use this plugin for workflow discipline.
+For a guided route, use `/using-8-habits`.
 
-## Does this replace code review by a human?
+## Do I Need All Seven Steps Every Time?
 
-**No.** `/review-ai` is an AI-driven audit that catches low-hanging issues (hallucinations, missing error handling, scope creep). A human reviewer catches things an AI cannot: intent mismatch, team conventions, strategic alignment. Use both.
+No. Use the workflow proportionally. Trivial fixes often need only review. Production-impacting changes need deployment planning. Unclear or architectural work should use the full path.
 
-## Can I use this in a language that isn't English?
+## Is `/review-ai` Optional?
 
-The skills themselves are in English. Bilingual Thai+English is the project's long-term goal — see [Contributing to Wiki](Contributing-to-Wiki) if you want to help translate.
+Not for AI-generated work. It is the baseline quality step before commit.
 
-## What's the difference between `/cross-verify` and `/review-ai`?
+## Is This An EU AI Act Compliance Toolkit?
 
-- `/review-ai` is **code-focused** — audits the diff for bugs, security, scope creep
-- `/cross-verify` is **process-focused** — 17 questions spanning all 8 habits, run **before** implementation starts
+No. This plugin includes a redirect stub for `/eu-ai-act-check`; the canonical compliance checklist lives in `pitimon/claude-governance`. This plugin can help produce reviewable engineering artifacts, but it does not certify compliance.
 
-Run `/cross-verify` on your plan before coding; run `/review-ai` on your code before committing.
+## Why Does The Wiki Say It Is Generated?
 
-## Do I need GitHub, or can I use GitLab/Bitbucket?
+The published GitHub Wiki is synced from `docs/wiki/`. Edit the repository files and open a PR; web edits to the GitHub Wiki can be overwritten by the sync workflow.
 
-The plugin itself is git-host-agnostic. Only the wiki sync (this documentation) depends on GitHub Actions. Everything else works anywhere.
+## See Also
 
-## Can I use this with other Claude Code plugins?
-
-Yes. This plugin is complementary with governance, security, and DevSecOps plugins. There are no hard conflicts — just different scopes.
-
-## How does this interact with `claude-governance`?
-
-They complement each other:
-
-- **8-habit-ai-dev** = workflow discipline (7 steps, 8 habits, cross-verification)
-- **claude-governance** = fitness functions and guardrails (secret scanning, commit conventions, ADRs)
-
-Use both for maximum coverage. See the note in [Base Camp](Home) for more.
-
-## Where are the habits actually defined?
-
-In [`habits/h1-...md` through `habits/h8-...md`](https://github.com/pitimon/8-habit-ai-dev/tree/main/habits). The [Habits Reference](Habits-Reference) page in this wiki is auto-generated from those files.
-
-## What is `/calibrate` and do I need it?
-
-`/calibrate` is a self-assessment skill that determines your maturity level (Dependence → Independence → Interdependence → Significance) and writes a profile to `~/.claude/habit-profile.md`. Other skills read this profile to adapt their verbosity — beginners get full guidance, experts get minimal prompts.
-
-You don't need it to use the plugin — the default is Independence level. Calibrate when guidance feels too detailed or too sparse. See [Maturity Model](Maturity-Model) for the full picture.
-
-## Does this plugin help with EU AI Act compliance?
-
-Yes. `/eu-ai-act-check` provides a 9-obligation checklist covering Articles 9-15 of EU AI Act Regulation 2024/1689, with **25 MUST + 27 SHOULD + 8 COULD** items. It includes a scope-check pre-flight so you can quickly skip if your system is not high-risk or not EU-targeted.
-
-The enforcement date is **2 August 2026**. This is believed to be the first Claude Code plugin with explicit EU AI Act compliance tooling. See [Skills Catalog → `/eu-ai-act-check`](Skills-Reference#eu-ai-act-check).
-
-## I found a bug or want to suggest a feature
-
-Open an issue: [github.com/pitimon/8-habit-ai-dev/issues](https://github.com/pitimon/8-habit-ai-dev/issues).
-
-## See also
-
-- **[Troubleshooting](Troubleshooting)**
-- **[Contributing to Wiki](Contributing-to-Wiki)**
+- [Installation](Installation)
+- [Workflow Overview](Workflow-Overview)
+- [Skills Reference](Skills-Reference)
+- [Troubleshooting](Troubleshooting)

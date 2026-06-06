@@ -1,134 +1,65 @@
-![Version](https://img.shields.io/badge/version-2.20.2-blue) ![Skills](https://img.shields.io/badge/skills-24-green) ![License](https://img.shields.io/badge/license-MIT-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange) ![Review](https://img.shields.io/badge/external_review-9.5%2F10-gold)
+![Version](https://img.shields.io/badge/version-2.20.2-blue) ![Skills](https://img.shields.io/badge/skills-24-green) ![License](https://img.shields.io/badge/license-MIT-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange)
 
 # 8-Habit AI Dev
 
+`8-habit-ai-dev` is a Claude Code and Codex plugin that adds workflow discipline to AI-assisted development. It ships portable markdown skills, a 7-step development workflow, and review habits grounded in Covey's 8 Habits.
+
 > [!IMPORTANT]
-> **Anti-Vibe-Coding plugin for Claude Code.**
-> A 7-step workflow discipline and 8-Habit cross-verification framework that replaces ad-hoc AI prompting with structured, reviewable, governable development.
->
-> _"ทำเสร็จ ≠ ทำดี"_ — _Done_ is not _Done well_.
+> This plugin provides guidance, prompts, review structure, and documentation. It does not add runtime enforcement, policy authorization, compliance certification, cloud automation, or production mutation.
 
-## Why This Exists
+## Start Here
 
-AI-assisted coding is fast but often undisciplined: missing requirements, skipped reviews, no rollback plans, accumulating tech debt. This plugin enforces the habits that separate effective developers from vibe coders — based on Stephen Covey's _7 Habits_ + _The 8th Habit_, adapted for the AI era.
+| Goal | Page |
+| --- | --- |
+| Install the plugin | [Installation](Installation) |
+| Try the workflow once | [Getting Started](Getting-Started) |
+| Choose the right skill | [Skills Reference](Skills-Reference) |
+| Understand the full process | [Workflow Overview](Workflow-Overview) |
+| Recover from common issues | [Troubleshooting](Troubleshooting) |
 
-## At a Glance
+## What You Get
 
-|                       |                                                                                                           |
-| --------------------- | --------------------------------------------------------------------------------------------------------- |
-| **24 skills**         | 8 workflow + 16 standalone skills for review, security, ops, debugging, compliance, and communication     |
-| **8 Habits**          | Covey's 7 + The 8th, adapted for AI-assisted development                                                  |
-| **24 ADRs**           | Every non-trivial decision documented                                                                     |
-| **4 maturity levels** | [Dependence → Independence → Interdependence → Significance](Maturity-Model)                              |
-| **Zero dependencies** | Pure markdown — no npm, no build step                                                                     |
-| **EU AI Act ready**   | First Claude Code plugin with [compliance toolkit](Skills-Reference#compliance--audit-skills)             |
-| **External review**   | Scored **9.5/10** (EXCELLENT) on [first formal audit](https://github.com/pitimon/8-habit-ai-dev/issues/1) |
+| Area | Included |
+| --- | --- |
+| Workflow | Steps 0-7 from research through monitoring |
+| Skills | 24 markdown skills for planning, review, operations, audit, and reflection |
+| Runtime support | Claude Code package and native Codex package |
+| Validation | Bash validators for skill structure, content, graph integrity, and hook budget |
+| Documentation | Wiki pages generated from `docs/wiki/` through PR review |
 
-> [!TIP]
-> **New here?** Start with [Installation](Installation) then [Getting Started](Getting-Started).
-> Already installed? Jump to [Workflow Overview](Workflow-Overview) or type `/using-8-habits` in Claude Code.
+## Core Workflow
 
-## The 7-Step Workflow
-
-```
-Legend:  [O] optional   [H] human checkpoint   [!] NEVER SKIP
-
-   [O] 0 · /research        H5 Understand    investigate before specifying
-        │
-        ▼
-   [H] 1 · /requirements    H2 End in Mind   define what, why, who
-        │
-        ▼
-   [H] 2 · /design          H8 Voice         architecture (human-led)
-        │
-        ▼
-   [O] 3 · /breakdown       H3 First Things  atomic tasks, no scope creep
-        │
-        ▼
-   [O] 4 · /build-brief     H5 Understand    context before coding
-        │
-        ▼
-   [!] 5 · /review-ai       H4 Win-Win       audit before commit
-        │
-        ▼
-   [H] 6 · /deploy-guide    H1 Proactive     staging first, rollback, reconcile
-        │
-        ▼
-   [O] 7 · /monitor-setup   H7 Sharpen Saw   observe after deploy
+```text
+/research -> /requirements -> /design -> /breakdown
+    -> /build-brief -> /review-ai -> /deploy-guide -> /monitor-setup
 ```
 
-| Step | Command                                  | Habit | Purpose                            |
-| ---- | ---------------------------------------- | ----- | ---------------------------------- |
-| 0    | [`/research`](Step-0-Research)           | H5    | Investigate before specifying      |
-| 1    | [`/requirements`](Step-1-Requirements)   | H2    | Define what, why, who              |
-| 2    | [`/design`](Step-2-Design)               | H8    | Architecture decisions (human-led) |
-| 3    | [`/breakdown`](Step-3-Breakdown)         | H3    | Atomic tasks, no scope creep       |
-| 4    | [`/build-brief`](Step-4-Build-Brief)     | H5    | Context before coding              |
-| 5    | [`/review-ai`](Step-5-Review-AI)         | H4    | Audit before commit                |
-| 6    | [`/deploy-guide`](Step-6-Deploy-Guide)   | H1    | Staging first, rollback, reconcile |
-| 7    | [`/monitor-setup`](Step-7-Monitor-Setup) | H7    | Observe after deploy               |
+Most users should begin with two habits:
 
-## Beyond the Workflow
+- Run `/requirements` before building non-trivial work.
+- Run `/review-ai` before committing AI-generated work.
 
-**Assessment** — run at any point for deeper analysis:
+Use the full workflow for larger features, unclear domains, architecture changes, production deploys, or operational fixes.
 
-| Skill                                                        | Purpose                                                        |
-| ------------------------------------------------------------ | -------------------------------------------------------------- |
-| [`/cross-verify`](Skills-Reference#cross-verify)             | 17-question 8-Habit checklist                                  |
-| [`/whole-person-check`](Skills-Reference#whole-person-check) | Body/Mind/Heart/Spirit balance                                 |
-| [`/security-check`](Skills-Reference#security-check)         | OWASP Top 10 focused review                                    |
-| [`/scrutinize`](Skills-Reference#scrutinize)                 | Outsider-perspective review — questions if change should exist |
-| [`/consistency-check`](Skills-Reference#consistency-check)   | Spec artifact and incident/config hotfix drift detection       |
-| [`/reflect`](Skills-Reference#reflect)                       | Post-task retrospective with lesson persistence                |
-| [`/workflow`](Skills-Reference#workflow)                     | Interactive guided walkthrough                                 |
+## Current Release Focus
 
-**Debug Discipline** — active investigation + post-fix record:
+Version `v2.20.2` keeps the plugin's markdown-only boundary while improving operational guidance:
 
-| Skill                                          | Purpose                                                |
-| ---------------------------------------------- | ------------------------------------------------------ |
-| [`/diagnose`](Skills-Reference#diagnose)       | 6-phase active bug investigation (feedback-loop first) |
-| [`/post-mortem`](Skills-Reference#post-mortem) | Canonical RCA writeup after a validated fix lands      |
+- `/operational-state` classifies operational findings before action.
+- `/consistency-check` includes incident/config hotfix drift checks.
+- `/deploy-guide` includes reconciliation gates for provider-managed canaries and capacity changes.
 
-**Spec & Communication** — helpers orthogonal to the 7-step workflow:
+## Compatibility Boundary
 
-| Skill                                                  | Purpose                                          |
-| ------------------------------------------------------ | ------------------------------------------------ |
-| [`/save-spec`](Skills-Reference#save-spec)             | Scaffold project-root SPEC.md orientation hub    |
-| [`/management-talk`](Skills-Reference#management-talk) | Reshape engineer content for leadership channels |
+Claude Code and Codex both consume the same markdown skills. Claude Code also has Claude-specific hooks and session reminders. Codex uses `AGENTS.md`, the Codex plugin manifest, and the same `skills/` directory; it does not run Claude hooks.
 
-**Meta & Onboarding** — learn and adapt:
-
-| Skill                                                | Purpose                                        |
-| ---------------------------------------------------- | ---------------------------------------------- |
-| [`/using-8-habits`](Skills-Reference#using-8-habits) | Onboarding decision tree — which skill when?   |
-| [`/calibrate`](Skills-Reference#calibrate)           | Self-assess maturity, adapt guidance verbosity |
-
-**Compliance & Audit** — governance and transparency:
-
-| Skill                                                  | Purpose                                          |
-| ------------------------------------------------------ | ------------------------------------------------ |
-| [`/eu-ai-act-check`](Skills-Reference#eu-ai-act-check) | EU AI Act 9-obligation checklist (Articles 9-15) |
-| [`/ai-dev-log`](Skills-Reference#ai-dev-log)           | AI-assisted development log from git history     |
-
-## Principles
-
-> [!NOTE]
-> Skills are **read-only guidance** — they tell Claude how to approach a task. They never edit files themselves.
-
-- **Human-in-the-loop** for architecture and irreversible decisions
-- **Zero dependencies**: pure markdown + bash validation
-- **PR-first**: every change goes through review, even documentation
-- **Complementary**: pairs with [`claude-governance`](https://github.com/pitimon/claude-governance) for enforcement + compliance
+For details, see [Architecture](Architecture), [Installation](Installation), and the repository compatibility docs.
 
 ## Reference
 
-- **[8 Habits](Habits-Reference)** — the full playbook
-- **[Skills Catalog](Skills-Reference)** — all 24 skills, when to use each
-- **[Architecture](Architecture)** — how the plugin works internally
-- **[Maturity Model](Maturity-Model)** — adaptive guidance levels
-- **[Vibe Coding vs Structured](Vibe-Coding-vs-Structured)** — side-by-side comparison
-- **[FAQ](FAQ)** · **[Troubleshooting](Troubleshooting)**
-
-## Contributing
-
-See [Contributing to Wiki](Contributing-to-Wiki). The wiki is a build artifact — edit `docs/wiki/<page>.md` and open a PR.
+- [Workflow Overview](Workflow-Overview)
+- [Skills Reference](Skills-Reference)
+- [Habits Reference](Habits-Reference)
+- [Maturity Model](Maturity-Model)
+- [Architecture](Architecture)
+- [Changelog](Changelog)

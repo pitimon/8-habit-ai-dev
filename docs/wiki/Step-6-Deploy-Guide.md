@@ -1,66 +1,44 @@
 # Step 6 · Deploy Guide
 
-**Command**: `/deploy-guide [staging|production]` · **Habit**: H1 Be Proactive · **Previous**: [Step 5 · Review AI](Step-5-Review-AI) · **Next**: [Step 7 · Monitor Setup](Step-7-Monitor-Setup)
+`/deploy-guide` produces a staging-first deployment plan with verification, rollback, and operational reconciliation before production is treated as complete.
 
-## Purpose
+| Field | Value |
+| --- | --- |
+| Command | `/deploy-guide [staging|production]` |
+| Habit | H1 Be Proactive |
+| Previous | [Step 5 · Review AI](Step-5-Review-AI) |
+| Next | [Step 7 · Monitor Setup](Step-7-Monitor-Setup) |
 
-Produce a staging-first deploy plan with a **rollback ready to paste**. Prevents the class of incidents caused by "let's just push it, it looks fine."
+## Use This When
 
-## When to use
+- Production or shared infrastructure may change.
+- A database, dependency, environment, alerting, or config change has runtime impact.
+- You are planning a provider-managed canary or capacity change.
 
-- Any deploy touching production
-- Any database migration
-- Any config change to shared infrastructure
-- Any production canary or provider-managed capacity change, such as nodegroup/ASG scale-down
+## Skip When
 
-## When to skip
-
-- Never for production. Local-only changes do not need this step.
-
-## Process
-
-1. Read existing deploy scripts, CI/CD configs, `docker-compose.yml`, `Makefile`
-2. Produce **staging steps** first, with exact commands
-3. Define staging **verification** — health check, smoke test, feature verify
-4. Produce **production steps** (only after staging QA passes)
-5. Produce **rollback procedure** — copy-pasteable commands
-6. For provider-managed canaries, add reconciliation gates: planned target vs actual provider-selected target, desired/min/max alignment, schedulable capacity, and no unintended `SchedulingDisabled` nodes
-7. Produce **post-deploy verification**
+- The change is local-only and cannot affect a deployed runtime.
+- You are only editing documentation with no consumer behavior change.
 
 ## Output
 
-A deploy plan document containing:
+- Deploy type classifier.
+- Staging plan and staging verification.
+- Production plan gated on staging evidence.
+- Rollback commands ready to paste.
+- Post-deploy verification.
+- For provider-managed canaries: planned target, actual provider-selected target, desired/min/max capacity, scheduling state, readiness, and mitigation path.
 
-- **Deploy: [version/feature]** title
-- **Staging** — numbered command list
-- **Staging QA** — verification checklist (health, feature, smoke test)
-- **Production** — numbered command list (only after staging QA passes)
-- **Rollback (ready to paste)** — copy-pasteable commands inside a fenced block
-- **Canary reconciliation** — planned target, actual provider target, scale/update status, scheduling state, and mitigation path
-- **Post-deploy verification** — checklist
-
-## Rules
-
-- **Never** combine build + deploy in one step for production
-- **Never** skip staging
-- **Never** deploy on a Friday afternoon without explicit reason
-- **Never** call a provider scale-down complete until Kubernetes scheduling state is reconciled
+> [!WARNING]
+> Do not call a provider-managed scale or canary complete only because the provider accepted the change. Reconcile the intended target and the actual runtime state.
 
 ## Handoff
 
-- **Expects**: Reviewed, passing code from `/review-ai`
-- **Produces for `/monitor-setup`**: A deployed service ready to observe
+`/monitor-setup` should receive deployed state, validation evidence, rollback notes, and any monitoring gaps discovered during rollout.
 
-## H1 Checkpoint
+## See Also
 
-> [!IMPORTANT]
-> _"Am I preventing future incidents, or reacting to current ones?"_
-
-## See also
-
-- [Source: `skills/deploy-guide/SKILL.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/deploy-guide/SKILL.md)
-- [Habits Reference → H1](Habits-Reference#habit-1-be-proactive)
-
-```
-
-```
+- [Workflow Overview](Workflow-Overview)
+- [Step 7 · Monitor Setup](Step-7-Monitor-Setup)
+- [Skills Reference](Skills-Reference#deploy-guide)
+- [Source skill](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/deploy-guide/SKILL.md)

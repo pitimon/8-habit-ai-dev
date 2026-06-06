@@ -1,45 +1,35 @@
 # Architecture
 
-The plugin is a **pure-markdown Claude Code plugin** with zero runtime dependencies. No build system, no `npm install` — just structured markdown files that Claude Code loads at runtime to shape its development behavior.
+`8-habit-ai-dev` is a markdown-first plugin. The stable core is the `skills/` directory; runtime-specific files only package or present those skills to Claude Code, Codex, and other markdown-capable agents.
 
 > [!NOTE]
-> Understanding the architecture is optional for using the plugin. This page is for contributors and curious users who want to know how the pieces fit together.
+> This page describes how the documentation and plugin surfaces fit together. It is not required reading for everyday use.
 
-## 4-Layer Loading Model
+## Core Boundary
 
-The plugin loads content in 4 layers, each with different timing and scope:
+The plugin owns workflow discipline:
 
-```
-   Layer 1 · Rules           auto-loaded every session    rules/effective-development.md
-        │
-        ▼
-   Layer 2 · Session Hook    runs at session start        hooks/session-start.sh
-        │
-        ▼
-   Layer 3 · Skills          on-demand, user-invoked      skills/*/SKILL.md
-        │
-        ▼
-   Layer 4 · Agents          cross-verification           8-habit-reviewer
-```
+- skill routing and markdown guidance,
+- human checkpoints,
+- review and verification prompts,
+- release and operational documentation discipline,
+- validation scripts for the plugin content itself.
 
-### Layer 1: Rules (always active)
+The plugin does not own runtime enforcement, irreversible-action authorization, cloud automation, compliance certification, or dynamic orchestration engines.
 
-`rules/effective-development.md` is loaded automatically into every Claude Code session via Claude's rules system. It contains the full 8-Habit playbook with Rules, Anti-patterns, and Checkpoints per habit. This is the foundation — always present in context, shaping Claude's behavior even if no skills are invoked.
+## Loading Model
 
-### Layer 2: Session Hook (session start)
+| Layer | Claude Code | Codex |
+| --- | --- | --- |
+| Entry point | `CLAUDE.md` | `AGENTS.md` |
+| Skills | `skills/*/SKILL.md` | `skills/*/SKILL.md` |
+| Resolver | `skills/RESOLVER.md` | `skills/RESOLVER.md` |
+| Session hooks | `hooks/` | Not executed |
+| Package manifest | `.claude-plugin/` | `.codex-plugin/` and `.agents/plugins/marketplace.json` |
 
-`hooks/session-start.sh` runs once at the start of every session. Budget: **≤300 tokens** (enforced by `test-verbosity-hook.sh`).
+## Skill Shape
 
-Responsibilities:
-
-- Print the 7-step workflow reminder
-- Detect workflow progress (existing PRD/ADR/TASKS artifacts)
-- Read `~/.claude/habit-profile.md` and emit maturity-level adaptation directive
-- Respect `HABIT_QUIET=1` opt-out (ADR-006)
-
-### Layer 3: Skills (on-demand)
-
-24 skills in `skills/*/SKILL.md`, loaded only when the user invokes them (e.g., `/requirements`, `/design`). Each skill has YAML frontmatter:
+Each skill is a markdown file with YAML frontmatter and a consistent body:
 
 ```yaml
 ---
@@ -47,75 +37,44 @@ name: <skill-name>
 description: >
   When to use this skill
 user-invocable: true
-argument-hint: "[arg description]"
-allowed-tools: ["Read", "Glob", "Grep"]
 prev-skill: <predecessor|any|none>
 next-skill: <successor|any|none>
 ---
 ```
 
-**Progressive disclosure** (v2.10.0, ADR-009): Three large skills use a `SKILL.md + reference.md + examples.md` triad. The main SKILL.md loads, then pulls in reference/examples only when needed via `Load ${CLAUDE_PLUGIN_ROOT}/...` directives.
+Workflow skills also define what they expect from the previous step and what they produce for the next step.
 
-### Layer 4: Agents (cross-verification)
+## Workflow Graph
 
-`8-habit-reviewer` — a read-only agent (`Read`, `Glob`, `Grep` tools only, model: `sonnet`) invoked by `/cross-verify`. Performs deep 17-question analysis against all 8 habits independently.
-
-`research-verifier` — validates cited URLs and file paths in research briefs.
-
-## Handoff Contracts
-
-Every workflow skill declares `prev-skill` and `next-skill` in its frontmatter, creating a directed acyclic graph (DAG):
-
-```
-/research → /requirements → /design → /breakdown → /build-brief → /review-ai → /deploy-guide → /monitor-setup
+```text
+/research -> /requirements -> /design -> /breakdown
+    -> /build-brief -> /review-ai -> /deploy-guide -> /monitor-setup
 ```
 
-Each skill documents:
+The graph is validated by repository tests so skill references do not silently drift.
 
-- **Expects from predecessor**: what input it needs
-- **Produces for successor**: what output the next step consumes
+## Validation
 
-> [!IMPORTANT]
-> The DAG is machine-verified. `tests/test-skill-graph.sh` validates: no cycles, no dangling references, symmetric edges, no orphan skills.
+| Script | Purpose |
+| --- | --- |
+| `tests/validate-structure.sh` | Frontmatter, names, version sync, graph fields, packaging surfaces |
+| `tests/validate-content.sh` | Markdown integrity, internal links, ADR shape, doctrine checks |
+| `tests/test-skill-graph.sh` | Handoff graph integrity |
+| `tests/test-verbosity-hook.sh` | Claude hook output and token budget |
 
-## Fitness Functions
+## Documentation Surfaces
 
-4 validators run in CI with **482+ total assertions**:
+| Surface | Role |
+| --- | --- |
+| `README.md` | Repository overview |
+| `AGENTS.md` | Cross-agent operating protocol |
+| `CLAUDE.md` | Claude Code architecture reference |
+| `docs/wiki/` | Source for GitHub Wiki pages |
+| `llms.txt` | Flat map for LLM indexing |
+| `docs/adr/` | Architecture decision records |
 
-| Validator                | What it checks                                                             |
-| ------------------------ | -------------------------------------------------------------------------- |
-| `validate-structure.sh`  | Skill frontmatter, directory structure, version consistency across 4 files |
-| `validate-content.sh`    | Skill complexity (word budget), content depth, cross-reference integrity   |
-| `test-skill-graph.sh`    | DAG integrity — cycles, dangling refs, symmetric edges, orphans            |
-| `test-verbosity-hook.sh` | 12 assertions across all 8 hook branches + HABIT_QUIET + token budget      |
+## See Also
 
-## Architecture Decision Records
-
-Every non-trivial decision is documented in `docs/adr/`:
-
-| ADR                                                                                                                      | Decision                                        |
-| ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
-| [001](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-001-orchestration-patterns.md)                    | Orchestration patterns for multi-step workflows |
-| [002](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-002-research-modes.md)                            | Research skill modes and depth levels           |
-| [003](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-003-content-validation.md)                        | Content validation fitness functions            |
-| [004](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-004-wiki-as-artifact.md)                          | Wiki stored as build artifact in source control |
-| [005](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-005-eu-ai-act-toolkit.md)                         | EU AI Act compliance toolkit scope              |
-| [006](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-006-audience-honesty-and-superpowers-deferral.md) | Audience honesty + HABIT_QUIET opt-out          |
-| [007](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-007-agentskills-compatibility-decision.md)        | agentskills.io compatibility (NO-GO)            |
-| [008](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-008-user-maturity-calibration-design.md)          | User maturity calibration design                |
-| [009](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-009-skill-split-convention.md)                    | Progressive-disclosure skill split convention   |
-
-## Guides & Templates
-
-The `guides/` directory contains supporting material referenced by skills:
-
-- **Templates**: PRD, task list, review, lesson, interview protocol, ADR
-- **Reference docs**: EARS notation, cross-verification questions, whole-person rubrics
-- **Protocols**: Structured output format, orchestration patterns, verbosity adaptation rules
-- **Cross-verify packs**: Domain-specific question sets (API, frontend, infra, AI/ML, mobile)
-
-## See also
-
-- [Skills Catalog](Skills-Reference)
-- [Maturity Model](Maturity-Model)
-- [Changelog](Changelog)
+- [Installation](Installation)
+- [Skills Reference](Skills-Reference)
+- [Contributing to Wiki](Contributing-to-Wiki)
