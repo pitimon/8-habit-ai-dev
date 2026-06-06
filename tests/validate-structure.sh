@@ -973,6 +973,43 @@ if [ "$CODEX_DOC_FAIL" -eq 0 ]; then
 fi
 echo ""
 
+# --- Check 30: generated skill catalog freshness ---
+echo "--- Check 30: generated skill catalog freshness ---"
+CATALOG_FAIL=0
+CATALOG_SCRIPT="scripts/generate-skill-catalog.js"
+CATALOG_JSON="docs/data/skills.json"
+
+if [ -f "$CATALOG_SCRIPT" ]; then
+  pass "$CATALOG_SCRIPT exists"
+else
+  fail "$CATALOG_SCRIPT missing"
+  CATALOG_FAIL=$((CATALOG_FAIL + 1))
+fi
+
+if [ -f "$CATALOG_JSON" ]; then
+  pass "$CATALOG_JSON exists"
+else
+  fail "$CATALOG_JSON missing"
+  CATALOG_FAIL=$((CATALOG_FAIL + 1))
+fi
+
+if command -v node >/dev/null 2>&1; then
+  pass "node available for generated catalog check"
+else
+  fail "node not found — required for $CATALOG_SCRIPT"
+  CATALOG_FAIL=$((CATALOG_FAIL + 1))
+fi
+
+if [ "$CATALOG_FAIL" -eq 0 ]; then
+  if node "$CATALOG_SCRIPT" --check; then
+    pass "$CATALOG_JSON is fresh"
+  else
+    fail "$CATALOG_JSON is stale; run: node $CATALOG_SCRIPT"
+    CATALOG_FAIL=$((CATALOG_FAIL + 1))
+  fi
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"

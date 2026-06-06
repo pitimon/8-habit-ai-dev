@@ -464,6 +464,19 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.0
+
+**Theme: cross-agent discovery and portability contract**
+
+v2.21.0 adds a conservative discovery/export layer inspired by Mercury Skills while preserving the plugin boundary: the same markdown skill corpus works in Claude Code and Codex, and host-side tooling should stay portable across macOS, Linux, and WSL.
+
+- **Frontmatter contract** — `CONTRIBUTING.md`, `guides/skill-authoring.md`, and `docs/compatibility-matrix.md` now define required, optional, cross-agent, and Codex-ingestible `SKILL.md` fields.
+- **Generated skill catalog** — `docs/data/skills.json` is generated from `skills/*/SKILL.md` by `scripts/generate-skill-catalog.js` for cross-agent discovery.
+- **Freshness check** — `tests/validate-structure.sh` Check 30 verifies the generated catalog is current.
+- **Handoff integrity** — `guides/structured-output-protocol.md` adds a compact handoff note pattern for state, decisions, assumptions, evidence, confidence, next skill, and rejection path.
+- **AI-work health** — `/review-ai`, `/reflect`, and `guides/quick-reference.md` add observable loop/retry/compaction/audit-trail signals without adding runtime metering or enforcement.
+- **Boundary** — markdown guidance and generated metadata only: no runtime dispatcher, no Claude-hook port to Codex, no budget enforcement, and no policy gate.
+
 ## What's New in v2.20.2
 
 **Theme: production canary reconciliation gates** ([#250](https://github.com/pitimon/8-habit-ai-dev/issues/250))
@@ -1172,4 +1185,4 @@ MIT
 
 ---
 
-_Version: 2.20.2 | Last updated: 2026-06-06_
+_Version: 2.21.0 | Last updated: 2026-06-06_

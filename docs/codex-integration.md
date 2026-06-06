@@ -38,6 +38,7 @@ Codex integration promises:
 - Codex can install the plugin through the native marketplace flow.
 - Codex can load the same 24 markdown skills from `skills/`.
 - Codex should start from `AGENTS.md`, then use `skills/RESOLVER.md` to select a skill.
+- Codex and other tools may read `docs/data/skills.json` as generated discovery metadata.
 - Codex should treat `CLAUDE.md` as architecture reference, not as automatically loaded runtime state.
 - Codex should treat Obsidian or other memory systems as external curated memory, not as the plugin's internal state.
 
@@ -56,10 +57,11 @@ Those belong in companion tooling or a future adapter layer.
 
 1. Read `AGENTS.md` for the operating protocol.
 2. Read `skills/RESOLVER.md` for intent-to-skill routing.
-3. Load the cited `skills/<name>/SKILL.md`.
-4. Follow the skill's process and Definition of Done.
-5. For high-risk work, run `/cross-verify`, `/review-ai`, `/security-check`, or `/scrutinize` as appropriate.
-6. For release work, reconcile GitHub Releases and git tags before updating release docs.
+3. Optionally inspect `docs/data/skills.json` for a machine-readable skill list.
+4. Load the cited `skills/<name>/SKILL.md`.
+5. Follow the skill's process and Definition of Done.
+6. For high-risk work, run `/cross-verify`, `/review-ai`, `/security-check`, or `/scrutinize` as appropriate.
+7. For release work, reconcile GitHub Releases and git tags before updating release docs.
 
 ## Optional Adapter Layer
 
@@ -86,6 +88,7 @@ Adapter responsibilities that do not belong in this plugin core:
 | --- | --- |
 | Skill behavior | `skills/*/SKILL.md` |
 | Skill routing | `skills/RESOLVER.md` |
+| Generated skill catalog | `docs/data/skills.json` |
 | Cross-agent entrypoint | `AGENTS.md` |
 | Claude Code architecture | `CLAUDE.md` |
 | Codex packaging | `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json` |

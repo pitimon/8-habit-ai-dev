@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.20.2-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.0-blue)
 
 # Changelog
 
@@ -6,6 +6,20 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.0 · Cross-Agent Discovery and Portability Contract
+
+Adds a generated skill catalog and documents the shared `SKILL.md` frontmatter contract for Claude Code, Codex, and other markdown-capable agents.
+
+Visible documentation points:
+
+- `docs/data/skills.json` is generated from `skills/*/SKILL.md` for cross-agent discovery.
+- `CONTRIBUTING.md`, `guides/skill-authoring.md`, and `docs/compatibility-matrix.md` document required, optional, cross-agent, and Codex-ingestible frontmatter fields.
+- `docs/codex-integration.md` and `llms.txt` point tools to the generated catalog.
+- `guides/structured-output-protocol.md` adds a compact handoff-integrity note pattern.
+- `/review-ai`, `/reflect`, and `guides/quick-reference.md` add observable AI-work health signals such as loops, retries, context compaction, audit evidence, and next-session recovery.
+
+Boundary: generated metadata and markdown guidance only. No runtime dispatcher, no Claude hook port to Codex, no budget enforcement, no policy gate, and no agent-to-agent orchestration protocol.
 
 ## v2.20.2 · Production Canary Reconciliation Gates
 

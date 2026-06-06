@@ -46,7 +46,16 @@ next-skill: deploy-guide
    - Tests written for new functions (cross-check with step 2)
    - Docs updated if API changed
 
-7. **Give actionable feedback** — not just "fix this" but explain WHY and HOW:
+7. **AI-work budget and health check** (MEDIUM, guidance only):
+   - Did the work enter repeated loops, retries, or re-generation without new evidence?
+   - Was context compacted or summarized, and was any summary verified against source files?
+   - Is there enough audit evidence to explain what changed and why?
+   - Does token, cost, or elapsed time look disproportionate to the task value?
+   - Can the next session recover state from committed docs, issues, PRs, or handoff notes?
+
+   Treat these as observable review signals. Do not invent runtime token metrics, model pricing, budget enforcement, or authorization gates inside this plugin.
+
+8. **Give actionable feedback** — not just "fix this" but explain WHY and HOW:
 
    ```
    CRITICAL: Hardcoded API key at line 42
@@ -54,7 +63,7 @@ next-skill: deploy-guide
    → Why: Keys in code get committed to git history permanently
    ```
 
-8. **Evidence Requirements** (Feynman principle: "line number or it didn't happen"):
+9. **Evidence Requirements** (Feynman principle: "line number or it didn't happen"):
 
    Every finding MUST include specific evidence — no "you should consider..." without pointing to code:
    - **Security**: Exact `file:line` where vulnerability exists
@@ -64,7 +73,7 @@ next-skill: deploy-guide
 
    Unsupported findings are not findings — they are opinions. Drop or substantiate.
 
-9. **H4 Checkpoint**: "Does this review help the developer (or AI) get better, not just point out flaws?"
+10. **H4 Checkpoint**: "Does this review help the developer (or AI) get better, not just point out flaws?"
 
 ## Handoff
 
@@ -93,6 +102,7 @@ Output format:
 | Quality      | [count]  | [highest] |
 | Performance  | [count]  | [highest] |
 | Completeness | [count]  | [highest] |
+| AI-work health | [count] | [highest] |
 **Action required**: [specific next steps or "none — clear to commit"]
 ```
 
@@ -118,6 +128,7 @@ After rendering the verdict, assess the review through the Whole Person lens. Fl
 | Mind      | Architecture sound? Design documented? Trade-offs considered?       | AI excels here — usually strong               |
 | Heart     | Error messages empathetic? Code readable? UX considered?            | AI follows patterns but lacks genuine empathy |
 | Spirit    | Security reviewed? Ethical impact considered? Should we build this? | AI checks lists but doesn't question purpose  |
+| H7 signal | Loops, retries, context compaction, and audit trail reviewed?        | AI often hides process cost unless asked      |
 
 If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
 
@@ -166,7 +177,7 @@ After producing findings, do not stop at the verdict. Run a **Find → Fix → R
 - [ ] Verdict rendered using the 4-level table above
 - [ ] Each finding includes actionable feedback (WHY + HOW to fix)
 - [ ] Every finding cites specific evidence (file:line, test output, or diff)
-- [ ] Summary table shows findings count for all four categories (Security, Quality, Performance, Completeness)
+- [ ] Summary table shows findings count for Security, Quality, Performance, Completeness, and AI-work health
 - [ ] Verification Phase complete — Verification Table at end shows fix evidence per finding (RESOLVED with `file:line`, or DEFERRED with issue ref)
 
 ## Structured Output Block
@@ -184,6 +195,7 @@ findings_low: [N]
 pass: [true|false]
 test_coverage_checked: [true|false]
 security_checked: [true|false]
+ai_work_health_checked: [true|false]
 END_SKILL_OUTPUT -->
 ```
 
