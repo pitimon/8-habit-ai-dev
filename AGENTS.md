@@ -1,45 +1,48 @@
 # Agents working on 8-habit-ai-dev
 
-This is your install + operating protocol. Claude Code reads `./CLAUDE.md` automatically. Everyone else (Codex, Cursor, Windsurf, Aider, Continue, or any LLM fetching this repo via URL) starts here.
+Start here for Codex, Cursor, Windsurf, Aider, Continue, or any non-Claude agent. Claude Code reads `CLAUDE.md` automatically; everyone else should treat `CLAUDE.md` as reference material, not runtime state.
 
-## What this is
+## Project shape
 
-A Claude Code and Codex plugin that adds **workflow discipline** to AI-assisted development — 23 on-demand markdown skills across a 7-step workflow grounded in Covey's 8 Habits. The plugin is markdown only: no build system, no runtime code, no dependencies. Skills are **read-only guidance** — they tell an agent _how_ to approach a task; they never edit files on their own.
+`8-habit-ai-dev` is a Claude Code and Codex plugin that adds workflow discipline to AI-assisted development: 24 markdown skills across a 7-step workflow grounded in Covey's 8 Habits.
 
-## Install
+This repo is markdown-only. There is no application runtime, build system, dependency install, or generated code path in normal development. Skills are read-only guidance: they tell an agent how to approach work, but they do not execute edits by themselves.
 
-- **Claude Code**: `claude plugin marketplace add pitimon/8-habit-ai-dev && claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev`
-- **Codex**: `codex plugin marketplace add pitimon/8-habit-ai-dev && codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev`
-- **Other agent platforms**: `git clone https://github.com/pitimon/8-habit-ai-dev` then load `skills/<name>/SKILL.md` via your platform's skill-loading mechanism (Cursor Rules, Windsurf memories, Aider `--read`, Continue, etc.). The skill _content_ is identical across platforms — only the invocation differs. Consult your tool's documentation for the exact command.
+## Read first
 
-## Read this order
+1. `AGENTS.md` - this operating protocol.
+2. `SPEC.md` - project digest and fast session re-entry.
+3. `DOMAIN.md` - invariants, safety boundaries, and validation expectations.
+4. `CLAUDE.md` - Claude Code architecture reference and skill authoring conventions.
+5. `skills/RESOLVER.md` - phrase-to-skill dispatcher; read the cited `skills/<name>/SKILL.md` before using a skill.
+6. `docs/compatibility-matrix.md` and `docs/codex-integration.md` - Codex and non-Claude runtime boundaries.
+7. `llms.txt` - flat documentation map for LLM indexing.
 
-1. **`./AGENTS.md`** (this file) — install + operating protocol.
-2. [`./CLAUDE.md`](./CLAUDE.md) — architecture reference, skill authoring conventions, plugin boundary with `claude-governance`.
-3. [`./skills/RESOLVER.md`](./skills/RESOLVER.md) — phrase-to-path skill dispatcher. Read first for any task; pick the row matching user intent, then read the cited `SKILL.md`.
-4. [`./docs/compatibility-matrix.md`](./docs/compatibility-matrix.md) and [`./docs/codex-integration.md`](./docs/codex-integration.md) — runtime boundary for Codex and other non-Claude agents.
-5. If new to the workflow: invoke `/workflow` for a guided 7-step walkthrough, or `/using-8-habits` for the decision tree.
+## Codex contract
 
-## Codex runtime contract
+- Install with `codex plugin marketplace add pitimon/8-habit-ai-dev` then `codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev`.
+- Use `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json` as Codex packaging surfaces.
+- Do not assume Claude hooks in `hooks/` run under Codex. Codex gets the same markdown skills, not Claude session hooks or hook-based verbosity adaptation.
+- Keep any future Codex automation as an adapter around routing, reading skills, validation, release reconciliation, and curated memory deposit.
+- Do not add policy enforcement, irreversible-action authorization, compliance certification, or dynamic orchestration engines to this plugin core. Those belong in companion tooling such as `claude-governance`.
 
-Codex installs the same 23 markdown skills through native plugin packaging and uses `AGENTS.md` + `skills/RESOLVER.md` as the operating path. `CLAUDE.md` remains a reference document for Codex, not automatically loaded runtime state.
+## Hard boundaries
 
-Claude-specific hooks in `hooks/` are not Codex runtime behavior. If Codex automation is added later, keep it as an adapter layer around the markdown skills: routing, opening the right skill, running validators, reconciling releases, and writing curated memory are in scope; policy enforcement, irreversible-action authorization, compliance execution, and dynamic orchestration engines are not.
+- Do not delete or overwrite `CLAUDE.md`.
+- Do not put secrets, tokens, credentials, private keys, or customer-sensitive raw data in repo docs, skills, examples, tests, or memory notes.
+- Preserve the plugin identity: workflow discipline, not runtime enforcement.
+- Keep skill content portable markdown. Do not add platform-specific syntax to every skill unless a new ADR accepts that coupling.
+- If a change touches consumer-facing doctrine or packaging, check the version-sync convention in `CLAUDE.md` and `CONTRIBUTING.md`.
 
-## Trust boundary
+## Common actions
 
-Skills are **read-only guidance**. A skill tells you _how_ to approach a task (what questions to ask, what checklist to run, what artifact to produce). It does not modify files by itself — any edits are made by the agent loading the skill, under the user's approval. This matches the plugin's core philosophy: **discipline, not enforcement**. Compliance enforcement (gates, hooks, irreversible-action auth) lives in the sibling plugin [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) — install both for full coverage.
+- Research a choice: read `skills/research/SKILL.md`.
+- Plan feature behavior: read `skills/requirements/SKILL.md`.
+- Decide architecture: read `skills/design/SKILL.md`.
+- Audit AI-generated work: read `skills/review-ai/SKILL.md`.
+- Check security risks: read `skills/security-check/SKILL.md`.
+- Preserve a durable lesson: use `/reflect`; Codex-created durable project notes go to the configured Obsidian vault, not to `claude-mem`.
 
-## Common tasks
+## Memory policy
 
-- **"I want to research a library before choosing it"** → [`skills/research/SKILL.md`](./skills/research/SKILL.md) (Step 0 of the 7-step workflow)
-- **"I need to plan what this feature does"** → [`skills/requirements/SKILL.md`](./skills/requirements/SKILL.md) (PRD + EARS criteria)
-- **"I just got some AI-generated code, audit it before I commit"** → [`skills/review-ai/SKILL.md`](./skills/review-ai/SKILL.md)
-- **"Something feels off in my plan, run a checklist"** → [`skills/cross-verify/SKILL.md`](./skills/cross-verify/SKILL.md) (17-question 8-habit review)
-- **"I just finished a task, what did we learn?"** → [`skills/reflect/SKILL.md`](./skills/reflect/SKILL.md) (6-question micro-retrospective)
-
-For the full phrase-to-path index, see [`./skills/RESOLVER.md`](./skills/RESOLVER.md).
-
-## Full map
-
-[`./llms.txt`](./llms.txt) is the flat documentation map used by LLM-based agents to fetch and index the plugin remotely. It lists every entry point, philosophy doc, and compliance reference with absolute URLs.
+Use `claude-mem` as read-only historical agent memory when available. Write new durable project notes to the Obsidian vault at `/Volumes/ipv9-OneT/ObsidianVault`, preferably under `Claude-Mem/Projects/` or generated exports under `Claude-Mem/Exports/`. Treat `Codex/Inbox/` captures as raw evidence; promote only concise summaries, decisions, and runbooks.

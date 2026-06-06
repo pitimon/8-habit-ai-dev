@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.2-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.3-blue)
 
 # Changelog
 
@@ -6,6 +6,20 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.3 · Codex Project Context Files
+
+Adds concise repo-local context for Codex and other non-Claude agents.
+
+Visible documentation points:
+
+- `DOMAIN.md` captures invariants, safety rules, data boundaries, and validation expectations.
+- `SPEC.md` provides a fast project digest and session re-entry context.
+- `.codex/README.md` documents repo-local Codex setup and the Claude-hook boundary.
+- `docs/adr/README.md` and ADR-025 record the ADR index and project-context decision.
+- `AGENTS.md` and `llms.txt` point agents at these context files.
+
+Boundary: documentation and session ergonomics only. No runtime enforcement, marketplace behavior change, skill behavior change, or Claude hook port to Codex.
 
 ## v2.21.2 · Codex Installed-Cache Validator Context
 

@@ -7,6 +7,8 @@ Repo: https://github.com/pitimon/8-habit-ai-dev
 ## Core entry points
 
 - [AGENTS.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/AGENTS.md): Start here if you are not Claude Code. Install order for Codex and other agents, trust boundary, skill resolver pointer, common-tasks examples.
+- [SPEC.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/SPEC.md): Project digest and fast session re-entry context for Codex and other agents.
+- [DOMAIN.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/DOMAIN.md): Invariants, safety boundaries, operational constraints, and validation expectations.
 - [CLAUDE.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/CLAUDE.md): Architecture reference for Claude Code. Plugin layout, skill authoring conventions, plugin boundary, skills-to-habits mapping.
 - [README.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/README.md): Human-facing overview, quick start, decision tree, full skill reference.
 - [SELF-CHECK.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/SELF-CHECK.md): Release checklist and integrity checks.
@@ -15,6 +17,9 @@ Repo: https://github.com/pitimon/8-habit-ai-dev
 - [docs/data/skills.json](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/docs/data/skills.json): Generated machine-readable skill catalog for cross-agent discovery. Metadata only; not a runtime dispatcher.
 - [docs/compatibility-matrix.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/docs/compatibility-matrix.md): Runtime compatibility contract across Claude Code, Codex, and other markdown-capable agents.
 - [docs/codex-integration.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/docs/codex-integration.md): Codex install, verify, routing, adapter boundary, and release-flow guidance.
+- [docs/adr/README.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/docs/adr/README.md): ADR index and authoring convention.
+- [docs/adr/ADR-025-codex-project-context-files.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/docs/adr/ADR-025-codex-project-context-files.md): Decision record for root project context files and Codex setup notes.
+- [.codex/README.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/.codex/README.md): Repo-local Codex setup notes and hook/config boundary.
 - [docs/wiki/Limitations.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/docs/wiki/Limitations.md): User-facing boundaries, non-goals, runtime limits, and release-evidence expectations.
 
 ## Skills
