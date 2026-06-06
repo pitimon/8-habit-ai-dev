@@ -11,6 +11,9 @@ The public wiki is generated from `docs/wiki/` in the repository. Treat wiki cha
 5. Open a PR for review.
 6. After merge, verify the wiki sync workflow and inspect the published page.
 
+> [!IMPORTANT]
+> `Habits-Reference.md` is generated during wiki sync from `habits/` by `scripts/gen-habits-reference.sh`. To change the published Habits Reference page, update the generator or habit source files, then inspect the synced wiki after merge.
+
 ## Style
 
 - Start every page with a clear H1 and short lead paragraph.
