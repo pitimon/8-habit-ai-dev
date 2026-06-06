@@ -269,6 +269,10 @@ Version lives in **5 files** — all must be bumped together:
 
 Before bumping the version files above and tagging a release, run through this list. Each item is a forcing function against drift — skipping any item is how dormancy starts (see ADR-018 §"Context" for the 13-month dormancy precedent that motivated this checklist).
 
+- [ ] Release decision recorded before any version bump:
+  - `Release now` for installed-user surfaces: `skills/`, `guides/`, `hooks/`, manifests, `AGENTS.md`, `llms.txt`, generated catalogs, install/update docs, runtime-boundary docs, or root context files shipped in the plugin package.
+  - `Bundle later` for consumer-facing changes that can wait; do not bump version files until the bundled release PR.
+  - `No release` for contributor-only tests, CI, ADRs, internal docs, or validator maintenance that does not change installed-user behavior or package contents.
 - [ ] Run [`SKILL-EFFECTIVENESS.md`](SKILL-EFFECTIVENESS.md) tally update per its §"Maintainer update protocol" — grep Q6 across new lessons since last tally, increment counters, refresh `Last updated` + `Lessons analyzed`, note any new trends or zero-signal skills. ADR-018 Edge #1, anti-dormancy mechanism per issue [#227](https://github.com/pitimon/8-habit-ai-dev/issues/227).
 - [ ] CHANGELOG entry added (or explicitly marked doctrine-only per ADR-017 §C5).
 - [ ] Version bumped in all 5 files (see "Version Bumping" above) — `tests/validate-structure.sh` will fail CI if any drifts.

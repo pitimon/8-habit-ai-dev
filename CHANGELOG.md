@@ -10,6 +10,21 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.4 — Release Decision Gate (2026-06-06)
+
+### Documentation
+
+- Add a release decision gate to `/deploy-guide`: classify plugin PRs as `Release now`, `Bundle later`, or `No release` before bumping version files.
+- Add the same release classification to `CONTRIBUTING.md` so maintainers distinguish release-gated work from ordinary PRs.
+
+### Validation
+
+- Add `tests/validate-content.sh` coverage to keep the deploy-guide release gate and no-version-bump invariant present.
+
+### Boundary
+
+- Markdown workflow guidance and validation only. No runtime enforcement, marketplace behavior change, or Claude hook port to Codex.
+
 ## v2.21.3 — Codex Project Context Files (2026-06-06)
 
 ### Documentation

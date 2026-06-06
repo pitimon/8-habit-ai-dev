@@ -45,14 +45,21 @@ next-skill: monitor-setup
    - [ ] Environment variables validated
    - [ ] Rollback plan documented
 
-5. **Rollback plan** (MUST have before deploying):
+5. **Plugin release decision gate** (for this repo and other installed plugins): classify the PR before bumping version files.
+   - `Release now` — the PR changes installed-user surfaces: `skills/`, `guides/`, `hooks/`, package manifests, `AGENTS.md`, `llms.txt`, generated catalogs, install/update docs, runtime-boundary docs, or root context files that plugin users should receive.
+   - `Bundle later` — the PR is consumer-facing but not urgent; merge only without a version bump, record the bundle target, and leave release links untouched.
+   - `No release` — the PR is contributor-only: tests, CI, ADRs, internal docs, or validator maintenance that does not change installed-user behavior or package contents.
+
+   **Invariant**: if any version-bearing file or release link is bumped, finish the release: merge, tag/GitHub Release, update installed plugin cache, and verify the installed artifact. If you decide not to release, do not bump version files.
+
+6. **Rollback plan** (MUST have before deploying):
    - How to revert to previous version
    - How long rollback takes
    - What data might be affected
 
-6. **Config-only example**: Alertmanager email template mounted into a Swarm service is not a "no deploy" change. If the live container reads `/etc/alertmanager/templates/*.tmpl`, plan template render, config/object replacement or host sync, targeted service update/reload, and a notification smoke test. Avoid a full stack redeploy unless topology changed; it can restart unrelated services and expand blast radius.
+7. **Config-only example**: Alertmanager email template mounted into a Swarm service is not a "no deploy" change. If the live container reads `/etc/alertmanager/templates/*.tmpl`, plan template render, config/object replacement or host sync, targeted service update/reload, and a notification smoke test. Avoid a full stack redeploy unless topology changed; it can restart unrelated services and expand blast radius.
 
-7. **Production canary / capacity-change template**: use this for EKS nodegroup, ASG, Kubernetes node, or similar provider-managed scale/replacement work.
+8. **Production canary / capacity-change template**: use this for EKS nodegroup, ASG, Kubernetes node, or similar provider-managed scale/replacement work.
 
    - **Precheck**: confirm identity, context, profile, region, cluster/resource, current desired/min/max, schedulable capacity, unhealthy pods, PDBs, stateful workloads, canary target workload inventory, and rollback/mitigation for pre-scale failure.
    - **Cordon approval gate**: ask before cordoning the canary. Record target node/resource and why it is safe.
@@ -74,7 +81,7 @@ next-skill: monitor-setup
    - Closure: <Resolved only if provider state and cluster scheduling state both align; otherwise Watch/Handoff/Active Incident via /operational-state>
    ```
 
-8. **H1 Checkpoint**: "Do I have a plan for when this fails, not just when it succeeds?"
+9. **H1 Checkpoint**: "Do I have a plan for when this fails, not just when it succeeds?"
 
 ## Anti-Patterns
 
@@ -84,6 +91,7 @@ next-skill: monitor-setup
 - Skipping health check after deploy
 - Treating provider scale-down success as canary reconciliation success
 - Leaving the original canary node/resource unintentionally cordoned or `SchedulingDisabled`
+- Bumping plugin version files before deciding `Release now` vs `Bundle later` vs `No release`
 
 ## Handoff
 
@@ -99,6 +107,7 @@ next-skill: monitor-setup
 ## Definition of Done
 
 - [ ] Deploy type classified before rollout plan is chosen
+- [ ] Plugin release decision recorded before any version bump: `Release now`, `Bundle later`, or `No release`
 - [ ] Staging deploy verified — health endpoint returns correct version
 - [ ] Rollback plan documented with specific steps and time estimate
 - [ ] Production canary/capacity changes include provider-target reconciliation and no unintended `SchedulingDisabled` nodes
