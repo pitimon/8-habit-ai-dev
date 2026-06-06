@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.20.0-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.20.0)
+[![Version](https://img.shields.io/badge/Version-2.20.1-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.20.1)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -43,7 +43,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v2200) — Version history
+- [What's New](#whats-new-in-v2201) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [FAQ](#faq) — Common questions answered
@@ -151,7 +151,7 @@ You don't need all steps every time. Start with **`/requirements` before buildin
 | Skill                 | Habit               | Purpose                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | --------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `/cross-verify`       | H1-H8               | 17-question checklist + dimension summary (Body/Mind/Heart/Spirit)                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `/consistency-check`  | H5 + H1             | Cross-artifact analyzer — 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency) over persisted PRD↔design↔tasks (v2.15.0, ADR-013)                                                                                                                                                                                                                                                                                                                                       |
+| `/consistency-check`  | H5 + H1             | Cross-artifact analyzer over persisted PRD↔design↔tasks, plus incident/config hotfix mode for symptom↔evidence↔root-cause↔fix↔verification drift (v2.20.1)                                                                                                                                                                                                                                                                                                                                    |
 | `/operational-state`  | H1 + H5 + H8        | **Operational finding classifier** — choose Watch, Fix Candidate, Active Incident, Resolved, Handoff, Known Accepted Issue, False Positive, or Self-Resolved before action. Maps evidence, allowed/prohibited actions, approval gates, artifacts, escalation criteria, and closure criteria. Read-only guidance; no runtime state engine or production mutation.                                                                                                                                   |
 | `/whole-person-check` | H8: Find Your Voice | 4-dimension assessment (1-5 scale) with AI Blind Spot detection                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `/security-check`     | H1: Be Proactive    | Focused OWASP security lens — secrets, injection, auth, deps                                                                                                                                                                                                                                                                                                                                                                                                                                 |
@@ -352,7 +352,7 @@ Both agents use the `sonnet` model for fast, focused analysis.
 │   ├── deploy-guide/SKILL.md       #   Step 6 → H1
 │   ├── monitor-setup/SKILL.md      #   Step 7 → H7
 │   ├── cross-verify/SKILL.md       #   All habits (17Q + dimension summary)
-│   ├── consistency-check/SKILL.md  #   H5+H1: cross-artifact analyzer (v2.15.0, ADR-013)
+│   ├── consistency-check/SKILL.md  #   H5+H1: spec + incident/config consistency (v2.20.1)
 │   ├── operational-state/SKILL.md  #   H1+H5+H8: operational state classifier (v2.20.0)
 │   ├── whole-person-check/SKILL.md #   H8: Body/Mind/Heart/Spirit
 │   ├── security-check/SKILL.md     #   H1: OWASP security lens
@@ -437,6 +437,18 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.20.1
+
+**Theme: incident/config consistency-lite for operational hotfix PRs** ([#253](https://github.com/pitimon/8-habit-ai-dev/issues/253))
+
+Extends `/consistency-check` with a lightweight incident/config hotfix mode for cases that do not have persisted PRD/design/tasks artifacts. The mode checks that an operational PR or closure note does not hide drift between symptom, evidence, root cause, actual fix, deploy path, and live verification.
+
+- **No new skill** — keeps the check inside `/consistency-check` to avoid operational skill sprawl after `/operational-state`.
+- **Hotfix output table** — emits `symptom | evidence | root cause | fix | verification | drift`.
+- **Overclaim guard** — flags PR/changelog text that says more than the live verification proves.
+- **Operational state handoff** — unresolved adjacent state is classified or handed to `/operational-state` instead of being hidden.
+- **Worked example** — adds a generic WorkerDown/Alertmanager-style alert/config hotfix example.
 
 ## What's New in v2.20.0
 
@@ -1122,4 +1134,4 @@ MIT
 
 ---
 
-_Version: 2.20.0 | Last updated: 2026-06-06_
+_Version: 2.20.1 | Last updated: 2026-06-06_

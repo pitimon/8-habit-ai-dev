@@ -1,6 +1,6 @@
 # Skills Catalog
 
-All **24 skills** shipped through `8-habit-ai-dev` v2.20.0. Skills are **read-only guidance** — they tell Claude how to approach a task, they do not modify files themselves.
+All **24 skills** shipped through `8-habit-ai-dev` v2.20.1. Skills are **read-only guidance** — they tell Claude how to approach a task, they do not modify files themselves.
 
 > [!TIP]
 > Not sure which skill to use? Type `/using-8-habits` for an interactive decision tree, or see the [quick-select matrix](#quick-select-matrix) below.
@@ -56,10 +56,10 @@ Outsider-perspective end-to-end review — questions intent first ("is there a s
 
 ### `/consistency-check` {#consistency-check}
 
-Cross-artifact consistency analyzer — runs 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency) across persisted spec artifacts (PRD ↔ design ↔ tasks). Read-only — reports drift, coverage gaps, contradictions. Inspired by github/spec-kit `/analyze`.
+Cross-artifact consistency analyzer — runs 5 detection passes (Coverage, Drift, Ambiguity, Underspec, Inconsistency) across persisted spec artifacts (PRD ↔ design ↔ tasks). Also includes incident/config hotfix mode for symptom ↔ evidence ↔ root cause ↔ fix ↔ verification drift when no spec bundle exists. Read-only — reports drift, coverage gaps, contradictions. Inspired by github/spec-kit `/analyze`.
 
 - **Habit**: H5 Understand First + H1 Be Proactive
-- **When to use**: After `/requirements`, `/design`, `/breakdown` have been run with `--persist <slug>` to catch drift before code
+- **When to use**: After `/requirements`, `/design`, `/breakdown` have been run with `--persist <slug>` to catch drift before code, or before closing an incident/config hotfix PR
 - **Source**: [`skills/consistency-check/SKILL.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/consistency-check/SKILL.md)
 
 ### `/operational-state` {#operational-state}
@@ -185,7 +185,7 @@ Generates an AI-assisted development log from `git log` + `Co-Authored-By` trail
 | Capture lessons after a task             | [`/reflect`](#reflect)                                                 |
 | Deploy safely to production              | [`/deploy-guide`](Step-6-Deploy-Guide)                                 |
 | Question whether the change should exist | [`/scrutinize`](#scrutinize)                                           |
-| Catch drift between PRD↔design↔tasks     | [`/consistency-check`](#consistency-check)                             |
+| Catch drift between PRD↔design↔tasks or incident/config hotfix claims | [`/consistency-check`](#consistency-check)                             |
 | Classify an operational finding          | [`/operational-state`](#operational-state)                             |
 | Investigate a bug from feedback-loop     | [`/diagnose`](#diagnose)                                               |
 | Write the engineering record post-fix    | [`/post-mortem`](#post-mortem)                                         |

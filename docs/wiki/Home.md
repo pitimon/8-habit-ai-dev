@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-2.20.0-blue) ![Skills](https://img.shields.io/badge/skills-24-green) ![License](https://img.shields.io/badge/license-MIT-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange) ![Review](https://img.shields.io/badge/external_review-9.5%2F10-gold)
+![Version](https://img.shields.io/badge/version-2.20.1-blue) ![Skills](https://img.shields.io/badge/skills-24-green) ![License](https://img.shields.io/badge/license-MIT-brightgreen) ![Dependencies](https://img.shields.io/badge/dependencies-0-orange) ![Review](https://img.shields.io/badge/external_review-9.5%2F10-gold)
 
 # 8-Habit AI Dev
 

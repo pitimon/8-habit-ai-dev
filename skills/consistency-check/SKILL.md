@@ -1,9 +1,11 @@
 ---
 name: consistency-check
 description: >
-  Cross-artifact consistency analyzer — runs 5 detection passes across persisted spec artifacts
-  (PRD ↔ design ↔ tasks) and emits severity-graded findings.
-  Use AFTER /requirements, /design, /breakdown have been run with `--persist <slug>`.
+  Cross-artifact and incident/config consistency analyzer — runs 5 detection passes across
+  persisted spec artifacts (PRD ↔ design ↔ tasks), or a lightweight symptom/evidence/root-cause/fix
+  check for operational hotfixes that lack persisted specs.
+  Use AFTER /requirements, /design, /breakdown have been run with `--persist <slug>`,
+  or before merging/closing an incident/config hotfix PR.
   Read-only — reports drift, coverage gaps, contradictions; does NOT modify or block.
   Inspired by github/spec-kit /analyze. Maps to H5 (Understand First — verify your understanding holds across artifacts) + H1 (Be Proactive — catch drift before code).
 user-invocable: true
@@ -24,12 +26,20 @@ next-skill: any
 - When auditing whether a design actually covers all stated requirements
 - When onboarding a new team member to an in-flight spec
 - During PR review when the PR description references a `docs/specs/<slug>/` directory
+- Before merging or closing an incident/config hotfix PR that needs symptom ↔ evidence ↔ root cause ↔ fix ↔ verification alignment
+- When alerting, notification, deploy, or runtime-config text risks over-claiming what live verification proves
 
 ## When to Skip
 
 - Single-artifact work (no cross-artifact relationship to check)
-- Bug fixes with no spec persisted
+- Bug fixes with no spec persisted and no incident/config/deploy/verification claims to reconcile
 - Specs that did not opt into `--persist` (this skill requires persisted files — emits a CRITICAL with guidance if directory empty)
+
+## Mode Selection
+
+Use **spec-artifact mode** when the input is a `docs/specs/<slug>/` directory or path containing `prd.md`, `design.md`, or `tasks.md`.
+
+Use **incident/config hotfix mode** when the input is an issue, PR, changelog entry, deploy note, alert, or operator summary instead of a persisted spec bundle. This mode is read-only and works without `docs/specs/<slug>/`.
 
 ## Input Resolution
 
@@ -37,9 +47,11 @@ next-skill: any
 
 1. If `<arg>` matches an existing directory entry under `docs/specs/<arg>/`, treat as **slug** and read from `docs/specs/<arg>/`
 2. Otherwise, treat `<arg>` as a **directory path** (relative or absolute) and read from that path
-3. If neither resolves to an existing directory containing at least one of `prd.md`, `design.md`, `tasks.md`: emit a single CRITICAL finding `"No persisted artifacts found at <resolved-path> — was '--persist <slug>' used during /requirements/design/breakdown? See guides/persistence-convention.md"` and exit cleanly
+3. If neither resolves to an existing directory containing at least one of `prd.md`, `design.md`, `tasks.md`, switch to **incident/config hotfix mode** if the user supplied incident, PR, deploy, alert, or verification material; otherwise emit a single CRITICAL finding `"No persisted artifacts found at <resolved-path> — was '--persist <slug>' used during /requirements/design/breakdown, or did you intend incident/config hotfix mode? See guides/persistence-convention.md"` and exit cleanly
 
 ## Process
+
+First select the mode. In spec-artifact mode, run Steps 1-5 below. In incident/config hotfix mode, read the supplied issue/PR/changelog/deploy/alert/verification material, then emit the incident table after Step 5.
 
 ### Step 1: Read artifacts
 
@@ -88,6 +100,16 @@ For the full output template with column widths, formatting examples, and dimens
 - **H1**: "Are the highest-severity findings worth fixing BEFORE implementation, not AFTER?"
 
 If the report has 0 CRITICAL/HIGH findings, the bundle is ready for `/build-brief`. If ≥1 CRITICAL or ≥3 HIGH findings, recommend looping back to the originating skill (`/requirements`, `/design`, or `/breakdown`) to remediate before implementation.
+
+## Incident/Config Hotfix Mode
+
+Use this lightweight pass when there is no persisted PRD/design/tasks bundle but the work has operational claims. Verify each claim against an independent artifact when possible, then emit:
+
+| symptom | evidence | root cause | fix | verification | drift |
+| ------- | -------- | ---------- | --- | ------------ | ----- |
+| <reported symptom> | <reproduced or alert evidence> | <verified cause> | <actual PR/change> | <live proof> | <CLEAN or drift label> |
+
+Flag drift when PR scope fixes only the visible symptom, changelog/release notes claim more than verification proves, deploy notes describe the wrong path, or related state is left unclassified. If related state remains, hand off to `/operational-state` before closure.
 
 ## Pass Details
 
@@ -161,6 +183,7 @@ The hybrid (deterministic-when-IDs-present, semantic-when-absent) approach was c
 ## Handoff
 
 - **Expects from predecessor (any of `/requirements`, `/design`, `/breakdown`)**: a populated `docs/specs/<slug>/` directory with at least one of `prd.md`, `design.md`, `tasks.md`. Best results when all three are present AND ID-linked.
+- **Expects for incident/config mode**: issue/alert symptom, reproduced evidence, root-cause evidence, PR/change summary, changelog or release note text when present, deploy path, and live verification.
 - **Produces for successor (`/build-brief` or any)**: a severity-graded findings report. The user decides whether to proceed, remediate, or revisit. This skill never blocks.
 
 ## Definition of Done
@@ -172,6 +195,7 @@ The hybrid (deterministic-when-IDs-present, semantic-when-absent) approach was c
 - [ ] Each finding cites `<file>:<line>` or `<file>` in the location column
 - [ ] Each finding has a one-sentence imperative `suggested action`
 - [ ] Summary row at bottom with total + per-severity counts + linkage state
+- [ ] Incident/config mode, when selected, emits `symptom | evidence | root cause | fix | verification | drift` and classifies or hands off unresolved related state
 - [ ] Read-only behavior preserved (no Write, no Bash, no Edit invocations)
 
 ## Further Reading
