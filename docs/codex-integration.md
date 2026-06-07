@@ -17,19 +17,27 @@ codex plugin list
 
 ## Update
 
-Codex installs plugins from configured marketplace snapshots. Refresh the Git marketplace snapshot before checking for current plugin metadata:
+Codex currently has no `codex plugin update` command. Updating a Codex plugin is a two-step refresh-and-reinstall flow:
+
+1. Refresh the configured Git marketplace snapshot.
+2. Reinstall the plugin if the installed cache still points at an older copy.
+
+Refresh the marketplace snapshot first:
 
 ```bash
 codex plugin marketplace upgrade pitimon-8-habit-ai-dev
 codex plugin list
 ```
 
-If a local cache appears stale, reinstall from the refreshed snapshot:
+Then reinstall from the refreshed snapshot:
 
 ```bash
 codex plugin remove 8-habit-ai-dev@pitimon-8-habit-ai-dev
 codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
+codex plugin list
 ```
+
+Use `codex plugin marketplace list` if you need to confirm the configured marketplace name before running `marketplace upgrade`.
 
 ## Validation Contexts
 

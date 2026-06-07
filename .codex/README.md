@@ -10,6 +10,20 @@ codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
 codex plugin list
 ```
 
+## Update
+
+Codex currently has no `codex plugin update` command. Refresh the Git marketplace snapshot, then reinstall the plugin from that refreshed snapshot:
+
+```bash
+codex plugin marketplace upgrade pitimon-8-habit-ai-dev
+codex plugin list
+codex plugin remove 8-habit-ai-dev@pitimon-8-habit-ai-dev
+codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
+codex plugin list
+```
+
+Use `codex plugin marketplace list` if you need to confirm the configured marketplace name.
+
 Packaging files:
 
 - `.codex-plugin/plugin.json`
