@@ -27,6 +27,8 @@ next-skill: design
 
 2. **Check existing docs and context contract**: Read `CLAUDE.md`, `AGENTS.md`, `SPEC.md`, `PRD.md`, `DOMAIN.md`, `CONTEXT.md`, `CONTEXT-MAP.md`, `README.md`, and `docs/agents/domain.md` if they exist. Use the project's glossary terms in the PRD and do not duplicate what is already defined.
 
+   Apply the Interview Protocol's context-aware challenge gate when these files exist: flag glossary conflicts, sharpen fuzzy terms, test vague relationships with concrete scenarios, inspect code instead of asking when the answer is discoverable, and treat ADRs as current unless the user asks to revisit them. Do not create or overwrite context files unless the user explicitly asks.
+
 3. **Draft PRD summary** (keep concise — 10-20 lines):
 
    ```

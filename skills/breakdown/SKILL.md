@@ -27,6 +27,8 @@ next-skill: build-brief
    ...
    ```
 
+   For backlog-bound work, prefer vertical slices: each task should deliver a thin but complete path that can be verified or demonstrated on its own. Avoid horizontal layer tasks (`schema only`, `API only`, `UI only`) unless that layer is independently useful and has its own acceptance criteria. A good issue describes end-to-end behavior, not a list of implementation layers.
+
 3. **Prioritize** by importance, not interest:
    - Q1 (Urgent + Important): Blocking dependencies, security fixes
    - Q2 (Important, Not Urgent): Core features, tests, docs
@@ -98,6 +100,7 @@ next-skill: build-brief
 - **Expects from predecessor** (`/design`): Architecture decisions and constraints
 - **Produces for successor** (`/build-brief`): Prioritized task list with dependencies and file paths
 - **Backlog-bound tasks**: When a task in the produced list will sit ≥7 days before pickup (or filer ≠ picker), recommend filing an issue using the repo's tracker contract if `docs/agents/issue-tracker.md` exists; otherwise default to GitHub issue wording. Use [`guides/templates/agent-brief-template.md`](../../guides/templates/agent-brief-template.md) for the durable issue spec. Habit-mapped variant of the pattern from [mattpocock/skills](https://github.com/mattpocock/skills).
+- **Issue tracking comments**: When the user asks an agent to pick up, track, or close work through an issue, draft pickup/progress/completion comments using [`guides/templates/issue-tracking-comments.md`](../../guides/templates/issue-tracking-comments.md). Do not auto-post, auto-label, or auto-close unless the user or repo tracker contract explicitly allows it.
 
 ## Optional Persistence (`--persist <slug>`)
 
@@ -122,6 +125,7 @@ ID-linkage tip: when persisting, format each task as `Task #N implements: Decisi
 - [ ] No task touches more than 5 files
 - [ ] Orchestration classification assigned to each task (sequential/parallel-safe/parallel-worktree)
 - [ ] Backlog-bound tasks classified as `ready-for-agent`, `ready-for-human`, or `needs-info`
+- [ ] Backlog-bound tasks are vertical slices unless a horizontal task is independently verifiable
 
 ## Structured Output Block
 

@@ -46,6 +46,8 @@ next-skill: review-ai
    **Test approach**: [what to test, TDD if applicable]
    ```
 
+   If the user requested TDD, red-green-refactor, or test-first work, load `${CLAUDE_PLUGIN_ROOT}/guides/tdd-tracer-bullet.md` and define the first behavior-level tracer bullet before implementation starts.
+
 3. **Include relevant context** the AI needs:
    - CLAUDE.md project rules
    - DOMAIN.md entity definitions (if API work)
@@ -126,3 +128,4 @@ See [Step 4 wiki page](../../docs/wiki/Step-4-Build-Brief.md) for deeper walkthr
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the full H5 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/orchestration-patterns.md` for context boundary and orchestration patterns.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local glossary, issue-tracker, or agent context files are present.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/tdd-tracer-bullet.md` when the task is explicitly TDD, red-green-refactor, or test-first.

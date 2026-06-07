@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.6-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.7-blue)
 
 # Changelog
 
@@ -6,6 +6,20 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.7 · Issue Tracking and Tracer-Bullet Planning
+
+Adds issue-comment discipline, context-aware requirement grilling, vertical-slice breakdown wording, and a TDD tracer-bullet guide.
+
+Visible documentation points:
+
+- `guides/templates/issue-tracking-comments.md` provides pickup, progress/blocker, and completion comment drafts for issue-based work.
+- `/requirements` now challenges glossary conflicts, fuzzy terms, scenarios, code contradictions, and ADR conflicts when repo context exists.
+- `/breakdown` now prefers backlog-bound tasks that are independently verifiable vertical slices.
+- `/build-brief` can load `guides/tdd-tracer-bullet.md` for TDD, red-green-refactor, or test-first work.
+- Codex update-flow docs and GitHub Actions/link-check maintenance commits since v2.21.6 are included in this tag.
+
+Boundary: markdown guidance only. No automatic issue mutation, setup engine, test runner, runtime enforcement, or dynamic orchestration.
 
 ## v2.21.6 · Codex SessionStart JSON Compatibility
 

@@ -54,6 +54,18 @@ Guide structured conversation to surface requirements before formalizing them in
 **Listen for**: Acceptance criteria, edge cases, regression concerns
 **Red flag**: No testable criteria — requirements aren't ready yet
 
+## Context-Aware Challenge
+
+When repo-local context exists, use it during the interview before drafting the PRD. This is a challenge gate, not a setup requirement.
+
+- **Glossary conflict**: If the user's wording conflicts with `CONTEXT.md`, `CONTEXT-MAP.md`, `DOMAIN.md`, or `docs/agents/domain.md`, surface the conflict before writing requirements.
+- **Fuzzy term**: If a term is overloaded, propose one precise canonical term and ask for confirmation.
+- **Concrete scenario**: Convert vague relationships into edge-case scenarios that force boundaries to become explicit.
+- **Code contradiction**: If a question can be answered by reading existing code or docs, inspect those sources instead of asking the user to recall them.
+- **ADR conflict**: Treat relevant ADRs as current unless the user explicitly asks to revisit the decision.
+
+Use this gate adaptively. For Quick depth, run only the checks that are directly relevant. For Deep depth, challenge terminology, scenarios, and ADR assumptions before EARS criteria are written.
+
 ## Stop Conditions
 
 Stop the interview when you can:

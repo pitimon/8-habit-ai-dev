@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.6-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.6)
+[![Version](https://img.shields.io/badge/Version-2.21.7-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.7)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -43,7 +43,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v2211) — Version history
+- [What's New](#whats-new-in-v2217) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -464,6 +464,19 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.21.7
+
+**Theme: issue tracking and tracer-bullet planning**
+
+v2.21.7 tightens the next-agent handoff path inspired by `mattpocock/skills`, while staying inside the markdown-only plugin boundary.
+
+- **Issue tracking comments** — adds [`guides/templates/issue-tracking-comments.md`](guides/templates/issue-tracking-comments.md) with pickup, progress/blocker, and completion comment drafts for issue-based work.
+- **Context-aware requirements** — `/requirements` now applies the interview protocol's glossary, ADR, scenario, and code-contradiction challenge gate when repo context files exist.
+- **Vertical slices** — `/breakdown` now prefers backlog-bound tasks that deliver a thin, independently verifiable path instead of horizontal layer tickets.
+- **TDD tracer bullets** — adds [`guides/tdd-tracer-bullet.md`](guides/tdd-tracer-bullet.md) and teaches `/build-brief` to load it for TDD, red-green-refactor, or test-first work.
+- **Bundled maintenance** — includes the Codex update-flow clarification plus link-check exclusion hardening and Node 24-compatible `actions/checkout` v5 workflow updates.
+- **Boundary** — markdown guidance only: no issue auto-mutation, no setup engine, no test runner, no runtime enforcement, and no dynamic orchestration.
 
 ## What's New in v2.21.6
 
@@ -1251,4 +1264,4 @@ MIT
 
 ---
 
-_Version: 2.21.6 | Last updated: 2026-06-07_
+_Version: 2.21.7 | Last updated: 2026-06-07_

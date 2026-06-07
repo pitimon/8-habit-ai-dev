@@ -10,6 +10,30 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.7 — Issue Tracking and Tracer-Bullet Planning (2026-06-07)
+
+### Documentation
+
+- Add `guides/templates/issue-tracking-comments.md` with pickup, progress/blocker, and completion comment drafts for issue-based work.
+- Add `guides/tdd-tracer-bullet.md` for behavior-first TDD loops through public interfaces.
+- Index both guides in `llms.txt` for cross-agent discovery.
+- Bundle the post-v2.21.6 Codex update-flow clarification: Codex has no `plugin update`; users should run marketplace upgrade plus remove/add reinstall.
+
+### Skills
+
+- Update `/requirements` to apply a context-aware challenge gate from the interview protocol when repo-local glossary, domain, or ADR context exists.
+- Update `/breakdown` to prefer backlog-bound vertical slices that can be verified or demonstrated independently.
+- Update `/build-brief` to load the TDD tracer-bullet guide when the user asks for TDD, red-green-refactor, or test-first work.
+
+### Boundary
+
+- Markdown guidance only. No automatic issue mutation, no setup engine, no test runner, no runtime enforcement, and no dynamic orchestration.
+
+### Maintenance
+
+- Harden markdown link-check exclusions for generated/symlinked plugin paths.
+- Upgrade pinned `actions/checkout` usage to the Node 24-capable v5 action.
+
 ## v2.21.6 — Codex SessionStart JSON Compatibility (2026-06-07)
 
 ### Fixed
