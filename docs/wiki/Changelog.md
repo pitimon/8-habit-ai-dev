@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.8-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.9-blue)
 
 # Changelog
 
@@ -6,6 +6,19 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.9 · Codex Skill Invocation Guidance
+
+Clarifies how to invoke this plugin's skills from Codex without assuming Claude Code slash-command parity.
+
+Visible documentation points:
+
+- README now separates Claude Code slash usage from Codex skill usage.
+- Codex users should select skills through `/skills`, mention a skill such as `$cross-verify`, or ask Codex to use the named skill.
+- `docs/codex-integration.md` now has a dedicated Codex Command UX section.
+- The compatibility matrix now records skill invocation UX as a runtime-specific surface.
+
+Boundary: documentation-only clarification. No Codex custom prompts, runtime dispatcher, hook parity claim, or skill behavior change.
 
 ## v2.21.8 · Opus Reviewer Agents
 

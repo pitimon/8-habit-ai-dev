@@ -10,6 +10,18 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.9 — Codex Skill Invocation Guidance (2026-06-07)
+
+### Documentation
+
+- Clarify that Claude Code slash notation such as `/cross-verify` is not a plugin-provided top-level slash command in Codex.
+- Add Codex usage examples for `/skills`, `$skill-name` mentions, and natural-language skill invocation.
+- Update the Codex Integration Guide and compatibility matrix so users do not confuse Claude Code slash UX with Codex skill UX.
+
+### Boundary
+
+- Documentation-only runtime boundary clarification. No new Codex custom prompts, no runtime dispatcher, no hook parity claim, and no change to skill behavior.
+
 ## v2.21.8 — Opus Reviewer Agents (2026-06-07)
 
 ### Agents

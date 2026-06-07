@@ -41,7 +41,7 @@ This repo is markdown-only. There is no application runtime, build system, depen
 - Decide architecture: read `skills/design/SKILL.md`.
 - Audit AI-generated work: read `skills/review-ai/SKILL.md`.
 - Check security risks: read `skills/security-check/SKILL.md`.
-- Preserve a durable lesson: use `/reflect`; Codex-created durable project notes go to the configured Obsidian vault, not to `claude-mem`.
+- Preserve a durable lesson: in Claude Code use `/reflect`; in Codex select or mention the `reflect` skill through `/skills`, `$reflect`, or natural-language intent. Codex-created durable project notes go to the configured Obsidian vault, not to `claude-mem`.
 
 ## Memory policy
 

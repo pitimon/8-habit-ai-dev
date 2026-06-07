@@ -54,6 +54,7 @@ Codex integration promises:
 
 - Codex can install the plugin through the native marketplace flow.
 - Codex can load the same 24 markdown skills from `skills/`.
+- Codex can invoke those skills through its native skill surfaces: `/skills`, `$skill-name` mentions, plugin/skill mentions in the app, or natural-language intent.
 - Codex should start from `AGENTS.md`, then use `skills/RESOLVER.md` to select a skill.
 - Codex and other tools may read `docs/data/skills.json` as generated discovery metadata.
 - Codex should treat `CLAUDE.md` as architecture reference, not as automatically loaded runtime state.
@@ -61,6 +62,7 @@ Codex integration promises:
 
 Codex integration does not promise:
 
+- plugin-provided top-level slash commands such as `/research`, `/requirements`, or `/cross-verify`.
 - Claude hook feature parity.
 - automatic verbosity adaptation as a required Codex runtime feature.
 - runtime enforcement gates.
@@ -72,6 +74,32 @@ Those belong in companion tooling or a future adapter layer.
 
 Compatibility note: if Codex invokes this package's `SessionStart` hook, `hooks/session-start.sh` emits Codex-compatible JSON with the existing reminder under `hookSpecificOutput.additionalContext`. Claude/default runs still emit the markdown reminder directly. This is a narrow hook-output adapter, not a general runtime enforcement layer.
 
+## Codex Command UX
+
+Claude Code users commonly invoke plugin skills as top-level slash commands such as `/requirements`, `/review-ai`, and `/cross-verify`. Codex does not expose installed plugin skills as new top-level slash commands.
+
+Use one of Codex's native skill invocation paths instead:
+
+```text
+/skills
+```
+
+Then select `requirements`, `review-ai`, `cross-verify`, or another installed skill.
+
+You can also mention a skill directly in the prompt:
+
+```text
+$cross-verify ตรวจแผนนี้ก่อน commit
+```
+
+Or ask by intent:
+
+```text
+Use the cross-verify skill to check this release plan.
+```
+
+Avoid documenting `~/.codex/prompts` as this plugin's distribution path. Codex custom prompts are local-only and deprecated for reusable shared workflows; skills are the supported reusable workflow surface.
+
 ## Recommended Codex Flow
 
 1. Read `AGENTS.md` for the operating protocol.
@@ -79,7 +107,7 @@ Compatibility note: if Codex invokes this package's `SessionStart` hook, `hooks/
 3. Optionally inspect `docs/data/skills.json` for a machine-readable skill list.
 4. Load the cited `skills/<name>/SKILL.md`.
 5. Follow the skill's process and Definition of Done.
-6. For high-risk work, run `/cross-verify`, `/review-ai`, `/security-check`, or `/scrutinize` as appropriate.
+6. For high-risk work, use Codex's `/skills` selector, `$skill-name` mention, or natural-language request to invoke `cross-verify`, `review-ai`, `security-check`, or `scrutinize` as appropriate.
 7. For release work, reconcile GitHub Releases and git tags before updating release docs.
 
 ## Optional Adapter Layer

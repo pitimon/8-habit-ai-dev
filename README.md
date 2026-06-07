@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.8-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.8)
+[![Version](https://img.shields.io/badge/Version-2.21.9-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.9)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -43,7 +43,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v2218) — Version history
+- [What's New](#whats-new-in-v2219) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -97,13 +97,31 @@ codex plugin marketplace add pitimon/8-habit-ai-dev
 codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
 ```
 
-**Use** (restart your agent, then invoke any skill by name or matching intent):
+**Use in Claude Code** (restart Claude Code, then invoke a skill by slash command):
 
 ```
 /requirements       # Before you build anything
 /review-ai          # Before you commit anything
 /cross-verify       # Before you ship anything
 /whole-person-check # Assess Body/Mind/Heart/Spirit balance
+```
+
+**Use in Codex** (restart Codex after installing; plugin skills are not top-level `/skill` slash commands):
+
+```text
+/skills
+```
+
+Pick `requirements`, `review-ai`, `cross-verify`, or another installed skill from the selector. You can also mention the skill explicitly in your prompt:
+
+```text
+$cross-verify ตรวจแผนนี้ก่อน commit
+```
+
+or use plain intent:
+
+```text
+Use the cross-verify skill to check this release plan.
 ```
 
 **Verify Claude Code installation**: After restarting, you should see `## 8-Habit AI Dev Active` in the session banner with the 7-step workflow reminder. For Codex, run `codex plugin list` and confirm `8-habit-ai-dev@pitimon-8-habit-ai-dev` is installed.
@@ -154,11 +172,13 @@ Step 4          Step 5          Step 6         Step 7
 H5:Understand   H4:Win-Win      H1:Proactive   H7:Sharpen Saw
 ```
 
-You don't need all steps every time. Start with **`/requirements` before building** and **`/review-ai` before committing** — those two alone eliminate most Vibe Coding problems.
+You don't need all steps every time. Start with **`requirements` before building** and **`review-ai` before committing** — those two alone eliminate most Vibe Coding problems. In Claude Code that usually means `/requirements` and `/review-ai`; in Codex, select them through `/skills`, mention `$requirements` / `$review-ai`, or ask in natural language.
 
 ---
 
 ## Skills Reference
+
+Skill names below use Claude Code slash notation because that is the shortest label for the skill corpus. In Codex, these are installed skills, not plugin-provided top-level slash commands. Use `/skills`, mention the skill such as `$cross-verify`, or ask Codex to use the named skill.
 
 ### Workflow Skills (Steps 0-7)
 
@@ -464,6 +484,16 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.21.9
+
+**Theme: Codex skill invocation guidance**
+
+v2.21.9 clarifies how Codex users invoke this plugin's skills without assuming Claude Code slash-command parity.
+
+- **Codex command UX** — README and [`docs/codex-integration.md`](docs/codex-integration.md) now show `/skills`, `$skill-name`, and natural-language examples for Codex.
+- **Runtime boundary** — compatibility docs now record skill invocation UX as host-specific: Claude Code uses top-level slash notation, while Codex uses native skill selection and mentions.
+- **No local prompt workaround** — docs explicitly avoid `~/.codex/prompts` as this plugin's distribution path because custom prompts are local-only and deprecated for reusable shared workflows.
 
 ## What's New in v2.21.8
 
@@ -1274,4 +1304,4 @@ MIT
 
 ---
 
-_Version: 2.21.8 | Last updated: 2026-06-07_
+_Version: 2.21.9 | Last updated: 2026-06-07_
