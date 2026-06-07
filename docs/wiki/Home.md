@@ -52,7 +52,7 @@ Version `v2.21.0` keeps the plugin's markdown-only boundary while improving cros
 
 ## Compatibility Boundary
 
-Claude Code and Codex both consume the same markdown skills. Claude Code also has Claude-specific hooks and session reminders. Codex uses `AGENTS.md`, the Codex plugin manifest, and the same `skills/` directory; it does not run Claude hooks.
+Claude Code and Codex both consume the same markdown skills. Claude Code also has Claude-specific hooks and session reminders. Codex uses `AGENTS.md`, the Codex plugin manifest, and the same `skills/` directory; if Codex invokes the package `SessionStart` hook, the hook returns JSON additional context rather than raw markdown.
 
 For details, see [Architecture](Architecture), [Limitations](Limitations), [Installation](Installation), and the repository compatibility docs.
 

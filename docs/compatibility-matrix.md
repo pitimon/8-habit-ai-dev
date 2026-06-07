@@ -14,8 +14,8 @@ This matrix documents what `8-habit-ai-dev` promises across agent runtimes. It i
 | `skills/RESOLVER.md` phrase dispatcher | Yes | Yes | Yes |
 | Claude Code plugin packaging | Yes | No | No |
 | Codex plugin packaging | No | Yes | No |
-| Claude hooks in `hooks/` | Yes | No direct runtime compatibility | No direct runtime compatibility |
-| Hook-based verbosity adaptation | Claude Code only | Not runtime-integrated | Not runtime-integrated |
+| Claude hooks in `hooks/` | Yes | Narrow `SessionStart` JSON adapter if Codex invokes the hook | No direct runtime compatibility |
+| Hook-based verbosity adaptation | Claude Code markdown context | Codex-compatible JSON additional context if the hook is invoked | Not runtime-integrated |
 | `disable-model-invocation` intent marker | Decorative for current plugin skills per ADR-014 | Must remain Codex-ingestible | Varies |
 | `docs/data/skills.json` generated catalog | Yes, documentation/export metadata | Yes, documentation/export metadata | Yes, if the platform can read JSON |
 | Install/update verification | `claude plugin list` | `codex plugin list` after marketplace refresh | Platform-specific |
@@ -46,7 +46,7 @@ Codex gets native packaging and the same markdown skills:
 - `AGENTS.md` is the operating entrypoint.
 - `skills/RESOLVER.md` tells Codex which skill to read for a user intent.
 
-Codex does not automatically gain Claude hook behavior. Any runtime automation must be an adapter layer, not a rewrite of the core skills.
+Codex does not automatically gain Claude hook feature parity. The shipped `SessionStart` hook has a narrow JSON output adapter for Codex hosts that invoke it; any broader runtime automation must remain an adapter layer, not a rewrite of the core skills.
 
 See [Codex Integration Guide](codex-integration.md).
 

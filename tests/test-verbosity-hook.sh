@@ -42,6 +42,10 @@ if [ ! -f "$HOOK" ]; then
   exit 1
 fi
 
+# Most tests cover the Claude/default markdown contract. Codex sessions may
+# expose CODEX_* variables in the environment, so clear them for those cases.
+unset CODEX_THREAD_ID CODEX_CI CODEX_MANAGED_PACKAGE_ROOT
+
 # Helper: run the hook against a given profile content (or nothing if "" passed)
 # and assert the output contains $expected_substring.
 run_case() {
@@ -343,6 +347,35 @@ if [ "$token_estimate" -le 300 ]; then
   pass "hook output fits ≤300 token budget (estimate: ~${token_estimate} tokens from ${word_count} words)"
 else
   fail "hook output exceeds 300 token budget (estimate: ~${token_estimate} tokens from ${word_count} words)"
+fi
+echo ""
+
+# --- Codex JSON hook output ---
+echo "--- Codex JSON hook output ---"
+printf '%s' "$SIGNIFICANCE_PROFILE" > "$TMPHOME/.claude/habit-profile.md"
+codex_output=$(HOME="$TMPHOME" HABIT_HOOK_OUTPUT=codex-json bash "$HOOK" 2>&1) || {
+  fail "Codex JSON mode — hook exited non-zero"
+  codex_output=""
+}
+
+if printf '%s' "$codex_output" | node -e '
+const chunks = [];
+process.stdin.on("data", chunk => chunks.push(chunk));
+process.stdin.on("end", () => {
+  const parsed = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+  if (parsed.hookSpecificOutput?.hookEventName !== "SessionStart") {
+    throw new Error("missing SessionStart hook event name");
+  }
+  const context = parsed.hookSpecificOutput?.additionalContext;
+  if (typeof context !== "string" || !context.includes("8-Habit AI Dev Active")) {
+    throw new Error("missing reminder additionalContext");
+  }
+});
+' >/dev/null 2>&1; then
+  pass "Codex JSON mode emits parseable SessionStart additionalContext"
+else
+  fail "Codex JSON mode output is not valid hookSpecificOutput JSON"
+  echo "    got: ${codex_output:0:160}..."
 fi
 echo ""
 

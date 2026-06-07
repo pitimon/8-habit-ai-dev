@@ -16,7 +16,7 @@ The maturity model controls how much guidance the plugin should provide. It rang
 `/calibrate` asks a short set of questions and writes a local Claude Code profile at `~/.claude/habit-profile.md`. Skills can use that profile to adjust verbosity.
 
 > [!NOTE]
-> Hook-based profile adaptation is Claude Code-specific. Codex can still use the skill content, but it does not run Claude hooks.
+> Hook-based profile adaptation is Claude Code-specific. Codex can still use the skill content; if Codex invokes the package `SessionStart` hook, the hook returns JSON additional context rather than raw markdown.
 
 ## When To Recalibrate
 

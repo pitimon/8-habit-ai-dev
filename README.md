@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.5-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.5)
+[![Version](https://img.shields.io/badge/Version-2.21.6-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.6)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -110,7 +110,7 @@ codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 **New to the plugin?** Start with `/workflow` for a guided walkthrough, or see [Use Cases](#use-cases-which-skill-when) to find the right skill for your situation.
 
-Two commands to install per platform. Claude Code also loads a session reminder; both platforms make 24 skills available. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md), [Codex integration guide](docs/codex-integration.md), and wiki [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations): Codex gets native packaging and the same markdown skills, not Claude hook execution or runtime enforcement.
+Two commands to install per platform. Claude Code also loads a session reminder; both platforms make 24 skills available. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md), [Codex integration guide](docs/codex-integration.md), and wiki [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations): Codex gets native packaging, the same markdown skills, and a narrow `SessionStart` JSON adapter if the host invokes the hook; it does not get Claude hook feature parity or runtime enforcement.
 
 ### Keeping the plugin updated
 
@@ -464,6 +464,17 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.21.6
+
+**Theme: Codex SessionStart JSON compatibility**
+
+v2.21.6 fixes a Codex v0.137.0 startup compatibility bug where `hooks/session-start.sh` could emit raw markdown to a host expecting JSON.
+
+- **Codex hook JSON** — `hooks/session-start.sh` now wraps the existing reminder in `hookSpecificOutput.additionalContext` when Codex runtime environment variables are present or `HABIT_HOOK_OUTPUT=codex-json` is set.
+- **Claude/default behavior preserved** — default non-Codex runs still emit the markdown banner directly; `HABIT_HOOK_OUTPUT=markdown` can force markdown output for smoke tests or unusual parent environments.
+- **Regression coverage** — `tests/test-verbosity-hook.sh` now verifies Codex JSON parses and contains `hookSpecificOutput.additionalContext`.
+- **Boundary** — this is a narrow hook-output adapter, not runtime enforcement, dynamic orchestration, policy authorization, or Claude hook feature parity inside Codex.
 
 ## What's New in v2.21.5
 
@@ -1240,4 +1251,4 @@ MIT
 
 ---
 
-_Version: 2.21.5 | Last updated: 2026-06-07_
+_Version: 2.21.6 | Last updated: 2026-06-07_

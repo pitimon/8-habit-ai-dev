@@ -6,6 +6,31 @@
 # Honor opt-out before any work
 [[ "${HABIT_QUIET:-}" == "1" ]] && exit 0
 
+is_codex_hook_runtime() {
+  [ "${HABIT_HOOK_OUTPUT:-}" = "markdown" ] && return 1
+  [ "${HABIT_HOOK_OUTPUT:-}" = "codex-json" ] ||
+    [ -n "${CODEX_THREAD_ID:-}" ] ||
+    [ -n "${CODEX_CI:-}" ] ||
+    [ -n "${CODEX_MANAGED_PACKAGE_ROOT:-}" ]
+}
+
+json_escape() {
+  local line
+  local first=1
+  while IFS= read -r line; do
+    line=${line//\\/\\\\}
+    line=${line//\"/\\\"}
+    line=${line//$'\t'/\\t}
+    line=${line//$'\r'/\\r}
+    if [ "$first" -eq 1 ]; then
+      printf '%s' "$line"
+      first=0
+    else
+      printf '\\n%s' "$line"
+    fi
+  done
+}
+
 # Read version from plugin.json for the session banner
 VERSION=$(sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' \
   "${CLAUDE_PLUGIN_ROOT:-.}/.claude-plugin/plugin.json" 2>/dev/null | head -1)
@@ -114,7 +139,7 @@ if [ "${HABIT_QUIET:-0}" != "1" ]; then
   fi
 fi
 
-cat <<EOF
+REMINDER=$(cat <<EOF
 ## 8-Habit AI Dev Active (v${VERSION})
 
 **7-Step Workflow reference** — use what fits the task:
@@ -134,3 +159,11 @@ cat <<EOF
 
 _Silence this reminder: \`export HABIT_QUIET=1\`_
 EOF
+)
+
+if is_codex_hook_runtime; then
+  ESCAPED_REMINDER=$(printf '%s' "$REMINDER" | json_escape)
+  printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}\n' "$ESCAPED_REMINDER"
+else
+  printf '%s\n' "$REMINDER"
+fi

@@ -3,7 +3,7 @@
 Install `8-habit-ai-dev` through the plugin marketplace for your agent runtime. The package is markdown-only: no dependency install, build step, or application service is required.
 
 > [!NOTE]
-> Claude Code and Codex use different package surfaces. Both load the same `skills/` content, but Codex does not run Claude hooks.
+> Claude Code and Codex use different package surfaces. Both load the same `skills/` content; Claude hook feature parity is not assumed. If Codex invokes the package `SessionStart` hook, the hook returns Codex-compatible JSON.
 
 ## Claude Code
 

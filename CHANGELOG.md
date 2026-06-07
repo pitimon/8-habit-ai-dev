@@ -10,6 +10,23 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.6 — Codex SessionStart JSON Compatibility (2026-06-07)
+
+### Fixed
+
+- Fix Codex v0.137.0 `SessionStart` compatibility by returning valid hook JSON when Codex runtime environment variables are present.
+- Preserve the existing Claude/default markdown reminder behavior outside Codex JSON mode.
+- Add `HABIT_HOOK_OUTPUT=codex-json` and `HABIT_HOOK_OUTPUT=markdown` overrides for deterministic smoke tests and unusual parent environments.
+
+### Validation
+
+- Add regression coverage to `tests/test-verbosity-hook.sh` proving Codex JSON output parses and contains `hookSpecificOutput.additionalContext`.
+- Refresh compatibility docs and generated skill catalog wording so the boundary is precise: this is a narrow output adapter, not Claude hook feature parity or runtime enforcement.
+
+### Boundary
+
+- Narrow runtime compatibility bugfix only. No skill behavior change, no runtime enforcement, no policy authorization, no dynamic orchestration, and no general Claude hook port to Codex.
+
 ## v2.21.5 — Project Context Contract (2026-06-07)
 
 ### Documentation

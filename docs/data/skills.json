@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_by": "scripts/generate-skill-catalog.js",
   "source": "skills/*/SKILL.md",
-  "compatibility_note": "Catalog describes portable markdown skills. Claude hooks are Claude Code-only and are not Codex runtime behavior.",
+  "compatibility_note": "Catalog describes portable markdown skills. Claude hook feature parity is not implied; the package SessionStart hook has a narrow Codex JSON additionalContext adapter if the host invokes it.",
   "skills": [
     {
       "name": "ai-dev-log",

@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.5-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.6-blue)
 
 # Changelog
 
@@ -6,6 +6,19 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.6 · Codex SessionStart JSON Compatibility
+
+Fixes Codex v0.137.0 startup compatibility for the package `SessionStart` hook.
+
+Visible documentation points:
+
+- `hooks/session-start.sh` returns valid JSON with `hookSpecificOutput.additionalContext` when Codex invokes the hook.
+- Claude/default runs still emit the markdown reminder directly.
+- `tests/test-verbosity-hook.sh` now includes a Codex JSON parse smoke test.
+- Compatibility docs now describe this as a narrow output adapter rather than Claude hook feature parity.
+
+Boundary: hook-output compatibility only. No runtime enforcement, policy authorization, dynamic orchestration, or general Claude hook port to Codex.
 
 ## v2.21.5 · Project Context Contract
 

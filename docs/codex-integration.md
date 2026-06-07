@@ -53,14 +53,16 @@ Codex integration promises:
 
 Codex integration does not promise:
 
-- Claude hook execution.
-- automatic verbosity adaptation from `hooks/session-start.sh`.
+- Claude hook feature parity.
+- automatic verbosity adaptation as a required Codex runtime feature.
 - runtime enforcement gates.
 - policy authorization.
 - dynamic sub-agent orchestration.
 - compliance framework execution.
 
 Those belong in companion tooling or a future adapter layer.
+
+Compatibility note: if Codex invokes this package's `SessionStart` hook, `hooks/session-start.sh` emits Codex-compatible JSON with the existing reminder under `hookSpecificOutput.additionalContext`. Claude/default runs still emit the markdown reminder directly. This is a narrow hook-output adapter, not a general runtime enforcement layer.
 
 ## Recommended Codex Flow
 

@@ -141,7 +141,7 @@ function renderCatalog(skills) {
     generated_by: "scripts/generate-skill-catalog.js",
     source: "skills/*/SKILL.md",
     compatibility_note:
-      "Catalog describes portable markdown skills. Claude hooks are Claude Code-only and are not Codex runtime behavior.",
+      "Catalog describes portable markdown skills. Claude hook feature parity is not implied; the package SessionStart hook has a narrow Codex JSON additionalContext adapter if the host invokes it.",
     skills,
   };
   return `${JSON.stringify(catalog, null, 2)}\n`;

@@ -12,7 +12,7 @@ No. It gives prompts, checklists, handoffs, and review structure. Runtime enforc
 
 ## Does Codex Run The Claude Hooks?
 
-No. Codex can install the plugin and load the same markdown skills, but Claude hooks in `hooks/` are Claude Code-specific.
+Codex should not be treated as having Claude hook feature parity. If Codex invokes this package's `SessionStart` hook, the hook returns Codex-compatible JSON with the reminder in `hookSpecificOutput.additionalContext`; broader hook behavior remains host-specific.
 
 ## Which Skill Should I Start With?
 

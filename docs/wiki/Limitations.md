@@ -26,11 +26,11 @@
 | Cloud, Kubernetes, Docker, or database mutation | Your normal infrastructure tooling, runbooks, and staged rollout process |
 | Secret scanning or credential handling | Dedicated security scanners and secret-management systems |
 | Dynamic sub-agent orchestration engine | A separate adapter or orchestration product |
-| Claude hook behavior inside Codex | Codex-native adapters or explicit manual checks |
+| Claude hook feature parity inside Codex | Codex-native adapters or explicit manual checks |
 
 ## Platform Boundaries
 
-Claude Code and Codex both receive the same markdown skills. Claude Code may also run Claude-specific hooks from `hooks/`; Codex does not run those hooks. Other agents can use the repo as markdown instructions when they can load `AGENTS.md`, `skills/RESOLVER.md`, and the relevant `SKILL.md`.
+Claude Code and Codex both receive the same markdown skills. Claude Code may also run Claude-specific hooks from `hooks/`. If Codex invokes this package's `SessionStart` hook, the hook returns JSON additional context rather than raw markdown; broader hook behavior remains host-specific. Other agents can use the repo as markdown instructions when they can load `AGENTS.md`, `skills/RESOLVER.md`, and the relevant `SKILL.md`.
 
 The shared source of truth remains `skills/*/SKILL.md`. Packaging, hooks, banners, and marketplace behavior are host-specific presentation layers.
 

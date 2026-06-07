@@ -13,7 +13,7 @@ Checks:
 3. Confirm the plugin package includes `hooks/session-start.sh`.
 4. If installed from a local checkout, confirm the hook is executable.
 
-Codex users should not expect this banner because Codex does not run Claude hooks.
+Codex users should not expect the raw markdown banner. If Codex invokes the package `SessionStart` hook, the same reminder is returned as JSON under `hookSpecificOutput.additionalContext`.
 
 ### Marketplace Not Found
 
