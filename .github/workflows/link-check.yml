@@ -22,7 +22,12 @@ name: Link Check
 # checked (caught a real moved-doc bug pre-merge during dogfood).
 #
 # The root-level `plugin` symlink exists for Codex marketplace compatibility.
-# Exclude it so glob expansion does not recurse through plugin/plugin/...
+# Exclude it so link checking does not duplicate the entire repository through
+# plugin/README.md, plugin/docs/..., etc.
+#
+# lychee treats --exclude-path values as regexes. Keep directory exclusions in
+# (^|/)dir/ form rather than ./dir literals so they match normalized runner
+# paths as well as repo-relative paths.
 #
 # Gartner newsroom links are excluded because they return 403 to GitHub-hosted
 # link checkers while remaining human-readable in browsers.
@@ -62,8 +67,11 @@ jobs:
             --exclude '^https://github\.com/pitimon/8-habit-ai-dev/(blob|tree|raw)/main/|^https://github\.com/pitimon/8-habit-ai-dev/releases/tag/'
             --exclude '^https://github\.com/pitimon/(memforge|devsecops-ai-team)(/|$)'
             --exclude '^https://www\.gartner\.com/en/newsroom/press-releases/'
-            --exclude-path ./docs/wiki
-            --exclude-path ./plugin
+            --exclude-path '(^|/)docs/wiki/'
+            --exclude-path '(^|/)plugin/'
+            --exclude-path '(^|/)\.claude/'
+            --exclude-path '(^|/)\.codex/'
+            --exclude-path '(^|/)deep-project/'
             './**/*.md'
           fail: true
         env:
