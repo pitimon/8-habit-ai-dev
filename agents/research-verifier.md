@@ -6,7 +6,7 @@ description: >
   or when evidence verification is needed. Read-only analysis. Does NOT verify
   semantic correctness of conclusions (e.g. "this dep is unused") — those require
   separate grep or call-graph evidence provided by the author.
-model: sonnet
+model: opus
 tools: ["Read", "Glob", "Grep", "WebFetch"]
 ---
 

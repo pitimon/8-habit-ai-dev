@@ -69,7 +69,7 @@ Böckeler แบ่ง harness เป็น 2 ฝั่ง:
 - `tests/validate-structure.sh` — **74 checks** ของโครงสร้างไฟล์
 - `tests/validate-content.sh` — **132 checks** ของ content (version 4-files consistency, README drift, sidebar)
 - Aux scripts อีก **36 checks**
-- `agents/8-habit-reviewer.md` — read-only review agent (sonnet)
+- `agents/8-habit-reviewer.md` — read-only review agent (opus)
 - `/cross-verify` — 17 คำถาม audit ก่อน commit
 - `/review-ai` — Find→Fix→Re-Verify loop กัน partial-fix
 - `~/.claude/lessons/` cross-session memory — ปิด gap "AI ไม่มีความจำข้าม session" ที่ Hashimoto เจอตรงๆ

@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.7-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.8-blue)
 
 # Changelog
 
@@ -6,6 +6,18 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.8 · Opus Reviewer Agents
+
+Moves the two read-only Claude Code reviewer agents to Opus for stronger high-stakes review.
+
+Visible documentation points:
+
+- `agents/8-habit-reviewer.md` now uses `model: opus`.
+- `agents/research-verifier.md` now uses `model: opus`.
+- README and compatibility docs clarify that this is a Claude Code agent-surface choice, not a Codex subagent parity promise.
+
+Boundary: Claude Code agent model selection only. Codex continues to consume the shared markdown skills.
 
 ## v2.21.7 · Issue Tracking and Tracer-Bullet Planning
 

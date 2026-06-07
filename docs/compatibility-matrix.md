@@ -69,6 +69,7 @@ Use this table when deciding where a behavior belongs. The shared product is the
 | --- | --- | --- | --- | --- |
 | Skill behavior | `skills/*/SKILL.md` prose and Definition of Done | Loaded through Claude plugin skills | Loaded through Codex plugin skills | Loaded manually or through that platform's skill/rules mechanism |
 | Skill routing | `skills/RESOLVER.md` and frontmatter descriptions | May also be aided by Claude UX | Codex should read resolver + matching `SKILL.md` | Platform-specific dispatcher or manual selection |
+| Reviewer agents | `agents/*.md` definitions are consumer-facing repo artifacts | Claude Code agent surface; reviewer agents use Opus | Not a Codex subagent parity promise | Platform-specific, if imported manually |
 | Entry context | `README.md`, docs, `llms.txt` | `CLAUDE.md` is the primary auto-loaded reference | `AGENTS.md` is the operating protocol | `AGENTS.md` + `llms.txt` |
 | Packaging | Portable markdown and manifests | `.claude-plugin/` | `.codex-plugin/plugin.json` + `.agents/plugins/marketplace.json` | Git clone, raw URLs, or platform-specific import |
 | Hooks | Not part of the shared skill core | `hooks/` can run in Claude Code | Not executed | Not executed unless a separate adapter implements equivalent behavior |

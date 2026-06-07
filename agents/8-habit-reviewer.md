@@ -3,7 +3,7 @@ name: 8-habit-reviewer
 description: >
   Deep cross-verification reviewer — evaluates plans and code against all 8 habits.
   Use after completing a feature, before creating a PR, or when asked for a habit review.
-model: sonnet
+model: opus
 tools: ["Read", "Glob", "Grep"]
 ---
 

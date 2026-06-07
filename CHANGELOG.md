@@ -10,6 +10,22 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.8 — Opus Reviewer Agents (2026-06-07)
+
+### Agents
+
+- Change `agents/8-habit-reviewer.md` from `model: sonnet` to `model: opus`.
+- Change `agents/research-verifier.md` from `model: sonnet` to `model: opus`.
+
+### Documentation
+
+- Update README agent docs to explain why the reviewer agents use Opus for high-stakes review and citation-integrity gates.
+- Update compatibility docs to keep the Claude Code agent model surface distinct from Codex's shared markdown skill surface.
+
+### Boundary
+
+- Claude Code agent model selection only. Codex still consumes the shared markdown skills; this release does not claim Claude subagent model parity in Codex, add runtime enforcement, or add dynamic orchestration.
+
 ## v2.21.7 — Issue Tracking and Tracer-Bullet Planning (2026-06-07)
 
 ### Documentation

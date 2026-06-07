@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.7-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.7)
+[![Version](https://img.shields.io/badge/Version-2.21.8-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.8)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -43,7 +43,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v2217) — Version history
+- [What's New](#whats-new-in-v2218) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -354,7 +354,7 @@ Source verification agent _(v2.1.0)_. Validates every citation in a research bri
 - **Tools**: Read, Glob, Grep, WebFetch (read-only)
 - **Principle**: Feynman standard — _"The first principle is that you must not fool yourself"_
 
-Both agents use the `sonnet` model for fast, focused analysis.
+Both Claude Code agent definitions use the `opus` model because they run high-stakes review and citation-integrity gates. This model selection is a Claude Code agent surface; Codex still consumes the shared markdown skills and does not gain Claude subagent model parity from this setting.
 
 ---
 
@@ -464,6 +464,16 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.21.8
+
+**Theme: Opus reviewer agents**
+
+v2.21.8 moves the two read-only Claude Code reviewer agents from Sonnet to Opus for stronger high-stakes review.
+
+- **Reviewer model upgrade** — `agents/8-habit-reviewer.md` and `agents/research-verifier.md` now use `model: opus`.
+- **Docs boundary** — README and compatibility docs clarify that this is a Claude Code agent-surface choice. Codex still consumes the shared markdown skills and does not receive Claude subagent model parity from this setting.
+- **Validation** — existing agent validation already accepts `opus`; validators continue to verify the frontmatter model value.
 
 ## What's New in v2.21.7
 
@@ -1264,4 +1274,4 @@ MIT
 
 ---
 
-_Version: 2.21.7 | Last updated: 2026-06-07_
+_Version: 2.21.8 | Last updated: 2026-06-07_
