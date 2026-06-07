@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.4-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.5-blue)
 
 # Changelog
 
@@ -6,6 +6,19 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.5 · Project Context Contract
+
+Adds optional repo-local context guidance so skills can read glossary, issue-tracker, triage-label, domain-doc, and ADR context before reasoning.
+
+Visible documentation points:
+
+- New `guides/project-context-contract.md` defines optional context files such as `CONTEXT.md`, `CONTEXT-MAP.md`, and `docs/agents/*.md`.
+- `/requirements`, `/design`, `/build-brief`, `/diagnose`, and `/scrutinize` now check glossary/context files when present.
+- `/breakdown` and the AGENT-BRIEF template now classify backlog-bound work as `ready-for-agent`, `ready-for-human`, or `needs-info`.
+- `llms.txt` indexes the guide for cross-agent discovery.
+
+Boundary: markdown guidance only. No setup engine, automatic issue mutation, runtime enforcement, marketplace behavior change, or Claude hook port to Codex.
 
 ## v2.21.4 · Release Decision Gate
 

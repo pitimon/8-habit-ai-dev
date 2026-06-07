@@ -10,6 +10,22 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.5 — Project Context Contract (2026-06-07)
+
+### Documentation
+
+- Add `guides/project-context-contract.md`, an optional repo-local context contract for glossary, issue tracker, triage labels, domain-doc routing, and ADR awareness. Inspired by `mattpocock/skills`, but adapted as markdown guidance instead of a setup engine.
+- Index the new guide in `llms.txt` for cross-agent discovery.
+
+### Skills
+
+- Update `/requirements`, `/design`, `/build-brief`, `/diagnose`, and `/scrutinize` to read repo-local context files when present before naming requirements, decisions, briefs, hypotheses, or review findings.
+- Update `/breakdown` and `guides/templates/agent-brief-template.md` with delegation readiness states: `ready-for-agent`, `ready-for-human`, and `needs-info`.
+
+### Boundary
+
+- Markdown guidance only. No runtime enforcement, no automatic issue mutation, no setup engine, and no Claude hook port to Codex.
+
 ## v2.21.4 — Release Decision Gate (2026-06-06)
 
 ### Documentation

@@ -33,7 +33,7 @@ next-skill: build-brief
    - Q3 (Urgent, Not Important): Nice-to-have polish
    - Q4 (Neither): Skip entirely
 
-4. **Identify parallel work and classify orchestration**: Tasks with no dependencies can run simultaneously. Classify each task:
+4. **Identify parallel work, delegation readiness, and classify orchestration**: Tasks with no dependencies can run simultaneously. Also classify whether a task is ready for agent pickup or still needs human input.
 
    | Type                | When                                           | Isolation                             |
    | ------------------- | ---------------------------------------------- | ------------------------------------- |
@@ -48,8 +48,18 @@ next-skill: build-brief
    |------|------|-----------|------------|
    | T1   | parallel-worktree | own worktree | none |
    | T2   | parallel-safe | same repo | none |
-   | T3   | sequential | — | T1, T2 |
+   | T3   | sequential | - | T1, T2 |
    ```
+
+   Add a readiness column when the task list may be filed into a backlog:
+
+   | Readiness | Use when |
+   | --- | --- |
+   | `ready-for-agent` | The task has success criteria, scope boundaries, and enough context for an agent to pick up without asking the filer |
+   | `ready-for-human` | The task needs human judgment, access, design approval, or manual verification before implementation |
+   | `needs-info` | The task is not yet implementable because a requirement, owner, environment, or acceptance criterion is missing |
+
+   If `docs/agents/triage-labels.md` exists, map these canonical states to the repo's real issue labels before recommending issue filing.
 
 5. **Token-efficient parallel design** (for `parallel-safe` and `parallel-worktree` tasks):
 
@@ -87,7 +97,7 @@ next-skill: build-brief
 
 - **Expects from predecessor** (`/design`): Architecture decisions and constraints
 - **Produces for successor** (`/build-brief`): Prioritized task list with dependencies and file paths
-- **Backlog-bound tasks**: When a task in the produced list will sit ≥7 days before pickup (or filer ≠ picker), recommend filing as a GitHub issue using [`guides/templates/agent-brief-template.md`](../../guides/templates/agent-brief-template.md) — durable issue spec that survives context drift. Habit-mapped variant of the pattern from [mattpocock/skills](https://github.com/mattpocock/skills).
+- **Backlog-bound tasks**: When a task in the produced list will sit ≥7 days before pickup (or filer ≠ picker), recommend filing an issue using the repo's tracker contract if `docs/agents/issue-tracker.md` exists; otherwise default to GitHub issue wording. Use [`guides/templates/agent-brief-template.md`](../../guides/templates/agent-brief-template.md) for the durable issue spec. Habit-mapped variant of the pattern from [mattpocock/skills](https://github.com/mattpocock/skills).
 
 ## Optional Persistence (`--persist <slug>`)
 
@@ -111,6 +121,7 @@ ID-linkage tip: when persisting, format each task as `Task #N implements: Decisi
 - [ ] Tasks prioritized by importance (Q2 > Q1 > Q3, Q4 eliminated)
 - [ ] No task touches more than 5 files
 - [ ] Orchestration classification assigned to each task (sequential/parallel-safe/parallel-worktree)
+- [ ] Backlog-bound tasks classified as `ready-for-agent`, `ready-for-human`, or `needs-info`
 
 ## Structured Output Block
 
@@ -140,3 +151,4 @@ Load `${CLAUDE_PLUGIN_ROOT}/habits/h3-first-things-first.md` for the full H3 pri
 Load `${CLAUDE_PLUGIN_ROOT}/guides/orchestration-patterns.md` for worktree isolation and context boundary patterns.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md` when `--persist <slug>` is used (canonical spec for opt-in persistence to `docs/specs/<slug>/tasks.md`).
+Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local issue-tracker, triage-label, or domain context files are present.

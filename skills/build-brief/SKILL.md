@@ -25,7 +25,7 @@ next-skill: review-ai
 
    Research basis: Amazon Working Backwards, Basecamp Shape Up, and Google Design Docs all physically separate "what & why" from "how". Teams that skip this waste 30-40% of implementation time on rework.
 
-1. **Read existing code first**: Before writing anything new, read the files in the affected area. Understand current patterns, naming conventions, and architecture.
+1. **Read existing code and context first**: Before writing anything new, read the files in the affected area. Also read repo context files when present: `DOMAIN.md`, `SPEC.md`, `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/agents/domain.md`, and relevant ADRs. Understand current patterns, naming conventions, glossary terms, and architecture.
 
 1b. **Check past lessons** (if `~/.claude/lessons/` exists):
    - Grep `~/.claude/lessons/` for tags or keywords matching the task name, affected file paths, or domain
@@ -41,6 +41,7 @@ next-skill: review-ai
    **Goal**: [1 sentence]
    **Files to modify**: [list with paths]
    **Existing patterns to follow**: [e.g., "uses callRemoteAPI + wrapSuccess pattern"]
+   **Project vocabulary**: [canonical terms from CONTEXT.md / DOMAIN.md, if present]
    **Constraints**: [e.g., "must be backward compatible", "max 800 lines"]
    **Test approach**: [what to test, TDD if applicable]
    ```
@@ -109,9 +110,10 @@ next-skill: review-ai
 
 ## Definition of Done
 
-- [ ] Existing code in affected area has been read (not just assumed)
+- [ ] Existing code and relevant context docs in affected area have been read (not just assumed)
 - [ ] All referenced file paths verified to exist
 - [ ] Existing patterns and naming conventions documented in brief
+- [ ] Project vocabulary / glossary terms captured when present
 - [ ] Constraints listed (backward compatibility, file size, performance)
 - [ ] Test approach defined (what to test, TDD if applicable)
 - [ ] Brief is ≤4,000 tokens (or split into per-phase briefs for complex tasks)
@@ -123,3 +125,4 @@ See [Step 4 wiki page](../../docs/wiki/Step-4-Build-Brief.md) for deeper walkthr
 
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the full H5 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/orchestration-patterns.md` for context boundary and orchestration patterns.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local glossary, issue-tracker, or agent context files are present.

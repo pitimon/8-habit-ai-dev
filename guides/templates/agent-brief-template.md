@@ -39,6 +39,14 @@ Durable issue-spec template for backlog-bound work — survives weeks of context
 - **<term>**: <one-sentence definition>
 - **<term>**: <one-sentence definition>
 
+If `CONTEXT.md`, `CONTEXT-MAP.md`, or `docs/agents/domain.md` exists, pull vocabulary from those files instead of inventing new terms.
+
+## Delegation readiness
+
+**State**: `ready-for-agent` | `ready-for-human` | `needs-info`
+
+Use `ready-for-agent` only when the issue has enough context, success criteria, and scope boundaries for pickup without more filer input. If `docs/agents/triage-labels.md` exists, map this state to the repo's real tracker label.
+
 ## Why this matters (H8: Find Your Voice)
 
 <1-2 sentence "why we're building this" — survives weeks in backlog when the rationale fades from team memory. Cite an ADR, lesson, or issue if a deeper record exists.>
@@ -54,6 +62,7 @@ Durable issue-spec template for backlog-bound work — survives weeks of context
 ## Pickup checklist (for the agent/dev who picks this up)
 
 - [ ] Read `CLAUDE.md` / `DOMAIN.md` for current context
+- [ ] Read `CONTEXT.md`, `CONTEXT-MAP.md`, or `docs/agents/domain.md` if present
 - [ ] Verify success criteria still apply (issue may be stale — scope can shift in weeks)
 - [ ] If scope expanded since filing, re-run `/8-habit-ai-dev:requirements` before building
 - [ ] If domain vocabulary is unfamiliar, search lessons (`~/.claude/lessons/`) for prior work on the same terms

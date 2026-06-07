@@ -16,7 +16,7 @@ next-skill: breakdown
 
 ## Process
 
-1. **Read existing architecture**: Check `CLAUDE.md`, `DESIGN.md`, `ARCHITECTURE.md`, `ADR/` directory — understand current state before proposing changes.
+1. **Read existing architecture and context contract**: Check `CLAUDE.md`, `AGENTS.md`, `SPEC.md`, `DOMAIN.md`, `CONTEXT.md`, `CONTEXT-MAP.md`, `DESIGN.md`, `ARCHITECTURE.md`, `docs/agents/domain.md`, and ADR directories. Understand current state and project vocabulary before proposing changes.
 
 1b. **Validate scope alignment**: If a `SKILL_OUTPUT:requirements` block exists in the PRD output, read it and verify:
 
@@ -119,6 +119,7 @@ ID-linkage tip: when persisting, label each decision as `### Decision-N: <topic>
 - [ ] Human has explicitly decided (not AI default) — decision recorded
 - [ ] ADR created for decisions affecting >3 files or changing public API
 - [ ] Constraints and non-goals documented
+- [ ] Existing glossary/context files and ADRs were checked when present
 
 ## Structured Output
 
@@ -151,3 +152,4 @@ See [Step 2 wiki page](../../docs/wiki/Step-2-Design.md) for deeper walkthrough,
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/adr-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h8-find-voice.md` for the full H8 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md` when `--persist <slug>` is used (canonical spec for opt-in persistence to `docs/specs/<slug>/design.md`).
+Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local glossary, issue-tracker, or agent context files are present.

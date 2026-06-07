@@ -661,7 +661,7 @@ docs/adr/ADR-016-t2-bag-drop-date-eviction-policy.md|205
 docs/adr/ADR-017-anthropic-skill-patterns-audit.md|152
 docs/adr/ADR-018-memory-layer-activation.md|145
 guides/cross-verification.md|95
-skills/requirements/SKILL.md|131
+skills/requirements/SKILL.md|132
 EOF_RECEIPTS
   if [ "$RECEIPTS_FAIL" -gt 0 ]; then
     REQ_FAIL=$((REQ_FAIL + RECEIPTS_FAIL))

@@ -49,6 +49,8 @@ If you ran `/research` before this — or have a saved brief from a prior sessio
 
 If no prior brief exists, this skill proceeds without it. The skill never auto-globs your filesystem; user agency drives context loading.
 
+If the repo has `CONTEXT.md`, `CONTEXT-MAP.md`, `DOMAIN.md`, `docs/agents/domain.md`, or relevant ADRs, read them before naming hypotheses. **Why**: a bug hypothesis phrased in the wrong domain language anchors on the wrong seam and makes the repro look more general than it is.
+
 ---
 
 ## The 6 Phases
@@ -152,6 +154,7 @@ If either answer is "no", loop back to the relevant phase. The cost of an extra 
 
 - [ ] Phase 1 feedback loop is fast (<10s ideal) AND deterministic — documented
 - [ ] Phase 2 reproduction confirmed at ≥80% rate
+- [ ] Relevant repo glossary/context and ADRs were checked when present
 - [ ] Phase 3 produced 3–5 ranked falsifiable hypotheses with explicit predictions
 - [ ] Phase 4 probes were one-variable-at-a-time, uniquely tagged
 - [ ] Phase 4 root cause confirmed from an independent source (different tool/command/vantage); any contradiction reconciled, not picked
@@ -167,6 +170,7 @@ Load `/Users/itarun/.claude/plugins/cache/pitimon-8-habit-ai-dev/8-habit-ai-dev/
 Load `/Users/itarun/.claude/plugins/cache/pitimon-8-habit-ai-dev/8-habit-ai-dev/2.18.0/habits/h1-be-proactive.md` for the H1 principle.
 
 Load `/Users/itarun/.claude/plugins/cache/pitimon-8-habit-ai-dev/8-habit-ai-dev/2.18.0/habits/h5-understand-first.md` for the H5 principle.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local glossary, issue-tracker, or agent context files are present.
 
 ---
 

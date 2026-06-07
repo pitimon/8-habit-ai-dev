@@ -25,7 +25,7 @@ next-skill: design
    - What are the boundaries? (in scope / out of scope)
    - What exists already?
 
-2. **Check existing docs**: Read `CLAUDE.md`, `PRD.md`, `DOMAIN.md`, or `README.md` if they exist — don't duplicate what's already defined.
+2. **Check existing docs and context contract**: Read `CLAUDE.md`, `AGENTS.md`, `SPEC.md`, `PRD.md`, `DOMAIN.md`, `CONTEXT.md`, `CONTEXT-MAP.md`, `README.md`, and `docs/agents/domain.md` if they exist. Use the project's glossary terms in the PRD and do not duplicate what is already defined.
 
 3. **Draft PRD summary** (keep concise — 10-20 lines):
 
@@ -140,3 +140,4 @@ Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/interview-protocol.md` for the stru
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h2-begin-with-end.md` for the full H2 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md` when `--persist <slug>` is used (canonical spec for opt-in persistence to `docs/specs/<slug>/prd.md`).
+Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local glossary, issue-tracker, or agent context files are present.

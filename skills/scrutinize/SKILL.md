@@ -57,6 +57,7 @@ Stand outside the change and ask whether it should exist at all, then verify it 
   - Entry point → call sites → branches taken → state mutated → exit / return / side effect.
   - Include the unchanged code on either side of the diff. Bugs hide at the seams.
 - For a plan or design doc: trace the proposed flow against the existing system. Where does it touch reality? What does it assume that isn't true?
+- If repo context files exist (`DOMAIN.md`, `SPEC.md`, `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/agents/domain.md`, or ADRs), use them to check whether the plan matches the project's vocabulary and accepted decisions.
 - Note every place the trace surprises you (unexpected branch, dead code reached, state you didn't know existed). Surprises are signal.
 
 ### 3. Verify — does it actually do what it claims?
@@ -153,6 +154,7 @@ What this scrutinize did that `/review-ai` would not:
 - [ ] Goal stated in one sentence in your own words (Step 1)
 - [ ] Simpler-alternative pass complete — explicitly named or "none found, here's why" (Step 1)
 - [ ] Call graph traced end-to-end including unchanged code on either side of diff (Step 2)
+- [ ] Existing glossary/context files and ADRs checked when present
 - [ ] Each claim from the artifact verified or refuted with a traced path (Step 3)
 - [ ] Findings ordered by severity; each finding has Why-it-matters + Evidence + Suggested-change
 - [ ] One-line verdict at the end (ship / fix-then-ship / rework / reject)
@@ -167,3 +169,4 @@ The 4-step workflow (Intent → Trace → Verify → Report) is inspired by [`th
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the full H5 principle.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h8-find-voice.md` for the full H8 principle.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local glossary, issue-tracker, or agent context files are present.
