@@ -10,6 +10,19 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.16 — Requirements Intake Mode Split (2026-06-08)
+
+### Skills
+
+- Update `/requirements` with `Existing-system mode` and `Idea-mode` intake discipline.
+- Require existing-system requirements to cite source evidence where available and keep unverifiable statements visible as assumptions or questions.
+- Require idea-mode requirements to label assumptions before treating them as constraints and preserve proposed behavior separately from confirmed system facts.
+
+### Docs and Validation
+
+- Add the intake-mode summary to the Step 1 Requirements wiki page.
+- Add lightweight validator pins for the two mode names and evidence/assumption language.
+
 ## v2.21.15 — SessionStart Dead Variable Cleanup (2026-06-08)
 
 ### Hooks
