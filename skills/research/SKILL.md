@@ -175,8 +175,7 @@ Rationale: a dep or symbol can be imported by a different-sounding name (e.g. `n
 - [ ] Research depth level selected and documented in brief header
 - [ ] Research questions defined before searching
 - [ ] At least 2 sources consulted (codebase + external or codebase + docs)
-- [ ] Every finding cites its source
-- [ ] All cited sources verified (file paths exist, URLs checked) — appropriate to depth level
+- [ ] Every finding cites a verified source (file paths exist, URLs checked) — appropriate to depth level
 - [ ] Constraints documented with source
 - [ ] Comparison matrix included (if Compare mode) with evidence per cell
 - [ ] Audit results included (if Audit mode) with file:line per row

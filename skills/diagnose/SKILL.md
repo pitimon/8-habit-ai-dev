@@ -153,14 +153,13 @@ If either answer is "no", loop back to the relevant phase. The cost of an extra 
 ## Definition of Done
 
 - [ ] Phase 1 feedback loop is fast (<10s ideal) AND deterministic — documented
-- [ ] Phase 2 reproduction confirmed at ≥80% rate
-- [ ] Relevant repo glossary/context and ADRs were checked when present
+- [ ] Phase 2 reproduction confirmed at ≥80% rate, after relevant glossary/context and ADRs were checked when present
 - [ ] Phase 3 produced 3–5 ranked falsifiable hypotheses with explicit predictions
 - [ ] Phase 4 probes were one-variable-at-a-time, uniquely tagged
 - [ ] Phase 4 root cause confirmed from an independent source (different tool/command/vantage); any contradiction reconciled, not picked
 - [ ] Phase 5 regression test written BEFORE the fix, located at the architectural seam
-- [ ] Phase 6 cleanup grep returned zero residual probes
-- [ ] **Phase 6 re-run of Phase 1 feedback loop confirmed green** (not just regression test passing)
+- [ ] Phase 6 cleanup grep returned zero residual probes, and temporarily disabled subsystems were restored
+- [ ] **Phase 6 re-run of Phase 1 feedback loop confirmed green** (not just regression test passing), with full test-suite impact checked
 - [ ] `/post-mortem` ready to be invoked
 
 ## Further Reading

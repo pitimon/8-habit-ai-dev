@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.11-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.12-blue)
 
 # Changelog
 
@@ -6,6 +6,18 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.12 · QA Polish and Design Wiki Example
+
+Completes the post-release QA polish for the `/design` claim-discipline release.
+
+Visible documentation points:
+
+- Step 2 Design now includes a concrete claim-discipline example with pass level, claim labels, evidence strength, `Verify first: Yes/No`, question priority, and Mermaid traceability guidance.
+- `/diagnose` and `/research` Definition of Done lists were compacted to remove existing validator warnings while preserving behavior.
+- `/ai-dev-log` now uses `reference.md` for script internals and report-template detail, keeping the main skill body concise.
+
+Boundary: polish only. No new skill, runtime enforcement, hook behavior change, or semantic change to `/diagnose`, `/research`, or `/ai-dev-log`.
 
 ## v2.21.11 · Design Architecture Claim Discipline
 
