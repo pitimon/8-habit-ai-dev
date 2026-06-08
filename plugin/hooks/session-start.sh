@@ -42,16 +42,10 @@ done
 VERSION="${VERSION:-unknown}"
 
 # Check for workflow artifacts to show progress
-PRD="" ; ADR="" ; TASKS="" ; BRIEF=""
+PRD="" ; ADR="" ; TASKS=""
 [ -f PRD.md ] || [ -f docs/PRD.md ] && PRD="✓"
 [ -d ADR ] || [ -d docs/ADR ] && ADR="✓"
 [ -f TASKS.md ] || [ -f docs/TASKS.md ] && TASKS="✓"
-
-if [ -n "$PRD$ADR$TASKS" ]; then
-  PROGRESS=" | Progress: ${PRD:+①}${ADR:+②}${TASKS:+③}"
-else
-  PROGRESS=""
-fi
 
 # Habit profile state — emits level-specific adaptation directive (v2.7.0, Issue #96).
 # When ~/.claude/habit-profile.md exists with a valid level, outputs a one-sentence

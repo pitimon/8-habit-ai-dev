@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.14-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.14)
+[![Version](https://img.shields.io/badge/Version-2.21.15-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.15)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -484,6 +484,16 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.21.15
+
+**Theme: SessionStart dead variable cleanup**
+
+v2.21.15 removes two ShellCheck SC2034 dead variables from the SessionStart hook without changing rendered reminder behavior.
+
+- **Dead code removed** — `BRIEF` and `PROGRESS` assignments are gone from `hooks/session-start.sh`.
+- **Behavior preserved** — workflow artifact markers still render through the existing inline `${PRD:+ ✓}` / `${ADR:+ ✓}` / `${TASKS:+ ✓}` expressions.
+- **Regression coverage retained** — `tests/test-verbosity-hook.sh` continues to cover root fallback, Codex JSON output, version rendering, and workflow hints.
 
 ## What's New in v2.21.14
 
@@ -1355,4 +1365,4 @@ MIT
 
 ---
 
-_Version: 2.21.14 | Last updated: 2026-06-08_
+_Version: 2.21.15 | Last updated: 2026-06-08_

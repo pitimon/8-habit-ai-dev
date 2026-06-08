@@ -10,6 +10,17 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.15 — SessionStart Dead Variable Cleanup (2026-06-08)
+
+### Hooks
+
+- Remove unused `BRIEF` and `PROGRESS` variables from `hooks/session-start.sh`.
+- Preserve current rendered reminder behavior, which already uses inline workflow artifact markers.
+
+### Tests
+
+- Keep the existing SessionStart regression suite as the behavior guard for root fallback, Codex JSON output, version rendering, and workflow artifact markers.
+
 ## v2.21.14 — Codex SessionStart Version Fallback (2026-06-08)
 
 ### Hooks
