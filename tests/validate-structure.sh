@@ -7,6 +7,12 @@ set -euo pipefail
 
 ERRORS=0
 PASS=0
+CODEX_INSTALLED_CACHE=0
+case "$(pwd -P)" in
+  */.codex/plugins/cache/*)
+    CODEX_INSTALLED_CACHE=1
+    ;;
+esac
 
 pass() { PASS=$((PASS + 1)); echo "  PASS: $1"; }
 fail() { ERRORS=$((ERRORS + 1)); echo "  FAIL: $1"; }
@@ -84,18 +90,23 @@ done
 echo ""
 
 # --- Check 4: Version consistency ---
-echo "--- Check 4: Version consistency across 4 manifests/docs ---"
+echo "--- Check 4: Version consistency across 5 manifests/docs ---"
 v_plugin=$(grep '"version"' .claude-plugin/plugin.json 2>/dev/null | head -1 | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
 v_marketplace=$(grep '"version"' .claude-plugin/marketplace.json 2>/dev/null | head -1 | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
 v_codex=$(grep '"version"' .codex-plugin/plugin.json 2>/dev/null | head -1 | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
+v_codex_child=$(grep '"version"' plugin/.codex-plugin/plugin.json 2>/dev/null | head -1 | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
 v_readme=$(grep 'Version:' README.md 2>/dev/null | head -1 | sed 's/.*Version: \([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\).*/\1/')
 
-if [ -z "$v_plugin" ] || [ -z "$v_marketplace" ] || [ -z "$v_codex" ] || [ -z "$v_readme" ]; then
-  fail "Could not extract version from one or more files (claude=$v_plugin, marketplace=$v_marketplace, codex=$v_codex, readme=$v_readme)"
-elif [ "$v_plugin" = "$v_marketplace" ] && [ "$v_plugin" = "$v_codex" ] && [ "$v_plugin" = "$v_readme" ]; then
-  pass "All 4 manifests/docs have version $v_plugin"
+if [ -z "$v_codex_child" ] && [ "$CODEX_INSTALLED_CACHE" -eq 1 ]; then
+  v_codex_child="$v_codex"
+fi
+
+if [ -z "$v_plugin" ] || [ -z "$v_marketplace" ] || [ -z "$v_codex" ] || [ -z "$v_codex_child" ] || [ -z "$v_readme" ]; then
+  fail "Could not extract version from one or more files (claude=$v_plugin, marketplace=$v_marketplace, codex=$v_codex, codex_child=$v_codex_child, readme=$v_readme)"
+elif [ "$v_plugin" = "$v_marketplace" ] && [ "$v_plugin" = "$v_codex" ] && [ "$v_plugin" = "$v_codex_child" ] && [ "$v_plugin" = "$v_readme" ]; then
+  pass "All 5 manifests/docs have version $v_plugin"
 else
-  fail "Version mismatch: claude plugin.json=$v_plugin, claude marketplace.json=$v_marketplace, codex plugin.json=$v_codex, README.md=$v_readme"
+  fail "Version mismatch: claude plugin.json=$v_plugin, claude marketplace.json=$v_marketplace, codex plugin.json=$v_codex, codex child plugin.json=$v_codex_child, README.md=$v_readme"
 fi
 echo ""
 
@@ -822,7 +833,7 @@ else
     pass "no file changes since $LAST_TAG — Check 27 trivially passes"
   else
     # Match any path under consumer-doctrine top-level dirs plus native Codex packaging.
-    CONSUMER_TOUCHED=$(echo "$CHANGED" | grep -E '^((rules|skills|hooks|habits|guides|agents)/|\.codex-plugin/|\.agents/plugins/marketplace\.json$)' || true)
+    CONSUMER_TOUCHED=$(echo "$CHANGED" | grep -E '^((rules|skills|hooks|habits|guides|agents|plugin)/|\.codex-plugin/|\.agents/plugins/marketplace\.json$)' || true)
 
     if [ -z "$CONSUMER_TOUCHED" ]; then
       pass "contributor-doctrine only since $LAST_TAG — no bump required (ADR-019)"
@@ -847,18 +858,22 @@ echo ""
 echo "--- Check 28: native Codex plugin packaging (ADR-023) ---"
 CODEX_FAIL=0
 CODEX_PLUGIN=".codex-plugin/plugin.json"
+CODEX_CHILD_PLUGIN="plugin/.codex-plugin/plugin.json"
 CODEX_MARKETPLACE=".agents/plugins/marketplace.json"
-CODEX_INSTALLED_CACHE=0
-case "$(pwd -P)" in
-  */.codex/plugins/cache/*)
-    CODEX_INSTALLED_CACHE=1
-    ;;
-esac
 
 if [ -f "$CODEX_PLUGIN" ]; then
   pass "$CODEX_PLUGIN exists"
 else
   fail "$CODEX_PLUGIN missing"
+  CODEX_FAIL=$((CODEX_FAIL + 1))
+fi
+
+if [ -f "$CODEX_CHILD_PLUGIN" ]; then
+  pass "$CODEX_CHILD_PLUGIN exists"
+elif [ "$CODEX_INSTALLED_CACHE" -eq 1 ]; then
+  pass "$CODEX_CHILD_PLUGIN omitted in Codex installed cache"
+else
+  fail "$CODEX_CHILD_PLUGIN missing"
   CODEX_FAIL=$((CODEX_FAIL + 1))
 fi
 
@@ -880,18 +895,59 @@ if [ -f "$CODEX_PLUGIN" ]; then
   done
 fi
 
+if [ -f "$CODEX_CHILD_PLUGIN" ]; then
+  for field in '"name": "8-habit-ai-dev"' '"skills": "./skills/"' '"interface"' '"defaultPrompt"'; do
+    if grep -q "$field" "$CODEX_CHILD_PLUGIN"; then
+      pass "$CODEX_CHILD_PLUGIN contains $field"
+    else
+      fail "$CODEX_CHILD_PLUGIN missing $field"
+      CODEX_FAIL=$((CODEX_FAIL + 1))
+    fi
+  done
+fi
+
 if [ -L "plugin" ]; then
-  target=$(readlink "plugin")
-  if [ "$target" = "." ]; then
-    pass "plugin symlink points to repo root (Codex marketplace child path)"
+  fail "plugin is a symlink; Codex child source must be a real directory so Claude Code installers do not package a root self-symlink"
+  CODEX_FAIL=$((CODEX_FAIL + 1))
+elif [ -d "plugin" ]; then
+  if [ -f "$CODEX_CHILD_PLUGIN" ]; then
+    pass "plugin is a real Codex child source directory"
   else
-    fail "plugin symlink points to '$target' (expected '.')"
+    fail "plugin directory exists but $CODEX_CHILD_PLUGIN is missing"
     CODEX_FAIL=$((CODEX_FAIL + 1))
   fi
+  if [ -d "plugin/skills" ]; then
+    pass "plugin/skills exists in Codex child package"
+  else
+    fail "plugin/skills missing (Codex child package would install without skills)"
+    CODEX_FAIL=$((CODEX_FAIL + 1))
+  fi
+  if [ "$CODEX_INSTALLED_CACHE" -eq 0 ]; then
+    SYNC_FAIL=0
+    for path in skills guides habits hooks agents rules scripts docs; do
+      if diff -qr "$path" "plugin/$path" >/dev/null 2>&1; then
+        pass "plugin/$path is in sync with $path"
+      else
+        fail "plugin/$path drifted from $path; re-sync the Codex child package"
+        SYNC_FAIL=$((SYNC_FAIL + 1))
+      fi
+    done
+    for file in AGENTS.md CHANGELOG.md CLAUDE.md CONTRIBUTING.md DOMAIN.md LICENSE README.md SELF-CHECK.md SKILL-EFFECTIVENESS.md SPEC.md llms.txt; do
+      if cmp -s "$file" "plugin/$file"; then
+        pass "plugin/$file is in sync with $file"
+      else
+        fail "plugin/$file drifted from $file; re-sync the Codex child package"
+        SYNC_FAIL=$((SYNC_FAIL + 1))
+      fi
+    done
+    if [ "$SYNC_FAIL" -gt 0 ]; then
+      CODEX_FAIL=$((CODEX_FAIL + SYNC_FAIL))
+    fi
+  fi
 elif [ "$CODEX_INSTALLED_CACHE" -eq 1 ]; then
-  pass "plugin symlink omitted in Codex installed cache (source/marketplace-only child path)"
+  pass "plugin child source omitted in Codex installed cache"
 else
-  fail "plugin symlink missing (Codex marketplace needs a child source path)"
+  fail "plugin child source directory missing (Codex marketplace needs a child source path)"
   CODEX_FAIL=$((CODEX_FAIL + 1))
 fi
 

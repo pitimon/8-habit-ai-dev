@@ -1,0 +1,628 @@
+{
+  "schema_version": 1,
+  "generated_by": "scripts/generate-skill-catalog.js",
+  "source": "skills/*/SKILL.md",
+  "compatibility_note": "Catalog describes portable markdown skills. Claude hook feature parity is not implied; the package SessionStart hook has a narrow Codex JSON additionalContext adapter if the host invokes it.",
+  "skills": [
+    {
+      "name": "ai-dev-log",
+      "path": "skills/ai-dev-log/SKILL.md",
+      "description": "Generate AI-assisted development log from git history + Co-Authored-By trailers. Use for EU AI Act Article 11 (technical documentation) audit trail and AI transparency. Maps to H4 (Win-Win — honest disclosure) + H1 (Be Proactive — audit-ready).",
+      "user_invocable": true,
+      "argument_hint": "[--since YYYY-MM-DD] [--repo path] [--out file]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Bash"
+      ],
+      "prev_skill": "any",
+      "next_skill": "any",
+      "disable_model_invocation": false,
+      "workflow_step": null,
+      "habit": "H4",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "breakdown",
+      "path": "skills/breakdown/SKILL.md",
+      "description": "Decompose feature into atomic tasks — 1 task per agent. Use AFTER /design and BEFORE /build-brief. Step 3 of 7-step workflow. Maps to H3 (First Things First).",
+      "user_invocable": true,
+      "argument_hint": "[--persist <slug>] [feature or PRD to decompose]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Write",
+        "AskUserQuestion"
+      ],
+      "prev_skill": "design",
+      "next_skill": "build-brief",
+      "disable_model_invocation": null,
+      "workflow_step": 3,
+      "habit": "H3",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "build-brief",
+      "path": "skills/build-brief/SKILL.md",
+      "description": "Generate context-rich implementation brief before coding. Use AFTER /breakdown for each task. Step 4 of 7-step workflow. Maps to H5 (Seek First to Understand).",
+      "user_invocable": true,
+      "argument_hint": "[task to implement]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep"
+      ],
+      "prev_skill": "breakdown",
+      "next_skill": "review-ai",
+      "disable_model_invocation": null,
+      "workflow_step": 4,
+      "habit": "H5",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "calibrate",
+      "path": "skills/calibrate/SKILL.md",
+      "description": "Assess your 8-habit maturity level via 5-7 questions and persist a profile to ~/.claude/habit-profile.md. Other skills read this profile to adapt their verbosity — Dependence (full guidance) → Independence (key checkpoints) → Interdependence (team focus) → Significance (minimal prompts). Maps to H8 (Find Your Voice — meet the user where they are, not where the template assumes).",
+      "user_invocable": true,
+      "argument_hint": "[optional: --force to skip confirmation]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Write"
+      ],
+      "prev_skill": "none",
+      "next_skill": "any",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": "H8",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "consistency-check",
+      "path": "skills/consistency-check/SKILL.md",
+      "description": "Cross-artifact and incident/config consistency analyzer — runs 5 detection passes across persisted spec artifacts (PRD ↔ design ↔ tasks), or a lightweight symptom/evidence/root-cause/fix check for operational hotfixes that lack persisted specs. Use AFTER /requirements, /design, /breakdown have been run with `--persist <slug>`, or before merging/closing an incident/config hotfix PR. Read-only — reports drift, coverage gaps, contradictions; does NOT modify or block. Inspired by github/spec-kit /analyze. Maps to H5 (Understand First — verify your understanding holds across artifacts) + H1 (Be Proactive — catch drift before code).",
+      "user_invocable": true,
+      "argument_hint": "<slug-or-path-to-spec-dir>",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep"
+      ],
+      "prev_skill": "any",
+      "next_skill": "any",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": null,
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "cross-verify",
+      "path": "skills/cross-verify/SKILL.md",
+      "description": "Run 17-question 8-Habit cross-verification checklist on a plan or implementation. Use AFTER planning and BEFORE committing to implementation. Maps to ALL 8 Habits.",
+      "user_invocable": true,
+      "argument_hint": "[plan or feature to verify]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep"
+      ],
+      "prev_skill": "any",
+      "next_skill": "any",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": null,
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "deploy-guide",
+      "path": "skills/deploy-guide/SKILL.md",
+      "description": "Step-by-step deployment assistance with rollback planning. Use when deploying to staging or production. Step 6 of 7-step workflow. Maps to H1 (Be Proactive).",
+      "user_invocable": true,
+      "argument_hint": "[staging|production]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Bash"
+      ],
+      "prev_skill": "review-ai",
+      "next_skill": "monitor-setup",
+      "disable_model_invocation": null,
+      "workflow_step": 6,
+      "habit": "H1",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "design",
+      "path": "skills/design/SKILL.md",
+      "description": "Produce architecture decisions — DB, auth, API, constraints. Use AFTER /requirements and BEFORE /breakdown. Step 2 of 7-step workflow. Maps to H8 (Find Your Voice).",
+      "user_invocable": true,
+      "argument_hint": "[--persist <slug>] [component or system to design]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Write",
+        "AskUserQuestion"
+      ],
+      "prev_skill": "requirements",
+      "next_skill": "breakdown",
+      "disable_model_invocation": null,
+      "workflow_step": 2,
+      "habit": "H8",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "diagnose",
+      "path": "skills/diagnose/SKILL.md",
+      "description": "Active bug investigation discipline — 6-phase methodology covering feedback-loop, reproduce, hypothesise, instrument, fix-with-regression-test, and cleanup-with-post-mortem. Use when investigating a hard bug or performance regression that doesn't have an obvious root cause. Triggers: \"diagnose\", \"debug this\", \"investigate this bug\", \"reproduce the failure\", \"why is X failing\". Read-only guidance — guides the human through systematic investigation rather than auto-fixing. Refuses to skip Phase 1 (feedback loop) even under pressure, because guessing-before-loop is the documented anti-pattern this skill prevents. Maps to H1 (Be Proactive — trace all callers) + H5 (Seek First to Understand — reproduce before fixing). Hands off to /post-mortem once the fix lands and the feedback loop passes.",
+      "user_invocable": true,
+      "argument_hint": "[bug description, error message, or path to a prior /research brief]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Bash"
+      ],
+      "prev_skill": "any",
+      "next_skill": "post-mortem",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": null,
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "eu-ai-act-check",
+      "path": "skills/eu-ai-act-check/SKILL.md",
+      "description": "EU AI Act compliance — migrated to pitimon/claude-governance v3.1.0. This stub redirects to the canonical implementation. Maps to H1 (Be Proactive — prevent regulatory crisis) + H8 (Voice/Conscience).",
+      "user_invocable": true,
+      "argument_hint": "(install pitimon/claude-governance for the canonical skill)",
+      "allowed_tools": [
+        "Read",
+        "Bash"
+      ],
+      "prev_skill": "any",
+      "next_skill": "any",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": null,
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "management-talk",
+      "path": "skills/management-talk/SKILL.md",
+      "description": "Reshape engineer-to-engineer content for engineering-org leadership (VPs, directors, PMs, release managers) and shape it for the channel — JIRA comment, Slack post, async standup, email, or meeting talking-points. Use AFTER `/post-mortem` or any engineering writeup when the same information needs to flow up-the-org. Strips function/file/SHA identifiers but keeps JIRA keys, PR numbers, product names, and customer/workload identifiers. Maps to H4 (Win-Win — leadership gets the right facts, not a code dump) + H6 (Synergize — engineer + leadership channels reinforce).",
+      "user_invocable": true,
+      "argument_hint": "[engineering content + target channel: jira|slack|standup|email|meeting]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep"
+      ],
+      "prev_skill": "any",
+      "next_skill": "any",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": "H4",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "monitor-setup",
+      "path": "skills/monitor-setup/SKILL.md",
+      "description": "Set up error tracking, alerting, and health checks. Use AFTER deploy to ensure observability. Step 7 of 7-step workflow. Maps to H7 (Sharpen the Saw).",
+      "user_invocable": true,
+      "argument_hint": "[project or service to monitor]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Bash"
+      ],
+      "prev_skill": "deploy-guide",
+      "next_skill": "none",
+      "disable_model_invocation": null,
+      "workflow_step": 7,
+      "habit": "H7",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "operational-state",
+      "path": "skills/operational-state/SKILL.md",
+      "description": "Classify operational findings before action: Watch, Fix Candidate, Active Incident, Resolved, Handoff, Known Accepted Issue, False Positive, or Self-Resolved. Use when an infra/app/alert finding is not simply \"fix\" or \"done\", especially when recovered-but-recurring signals, Running-but-unhealthy workloads, ownership handoffs, or accepted known issues need explicit evidence and closure criteria. Read-only guidance; maps state to required evidence, allowed/prohibited actions, approval gates, artifacts, escalation criteria, and next action without executing mutations. Maps to H1 (Be Proactive) + H5 (Seek First to Understand) + H8 (Find Your Voice).",
+      "user_invocable": true,
+      "argument_hint": "[finding, alert, incident note, or operational assessment]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep"
+      ],
+      "prev_skill": "any",
+      "next_skill": "any",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": null,
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "post-mortem",
+      "path": "skills/post-mortem/SKILL.md",
+      "description": "Canonical engineering record of a fixed bug — root cause, mechanism, fix, validation, and how it slipped through. Use AFTER a debug session lands a validated fix, BEFORE closing the ticket — produces an engineer-audience artifact. Refuses to draft without a reliable repro, known root cause, identified fix, and validated outcome. Maps to H4 (Win-Win — engineer-to-engineer deposit) + H7 (Sharpen the Saw — capture learning for future-you).",
+      "user_invocable": true,
+      "argument_hint": "[bug identifier or 'last task']",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Bash"
+      ],
+      "prev_skill": "any",
+      "next_skill": "any",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": "H4",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "reflect",
+      "path": "skills/reflect/SKILL.md",
+      "description": "Post-task micro-retrospective — 6 questions, 5 minutes. Use AFTER completing a task or workflow to capture lessons learned, including a skill-effectiveness signal that feeds SKILL-EFFECTIVENESS.md. Maps to H7 (Sharpen the Saw — invest in capability, not just output).",
+      "user_invocable": true,
+      "argument_hint": "[task just completed] or 'consolidate' to merge lessons",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Write",
+        "Bash"
+      ],
+      "prev_skill": "any",
+      "next_skill": "none",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": "H7",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "requirements",
+      "path": "skills/requirements/SKILL.md",
+      "description": "Generate PRD from user intent — define what, why, who, scope, and success criteria. Use BEFORE starting any feature. Step 1 of 7-step workflow. Maps to H2 (Begin with End in Mind).",
+      "user_invocable": true,
+      "argument_hint": "[--persist <slug>] [feature description]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Write",
+        "AskUserQuestion"
+      ],
+      "prev_skill": "research",
+      "next_skill": "design",
+      "disable_model_invocation": null,
+      "workflow_step": 1,
+      "habit": "H2",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "research",
+      "path": "skills/research/SKILL.md",
+      "description": "Investigate before specifying — research existing solutions, prior art, and domain constraints. Use BEFORE /requirements when the problem space is unclear. Step 0 of 7-step workflow. Maps to H5 (Seek First to Understand).",
+      "user_invocable": true,
+      "argument_hint": "[topic or problem to investigate]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "WebSearch",
+        "WebFetch",
+        "Agent"
+      ],
+      "prev_skill": "none",
+      "next_skill": "requirements",
+      "disable_model_invocation": null,
+      "workflow_step": 0,
+      "habit": "H5",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "review-ai",
+      "path": "skills/review-ai/SKILL.md",
+      "description": "Audit AI-generated code for security, quality, and completeness. Use AFTER implementation, BEFORE commit. Step 5 of 7-step workflow. Maps to H4 (Think Win-Win).",
+      "user_invocable": true,
+      "argument_hint": "[files or git diff to review]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Bash"
+      ],
+      "prev_skill": "build-brief",
+      "next_skill": "deploy-guide",
+      "disable_model_invocation": null,
+      "workflow_step": 5,
+      "habit": "H4",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "save-spec",
+      "path": "skills/save-spec/SKILL.md",
+      "description": "Scaffold a project-root SPEC.md digest following the spec-digest-pattern archetype. User-invoked. Phase 1 minimum viable — generator only; refuses to overwrite an existing SPEC.md. Use AFTER deciding the repo fits the project-orientation hub deployment mode (not feature-spec mode). Maps to H8 (Find Your Voice — pick the deployment mode that fits your repo) + H2 (Begin with End in Mind — establish the save point on day 1).",
+      "user_invocable": true,
+      "argument_hint": "[project-name] [target-dir]",
+      "allowed_tools": [
+        "Read",
+        "Write",
+        "Glob",
+        "AskUserQuestion"
+      ],
+      "prev_skill": "any",
+      "next_skill": "any",
+      "disable_model_invocation": false,
+      "workflow_step": null,
+      "habit": null,
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "scrutinize",
+      "path": "skills/scrutinize/SKILL.md",
+      "description": "Outsider-perspective end-to-end review of a plan, PR, or proposed change — questions intent first (is there a simpler way?), then traces the actual code path (not just the diff) to verify the change does what it claims. Use BEFORE committing to an implementation, or BEFORE merging a PR — pairs with `/review-ai` (scope-question vs diff-local). Output is concise, actionable, with rationale per finding. Maps to H5 (Understand First — outsider lens) + H8 (Find Your Voice — question whether the change should exist).",
+      "user_invocable": true,
+      "argument_hint": "[plan, PR diff, or proposed change to review]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Bash"
+      ],
+      "prev_skill": "any",
+      "next_skill": "any",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": "H5",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "security-check",
+      "path": "skills/security-check/SKILL.md",
+      "description": "Focused security review — secrets, injection, auth, dependencies, OWASP Top 10. Use as a dedicated security lens separate from general code review. Maps to H1 (Be Proactive — prevent security incidents, don't react to them).",
+      "user_invocable": true,
+      "argument_hint": "[files, directory, or git diff to check]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep",
+        "Bash"
+      ],
+      "prev_skill": "any",
+      "next_skill": "any",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": "H1",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "using-8-habits",
+      "path": "skills/using-8-habits/SKILL.md",
+      "description": "Onboarding meta-skill — explains the 7-step workflow, all 24 skills, and the decision tree for \"which skill next?\". Read this first when starting with 8-habit-ai-dev. Maps to H5 (Seek First to Understand) + H8 (Empower next person).",
+      "user_invocable": true,
+      "argument_hint": "[optional: specific scenario, e.g. 'building a new feature']",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep"
+      ],
+      "prev_skill": "none",
+      "next_skill": "any",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": "H5",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "whole-person-check",
+      "path": "skills/whole-person-check/SKILL.md",
+      "description": "Assess a feature, component, or PR against Covey's 4 dimensions: Body, Mind, Heart, Spirit. Use to evaluate balance across discipline, vision, passion, and conscience. Maps to H8 (Find Your Voice — Whole Person Model).",
+      "user_invocable": true,
+      "argument_hint": "[feature, component, or PR to assess]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep"
+      ],
+      "prev_skill": "any",
+      "next_skill": "any",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": "H8",
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    },
+    {
+      "name": "workflow",
+      "path": "skills/workflow/SKILL.md",
+      "description": "Guided walkthrough of the 7-step workflow. Prompts at each step to invoke or skip. Use when starting a new feature or when unsure which step comes next.",
+      "user_invocable": true,
+      "argument_hint": "[feature or task to work through]",
+      "allowed_tools": [
+        "Read",
+        "Glob",
+        "Grep"
+      ],
+      "prev_skill": "none",
+      "next_skill": "none",
+      "disable_model_invocation": null,
+      "workflow_step": null,
+      "habit": null,
+      "compatibility": {
+        "claude_code": true,
+        "codex": true,
+        "macos": true,
+        "linux": true,
+        "wsl": true,
+        "requires_claude_hook": false
+      }
+    }
+  ]
+}
