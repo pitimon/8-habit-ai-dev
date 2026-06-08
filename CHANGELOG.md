@@ -10,6 +10,22 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.17 — Software Ecology Guardrail (2026-06-08)
+
+### Skills
+
+- Add a lightweight `/research` scan for AI acceleration effects on review load, validation cost, handoff drift, internal contracts, and human attention.
+- Add a `/design` `software ecology impact` label for AI/agent acceleration only when it affects boundaries, API contracts, validation, release, or ownership.
+- Extend `/review-ai` with software ecology review signals for review burden, validator brittleness, generated-content noise, and contract drift.
+
+### Validation
+
+- Add phrase-level content checks for the new software ecology guardrail without pinning long prose.
+
+### Boundary
+
+- Markdown guidance only. No runtime enforcement, hook behavior change, orchestration engine, policy gate, or Claude/Codex hook parity claim.
+
 ## v2.21.16 — Requirements Intake Mode Split (2026-06-08)
 
 ### Skills

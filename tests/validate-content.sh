@@ -335,7 +335,8 @@ if [ -f "$DESIGN_SKILL" ]; then
     "Direct" "Unverified" \
     "Verify first: Yes" "Verify first: No" \
     "Blocking" "Important" "Useful" \
-    "Every node must trace to evidence, assumption, or proposal"
+    "Every node must trace to evidence, assumption, or proposal" \
+    "software ecology impact"
   do
     if grep -q "$phrase" "$DESIGN_SKILL"; then
       pass "$DESIGN_SKILL has architecture claim discipline phrase '$phrase'"
@@ -410,6 +411,13 @@ if [ -f "$RESEARCH_SKILL" ]; then
   else
     fail "$RESEARCH_SKILL missing superpowers:brainstorming pointer"
   fi
+  for phrase in "software ecology impact" "review load" "validation cost" "handoff drift" "human attention"; do
+    if grep -q "$phrase" "$RESEARCH_SKILL"; then
+      pass "$RESEARCH_SKILL has software ecology phrase '$phrase'"
+    else
+      fail "$RESEARCH_SKILL missing software ecology phrase '$phrase'"
+    fi
+  done
 fi
 
 # ADR-006 exists
@@ -591,6 +599,14 @@ if [ -f "$REVIEW_AI" ]; then
     fail "$REVIEW_AI Verification Phase has $verify_steps numbered steps (expected exactly 5 — Issue #157 hardening pins the loop count)"
     VERIFY_FAIL=$((VERIFY_FAIL + 1))
   fi
+  for phrase in "review burden" "validator brittleness" "generated-content noise" "contract drift" "Software ecology"; do
+    if grep -q "$phrase" "$REVIEW_AI"; then
+      pass "$REVIEW_AI has software ecology review phrase '$phrase'"
+    else
+      fail "$REVIEW_AI missing software ecology review phrase '$phrase'"
+      VERIFY_FAIL=$((VERIFY_FAIL + 1))
+    fi
+  done
 else
   fail "$REVIEW_AI not found"
   VERIFY_FAIL=$((VERIFY_FAIL + 1))

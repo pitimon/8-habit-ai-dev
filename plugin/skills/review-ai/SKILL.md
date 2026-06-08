@@ -52,6 +52,7 @@ next-skill: deploy-guide
    - Is there enough audit evidence to explain what changed and why?
    - Does token, cost, or elapsed time look disproportionate to the task value?
    - Can the next session recover state from committed docs, issues, PRs, or handoff notes?
+   - Does this PR add review burden, validator brittleness, generated-content noise, or contract drift?
 
    Treat these as observable review signals. Do not invent runtime token metrics, model pricing, budget enforcement, or authorization gates inside this plugin.
 
@@ -103,6 +104,7 @@ Output format:
 | Performance  | [count]  | [highest] |
 | Completeness | [count]  | [highest] |
 | AI-work health | [count] | [highest] |
+| Software ecology | [count] | [highest] |
 **Action required**: [specific next steps or "none — clear to commit"]
 ```
 
@@ -178,6 +180,7 @@ After producing findings, do not stop at the verdict. Run a **Find → Fix → R
 - [ ] Each finding includes actionable feedback (WHY + HOW to fix)
 - [ ] Every finding cites specific evidence (file:line, test output, or diff)
 - [ ] Summary table shows findings count for Security, Quality, Performance, Completeness, and AI-work health
+- [ ] Software ecology signals checked for review burden, validator brittleness, generated-content noise, and contract drift
 - [ ] Verification Phase complete — Verification Table at end shows fix evidence per finding (RESOLVED with `file:line`, or DEFERRED with issue ref)
 
 ## Structured Output Block
