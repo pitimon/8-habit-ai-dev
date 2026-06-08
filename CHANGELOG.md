@@ -10,6 +10,18 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.13 — SessionStart Root Fallback (2026-06-08)
+
+### Hooks
+
+- Fix the installed SessionStart command so it no longer assumes `CLAUDE_PLUGIN_ROOT` is always set before resolving `hooks/session-start.sh`.
+- Add a cross-runtime root fallback: `CLAUDE_PLUGIN_ROOT` first, `CODEX_MANAGED_PACKAGE_ROOT` second, and package-root cwd as the final fallback.
+- Preserve the existing SessionStart reminder behavior and Codex JSON adapter; this is path resolution only, not new hook behavior or enforcement.
+
+### Tests
+
+- Extend `tests/test-verbosity-hook.sh` to execute the command from `hooks/hooks.json` directly with `CLAUDE_PLUGIN_ROOT` unset, covering the previous exit-127 failure shape.
+
 ## v2.21.12 — QA Polish and Design Wiki Example (2026-06-08)
 
 ### Documentation

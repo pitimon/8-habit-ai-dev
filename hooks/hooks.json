@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh"
+            "command": "PLUGIN_ROOT=\"${CLAUDE_PLUGIN_ROOT:-${CODEX_MANAGED_PACKAGE_ROOT:-.}}\"; CLAUDE_PLUGIN_ROOT=\"$PLUGIN_ROOT\" bash \"$PLUGIN_ROOT/hooks/session-start.sh\""
           }
         ]
       }
