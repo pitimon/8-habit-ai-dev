@@ -16,6 +16,14 @@ Output template for `/design` (Step 2). Based on MADR (Markdown Any Decision Rec
 
 [What is the issue? Why do we need to make this decision?]
 
+## Architecture Claims (Optional)
+
+Use this table when claims are load-bearing, uncertain, or important for future handoff. Delete this section when the decision is simple and every claim is already obvious from the context.
+
+| Claim | Label | Evidence strength | Source or basis | Verify first |
+| ----- | ----- | ----------------- | --------------- | ------------ |
+| [Claim] | [Confirmed, Inferred, Proposed, Assumed, Unknown, Requires approval] | [Direct, Inferred, Assumed, Unverified] | [File, doc, command, user statement, or assumption] | [Yes or No] |
+
 ## Options Considered
 
 ### Option A: [Name]
@@ -33,6 +41,14 @@ Output template for `/design` (Step 2). Based on MADR (Markdown Any Decision Rec
 ## Decision
 
 [Which option was chosen and WHY — the rationale, not just the choice]
+
+## Decisions Requiring Approval (Optional)
+
+Use this section when one or more decisions still require explicit human acceptance before implementation.
+
+| Decision or question | Priority | Required approver | Default if unanswered |
+| -------------------- | -------- | ----------------- | --------------------- |
+| [Decision or question] | [Blocking, Important, Useful] | [Human role/name] | [No default, or assumption to use temporarily] |
 
 ## Consequences
 

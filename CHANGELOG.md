@@ -10,6 +10,26 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.11 — Design Architecture Claim Discipline (2026-06-08)
+
+### Skills
+
+- Update `/design` with `Scan`, `Focus`, and `Full` pass levels so architecture work starts at the smallest safe depth and promotes only with evidence, explicit user request, or risk of staying smaller.
+- Add claim labels, evidence strength, `Verify first: Yes/No`, and question priorities so load-bearing architecture statements are not presented as fact without traceability.
+- Add a Mermaid diagram guard requiring diagrams to clarify boundaries, data, workflows, or ownership, with every node traceable to evidence, assumption, or proposal.
+
+### Templates
+
+- Extend the ADR template with optional Architecture Claims and Decisions Requiring Approval sections for uncertain or approval-gated decisions.
+
+### Validation
+
+- Add lightweight text pins in `tests/validate-content.sh` for the new `/design` pass levels, labels, evidence strengths, verification marker, and question priorities.
+
+### Boundary
+
+- Adapted from selected ideas in `aetox-skills/senior-architect-agent` for this plugin's cross-runtime Markdown guidance. No new senior-architect skill, no full architecture template suite, no runtime hooks, no enforcement engine, and no Claude-only behavior.
+
 ## v2.21.10 — Linux Claude Code Install Compatibility (2026-06-08)
 
 ### Fixed
