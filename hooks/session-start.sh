@@ -31,9 +31,14 @@ json_escape() {
   done
 }
 
-# Read version from plugin.json for the session banner
-VERSION=$(sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' \
-  "${CLAUDE_PLUGIN_ROOT:-.}/.claude-plugin/plugin.json" 2>/dev/null | head -1)
+# Read version from the installed package manifest for the session banner.
+PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-.}"
+VERSION=""
+for MANIFEST in "$PLUGIN_ROOT/.claude-plugin/plugin.json" "$PLUGIN_ROOT/.codex-plugin/plugin.json"; do
+  [ -n "$VERSION" ] && break
+  VERSION=$(sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' \
+    "$MANIFEST" 2>/dev/null | head -1)
+done
 VERSION="${VERSION:-unknown}"
 
 # Check for workflow artifacts to show progress

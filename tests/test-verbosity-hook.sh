@@ -413,6 +413,26 @@ elif [ -n "$cwd_output" ]; then
   fail "SessionStart command cwd fallback missing reminder"
   echo "    got: ${cwd_output:0:160}..."
 fi
+
+codex_root=$(mktemp -d)
+mkdir -p "$codex_root/hooks" "$codex_root/.codex-plugin"
+cp "$HOOK_ABS" "$codex_root/hooks/session-start.sh"
+printf '{"version":"9.8.7-test"}\n' > "$codex_root/.codex-plugin/plugin.json"
+codex_version_output=$(
+  unset CLAUDE_PLUGIN_ROOT
+  HOME="$TMPHOME" HABIT_HOOK_OUTPUT=codex-json CODEX_MANAGED_PACKAGE_ROOT="$codex_root" bash -c "$HOOK_COMMAND" 2>&1
+) || {
+  fail "SessionStart command reads Codex manifest version"
+  codex_version_output=""
+}
+rm -rf "$codex_root"
+
+if printf '%s' "$codex_version_output" | grep -qF "8-Habit AI Dev Active (v9.8.7-test)"; then
+  pass "SessionStart command reads Codex manifest version"
+elif [ -n "$codex_version_output" ]; then
+  fail "SessionStart command Codex manifest version missing"
+  echo "    got: ${codex_version_output:0:160}..."
+fi
 echo ""
 
 # --- Summary ---
