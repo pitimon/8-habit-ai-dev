@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.12-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.13-blue)
 
 # Changelog
 
@@ -6,6 +6,18 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.13 · SessionStart Root Fallback
+
+Fixes a startup-path regression where a host invoking the package SessionStart hook without `CLAUDE_PLUGIN_ROOT` could expand the command to `/hooks/session-start.sh` and exit 127.
+
+Visible user-facing points:
+
+- SessionStart command path now resolves from `CLAUDE_PLUGIN_ROOT`, then `CODEX_MANAGED_PACKAGE_ROOT`, then package-root cwd.
+- Existing reminder content and Codex JSON output behavior are unchanged.
+- Regression coverage executes the registered `hooks/hooks.json` command with `CLAUDE_PLUGIN_ROOT` unset.
+
+Boundary: command-path compatibility only. No runtime enforcement, policy gate, dynamic orchestration, or broad Claude-hook feature parity claim.
 
 ## v2.21.12 · QA Polish and Design Wiki Example
 

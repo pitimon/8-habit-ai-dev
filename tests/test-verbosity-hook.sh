@@ -379,6 +379,42 @@ else
 fi
 echo ""
 
+# --- SessionStart hook command root fallback ---
+echo "--- SessionStart hook command root fallback ---"
+HOOK_COMMAND=$(node -e 'const hooks = require("./hooks/hooks.json"); console.log(hooks.hooks.SessionStart[0].hooks[0].command);')
+
+printf '%s' "$SIGNIFICANCE_PROFILE" > "$TMPHOME/.claude/habit-profile.md"
+root_env_output=$(
+  unset CLAUDE_PLUGIN_ROOT
+  HOME="$TMPHOME" HABIT_HOOK_OUTPUT=codex-json CODEX_MANAGED_PACKAGE_ROOT="$PWD" bash -c "$HOOK_COMMAND" 2>&1
+) || {
+  fail "SessionStart command resolves CODEX_MANAGED_PACKAGE_ROOT fallback"
+  root_env_output=""
+}
+
+if printf '%s' "$root_env_output" | grep -qF "8-Habit AI Dev Active"; then
+  pass "SessionStart command resolves CODEX_MANAGED_PACKAGE_ROOT fallback"
+elif [ -n "$root_env_output" ]; then
+  fail "SessionStart command CODEX_MANAGED_PACKAGE_ROOT fallback missing reminder"
+  echo "    got: ${root_env_output:0:160}..."
+fi
+
+cwd_output=$(
+  unset CLAUDE_PLUGIN_ROOT CODEX_MANAGED_PACKAGE_ROOT
+  HOME="$TMPHOME" HABIT_HOOK_OUTPUT=codex-json bash -c "$HOOK_COMMAND" 2>&1
+) || {
+  fail "SessionStart command resolves cwd fallback"
+  cwd_output=""
+}
+
+if printf '%s' "$cwd_output" | grep -qF "8-Habit AI Dev Active"; then
+  pass "SessionStart command resolves cwd fallback"
+elif [ -n "$cwd_output" ]; then
+  fail "SessionStart command cwd fallback missing reminder"
+  echo "    got: ${cwd_output:0:160}..."
+fi
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"
