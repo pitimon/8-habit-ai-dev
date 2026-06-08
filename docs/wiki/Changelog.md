@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.14-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.15-blue)
 
 # Changelog
 
@@ -6,6 +6,18 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.15 · SessionStart Dead Variable Cleanup
+
+Removes two ShellCheck SC2034 dead variables from the SessionStart hook without changing rendered reminder behavior.
+
+Visible user-facing points:
+
+- `BRIEF` and `PROGRESS` assignments were removed from `hooks/session-start.sh`.
+- Workflow artifact markers still render through the existing inline marker expressions.
+- Existing SessionStart regression tests continue to guard root fallback, Codex JSON output, version rendering, and workflow hints.
+
+Boundary: cleanup only. No new hook content, runtime enforcement, policy gate, dynamic orchestration, or broad Claude-hook feature parity claim.
 
 ## v2.21.14 · Codex SessionStart Version Fallback
 
