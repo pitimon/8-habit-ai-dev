@@ -58,6 +58,7 @@ What do we need to know before specifying requirements?
 - What have others tried? What worked? What failed?
 - What technology options (language, framework, runtime) fit this problem? What are the ecosystem trade-offs?
 - Are there maturity, community, or licensing concerns with candidate technologies?
+- If AI acceleration is part of the work, what will it amplify in the engineering system: review load, validation cost, handoff drift, internal contracts, or human attention?
 
 ### 2. Search existing solutions
 
@@ -118,6 +119,10 @@ Before documenting findings, verify all cited sources:
 **Deep**: Dispatch the `research-verifier` agent for comprehensive verification. Use the Agent tool with `subagent_type: "8-habit-ai-dev:research-verifier"` passing the draft brief. The agent checks every citation and produces a verification report.
 
 > **Scope of Deep-mode verification**: the agent gates **citation integrity** (cited files/URLs exist and contain the claimed text), not **semantic correctness** of conclusions drawn from those citations. A verdict like "this dep is unused" needs separate evidence (see _Evidence Standard_ below) even when Deep-mode passes.
+
+### 4b. Software ecology scan
+
+For AI/agent acceleration work, note the software ecology impact before recommending a build path. Keep this lightweight: identify whether the proposal increases review load, validation cost, handoff drift, pressure on internal contracts, or competition for human attention. If none are material, say so in one sentence.
 
 ### 5. Document constraints and findings
 

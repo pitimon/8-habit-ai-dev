@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.16-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.17-blue)
 
 # Changelog
 
@@ -6,6 +6,19 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.17 · Software Ecology Guardrail
+
+Adds lightweight guidance for AI acceleration effects around the engineering system.
+
+Visible user-facing points:
+
+- `/research` now checks review load, validation cost, handoff drift, internal contracts, and human attention when AI acceleration is part of the work.
+- `/design` labels `software ecology impact` only when acceleration affects boundaries, API contracts, validation, release, or ownership.
+- `/review-ai` checks review burden, validator brittleness, generated-content noise, and contract drift.
+- Content validation pins short guardrail phrases without freezing long prose.
+
+Boundary: markdown guidance only. No runtime enforcement, hook behavior change, orchestration engine, policy gate, or Claude/Codex hook parity claim.
 
 ## v2.21.16 · Requirements Intake Mode Split
 

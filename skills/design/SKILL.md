@@ -43,6 +43,12 @@ Start with `Scan` unless the user's request or existing evidence already proves 
    - Framework selection (when alternatives exist)
    - Third-party dependencies
 
+2b. **Label software ecology impact when AI/agent acceleration changes architecture concerns**:
+
+- Use `software ecology impact` only when the acceleration affects a boundary, API contract, validation approach, release path, or ownership model.
+- Treat it as an architecture concern, not a policy gate: capture the trade-off, owner, and validation implication inside the relevant decision or ADR.
+- If the work merely changes copy, prompts, or local workflow with no architecture effect, skip the label.
+
 3. **Present options** with trade-offs (not just one recommendation):
 
    ```
@@ -169,6 +175,7 @@ ID-linkage tip: when persisting, label each decision as `### Decision-N: <topic>
 - [ ] ADR created for decisions affecting >3 files or changing public API
 - [ ] Constraints and non-goals documented
 - [ ] Existing glossary/context files and ADRs were checked when present
+- [ ] AI/agent acceleration work labels `software ecology impact` when it affects boundaries, API contracts, validation, release, or ownership
 - [ ] Pass level, claim labels, evidence strength, and `Verify first: Yes/No` are recorded for load-bearing claims
 
 ## Structured Output
