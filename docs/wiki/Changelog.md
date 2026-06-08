@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.13-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.14-blue)
 
 # Changelog
 
@@ -6,6 +6,18 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.14 · Codex SessionStart Version Fallback
+
+Completes the SessionStart root fallback by making the banner version work in Codex package roots that expose `.codex-plugin/plugin.json` but not `.claude-plugin/plugin.json`.
+
+Visible user-facing points:
+
+- `hooks/session-start.sh` now reads `.claude-plugin/plugin.json` first, then `.codex-plugin/plugin.json`.
+- Installed Codex cache smoke renders the real package version instead of `vunknown`.
+- Regression coverage builds a fake Codex-only package root and executes the registered SessionStart command.
+
+Boundary: version rendering only. No new hook content, runtime enforcement, policy gate, dynamic orchestration, or broad Claude-hook feature parity claim.
 
 ## v2.21.13 · SessionStart Root Fallback
 

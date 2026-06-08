@@ -10,6 +10,17 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.14 — Codex SessionStart Version Fallback (2026-06-08)
+
+### Hooks
+
+- Teach `hooks/session-start.sh` to read the session banner version from `.claude-plugin/plugin.json` first and `.codex-plugin/plugin.json` second.
+- Preserve the v2.21.13 root fallback while avoiding `vunknown` in Codex package roots that only expose the native Codex manifest.
+
+### Tests
+
+- Extend `tests/test-verbosity-hook.sh` with a fake Codex package root that has only `.codex-plugin/plugin.json`, proving the registered SessionStart command renders the expected version.
+
 ## v2.21.13 — SessionStart Root Fallback (2026-06-08)
 
 ### Hooks
