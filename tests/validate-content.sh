@@ -328,6 +328,21 @@ if [ -f "$DESIGN_SKILL" ]; then
   else
     fail "$DESIGN_SKILL missing Article 14 checkpoint"
   fi
+  for phrase in \
+    "Scan" "Focus" "Full" \
+    "Promote only with evidence, explicit user request, or risk of staying smaller" \
+    "Confirmed" "Proposed" "Assumed" "Unknown" "Requires approval" \
+    "Direct" "Unverified" \
+    "Verify first: Yes" "Verify first: No" \
+    "Blocking" "Important" "Useful" \
+    "Every node must trace to evidence, assumption, or proposal"
+  do
+    if grep -q "$phrase" "$DESIGN_SKILL"; then
+      pass "$DESIGN_SKILL has architecture claim discipline phrase '$phrase'"
+    else
+      fail "$DESIGN_SKILL missing architecture claim discipline phrase '$phrase'"
+    fi
+  done
 fi
 
 echo ""

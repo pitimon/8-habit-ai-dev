@@ -24,6 +24,16 @@ next-skill: breakdown
 - Success criteria are achievable with the proposed design
 - Identified `risks` are addressed or accepted in design constraints
 
+1c. **Select the smallest safe pass level** before producing design output:
+
+| Pass level | Use when | Expected output |
+| ---------- | -------- | --------------- |
+| **Scan** | Small, bounded, exploratory, or unclear architecture impact | Compact architecture note, key constraints, open questions, and safe next step |
+| **Focus** | One module, workflow, subsystem, integration, or boundary is in scope | Targeted decisions, local trade-offs, risks, and any needed ADRs |
+| **Full** | Whole-system design, unclear ownership, 3+ interacting modules, persistence, authentication, payment, security, deployment, or future-agent handoff is needed | Full decision set, ADR coverage, risk register, human approvals, and handoff-ready constraints |
+
+Start with `Scan` unless the user's request or existing evidence already proves a `Focus` or `Full` trigger. **Promote only with evidence, explicit user request, or risk of staying smaller**. When promoting, state the trigger, cite the evidence or request, and name the risk of keeping the smaller pass.
+
 2. **Identify decisions** that need human input:
    - Database choice and schema
    - Authentication/authorization approach
@@ -43,6 +53,38 @@ next-skill: breakdown
    ```
 
 4. **Human must decide**: AI proposes, human disposes. Mark each decision as In-the-Loop.
+
+4a. **Label architecture claims before relying on them**. Do not present uncertain structure as confirmed architecture.
+
+| Claim label | Meaning |
+| ----------- | ------- |
+| **Confirmed** | Directly supported by files, existing docs, command output, or explicit user-provided facts |
+| **Inferred** | Reasoned from evidence, but not directly stated or exhaustively verified |
+| **Proposed** | Suggested future architecture or change, not implemented or approved yet |
+| **Assumed** | Working premise used to move forward; replace with evidence when load-bearing |
+| **Unknown** | Important gap that is not yet known |
+| **Requires approval** | Decision or claim that needs explicit human acceptance before it becomes a constraint |
+
+For load-bearing claims, include evidence strength and verification need:
+
+| Evidence strength | Use when |
+| ----------------- | -------- |
+| **Direct** | The cited file, doc, command, or user statement directly supports the claim |
+| **Inferred** | Multiple signals support the claim, but no single source directly confirms it |
+| **Assumed** | The claim is an explicit temporary premise |
+| **Unverified** | The claim has no reliable source yet and must not drive irreversible design |
+
+Use `Verify first: Yes` for any claim that affects sticky decisions, security, compliance, data model, auth boundary, public API, deployment, or irreversible user impact. Use `Verify first: No` only when the claim is already direct evidence or low-impact.
+
+4b. **Prioritize architecture-impacting questions**:
+
+| Priority | Meaning |
+| -------- | ------- |
+| **Blocking** | A wrong answer can change the architecture, invalidate an ADR, or create major rework |
+| **Important** | The answer changes trade-offs, sequencing, risk, or verification plan |
+| **Useful** | The answer improves clarity but can be safely assumed or deferred |
+
+Ask `Blocking` questions before final recommendations. For `Important` or `Useful` questions, either ask or proceed with a clearly labeled assumption.
 
 5. **Identify sticky decisions** (decisions that should not change mid-implementation):
 
@@ -91,6 +133,13 @@ next-skill: breakdown
    - Affects >3 files
    - Changes public API
 
+7b. **Use diagrams only when they clarify architecture**:
+
+- Use Mermaid only when it clarifies boundary, data flow, workflow, module relationship, or ownership.
+- Every node must trace to evidence, assumption, or proposal. Label uncertain nodes rather than drawing them as fact.
+- Split large diagrams by architecture question instead of creating one unreadable all-in-one diagram.
+- Do not create decorative diagrams that do not help a future human or agent make a decision.
+
 8. **H8 Checkpoint**: "Do I understand WHY we're building it this way, not just WHAT?"
    Also check all 4 dimensions: Body (CI/infra ready?), Mind (serves roadmap?), Heart (good DX/UX?), Spirit (security/ethics defaults baked in?).
 
@@ -120,6 +169,7 @@ ID-linkage tip: when persisting, label each decision as `### Decision-N: <topic>
 - [ ] ADR created for decisions affecting >3 files or changing public API
 - [ ] Constraints and non-goals documented
 - [ ] Existing glossary/context files and ADRs were checked when present
+- [ ] Pass level, claim labels, evidence strength, and `Verify first: Yes/No` are recorded for load-bearing claims
 
 ## Structured Output
 
@@ -128,6 +178,7 @@ After documenting design decisions, append a structured output block for cross-s
 ```
 [/design] COMPLETE SKILL_OUTPUT:design
 <!-- SKILL_OUTPUT:design
+pass_level: [Scan|Focus|Full]
 decision_count: [N]
 decisions:
   - "[decision 1: e.g., PostgreSQL for persistence]"
@@ -136,6 +187,10 @@ sticky_decisions:
   - "[sticky 1: e.g., PostgreSQL — >50% rework to change]"
 constraints:
   - "[constraint 1]"
+load_bearing_claims:
+  - "[Confirmed|Inferred|Proposed|Assumed|Unknown|Requires approval: claim; Evidence: Direct|Inferred|Assumed|Unverified; Verify first: Yes|No]"
+approval_required:
+  - "[Blocking|Important|Useful: decision or question]"
 adr_references:
   - "[ADR-NNN: title]"
 article_14_applicable: [true|false]

@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.10-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.11-blue)
 
 # Changelog
 
@@ -6,6 +6,19 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.11 · Design Architecture Claim Discipline
+
+Improves `/design` so architecture work is right-sized and evidence-labeled before decisions become implementation constraints.
+
+Visible workflow points:
+
+- `/design` now selects `Scan`, `Focus`, or `Full` before producing architecture output.
+- Load-bearing architecture claims use labels, evidence strength, and `Verify first: Yes/No`.
+- Architecture-impacting questions are prioritized as `Blocking`, `Important`, or `Useful`.
+- The ADR template can include optional Architecture Claims and Decisions Requiring Approval sections.
+
+Boundary: markdown guidance only. No new senior-architect skill, runtime enforcement, hook behavior, or platform-specific architecture engine.
 
 ## v2.21.10 · Linux Claude Code Install Compatibility
 
