@@ -446,6 +446,19 @@ if [ -f "$REQ_SKILL" ]; then
   else
     fail "$REQ_SKILL missing EARS opt-out rule"
   fi
+  # v2.21.16 requirements intake modes — keeps /requirements aligned with /design claim discipline.
+  for phrase in \
+    "Existing-system mode" \
+    "Idea-mode" \
+    "Cite source evidence where available" \
+    "label assumptions before treating them as constraints" \
+    "Do not let proposed behavior masquerade as confirmed system fact"; do
+    if grep -q "$phrase" "$REQ_SKILL"; then
+      pass "$REQ_SKILL has requirements intake mode phrase '$phrase'"
+    else
+      fail "$REQ_SKILL missing requirements intake mode phrase '$phrase'"
+    fi
+  done
 else
   fail "$REQ_SKILL not found"
 fi
@@ -676,7 +689,7 @@ docs/adr/ADR-016-t2-bag-drop-date-eviction-policy.md|205
 docs/adr/ADR-017-anthropic-skill-patterns-audit.md|152
 docs/adr/ADR-018-memory-layer-activation.md|145
 guides/cross-verification.md|95
-skills/requirements/SKILL.md|134
+skills/requirements/SKILL.md|144
 EOF_RECEIPTS
   if [ "$RECEIPTS_FAIL" -gt 0 ]; then
     REQ_FAIL=$((REQ_FAIL + RECEIPTS_FAIL))

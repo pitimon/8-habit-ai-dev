@@ -16,6 +16,15 @@ next-skill: design
 
 ## Process
 
+0. **Choose requirements intake mode**: Before drafting the PRD, classify the request as one of two modes and state the mode in the PRD notes.
+
+   | Mode | Use when | Discipline |
+   | ---- | -------- | ---------- |
+   | **Existing-system mode** | The user is changing, extending, integrating with, or debugging a real codebase, workflow, deployment, or documented system | Cite source evidence where available: files, docs, commands, issue links, logs, or user-provided facts. Mark anything not verified from the system as an assumption or open question. |
+   | **Idea-mode** | The user is shaping a raw product, feature, or system idea before implementation exists | Preserve user intent, label assumptions before treating them as constraints, and ask architecture-impacting questions before presenting speculative details as requirements. |
+
+   If the request mixes both, use **Existing-system mode** for the known system boundary and **Idea-mode** for new proposed behavior. Do not let proposed behavior masquerade as confirmed system fact.
+
 1. **Discover requirements**: Before writing EARS criteria, follow the Interview Protocol (loaded below) to discover requirements through structured conversation. Use adaptive depth — Quick (3 questions) for small scope, Standard (5) by default, Deep (7+) for complex features.
 
    Core questions to clarify:
@@ -27,7 +36,7 @@ next-skill: design
 
 2. **Check existing docs and context contract**: Read `CLAUDE.md`, `AGENTS.md`, `SPEC.md`, `PRD.md`, `DOMAIN.md`, `CONTEXT.md`, `CONTEXT-MAP.md`, `README.md`, and `docs/agents/domain.md` if they exist. Use the project's glossary terms in the PRD and do not duplicate what is already defined.
 
-   Apply the Interview Protocol's context-aware challenge gate when these files exist: flag glossary conflicts, sharpen fuzzy terms, test vague relationships with concrete scenarios, inspect code instead of asking when the answer is discoverable, and treat ADRs as current unless the user asks to revisit them. Do not create or overwrite context files unless the user explicitly asks.
+   Apply the Interview Protocol's context-aware challenge gate when these files exist: flag glossary conflicts, sharpen fuzzy terms, test vague relationships with concrete scenarios, inspect code instead of asking when the answer is discoverable, and treat ADRs as current unless the user asks to revisit them. In Existing-system mode, cite the source evidence that anchors requirements where available; in Idea-mode, keep assumptions and unanswered questions visible. Do not create or overwrite context files unless the user explicitly asks.
 
 3. **Draft PRD summary** (keep concise — 10-20 lines):
 
@@ -107,6 +116,7 @@ ID-linkage tip: when persisting, prefix each EARS criterion with `FR-NNN:` (e.g.
 ## Definition of Done
 
 - [ ] PRD summary exists with What/Why/Who/Scope sections filled
+- [ ] Intake mode recorded as Existing-system mode, Idea-mode, or mixed
 - [ ] 3-5 concrete, verifiable success criteria defined
 - [ ] Scope boundaries clear — both "in scope" and "out of scope" listed
 - [ ] Stakeholder/target user identified

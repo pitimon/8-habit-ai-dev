@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.15-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.16-blue)
 
 # Changelog
 
@@ -6,6 +6,19 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.16 · Requirements Intake Mode Split
+
+Extends the `/design` claim-discipline work upstream into `/requirements`.
+
+Visible user-facing points:
+
+- `Existing-system mode` tells agents to cite source evidence where available and keep unverifiable statements visible.
+- `Idea-mode` tells agents to preserve user intent and label assumptions before treating them as constraints.
+- Mixed work keeps confirmed system facts separate from proposed behavior before handing off to `/design`.
+- Content validation now pins the mode names and evidence/assumption discipline.
+
+Boundary: markdown guidance only. No new skill, runtime enforcement, template suite, `/build-brief` handoff change, or Claude-only behavior.
 
 ## v2.21.15 · SessionStart Dead Variable Cleanup
 

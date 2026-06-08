@@ -28,6 +28,17 @@
 - Success criteria, preferably in EARS-style wording when useful.
 - Definition of Done and test expectations.
 
+## Intake Mode
+
+Start by naming the intake mode:
+
+| Mode | Use When | Requirements Discipline |
+| --- | --- | --- |
+| Existing-system mode | A real codebase, workflow, deployment, issue, or documented system already exists | Cite source evidence where available and mark unverifiable statements as assumptions or questions. |
+| Idea-mode | The user is shaping a raw product, feature, or system idea before implementation exists | Preserve intent, label assumptions before constraints, and ask architecture-impacting questions before turning speculation into requirements. |
+
+For mixed work, keep confirmed system facts separate from proposed behavior. That keeps the later `/design` pass from treating product ideas as verified architecture.
+
 ## Handoff
 
 `/design` should receive the requirements, constraints, acceptance criteria, and any decisions that still require human judgment.
