@@ -59,141 +59,20 @@ bash ${CLAUDE_PLUGIN_ROOT}/scripts/generate-ai-dev-log.sh --json
 bash ${CLAUDE_PLUGIN_ROOT}/scripts/generate-ai-dev-log.sh --summary
 ```
 
-The script handles all 6 process steps below (discover → extract → group → oversight → report → fallback). Read the script source if you want to customize: `scripts/generate-ai-dev-log.sh`
+The script handles all 6 process steps below (discover, extract, group, oversight, report, fallback). Read the script source if you want to customize: `scripts/generate-ai-dev-log.sh`
 
-The detailed process below is for **understanding** what the script does, not for manual execution.
+The detailed process and report template live in `reference.md`; load it when you need to explain or customize the generator.
 
----
+## Process Summary
 
-## Process (script reference)
+1. Discover AI co-authors from `Co-Authored-By` trailers.
+2. Extract AI-assisted commits for the selected period.
+3. Group activity by time period for readability.
+4. Add human oversight evidence when PR, review, or test metadata is available.
+5. Generate Markdown, JSON, or summary output.
+6. Document fallback limitations when trailers are incomplete.
 
-### Step 1 — Discover AI Co-Authors
-
-```bash
-# Find all unique AI co-authors in git history
-git log --format='%(trailers:key=Co-Authored-By,valueonly)' \
-  | grep -iE "claude|gpt|copilot|gemini|cursor|anthropic|openai" \
-  | sort -u
-```
-
-If empty → skip this skill (no AI involvement detected).
-
-### Step 2 — Extract AI-Assisted Commits
-
-```bash
-# All commits with any Co-Authored-By trailer
-git log --since="${SINCE:-2024-01-01}" \
-  --format='%h|%ad|%an|%s|%(trailers:key=Co-Authored-By,valueonly)' \
-  --date=short \
-  | awk -F'|' '$5 != ""' \
-  > /tmp/ai-commits.txt
-
-wc -l /tmp/ai-commits.txt
-```
-
-### Step 3 — Group by Time Period
-
-Aggregate by week/month for readability. Group format:
-
-```
-## Period: 2026-Q1 (Jan-Mar)
-
-### Statistics
-- Total commits: 47
-- AI-assisted commits: 31 (66%)
-- Unique human authors: 3
-- AI co-authors detected: claude-opus-4.6, claude-sonnet-4.6
-
-### Notable AI-assisted work
-- 2026-01-15: feat(auth): add OAuth2 PKCE flow — human: itarun.p, AI: Claude Opus 4.6
-- 2026-02-03: refactor(api): split monolith handler — human: itarun.p, AI: Claude Sonnet 4.6
-- 2026-03-12: feat(eu-ai-act): compliance toolkit — human: itarun.p, AI: Claude Opus 4.6
-```
-
-### Step 4 — Add Human Oversight Evidence
-
-For each AI-assisted commit, document:
-
-- Was it reviewed in PR by another human? (check `gh pr view <pr> --json reviews`)
-- Were tests added/updated? (check diff for test files)
-- Was it merged via PR (not direct push)? (Article 14 ¶4(d) — override capability)
-
-### Step 5 — Generate Markdown Report
-
-Default output: `docs/compliance/ai-dev-log/YYYY-Q[1-4].md`
-
-Template:
-
-```markdown
-# AI-Assisted Development Log
-
-**Period**: [start] to [end]
-**Repo**: [name]
-**Generated**: YYYY-MM-DD by `/ai-dev-log`
-
-## Summary
-
-- Total commits in period: [N]
-- AI-assisted commits: [N] ([%])
-- Human authors: [list]
-- AI models detected: [list]
-
-## Methodology
-
-This log is generated from `git log` Co-Authored-By trailers per the convention that Claude Code (and similar tools) automatically add when authoring commits. Trailers without explicit Co-Authored-By markers are treated as fully human-authored.
-
-**Limitation**: Pre-tooling commits or commits where AI assisted but no trailer was added will appear as human-only. For audit, supplement this log with:
-
-- Calendar/timesheet records of AI tool usage
-- IDE telemetry (if available)
-- Memory of "rough month" (subjective)
-
-## Statistics by Month
-
-| Month   | Total commits | AI-assisted | %   | Models used                 |
-| ------- | ------------- | ----------- | --- | --------------------------- |
-| 2026-01 | 18            | 12          | 67% | Claude Opus 4.6             |
-| 2026-02 | 15            | 9           | 60% | Claude Opus 4.6, Sonnet 4.6 |
-| 2026-03 | 14            | 10          | 71% | Claude Opus 4.6             |
-
-## Notable AI-Assisted Changes
-
-[Selected commits with significant AI contribution, manually annotated for clarity]
-
-### YYYY-MM-DD: [feature/fix description]
-
-- **Commit**: [hash]
-- **Human**: [name]
-- **AI**: [model]
-- **PR**: #[number] (reviewed by [name])
-- **Tests added**: [yes/no]
-- **Why notable**: [1-line context]
-
-## Human Oversight Evidence (Article 14 reference)
-
-- All AI-assisted commits went through git history (auditable)
-- [N]% were merged via PR (not direct push to main)
-- [N]% were reviewed by ≥1 human reviewer in PR
-- Test coverage delta: [+/- %]
-
-## Models Used in Period
-
-- **Claude Opus 4.6 (1M context)**: [N] commits, primary use case [coding/review/research]
-- **Claude Sonnet 4.6**: [N] commits, primary use case [refactoring/docs]
-```
-
-### Step 6 — Fallback for Missing Trailers
-
-If many commits lack Co-Authored-By trailers but you know AI was used:
-
-```bash
-# Identify potentially AI-assisted commits by author pattern + commit message style
-git log --format='%h|%ad|%an|%s' --date=short --since="$SINCE" \
-  | grep -iE "feat|fix|refactor" \
-  > /tmp/possibly-ai.txt
-```
-
-Document the gap in the report's Methodology section. Honesty about what's measurable and what's inferred is more valuable than fake completeness.
+If many commits lack trailers but you know AI was used, keep the report honest: mark the gap as inferred and supplement it with external records such as PR notes, timesheets, IDE telemetry, or project memory.
 
 ## Output Modes
 
@@ -228,6 +107,8 @@ Document the gap in the report's Methodology section. Honesty about what's measu
 - EU AI Act Article 11 (Technical Documentation) — primary-source verified quotes live in [`pitimon/claude-governance` `docs/research/eu-ai-act-obligations.md`](https://github.com/pitimon/claude-governance/blob/main/docs/research/eu-ai-act-obligations.md) (migrated 2026-05-02 per ADR-012)
 - EU AI Act Article 13 ¶3(d) (Disclosure of human oversight measures)
 - Habit details: `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md`, `${CLAUDE_PLUGIN_ROOT}/habits/h1-be-proactive.md`
+
+Load `${CLAUDE_PLUGIN_ROOT}/skills/ai-dev-log/reference.md` for the script internals, report template, fallback method, and audit-field examples.
 
 ## Privacy Note
 

@@ -10,6 +10,22 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.12 — QA Polish and Design Wiki Example (2026-06-08)
+
+### Documentation
+
+- Expand the Step 2 Design wiki page with a concrete claim-discipline example covering pass level, claim labels, evidence strength, `Verify first: Yes/No`, question priority, and Mermaid traceability.
+- Update release surfaces so users can discover the v2.21.11 design discipline from the wiki walkthrough, not only from the skill file and changelog.
+
+### Skills
+
+- Compact `/diagnose` and `/research` Definition of Done lists to remove existing validator warnings while preserving their behavioral requirements.
+- Split `/ai-dev-log` process and report-template detail into `skills/ai-dev-log/reference.md` so the main skill body stays concise while retaining audit customization guidance.
+
+### Boundary
+
+- Follow-up polish only. No new skill, no runtime enforcement, no hook behavior change, and no semantic change to `/diagnose`, `/research`, or `/ai-dev-log`.
+
 ## v2.21.11 — Design Architecture Claim Discipline (2026-06-08)
 
 ### Skills
