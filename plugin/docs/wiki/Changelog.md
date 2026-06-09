@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.17-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.18-blue)
 
 # Changelog
 
@@ -6,6 +6,19 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.18 · Epistemic Footer and Shadow Self-Check
+
+Tightens evidence labeling and self-critique in the verification path.
+
+Visible user-facing points:
+
+- `/cross-verify` now requires the `V/I/U` confidence footer for high-stakes reviews and records open unknowns explicitly.
+- `/cross-verify` adds a Shadow Self-Check before recommendation: strongest counter-argument and who is harmed if the verdict is wrong.
+- Research briefs gain a mandatory Confidence & Open Unknowns block.
+- Integrity principle #7 now uses the shared `V/I/U` vocabulary.
+
+Boundary: markdown guidance only. No runtime enforcement, hook behavior change, new skill, orchestration engine, policy gate, or duplicated `/scrutinize` gate.
 
 ## v2.21.17 · Software Ecology Guardrail
 
