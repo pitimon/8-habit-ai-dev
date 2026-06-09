@@ -7,7 +7,9 @@ Detailed process reference for `/ai-dev-log`. The main `SKILL.md` keeps the invo
 ### Step 1 — Discover AI Co-Authors
 
 ```bash
-# Find all unique AI co-authors in git history
+# Find all unique AI co-authors in git history.
+# The generator uses Git's trailer parser first and falls back to commit-body
+# Co-Authored-By lines only when the parser returns empty for a commit.
 git log --format='%(trailers:key=Co-Authored-By,valueonly)' \
   | grep -iE "claude|gpt|copilot|gemini|cursor|anthropic|openai" \
   | sort -u
@@ -18,8 +20,9 @@ If empty, skip this skill because no AI involvement was detected from trailers.
 ### Step 2 — Extract AI-Assisted Commits
 
 ```bash
-# All commits with any Co-Authored-By trailer
-git log --since="${SINCE:-2024-01-01}" \
+# All commits with any Co-Authored-By trailer at a pinned snapshot boundary
+SNAPSHOT_SHA="${SNAPSHOT:-$(git rev-parse HEAD)}"
+git log "$SNAPSHOT_SHA" --since="${SINCE:-2024-01-01}" \
   --format='%h|%ad|%an|%s|%(trailers:key=Co-Authored-By,valueonly)' \
   --date=short \
   | awk -F'|' '$5 != ""' \
@@ -67,6 +70,7 @@ Default output: `docs/compliance/ai-dev-log/YYYY-Q[1-4].md`
 **Period**: [start] to [end]
 **Repo**: [name]
 **Generated**: YYYY-MM-DD by `/ai-dev-log`
+**Snapshot boundary**: [HEAD sha used for this report]
 
 ## Summary
 
@@ -77,7 +81,7 @@ Default output: `docs/compliance/ai-dev-log/YYYY-Q[1-4].md`
 
 ## Methodology
 
-This log is generated from `git log` Co-Authored-By trailers per the convention that Claude Code and similar tools use when authoring commits. Trailers without explicit Co-Authored-By markers are treated as fully human-authored.
+This log is generated from `git log` Co-Authored-By trailers at a pinned snapshot boundary per the convention that Claude Code and similar tools use when authoring commits. The generator uses Git's trailer parser first, then scans commit bodies only for valid `Co-Authored-By:` lines when the parser returns empty. Commits without explicit Co-Authored-By markers are treated as fully human-authored.
 
 **Limitation**: Pre-tooling commits or commits where AI assisted but no trailer was added will appear as human-only. For audit, supplement this log with calendar records, timesheets, IDE telemetry if available, and project memory.
 

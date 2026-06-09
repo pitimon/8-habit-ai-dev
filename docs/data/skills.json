@@ -9,7 +9,7 @@
       "path": "skills/ai-dev-log/SKILL.md",
       "description": "Generate AI-assisted development log from git history + Co-Authored-By trailers. Use for EU AI Act Article 11 (technical documentation) audit trail and AI transparency. Maps to H4 (Win-Win — honest disclosure) + H1 (Be Proactive — audit-ready).",
       "user_invocable": true,
-      "argument_hint": "[--since YYYY-MM-DD] [--repo path] [--out file]",
+      "argument_hint": "[--since YYYY-MM-DD] [--repo path] [--snapshot sha] [--out file]",
       "allowed_tools": [
         "Read",
         "Glob",

@@ -10,6 +10,22 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.19 — AI Dev Log Snapshot and Trailer Fallback (2026-06-09)
+
+### Script
+
+- Fix `/ai-dev-log` undercounting when Git's `%(trailers:key=Co-Authored-By,valueonly)` formatter returns empty for commits whose body still contains valid `Co-Authored-By:` trailer lines.
+- Add `--snapshot <sha>` and record the snapshot boundary in generated Markdown/JSON/summary output so report-maintenance commits do not move the evidence window.
+- Keep `--out` useful for empty states by writing a 0-detected report with limitations instead of exiting before file creation.
+
+### Documentation
+
+- Update `/ai-dev-log` guidance, reference docs, privacy note, and generated skill catalogs to disclose the commit-body trailer fallback and reproducible snapshot boundary.
+
+### Boundary
+
+- Audit log generator behavior only. No new skill, runtime enforcement, policy gate, hook behavior change, or expanded commit-diff/file-content inspection.
+
 ## v2.21.18 — Epistemic Footer and Shadow Self-Check (2026-06-09)
 
 ### Skills and Guides
