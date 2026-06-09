@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.20-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.21-blue)
 
 # Changelog
 
@@ -6,6 +6,15 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.21 · CI/CD Proof-Scope Discipline
+
+Adds deploy/CD proof-scope discipline to `/deploy-guide`.
+
+- Proof layers are explicit: configuration, workflow, runner identity, runtime, and release validation.
+- Tag-triggered CD fixes require a fresh current-main validation tag before closure.
+- Self-hosted jobs must record runner identity and relevant connectivity proof.
+- Scope remains guidance and validator pins only; no runner automation or issue mutation.
 
 ## v2.21.20 · Codex SessionStart PATH Hardening
 

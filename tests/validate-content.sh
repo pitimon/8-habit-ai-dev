@@ -720,7 +720,7 @@ echo ""
 echo "--- Check 23: /deploy-guide release decision gate ---"
 DEPLOY_SKILL="skills/deploy-guide/SKILL.md"
 if [ -f "$DEPLOY_SKILL" ]; then
-  for phrase in "Plugin release decision gate" "Release now" "Bundle later" "No release" "do not bump version files"; do
+  for phrase in "Plugin release decision gate" "Release now" "Bundle later" "No release" "do not bump version files" "CI/CD proof discipline" "Configuration validation" "Workflow validation" "Runner identity evidence" "fresh current-main validation tag" "Use \`Refs\` instead of \`Closes\`"; do
     if grep -q "$phrase" "$DEPLOY_SKILL"; then
       pass "$DEPLOY_SKILL has release gate phrase '$phrase'"
     else

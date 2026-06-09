@@ -27,10 +27,15 @@
 - Production plan gated on staging evidence.
 - Rollback commands ready to paste.
 - Post-deploy verification.
+- For CI/CD: proof layer named explicitly as configuration, workflow, runner identity, runtime, or release validation.
+- For tag-triggered CD: fresh current-main validation tag before closure when workflow changes affect tags.
 - For provider-managed canaries: planned target, actual provider-selected target, desired/min/max capacity, scheduling state, readiness, and mitigation path.
 
 > [!WARNING]
 > Do not call a provider-managed scale or canary complete only because the provider accepted the change. Reconcile the intended target and the actual runtime state.
+
+> [!WARNING]
+> Do not call tag-triggered CD fixed from an old tag rerun. Old tag reruns may use the workflow snapshot from that tag, not the current workflow on `main`.
 
 ## Handoff
 
