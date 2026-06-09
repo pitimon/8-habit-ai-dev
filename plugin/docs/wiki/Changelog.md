@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.19-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.20-blue)
 
 # Changelog
 
@@ -6,6 +6,14 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.20 · Codex SessionStart PATH Hardening
+
+Fixes Codex startup hook exit 127 in stripped startup environments.
+
+- `hooks/hooks.json` now seeds a minimal system `PATH` and invokes `/bin/bash` explicitly for the 8-Habit `SessionStart` reminder.
+- The packaged plugin mirror carries the same hook manifest fix.
+- Scope remains hook manifest portability only; no new enforcement or skill behavior change.
 
 ## v2.21.19 · AI Dev Log Snapshot and Trailer Fallback
 
