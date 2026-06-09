@@ -10,6 +10,22 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.20 — Codex SessionStart PATH Hardening (2026-06-09)
+
+### Hooks
+
+- Seed a minimal system `PATH` and use `/bin/bash` explicitly in the 8-Habit `SessionStart` hook manifest so Codex startup does not depend on a populated inherited environment.
+- Preserve the existing reminder script and rendered context behavior.
+
+### Validation
+
+- Reproduce the failure with an empty startup `PATH` (`/bin/sh: bash: No such file or directory`, exit 127) before the fix.
+- Verify the same stripped-environment hook invocation exits successfully after the manifest change.
+
+### Boundary
+
+- Hook manifest portability only. No new runtime enforcement, skill behavior change, policy gate, or Claude/Codex hook parity claim.
+
 ## v2.21.19 — AI Dev Log Snapshot and Trailer Fallback (2026-06-09)
 
 ### Script
