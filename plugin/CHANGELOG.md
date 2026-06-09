@@ -10,6 +10,20 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.18 — Epistemic Footer and Shadow Self-Check (2026-06-09)
+
+### Skills and Guides
+
+- Make the `/cross-verify` confidence footer required for high-stakes reviews and add an open-unknowns field.
+- Add a compact Shadow Self-Check to `/cross-verify` before the recommendation: strongest counter-argument and who is harmed if the verdict is wrong.
+- Extend the research brief template with a mandatory Confidence & Open Unknowns block.
+- Align integrity principle #7 with the shared `V/I/U` evidence vocabulary.
+
+### Boundary
+
+- Markdown guidance only. No runtime enforcement, hook behavior change, new skill, orchestration engine, policy gate, or Claude/Codex behavior split.
+- R2 is centralized in `/cross-verify`; `/scrutinize` remains unchanged because it already runs adversarial passes and is near the word cap.
+
 ## v2.21.17 — Software Ecology Guardrail (2026-06-08)
 
 ### Skills

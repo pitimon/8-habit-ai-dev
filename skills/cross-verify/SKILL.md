@@ -80,7 +80,7 @@ Run through this checklist. Flag any item that fails.
 
 > **When the subject under review is a diagnosis or root cause** (not a plan or code change), add one reconciliation check before scoring Q12: could this root cause be **confidently wrong**? Confirm it by an **independent method** — a different tool, command, or vantage, not the same observation — and **reconcile** conflicting evidence before proceeding. Author-side gates all share your evidence, so only an independent source can diverge from it. See [`independent-source-verification.md`](../../guides/independent-source-verification.md).
 
-## Confidence Levels (Optional — for high-stakes reviews)
+## Confidence Levels (Required for high-stakes reviews)
 
 For critical decisions (architecture, security, production deploys), mark each Pass with a confidence level. Inspired by Feynman's honest uncertainty principle — separate what you verified from what you assumed.
 
@@ -93,8 +93,17 @@ For critical decisions (architecture, security, production deploys), mark each P
 
 **Scoring**: All Pass levels count toward the score, but ✓U items are flagged as verification debt.
 
-**When to use**: Architecture reviews, security-sensitive changes, pre-production gates.
-**When to skip**: Quick checks, formatting changes, familiar code — Pass/Fail/N/A is sufficient.
+**Required for**: Architecture reviews, security-sensitive changes, pre-production gates — these MUST carry the Confidence + Open-unknowns footer in the report header (below).
+**Optional for**: Quick checks, formatting changes, familiar code — Pass/Fail/N/A is sufficient.
+
+## Shadow Self-Check (before recording the recommendation)
+
+After scoring, run a 10-second adversarial pass on your _own_ verdict — the checklist judged the work; this judges your judgment:
+
+- **What is the strongest counter-argument to my recommendation?** If you can't state one, you haven't pressure-tested it — re-examine the failed and ✓U items before proceeding.
+- **Who is harmed if my verdict is wrong?** A false "proceed" ships the gap; a false "stop" wastes the work. Reweight borderline calls toward the costlier error.
+
+This is the cheap inline complement to a full reviewer-subagent dispatch (`advisor-pattern.md`) — run it always; escalate to the subagent only when the action is irreversible or the context is contaminated.
 
 ## Output
 
@@ -103,7 +112,7 @@ For critical decisions (architecture, security, production deploys), mark each P
 **Feature**: [name]
 **Score**: [X]/17 (N/A excluded: [Y]/[Z] applicable = [%])
 **Band**: [see table below]
-**Confidence**: [optional — V: X, I: Y, U: Z]
+**Confidence**: [V: X, I: Y, U: Z — required for high-stakes reviews] · **Open unknowns**: [top 1-3 still unverified, or "none material"]
 **Failed**: [list failed items with 1-line explanation each]
 **Recommendation**: [proceed / address gaps / revisit plan / stop and rethink]
 
@@ -142,6 +151,8 @@ When calculating adjusted score, exclude N/A items from both numerator and denom
 - [ ] Band determined from adjusted score (N/A items excluded)
 - [ ] Failed items each have a specific remediation action
 - [ ] Report follows the output template above (not free-form prose)
+- [ ] High-stakes reviews carry the Confidence (V/I/U) + Open-unknowns footer in the report header
+- [ ] Shadow self-check run on the verdict (counter-argument + who's harmed if wrong)
 
 ## Domain Question Packs (Optional)
 
