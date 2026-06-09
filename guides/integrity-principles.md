@@ -43,7 +43,7 @@ These commandments define what AI-assisted development must **never** do. Rules 
 **7. Never present inference as fact.**
 
 - **Why**: "This function handles authentication" might be true, but if you haven't read it, it's a guess
-- **Instead**: Mark uncertainty: "Based on the name, this likely handles auth — needs verification"
+- **Instead**: Mark uncertainty with the shared epistemic label — **✓V Verified** (you read it) / **✓I Inferred** (reasonable belief, unchecked) / **✓U Unverified** (assumption). E.g. "Based on the name, this likely handles auth — ✓I, needs verification." Same V/I/U vocabulary as `/cross-verify` and the `/research` brief footer, so the reader can always separate what you checked from what you guessed
 
 **13. Never paste a verbatim quote without grep-verifying its source.**
 

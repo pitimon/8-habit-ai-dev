@@ -47,6 +47,10 @@ Use this template when producing output from `/research`. All sections marked (o
 
 ### Recommendation
 [build / reuse / adapt] — [reasoning with cited evidence]
+
+### Confidence & Open Unknowns
+**Confidence**: [Quick: low | Standard: moderate | Deep: high] — [1-line basis]
+**Open unknowns**: [top 1-3 things still unverified, or "none material"]
 ```
 
 ## Template Notes
@@ -57,3 +61,4 @@ Use this template when producing output from `/research`. All sections marked (o
 - **Compare mode**: Include Comparison Matrix with at least 3 criteria
 - **Audit mode**: Include Audit Results table; every row must cite a file:line
 - All findings MUST cite their source — uncitable claims marked as "unverified assumption"
+- **Confidence & Open Unknowns** is mandatory, not optional: always state an overall confidence and list what stays unverified, so the reader can tell what you checked from what you assumed. This applies `/cross-verify`'s separate-what-you-verified-from-what-you-assumed principle at the brief level (the per-finding `Verified` column already carries it at the row level)
