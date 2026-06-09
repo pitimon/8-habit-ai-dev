@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.18-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.19-blue)
 
 # Changelog
 
@@ -6,6 +6,19 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.19 · AI Dev Log Snapshot and Trailer Fallback
+
+Makes `/ai-dev-log` stable and reproducible for audit reports that depend on `Co-Authored-By` trailers.
+
+Visible user-facing points:
+
+- `/ai-dev-log` now falls back to commit-body `Co-Authored-By:` trailer lines when Git's trailer formatter returns empty.
+- Generated reports record the snapshot boundary used for statistics.
+- `--snapshot <sha>` reproduces a previously generated report from its recorded boundary.
+- `--out` writes a 0-detected report with limitations instead of exiting before file creation.
+
+Boundary: generator behavior only. No new skill, runtime enforcement, policy gate, hook behavior, or diff/file-content inspection.
 
 ## v2.21.18 · Epistemic Footer and Shadow Self-Check
 

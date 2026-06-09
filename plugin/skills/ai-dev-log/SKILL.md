@@ -5,7 +5,7 @@ description: >
   Use for EU AI Act Article 11 (technical documentation) audit trail and AI transparency.
   Maps to H4 (Win-Win — honest disclosure) + H1 (Be Proactive — audit-ready).
 user-invocable: true
-argument-hint: "[--since YYYY-MM-DD] [--repo path] [--out file]"
+argument-hint: "[--since YYYY-MM-DD] [--repo path] [--snapshot sha] [--out file]"
 allowed-tools: ["Read", "Glob", "Grep", "Bash"]
 disable-model-invocation: false
 prev-skill: any
@@ -52,6 +52,11 @@ bash ${CLAUDE_PLUGIN_ROOT}/scripts/generate-ai-dev-log.sh \
   --since 2026-01-01 \
   --out docs/compliance/eu-ai-act/ai-dev-log/2026-Q1.md
 
+# Reproduce a previously generated report from its recorded boundary
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/generate-ai-dev-log.sh \
+  --since 2026-01-01 \
+  --snapshot <sha-from-report>
+
 # JSON for CI ingestion
 bash ${CLAUDE_PLUGIN_ROOT}/scripts/generate-ai-dev-log.sh --json
 
@@ -65,12 +70,12 @@ The detailed process and report template live in `reference.md`; load it when yo
 
 ## Process Summary
 
-1. Discover AI co-authors from `Co-Authored-By` trailers.
+1. Discover AI co-authors from `Co-Authored-By` trailers, using commit-body trailer lines only as a fallback when Git's trailer parser returns empty.
 2. Extract AI-assisted commits for the selected period.
 3. Group activity by time period for readability.
 4. Add human oversight evidence when PR, review, or test metadata is available.
 5. Generate Markdown, JSON, or summary output.
-6. Document fallback limitations when trailers are incomplete.
+6. Pin the report to the current `HEAD` snapshot and document fallback limitations when trailers are incomplete.
 
 If many commits lack trailers but you know AI was used, keep the report honest: mark the gap as inferred and supplement it with external records such as PR notes, timesheets, IDE telemetry, or project memory.
 
@@ -95,7 +100,8 @@ If many commits lack trailers but you know AI was used, keep the report honest: 
 ## Definition of Done
 
 - [ ] Time period defined (default: last quarter)
-- [ ] AI co-authors discovered from git trailers
+- [ ] AI co-authors discovered from git trailers or valid commit-body trailer fallback
+- [ ] Snapshot boundary recorded so later report-maintenance commits do not move the statistics
 - [ ] Statistics calculated (total/AI-assisted/percentages)
 - [ ] Notable changes annotated with PR/review/test evidence
 - [ ] Methodology section discloses limitations honestly
@@ -112,9 +118,8 @@ Load `${CLAUDE_PLUGIN_ROOT}/skills/ai-dev-log/reference.md` for the script inter
 
 ## Privacy Note
 
-This skill reads git commit metadata only. It does NOT access:
+This skill reads git commit metadata and, only when Git's trailer parser returns empty, scans commit bodies for `Co-Authored-By:` trailer lines. It does NOT access:
 
-- Commit message bodies (only first line/title)
 - File contents or diffs
 - Author email addresses (uses display names only)
 

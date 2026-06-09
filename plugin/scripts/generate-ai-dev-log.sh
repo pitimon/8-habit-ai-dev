@@ -6,10 +6,11 @@
 #   bash scripts/generate-ai-dev-log.sh --since 2026-01-01 # custom start date
 #   bash scripts/generate-ai-dev-log.sh --out FILE         # write to file
 #   bash scripts/generate-ai-dev-log.sh --repo /path/to/dir # custom repo directory
+#   bash scripts/generate-ai-dev-log.sh --snapshot SHA     # pin report to a commit
 #   bash scripts/generate-ai-dev-log.sh --json             # JSON output
 #   bash scripts/generate-ai-dev-log.sh --summary          # one-line stats only
 #
-# Reads: git log + Co-Authored-By trailers
+# Reads: git log + Co-Authored-By trailers, with commit-body fallback for trailers
 # Writes: stdout (default) or --out file
 # Habit: H4 (Win-Win — honest disclosure) + H1 (Be Proactive — audit-ready)
 # Reference: skills/ai-dev-log/SKILL.md
@@ -34,6 +35,7 @@ fi
 OUT_FILE=""
 FORMAT="markdown"
 REPO_DIR="${PWD}"
+SNAPSHOT_REF="HEAD"
 
 # ─── Parse args ────────────────────────────────────────────────────
 while [[ $# -gt 0 ]]; do
@@ -53,6 +55,9 @@ while [[ $# -gt 0 ]]; do
     --repo)
       [[ $# -lt 2 ]] && { echo "ERROR: --repo requires a path" >&2; exit 2; }
       REPO_DIR="$2"; shift 2 ;;
+    --snapshot)
+      [[ $# -lt 2 ]] && { echo "ERROR: --snapshot requires a commit-ish" >&2; exit 2; }
+      SNAPSHOT_REF="$2"; shift 2 ;;
     -h|--help) sed -n '2,15p' "$0"; exit 0 ;;
     *) echo "ERROR: Unknown arg: $1 (use -h for help)" >&2; exit 2 ;;
   esac
@@ -77,41 +82,96 @@ json_escape() {
 AI_PATTERN='[Cc]laude|[Gg]pt|[Cc]opilot|[Gg]emini|[Cc]ursor|[Aa]nthropic|[Oo]pen[Aa][Ii]'
 
 # ─── Data extraction (single-pass) ─────────────────────────────────
-# Single git log call → temp file → reused by all aggregations (avoids N×git log)
+# Snapshot the selected commit before generating output so a committed report
+# does not move the evidence boundary used for this report's statistics.
+if ! SNAPSHOT_SHA=$(git rev-parse --verify "${SNAPSHOT_REF}^{commit}" 2>/dev/null); then
+  echo "ERROR: Invalid --snapshot commit: $SNAPSHOT_REF" >&2
+  exit 2
+fi
 TMP_LOG=$(mktemp -t ai-dev-log.XXXXXX)
 trap 'rm -f "$TMP_LOG"' EXIT
 
-git log --since="$SINCE" \
-  --format='%h|%ad|%an|%s|%(trailers:key=Co-Authored-By,valueonly)' \
-  --date=short > "$TMP_LOG"
+# Single git log call → normalized temp file → reused by all aggregations.
+# The primary source is Git's trailer parser. Some valid trailer shapes can still
+# return empty there, so fall back to scanning the commit body for Co-Authored-By
+# lines before normalizing to one pipe-delimited record per commit.
+git log "$SNAPSHOT_SHA" --since="$SINCE" \
+  --format='%h%x1f%ad%x1f%an%x1f%s%x1f%(trailers:key=Co-Authored-By,valueonly)%x1f%B%x1e' \
+  --date=short |
+  awk -v RS="$(printf '\036')" -v FS="$(printf '\037')" '
+    function trim(s) {
+      gsub(/^[[:space:]]+/, "", s)
+      gsub(/[[:space:]]+$/, "", s)
+      return s
+    }
+    function clean_field(s) {
+      gsub(/\r/, "", s)
+      gsub(/\n/, " ", s)
+      gsub(/\|/, "/", s)
+      return trim(s)
+    }
+    function append_coauthor(list, item) {
+      item = clean_field(item)
+      if (item == "") return list
+      return list == "" ? item : list "; " item
+    }
+    NF >= 4 {
+      coauthors = ""
+      if ($5 != "") {
+        split($5, parsed, "\n")
+        for (i in parsed) coauthors = append_coauthor(coauthors, parsed[i])
+      }
+      if (coauthors == "" && $6 != "") {
+        body_line_count = split($6, body_lines, "\n")
+        for (i = 1; i <= body_line_count; i++) {
+          if (body_lines[i] ~ /^[[:space:]]*[Cc]o-[Aa]uthored-[Bb]y:[[:space:]]*/) {
+            sub(/^[[:space:]]*[Cc]o-[Aa]uthored-[Bb]y:[[:space:]]*/, "", body_lines[i])
+            coauthors = append_coauthor(coauthors, body_lines[i])
+          }
+        }
+      }
+      printf "%s|%s|%s|%s|%s\n", clean_field($1), clean_field($2), clean_field($3), clean_field($4), coauthors
+    }
+  ' > "$TMP_LOG"
 
 # Stats (computed from temp file, no further git calls)
 TOTAL_COMMITS=$(wc -l < "$TMP_LOG" | tr -d ' ')
 AI_COMMITS=$(awk -F'|' -v p="$AI_PATTERN" '$5 ~ p' "$TMP_LOG" | wc -l | tr -d ' ')
 
-if [[ "$TOTAL_COMMITS" -eq 0 ]]; then
-  echo "No commits found since $SINCE." >&2
-  exit 0
+if [[ "$TOTAL_COMMITS" -gt 0 ]]; then
+  AI_PCT=$(awk "BEGIN { printf \"%.0f\", ($AI_COMMITS / $TOTAL_COMMITS) * 100 }")
+else
+  AI_PCT=0
 fi
-
-AI_PCT=$(awk "BEGIN { printf \"%.0f\", ($AI_COMMITS / $TOTAL_COMMITS) * 100 }")
 UNIQUE_HUMANS=$(awk -F'|' '{print $3}' "$TMP_LOG" | sort -u | wc -l | tr -d ' ')
 
 # AI co-authors (unique, AI-only)
-AI_COAUTHORS=$(awk -F'|' -v p="$AI_PATTERN" '$5 ~ p {print $5}' "$TMP_LOG" | sort -u)
-
-if [[ -z "$AI_COAUTHORS" ]]; then
-  echo "No AI co-authors detected since $SINCE." >&2
-  echo "Either project uses no AI assistance, or commits lack Co-Authored-By trailers." >&2
-  exit 0
-fi
+AI_COAUTHORS=$(awk -F'|' -v p="$AI_PATTERN" '
+  $5 ~ p {
+    n = split($5, coauthors, /;[[:space:]]*/)
+    for (i = 1; i <= n; i++) {
+      if (coauthors[i] ~ p) print coauthors[i]
+    }
+  }
+' "$TMP_LOG" | sort -u)
 
 REPO_NAME=$(basename "$(git rev-parse --show-toplevel)")
 GENERATED=$(date +%Y-%m-%d)
+if [[ -z "$AI_COAUTHORS" ]]; then
+  AI_COAUTHORS_LIST="  - None detected"
+  EMPTY_STATE_NOTE="No AI co-authors were detected in this snapshot. Either the project uses no AI assistance, or commits lack detectable \`Co-Authored-By\` trailers."
+else
+  AI_COAUTHORS_LIST=$(echo "$AI_COAUTHORS" | sed 's/^/  - /')
+  EMPTY_STATE_NOTE=""
+fi
+EMPTY_STATE_BLOCK=""
+if [[ -n "$EMPTY_STATE_NOTE" ]]; then
+  EMPTY_STATE_BLOCK=$(printf '\n> %s\n' "$EMPTY_STATE_NOTE")
+fi
 
 # ─── Summary mode ──────────────────────────────────────────────────
 if [[ "$FORMAT" == "summary" ]]; then
-  echo "Period: $SINCE → $GENERATED | Total: $TOTAL_COMMITS | AI-assisted: $AI_COMMITS ($AI_PCT%) | Humans: $UNIQUE_HUMANS"
+  echo "Period: $SINCE → $GENERATED | Snapshot: $SNAPSHOT_SHA | Total: $TOTAL_COMMITS | AI-assisted: $AI_COMMITS ($AI_PCT%) | Humans: $UNIQUE_HUMANS"
   exit 0
 fi
 
@@ -119,6 +179,7 @@ fi
 if [[ "$FORMAT" == "json" ]]; then
   printf '{\n'
   printf '  "period": {"since": "%s", "generated": "%s"},\n' "$SINCE" "$GENERATED"
+  printf '  "snapshot": {"head": "%s"},\n' "$SNAPSHOT_SHA"
   printf '  "repo": "%s",\n' "$(json_escape "$REPO_NAME")"
   printf '  "stats": {\n'
   printf '    "total_commits": %d,\n' "$TOTAL_COMMITS"
@@ -134,7 +195,7 @@ if [[ "$FORMAT" == "json" ]]; then
     printf '    "%s"' "$(json_escape "$line")"
   done <<< "$AI_COAUTHORS"
   printf '\n  ],\n'
-  printf '  "methodology": "Read from git Co-Authored-By trailers; commits without trailers treated as fully human-authored",\n'
+  printf '  "methodology": "Read from git Co-Authored-By trailers with commit-body fallback for valid trailer lines; commits without trailers treated as fully human-authored",\n'
   printf '  "limitations": "Pre-tooling commits or commits with missing trailers will appear human-only"\n'
   printf '}\n'
   exit 0
@@ -175,7 +236,7 @@ NOTABLE=$(awk -F'|' -v p="$AI_PATTERN" '
 OVERFLOW_NOTE=""
 if [[ "$AI_COMMITS" -gt 30 ]]; then
   # Leading newline keeps spacing tidy when present; avoids blank line when empty
-  OVERFLOW_NOTE=$'\n_(showing 30 of '"$AI_COMMITS"' AI-assisted commits — see git log for full history)_'
+  OVERFLOW_NOTE=$(printf '\n_(showing 30 of %s AI-assisted commits — see git log for full history)_' "$AI_COMMITS")
 fi
 
 OUTPUT=$(cat <<EOF
@@ -184,9 +245,11 @@ OUTPUT=$(cat <<EOF
 **Period**: $SINCE to $GENERATED
 **Repo**: $REPO_NAME
 **Generated**: $GENERATED by \`scripts/generate-ai-dev-log.sh\`
+**Snapshot boundary**: \`$SNAPSHOT_SHA\`
 
 > ⚠️ Reference: \`skills/ai-dev-log/SKILL.md\` (8-habit-ai-dev plugin)
 > Methodology limitations apply — read carefully before using as compliance evidence.
+$EMPTY_STATE_BLOCK
 
 ## Summary
 
@@ -194,11 +257,11 @@ OUTPUT=$(cat <<EOF
 - **AI-assisted commits**: $AI_COMMITS ($AI_PCT%)
 - **Unique human authors**: $UNIQUE_HUMANS
 - **AI co-authors detected**:
-$(echo "$AI_COAUTHORS" | sed 's/^/  - /')
+$AI_COAUTHORS_LIST
 
 ## Methodology
 
-This log is generated from \`git log\` Co-Authored-By trailers. The convention: Claude Code (and similar tools) automatically add a Co-Authored-By trailer when authoring commits. Commits without explicit Co-Authored-By markers are treated as fully human-authored.
+This log is generated from \`git log\` Co-Authored-By trailers at snapshot boundary \`$SNAPSHOT_SHA\`. The convention: Claude Code (and similar tools) automatically add a Co-Authored-By trailer when authoring commits. The script uses the Git trailer parser first, then scans commit bodies only for valid \`Co-Authored-By:\` lines when the parser returns empty. Commits without explicit Co-Authored-By markers are treated as fully human-authored.
 
 **Limitations** (be honest about gaps):
 - Pre-tooling commits or commits where AI assisted but no trailer was added will appear as human-only
