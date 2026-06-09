@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.20-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.20)
+[![Version](https://img.shields.io/badge/Version-2.21.21-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.21)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -484,6 +484,17 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.21.21
+
+**Theme: CI/CD Proof-Scope Discipline**
+
+v2.21.21 teaches `/deploy-guide` to keep deploy proof layers separate during CI/CD incidents.
+
+- **Proof layers named** — configuration validation, workflow validation, runner identity evidence, runtime validation, and release validation are distinct outcomes.
+- **Tag-triggered CD warning** — old tag reruns may use the workflow snapshot from that tag; workflow fixes need a fresh current-main validation tag before closure.
+- **Operational state language** — when the blocker changes class, issue/status wording must change too; use `Refs` instead of `Closes` while final live proof is pending.
+- **Boundary preserved** — guidance and validator pins only; no runner automation, issue mutation, deploy engine, or new operational-state skill.
 
 ## What's New in v2.21.20
 
@@ -1419,4 +1430,4 @@ MIT
 
 ---
 
-_Version: 2.21.20 | Last updated: 2026-06-09_
+_Version: 2.21.21 | Last updated: 2026-06-09_

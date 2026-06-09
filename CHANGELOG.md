@@ -10,6 +10,24 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.21 — CI/CD Proof-Scope Discipline (2026-06-09)
+
+### Skills
+
+- Add CI/CD proof discipline to `/deploy-guide` so agents name which layer passed: configuration, workflow, runner identity, runtime, or release validation.
+- Warn that rerunning an old Git tag may use the workflow snapshot from that tag, not the current workflow on `main`.
+- Require self-hosted runner identity evidence when relevant: runner name, machine/host name, labels, and target connectivity proof.
+- Require blocker-state language to change when the operational blocker class changes, and prefer `Refs` over `Closes` while final live proof is still pending.
+
+### Docs and Validation
+
+- Update the Step 6 wiki page and Skills Reference with CI/CD proof-layer expectations.
+- Extend the `/deploy-guide` validator pins so the proof-scope checklist cannot silently regress.
+
+### Boundary
+
+- Markdown guidance and validator pins only. No workflow runner automation, issue auto-mutation, runtime enforcement, deployment engine, or new operational-state skill.
+
 ## v2.21.20 — Codex SessionStart PATH Hardening (2026-06-09)
 
 ### Hooks

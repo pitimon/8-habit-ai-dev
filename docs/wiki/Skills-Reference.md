@@ -77,7 +77,7 @@ Plan staging, production, rollback, verification, and reconciliation for deploys
 
 - Page: [Step 6 · Deploy Guide](Step-6-Deploy-Guide)
 - Habit: H1 Be Proactive
-- Current note: includes provider-managed canary/capacity reconciliation gates.
+- Current note: includes CI/CD proof-layer discipline and provider-managed canary/capacity reconciliation gates.
 - Source: [`skills/deploy-guide/SKILL.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/skills/deploy-guide/SKILL.md)
 
 ### `/monitor-setup` {#monitor-setup}

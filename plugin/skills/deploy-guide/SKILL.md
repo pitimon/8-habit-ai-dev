@@ -52,14 +52,25 @@ next-skill: monitor-setup
 
    **Invariant**: if any version-bearing file or release link is bumped, finish the release: merge, tag/GitHub Release, update installed plugin cache, and verify the installed artifact. If you decide not to release, do not bump version files.
 
-6. **Rollback plan** (MUST have before deploying):
+6. **CI/CD proof discipline** (for deploy pipelines, GitHub Actions, runners, tags, and environment configuration): never collapse proof layers.
+   - **Configuration validation**: secrets, variables, environments, permissions, and rendered config are present and selected.
+   - **Workflow validation**: the intended workflow file, branch/tag snapshot, path filters, and job conditions are the ones actually running.
+   - **Runner identity evidence**: record self-hosted runner name, machine/host name, labels, and the specific connectivity proof relevant to the deploy target.
+   - **Runtime validation**: deploy command reaches the runtime target and changes the expected service, artifact, config, or infrastructure state.
+   - **Release validation**: tag, release, promotion, or production gate proves the released path, not just a staging/pre-flight path.
+
+   Tag-triggered CD warning: rerunning an old Git tag can use the workflow snapshot from that tag, not the current workflow on `main`. If a workflow change affects tag-triggered deploys, require a fresh current-main validation tag before declaring tag-triggered CD fixed.
+
+   Blocker-state rule: when the blocker class changes, update the issue title/status and proof language (`missing config` -> `runner network path` -> `mitigation merged` -> `fresh validation pending`). Use `Refs` instead of `Closes` when mitigation is merged but final live proof is still pending. Hand off unresolved state to `/operational-state`.
+
+7. **Rollback plan** (MUST have before deploying):
    - How to revert to previous version
    - How long rollback takes
    - What data might be affected
 
-7. **Config-only example**: Alertmanager email template mounted into a Swarm service is not a "no deploy" change. If the live container reads `/etc/alertmanager/templates/*.tmpl`, plan template render, config/object replacement or host sync, targeted service update/reload, and a notification smoke test. Avoid a full stack redeploy unless topology changed; it can restart unrelated services and expand blast radius.
+8. **Config-only example**: Alertmanager email template mounted into a Swarm service is not a "no deploy" change. If the live container reads `/etc/alertmanager/templates/*.tmpl`, plan template render, config/object replacement or host sync, targeted service update/reload, and a notification smoke test. Avoid a full stack redeploy unless topology changed; it can restart unrelated services and expand blast radius.
 
-8. **Production canary / capacity-change template**: use this for EKS nodegroup, ASG, Kubernetes node, or similar provider-managed scale/replacement work.
+9. **Production canary / capacity-change template**: use this for EKS nodegroup, ASG, Kubernetes node, or similar provider-managed scale/replacement work.
 
    - **Precheck**: confirm identity, context, profile, region, cluster/resource, current desired/min/max, schedulable capacity, unhealthy pods, PDBs, stateful workloads, canary target workload inventory, and rollback/mitigation for pre-scale failure.
    - **Cordon approval gate**: ask before cordoning the canary. Record target node/resource and why it is safe.
@@ -81,7 +92,7 @@ next-skill: monitor-setup
    - Closure: <Resolved only if provider state and cluster scheduling state both align; otherwise Watch/Handoff/Active Incident via /operational-state>
    ```
 
-9. **H1 Checkpoint**: "Do I have a plan for when this fails, not just when it succeeds?"
+10. **H1 Checkpoint**: "Do I have a plan for when this fails, not just when it succeeds?"
 
 ## Anti-Patterns
 
@@ -92,6 +103,9 @@ next-skill: monitor-setup
 - Treating provider scale-down success as canary reconciliation success
 - Leaving the original canary node/resource unintentionally cordoned or `SchedulingDisabled`
 - Bumping plugin version files before deciding `Release now` vs `Bundle later` vs `No release`
+- Saying "deploy fixed" when only config validation or workflow pre-flight passed
+- Rerunning an old tag and treating it as proof of the current workflow fix
+- Omitting self-hosted runner identity and network-path evidence
 
 ## Handoff
 
@@ -108,6 +122,9 @@ next-skill: monitor-setup
 
 - [ ] Deploy type classified before rollout plan is chosen
 - [ ] Plugin release decision recorded before any version bump: `Release now`, `Bundle later`, or `No release`
+- [ ] CI/CD proof layer named: configuration, workflow, runner identity, runtime, or release validation
+- [ ] Tag-triggered CD fixes use a fresh current-main validation tag before closure
+- [ ] Self-hosted runner evidence recorded when relevant: runner name, machine name, labels, and connectivity proof
 - [ ] Staging deploy verified — health endpoint returns correct version
 - [ ] Rollback plan documented with specific steps and time estimate
 - [ ] Production canary/capacity changes include provider-target reconciliation and no unintended `SchedulingDisabled` nodes
