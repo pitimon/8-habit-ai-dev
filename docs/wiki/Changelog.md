@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.21-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.22-blue)
 
 # Changelog
 
@@ -6,6 +6,13 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.22 · Fable Model Review Record
+
+Adds the first standalone review record under `docs/reviews/`.
+
+- Full 8-Habit review of v2.21.21 by the Fable model: score 13/17, verdict fix-then-ship, 21 evidence-cited findings.
+- Documentation only; no skill, hook, or validator behavior changes.
 
 ## v2.21.21 · CI/CD Proof-Scope Discipline
 
