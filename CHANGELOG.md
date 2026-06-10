@@ -10,6 +10,17 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.22 — Fable Model Review Record (2026-06-10)
+
+### Docs
+
+- Add `docs/reviews/2026-06-10-fable-model-review.md` — comprehensive 8-Habit review record of the plugin at v2.21.21 by the Fable model (five-pass methodology: fresh validator runs, `8-habit-reviewer` 17-question checklist, three Whole Person dimension audits, outsider scrutinize synthesis). Score 13/17, verdict fix-then-ship, 21 findings including one blocker (`/diagnose` hardcoded absolute Load paths pinned to v2.18.0).
+- Establish `docs/reviews/` as the convention for standalone review records.
+
+### Boundary
+
+- Documentation only — no skill, hook, or validator behavior changes. The version bump exists because the `plugin/docs` mirror makes any `docs/` change consumer-doctrine under Check 27, which contradicts ADR-019's contributor-doctrine exemption for `docs/` (recorded as finding F21 in the review record).
+
 ## v2.21.21 — CI/CD Proof-Scope Discipline (2026-06-09)
 
 ### Skills
