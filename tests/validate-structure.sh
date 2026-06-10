@@ -190,6 +190,22 @@ done < <(find skills/ -name "SKILL.md" -type f)
 if [ "$LOAD_FAIL" -eq 0 ]; then
   pass "All Load directives resolve to existing files"
 fi
+
+# Check 8b: Load directive portability (issue #308, review F1/F2).
+# A backticked Load target that starts with / or ~ is an absolute path from the
+# author's machine — it silently fails to load for every other installer and may
+# leak local usernames. Every Load path must be ${CLAUDE_PLUGIN_ROOT}-relative,
+# which is also what makes Check 8's existence check above able to see it.
+LOAD_ABS_FAIL=0
+while read -r skill_file; do
+  while read -r abs_line; do
+    fail "$skill_file has a non-portable Load directive (absolute path, must use \${CLAUDE_PLUGIN_ROOT}/): $abs_line"
+    LOAD_ABS_FAIL=$((LOAD_ABS_FAIL + 1))
+  done < <(grep -oE 'Load `(/|~)[^`]*`' "$skill_file" 2>/dev/null)
+done < <(find skills/ -name "SKILL.md" -type f)
+if [ "$LOAD_ABS_FAIL" -eq 0 ]; then
+  pass "All Load directives are \${CLAUDE_PLUGIN_ROOT}-relative (no absolute paths)"
+fi
 echo ""
 
 # --- Check 9: Word count guardrails (warning only) ---

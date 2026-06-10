@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.22-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.22)
+[![Version](https://img.shields.io/badge/Version-2.21.23-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.23)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -484,6 +484,16 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
 
 ---
+
+## What's New in v2.21.23
+
+**Theme: Diagnose Load Path Portability Fix**
+
+v2.21.23 fixes the review's blocker finding (F1) and closes the validator gap behind it (F2).
+
+- **`/diagnose` loads for every installer** — Further Reading Load directives now use `${CLAUDE_PLUGIN_ROOT}/...` instead of an absolute maintainer-machine cache path pinned to v2.18.0. Reference notes and habit files load correctly again. ([#308](https://github.com/pitimon/8-habit-ai-dev/issues/308))
+- **Check 8b class guard** — the structure validator now fails any Load directive whose backticked target is an absolute path (`/` or `~`), so this defect class cannot regress. Negative-tested with a synthetic absolute path.
+- **Boundary preserved** — skill content fix + validator guard only; no workflow or behavior changes.
 
 ## What's New in v2.21.22
 
@@ -1440,4 +1450,4 @@ MIT
 
 ---
 
-_Version: 2.21.22 | Last updated: 2026-06-10_
+_Version: 2.21.23 | Last updated: 2026-06-10_
