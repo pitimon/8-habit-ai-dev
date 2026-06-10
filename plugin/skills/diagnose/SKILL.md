@@ -164,11 +164,11 @@ If either answer is "no", loop back to the relevant phase. The cost of an extra 
 
 ## Further Reading
 
-Load `/Users/itarun/.claude/plugins/cache/pitimon-8-habit-ai-dev/8-habit-ai-dev/2.18.0/skills/diagnose/reference.md` for full mattpocock prior-art notes, per-phase examples, false-positive patterns from the compression-worker-420 lesson, and license attribution.
+Load `${CLAUDE_PLUGIN_ROOT}/skills/diagnose/reference.md` for full mattpocock prior-art notes, per-phase examples, false-positive patterns from the compression-worker-420 lesson, and license attribution.
 
-Load `/Users/itarun/.claude/plugins/cache/pitimon-8-habit-ai-dev/8-habit-ai-dev/2.18.0/habits/h1-be-proactive.md` for the H1 principle.
+Load `${CLAUDE_PLUGIN_ROOT}/habits/h1-be-proactive.md` for the H1 principle.
 
-Load `/Users/itarun/.claude/plugins/cache/pitimon-8-habit-ai-dev/8-habit-ai-dev/2.18.0/habits/h5-understand-first.md` for the H5 principle.
+Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the H5 principle.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local glossary, issue-tracker, or agent context files are present.
 
 ---

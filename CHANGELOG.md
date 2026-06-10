@@ -10,6 +10,20 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.23 — Diagnose Load Path Portability Fix (2026-06-10)
+
+### Fixed
+
+- `/diagnose` Further Reading Load directives now use `${CLAUDE_PLUGIN_ROOT}/...` instead of an absolute maintainer-machine cache path pinned to v2.18.0 (review finding F1, blocker; [#308](https://github.com/pitimon/8-habit-ai-dev/issues/308)). The skill's `reference.md` and habit files now load for every installer; the old path also leaked the maintainer's username.
+
+### Validation
+
+- New Check 8b in `tests/validate-structure.sh` fails any Load directive whose backticked target is an absolute path (`/` or `~`) — class guard closing the gap that let F1 ship (review finding F2). Negative-tested with a synthetic absolute-path directive.
+
+### Boundary
+
+- Skill content fix + validator guard only. No workflow, hook, or behavior changes.
+
 ## v2.21.22 — Fable Model Review Record (2026-06-10)
 
 ### Docs

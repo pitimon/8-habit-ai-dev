@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.22-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.23-blue)
 
 # Changelog
 
@@ -6,6 +6,13 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.23 · Diagnose Load Path Portability Fix
+
+Fixes the review blocker F1 and its validator gap F2 (issue #308).
+
+- `/diagnose` Load directives now `${CLAUDE_PLUGIN_ROOT}`-relative — reference and habit files load for every installer.
+- New Check 8b fails any absolute-path Load directive so the defect class cannot regress.
 
 ## v2.21.22 · Fable Model Review Record
 
