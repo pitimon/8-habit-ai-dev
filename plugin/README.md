@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.23-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.23)
+[![Version](https://img.shields.io/badge/Version-2.21.24-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.24)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -482,6 +482,18 @@ Both Claude Code agent definitions use the `opus` model because they run high-st
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
+
+---
+
+## What's New in v2.21.24
+
+**Theme: Cross-Platform Frontmatter Rule + Disk-Intermediate Orchestration Precedent**
+
+Two engineering lessons mined from [`Egonex-AI/Understand-Anything`](https://github.com/Egonex-AI/Understand-Anything) (58k★) via `/research deep`, folded into existing guides — **no new skill** (ADR-018 "earn each line").
+
+- **Frontmatter portability rule** — `guides/vendor-portability.md` now bans the Claude-only `model: inherit` keyword (non-Claude runtimes reject it as `ProviderModelNotFoundError`) while preserving deliberate, documented model pins. Reviewer agents stay `model: opus` per [#285](https://github.com/pitimon/8-habit-ai-dev/issues/285).
+- **Disk-intermediate orchestration precedent** — `guides/orchestration-patterns.md` Pattern 2 cites passing sub-agent results through disk rather than the parent context, reinforcing the context-economy principle.
+- **Boundary preserved** — guide content only; a candidate codebase-orientation `/research` mode was deferred as a documented gap after an `8-habit-reviewer` cross-verify.
 
 ---
 
@@ -1450,4 +1462,4 @@ MIT
 
 ---
 
-_Version: 2.21.23 | Last updated: 2026-06-10_
+_Version: 2.21.24 | Last updated: 2026-06-13_

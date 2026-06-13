@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.23-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.24-blue)
 
 # Changelog
 
@@ -6,6 +6,13 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.24 · Cross-Platform Frontmatter Rule + Disk-Intermediate Orchestration Precedent
+
+Two engineering lessons from `Egonex-AI/Understand-Anything` (58k★), folded into existing guides — no new skill.
+
+- `guides/vendor-portability.md` bans the Claude-only `model: inherit` keyword (opencode rejects it) while preserving documented model pins like the reviewer agents' `model: opus` (#285).
+- `guides/orchestration-patterns.md` Pattern 2 adds a disk-intermediate context-economy precedent.
 
 ## v2.21.23 · Diagnose Load Path Portability Fix
 
