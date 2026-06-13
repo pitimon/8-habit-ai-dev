@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.24-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.24)
+[![Version](https://img.shields.io/badge/Version-2.21.25-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.25)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -482,6 +482,18 @@ Both Claude Code agent definitions use the `opus` model because they run high-st
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
+
+---
+
+## What's New in v2.21.25
+
+**Theme: SKILL-EFFECTIVENESS Tally Harvest + Anti-Dormancy Gap Close**
+
+Maintainer-curated report update — H7 applied to the plugin itself.
+
+- **Tally harvested** — 3 accumulated `/reflect` Q6 lessons: `/cross-verify` 21→24, and `/diagnose` records its first **missed_skill** signal (0→1: a crash investigated ad-hoc instead of via the 6-phase discipline).
+- **Anti-dormancy gap closed** — v2.21.19–v2.21.24 (6 releases) had no SKILL-EFFECTIVENESS pulse note, past the ADR-018 ≥2-cycle reversal threshold; caught by an end-of-session "anything left?" sweep.
+- **Boundary** — report + release docs only; no behavior change. Tracks [#311](https://github.com/pitimon/8-habit-ai-dev/issues/311) (deferred codebase-orientation surface).
 
 ---
 
@@ -1462,4 +1474,4 @@ MIT
 
 ---
 
-_Version: 2.21.24 | Last updated: 2026-06-13_
+_Version: 2.21.25 | Last updated: 2026-06-13_
