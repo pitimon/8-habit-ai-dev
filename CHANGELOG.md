@@ -10,6 +10,17 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.24 — Cross-Platform Frontmatter Rule + Disk-Intermediate Orchestration Precedent (2026-06-13)
+
+### Added
+
+- `guides/vendor-portability.md` — new "Cross-platform authoring rule" section. Bans the Claude-only `model: inherit` frontmatter keyword (non-Claude runtimes like opencode reject it as `ProviderModelNotFoundError`), while explicitly preserving deliberate, **documented** model pins. The plugin's reviewer agents stay `model: opus` per [#285](https://github.com/pitimon/8-habit-ai-dev/issues/285); the discipline is "pin deliberately and record the rationale, or omit." Sourced from [`Egonex-AI/Understand-Anything`](https://github.com/Egonex-AI/Understand-Anything) #167 via `/research deep`.
+- `guides/orchestration-patterns.md` — Pattern 2 (Context Boundaries) gains a production precedent: multi-agent pipelines pass intermediate results through disk (`.x/intermediate/`) rather than the parent context, reinforcing the Merge-contract / context-economy principle.
+
+### Boundary
+
+- Guide content only — **no new skill** (respects ADR-018 "earn each line"). A third candidate idea (a codebase-orientation mode on `/research`) was deferred as a documented gap because it collides with `/research`'s convergent identity. Scope corrected after an `8-habit-reviewer` cross-verify caught that a naive "never hardcode `model:`" rule would have contradicted the documented #285 decision.
+
 ## v2.21.23 — Diagnose Load Path Portability Fix (2026-06-10)
 
 ### Fixed

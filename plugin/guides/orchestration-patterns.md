@@ -72,6 +72,8 @@ Merge contract: Modified src/auth/middleware.ts + new test file. Merge to featur
 
 **Source**: clawhip by Yeachan Heo — event-to-channel notification router that prevents context pollution between agent sessions. [github.com/Yeachan-Heo/clawhip](https://github.com/Yeachan-Heo/clawhip)
 
+**Production precedent — pass intermediate results through disk, not context**: [Understand-Anything](https://github.com/Egonex-AI/Understand-Anything) (a 58k★ multi-agent codebase-analysis plugin) runs a pipeline of agents (`project-scanner`, `file-analyzer`, `architecture-analyzer`, …) where **each agent writes its intermediate output to disk (`.understand-anything/intermediate/`) instead of returning it into the parent context**, and the files are cleaned up after the final graph is assembled ([their `CLAUDE.md`](https://github.com/Egonex-AI/Understand-Anything/blob/main/CLAUDE.md) §Agent Pipeline). This is the same context-economy principle behind the **Merge contract** boundary above: the parent orchestrator only needs to know _where_ a result landed, not carry the full payload in-window. When a sub-agent produces a large artifact (a diff, a scan, a generated file), prefer "write to a known path + return the path" over "return the whole thing" — it keeps the orchestrator's context lean and the merge predictable.
+
 ---
 
 ## Pattern 3: Meta-System Mindset
