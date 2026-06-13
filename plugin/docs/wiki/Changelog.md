@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.24-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.25-blue)
 
 # Changelog
 
@@ -6,6 +6,13 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.25 · SKILL-EFFECTIVENESS Tally Harvest + Anti-Dormancy Gap Close
+
+Maintainer-curated report update — closes a 6-release dormancy gap.
+
+- Harvested 3 `/reflect` Q6 lessons: `/cross-verify` 21→24, `/diagnose` missed_skill 0→1 (first non-zero in that column).
+- v2.21.19–v2.21.24 had shipped with no pulse note (past the ADR-018 ≥2-cycle reversal threshold); consolidated note added. Tracks #311 (deferred codebase-orientation surface).
 
 ## v2.21.24 · Cross-Platform Frontmatter Rule + Disk-Intermediate Orchestration Precedent
 

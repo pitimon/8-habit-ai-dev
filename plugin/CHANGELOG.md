@@ -10,6 +10,20 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.25 — SKILL-EFFECTIVENESS Tally Harvest + Anti-Dormancy Gap Close (2026-06-13)
+
+### Changed
+
+- `SKILL-EFFECTIVENESS.md` — harvested 3 accumulated `/reflect` Q6 lessons: **`/cross-verify` 21→24** (+3: Fable review, key-creation Q2-edge-case catches, understand-anything #285-contradiction catch) and **`/diagnose` missed_skill 0→1** (first non-zero entry in the "Missed / should have triggered" column — a memforge crash investigated ad-hoc instead of via the 6-phase discipline). `Lessons analyzed` 57→60.
+
+### Fixed
+
+- **Anti-dormancy gap** — v2.21.19–v2.21.24 (6 releases) shipped with no SKILL-EFFECTIVENESS pulse note, past the ≥2-cycle ADR-018 §"Forward-Guardrail Sunset" reversal threshold. Added a consolidated pulse note covering that window; the slip was caught by an end-of-session "anything left?" sweep — the exact case the forcing function exists to surface.
+
+### Boundary
+
+- Maintainer-curated report + release docs only; no skill/hook/validator behavior change. (Tracks #311 — deferred codebase-orientation surface — as a separate decision.)
+
 ## v2.21.24 — Cross-Platform Frontmatter Rule + Disk-Intermediate Orchestration Precedent (2026-06-13)
 
 ### Added
