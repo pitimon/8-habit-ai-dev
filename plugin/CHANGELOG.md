@@ -10,6 +10,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.26 — Codebase-Orientation Skill: Out-of-Scope Record (2026-06-13)
+
+### Added
+
+- `docs/out-of-scope/codebase-orientation-skill.md` — closes [#311](https://github.com/pitimon/8-habit-ai-dev/issues/311) as **T3 (reject)** per the ADR-018 ship-decision table. The deferred "Idea A" from the Understand-Anything research (v2.21.24) — a `/understand-onboard`-style codebase-orientation skill — was evaluated via the ADR-018 `predicted_uses` contract and rejected: redundant with the installed `claude-mem` comprehension suite (pathfinder / learn-codebase / smart-explore), low predicted-use frequency, and the only distinct angle (H5 discipline) fits a guide paragraph rather than a 25th skill. Record includes reconsideration conditions.
+
+### Boundary
+
+- Out-of-scope documentation + release surface only; no skill/hook/validator behavior change. Honors ADR-018 "earn each line" by shrinking-not-growing skill surface.
+
 ## v2.21.25 — SKILL-EFFECTIVENESS Tally Harvest + Anti-Dormancy Gap Close (2026-06-13)
 
 ### Changed

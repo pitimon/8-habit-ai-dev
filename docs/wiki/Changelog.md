@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.25-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.26-blue)
 
 # Changelog
 
@@ -6,6 +6,13 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.26 · Codebase-Orientation Skill — Out-of-Scope Record
+
+Closes #311 as T3 (reject) — documents the decision instead of shipping a 25th skill.
+
+- The deferred Understand-Anything "Idea A" (a `/understand-onboard`-style orientation skill) is recorded in `docs/out-of-scope/codebase-orientation-skill.md`.
+- Rejected: redundant with the installed `claude-mem` suite (pathfinder / learn-codebase / smart-explore) + low predicted-use frequency; H5-discipline angle fits a guide. Reconsideration conditions included.
 
 ## v2.21.25 · SKILL-EFFECTIVENESS Tally Harvest + Anti-Dormancy Gap Close
 
