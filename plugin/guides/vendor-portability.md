@@ -48,6 +48,21 @@ The 8-habit workflow is discipline — it tells you _how to develop well_. Manag
 
 Using managed runtime does not require abandoning discipline. Using discipline does not require avoiding managed runtime. Choose runtime per project; keep discipline constant.
 
+## Cross-platform authoring rule: agent/skill frontmatter
+
+The framework's markdown loads into many runtimes (Claude Code, Codex, Cursor, Copilot, opencode, …). Frontmatter that uses a **Claude-only keyword** silently breaks on the others.
+
+**Rule — never use the `inherit` model keyword.** `model: inherit` is a Claude Code-specific token meaning "use the session's model." Non-Claude runtimes treat it as a _literal model id_ and reject it (`ProviderModelNotFoundError`). Precedent: [Understand-Anything #167](https://github.com/Egonex-AI/Understand-Anything/blob/main/CLAUDE.md) §Agent Pipeline removed the `model` field for exactly this reason — opencode rejected `inherit`.
+
+**Two portable choices instead:**
+
+- **Omit `model` entirely** → each platform falls back to its configured default. This is the right default when the agent has no special model need.
+- **Pin a concrete model deliberately, and document why** → e.g. `model: opus`. A real model name resolves (or degrades gracefully) on every runtime; the portability hazard is the `inherit` _keyword_, not the act of pinning. This plugin pins both reviewer agents (`agents/8-habit-reviewer.md`, `agents/research-verifier.md`) to `model: opus` because adversarial review quality justifies the strongest model — a deliberate decision recorded in [Issue #285](https://github.com/pitimon/8-habit-ai-dev/issues/285), not an accident.
+
+> The discipline is **"pin deliberately and record the rationale, or omit"** — not "never pin." An undocumented pin is the smell (no one knows if it's load-bearing); `inherit` is the outright bug.
+
+**Audit grep** before shipping any agent/skill: `grep -rn "^model:" skills/ agents/` — every hit must be a concrete model name backed by a documented decision; zero hits of `inherit`.
+
 ## Selection checklist
 
 Before adopting a vendor-managed feature, run through this checklist. This is exactly the "third alternative beyond the obvious options" exercise `/cross-verify` Q14 asks for — managed vs. self-hosted is rarely binary, and a hybrid posture with explicit persistence discipline is often the better answer:
