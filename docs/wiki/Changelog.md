@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.27-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.28-blue)
 
 # Changelog
 
@@ -6,6 +6,13 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.28 · Post-release QA polish (#316, #317)
+
+Maintainer Codex-install QA of v2.21.27 surfaced two low-severity doc/validator items, fixed here.
+
+- **#317** — README "What's New" TOC anchor had drifted to v2.21.12 (~15 releases stale); fixed, and a new `validate-content.sh` Check 19 sub-check derives the slug from `plugin.json` so it can't silently drift again.
+- **#316** — `/deploy-guide` Definition of Done regrouped from 10 flat items into 3 grouped checkboxes (Decision / Validation / Post-deploy), every gate preserved as a sub-item; clears the density warning.
 
 ## v2.21.27 · Invocation-Aware SKILL-EFFECTIVENESS + Usage≠Revocation Principle
 

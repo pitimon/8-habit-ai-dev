@@ -120,16 +120,19 @@ next-skill: monitor-setup
 
 ## Definition of Done
 
-- [ ] Deploy type classified before rollout plan is chosen
-- [ ] Plugin release decision recorded before any version bump: `Release now`, `Bundle later`, or `No release`
-- [ ] CI/CD proof layer named: configuration, workflow, runner identity, runtime, or release validation
-- [ ] Tag-triggered CD fixes use a fresh current-main validation tag before closure
-- [ ] Self-hosted runner evidence recorded when relevant: runner name, machine name, labels, and connectivity proof
-- [ ] Staging deploy verified — health endpoint returns correct version
-- [ ] Rollback plan documented with specific steps and time estimate
-- [ ] Production canary/capacity changes include provider-target reconciliation and no unintended `SchedulingDisabled` nodes
-- [ ] Post-deploy health check confirmed (smoke test passed)
-- [ ] Error rate monitored for at least 5 minutes after deploy
+- [ ] **Decision** — release classification complete before any version bump:
+  - [ ] Deploy type classified before rollout plan is chosen
+  - [ ] Plugin release decision recorded before any version bump: `Release now`, `Bundle later`, or `No release`
+  - [ ] CI/CD proof layer named: configuration, workflow, runner identity, runtime, or release validation
+- [ ] **Validation** — pre-promotion evidence captured:
+  - [ ] Tag-triggered CD fixes use a fresh current-main validation tag before closure
+  - [ ] Self-hosted runner evidence recorded when relevant: runner name, machine name, labels, and connectivity proof
+  - [ ] Staging deploy verified — health endpoint returns correct version
+- [ ] **Post-deploy** — rollout safety and monitoring:
+  - [ ] Rollback plan documented with specific steps and time estimate
+  - [ ] Production canary/capacity changes include provider-target reconciliation and no unintended `SchedulingDisabled` nodes
+  - [ ] Post-deploy health check confirmed (smoke test passed)
+  - [ ] Error rate monitored for at least 5 minutes after deploy
 
 ## Further Reading
 

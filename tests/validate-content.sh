@@ -838,6 +838,17 @@ else
   else
     fail "README.md version badge stale — bump both badge text and release link to v${current_version}."
   fi
+
+  # I. README.md TOC "What's New" anchor must point at the current section slug (added 2026-06-14 per #317).
+  # GitHub slugifies "## What's New in v2.21.28" → "whats-new-in-v22128" (lowercase, drop apostrophe/dots,
+  # spaces→hyphens). Sub-check G verifies the section EXISTS; this verifies the in-page TOC link targets it.
+  # The TOC anchor drifted unnoticed from v2.21.12→v2.21.27 (15 releases) because no check derived the slug.
+  toc_slug="whats-new-in-v$(printf '%s' "$current_version" | tr -d '.')"
+  if grep -q "(#${toc_slug})" README.md; then
+    pass "README.md TOC 'What's New' anchor points at current section (#${toc_slug})"
+  else
+    fail "README.md TOC 'What's New' anchor stale — update the '[What's New](#...)' link to '(#${toc_slug})' so it targets the current '## What's New in v${current_version}' section, not an older release. See issue #317."
+  fi
 fi
 
 echo ""

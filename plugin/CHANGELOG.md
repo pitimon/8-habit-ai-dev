@@ -10,6 +10,24 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.28 — Post-release QA polish (#316, #317) (2026-06-14)
+
+### Fixed
+
+- **README "What's New" TOC anchor** ([#317](https://github.com/pitimon/8-habit-ai-dev/issues/317)) — the in-page TOC link had silently drifted to `#whats-new-in-v22112` for ~15 releases (every "What's New" addition since v2.21.12 forgot to update it). Now points to the current section.
+
+### Added
+
+- **`validate-content.sh` Check 19 sub-check I** — derives the TOC slug from `plugin.json` (`whats-new-in-v<digits>`) and asserts the README TOC link targets the current section. Closes the recurring anchor-drift class so it can't silently regress again (the durable half of #317).
+
+### Changed
+
+- **`/deploy-guide` Definition of Done** ([#316](https://github.com/pitimon/8-habit-ai-dev/issues/316)) — 10 flat checkboxes regrouped into 3 grouped checkboxes (Decision / Validation / Post-deploy) with every original gate preserved as an indented sub-item. Clears the `validate-content.sh` density warning without losing a concept; Check 23 release-gate phrases preserved.
+
+### Boundary
+
+- Docs/validator/skill-content polish only. No new runtime enforcement, no skill behavior change, no plugin-boundary impact.
+
 ## v2.21.27 — Invocation-Aware SKILL-EFFECTIVENESS + Usage≠Revocation Principle (2026-06-14)
 
 ### Added
