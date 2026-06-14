@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.26-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.27-blue)
 
 # Changelog
 
@@ -6,6 +6,14 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.27 · Invocation-Aware SKILL-EFFECTIVENESS + Usage≠Revocation Principle
+
+Codifies that skill usage history informs **discoverability and footprint only — never revocation** (#314).
+
+- A 3-layer audit (lessons + memforge + 2,534 transcripts across 53 projects) found **5 of the "14 zero-signal" skills had real external invocation** — Q6 never captured Skill-tool, script, or cross-project runs.
+- The maintainer protocol gains a transcript-invocation harvest step (with observer-pipeline + dogfooding discount rules) and a per-skill **Skill class index** (`invoked` / `delegated` / `expected-zero`).
+- Revocation now explicitly requires supersession, demonstrated harm, or obsolescence — not low usage.
 
 ## v2.21.26 · Codebase-Orientation Skill — Out-of-Scope Record
 

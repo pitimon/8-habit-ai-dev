@@ -78,16 +78,16 @@ Load `${CLAUDE_PLUGIN_ROOT}/[reference-file].md` for detailed guidance.
 
 Every `skills/<name>/SKILL.md` frontmatter block must stay valid for both Claude Code and Codex ingestion. The skill body is the portable source of truth; runtime-specific behavior belongs in packaging docs or adapter tooling.
 
-| Field | Required | Cross-agent contract | Notes |
-| --- | --- | --- | --- |
-| `name` | Yes | Claude Code, Codex, other markdown skill loaders | Must match the directory name exactly. |
-| `description` | Yes | Claude Code, Codex | Trigger text, not the skill objective. Keep under 1024 collapsed characters and include concrete trigger phrases. |
-| `user-invocable` | Yes | Claude Code, Codex | Boolean flag used by plugin consumers and validators. Current skills use `true`. |
-| `argument-hint` | Recommended | Claude Code, Codex | Human/operator hint only. Do not encode runtime semantics here. |
-| `allowed-tools` | Yes | Claude Code, Codex-readable | Keep minimal. Tool names document what the skill may need; they are not a universal permission system across runtimes. |
-| `prev-skill` | Yes | Claude Code, Codex-readable | Workflow graph metadata. Use a concrete skill, `none`, or `any`. |
-| `next-skill` | Yes | Claude Code, Codex-readable | Workflow graph metadata. Use a concrete skill, `none`, or `any`. |
-| `disable-model-invocation` | Optional | Must remain Codex-ingestible | Current plugin values are `false` where present. Do not set `true` until Claude Code and Codex support compatible semantics. |
+| Field                      | Required    | Cross-agent contract                             | Notes                                                                                                                        |
+| -------------------------- | ----------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| `name`                     | Yes         | Claude Code, Codex, other markdown skill loaders | Must match the directory name exactly.                                                                                       |
+| `description`              | Yes         | Claude Code, Codex                               | Trigger text, not the skill objective. Keep under 1024 collapsed characters and include concrete trigger phrases.            |
+| `user-invocable`           | Yes         | Claude Code, Codex                               | Boolean flag used by plugin consumers and validators. Current skills use `true`.                                             |
+| `argument-hint`            | Recommended | Claude Code, Codex                               | Human/operator hint only. Do not encode runtime semantics here.                                                              |
+| `allowed-tools`            | Yes         | Claude Code, Codex-readable                      | Keep minimal. Tool names document what the skill may need; they are not a universal permission system across runtimes.       |
+| `prev-skill`               | Yes         | Claude Code, Codex-readable                      | Workflow graph metadata. Use a concrete skill, `none`, or `any`.                                                             |
+| `next-skill`               | Yes         | Claude Code, Codex-readable                      | Workflow graph metadata. Use a concrete skill, `none`, or `any`.                                                             |
+| `disable-model-invocation` | Optional    | Must remain Codex-ingestible                     | Current plugin values are `false` where present. Do not set `true` until Claude Code and Codex support compatible semantics. |
 
 Do not add `category`, `tags`, or third-party registry fields unless there is a documented in-repo consumer and a validator. The generated catalog derives workflow and habit metadata from existing fields/body text instead of expanding the frontmatter surface.
 
@@ -274,7 +274,7 @@ Before bumping the version files above and tagging a release, run through this l
   - `Release now` for installed-user surfaces: `skills/`, `guides/`, `hooks/`, manifests, `AGENTS.md`, `llms.txt`, generated catalogs, install/update docs, runtime-boundary docs, or root context files shipped in the plugin package.
   - `Bundle later` for consumer-facing changes that can wait; do not bump version files until the bundled release PR.
   - `No release` for contributor-only tests, CI, ADRs, internal docs, or validator maintenance that does not change installed-user behavior or package contents.
-- [ ] Run [`SKILL-EFFECTIVENESS.md`](SKILL-EFFECTIVENESS.md) tally update per its §"Maintainer update protocol" — grep Q6 across new lessons since last tally, increment counters, refresh `Last updated` + `Lessons analyzed`, note any new trends or zero-signal skills. ADR-018 Edge #1, anti-dormancy mechanism per issue [#227](https://github.com/pitimon/8-habit-ai-dev/issues/227).
+- [ ] Run [`SKILL-EFFECTIVENESS.md`](SKILL-EFFECTIVENESS.md) tally update per its §"Maintainer update protocol" — grep Q6 across new lessons since last tally **and harvest invocation ground truth** (`<command-name>` + Skill-tool grep across `~/.claude/projects/`, excluding `claude-mem-observer-sessions` and the plugin's own repo dir per #314), increment counters, refresh the Skill class index + `Last updated` + `Lessons analyzed`, note any new trends. Usage informs discoverability/footprint only — **never deprecation** (Governing principle). ADR-018 Edge #1, anti-dormancy mechanism per issue [#227](https://github.com/pitimon/8-habit-ai-dev/issues/227).
 - [ ] CHANGELOG entry added (or explicitly marked doctrine-only per ADR-017 §C5).
 - [ ] Version bumped in all 6 files (see "Version Bumping" above) — `tests/validate-structure.sh` will fail CI if any drifts.
 - [ ] `README.md` "What's New" mentions the bumped version (Check 19 enforces this).
