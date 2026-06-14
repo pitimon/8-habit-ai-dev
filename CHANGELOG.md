@@ -10,6 +10,23 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.27 — Invocation-Aware SKILL-EFFECTIVENESS + Usage≠Revocation Principle (2026-06-14)
+
+### Added
+
+- **Governing principle** in `SKILL-EFFECTIVENESS.md`: usage history is a signal for **discoverability and footprint only — never a trigger for revocation**. Revocation requires supersession across the plugin boundary, demonstrated harm with a root cause, or obsolescence. Closes [#314](https://github.com/pitimon/8-habit-ai-dev/issues/314).
+- **Transcript-invocation harvest step** in the §"Maintainer update protocol" — counts `<command-name>` + Skill-tool invocations across `~/.claude/projects/`, with mandatory discount rules (exclude `claude-mem-observer-sessions` and the plugin's own repo dir; ignore SessionStart-banner presence).
+- **Skill class index** — per-skill `invoked` / `delegated` / `expected-zero` classification with evidence.
+
+### Changed
+
+- The "14 zero-signal skills" Action Item and AHE-context prose now reflect the audit finding that **5 of the 14 had real external invocation** (`requirements` 14×, `ai-dev-log` on sysAdmin2025, `review-ai`, `post-mortem`, `using-8-habits`) — Q6 was blind to Skill-tool / script / cross-project runs. (`consistency-check` was Skill-tool-invoked but dogfood-only, so it stays expected-zero per the discount rule.) No skill is framed as a prune candidate.
+- `CONTRIBUTING.md` release checklist references the new invocation harvest + discount rules and the usage≠deprecation principle.
+
+### Boundary
+
+- All recommendations are maintainer-manual. A runtime aggregator of lessons/transcripts would belong in `claude-governance` (plugin boundary), not here. No skill/hook/validator behavior change.
+
 ## v2.21.26 — Codebase-Orientation Skill: Out-of-Scope Record (2026-06-13)
 
 ### Added

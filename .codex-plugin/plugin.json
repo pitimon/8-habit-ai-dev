@@ -1,6 +1,6 @@
 {
   "name": "8-habit-ai-dev",
-  "version": "2.21.26",
+  "version": "2.21.27",
   "description": "Anti-Vibe-Coding workflow discipline: 24 markdown skills across a 7-step AI-assisted development workflow.",
   "author": {
     "name": "Pitimon",
@@ -28,9 +28,7 @@
     "longDescription": "8-Habit AI Dev adds a 7-step, spec-first workflow discipline for AI-assisted development: research, requirements, design, breakdown, implementation brief, review, deploy, and monitor. The plugin is markdown-only and tool-agnostic: skills guide the agent and human through better process without adding runtime enforcement.",
     "developerName": "Pitimon",
     "category": "Productivity",
-    "capabilities": [
-      "Interactive"
-    ],
+    "capabilities": ["Interactive"],
     "websiteURL": "https://github.com/pitimon/8-habit-ai-dev",
     "defaultPrompt": [
       "Help me plan this feature with 8-Habit discipline.",

@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.26-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.26)
+[![Version](https://img.shields.io/badge/Version-2.21.27-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.27)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -482,6 +482,17 @@ Both Claude Code agent definitions use the `opus` model because they run high-st
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
+
+---
+
+## What's New in v2.21.27
+
+**Theme: Invocation-Aware SKILL-EFFECTIVENESS + Usage≠Revocation Principle**
+
+- **Governing principle codified** — `SKILL-EFFECTIVENESS.md` now states that usage history is a signal for **discoverability and footprint only, never a trigger for revocation**. Revocation requires supersession, demonstrated harm, or obsolescence — not low usage ([#314](https://github.com/pitimon/8-habit-ai-dev/issues/314)).
+- **Q6 was blind** — a 3-layer audit (lessons + memforge + 2,534 transcripts across 53 projects) found **5 of the "14 zero-signal" skills had real external invocation** (`requirements` 14×, `ai-dev-log` on sysAdmin2025, others) — Q6 never saw Skill-tool, script, or cross-project runs.
+- **Invocation-aware harvest** — the maintainer protocol gains a transcript-invocation step (with observer-pipeline + dogfooding discount rules) and a per-skill **Skill class index** (`invoked` / `delegated` / `expected-zero`).
+- **H8 / Conscience** — a metric must not quietly become policy; the principle makes the human-owned existence decision explicit.
 
 ---
 
@@ -1484,4 +1495,4 @@ MIT
 
 ---
 
-_Version: 2.21.26 | Last updated: 2026-06-13_
+_Version: 2.21.27 | Last updated: 2026-06-14_
