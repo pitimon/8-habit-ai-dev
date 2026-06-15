@@ -130,7 +130,7 @@ After rendering the verdict, assess the review through the Whole Person lens. Fl
 | Mind      | Architecture sound? Design documented? Trade-offs considered?       | AI excels here — usually strong               |
 | Heart     | Error messages empathetic? Code readable? UX considered?            | AI follows patterns but lacks genuine empathy |
 | Spirit    | Security reviewed? Ethical impact considered? Should we build this? | AI checks lists but doesn't question purpose  |
-| H7 signal | Loops, retries, context compaction, and audit trail reviewed?        | AI often hides process cost unless asked      |
+| H7 signal | Loops, retries, context compaction, and audit trail reviewed?       | AI often hides process cost unless asked      |
 
 If Heart or Spirit scores lag Body/Mind by ≥2 categories, add:
 
@@ -212,5 +212,5 @@ See [Step 5 wiki page](../../docs/wiki/Step-5-Review-AI.md) for deeper walkthrou
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/review-report-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md` for the full H4 principle and examples.
-Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards (the 13 commandments).
+Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards (the 14 commandments).
 Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.

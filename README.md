@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.28-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.28)
+[![Version](https://img.shields.io/badge/Version-2.21.29-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.29)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -43,7 +43,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22128) — Version history
+- [What's New](#whats-new-in-v22129) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -482,6 +482,17 @@ Both Claude Code agent definitions use the `opus` model because they run high-st
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
+
+---
+
+## What's New in v2.21.29
+
+**Theme: Trap-naming taxonomy lens for `/scrutinize` + `/cross-verify` (#319)**
+
+- **New 14th integrity commandment** — "Never let a seductive-but-broken option pass unnamed" with a 4-mode failure taxonomy (hidden cost / false economy / scaling failure / premature abstraction), added to `guides/integrity-principles.md` under a "Design Judgment" heading. Inspired by [UditAkhourii/adhd](https://github.com/UditAkhourii/adhd)'s evidence that _naming_ traps is the highest-leverage adversarial output ([#319](https://github.com/pitimon/8-habit-ai-dev/issues/319)).
+- **`/scrutinize` Step 1** now tags each rejected alternative with its failure mode, not just names a better one.
+- **`/cross-verify` Shadow Self-Check** now tests whether the recommendation _itself_ is a trap against the same taxonomy.
+- **Zero new surface** — both skills already `Load` the integrity guide, so no new Load lines, no `llms.txt` change; markdown-only, no frontmatter/runtime changes (8-habit discipline, not enforcement).
 
 ---
 
@@ -1504,4 +1515,4 @@ MIT
 
 ---
 
-_Version: 2.21.28 | Last updated: 2026-06-14_
+_Version: 2.21.29 | Last updated: 2026-06-15_

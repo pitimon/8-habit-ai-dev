@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.28-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.29-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.29 · Trap-naming taxonomy lens (#319)
+
+Adds a 4-mode trap failure taxonomy (hidden cost / false economy / scaling failure / premature abstraction) as a 14th integrity commandment in `guides/integrity-principles.md`, wired into `/scrutinize` Step 1 (tag rejected alternatives) and `/cross-verify` Shadow Self-Check (test the recommendation itself). Inspired by [UditAkhourii/adhd](https://github.com/UditAkhourii/adhd)'s evidence that naming traps is the highest-leverage adversarial output. Markdown-only discipline; both skills already load the integrity guide, so no new surface.
 
 ## v2.21.28 · Post-release QA polish (#316, #317)
 

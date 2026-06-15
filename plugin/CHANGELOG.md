@@ -10,6 +10,24 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.29 — Trap-naming taxonomy lens (#319) (2026-06-15)
+
+### Added
+
+- **14th integrity commandment** ([#319](https://github.com/pitimon/8-habit-ai-dev/issues/319)) — "Never let a seductive-but-broken option pass unnamed", with a 4-mode failure taxonomy (hidden cost / false economy / scaling failure / premature abstraction) in `guides/integrity-principles.md` under a new "Design Judgment" heading. Inspired by [UditAkhourii/adhd](https://github.com/UditAkhourii/adhd)'s evidence that naming traps is the highest-leverage adversarial output (baselines rarely name the seductive failure). Surfaced via the `/research` → `/requirements` → `/design` → `/breakdown` workflow trail.
+
+### Changed
+
+- **`/scrutinize` Step 1** — now tags each rejected alternative (or a trap current approach) with its failure mode, extending "name the simpler alternative" with _why_ the tempting options fail. No new `Load` line (already loads the integrity guide); full-file stays under the 2000-word ceiling (1936 → 1972).
+- **`/cross-verify` Shadow Self-Check** — adds a third bullet testing whether the recommendation _itself_ is a trap against the taxonomy.
+- **`/post-mortem` + `/review-ai`** — `Load` directive text updated "(the 13 commandments)" → "(the 14 commandments)" to stay accurate after the addition.
+
+### Boundary
+
+- Markdown-only discipline content. Both adversarial skills already `Load` `guides/integrity-principles.md`, so no new Load plumbing and no `llms.txt` change. No frontmatter/`allowed-tools` edits, no runtime enforcement, no plugin-boundary impact (this is 8-habit _discipline_, not a `claude-governance` enforcement hook). `/scrutinize` zero-signal row left unchanged — SKILL-EFFECTIVENESS pulse note added rather than a false-claim tally bump.
+
+---
+
 ## v2.21.28 — Post-release QA polish (#316, #317) (2026-06-14)
 
 ### Fixed
