@@ -4,7 +4,7 @@
 
 These commandments define what AI-assisted development must **never** do. Rules tell you what TO do; integrity commandments tell you what NEVER to do. Violations are non-negotiable — no exceptions for "small changes" or "obvious fixes."
 
-## The 13 Commandments
+## The 14 Commandments
 
 ### Evidence & Verification
 
@@ -78,6 +78,18 @@ These commandments define what AI-assisted development must **never** do. Rules 
 - **Why**: "Fixed" tells the next person nothing. What was broken? What was the root cause? Will it recur?
 - **Instead**: Include: what was wrong, what was changed, why this fix is correct, and what to watch for
 
+### Design Judgment
+
+**14. Never let a seductive-but-broken option pass unnamed.**
+
+- **Why**: The most dangerous design option is the one that looks clean but hides its cost. If you reject an alternative — or pick one — without naming _why_ the tempting-but-wrong options fail, the next person re-proposes them. Adapted from ADHD's divergent-ideation evidence: naming traps is the highest-leverage adversarial output, because baselines rarely name the seductive failure
+- **Instead**: When weighing options (`/scrutinize` Step 1, `/cross-verify` Shadow Self-Check), tag each seductive-but-broken option with its failure mode:
+  - **Hidden cost** — looks cheap now, expensive later (ops burden, lock-in, migration debt)
+  - **False economy** — saves the wrong resource (saves code, costs clarity; saves time, costs correctness)
+  - **Scaling failure** — works at current size, breaks under load, growth, or concurrency
+  - **Premature abstraction** — generalizes before a second real use case exists
+- **Scope**: design-option reviews, plan critiques, and "which approach" decisions — not single-path bug fixes
+
 ## Mapping to 8 Habits
 
 | Commandment           | Primary Habit                           | Dimension |
@@ -86,6 +98,7 @@ These commandments define what AI-assisted development must **never** do. Rules 
 | 5-7, 13 (Honesty)     | H8: Find Voice — conscience             | Spirit    |
 | 8-10 (Process)        | H1: Be Proactive — prevent, don't react | Body      |
 | 11-12 (Communication) | H4: Win-Win — Emotional Bank Account    | Heart     |
+| 14 (Design Judgment)  | H8: Find Voice — conscience             | Spirit    |
 
 ## The Feynman Standard
 
@@ -101,3 +114,4 @@ In AI-assisted development, the risk is higher: AI can produce confident, articu
 - **During cross-verify** (`/cross-verify`): Use commandments to assess confidence levels
 - **During development**: Keep commandments 5-7 active — verify before you reference
 - **During deployment**: Commandments 8-10 are non-negotiable gates
+- **During option review** (`/scrutinize`, `/cross-verify`): Apply commandment 14 — name each seductive-but-broken option with its failure mode

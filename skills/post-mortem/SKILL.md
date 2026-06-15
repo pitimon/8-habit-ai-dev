@@ -183,4 +183,4 @@ Structure and discipline inspired by [`thananon/9arm-skills/post-mortem`](https:
 
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md` for the full H4 principle.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h7-sharpen-saw.md` for the full H7 principle.
-Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards (the 13 commandments).
+Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards (the 14 commandments).
