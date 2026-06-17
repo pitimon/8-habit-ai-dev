@@ -1,5 +1,4 @@
 {
-  "description": "8-Habit AI Dev hooks — session reminder for 7-step workflow",
   "hooks": {
     "SessionStart": [
       {

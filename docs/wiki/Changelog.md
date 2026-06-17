@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.29-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.30-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.30 · Codex hook-config schema purity + doctrine reconcile (#321)
+
+Maintainer's own Codex install surfaced a hook-config parse failure: Codex auto-parses `hooks/hooks.json` at install with a strict schema (top level = `hooks` only) and rejected the top-level `description` field (`unknown field 'description', expected 'hooks'`). Fixed by dropping the field, added validator Check 31 as a forcing function, and reconciled the Codex compatibility docs — which had conflated _parsing_ with _executing_ — to state the real contract: Codex parses `hooks.json` at install and may invoke `SessionStart` via the JSON adapter. No runtime enforcement added; Claude hook parity remains unpromised (ADR-024).
 
 ## v2.21.29 · Trap-naming taxonomy lens (#319)
 

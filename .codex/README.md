@@ -41,7 +41,7 @@ Packaging files:
 
 ## Hooks and config boundary
 
-Codex does not run Claude Code hooks from `hooks/`. `hooks/session-start.sh` and `hooks/hooks.json` are Claude Code runtime surfaces only.
+Codex does not run Claude Code's full hook lifecycle, but it is not blind to `hooks/` either: Codex auto-discovers and **parses** `hooks/hooks.json` at install/cache time with a strict schema that accepts only a top-level `hooks` key (sibling metadata such as `description` is rejected — see [#321](https://github.com/pitimon/8-habit-ai-dev/issues/321)). It may also invoke the `SessionStart` hook, in which case `hooks/session-start.sh` emits Codex-compatible JSON. Keep `hooks/hooks.json` schema-pure (top level = `hooks` only); validator Check 31 enforces this. Broader Claude hook feature parity is still not promised.
 
 Repo-local Codex packaging exposes the markdown skills. It does not provide runtime enforcement, policy authorization, compliance certification, or dynamic orchestration.
 

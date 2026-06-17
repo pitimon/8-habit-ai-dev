@@ -72,6 +72,8 @@ Codex integration does not promise:
 
 Those belong in companion tooling or a future adapter layer.
 
+Config-parse note: even though Codex does not run the full Claude hook lifecycle, it **auto-discovers and parses `hooks/hooks.json` at install/cache time** with a strict schema that accepts only a top-level `hooks` key. A sibling metadata field (e.g. `description`) makes Codex reject the config with `unknown field ..., expected hooks` ([#321](https://github.com/pitimon/8-habit-ai-dev/issues/321)). Keep the file schema-pure; `tests/validate-structure.sh` Check 31 enforces this so the same `hooks.json` installs cleanly in both Claude Code and Codex.
+
 Compatibility note: if Codex invokes this package's `SessionStart` hook, `hooks/session-start.sh` emits Codex-compatible JSON with the existing reminder under `hookSpecificOutput.additionalContext`. Claude/default runs still emit the markdown reminder directly. This is a narrow hook-output adapter, not a general runtime enforcement layer.
 
 ## Codex Command UX
@@ -131,16 +133,16 @@ Adapter responsibilities that do not belong in this plugin core:
 
 ## Source of Truth
 
-| Topic | Source of truth |
-| --- | --- |
-| Skill behavior | `skills/*/SKILL.md` |
-| Skill routing | `skills/RESOLVER.md` |
-| Generated skill catalog | `docs/data/skills.json` |
-| Cross-agent entrypoint | `AGENTS.md` |
-| Claude Code architecture | `CLAUDE.md` |
-| Codex packaging | `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json` |
-| Official releases | GitHub Releases + git tags |
-| Durable project memory | curated Obsidian notes, if configured |
+| Topic                    | Source of truth                                                    |
+| ------------------------ | ------------------------------------------------------------------ |
+| Skill behavior           | `skills/*/SKILL.md`                                                |
+| Skill routing            | `skills/RESOLVER.md`                                               |
+| Generated skill catalog  | `docs/data/skills.json`                                            |
+| Cross-agent entrypoint   | `AGENTS.md`                                                        |
+| Claude Code architecture | `CLAUDE.md`                                                        |
+| Codex packaging          | `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json` |
+| Official releases        | GitHub Releases + git tags                                         |
+| Durable project memory   | curated Obsidian notes, if configured                              |
 
 ## Related
 

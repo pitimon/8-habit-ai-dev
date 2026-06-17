@@ -78,6 +78,6 @@ Release work must reconcile the version-bearing files named in `CLAUDE.md` and `
 
 Last updated: 2026-06-06
 
-Codex support is already native through `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json`. `AGENTS.md`, `docs/codex-integration.md`, and `docs/compatibility-matrix.md` define that Codex consumes the same markdown skills but does not run Claude hooks.
+Codex support is already native through `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json`. `AGENTS.md`, `docs/codex-integration.md`, and `docs/compatibility-matrix.md` define that Codex consumes the same markdown skills and parses `hooks/hooks.json` at install (strict schema, top level = `hooks` only — see #321) but does not run the full Claude hook lifecycle.
 
 The repo now has explicit Codex-ready project context files: `DOMAIN.md`, `SPEC.md`, `docs/adr/README.md`, `.codex/README.md`, and `docs/adr/ADR-025-codex-project-context-files.md`. Release `v2.21.2` clarified that source/marketplace validation and installed Codex cache validation have different child-source expectations; release `v2.21.10` replaced the original `plugin -> .` symlink with a real `plugin/` directory for Linux Claude Code install compatibility.
