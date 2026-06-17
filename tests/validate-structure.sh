@@ -1091,6 +1091,51 @@ if [ "$CATALOG_FAIL" -eq 0 ]; then
 fi
 echo ""
 
+# --- Check 31: Codex hook config schema purity (#321) ---
+echo "--- Check 31: Codex hook config schema purity (#321, ADR-024) ---"
+# Codex auto-discovers and parses hooks/hooks.json at install with a strict
+# serde schema that accepts ONLY a top-level "hooks" key. Any sibling key (e.g.
+# a "description") makes Codex reject the config: "unknown field `description`,
+# expected `hooks`". Claude Code tolerates the extra key; Codex does not. Keep
+# the top level schema-pure so the same file installs cleanly in both runtimes.
+# Parses the JSON object (node, already required by Check 30) so the check is
+# format-independent; falls back to a grep on the canonical 2-space shape if
+# node is unavailable.
+HOOK_SCHEMA_FAIL=0
+for hookcfg in hooks/hooks.json plugin/hooks/hooks.json; do
+  [ -f "$hookcfg" ] || continue
+  if command -v node >/dev/null 2>&1; then
+    EXTRA_KEYS=$(node -e 'const fs=require("fs");const k=Object.keys(JSON.parse(fs.readFileSync(process.argv[1],"utf8")));process.stdout.write(k.filter(x=>x!=="hooks").join(" "));const has=k.includes("hooks");process.exitCode=has?0:2' "$hookcfg" 2>/dev/null)
+    NODE_RC=$?
+    if [ -n "$EXTRA_KEYS" ]; then
+      fail "$hookcfg has non-'hooks' top-level key(s); Codex rejects unknown fields (#321): $EXTRA_KEYS"
+      HOOK_SCHEMA_FAIL=$((HOOK_SCHEMA_FAIL + 1))
+    elif [ "$NODE_RC" -eq 2 ]; then
+      fail "$hookcfg missing top-level 'hooks' key"
+      HOOK_SCHEMA_FAIL=$((HOOK_SCHEMA_FAIL + 1))
+    elif [ "$NODE_RC" -ne 0 ]; then
+      fail "$hookcfg is not valid JSON (Codex would fail to parse it)"
+      HOOK_SCHEMA_FAIL=$((HOOK_SCHEMA_FAIL + 1))
+    else
+      pass "$hookcfg top level is schema-pure (only 'hooks')"
+    fi
+  else
+    # Fallback: grep top-level keys on the canonical pretty-printed (2-space) shape.
+    TOP_KEYS=$(grep -E '^  "[^"]+":' "$hookcfg" | sed 's/^  "\([^"]*\)".*/\1/')
+    EXTRA_KEYS=$(echo "$TOP_KEYS" | grep -vx 'hooks' || true)
+    if [ -n "$EXTRA_KEYS" ]; then
+      fail "$hookcfg has non-'hooks' top-level key(s); Codex rejects unknown fields (#321): $(echo "$EXTRA_KEYS" | tr '\n' ' ')"
+      HOOK_SCHEMA_FAIL=$((HOOK_SCHEMA_FAIL + 1))
+    elif echo "$TOP_KEYS" | grep -qx 'hooks'; then
+      pass "$hookcfg top level is schema-pure (only 'hooks')"
+    else
+      fail "$hookcfg missing top-level 'hooks' key"
+      HOOK_SCHEMA_FAIL=$((HOOK_SCHEMA_FAIL + 1))
+    fi
+  fi
+done
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"

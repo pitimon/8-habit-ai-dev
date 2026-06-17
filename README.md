@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.29-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.29)
+[![Version](https://img.shields.io/badge/Version-2.21.30-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.30)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -43,7 +43,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22129) — Version history
+- [What's New](#whats-new-in-v22130) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -482,6 +482,16 @@ Both Claude Code agent definitions use the `opus` model because they run high-st
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
+
+---
+
+## What's New in v2.21.30
+
+**Theme: Codex hook-config schema purity + doctrine reconcile (#321)**
+
+- **Fixed Codex parse failure** — removed the top-level `description` field from `hooks/hooks.json`. Codex auto-parses this file at install with a strict schema that accepts only a top-level `hooks` key, so the sibling `description` made it reject the config (`unknown field 'description', expected 'hooks'`). Claude Code tolerated it; Codex did not ([#321](https://github.com/pitimon/8-habit-ai-dev/issues/321)).
+- **New validator guard (Check 31)** — `tests/validate-structure.sh` now fails if `hooks/hooks.json` carries any non-`hooks` top-level key, so this class of Codex parse error can never silently return.
+- **Doctrine reconciled** — `.codex/README.md`, `docs/compatibility-matrix.md`, and `docs/codex-integration.md` previously claimed "Codex does not run hooks" / "Not executed", which conflated _parsing_ with _executing_. They now state the real contract: Codex **parses** `hooks.json` at install (schema-pure) and **may invoke** `SessionStart` via the JSON adapter.
 
 ---
 
@@ -1515,4 +1525,4 @@ MIT
 
 ---
 
-_Version: 2.21.29 | Last updated: 2026-06-15_
+_Version: 2.21.30 | Last updated: 2026-06-17_

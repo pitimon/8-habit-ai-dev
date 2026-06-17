@@ -19,13 +19,13 @@ The plugin does not own runtime enforcement, irreversible-action authorization, 
 
 ## Loading Model
 
-| Layer | Claude Code | Codex |
-| --- | --- | --- |
-| Entry point | `CLAUDE.md` | `AGENTS.md` |
-| Skills | `skills/*/SKILL.md` | `skills/*/SKILL.md` |
-| Resolver | `skills/RESOLVER.md` | `skills/RESOLVER.md` |
-| Session hooks | `hooks/` | Not executed |
-| Package manifest | `.claude-plugin/` | `.codex-plugin/` and `.agents/plugins/marketplace.json` |
+| Layer            | Claude Code          | Codex                                                                                                                 |
+| ---------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Entry point      | `CLAUDE.md`          | `AGENTS.md`                                                                                                           |
+| Skills           | `skills/*/SKILL.md`  | `skills/*/SKILL.md`                                                                                                   |
+| Resolver         | `skills/RESOLVER.md` | `skills/RESOLVER.md`                                                                                                  |
+| Session hooks    | `hooks/`             | `hooks/hooks.json` parsed at install (schema-pure, top level = `hooks` only); `SessionStart` may run via JSON adapter |
+| Package manifest | `.claude-plugin/`    | `.codex-plugin/` and `.agents/plugins/marketplace.json`                                                               |
 
 ## Skill Shape
 
@@ -55,23 +55,23 @@ The graph is validated by repository tests so skill references do not silently d
 
 ## Validation
 
-| Script | Purpose |
-| --- | --- |
-| `tests/validate-structure.sh` | Frontmatter, names, version sync, graph fields, packaging surfaces |
-| `tests/validate-content.sh` | Markdown integrity, internal links, ADR shape, doctrine checks |
-| `tests/test-skill-graph.sh` | Handoff graph integrity |
-| `tests/test-verbosity-hook.sh` | Claude hook output and token budget |
+| Script                         | Purpose                                                            |
+| ------------------------------ | ------------------------------------------------------------------ |
+| `tests/validate-structure.sh`  | Frontmatter, names, version sync, graph fields, packaging surfaces |
+| `tests/validate-content.sh`    | Markdown integrity, internal links, ADR shape, doctrine checks     |
+| `tests/test-skill-graph.sh`    | Handoff graph integrity                                            |
+| `tests/test-verbosity-hook.sh` | Claude hook output and token budget                                |
 
 ## Documentation Surfaces
 
-| Surface | Role |
-| --- | --- |
-| `README.md` | Repository overview |
-| `AGENTS.md` | Cross-agent operating protocol |
-| `CLAUDE.md` | Claude Code architecture reference |
-| `docs/wiki/` | Source for GitHub Wiki pages |
-| `llms.txt` | Flat map for LLM indexing |
-| `docs/adr/` | Architecture decision records |
+| Surface      | Role                               |
+| ------------ | ---------------------------------- |
+| `README.md`  | Repository overview                |
+| `AGENTS.md`  | Cross-agent operating protocol     |
+| `CLAUDE.md`  | Claude Code architecture reference |
+| `docs/wiki/` | Source for GitHub Wiki pages       |
+| `llms.txt`   | Flat map for LLM indexing          |
+| `docs/adr/`  | Architecture decision records      |
 
 ## See Also
 

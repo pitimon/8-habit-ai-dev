@@ -10,6 +10,26 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.30 — Codex hook-config schema purity + doctrine reconcile (#321) (2026-06-17)
+
+### Fixed
+
+- **Codex hook-config parse failure** ([#321](https://github.com/pitimon/8-habit-ai-dev/issues/321)) — removed the top-level `description` field from `hooks/hooks.json` (and its `plugin/` mirror). Codex auto-discovers and parses `hooks/hooks.json` at install/cache time with a strict schema that accepts only a top-level `hooks` key, so the sibling `description` made Codex reject the config: `unknown field 'description', expected 'hooks'`. Claude Code tolerated the extra key; Codex does not. `jq empty` still passes.
+
+### Added
+
+- **Validator Check 31 — Codex hook config schema purity** — `tests/validate-structure.sh` now fails if `hooks/hooks.json` (or its mirror) carries any non-`hooks` top-level key. Forcing function so this Codex parse-error class cannot silently return.
+
+### Changed
+
+- **Doctrine reconcile** — `.codex/README.md`, `docs/compatibility-matrix.md`, and `docs/codex-integration.md` previously claimed "Codex does not run hooks" / "Not executed", conflating _parsing_ with _executing_ and contradicting both each other and the live Codex-aware code in `hooks/session-start.sh`. They now state the real contract: Codex **parses** `hooks.json` at install (schema-pure, top level = `hooks` only) and **may invoke** `SessionStart` via the JSON adapter. Broader Claude hook feature parity remains unpromised (ADR-024).
+
+### Boundary
+
+- No runtime enforcement added. The fix keeps the shared `hooks.json` installable in both Claude Code and Codex; it does not expand hook execution semantics or claim parity.
+
+---
+
 ## v2.21.29 — Trap-naming taxonomy lens (#319) (2026-06-15)
 
 ### Added
