@@ -114,6 +114,7 @@ Repository validators and generators should work on macOS, Linux, and WSL:
 
 - Prefer dependency-free scripts.
 - Use `bash` for shell validators and keep compatibility with macOS bash 3.x.
+- On Windows PowerShell hosts, require Git Bash as the compatibility layer and run `scripts/windows-preflight.ps1` before validator smokes; do not maintain parallel PowerShell copies of the Bash validators.
 - Avoid `sed | ... | head` file-reading pipelines under `pipefail`; use the documented `awk` pattern in `CONTRIBUTING.md`.
 - For JSON generation, prefer a small Node script over hand-built shell string concatenation.
 - Do not hardcode macOS-only paths, Linux-only commands such as GNU `timeout`, or WSL-specific filesystem assumptions.

@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.30-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.31-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.31 · Windows Git Bash preflight for Codex validation (#323)
+
+Adds `scripts/windows-preflight.ps1` for PowerShell users who need to validate the Codex plugin on Windows. The script checks `codex`, `git`, `node`, Git Bash, installed plugin listing, and the common bare-`bash` collision with the WSL launcher. The contract stays intentionally narrow: Bash validators remain the single source of truth; Windows uses Git Bash as the compatibility layer rather than a parallel PowerShell validator suite.
 
 ## v2.21.30 · Codex hook-config schema purity + doctrine reconcile (#321)
 

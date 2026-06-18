@@ -48,6 +48,30 @@ Use `codex plugin marketplace list` if you need to confirm the configured market
 
 Run source/marketplace validation when checking publishability. Run installed-cache validation when checking the shipped user artifact.
 
+## Windows PowerShell Preflight
+
+Windows PowerShell can install and use the Codex plugin, but this repository's
+validators and hook smokes remain Bash scripts. Do not port them into parallel
+PowerShell implementations unless a future ADR accepts the maintenance cost.
+
+For Windows hosts, use Git Bash as the required compatibility layer:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\windows-preflight.ps1
+```
+
+The preflight checks `codex`, `git`, `node`, Git Bash, the installed Codex
+plugin listing, and the common `bash` collision where `C:\Windows\System32\bash.exe`
+resolves first but no WSL distribution is installed. When Git Bash is available,
+it prints copy-pasteable validator commands such as:
+
+```powershell
+& "C:\Program Files\Git\bin\bash.exe" -lc "cd /c/Users/User01/.codex/.tmp/marketplaces/pitimon-8-habit-ai-dev && bash tests/validate-structure.sh"
+```
+
+Use the absolute Git Bash path in PowerShell automation. A bare `bash` command
+may invoke the WSL launcher instead of Git Bash on Windows.
+
 ## Codex Runtime Contract
 
 Codex integration promises:
