@@ -10,6 +10,23 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.31 — Windows Git Bash preflight for Codex validation (#323) (2026-06-18)
+
+### Added
+
+- **Windows PowerShell preflight** ([#323](https://github.com/pitimon/8-habit-ai-dev/issues/323)) — `scripts/windows-preflight.ps1` checks `codex`, `git`, `node`, Git Bash, installed Codex plugin listing, and the common Windows collision where a bare `bash` resolves to the WSL launcher (`C:\Windows\System32\bash.exe`) without an installed distribution.
+
+### Changed
+
+- **Windows validation doctrine** — `docs/codex-integration.md` and `docs/compatibility-matrix.md` now state the intended contract: keep the Bash validators as the single source of truth, and use Git Bash as the Windows compatibility layer instead of maintaining parallel PowerShell validator implementations.
+- **PowerShell operator ergonomics** — the preflight prints copy-pasteable Git Bash commands for `validate-structure`, `validate-content`, `test-skill-graph`, and `test-verbosity-hook` against the Codex marketplace checkout.
+
+### Boundary
+
+- No runtime enforcement, hook parity expansion, or PowerShell validator port. This is a readiness check and documentation update for Windows Codex validation.
+
+---
+
 ## v2.21.30 — Codex hook-config schema purity + doctrine reconcile (#321) (2026-06-17)
 
 ### Fixed
