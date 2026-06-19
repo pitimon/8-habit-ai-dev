@@ -44,6 +44,7 @@ These commandments define what AI-assisted development must **never** do. Rules 
 
 - **Why**: "This function handles authentication" might be true, but if you haven't read it, it's a guess
 - **Instead**: Mark uncertainty with the shared epistemic label — **✓V Verified** (you read it) / **✓I Inferred** (reasonable belief, unchecked) / **✓U Unverified** (assumption). E.g. "Based on the name, this likely handles auth — ✓I, needs verification." Same V/I/U vocabulary as `/cross-verify` and the `/research` brief footer, so the reader can always separate what you checked from what you guessed
+- **Staleness**: a label resting on memory or a prior session — not a check made _this_ session — is ✓U, not ✓V. Recalled state goes stale: a function, flag, or path may have changed since you last saw it. Re-verify before relying on it (mirrors the knowledge-cutoff honesty of treating recalled facts as unconfirmed until checked)
 
 **13. Never paste a verbatim quote without grep-verifying its source.**
 
@@ -82,8 +83,8 @@ These commandments define what AI-assisted development must **never** do. Rules 
 
 **14. Never let a seductive-but-broken option pass unnamed.**
 
-- **Why**: The most dangerous design option is the one that looks clean but hides its cost. If you reject an alternative — or pick one — without naming _why_ the tempting-but-wrong options fail, the next person re-proposes them. Adapted from ADHD's divergent-ideation evidence: naming traps is the highest-leverage adversarial output, because baselines rarely name the seductive failure
-- **Instead**: When weighing options (`/scrutinize` Step 1, `/cross-verify` Shadow Self-Check), tag each seductive-but-broken option with its failure mode:
+- **Why**: The most dangerous design option is the one that looks clean but hides its cost. If you reject an alternative — or pick one — without naming _why_ the tempting-but-wrong options fail, the next person re-proposes them. Adapted from ADHD's divergent-ideation evidence: naming traps is the highest-leverage adversarial output, because baselines rarely name the seductive failure. The mirror failure is rejecting a **strawman**: dismiss an option's weakest form and its strongest form survives unaddressed — and gets re-proposed just as surely as if you had never named it
+- **Instead**: When weighing options (`/scrutinize` Step 1, `/cross-verify` Shadow Self-Check), first **steelman** each rejected option — state the strongest case its advocate would make, in one honest sentence — and _then_ tag the failure mode that defeats even that best case. Reject the real alternative, not a convenient caricature. The failure modes:
   - **Hidden cost** — looks cheap now, expensive later (ops burden, lock-in, migration debt)
   - **False economy** — saves the wrong resource (saves code, costs clarity; saves time, costs correctness)
   - **Scaling failure** — works at current size, breaks under load, growth, or concurrency

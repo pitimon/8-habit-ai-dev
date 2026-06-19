@@ -93,6 +93,8 @@ For critical decisions (architecture, security, production deploys), mark each P
 
 **Scoring**: All Pass levels count toward the score, but ✓U items are flagged as verification debt.
 
+**Staleness**: a ✓V resting on memory or a prior session — not a check made _this_ session — is really ✓U. Recalled state goes stale (a function, flag, or path may have changed). Re-verify before it carries weight in the verdict.
+
 **Required for**: Architecture reviews, security-sensitive changes, pre-production gates — these MUST carry the Confidence + Open-unknowns footer in the report header (below).
 **Optional for**: Quick checks, formatting changes, familiar code — Pass/Fail/N/A is sufficient.
 
@@ -102,7 +104,7 @@ After scoring, run a 10-second adversarial pass on your _own_ verdict — the ch
 
 - **What is the strongest counter-argument to my recommendation?** If you can't state one, you haven't pressure-tested it — re-examine the failed and ✓U items before proceeding.
 - **Who is harmed if my verdict is wrong?** A false "proceed" ships the gap; a false "stop" wastes the work. Reweight borderline calls toward the costlier error.
-- **Is my recommendation itself a trap?** Test it against the failure modes — hidden cost, false economy, scaling failure, premature abstraction (commandment 14, `integrity-principles.md`). A clean-looking verdict can still hide one.
+- **Is my recommendation itself a trap?** Test it against the failure modes — hidden cost, false economy, scaling failure, premature abstraction (commandment 14, `integrity-principles.md`). A clean-looking verdict can still hide one. (Commandment 14's steelman half is N/A here: you are pressure-testing your _own_ verdict, not rejecting an alternative.)
 
 This is the cheap inline complement to a full reviewer-subagent dispatch (`advisor-pattern.md`) — run it always; escalate to the subagent only when the action is irreversible or the context is contaminated.
 

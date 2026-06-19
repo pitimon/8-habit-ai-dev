@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.31-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.32-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.32 · Evenhandedness (steelman) + behavioral-spec craft + staleness honesty (#325)
+
+Three workflow-discipline additions sourced from a `/research deep` comparison of a production AI behavioral system prompt against the plugin (which had already independently converged on most such patterns). Commandment 14 now asks you to steelman an option — state its strongest case — before naming why it fails, so you reject the real alternative rather than a strawman; this is wired into `/design` and `/scrutinize`. A new `guides/behavioral-spec-craft.md` distills seven spec-writing techniques for `/requirements` and `/design` (abstracted craft, not a republished prompt). And the ✓V/✓I/✓U confidence vocabulary gains a staleness note: a label resting on memory or a prior session is ✓U until re-verified.
 
 ## v2.21.31 · Windows Git Bash preflight for Codex validation (#323)
 
