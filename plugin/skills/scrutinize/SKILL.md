@@ -50,7 +50,7 @@ Stand outside the change and ask whether it should exist at all, then verify it 
   - A smaller change that solves 90% of the goal with 10% of the risk.
   - Solving it at a different layer (config vs code, framework vs app, build vs runtime).
 - If a better alternative exists, name it explicitly with rationale. **This is the most valuable thing you can output — surface it before the line-by-line review.**
-- When you reject an alternative (or judge the current approach a trap), tag _why_ it fails with a failure mode — hidden cost / false economy / scaling failure / premature abstraction (commandment 14, `integrity-principles.md`).
+- When you reject an alternative (or judge the current approach a trap), first state its strongest case (steelman), then tag _why_ even that best case fails — hidden cost / false economy / scaling failure / premature abstraction (commandment 14, `integrity-principles.md`).
 
 ### 2. Trace — walk the actual code path
 

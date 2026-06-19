@@ -10,6 +10,21 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.32 — Evenhandedness (steelman) + behavioral-spec craft + staleness honesty (#325) (2026-06-20)
+
+### Added
+
+- **`guides/behavioral-spec-craft.md`** ([#325](https://github.com/pitimon/8-habit-ai-dev/issues/325)) — a new reference guide distilling seven spec-writing techniques (layer by stability, explicit precedence, paired positive/negative examples, anti-reframing guards, principle-over-mechanics, fail-safe defaults, trust-boundary declaration) abstracted from the class of large production behavioral specifications. Referenced from `/requirements` (techniques 1–4, 6) and `/design` (techniques 2, 5, 7). It abstracts the craft and does **not** republish any vendor's prompt text.
+
+### Changed
+
+- **Commandment 14 now requires a steelman before the failure-mode tag** — when rejecting a design option, state its _strongest_ case first, then name why even that best case fails. Rejecting a strawman invites the option's re-proposal as surely as never naming it. Wired into `/design` (present options) and `/scrutinize` (Step 1, kept under the 2000-word skill cap). Mirrors the evenhandedness discipline of a well-written behavioral spec; complements the trap-naming taxonomy from #319.
+- **Staleness honesty in the ✓V/✓I/✓U vocabulary** — a confidence label resting on memory or a prior session is ✓U, not ✓V; recalled state goes stale and must be re-verified. Added to `guides/integrity-principles.md` (commandment 7) and the `/cross-verify` confidence table. Mirrors knowledge-cutoff honesty.
+
+> Source: a `/research deep` comparison of a production AI behavioral system prompt against this plugin found it had already independently converged on most such patterns (epistemic honesty, audience-adaptive verbosity, scope-limiting). These three were the genuine gaps. Deferred: D (Spirit-rubric enrichment), E (prose-default formatting doctrine). Routed to `claude-governance`: F (instruction-hierarchy / injection hygiene), per the plugin boundary.
+
+---
+
 ## v2.21.31 — Windows Git Bash preflight for Codex validation (#323) (2026-06-18)
 
 ### Added

@@ -18,10 +18,10 @@ next-skill: design
 
 0. **Choose requirements intake mode**: Before drafting the PRD, classify the request as one of two modes and state the mode in the PRD notes.
 
-   | Mode | Use when | Discipline |
-   | ---- | -------- | ---------- |
+   | Mode                     | Use when                                                                                                                    | Discipline                                                                                                                                                                            |
+   | ------------------------ | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
    | **Existing-system mode** | The user is changing, extending, integrating with, or debugging a real codebase, workflow, deployment, or documented system | Cite source evidence where available: files, docs, commands, issue links, logs, or user-provided facts. Mark anything not verified from the system as an assumption or open question. |
-   | **Idea-mode** | The user is shaping a raw product, feature, or system idea before implementation exists | Preserve user intent, label assumptions before treating them as constraints, and ask architecture-impacting questions before presenting speculative details as requirements. |
+   | **Idea-mode**            | The user is shaping a raw product, feature, or system idea before implementation exists                                     | Preserve user intent, label assumptions before treating them as constraints, and ask architecture-impacting questions before presenting speculative details as requirements.          |
 
    If the request mixes both, use **Existing-system mode** for the known system boundary and **Idea-mode** for new proposed behavior. Do not let proposed behavior masquerade as confirmed system fact.
 
@@ -149,6 +149,7 @@ See [Step 1 wiki page](../../docs/wiki/Step-1-Requirements.md) for deeper walkth
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/prd-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/interview-protocol.md` for the structured discovery protocol.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/behavioral-spec-craft.md` for spec-writing craft — layering, precedence, paired positive/negative examples, fail-safe-on-ambiguity (techniques 1–4, 6).
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h2-begin-with-end.md` for the full H2 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md` when `--persist <slug>` is used (canonical spec for opt-in persistence to `docs/specs/<slug>/prd.md`).

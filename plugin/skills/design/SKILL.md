@@ -26,11 +26,11 @@ next-skill: breakdown
 
 1c. **Select the smallest safe pass level** before producing design output:
 
-| Pass level | Use when | Expected output |
-| ---------- | -------- | --------------- |
-| **Scan** | Small, bounded, exploratory, or unclear architecture impact | Compact architecture note, key constraints, open questions, and safe next step |
-| **Focus** | One module, workflow, subsystem, integration, or boundary is in scope | Targeted decisions, local trade-offs, risks, and any needed ADRs |
-| **Full** | Whole-system design, unclear ownership, 3+ interacting modules, persistence, authentication, payment, security, deployment, or future-agent handoff is needed | Full decision set, ADR coverage, risk register, human approvals, and handoff-ready constraints |
+| Pass level | Use when                                                                                                                                                      | Expected output                                                                                |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Scan**   | Small, bounded, exploratory, or unclear architecture impact                                                                                                   | Compact architecture note, key constraints, open questions, and safe next step                 |
+| **Focus**  | One module, workflow, subsystem, integration, or boundary is in scope                                                                                         | Targeted decisions, local trade-offs, risks, and any needed ADRs                               |
+| **Full**   | Whole-system design, unclear ownership, 3+ interacting modules, persistence, authentication, payment, security, deployment, or future-agent handoff is needed | Full decision set, ADR coverage, risk register, human approvals, and handoff-ready constraints |
 
 Start with `Scan` unless the user's request or existing evidence already proves a `Focus` or `Full` trigger. **Promote only with evidence, explicit user request, or risk of staying smaller**. When promoting, state the trigger, cite the evidence or request, and name the risk of keeping the smaller pass.
 
@@ -58,37 +58,39 @@ Start with `Scan` unless the user's request or existing evidence already proves 
    **Recommendation**: [Which and why]
    ```
 
+   Before giving the recommendation, **steelman the option(s) you are about to reject** — state the strongest case each advocate would make, then explain why the chosen option still wins. Rejecting a strawman is how a sound alternative gets re-proposed next cycle (commandment 14, `integrity-principles.md`).
+
 4. **Human must decide**: AI proposes, human disposes. Mark each decision as In-the-Loop.
 
 4a. **Label architecture claims before relying on them**. Do not present uncertain structure as confirmed architecture.
 
-| Claim label | Meaning |
-| ----------- | ------- |
-| **Confirmed** | Directly supported by files, existing docs, command output, or explicit user-provided facts |
-| **Inferred** | Reasoned from evidence, but not directly stated or exhaustively verified |
-| **Proposed** | Suggested future architecture or change, not implemented or approved yet |
-| **Assumed** | Working premise used to move forward; replace with evidence when load-bearing |
-| **Unknown** | Important gap that is not yet known |
-| **Requires approval** | Decision or claim that needs explicit human acceptance before it becomes a constraint |
+| Claim label           | Meaning                                                                                     |
+| --------------------- | ------------------------------------------------------------------------------------------- |
+| **Confirmed**         | Directly supported by files, existing docs, command output, or explicit user-provided facts |
+| **Inferred**          | Reasoned from evidence, but not directly stated or exhaustively verified                    |
+| **Proposed**          | Suggested future architecture or change, not implemented or approved yet                    |
+| **Assumed**           | Working premise used to move forward; replace with evidence when load-bearing               |
+| **Unknown**           | Important gap that is not yet known                                                         |
+| **Requires approval** | Decision or claim that needs explicit human acceptance before it becomes a constraint       |
 
 For load-bearing claims, include evidence strength and verification need:
 
-| Evidence strength | Use when |
-| ----------------- | -------- |
-| **Direct** | The cited file, doc, command, or user statement directly supports the claim |
-| **Inferred** | Multiple signals support the claim, but no single source directly confirms it |
-| **Assumed** | The claim is an explicit temporary premise |
-| **Unverified** | The claim has no reliable source yet and must not drive irreversible design |
+| Evidence strength | Use when                                                                      |
+| ----------------- | ----------------------------------------------------------------------------- |
+| **Direct**        | The cited file, doc, command, or user statement directly supports the claim   |
+| **Inferred**      | Multiple signals support the claim, but no single source directly confirms it |
+| **Assumed**       | The claim is an explicit temporary premise                                    |
+| **Unverified**    | The claim has no reliable source yet and must not drive irreversible design   |
 
 Use `Verify first: Yes` for any claim that affects sticky decisions, security, compliance, data model, auth boundary, public API, deployment, or irreversible user impact. Use `Verify first: No` only when the claim is already direct evidence or low-impact.
 
 4b. **Prioritize architecture-impacting questions**:
 
-| Priority | Meaning |
-| -------- | ------- |
-| **Blocking** | A wrong answer can change the architecture, invalidate an ADR, or create major rework |
-| **Important** | The answer changes trade-offs, sequencing, risk, or verification plan |
-| **Useful** | The answer improves clarity but can be safely assumed or deferred |
+| Priority      | Meaning                                                                               |
+| ------------- | ------------------------------------------------------------------------------------- |
+| **Blocking**  | A wrong answer can change the architecture, invalidate an ADR, or create major rework |
+| **Important** | The answer changes trade-offs, sequencing, risk, or verification plan                 |
+| **Useful**    | The answer improves clarity but can be safely assumed or deferred                     |
 
 Ask `Blocking` questions before final recommendations. For `Important` or `Useful` questions, either ask or proceed with a clearly labeled assumption.
 
@@ -212,6 +214,7 @@ Place this at the very end of the design output, after all human-readable conten
 See [Step 2 wiki page](../../docs/wiki/Step-2-Design.md) for deeper walkthrough, examples, and common pitfalls.
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/adr-template.md` for the output template.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/behavioral-spec-craft.md` for spec-writing craft — precedence/override ordering, invariants over mechanics, trust-boundary declaration (techniques 2, 5, 7).
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h8-find-voice.md` for the full H8 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md` when `--persist <slug>` is used (canonical spec for opt-in persistence to `docs/specs/<slug>/design.md`).
 Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local glossary, issue-tracker, or agent context files are present.

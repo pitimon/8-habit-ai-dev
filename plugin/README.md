@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.31-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.31)
+[![Version](https://img.shields.io/badge/Version-2.21.32-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.32)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -43,7 +43,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22131) — Version history
+- [What's New](#whats-new-in-v22132) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -421,7 +421,7 @@ Both Claude Code agent definitions use the `opus` model because they run high-st
 ├── guides/
 │   ├── cross-verification.md       # 17-point checklist detail
 │   ├── whole-person-rubrics.md     # 4-dimension maturity rubrics
-│   ├── integrity-principles.md    # 13 AI Integrity Commandments
+│   ├── integrity-principles.md    # 14 AI Integrity Commandments
 │   ├── quick-reference.md          # 19 prioritized rules (scannable)
 │   ├── situation-map.md            # 15 situations → right habit/skill
 │   ├── orchestration-patterns.md   # Multi-agent orchestration (v2.0.0)
@@ -484,6 +484,18 @@ Both Claude Code agent definitions use the `opus` model because they run high-st
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
+
+---
+
+## What's New in v2.21.32
+
+**Theme: Evenhandedness (steelman) + behavioral-spec craft + staleness honesty (#325)**
+
+- **Steelman before you reject** — Commandment 14 now requires stating an option's _strongest_ case before tagging its failure mode, so you reject the real alternative, not a strawman. Wired into `/design` (present options) and `/scrutinize` (Step 1). Mirrors the evenhandedness discipline of a good behavioral spec; complements the existing trap-naming taxonomy.
+- **New `guides/behavioral-spec-craft.md`** — distills seven spec-writing techniques (layer by stability, explicit precedence, paired positive/negative examples, anti-reframing guards, principle-over-mechanics, fail-safe defaults, trust-boundary declaration) from the class of large production behavioral specs. Referenced from `/requirements` and `/design`. Abstracted craft — does not republish any vendor's prompt text.
+- **Staleness honesty in the ✓V/✓I/✓U vocabulary** — a confidence label resting on memory or a prior session is ✓U, not ✓V: recalled state goes stale, re-verify before relying on it. Added to `guides/integrity-principles.md` (#7) and the `/cross-verify` confidence table. Mirrors knowledge-cutoff honesty.
+
+> Source: a `/research deep` comparison of a production AI behavioral system prompt against this plugin found the plugin had already independently converged on most such patterns — these three were the genuine gaps. Scope notes D/E (deferred) and F (instruction-hierarchy → `claude-governance`, per plugin boundary).
 
 ---
 
@@ -1537,4 +1549,4 @@ MIT
 
 ---
 
-_Version: 2.21.31 | Last updated: 2026-06-18_
+_Version: 2.21.32 | Last updated: 2026-06-20_
