@@ -16,6 +16,7 @@ Dependence → Independence → Interdependence → Significance
 **Rules:**
 
 - Every bug fix: trace ALL callers, not just the reported path — defense-in-depth
+- When a change adds a dependency edge, ask whether it crosses an architecture/module boundary it shouldn't — a passing diff can still violate a layering rule
 - Every new function: consider null input, missing file, permission denied, corrupt data
 - Update docs DURING feature work, not after release
 - Surface improvements proactively — don't wait to be asked
@@ -26,7 +27,7 @@ Dependence → Independence → Interdependence → Significance
 - Suppressing errors silently instead of handling them properly
 - "I'll document it later" — later never comes
 
-**Checkpoint:** "Have I checked what else this change affects? Am I reacting or preventing?"
+**Checkpoint:** "Have I checked what else this change affects? Am I reacting or preventing? Does any new edge cross a boundary it shouldn't?"
 
 ### H2: Begin with the End in Mind (เริ่มต้นด้วยภาพสุดท้าย — define done before starting)
 

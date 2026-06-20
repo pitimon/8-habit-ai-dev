@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.32-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.33-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.33 · Blast-radius boundary-crossing flag in H1 (#327)
+
+H1 (Be Proactive) gains one reflective rule and a checkpoint clause: when a change adds a dependency edge, ask whether it crosses an architecture/module boundary it shouldn't — a passing diff can still violate a layering rule. Sourced from a `/research deep` on [`DeusData/codebase-memory-mcp`](https://github.com/DeusData/codebase-memory-mcp), a runtime code-graph MCP server that was **not** adopted (a runtime server is out of the markdown boundary, and its comprehension space is largely covered by the installed `claude-mem` suite — cf. #311). Only its one genuinely-additive idea, `detect_changes`' boundary-crossing flag, was extracted as discipline. It's a discipline question, not an enforcement gate — enforcement stays in `claude-governance` per the plugin boundary.
 
 ## v2.21.32 · Evenhandedness (steelman) + behavioral-spec craft + staleness honesty (#325)
 

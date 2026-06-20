@@ -10,6 +10,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.33 — Blast-radius boundary-crossing flag in H1 (#327) (2026-06-20)
+
+### Added
+
+- **H1 boundary-crossing discipline** ([#327](https://github.com/pitimon/8-habit-ai-dev/issues/327)) — `rules/effective-development.md` H1 (Be Proactive) gains one reflective rule and a checkpoint clause: when a change adds a dependency edge, ask whether it crosses an architecture/module boundary it shouldn't — a passing diff can still violate a layering rule. Phrased as a discipline question, **not** an enforcement gate (enforcement stays in `claude-governance` per the plugin boundary).
+
+> Source: a `/research deep` on [`DeusData/codebase-memory-mcp`](https://github.com/DeusData/codebase-memory-mcp) (a runtime SQLite code-graph MCP server). The tool was **not** adopted — a runtime server is out of this plugin's markdown-only boundary, and its comprehension space is largely covered by the installed `claude-mem` suite (cf. [#311](https://github.com/pitimon/8-habit-ai-dev/issues/311), which rejected a near-identical tree-sitter engine as T3). A claude-mem comparison confirmed one genuine gap: `detect_changes`' boundary-crossing flag. A `@8-habit-reviewer` cross-verify (13/17) found ~2/3 of the original 3-file plan merely restated existing lines (H1 "trace ALL callers" :18, checkpoint :29, `/diagnose` :131/:141, `/scrutinize` ×5) and collapsed it to this single additive delta. Deferred (not adopted): the index-before-grep cue and standalone use of the MCP tool.
+
+---
+
 ## v2.21.32 — Evenhandedness (steelman) + behavioral-spec craft + staleness honesty (#325) (2026-06-20)
 
 ### Added
