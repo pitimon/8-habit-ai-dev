@@ -830,7 +830,7 @@ echo ""
 
 # --- Check 27: Consumer-doctrine bump enforcement (ADR-019 + ADR-023) ---
 # Consumer-doctrine paths (rules/, skills/, hooks/, habits/, guides/, agents/,
-# .codex-plugin/, .agents/plugins/marketplace.json) reach
+# .claude-plugin/, .codex-plugin/, .agents/plugins/marketplace.json) reach
 # plugin consumers at runtime. Changes there MUST be accompanied by a version bump in
 # the version-bearing files, even if the change is "doctrine refinement" in spirit. Contributor-
 # doctrine paths (docs/, CLAUDE.md, CONTRIBUTING.md, .github/, SELF-CHECK.md, tests/)
@@ -856,7 +856,10 @@ else
     # still normalizes to `.codex-plugin/` → consumer (correct: it is a version manifest).
     CHANGED_LOGICAL=$(echo "$CHANGED" | sed 's#^plugin/##')
     # Match any path under consumer-doctrine top-level dirs plus native Codex packaging.
-    CONSUMER_TOUCHED=$(echo "$CHANGED_LOGICAL" | grep -E '^((rules|skills|hooks|habits|guides|agents)/|\.codex-plugin/|\.agents/plugins/marketplace\.json$)' | sort -u || true)
+    # #331: include `.claude-plugin/` (plugin.json non-version fields + marketplace.json) —
+    # ADR-019 classifies these as consumer-doctrine. marketplace.json has no `lastUpdated`
+    # field, so any non-version edit legitimately requires a bump (no false-positive class).
+    CONSUMER_TOUCHED=$(echo "$CHANGED_LOGICAL" | grep -E '^((rules|skills|hooks|habits|guides|agents)/|\.(claude|codex)-plugin/|\.agents/plugins/marketplace\.json$)' | sort -u || true)
 
     if [ -z "$CONSUMER_TOUCHED" ]; then
       pass "contributor-doctrine only since $LAST_TAG — no bump required (ADR-019)"
