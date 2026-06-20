@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.32-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.32)
+[![Version](https://img.shields.io/badge/Version-2.21.33-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.33)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -43,7 +43,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22132) — Version history
+- [What's New](#whats-new-in-v22133) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -484,6 +484,16 @@ Both Claude Code agent definitions use the `opus` model because they run high-st
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
+
+---
+
+## What's New in v2.21.33
+
+**Theme: Blast-radius boundary-crossing flag in H1 (#327)**
+
+- **H1 now flags boundary-crossing edges** — when a change adds a dependency edge, ask whether it crosses an architecture/module boundary it shouldn't: a passing diff can still violate a layering rule. Added as one reflective rule + a checkpoint clause in `rules/effective-development.md` (H1 Be Proactive). It's a discipline question, not an enforcement gate — enforcement stays in `claude-governance`.
+
+> Source: a `/research deep` on [`DeusData/codebase-memory-mcp`](https://github.com/DeusData/codebase-memory-mcp) (a runtime code-graph MCP server). The tool itself was **not** adopted — it's a runtime server (out of this plugin's markdown boundary) and its comprehension space is largely covered by the installed `claude-mem` suite; cf. #311. Its one genuinely-additive idea was `detect_changes`' boundary-crossing flag, extracted here as discipline. A `@8-habit-reviewer` cross-verify (13/17) found ~2/3 of the original plan merely restated existing lines (H1 "trace ALL callers", `/diagnose`, `/scrutinize`) and collapsed it to this single delta.
 
 ---
 
@@ -1549,4 +1559,4 @@ MIT
 
 ---
 
-_Version: 2.21.32 | Last updated: 2026-06-20_
+_Version: 2.21.33 | Last updated: 2026-06-20_
