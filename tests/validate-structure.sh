@@ -835,6 +835,7 @@ echo ""
 # the version-bearing files, even if the change is "doctrine refinement" in spirit. Contributor-
 # doctrine paths (docs/, CLAUDE.md, CONTRIBUTING.md, .github/, SELF-CHECK.md, tests/)
 # do not — they preserve ADR-017 §C5 intent. See ADR-019 for full rationale and tables.
+# The `plugin/` mirror is classified by its logical (de-mirrored) path — see the F21 fix below.
 echo "--- Check 27: consumer-doctrine bump enforcement (ADR-019 + ADR-023) ---"
 
 LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
@@ -848,8 +849,14 @@ else
   if [ -z "$CHANGED" ]; then
     pass "no file changes since $LAST_TAG — Check 27 trivially passes"
   else
+    # F21 fix (#329): normalize the leading `plugin/` mirror prefix before classifying, so a
+    # contributor-doctrine file (docs/, CONTRIBUTING.md, SELF-CHECK.md, …) does NOT trip
+    # consumer-doctrine merely via its mirrored `plugin/` copy. Check 28 guarantees root↔mirror
+    # byte-parity, so classifying by logical path is sound. `plugin/.codex-plugin/plugin.json`
+    # still normalizes to `.codex-plugin/` → consumer (correct: it is a version manifest).
+    CHANGED_LOGICAL=$(echo "$CHANGED" | sed 's#^plugin/##')
     # Match any path under consumer-doctrine top-level dirs plus native Codex packaging.
-    CONSUMER_TOUCHED=$(echo "$CHANGED" | grep -E '^((rules|skills|hooks|habits|guides|agents|plugin)/|\.codex-plugin/|\.agents/plugins/marketplace\.json$)' || true)
+    CONSUMER_TOUCHED=$(echo "$CHANGED_LOGICAL" | grep -E '^((rules|skills|hooks|habits|guides|agents)/|\.codex-plugin/|\.agents/plugins/marketplace\.json$)' | sort -u || true)
 
     if [ -z "$CONSUMER_TOUCHED" ]; then
       pass "contributor-doctrine only since $LAST_TAG — no bump required (ADR-019)"
