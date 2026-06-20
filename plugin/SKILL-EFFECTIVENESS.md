@@ -34,6 +34,8 @@ Trend analysis informs /skill-improve cycles, discoverability + footprint decisi
 
 ## Maintainer update protocol
 
+> **Cadence (relaxed 2026-06-20, #329)**: harvest when a `/reflect` Q6 window has **accumulated** — not once per release. A release with nothing new to harvest requires **no** "tally unchanged" pulse note. This retires the per-release note ritual, which had become self-referential overhead (a note written each release purely to avoid tripping a calendar-based reversal trigger). Dormancy is now measured as un-harvested real signal, not elapsed release count — anticipates the ADR-018 §"Forward-Guardrail Sunset" review (2026-11-24). The tally itself is preserved.
+
 When updating this file:
 
 1. **Read lesson files**: `ls ~/.claude/lessons/*.md` on the maintainer's machine, plus any contributor reports shared via PR or issue.

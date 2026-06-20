@@ -270,17 +270,17 @@ Version lives in **6 files** — all must be bumped together:
 
 Before bumping the version files above and tagging a release, run through this list. Each item is a forcing function against drift — skipping any item is how dormancy starts (see ADR-018 §"Context" for the 13-month dormancy precedent that motivated this checklist).
 
-- [ ] Release decision recorded before any version bump:
-  - `Release now` for installed-user surfaces: `skills/`, `guides/`, `hooks/`, manifests, `AGENTS.md`, `llms.txt`, generated catalogs, install/update docs, runtime-boundary docs, or root context files shipped in the plugin package.
-  - `Bundle later` for consumer-facing changes that can wait; do not bump version files until the bundled release PR.
-  - `No release` for contributor-only tests, CI, ADRs, internal docs, or validator maintenance that does not change installed-user behavior or package contents.
-- [ ] Run [`SKILL-EFFECTIVENESS.md`](SKILL-EFFECTIVENESS.md) tally update per its §"Maintainer update protocol" — grep Q6 across new lessons since last tally **and harvest invocation ground truth** (`<command-name>` + Skill-tool grep across `~/.claude/projects/`, excluding `claude-mem-observer-sessions` and the plugin's own repo dir per #314), increment counters, refresh the Skill class index + `Last updated` + `Lessons analyzed`, note any new trends. Usage informs discoverability/footprint only — **never deprecation** (Governing principle). ADR-018 Edge #1, anti-dormancy mechanism per issue [#227](https://github.com/pitimon/8-habit-ai-dev/issues/227).
+- [ ] Release decision recorded (**default = `Bundle later`**):
+  - `Bundle later` (default) — doc/doctrine deltas (guides, ADRs, wording, validators, a single rule/checkpoint tweak) ride the next release; do not bump version files for a one-change release.
+  - `Release now` — only when a change must reach installed users promptly (new/changed skill behavior, packaging/manifest fix, install-blocking bug); state the reason.
+  - `No release` — contributor-only paths (tests, CI, ADRs, internal docs, validator maintenance): no bump (ADR-019 contributor-doctrine).
+- [ ] **If** a `/reflect` Q6 window has accumulated since the last tally, run the [`SKILL-EFFECTIVENESS.md`](SKILL-EFFECTIVENESS.md) §"Maintainer update protocol" harvest (Q6 + invocation ground truth per #314; usage informs discoverability/footprint only, **never deprecation**). No per-release "tally unchanged" pulse note is required when nothing accumulated (ritual retired 2026-06-20; anticipates ADR-018 §"Forward-Guardrail Sunset", 2026-11-24).
 - [ ] CHANGELOG entry added (or explicitly marked doctrine-only per ADR-017 §C5).
 - [ ] Version bumped in all 6 files (see "Version Bumping" above) — `tests/validate-structure.sh` will fail CI if any drifts.
 - [ ] `README.md` "What's New" mentions the bumped version (Check 19 enforces this).
 - [ ] Real behavior proof captured for changed user surfaces: validators, generated catalog freshness, install/list evidence when packaging changed, and explicit "not tested" notes.
 
-**ADR-018 reversal trigger**: if the SKILL-EFFECTIVENESS tally is not updated for ≥2 release cycles, ADR-018 itself enters reversal review per its Forward-Guardrail Sunset criteria. This checklist's existence is part of the proof-of-life mechanism.
+**ADR-018 dormancy signal** (reframed 2026-06-20): dormancy = a real `/reflect` Q6 window accumulated but went **un-harvested**. Calendar release cadence is **not** dormancy — releases with nothing to harvest need no pulse note (that calendar-cycle reading was generating self-referential "tally unchanged" overhead). The genuine proof-of-life is that real signal gets harvested when it exists; this anticipates the ADR-018 §"Forward-Guardrail Sunset" review window (2026-11-24).
 
 ## Quality Checklist
 
