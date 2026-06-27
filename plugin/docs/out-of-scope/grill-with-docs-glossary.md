@@ -1,7 +1,7 @@
 ---
 date: 2026-06-27
 originating-decision: "/research deep on mattpocock/skills `grill-with-docs` + a Facebook post (หัวหน้าฮง) on Matt Pocock retiring /grill-me for coding"
-rejected-because: The headline pattern (CONTEXT.md ubiquitous-language glossary) is already adopted and attributed in guides/project-context-contract.md; the one net-new gap (a glossary-drift audit) has no first-person friction citation, so ADR-014's friction-first gate is unmet — same gate that blocked the Jun-24 codebase-design.md attempt
+rejected-because: The headline pattern (CONTEXT.md ubiquitous-language glossary) is already adopted and attributed in guides/project-context-contract.md; the net-new gaps (G1 glossary authoring, G2 glossary-drift audit, G3 continuous near-synonym challenge) have no first-person friction citation, so ADR-014's friction-first gate is unmet — same gate that blocked the Jun-24 codebase-design.md attempt
 ---
 
 # We don't ship a new glossary/domain-modeling surface from `grill-with-docs` — audit + T2 defer
@@ -17,11 +17,11 @@ adopted, what is deliberately rejected, and what is deferred under the friction-
 
 ## What we already have (the post validates a past decision)
 
-| Post element                                                 | Already in this plugin                                                      | Evidence                                                          |
-| ------------------------------------------------------------ | --------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `CONTEXT.md` glossary with `_Avoid_` near-synonym lists      | Yes — same format, explicitly attributed to `grill-with-docs`               | `guides/project-context-contract.md:30-56`, attribution at `:129` |
-| "Challenge the user's near-synonym / fuzzy term during work" | Yes — interview gate                                                        | `guides/templates/interview-protocol.md:61-62`                    |
-| Glossary consumed before reasoning                           | Yes — `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/diagnose` | `guides/project-context-contract.md:19-26`                        |
+| Post element                                                 | Already in this plugin                                                                                                                                                                                            | Evidence                                                          |
+| ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `CONTEXT.md` glossary with `_Avoid_` near-synonym lists      | Yes — same format, explicitly attributed to `grill-with-docs`                                                                                                                                                     | `guides/project-context-contract.md:30-56`, attribution at `:129` |
+| "Challenge the user's near-synonym / fuzzy term during work" | **Partial** — the gate exists but fires only inside the `/requirements` interview, not continuously across `/design` / `/build-brief` / `/review-ai` (Matt's `domain-modeling` challenges throughout the session) | `guides/templates/interview-protocol.md:61-62`                    |
+| Glossary consumed before reasoning                           | Yes — `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/diagnose`                                                                                                                                       | `guides/project-context-contract.md:19-26`                        |
 
 The `_Avoid_` glossary format here (`**Term**:` / one-or-two-sentence definition / `_Avoid_: …`)
 mirrors the upstream `domain-modeling` glossary shape — `mattpocock/skills`
@@ -55,17 +55,30 @@ handles near-synonyms (many words, one meaning). The existing answer to polysemy
 split via `CONTEXT-MAP.md` (`guides/project-context-contract.md:56`), where the same word can carry
 different canonical meanings in different contexts.
 
-## The one real gap, and why we defer it
+## The real gaps vs Matt's `domain-modeling`, and why we defer them
 
-There is a genuine _conceptual_ gap: the glossary is read-only **consumed** but never **audited for
-drift**. `consistency-check`'s five passes don't check whether domain terms used across spec artifacts
-are defined in `CONTEXT.md`, nor whether wording collides with an `_Avoid_` entry — Pass 3 (Ambiguity)
-only matches literal `[NEEDS CLARIFICATION]` / `TBD` tokens (`skills/consistency-check/SKILL.md:78-84,
-134-144`).
+Matt's `domain-modeling` is an **active loop** (write the glossary, update it inline as terms
+crystallize, challenge near-synonyms throughout, cross-reference code against the glossary). Our side
+is a **contract + passive consume**. Three concrete gaps follow from that difference:
+
+| #   | Gap                                   | What Matt has that we lack                                                                   | Closing increment                                                                              | Status                                                                       |
+| --- | ------------------------------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| G1  | **Glossary authoring/maintenance**    | `domain-modeling` _writes_ and updates `CONTEXT.md` inline ("update inline, not in batches") | a guided `/define-terms`-style authoring surface                                               | Deferred — heaviest; risks skill proliferation + the read-only-skill charter |
+| G2  | **Glossary-drift detection**          | `domain-modeling` cross-references code against glossary claims and surfaces contradictions  | a 6th read-only **"Glossary drift" pass** on `/consistency-check`                              | Deferred — the primary candidate (closest to friction)                       |
+| G3  | **Continuous near-synonym challenge** | challenged _throughout_ the session, not just at intake                                      | widen the existing `/requirements` interview gate to `/design` / `/build-brief` / `/review-ai` | Deferred — extension of a gate we already have, scoped narrowly today        |
+
+All three share one blocker (next section) and one re-entry gate (below); none is built now.
+
+### G2 detail (the primary candidate)
+
+The glossary is read-only **consumed** but never **audited for drift**. `consistency-check`'s five
+passes don't check whether domain terms used across spec artifacts are defined in `CONTEXT.md`, nor
+whether wording collides with an `_Avoid_` entry — Pass 3 (Ambiguity) only matches literal
+`[NEEDS CLARIFICATION]` / `TBD` tokens (`skills/consistency-check/SKILL.md:78-84, 134-144`).
 
 The smallest fix would be a 6th **"Glossary drift" pass** on `/consistency-check` (read-only; emit
 MEDIUM suggestions to add a term to `CONTEXT.md` or use the canonical word). But **no first-person
-friction justifies building it.** The three lessons that pattern-matched on "term/glossary/ambiguity"
+friction justifies building any of the three.** The three lessons that pattern-matched on "term/glossary/ambiguity"
 were keyword collisions on direct read (these are user-local lesson files under `~/.claude/lessons/`,
 not repo-tracked — paths given in full so a reader on the same machine can verify):
 
@@ -81,19 +94,20 @@ None describes rework caused by missing or ambiguous _domain vocabulary_. This i
 
 ## Wiring: sibling of the existing P2 LANGUAGE.md T2 entry
 
-The glossary-drift pass is **not a new free-floating deferral** — it is a sibling of the vocabulary
-candidate already in the [ADR-016](../adr/ADR-016-t2-bag-drop-date-eviction-policy.md) T2 bag:
+G1–G3 are **not new free-floating deferrals** — they sit under the vocabulary candidate already in the
+[ADR-016](../adr/ADR-016-t2-bag-drop-date-eviction-policy.md) T2 bag:
 
 > `P2 LANGUAGE.md vocabulary` — `mattpocock/skills` SHA `b8be62ff` `productivity/write-a-skill` —
 > drop date **2026-11-23** (`docs/adr/ADR-016-t2-bag-drop-date-eviction-policy.md:68`).
 
-The glossary-drift pass shares P2's drop date and re-entry conditions; do **not** mint a competing
-drop-date row.
+All three share P2's drop date and re-entry conditions; do **not** mint competing drop-date rows. G2 is
+the front-runner if the gate ever opens; G1 and G3 trail it and would only be reconsidered once G2
+proves insufficient.
 
 ## Re-entry conditions
 
 Per [ADR-016 §"Re-entry mechanism"](../adr/ADR-016-t2-bag-drop-date-eviction-policy.md) (lines 35-42),
-build the glossary-drift pass only when **either** trigger fires:
+build any of G1–G3 only when **either** trigger fires:
 
 1. **First-person glossary friction** — a `/reflect` lesson, cross-verify imbalance, or maintainer
    report citing real rework caused by ambiguous or undefined _domain vocabulary_ (not normative
@@ -101,5 +115,5 @@ build the glossary-drift pass only when **either** trigger fires:
 2. **SHA-churn re-audit** — `mattpocock/skills` ships a materially changed `domain-modeling` /
    `grill-with-docs` that exposes a capability our `CONTEXT.md` contract lacks.
 
-Until then: the glossary pattern is adopted, the maintenance audit is deferred, and the verbatim
-interview port is rejected.
+Until then: the glossary pattern is adopted, the active-maintenance loop (G1–G3) is deferred, and the
+verbatim interview port is rejected.
