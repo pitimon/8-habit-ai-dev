@@ -23,9 +23,10 @@ adopted, what is deliberately rejected, and what is deferred under the friction-
 | "Challenge the user's near-synonym / fuzzy term during work" | Yes — interview gate                                                        | `guides/templates/interview-protocol.md:61-62`                    |
 | Glossary consumed before reasoning                           | Yes — `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/diagnose` | `guides/project-context-contract.md:19-26`                        |
 
-The `_Avoid_` glossary format here matches the upstream `domain-modeling/CONTEXT-FORMAT.md` verbatim
-in spirit (`**Term**:` / one-or-two-sentence definition / `_Avoid_: …`). This was imported during the
-Jun-7 project-context-contract work (memory obs #98928), and the maintainer already concluded that
+The `_Avoid_` glossary format here (`**Term**:` / one-or-two-sentence definition / `_Avoid_: …`)
+mirrors the upstream `domain-modeling` glossary shape — `mattpocock/skills`
+`skills/engineering/domain-modeling/CONTEXT-FORMAT.md` (fetched during the `/research` audit). This was
+imported during the Jun-7 project-context-contract work (memory obs #98928), and the maintainer already concluded that
 vocabulary terms "appear organically across guides and skills without a formal definition" (obs #108120).
 
 ## What we reject: a verbatim port of `grill-me` / `grilling`
@@ -65,12 +66,14 @@ only matches literal `[NEEDS CLARIFICATION]` / `TBD` tokens (`skills/consistency
 The smallest fix would be a 6th **"Glossary drift" pass** on `/consistency-check` (read-only; emit
 MEDIUM suggestions to add a term to `CONTEXT.md` or use the canonical word). But **no first-person
 friction justifies building it.** The three lessons that pattern-matched on "term/glossary/ambiguity"
-were keyword collisions on direct read:
+were keyword collisions on direct read (these are user-local lesson files under `~/.claude/lessons/`,
+not repo-tracked — paths given in full so a reader on the same machine can verify):
 
-- `~/.claude/lessons/2026-05-04-...:22` — a missing cross-verify _checklist question_ ("domain-pack"
-  = a `cross-verify-packs/` file, not a glossary).
-- `~/.claude/lessons/2026-05-24-...:39` — RFC-2119 _normative-language_ consistency (must / should).
-- `~/.claude/lessons/2026-05-12-...:27` — a frontmatter _scope_-ambiguity convention.
+- `2026-05-04-openrouter-cache-fact-extraction.md:22` — a missing cross-verify _checklist question_
+  ("domain-pack" = a `cross-verify-packs/` file, not a glossary).
+- `2026-05-24-v218-4-skill-authoring-double-rescue.md:39` — RFC-2119 _normative-language_ consistency
+  (must / should).
+- `2026-05-12-current-state-save-point-v2-15-2.md:27` — a frontmatter _scope_-ambiguity convention.
 
 None describes rework caused by missing or ambiguous _domain vocabulary_. This is exactly the
 "pattern attractiveness, not friction citation" trap ADR-014 warns against, and it matches the Jun-24
