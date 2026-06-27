@@ -10,6 +10,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.34 — Karpathy simplicity + surgical-edit gaps as deferred doctrine (ADR-026 Deliverable B, #339) (2026-06-28)
+
+### Added
+
+- **N8 + N9 in the doctrine-audit guide** ([#339](https://github.com/pitimon/8-habit-ai-dev/issues/339)) — `guides/anthropic-engineering-doctrine-audit.md` Table 2 gains two **T2 (drop-date 2026-12-27)** rows: Karpathy rule #2 (simplicity / YAGNI edit discipline) and rule #3 (surgical / minimal-diff edits), both from `multica-ai/andrej-karpathy-skills` via the 2026-06-27 viral-post audit. They are **deferred, not adopted** — no first-person friction citation exists (popularity is not friction per [ADR-014](docs/adr/ADR-014-external-prior-art-audit.md):63). Rule #3's rationale records its tension with H1 defense-in-depth (`habits/h1-be-proactive.md:9`) that must be reframed before any future ship.
+
+> Follow-up to [ADR-026](docs/adr/ADR-026-external-prior-art-audit-karpathy-gstack.md) ("Deliverable B"): the prior-art audit of the 5 viral-post repos recorded the verdicts; this lands the deferred rows in the greppable defensive-citation surface so the next blog-reader hits "already evaluated" instead of re-litigating. Docs/doctrine only — no skill, rule, hook, or enforcement behavior changed.
+
+---
+
 ## v2.21.33 — Blast-radius boundary-crossing flag in H1 (#327) (2026-06-20)
 
 ### Added
