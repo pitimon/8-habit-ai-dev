@@ -6,6 +6,7 @@
 **Related**: [ADR-006 Audience Honesty + Superpowers Deferral](./ADR-006-audience-honesty-and-superpowers-deferral.md), [ADR-014 External Prior-Art Audit](./ADR-014-external-prior-art-audit.md) (tier framework + friction-first gate this ADR reuses), [ADR-016 T2 Bag Drop-Date](./ADR-016-t2-bag-drop-date-eviction-policy.md) (eviction policy for the T2 deferrals below), [ADR-017 Anthropic Skill Patterns](./ADR-017-anthropic-skill-patterns-audit.md), [ADR-019 Doctrine-Only Scope Refinement](./ADR-019-doctrine-only-scope-refinement.md) (consumer-vs-contributor doctrine — why this ADR is no-bump), [ADR-021 Dynamic-Workflow Positioning](./ADR-021-dynamic-workflow-positioning.md)
 **Source brief**: `~/.claude/plans/deep-ai-dynamic-wreath.md` (Deep mode, Audit). Predecessor engineer-skills brief: `~/.claude/plans/deep-https-github-com-utarn-engineer-ski-lexical-raccoon.md`
 **Related rejection record**: [`docs/out-of-scope/grill-with-docs-glossary.md`](../out-of-scope/grill-with-docs-glossary.md) (same viral-post genre; covered the domain-modeling / glossary slice on 2026-06-27)
+**Tracking**: [issue #339](https://github.com/pitimon/8-habit-ai-dev/issues/339) · [PR #340](https://github.com/pitimon/8-habit-ai-dev/pull/340)
 **External sources audited** (primary, verified June 2026 via WebFetch):
 
 - <https://github.com/multica-ai/andrej-karpathy-skills> (single `CLAUDE.md`, 4 rules; ~220k★ combined across personal + org mirror)
@@ -114,10 +115,10 @@ All verdicts stay inside `8-habit-ai-dev`'s charter (workflow discipline). The o
 
 ## Self-Check
 
-- [ ] Primary sources verified (karpathy-skills, gstack, utarn/engineer-skills) and cited with URLs
-- [ ] Every tier verdict carries a habit map + boundary fit per ADR-014 criteria
-- [ ] gstack boundary cite = verbatim `CLAUDE.md:54` rule-of-thumb (ADR-021 cited as consistent precedent, not controlling)
-- [ ] Karpathy #3 ↔ H1 tension recorded so no anti-H1 port happens later
-- [ ] T2 deferrals carry the ADR-016 drop date 2026-12-27 + re-entry conditions
-- [ ] Out-of-scope records created for gstack (T3) and utarn/engineer-skills (closeout)
-- [ ] Docs-only — no version bump (contributor-doctrine, ADR-019); `plugin/` mirror synced (Check 28)
+- [x] Primary sources cited with URLs; external quotes (Karpathy taglines, gstack roles) confirmed byte-for-byte against the raw repo files, not only the WebFetch extraction
+- [x] Every tier verdict carries a habit map + boundary fit per ADR-014 criteria
+- [x] gstack boundary cite = verbatim `CLAUDE.md:54` rule-of-thumb (ADR-021 cited as consistent precedent, not controlling)
+- [x] Karpathy #3 ↔ H1 tension recorded so no anti-H1 port happens later
+- [x] T2 deferrals carry the ADR-016 drop date 2026-12-27 + re-entry conditions
+- [x] Out-of-scope records created for gstack (T3) and utarn/engineer-skills (closeout)
+- [x] Docs-only — no version bump (contributor-doctrine, ADR-019); `plugin/` mirror synced (Check 28)
