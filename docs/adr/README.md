@@ -14,5 +14,6 @@ This directory contains durable architecture decisions for `8-habit-ai-dev`.
 
 - `ADR-001` through `ADR-024`: historical decisions covering orchestration, research modes, validation, wiki artifacts, EU AI Act migration, cross-agent discoverability, spec persistence, Codex packaging, and Codex runtime adapter boundaries.
 - `ADR-025-codex-project-context-files.md`: adds repo-local Codex context files while preserving existing Claude Code guidance.
+- `ADR-026-external-prior-art-audit-karpathy-gstack.md`: audits multica-ai/andrej-karpathy-skills + garrytan/gstack (and closes the utarn/engineer-skills thread) under ADR-014's friction-first gate — defers Karpathy simplicity/surgical-edit gaps (T2), rejects gstack's persona pipeline as `claude-governance` territory (T3).
 
 For the full documentation map, see `../../llms.txt`.
