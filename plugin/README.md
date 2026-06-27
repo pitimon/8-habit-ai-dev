@@ -30,6 +30,7 @@
 - [7-Step Workflow](#the-7-step-workflow) — Visual pipeline from research to monitoring
 - [Skills Reference](#skills-reference) — All 24 skills with habit mappings
 - [Use Cases](#use-cases-which-skill-when) — Common scenarios and recommended paths
+- [End-to-End Recipes](#end-to-end-recipes) — Copy-paste tool sequences for real situations
 - [The 8 Habits](#the-8-habits) — Principles behind the workflow
 - [Maturity Model](#the-maturity-model) — Dependence to Significance
 
@@ -220,18 +221,21 @@ Skill names below use Claude Code slash notation because that is the shortest la
 
 Start from **your situation**, not the skill name.
 
-| I want to...                      | Start with                                                                                                                                                                                                          | Then                              | Habit                          |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ------------------------------ |
-| Build a new feature from scratch  | `/requirements`                                                                                                                                                                                                     | `/design` → `/breakdown`          | H2: Define done first          |
-| Review code before committing     | `/review-ai`                                                                                                                                                                                                        | `/security-check` if needed       | H4: Never skip review          |
-| Understand an unfamiliar codebase | `/research`                                                                                                                                                                                                         | `/build-brief`                    | H5: Read before writing        |
-| Deploy / provider canary          | `/deploy-guide`                                                                                                                                                                                                     | `/monitor-setup`                  | H1: Stage, rollback, reconcile |
-| Assess overall project health     | `/cross-verify`                                                                                                                                                                                                     | `/whole-person-check`             | All 8 habits                   |
-| Classify an operational finding   | `/operational-state`                                                                                                                                                                                                | `/deploy-guide` or `/post-mortem` | H1 + H5 + H8                   |
-| Fix a production bug              | `/build-brief`                                                                                                                                                                                                      | Reproduce first                   | H5: Understand first           |
-| Something feels off about a plan  | `/cross-verify`                                                                                                                                                                                                     | Check dimension scores            | H1-H8                          |
-| Learn the full workflow           | `/workflow`                                                                                                                                                                                                         | (guided walkthrough)              | All                            |
-| Survive `/clear` and `/compact`   | See [`guides/spec-digest-pattern.md`](guides/spec-digest-pattern.md) (project-orientation hub) or [`current-state.md`](guides/persistence-convention.md#current-state-file-optional-user-owned) (feature-spec mode) | Adopt one based on repo archetype | H5: Understand first           |
+| I want to...                                  | Start with                                                                                                                                                                                                          | Then                              | Habit                             |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | --------------------------------- |
+| Build a new feature from scratch              | `/requirements`                                                                                                                                                                                                     | `/design` → `/breakdown`          | H2: Define done first             |
+| Review code before committing                 | `/review-ai`                                                                                                                                                                                                        | `/security-check` if needed       | H4: Never skip review             |
+| Understand an unfamiliar codebase             | `/research`                                                                                                                                                                                                         | `/build-brief`                    | H5: Read before writing           |
+| Deploy / provider canary                      | `/deploy-guide`                                                                                                                                                                                                     | `/monitor-setup`                  | H1: Stage, rollback, reconcile    |
+| Assess overall project health                 | `/cross-verify`                                                                                                                                                                                                     | `/whole-person-check`             | All 8 habits                      |
+| Classify an operational finding               | `/operational-state`                                                                                                                                                                                                | `/deploy-guide` or `/post-mortem` | H1 + H5 + H8                      |
+| Fix a production bug                          | `/build-brief`                                                                                                                                                                                                      | Reproduce first                   | H5: Understand first              |
+| Investigate a hard bug (no obvious cause)     | `/diagnose`                                                                                                                                                                                                         | `/post-mortem` → `/reflect`       | H1 + H5: Loop before guessing     |
+| Question whether a change should exist at all | `/scrutinize`                                                                                                                                                                                                       | `/review-ai` for diff-local       | H5 + H8: Intent before diff       |
+| Brief leadership on engineering work          | `/management-talk`                                                                                                                                                                                                  | (channel-aware reshape)           | H4 + H6: Right signal per channel |
+| Something feels off about a plan              | `/cross-verify`                                                                                                                                                                                                     | Check dimension scores            | H1-H8                             |
+| Learn the full workflow                       | `/workflow`                                                                                                                                                                                                         | (guided walkthrough)              | All                               |
+| Survive `/clear` and `/compact`               | See [`guides/spec-digest-pattern.md`](guides/spec-digest-pattern.md) (project-orientation hub) or [`current-state.md`](guides/persistence-convention.md#current-state-file-optional-user-owned) (feature-spec mode) | Adopt one based on repo archetype | H5: Understand first              |
 
 ### Recommended Paths
 
@@ -242,6 +246,76 @@ Start from **your situation**, not the skill name.
 **Quality Gate** — `/cross-verify` + `/whole-person-check`. For pre-PR or pre-release assessment.
 
 For the full 15-situation map, see [`guides/situation-map.md`](guides/situation-map.md).
+
+---
+
+## End-to-End Recipes
+
+The table above answers _"which skill?"_. These recipes answer _"how do I actually drive a whole situation?"_ — copy-paste sequences that chain skills (and, where it pays off, the plugin's read-only `8-habit-reviewer` agent — or an independent-model QA pass, if you run one). Names use Claude Code slash notation; in Codex, invoke the same skills via `/skills` or `$skill-name`. Mix, skip, and extend them for your own project — the discipline is the chain (**define → build → verify**), not any single skill.
+
+### R1 — Ship a new feature without vibe-coding
+
+```text
+/requirements   → PRD: what / why / who + EARS success criteria
+/design         → architecture decisions surfaced for YOUR judgment
+/breakdown      → atomic tasks, no scope creep
+( build )
+/review-ai      → PASS / CONCERNS / REWORK / FAIL verdict before commit
+/cross-verify   → 17-question gate across Body / Mind / Heart / Spirit
+```
+
+**You get:** _done_ is defined before the first prompt and reviewed before the commit. In a hurry? `/requirements` + `/review-ai` alone remove the two most common vibe-coding failure modes — undefined _done_ and unreviewed output. — **H2 + H4**
+
+### R2 — Audit AI-generated code before merge (independent gate)
+
+```text
+/review-ai          → builder-side self-review of the diff
+/security-check     → OWASP lens: secrets, injection, auth, dependencies
+8-habit-reviewer    → ask Claude to run this read-only agent — separate eyes on the same diff
+```
+
+**You get:** the model that wrote the code isn't the only one grading it — a separate reviewer catches what self-review rationalizes as "probably fine." For an even stronger gate, add an independent-model pass (e.g. an external Codex QA loop — _not_ shipped with this plugin), and always grep any reviewer's cited `file:line` before acting on it. — **H4 + H1**
+
+### R3 — Investigate a hard production bug
+
+```text
+/diagnose     → feedback-loop FIRST → reproduce → hypothesise → fix + regression test
+/post-mortem  → engineer-audience RCA (refuses to draft without a real repro)
+/reflect      → capture the lesson so the whole class of bug is caught earlier next time
+```
+
+**You get:** a fix backed by a durable regression test, not a one-off `curl` that proves nothing tomorrow. `/diagnose` refuses to skip the feedback loop — guessing-before-loop is the anti-pattern it exists to prevent. — **H1 + H5 + H7**
+
+### R4 — Decide whether to adopt an external pattern or library
+
+```text
+/research deep   (Audit mode)  → does our code ALREADY do this? where is the real gap?
+( friction-first gate )        → adopt only with a cited first-person need, not "looks nice"
+/cross-verify                  → pressure-test the recommendation before committing
+→ if rejected: record it in docs/out-of-scope/ with explicit reversal conditions
+```
+
+**You get:** you avoid bolting on attractive-but-redundant machinery, and every _"no"_ is documented so the next person doesn't re-litigate it. _(This repo's own `docs/out-of-scope/grill-with-docs-glossary.md` was produced by exactly this recipe.)_ — **H5 + H7**
+
+### R5 — Survive `/clear` and `/compact` without losing context
+
+```text
+/save-spec                       → scaffold a project-root SPEC.md digest (hub mode)
+guides/spec-digest-pattern.md    → project-orientation hub, for larger repos
+current-state.md                 → lightweight save point for in-flight feature work
+```
+
+**You get:** the next session re-orients from a durable file instead of re-deriving everything from scratch. Pick the archetype that fits your repo — don't adopt both. — **H5 + H2**
+
+### R6 — Reshape an engineering update for leadership
+
+```text
+/management-talk  → eng-to-eng content → JIRA / Slack / standup / email / meeting
+```
+
+**You get:** function/file/SHA noise stripped, but JIRA keys, PR numbers, and workload names kept — the channel-appropriate signal, not a wall of implementation detail. — **H4 + H6**
+
+> Recipes are starting points, not rails. The value is the verification chain, not ceremony — escalate to `/cross-verify` or an independent reviewer when an action is irreversible, and keep it light when it isn't.
 
 ---
 
@@ -1559,4 +1633,4 @@ MIT
 
 ---
 
-_Version: 2.21.33 | Last updated: 2026-06-20_
+_Version: 2.21.33 | Last updated: 2026-06-27_
