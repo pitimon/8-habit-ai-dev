@@ -251,7 +251,7 @@ For the full 15-situation map, see [`guides/situation-map.md`](guides/situation-
 
 ## End-to-End Recipes
 
-The table above answers _"which skill?"_. These recipes answer _"how do I actually drive a whole situation?"_ — copy-paste sequences that chain skills (and, where it pays off, companion tools like the `advisor` reviewer or an independent Codex QA pass). Names use Claude Code slash notation; in Codex, invoke the same skills via `/skills` or `$skill-name`. Mix, skip, and extend them for your own project — the discipline is the chain (**define → build → verify**), not any single skill.
+The table above answers _"which skill?"_. These recipes answer _"how do I actually drive a whole situation?"_ — copy-paste sequences that chain skills (and, where it pays off, the plugin's read-only `8-habit-reviewer` agent — or an independent-model QA pass, if you run one). Names use Claude Code slash notation; in Codex, invoke the same skills via `/skills` or `$skill-name`. Mix, skip, and extend them for your own project — the discipline is the chain (**define → build → verify**), not any single skill.
 
 ### R1 — Ship a new feature without vibe-coding
 
@@ -264,17 +264,17 @@ The table above answers _"which skill?"_. These recipes answer _"how do I actual
 /cross-verify   → 17-question gate across Body / Mind / Heart / Spirit
 ```
 
-**You get:** _done_ is defined before the first prompt and reviewed before the commit. In a hurry? `/requirements` + `/review-ai` alone kill most vibe-coding defects. — **H2 + H4**
+**You get:** _done_ is defined before the first prompt and reviewed before the commit. In a hurry? `/requirements` + `/review-ai` alone remove the two most common vibe-coding failure modes — undefined _done_ and unreviewed output. — **H2 + H4**
 
 ### R2 — Audit AI-generated code before merge (independent gate)
 
 ```text
-/review-ai       → builder-side self-review of the diff
-/security-check  → OWASP lens: secrets, injection, auth, dependencies
-/codex-qa-loop   → a SEPARATE model (Codex) grades it across 7 gates
+/review-ai          → builder-side self-review of the diff
+/security-check     → OWASP lens: secrets, injection, auth, dependencies
+8-habit-reviewer    → ask Claude to run this read-only agent — separate eyes on the same diff
 ```
 
-**You get:** the model that wrote the code isn't the only one grading it — independent eyes catch what self-review rationalizes as "probably fine." Always grep the QA's cited `file:line` before acting on it. — **H4 + H1**
+**You get:** the model that wrote the code isn't the only one grading it — a separate reviewer catches what self-review rationalizes as "probably fine." For an even stronger gate, add an independent-model pass (e.g. an external Codex QA loop — _not_ shipped with this plugin), and always grep any reviewer's cited `file:line` before acting on it. — **H4 + H1**
 
 ### R3 — Investigate a hard production bug
 
