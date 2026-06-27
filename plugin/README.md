@@ -383,7 +383,7 @@ Full checklist: [guides/cross-verification.md](guides/cross-verification.md)
 
 ## Whole Person Assessment
 
-The `/whole-person-check` skill evaluates work across Covey's 4 dimensions — the plugin's **unique differentiator**. No other engineering tool covers all four.
+The `/whole-person-check` skill evaluates work across Covey's 4 dimensions — one of the plugin's **differentiators**, since few engineering tools assess all four.
 
 | Dimension               | What It Measures                            | AI Strength         |
 | ----------------------- | ------------------------------------------- | ------------------- |
@@ -425,7 +425,7 @@ Both Claude Code agent definitions use the `opus` model because they run high-st
 
 ## Architecture
 
-See the full annotated repository file tree in [`docs/wiki/Architecture.md`](docs/wiki/Architecture.md).
+See an illustrative repository file tree in [`docs/wiki/Architecture.md`](docs/wiki/Architecture.md) — per-skill step/habit mappings are in the [Skills Reference](#skills-reference) table above.
 
 **Design decisions:**
 
