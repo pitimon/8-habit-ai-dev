@@ -31,7 +31,9 @@ _Workflow discipline for AI-assisted development_
 
 - [Habits Reference](Habits-Reference)
 - [Maturity Model](Maturity-Model)
+- [Whole Person Assessment](Whole-Person-Assessment)
 - [Architecture](Architecture)
+- [Glossary](Glossary)
 - [Limitations](Limitations)
 - [Vibe Coding vs Structured](Vibe-Coding-vs-Structured)
 - [Harness Engineering](Harness-Engineering)
