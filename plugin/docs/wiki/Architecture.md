@@ -73,6 +73,42 @@ The graph is validated by repository tests so skill references do not silently d
 | `llms.txt`   | Flat map for LLM indexing          |
 | `docs/adr/`  | Architecture decision records      |
 
+## Repository File Tree
+
+Illustrative layout (skill/ADR counts grow between releases — browse the repo for the authoritative tree):
+
+```
+8-habit-ai-dev/
+├── .claude-plugin/
+│   ├── plugin.json                 # Plugin metadata
+│   └── marketplace.json            # Marketplace listing
+├── .codex-plugin/
+│   └── plugin.json                 # Native Codex plugin metadata (v2.19.0)
+├── .agents/plugins/
+│   └── marketplace.json            # Native Codex marketplace listing
+├── skills/                         # 24 skills (8 workflow + 16 standalone)
+│   ├── research/SKILL.md           #   Step 0 → H5 (depth levels + modes)
+│   ├── requirements/SKILL.md       #   Step 1 → H2
+│   ├── design/SKILL.md             #   Step 2 → H8
+│   ├── breakdown/SKILL.md          #   Step 3 → H3 (orchestration classification)
+│   ├── build-brief/SKILL.md        #   Step 4 → H5 (context boundaries)
+│   ├── review-ai/SKILL.md          #   Step 5 → H4 (4-level verdict)
+│   ├── deploy-guide/SKILL.md       #   Step 6 → H1 (staging, rollback, reconciliation)
+│   ├── monitor-setup/SKILL.md      #   Step 7 → H7
+│   └── ...                         #   + standalone skills (cross-verify, diagnose, scrutinize, …)
+├── agents/                         # Read-only reviewers (8-habit-reviewer, research-verifier)
+├── hooks/                          # SessionStart workflow reminder
+├── habits/                         # h1..h8 reference content (loaded on-demand)
+├── guides/                         # Checklists, templates, cross-verify-packs
+├── tests/                          # validate-structure / validate-content / test-skill-graph
+├── scripts/                        # sync-mirror.sh, windows-preflight.ps1
+├── docs/                           # adr/, wiki/, out-of-scope/, compatibility matrix
+├── plugin/                         # Codex child-package mirror (kept in sync via sync-mirror.sh)
+├── rules/effective-development.md  # Auto-loaded Claude Code rules
+├── CLAUDE.md · AGENTS.md · CONTRIBUTING.md · SELF-CHECK.md
+└── README.md
+```
+
 ## See Also
 
 - [Installation](Installation)
