@@ -105,7 +105,8 @@ All verdicts stay inside `8-habit-ai-dev`'s charter (workflow discipline). The o
 **Negative / Honest disclosure**:
 
 - This is a popularity-driven audit, not a friction-driven one. Per ADR-014's lesson, that is acceptable **only** because it ships nothing — it records verdicts and defers. The two T2 gaps remain unaddressed until a real friction signal appears; if none does by 2026-12-27, they are evicted per ADR-016.
-- The discoverability follow-up (appending Karpathy #2/#3 to `guides/anthropic-engineering-doctrine-audit.md` Table 2, so the grep-protocol at `:52-59` finds them) is **deliberately not done here** — touching `guides/` is a consumer-doctrine change requiring a version bump, and is left as a separate maintainer decision.
+- The discoverability follow-up (appending Karpathy #2/#3 to `guides/anthropic-engineering-doctrine-audit.md` Table 2, so the grep-protocol at `:52-59` finds them) was **deliberately not done in this PR (#340)** — touching `guides/` is a consumer-doctrine change requiring a version bump, and was left as a separate maintainer decision.
+  - **Update 2026-06-28 (post-merge):** that separate decision was taken — "Deliverable B" shipped in **PR #341 / v2.21.34** as rows **N8 + N9 (T2, drop-date 2026-12-27)** in the doctrine-audit guide. This bullet's "not done here" is scoped to PR #340; it is no longer outstanding on `main`.
 
 ## Options Considered
 
