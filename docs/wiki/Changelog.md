@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.33-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.34-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.34 · Karpathy simplicity + surgical-edit gaps as deferred doctrine (ADR-026 Deliverable B, #339)
+
+The `multica-ai/andrej-karpathy-skills` rules #2 (simplicity / YAGNI) and #3 (surgical / minimal-diff edits) are recorded as **N8 + N9 (T2, drop-date 2026-12-27)** in `guides/anthropic-engineering-doctrine-audit.md` Table 2 — the greppable defensive-citation surface contributors check before re-proposing a blog-post pattern. They are **deferred, not adopted**: no first-person friction citation exists, and repo popularity is not friction (ADR-014). Rule #3 also carries a recorded tension with H1 (defense-in-depth) that must be reframed before any future ship. Follow-up to [ADR-026](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-026-external-prior-art-audit-karpathy-gstack.md) ("Deliverable B"). Docs/doctrine only — no skill, rule, hook, or enforcement behavior changed.
 
 ## v2.21.33 · Blast-radius boundary-crossing flag in H1 (#327)
 

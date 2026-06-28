@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.33-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.33)
+[![Version](https://img.shields.io/badge/Version-2.21.34-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.34)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22133) — Version history
+- [What's New](#whats-new-in-v22134) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -458,13 +458,13 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
-## What's New in v2.21.33
+## What's New in v2.21.34
 
-**Theme: Blast-radius boundary-crossing flag in H1 (#327)**
+**Theme: Karpathy simplicity + surgical-edit gaps recorded as deferred doctrine (ADR-026 Deliverable B, #339)**
 
-- **H1 now flags boundary-crossing edges** — when a change adds a dependency edge, ask whether it crosses an architecture/module boundary it shouldn't: a passing diff can still violate a layering rule. Added as one reflective rule + a checkpoint clause in `rules/effective-development.md` (H1 Be Proactive). It's a discipline question, not an enforcement gate — enforcement stays in `claude-governance`.
+- **Two Karpathy rules logged as deferred candidates** — the `multica-ai/andrej-karpathy-skills` rules #2 (simplicity / YAGNI) and #3 (surgical / minimal-diff edits) are recorded as **N8 + N9 (T2, drop-date 2026-12-27)** in `guides/anthropic-engineering-doctrine-audit.md` Table 2 — the greppable defensive-citation surface a contributor checks before re-proposing a blog-post pattern. They are **deferred, not adopted**: no first-person friction citation exists, and repo popularity is not friction (ADR-014). Rule #3 also carries a recorded tension with H1 (defense-in-depth) that must be reframed before any future ship.
 
-> Source: a `/research deep` on [`DeusData/codebase-memory-mcp`](https://github.com/DeusData/codebase-memory-mcp) (a runtime code-graph MCP server). The tool itself was **not** adopted — it's a runtime server (out of this plugin's markdown boundary) and its comprehension space is largely covered by the installed `claude-mem` suite; cf. #311. Its one genuinely-additive idea was `detect_changes`' boundary-crossing flag, extracted here as discipline. A `@8-habit-reviewer` cross-verify (13/17) found ~2/3 of the original plan merely restated existing lines (H1 "trace ALL callers", `/diagnose`, `/scrutinize`) and collapsed it to this single delta.
+> Follow-up to [ADR-026](docs/adr/ADR-026-external-prior-art-audit-karpathy-gstack.md) (the prior-art audit of the 5 viral-post repos). This is the "Deliverable B" discoverability step: the audit verdict lives in the ADR; this lands the rows where the `How to use this guide` grep-protocol will actually find them. Docs/doctrine only — no skill, rule, or enforcement behavior changed.
 
 ---
 
@@ -569,4 +569,4 @@ MIT
 
 ---
 
-_Version: 2.21.33 | Last updated: 2026-06-27_
+_Version: 2.21.34 | Last updated: 2026-06-28_
