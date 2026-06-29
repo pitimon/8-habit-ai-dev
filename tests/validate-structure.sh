@@ -958,7 +958,7 @@ elif [ -d "plugin" ]; then
         SYNC_FAIL=$((SYNC_FAIL + 1))
       fi
     done
-    for file in AGENTS.md CHANGELOG.md CLAUDE.md CONTRIBUTING.md DOMAIN.md LICENSE README.md SELF-CHECK.md SKILL-EFFECTIVENESS.md SPEC.md llms.txt; do
+    for file in AGENTS.md CHANGELOG.md CLAUDE.md CONTRIBUTING.md DOMAIN.md LICENSE README.md SELF-CHECK.md SECURITY.md SKILL-EFFECTIVENESS.md SPEC.md llms.txt; do
       if cmp -s "$file" "plugin/$file"; then
         pass "plugin/$file is in sync with $file"
       else
