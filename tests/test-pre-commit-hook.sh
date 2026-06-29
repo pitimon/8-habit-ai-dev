@@ -90,6 +90,24 @@ for HOOK_PATH in "$HOOK" "$HOOK_MIRROR"; do
 done
 
 echo ""
+echo "--- Static anti-pattern guard (DoD #6: a reintroduced false-success SHAPE must fail this test, not only the behavior scenarios above) ---"
+# The behavior scenarios block a reintroduced `|| true` *indirectly* (the no-verdict
+# guard catches an empty crash output). A future edit could keep the verdict guards yet
+# re-add `REVIEW_OUTPUT=$(...) || true` — restoring the exact F6 smell. This static
+# check rejects the shape directly so the regression cannot slip back in.
+for HOOK_PATH in "$HOOK" "$HOOK_MIRROR"; do
+  _label="${HOOK_PATH#$REPO_ROOT/}"
+  if grep -qE '\|\| true|continue-on-error' "$HOOK_PATH"; then
+    _matches=$(grep -nE '\|\| true|continue-on-error' "$HOOK_PATH" | tr '\n' ';')
+    echo "  FAIL: $_label contains a false-success anti-pattern: $_matches"
+    FAIL_COUNT=$((FAIL_COUNT + 1))
+  else
+    echo "  PASS: $_label has no \`|| true\` / \`continue-on-error\` (F6 stays closed)"
+    PASS_COUNT=$((PASS_COUNT + 1))
+  fi
+done
+
+echo ""
 echo "=== Summary ==="
 echo "PASS: $PASS_COUNT"
 echo "FAIL: $FAIL_COUNT"
