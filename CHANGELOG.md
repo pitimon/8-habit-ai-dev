@@ -10,6 +10,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.35 — Fail-closed pre-commit example (F6 false-success fix) (#343) (2026-06-29)
+
+### Fixed
+
+- **`hooks/pre-commit.sh.example` no longer ships the banned false-success anti-pattern** ([#343](https://github.com/pitimon/8-habit-ai-dev/issues/343)) — the optional `/review-ai` pre-commit gate was `REVIEW_OUTPUT=$(claude --print …) || true` then grep for REWORK/FAIL, so a CLI crash (auth / network) produced empty output and the hook reported "passed". It is now **fail-closed**: a non-zero CLI exit, a REWORK/FAIL verdict, and a missing verdict line each block the commit; only an explicit PASS/CONCERNS marker proceeds. Adds `tests/test-pre-commit-hook.sh` (12 assertions across both mirror copies, runs in CI) to prevent recurrence.
+
+> Closes F6 from the [Fable model review](docs/reviews/2026-06-10-fable-model-review.md) and the 2026-06-29 adversarial Spirit pass (`governance-reviewer`). The plugin's own `rules/coding-style.md` bans `cmd || true` on checks that must verify something — the example users copy shipped exactly that shape (introduced in #80). This is the enforce-on-others-skip-on-self gap the adversarial pass surfaced; the remaining findings (B1 800-line validator self-exemption, S1 missing SECURITY.md / threat model, F4 frozen SELF-CHECK table, F5 Bash drift) stay open under #343.
+
+---
+
 ## v2.21.34 — Karpathy simplicity + surgical-edit gaps as deferred doctrine (ADR-026 Deliverable B, #339) (2026-06-28)
 
 ### Added

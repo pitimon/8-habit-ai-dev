@@ -24,3 +24,5 @@ jobs:
         run: bash tests/validate-content.sh
       - name: Verbosity hook regression test (8 branches + override + budget)
         run: bash tests/test-verbosity-hook.sh
+      - name: Pre-commit hook F6 regression test (fail-closed verdict paths)
+        run: bash tests/test-pre-commit-hook.sh

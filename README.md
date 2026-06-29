@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.34-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.34)
+[![Version](https://img.shields.io/badge/Version-2.21.35-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.35)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22134) — Version history
+- [What's New](#whats-new-in-v22135) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -458,6 +458,16 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.35
+
+**Theme: Fail-closed pre-commit example (F6 false-success fix, #343)**
+
+- **The shipped pre-commit example no longer swallows a review-tool crash into a silent "passed."** — `hooks/pre-commit.sh.example` (the optional `/review-ai` pre-commit gate users can copy) was `REVIEW_OUTPUT=$(claude --print …) || true` then grep for REWORK/FAIL, so a CLI crash (auth / network) produced empty output and the hook reported success. It is now **fail-closed**: a non-zero CLI exit, a REWORK/FAIL verdict, and a missing verdict line each block the commit; only an explicit PASS/CONCERNS marker proceeds. New `tests/test-pre-commit-hook.sh` (12 assertions across both mirror copies) guards against recurrence and runs in CI.
+
+> This is the enforce-on-others-skip-on-self gap surfaced by a 2026-06-29 adversarial Spirit pass: the plugin's own `rules/coding-style.md` bans `cmd || true` on checks that must verify something, yet the example users copy shipped exactly that shape (introduced in [#80](https://github.com/pitimon/8-habit-ai-dev/issues/80)). Closes F6 from the [Fable model review](docs/reviews/2026-06-10-fable-model-review.md). Issue [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343) tracks the remaining findings (B1 800-line validator self-exemption, S1 missing SECURITY.md / threat model, F4 frozen SELF-CHECK table, F5 Bash drift).
+
+---
+
 ## What's New in v2.21.34
 
 **Theme: Karpathy simplicity + surgical-edit gaps recorded as deferred doctrine (ADR-026 Deliverable B, #339)**
@@ -569,4 +579,4 @@ MIT
 
 ---
 
-_Version: 2.21.34 | Last updated: 2026-06-28_
+_Version: 2.21.35 | Last updated: 2026-06-29_
