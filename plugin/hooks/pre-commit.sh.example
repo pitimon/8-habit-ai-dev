@@ -25,6 +25,16 @@
 
 set -euo pipefail
 
+# Get staged files FIRST (exclude deletions and mode-only changes). If there is
+# nothing substantive to review, exit 0 BEFORE requiring claude — so empty /
+# deletion-only / --allow-empty commits don't block solely because claude is absent.
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
+
+if [ -z "$STAGED_FILES" ]; then
+  # Nothing substantive staged (rename-only or pure deletions)
+  exit 0
+fi
+
 # Fail-closed (F6b, #343): if claude is not on PATH, /review-ai cannot run, so the
 # commit is BLOCKED rather than silently skipped. Escape hatch for environments
 # without claude (CI, containers): set HABIT_REVIEW_SKIP=1 to bypass explicitly.
@@ -37,14 +47,6 @@ if ! command -v claude >/dev/null 2>&1; then
   echo "[8-habit] claude CLI not found — /review-ai cannot run. Commit blocked (fail-closed, #343 F6b)."
   echo "[8-habit] Install claude on PATH, or bypass explicitly: HABIT_REVIEW_SKIP=1 git commit ..."
   exit 1
-fi
-
-# Get staged files (exclude deletions and mode-only changes)
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
-
-if [ -z "$STAGED_FILES" ]; then
-  # Nothing substantive staged (rename-only or pure deletions)
-  exit 0
 fi
 
 FILE_COUNT=$(echo "$STAGED_FILES" | wc -l | tr -d ' ')
