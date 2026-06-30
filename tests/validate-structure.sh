@@ -125,6 +125,30 @@ if [ "$SIZE_FAIL" -eq 0 ]; then
 fi
 echo ""
 
+# --- Check 5b: Bash tooling size limit (1500 lines) — documented exemption (#343 B1) ---
+# The 800-line rule (Check 5) is a READABILITY budget for CONTENT files (skills/habits/guides)
+# that a reader grasps in one sitting. Bash validators and scripts are LINEAR TOOLING (check
+# suites, sync helpers) where that budget does not fit — but they must still be BOUNDED so they
+# cannot grow without limit. This is a DOCUMENTED, ENFORCED exemption, not a silent self-exemption
+# (closes the enforce-on-others-skip-on-self gap the Fable review + adversarial Spirit pass
+# flagged). Supersedes the v2.14.3 (#163) "trim to <800" approach: that trim regressed
+# (validate-content 793->1012, validate-structure ->1164), proving trim-alone is not durable as
+# checks accrete. The 1500 cap bounds growth; if a validator approaches it, the check fires and
+# forces a real decision (extract sourced helpers or raise the cap deliberately).
+echo "--- Check 5b: Bash tooling < 1500 lines (documented exemption from the 800 content limit, #343 B1) ---"
+SIZE_FAIL_BASH=0
+while read -r f; do
+  lines=$(wc -l < "$f")
+  if [ "$lines" -gt 1500 ]; then
+    fail "$f has $lines lines (bash-tooling limit: 1500 — see Check 5b comment)"
+    SIZE_FAIL_BASH=$((SIZE_FAIL_BASH + 1))
+  fi
+done < <(find tests/ scripts/ hooks/ -name "*.sh" -type f)
+if [ "$SIZE_FAIL_BASH" -eq 0 ]; then
+  pass "All bash tooling under 1500 lines (documented exemption from 800 content limit, #343 B1)"
+fi
+echo ""
+
 # --- Check 6: prev-skill/next-skill fields exist ---
 echo "--- Check 6: prev-skill/next-skill frontmatter ---"
 for skill_dir in skills/*/; do
