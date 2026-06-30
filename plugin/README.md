@@ -50,7 +50,7 @@
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
 - [FAQ](#faq) — Common questions answered
 - [Glossary](#glossary) — Key terms defined
-- [Alternative Setup](#alternative-setup-without-plugin) | [Contributing](#contributing) | [License](#license)
+- [Alternative Setup](#alternative-setup-without-plugin) | [Security](#security) | [Contributing](#contributing) | [License](#license)
 
 ---
 
@@ -557,6 +557,15 @@ curl -sL https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/rules/eff
 ```
 
 This auto-loads the 8-Habit principles into every Claude Code session without the skills or hooks. For other agents, load [AGENTS.md](AGENTS.md), then use [skills/RESOLVER.md](skills/RESOLVER.md) to pick the right `SKILL.md`.
+
+---
+
+## Security
+
+This plugin ships **markdown guidance only** — no runtime service, endpoints, database, or network client — so the conventional application-layer attack surface does not apply. The real surface is **supply-chain** (integrity of skill / hook / rule content) and the opt-in `hooks/pre-commit.sh.example`.
+
+- 📄 [**Security Policy**](SECURITY.md) — how to report a vulnerability (private disclosure; please do **not** open a public issue).
+- 🛡️ [**Threat Model**](docs/security/threat-model.md) — STRIDE for a markdown-only plugin, trust boundaries, and an honest list of controls not yet present.
 
 ---
 

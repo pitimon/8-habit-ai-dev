@@ -22,7 +22,7 @@ cd "$(dirname "$0")/.."
 # Mirrored directories (Check 28 enforces `diff -qr <dir> plugin/<dir>`).
 DIRS="skills guides habits hooks agents rules scripts docs"
 # Mirrored root files (Check 28 enforces `cmp -s <file> plugin/<file>`).
-FILES="AGENTS.md CHANGELOG.md CLAUDE.md CONTRIBUTING.md DOMAIN.md LICENSE README.md SELF-CHECK.md SKILL-EFFECTIVENESS.md SPEC.md llms.txt"
+FILES="AGENTS.md CHANGELOG.md CLAUDE.md CONTRIBUTING.md DOMAIN.md LICENSE README.md SELF-CHECK.md SECURITY.md SKILL-EFFECTIVENESS.md SPEC.md llms.txt"
 
 # NOTE: `.codex-plugin/` is intentionally NOT synced — the root and plugin/ Codex manifests are
 # distinct files (Check 28 does not diff them), so copying would corrupt the child manifest.
