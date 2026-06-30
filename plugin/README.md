@@ -460,11 +460,15 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ## What's New in v2.21.35
 
-**Theme: Fail-closed pre-commit example (F6 false-success fix, #343)**
+**Theme: #343 adversarial-Spirit-pass workstream — fail-closed hook + security docs + self-check honesty**
 
-- **The shipped pre-commit example no longer swallows a review-tool crash into a silent "passed."** — `hooks/pre-commit.sh.example` (the optional `/review-ai` pre-commit gate users can copy) was `REVIEW_OUTPUT=$(claude --print …) || true` then grep for REWORK/FAIL, so a CLI crash (auth / network) produced empty output and the hook reported success. It is now **fail-closed**: a non-zero CLI exit, a REWORK/FAIL verdict, and a missing verdict line each block the commit; only an explicit PASS/CONCERNS marker proceeds. New `tests/test-pre-commit-hook.sh` (12 assertions across both mirror copies) guards against recurrence and runs in CI.
+- **F6 + F6b + F6c — fully fail-closed pre-commit example** — `hooks/pre-commit.sh.example` no longer ships the banned `|| true` false-success shape. A CLI crash, REWORK/FAIL verdict, missing verdict, or missing `claude` each block the commit; only an explicit PASS/CONCERNS proceeds (`HABIT_REVIEW_SKIP=1` escape hatch). Verdict regex tightened so `NOT PASS` can't false-proceed. `tests/test-pre-commit-hook.sh` (20 assertions, both mirrors) guards it.
+- **S1 — SECURITY.md + threat model** — added a disclosure policy + `docs/security/threat-model.md` (the plugin's own `/security-check` applied to the repo).
+- **F4 — retired the frozen "16/17 = 100%" SELF-CHECK headline** (grade-saturation fossil) → points to the living per-release list.
+- **B1 — Check 5b**: documented 1500-line bash-tooling exemption (the plugin's validators exceeded the 800-line rule they enforce).
+- **F5 — CLAUDE.md Bash-skill drift reconciled** (3 → 10).
 
-> This is the enforce-on-others-skip-on-self gap surfaced by a 2026-06-29 adversarial Spirit pass: the plugin's own `rules/coding-style.md` bans `cmd || true` on checks that must verify something, yet the example users copy shipped exactly that shape (introduced in [#80](https://github.com/pitimon/8-habit-ai-dev/issues/80)). Closes F6 from the [Fable model review](docs/reviews/2026-06-10-fable-model-review.md). Issue [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343) tracks the remaining findings (B1 800-line validator self-exemption, S1 missing SECURITY.md / threat model, F4 frozen SELF-CHECK table, F5 Bash drift).
+> Driven by a 2026-06-29 adversarial Spirit pass (`governance-reviewer`) corroborating the [Fable model review](docs/reviews/2026-06-10-fable-model-review.md): honest score Body 4 / Mind 3.5 / Heart 4 / Spirit 3 = 3.6/5, not the self-assessed 4.5. Closes [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343). Each item passed independent Codex QA.
 
 ---
 
