@@ -10,16 +10,25 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## v2.21.35 — Fully fail-closed pre-commit example (F6 + F6b + F6c) (#343) (2026-06-29)
+## v2.21.35 — #343 adversarial-Spirit-pass findings: fail-closed hook + security docs + self-check honesty (#343) (2026-06-30)
+
+The first batch from the [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343) workstream — driven by an adversarial `governance-reviewer` Spirit pass corroborating the [Fable model review](docs/reviews/2026-06-10-fable-model-review.md) (both scored the plugin Spirit 3/5). Each item passed independent Codex QA.
 
 ### Fixed
 
-- **F6 — `hooks/pre-commit.sh.example` no longer ships the banned false-success anti-pattern** ([#343](https://github.com/pitimon/8-habit-ai-dev/issues/343)) — the optional `/review-ai` pre-commit gate was `REVIEW_OUTPUT=$(claude --print …) || true` then grep for REWORK/FAIL, so a CLI crash (auth / network) produced empty output and the hook reported "passed". Now fail-closed: a non-zero CLI exit, a REWORK/FAIL verdict, and a missing verdict line each block the commit; only an explicit PASS/CONCERNS marker proceeds.
-- **F6b — missing-`claude` path is fail-closed** — the hook previously `exit 0` (silent skip) when `claude` was not on PATH. It now **blocks** (a gate that can't check fails), with `HABIT_REVIEW_SKIP=1` as an explicit escape hatch for environments without `claude` (CI, containers) — mirroring the `HABIT_QUIET` convention.
-- **F6c — verdict regex tightened** — `verdict.*:.*\b(...)\b` matched `## Review Verdict: NOT PASS` (would falsely proceed); tightened to `verdict:\s*(...)\b` so the verdict word must immediately follow the colon. Aligns with fail-closed: any format drift blocks (loud) rather than passes (silent).
-- `tests/test-pre-commit-hook.sh` — **20 assertions** across both mirror copies (PASS/CONCERNS/REWORK/FAIL/crash/no-verdict/NOT-PASS verdicts + missing-CLI ± `HABIT_REVIEW_SKIP` + a static `|| true` source-guard), runs in CI.
+- **F6 + F6b + F6c — fully fail-closed pre-commit example** — `hooks/pre-commit.sh.example` (the optional `/review-ai` gate) no longer ships the banned `|| true` false-success shape. F6: a CLI crash / REWORK-FAIL verdict / missing verdict line each block; only an explicit PASS/CONCERNS proceeds. F6b: a missing `claude` CLI blocks too (was a silent skip), with `HABIT_REVIEW_SKIP=1` as the escape hatch. F6c: verdict regex tightened so `NOT PASS` can't false-proceed. `tests/test-pre-commit-hook.sh` (20 assertions, both mirrors) guards it.
 
-> Closes F6 ([Fable model review](docs/reviews/2026-06-10-fable-model-review.md), 2026-06-10) + the F6b/F6c extensions (2026-06-30 Codex QA) from the [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343) workstream. The plugin's own `rules/coding-style.md` bans `cmd || true` on checks that must verify — the example users copy shipped exactly that shape (introduced in #80). The remaining #343 findings (B1, S1, F4, F5) ship via #345–#348.
+### Added
+
+- **S1 — SECURITY.md + threat model** — the plugin taught `/security-check` but had no disclosure policy, threat model, or self-audit. Added `SECURITY.md` (private disclosure via GitHub Private Security Advisories + email; "targets not guarantees" SLA) + `docs/security/threat-model.md` (STRIDE for a markdown-only plugin — real threats = supply-chain content + opt-in hook privilege; app-threats N/A; includes applying the plugin's own `/security-check` to the repo).
+
+### Changed
+
+- **F4 — retired the frozen "16/17 = 100%" SELF-CHECK headline** — a v1.x artifact persisting across ~95 releases, still citing "all 17 skills" (now 24), anchor of the ~60-release perfect-5.0 grade-saturation streak. Replaced with a retire note pointing to the living per-release list (retired, not re-graded — avoids the self-inflation trap).
+- **B1 — documented bash-tooling size exemption (Check 5b)** — the plugin's validators (~1188/1012 lines) exceeded the 800-line rule Check 5 enforces. Check 5b caps bash tooling at 1500 with a documented rationale (800 is a readability budget for content files; validators are linear tooling). Supersedes v2.14.3's "trim" approach, which regressed.
+- **F5 — CLAUDE.md Bash-skill drift reconciled (3 → 10)** — the "Proposed" section listed 3 Bash skills; 10 actually carry it. Now accurate.
+
+> Honest score at audit: Body 4 / Mind 3.5 / Heart 4 / Spirit 3 = 3.6/5 (not the self-assessed 4.5). Closes #343. Follow-up (separate): `eu-ai-act-check` redirect-stub Bash removal (least-privilege).
 
 ---
 
