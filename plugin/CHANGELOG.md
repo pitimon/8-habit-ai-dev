@@ -10,13 +10,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## v2.21.35 — Fail-closed pre-commit example (F6 false-success fix) (#343) (2026-06-29)
+## v2.21.35 — Fully fail-closed pre-commit example (F6 + F6b + F6c) (#343) (2026-06-29)
 
 ### Fixed
 
-- **`hooks/pre-commit.sh.example` no longer ships the banned false-success anti-pattern** ([#343](https://github.com/pitimon/8-habit-ai-dev/issues/343)) — the optional `/review-ai` pre-commit gate was `REVIEW_OUTPUT=$(claude --print …) || true` then grep for REWORK/FAIL, so a CLI crash (auth / network) produced empty output and the hook reported "passed". It is now **fail-closed**: a non-zero CLI exit, a REWORK/FAIL verdict, and a missing verdict line each block the commit; only an explicit PASS/CONCERNS marker proceeds. Adds `tests/test-pre-commit-hook.sh` (12 assertions across both mirror copies, runs in CI) to prevent recurrence.
+- **F6 — `hooks/pre-commit.sh.example` no longer ships the banned false-success anti-pattern** ([#343](https://github.com/pitimon/8-habit-ai-dev/issues/343)) — the optional `/review-ai` pre-commit gate was `REVIEW_OUTPUT=$(claude --print …) || true` then grep for REWORK/FAIL, so a CLI crash (auth / network) produced empty output and the hook reported "passed". Now fail-closed: a non-zero CLI exit, a REWORK/FAIL verdict, and a missing verdict line each block the commit; only an explicit PASS/CONCERNS marker proceeds.
+- **F6b — missing-`claude` path is fail-closed** — the hook previously `exit 0` (silent skip) when `claude` was not on PATH. It now **blocks** (a gate that can't check fails), with `HABIT_REVIEW_SKIP=1` as an explicit escape hatch for environments without `claude` (CI, containers) — mirroring the `HABIT_QUIET` convention.
+- **F6c — verdict regex tightened** — `verdict.*:.*\b(...)\b` matched `## Review Verdict: NOT PASS` (would falsely proceed); tightened to `verdict:\s*(...)\b` so the verdict word must immediately follow the colon. Aligns with fail-closed: any format drift blocks (loud) rather than passes (silent).
+- `tests/test-pre-commit-hook.sh` — **20 assertions** across both mirror copies (PASS/CONCERNS/REWORK/FAIL/crash/no-verdict/NOT-PASS verdicts + missing-CLI ± `HABIT_REVIEW_SKIP` + a static `|| true` source-guard), runs in CI.
 
-> Closes F6 from the [Fable model review](docs/reviews/2026-06-10-fable-model-review.md) and the 2026-06-29 adversarial Spirit pass (`governance-reviewer`). The plugin's own `rules/coding-style.md` bans `cmd || true` on checks that must verify something — the example users copy shipped exactly that shape (introduced in #80). This is the enforce-on-others-skip-on-self gap the adversarial pass surfaced; the remaining findings (B1 800-line validator self-exemption, S1 missing SECURITY.md / threat model, F4 frozen SELF-CHECK table, F5 Bash drift) stay open under #343.
+> Closes F6 ([Fable model review](docs/reviews/2026-06-10-fable-model-review.md), 2026-06-10) + the F6b/F6c extensions (2026-06-30 Codex QA) from the [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343) workstream. The plugin's own `rules/coding-style.md` bans `cmd || true` on checks that must verify — the example users copy shipped exactly that shape (introduced in #80). The remaining #343 findings (B1, S1, F4, F5) ship via #345–#348.
 
 ---
 

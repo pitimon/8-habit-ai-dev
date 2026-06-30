@@ -13,6 +13,8 @@
 #
 # Opt out for a single commit:
 #   git commit --no-verify
+# If claude is not on PATH, the hook blocks (fail-closed) unless bypassed with
+# HABIT_REVIEW_SKIP=1 (e.g. CI without claude installed).
 #
 # Note: This hook is independent of HABIT_QUIET=1 (which silences the
 # session-start reminder). You can silence the reminder while keeping
@@ -23,10 +25,18 @@
 
 set -euo pipefail
 
-# Skip if claude CLI is not available
+# Fail-closed (F6b, #343): if claude is not on PATH, /review-ai cannot run, so the
+# commit is BLOCKED rather than silently skipped. Escape hatch for environments
+# without claude (CI, containers): set HABIT_REVIEW_SKIP=1 to bypass explicitly.
+# (Mirrors the HABIT_QUIET opt-out convention used by hooks/session-start.sh.)
 if ! command -v claude >/dev/null 2>&1; then
-  echo "[8-habit] claude CLI not found — skipping /review-ai pre-commit check"
-  exit 0
+  if [ "${HABIT_REVIEW_SKIP:-}" = "1" ]; then
+    echo "[8-habit] claude CLI not found — HABIT_REVIEW_SKIP=1 set, skipping /review-ai pre-commit check."
+    exit 0
+  fi
+  echo "[8-habit] claude CLI not found — /review-ai cannot run. Commit blocked (fail-closed, #343 F6b)."
+  echo "[8-habit] Install claude on PATH, or bypass explicitly: HABIT_REVIEW_SKIP=1 git commit ..."
+  exit 1
 fi
 
 # Get staged files (exclude deletions and mode-only changes)
@@ -65,7 +75,7 @@ fi
 echo "$REVIEW_OUTPUT"
 
 # Block on REWORK or FAIL verdicts (review-ai severity 2/3).
-if echo "$REVIEW_OUTPUT" | grep -qiE "verdict.*:.*\b(REWORK|FAIL)\b"; then
+if echo "$REVIEW_OUTPUT" | grep -qiE "verdict:\s*(REWORK|FAIL)\b"; then
   echo ""
   echo "[8-habit] Pre-commit blocked: /review-ai returned REWORK or FAIL."
   echo "[8-habit] Fix the issues above, then re-stage and commit."
@@ -76,7 +86,7 @@ fi
 # Fail-closed: require a POSITIVE verdict marker (PASS / CONCERNS). If the
 # review ran but emitted no verdict line at all, it did not produce a result —
 # block rather than pass. (Old code defaulted to "passed" here — the F6 bug.)
-if ! echo "$REVIEW_OUTPUT" | grep -qiE "verdict.*:.*\b(PASS|CONCERNS)\b"; then
+if ! echo "$REVIEW_OUTPUT" | grep -qiE "verdict:\s*(PASS|CONCERNS)\b"; then
   echo ""
   echo "[8-habit] Pre-commit blocked: no review verdict found."
   echo "[8-habit] /review-ai ran but produced no PASS/CONCERNS/REWORK/FAIL line —"

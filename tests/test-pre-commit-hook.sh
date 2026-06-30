@@ -52,6 +52,7 @@ case "${CLAUDE_STUB:-}" in
   fail)      printf '## Review Verdict: FAIL\nsecurity vuln\n'; exit 0;;
   crash)     printf 'auth/network error\n' >&2; exit 2;;
   noverdict) printf 'review ran but emitted no verdict line\n'; exit 0;;
+  notpass)   printf '## Review Verdict: NOT PASS\ntricky false-positive\n'; exit 0;;
   *)         printf 'unknown stub mode\n' >&2; exit 1;;
 esac
 STUB
@@ -63,6 +64,19 @@ STUB
 run_scenario() {
   local hook="$1" mode="$2" sandbox="$3" rc
   ( cd "$sandbox" && PATH="$sandbox/bin:$PATH" CLAUDE_STUB="$mode" bash "$hook" ) >/dev/null 2>&1
+  rc=$?
+  printf '%s' "$rc"
+}
+
+# Run the hook with NO claude on PATH (F6b: missing-CLI fail-closed). `skip` arg
+# sets HABIT_REVIEW_SKIP=1 (the escape hatch). Echoes exit code.
+run_no_claude() {
+  local hook="$1" sandbox="$2" skip="${3:-}" rc
+  if [ "$skip" = "skip" ]; then
+    ( cd "$sandbox" && PATH=/usr/bin:/bin HABIT_REVIEW_SKIP=1 bash "$hook" ) >/dev/null 2>&1
+  else
+    ( cd "$sandbox" && PATH=/usr/bin:/bin bash "$hook" ) >/dev/null 2>&1
+  fi
   rc=$?
   printf '%s' "$rc"
 }
@@ -87,6 +101,15 @@ for HOOK_PATH in "$HOOK" "$HOOK_MIRROR"; do
   assert_exit "FAIL verdict blocks"              1 "$(run_scenario "$HOOK_PATH" fail      "$SANDBOX")"
   assert_exit "tool crash blocks (F6 core)"      1 "$(run_scenario "$HOOK_PATH" crash     "$SANDBOX")"
   assert_exit "no-verdict blocks (fail-closed)"  1 "$(run_scenario "$HOOK_PATH" noverdict "$SANDBOX")"
+  assert_exit "NOT PASS blocks (F6c regex)"      1 "$(run_scenario "$HOOK_PATH" notpass   "$SANDBOX")"
+done
+
+echo ""
+echo "--- F6b: missing-CLI fail-closed (block by default; HABIT_REVIEW_SKIP=1 proceeds) ---"
+for HOOK_PATH in "$HOOK" "$HOOK_MIRROR"; do
+  echo "  [${HOOK_PATH#$REPO_ROOT/}]"
+  assert_exit "claude absent blocks (F6b)"          1 "$(run_no_claude "$HOOK_PATH" "$SANDBOX")"
+  assert_exit "claude absent + SKIP proceeds (F6b)" 0 "$(run_no_claude "$HOOK_PATH" "$SANDBOX" skip)"
 done
 
 echo ""
