@@ -13,6 +13,8 @@
 #
 # Opt out for a single commit:
 #   git commit --no-verify
+# If claude is not on PATH, the hook blocks (fail-closed) unless bypassed with
+# HABIT_REVIEW_SKIP=1 (e.g. CI without claude installed).
 #
 # Note: This hook is independent of HABIT_QUIET=1 (which silences the
 # session-start reminder). You can silence the reminder while keeping
@@ -23,18 +25,28 @@
 
 set -euo pipefail
 
-# Skip if claude CLI is not available
-if ! command -v claude >/dev/null 2>&1; then
-  echo "[8-habit] claude CLI not found — skipping /review-ai pre-commit check"
-  exit 0
-fi
-
-# Get staged files (exclude deletions and mode-only changes)
+# Get staged files FIRST (exclude deletions and mode-only changes). If there is
+# nothing substantive to review, exit 0 BEFORE requiring claude — so empty /
+# deletion-only / --allow-empty commits don't block solely because claude is absent.
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
 
 if [ -z "$STAGED_FILES" ]; then
   # Nothing substantive staged (rename-only or pure deletions)
   exit 0
+fi
+
+# Fail-closed (F6b, #343): if claude is not on PATH, /review-ai cannot run, so the
+# commit is BLOCKED rather than silently skipped. Escape hatch for environments
+# without claude (CI, containers): set HABIT_REVIEW_SKIP=1 to bypass explicitly.
+# (Mirrors the HABIT_QUIET opt-out convention used by hooks/session-start.sh.)
+if ! command -v claude >/dev/null 2>&1; then
+  if [ "${HABIT_REVIEW_SKIP:-}" = "1" ]; then
+    echo "[8-habit] claude CLI not found — HABIT_REVIEW_SKIP=1 set, skipping /review-ai pre-commit check."
+    exit 0
+  fi
+  echo "[8-habit] claude CLI not found — /review-ai cannot run. Commit blocked (fail-closed, #343 F6b)."
+  echo "[8-habit] Install claude on PATH, or bypass explicitly: HABIT_REVIEW_SKIP=1 git commit ..."
+  exit 1
 fi
 
 FILE_COUNT=$(echo "$STAGED_FILES" | wc -l | tr -d ' ')
@@ -43,14 +55,29 @@ echo "[8-habit] Running /review-ai on $FILE_COUNT staged file(s)..."
 # Build file list for review context
 FILE_LIST=$(echo "$STAGED_FILES" | tr '\n' ' ')
 
-# Run review-ai via claude CLI in non-interactive print mode
-# Capture output and check for REWORK/FAIL verdicts
-REVIEW_OUTPUT=$(claude --print "/review-ai on staged files: $FILE_LIST" 2>&1) || true
+# Run review-ai via claude CLI in non-interactive print mode.
+#
+# Fail-closed (F6 fix, Fable review 2026-06-10): this hook is a gate, not an
+# advisory. Three failure modes each block the commit explicitly — never swallow
+# a failure into a silent "passed" (the banned false-success anti-pattern):
+#   1. The review tool itself fails (non-zero exit: crash / auth / network).
+#   2. The review returns a blocking verdict (REWORK or FAIL).
+#   3. The review ran but produced NO verdict line — treat as "review did not run".
+# A gate that can't check is a gate that fails.
+if ! REVIEW_OUTPUT=$(claude --print "/review-ai on staged files: $FILE_LIST" 2>&1); then
+  echo "[8-habit] /review-ai tool FAILED (non-zero exit) — review did not run."
+  echo "[8-habit] Aborting commit; do not bypass a gate that failed to check."
+  echo "--- tool output ---"
+  echo "$REVIEW_OUTPUT"
+  echo "-------------------"
+  echo "[8-habit] Fix the tool and retry, or bypass explicitly: git commit --no-verify"
+  exit 1
+fi
 
 echo "$REVIEW_OUTPUT"
 
-# Check verdict — block on REWORK or FAIL
-if echo "$REVIEW_OUTPUT" | grep -qiE "verdict.*:.*\b(REWORK|FAIL)\b"; then
+# Block on REWORK or FAIL verdicts (review-ai severity 2/3).
+if echo "$REVIEW_OUTPUT" | grep -qiE "verdict:\s*(REWORK|FAIL)\b"; then
   echo ""
   echo "[8-habit] Pre-commit blocked: /review-ai returned REWORK or FAIL."
   echo "[8-habit] Fix the issues above, then re-stage and commit."
@@ -58,5 +85,17 @@ if echo "$REVIEW_OUTPUT" | grep -qiE "verdict.*:.*\b(REWORK|FAIL)\b"; then
   exit 1
 fi
 
-echo "[8-habit] /review-ai passed — proceeding with commit."
+# Fail-closed: require a POSITIVE verdict marker (PASS / CONCERNS). If the
+# review ran but emitted no verdict line at all, it did not produce a result —
+# block rather than pass. (Old code defaulted to "passed" here — the F6 bug.)
+if ! echo "$REVIEW_OUTPUT" | grep -qiE "verdict:\s*(PASS|CONCERNS)\b"; then
+  echo ""
+  echo "[8-habit] Pre-commit blocked: no review verdict found."
+  echo "[8-habit] /review-ai ran but produced no PASS/CONCERNS/REWORK/FAIL line —"
+  echo "[8-habit] treating as 'review did not run', not 'passed'."
+  echo "[8-habit] To bypass: git commit --no-verify"
+  exit 1
+fi
+
+echo "[8-habit] /review-ai passed (PASS/CONCERNS) — proceeding with commit."
 exit 0

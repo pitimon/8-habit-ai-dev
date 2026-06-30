@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.34-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.35-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.35 · Fully fail-closed pre-commit example (F6 + F6b + F6c) (#343)
+
+`hooks/pre-commit.sh.example` — the optional `/review-ai` pre-commit gate users can copy — is now fully fail-closed. **F6**: no longer swallows a reviewer-tool crash into a silent "passed" (a CLI failure, a REWORK/FAIL verdict, or a missing verdict line each block; only an explicit PASS/CONCERNS proceeds). **F6b**: a missing `claude` CLI blocks too (was a silent skip), with `HABIT_REVIEW_SKIP=1` as the explicit escape hatch for environments without claude. **F6c**: the verdict regex is tightened so a malformed line like "NOT PASS" can no longer falsely proceed. `tests/test-pre-commit-hook.sh` (20 assertions, both mirror copies) guards against recurrence. Closes F6 ([Fable review](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/reviews/2026-06-10-fable-model-review.md)) + the F6b/F6c extensions (Codex QA) under [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343).
 
 ## v2.21.34 · Karpathy simplicity + surgical-edit gaps as deferred doctrine (ADR-026 Deliverable B, #339)
 
