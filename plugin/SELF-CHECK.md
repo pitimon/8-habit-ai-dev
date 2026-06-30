@@ -4,7 +4,7 @@
 
 > **H8 Modeling:** "Follow the process always, no shortcuts when unwatched."
 
-> **Retired 2026-06 (F4, [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343)):** the 17-question table and the "**16/17 = 100%**" headline that previously occupied this section were removed. That table was a v1.x artifact — frozen since commit `c7e6f34` (2026-04-06) across 100+ releases, still citing "all 17 skills" once the plugin grew to 24, and the anchor of a ~60-release perfect-5.0 "grade saturation" streak flagged by the [Fable review](docs/reviews/2026-06-10-fable-model-review.md) (F4) and the 2026-06 adversarial Spirit pass. It had stopped discriminating.
+> **Retired 2026-06 (F4, [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343)):** the 17-question table and the "**16/17 = 100%**" headline that previously occupied this section were removed. That table was a v1.x artifact — frozen since commit `c7e6f34` (2026-04-06), persisting across ~95 tagged releases, still citing "all 17 skills" once the plugin grew to 24, and the anchor of a ~60-release perfect-5.0 "grade saturation" streak flagged by the [Fable review](docs/reviews/2026-06-10-fable-model-review.md) (F4) and the 2026-06 adversarial Spirit pass. It had stopped discriminating.
 >
 > Re-running 17 self-graded questions would re-enter the self-inflation trap those reviews documented (honest score at the audit: **Body 4 / Mind 3.5 / Heart 4 / Spirit 3 = 3.6/5**, not 5.0). The **authoritative current self-assessment is the living per-release scoring list below** — refreshed every release with concrete evidence per dimension (Body / Mind / Heart / Spirit). The honesty discipline and dimension definitions remain; only the frozen headline is gone.
 
@@ -98,7 +98,7 @@ v1.9.0 improvements (Feynman-inspired):
 - **Lazy parallelism**: `/breakdown` + H6 gate — "Can I do this in ≤5 tool calls?"
 - **Inspiration**: Feynman research agent patterns adapted for development workflow
 
-The cross-verify score (16/16) measures **plan discipline**. The Whole Person score measures **plugin maturity**:
+The `/cross-verify` checklist (17 questions) measures **plan discipline**; the Whole Person score measures **plugin maturity**:
 
 - v1.2.0: Body 2, Mind 4, Heart 3, Spirit 3 = **3.0** (inflated to 4.5 — dishonest)
 - v1.6.0: Body 3, Mind 4, Heart 4, Spirit 4 = **3.75** (honest)
