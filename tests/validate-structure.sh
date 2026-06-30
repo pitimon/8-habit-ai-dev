@@ -132,10 +132,14 @@ echo ""
 # cannot grow without limit. This is a DOCUMENTED, ENFORCED exemption, not a silent self-exemption
 # (closes the enforce-on-others-skip-on-self gap the Fable review + adversarial Spirit pass
 # flagged). Supersedes the v2.14.3 (#163) "trim to <800" approach: that trim regressed
-# (validate-content 793->1012, validate-structure ->1164), proving trim-alone is not durable as
-# checks accrete. The 1500 cap bounds growth; if a validator approaches it, the check fires and
-# forces a real decision (extract sourced helpers or raise the cap deliberately).
-echo "--- Check 5b: Bash tooling < 1500 lines (documented exemption from the 800 content limit, #343 B1) ---"
+# (validate-content 793->1012, validate-structure 605->1164), proving trim-alone is not durable
+# as checks accrete. The 1500 cap is an UPPER BOUND that prevents unbounded growth — not a
+# maintainability target; four-digit validators are tolerated for tooling, but approaching 1500
+# should trigger extracting sourced helpers. Scope: tests/ scripts/ hooks/ (root). The plugin/
+# mirrors of hooks/ + scripts/ are byte-identical (Check 28), so they are transitively covered;
+# tests/ is intentionally not mirrored. `find` is used instead of `git ls-files` because this
+# validator also runs from non-git installed caches.
+echo "--- Check 5b: Bash tooling <= 1500 lines (documented exemption from the 800 content limit, #343 B1) ---"
 SIZE_FAIL_BASH=0
 while read -r f; do
   lines=$(wc -l < "$f")
@@ -145,7 +149,7 @@ while read -r f; do
   fi
 done < <(find tests/ scripts/ hooks/ -name "*.sh" -type f)
 if [ "$SIZE_FAIL_BASH" -eq 0 ]; then
-  pass "All bash tooling under 1500 lines (documented exemption from 800 content limit, #343 B1)"
+  pass "All bash tooling <= 1500 lines (documented exemption from 800 content limit, #343 B1)"
 fi
 echo ""
 
