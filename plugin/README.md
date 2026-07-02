@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.36-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.36)
+[![Version](https://img.shields.io/badge/Version-2.21.37-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.37)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22136) — Version history
+- [What's New](#whats-new-in-v22137) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -221,21 +221,21 @@ Skill names below use Claude Code slash notation because that is the shortest la
 
 Start from **your situation**, not the skill name.
 
-| I want to...                                  | Start with                                                                                                                                                                                                          | Then                              | Habit                             |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | --------------------------------- |
-| Build a new feature from scratch              | `/requirements`                                                                                                                                                                                                     | `/design` → `/breakdown`          | H2: Define done first             |
-| Review code before committing                 | `/review-ai`                                                                                                                                                                                                        | `/security-check` if needed       | H4: Never skip review             |
-| Understand an unfamiliar codebase             | `/research`                                                                                                                                                                                                         | `/build-brief`                    | H5: Read before writing           |
-| Deploy / provider canary                      | `/deploy-guide`                                                                                                                                                                                                     | `/monitor-setup`                  | H1: Stage, rollback, reconcile    |
-| Assess overall project health                 | `/cross-verify`                                                                                                                                                                                                     | `/whole-person-check`             | All 8 habits                      |
-| Classify an operational finding               | `/operational-state`                                                                                                                                                                                                | `/deploy-guide` or `/post-mortem` | H1 + H5 + H8                      |
-| Fix a production bug                          | `/build-brief`                                                                                                                                                                                                      | Reproduce first                   | H5: Understand first              |
-| Investigate a hard bug (no obvious cause)     | `/diagnose`                                                                                                                                                                                                         | `/post-mortem` → `/reflect`       | H1 + H5: Loop before guessing     |
-| Question whether a change should exist at all | `/scrutinize`                                                                                                                                                                                                       | `/review-ai` for diff-local       | H5 + H8: Intent before diff       |
-| Brief leadership on engineering work          | `/management-talk`                                                                                                                                                                                                  | (channel-aware reshape)           | H4 + H6: Right signal per channel |
-| Something feels off about a plan              | `/cross-verify`                                                                                                                                                                                                     | Check dimension scores            | H1-H8                             |
-| Learn the full workflow                       | `/workflow`                                                                                                                                                                                                         | (guided walkthrough)              | All                               |
-| Survive `/clear` and `/compact`               | See [`guides/spec-digest-pattern.md`](guides/spec-digest-pattern.md) (project-orientation hub) or [`current-state.md`](guides/persistence-convention.md#current-state-file-optional-user-owned) (feature-spec mode) | Adopt one based on repo archetype | H5: Understand first              |
+| I want to...                                  | Start with                                                                                                                                                                                                          | Then                                   | Habit                             |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | --------------------------------- |
+| Build a new feature from scratch              | `/requirements`                                                                                                                                                                                                     | `/design` → `/breakdown`               | H2: Define done first             |
+| Review code before committing                 | `/review-ai`                                                                                                                                                                                                        | `/security-check` if needed            | H4: Never skip review             |
+| Understand an unfamiliar codebase             | `/research`                                                                                                                                                                                                         | `/build-brief`                         | H5: Read before writing           |
+| Deploy / provider canary                      | `/deploy-guide`                                                                                                                                                                                                     | `/monitor-setup`                       | H1: Stage, rollback, reconcile    |
+| Assess overall project health                 | `/cross-verify`                                                                                                                                                                                                     | `/whole-person-check`                  | All 8 habits                      |
+| Classify an operational finding               | `/operational-state`                                                                                                                                                                                                | `/deploy-guide` or `/post-mortem`      | H1 + H5 + H8                      |
+| Fix a production bug                          | `/diagnose`                                                                                                                                                                                                         | Fix + regression test → `/post-mortem` | H5 + H1: Reproduce before fixing  |
+| Investigate a hard bug (no obvious cause)     | `/diagnose`                                                                                                                                                                                                         | `/post-mortem` → `/reflect`            | H1 + H5: Loop before guessing     |
+| Question whether a change should exist at all | `/scrutinize`                                                                                                                                                                                                       | `/review-ai` for diff-local            | H5 + H8: Intent before diff       |
+| Brief leadership on engineering work          | `/management-talk`                                                                                                                                                                                                  | (channel-aware reshape)                | H4 + H6: Right signal per channel |
+| Something feels off about a plan              | `/cross-verify`                                                                                                                                                                                                     | Check dimension scores                 | H1-H8                             |
+| Learn the full workflow                       | `/workflow`                                                                                                                                                                                                         | (guided walkthrough)                   | All                               |
+| Survive `/clear` and `/compact`               | See [`guides/spec-digest-pattern.md`](guides/spec-digest-pattern.md) (project-orientation hub) or [`current-state.md`](guides/persistence-convention.md#current-state-file-optional-user-owned) (feature-spec mode) | Adopt one based on repo archetype      | H5: Understand first              |
 
 ### Recommended Paths
 
@@ -458,6 +458,16 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.37
+
+**Theme: Mind-cluster doc-drift close — Fable F3/F7/F8 (#358); bundled with tooling + security-CI batches before release**
+
+- **F3 — CLAUDE.md skill table complete (19 → 24 rows)** — `/diagnose`, `/post-mortem`, `/scrutinize`, `/save-spec`, `/management-talk` were missing from the Skills→Habits table. New validator **Check 32** pins table-row count to `skills/` dir count so this class can't recur.
+- **F7 — routing knows the newer skills** — README "Fix a production bug" now routes to `/diagnose` (reproduce-first _is_ diagnose Phase 1-2), and the `/using-8-habits` decision tree gains leaves for bug investigation (`/diagnose` → `/operational-state` → `/post-mortem`), proposal review (`/scrutinize`), leadership briefs (`/management-talk`), and repo save points (`/save-spec`).
+- **F8 — `Last citation` column shipped** — the SKILL-EFFECTIVENESS tally column promised in the 2026-06-06 tally now exists; values are traceable to each row's existing trend notes (no invented dates; `—` = never cited).
+
+---
+
 ## What's New in v2.21.36
 
 **Theme: least-privilege residue + Fable doc-drift close (#353) · script-vs-AI-workflow portability (#354)**
@@ -603,4 +613,4 @@ MIT
 
 ---
 
-_Version: 2.21.36 | Last updated: 2026-07-03_
+_Version: 2.21.37 | Last updated: 2026-07-03_

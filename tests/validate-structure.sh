@@ -1174,6 +1174,23 @@ for hookcfg in hooks/hooks.json plugin/hooks/hooks.json; do
 done
 echo ""
 
+# --- Check 32: CLAUDE.md Skills→Habits table covers every skill (Fable F3, #358) ---
+echo "--- Check 32: CLAUDE.md skill-table completeness (Fable F3, #358) ---"
+# F3's root cause was "no validator covers CLAUDE.md": the Skills→Habits table
+# sat at 19 rows while skills/ grew to 24. Rows are pipe-table lines whose first
+# cell is a backticked slash-command (`| \`/name\``) — unique to that table.
+for claudemd in CLAUDE.md plugin/CLAUDE.md; do
+  [ -f "$claudemd" ] || continue
+  SKILL_DIR_COUNT=$(find skills -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')
+  TABLE_ROW_COUNT=$(grep -c '^| `/' "$claudemd" || true)
+  if [ "$SKILL_DIR_COUNT" -eq "$TABLE_ROW_COUNT" ]; then
+    pass "$claudemd Skills→Habits table has $TABLE_ROW_COUNT rows == $SKILL_DIR_COUNT skill dirs"
+  else
+    fail "$claudemd Skills→Habits table has $TABLE_ROW_COUNT rows but skills/ has $SKILL_DIR_COUNT dirs — add the missing skill row(s) (Fable F3 recurrence)"
+  fi
+done
+echo ""
+
 # --- Summary ---
 echo "=== Summary ==="
 echo "PASS: $PASS"

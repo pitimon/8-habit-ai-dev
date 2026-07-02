@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.36-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.37-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.37 · Mind-cluster doc-drift close — Fable F3/F7/F8 (#358)
+
+Batch 2 of the 2026-07-03 research sweep. **F3**: CLAUDE.md Skills→Habits table completed 19→24 rows + new Check 32 pins the count. **F7**: README production-bug row re-routed to `/diagnose`; `/using-8-habits` tree gains leaves for `/diagnose`, `/operational-state`, `/post-mortem`, `/scrutinize`, `/management-talk`, `/save-spec`. **F8**: `Last citation` column added to the SKILL-EFFECTIVENESS tally (trend-note-traceable values only). Bundled with tooling + security-CI batches before the release tag. See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) for details.
 
 ## v2.21.36 · least-privilege residue + doc-drift close + script-vs-AI-workflow boundary (#353, #354)
 
