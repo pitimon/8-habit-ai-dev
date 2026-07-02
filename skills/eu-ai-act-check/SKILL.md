@@ -3,7 +3,7 @@ name: eu-ai-act-check
 description: EU AI Act compliance — migrated to pitimon/claude-governance v3.1.0. This stub redirects to the canonical implementation. Maps to H1 (Be Proactive — prevent regulatory crisis) + H8 (Voice/Conscience).
 user-invocable: true
 argument-hint: "(install pitimon/claude-governance for the canonical skill)"
-allowed-tools: ["Read", "Bash"]
+allowed-tools: ["Read"]
 prev-skill: any
 next-skill: any
 ---

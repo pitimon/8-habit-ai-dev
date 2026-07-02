@@ -244,8 +244,7 @@
       "user_invocable": true,
       "argument_hint": "(install pitimon/claude-governance for the canonical skill)",
       "allowed_tools": [
-        "Read",
-        "Bash"
+        "Read"
       ],
       "prev_skill": "any",
       "next_skill": "any",

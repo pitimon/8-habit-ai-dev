@@ -3,9 +3,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
-[![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
+[![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.35-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.35)
+[![Version](https://img.shields.io/badge/Version-2.21.36-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.36)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22135) — Version history
+- [What's New](#whats-new-in-v22136) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -458,6 +458,17 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.36
+
+**Theme: least-privilege residue + Fable doc-drift close (#353) · script-vs-AI-workflow portability (#354)**
+
+- **Stub Bash dropped** — the `eu-ai-act-check` redirect stub's `allowed-tools` is now `["Read"]`; closes the least-privilege carry named in the v2.21.35 notes (CLAUDE.md Bash-skill count reconciled 10 → 9).
+- **Fable F17/F19/F20 doc drift closed** — `link-check.yml` no longer calls `plugin/` a symlink; the README EU AI Act badge now points to the canonical [`claude-governance`](https://github.com/pitimon/claude-governance) toolkit (the ADR-012 deferred badge fix); the verbosity guide's "17 skills" is dated to v2.7.0 design time and its snippet matches the hook's real `DIRECTIVE_LEVEL` variable.
+- **`/ai-dev-log` No-Script Fallback** — when `generate-ai-dev-log.sh` can't run (Windows without Git Bash, restricted host), the skill now documents performing the 6 process steps via individual git commands; a host with no shell reports "not generatable" instead of inventing statistics ([#354](https://github.com/pitimon/8-habit-ai-dev/issues/354)).
+- **New guide: [`guides/script-vs-ai-workflow.md`](guides/script-vs-ai-workflow.md)** — the execution/verification boundary: AI workflows may replace script _execution_ when a deterministic verifier gates the result; they must never replace _verification_ (validators stay scripts — LLM re-checks are the grade-saturation trap F4 closed). Classifies all 10 repo scripts.
+
+---
+
 ## What's New in v2.21.35
 
 **Theme: #343 adversarial-Spirit-pass workstream — fail-closed hook + security docs + self-check honesty**
@@ -592,4 +603,4 @@ MIT
 
 ---
 
-_Version: 2.21.35 | Last updated: 2026-06-29_
+_Version: 2.21.36 | Last updated: 2026-07-03_

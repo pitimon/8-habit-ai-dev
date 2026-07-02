@@ -21,7 +21,8 @@ name: Link Check
 # write time; CI cannot re-verify them. claude-governance is public and IS
 # checked (caught a real moved-doc bug pre-merge during dogfood).
 #
-# The root-level `plugin` symlink exists for Codex marketplace compatibility.
+# The root-level `plugin` directory is a real committed mirror for Codex
+# marketplace compatibility (ADR-023; was a symlink until v2.21.10).
 # Exclude it so link checking does not duplicate the entire repository through
 # plugin/README.md, plugin/docs/..., etc.
 #

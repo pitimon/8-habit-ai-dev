@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.35-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.36-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.36 · least-privilege residue + doc-drift close + script-vs-AI-workflow boundary (#353, #354)
+
+Residue-cleanup pair from a `/research deep` sweep of the repo's own recorded debt. **#353**: the `eu-ai-act-check` redirect stub drops `Bash` from `allowed-tools` (least-privilege carry named in the v2.21.35 notes); Fable F17/F19/F20 doc drift closed (link-check symlink comment, README EU AI Act badge → `claude-governance`, verbosity-guide skill count + hook variable name). **#354**: `/ai-dev-log` gains a No-Script Fallback (the model performs the 6 process steps via git commands when the generator script can't run) and the new [`guides/script-vs-ai-workflow.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/script-vs-ai-workflow.md) codifies the execution/verification boundary — AI may substitute script execution behind a deterministic gate, never script verification. See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) for details.
 
 ## v2.21.35 · #343 workstream — fail-closed hook + security docs + self-check honesty (#343)
 
