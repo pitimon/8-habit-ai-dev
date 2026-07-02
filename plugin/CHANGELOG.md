@@ -10,6 +10,22 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.38 — post-review batch: script-count drift + validator hardening + tracking hygiene (#369) (2026-07-03)
+
+From an 8-habit-reviewer pass over the completed v2.21.36+37 arc (advisor-pattern fallback). Verdict was "appropriate with named gaps" — this batch closes the gaps.
+
+### Fixed
+
+- **#369 — script-count drift (the arc's own regression)** — #360's `tests/ci-local.sh` made the shipped "all 12 repo script files" claim false. The guide's table gains the `ci-local.sh` row (Verification — never LLM-substituted), and current-doc surfaces drop hardcoded totals entirely so the class can't recur.
+- **#369 — Check 32 hardened** — the `plugin/CLAUDE.md` iteration now counts its sibling `plugin/skills/` (previously counted root `skills/` — accidentally correct only via Check 28's mirror guarantee); row-count awk scoped to the Skills→Habits Mapping section. Both negative-tested.
+
+### Added
+
+- **#369 — Check 33** — `ci-local.sh` `SCRIPTS` ↔ `validate.yml` lock-step guard; suite drift now fails structure validation instead of silently diverging the local runner (the F14 failure mode, guarded on F14's own fix).
+- **#369 — tracking hygiene** — D3 (/security-check plugin lens) + SLSA gap re-homed from closed #343 to #367; Fable residue F12/F15/F16 tracked in #368; `SPEC.md` "Current State" refreshed from 2026-06-06.
+
+---
+
 ## v2.21.37 — Mind-cluster doc-drift close: Fable F3/F7/F8 (#358) (2026-07-03)
 
 Batch 2 of the 2026-07-03 `/research deep` sweep (the Mind-3.5 cluster). Bundled release: Batches 3 (tooling) and 4 (security CI) extend this entry before the tag is created.
@@ -41,7 +57,7 @@ From a `/research deep` sweep (2026-07-03) of the repo's own recorded debt — e
 ### Added
 
 - **#354 — `/ai-dev-log` No-Script Fallback** — when `scripts/generate-ai-dev-log.sh` cannot run (Windows without Git Bash, restricted host, missing plugin `scripts/`), the skill documents performing the 6 process steps directly via individual git commands with the same output contract. Honest limitation stated: no shell → no git data → report "not generatable" rather than invented statistics. Friction citation: user portability request 2026-07-03 (#354).
-- **#354 — `guides/script-vs-ai-workflow.md`** — the execution/verification boundary: an AI workflow may replace a script's _execution_ when a deterministic verifier gates the result downstream (e.g. hand-synced mirror still faces Check 28); it must never replace _verification_ (validators are fitness functions — an LLM re-check is probabilistic self-grading, the F4 grade-saturation trap). Classifies all 12 repo script files (2 hooks, 5 `scripts/`, 5 test validators); documents the session-hook markdown degradation path (rules autoload).
+- **#354 — `guides/script-vs-ai-workflow.md`** — the execution/verification boundary: an AI workflow may replace a script's _execution_ when a deterministic verifier gates the result downstream (e.g. hand-synced mirror still faces Check 28); it must never replace _verification_ (validators are fitness functions — an LLM re-check is probabilistic self-grading, the F4 grade-saturation trap). Classifies every repo script file (see the guide's table — count guarded against drift after the "10 vs 12" QA catch); documents the session-hook markdown degradation path (rules autoload).
 
 ---
 

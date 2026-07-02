@@ -87,7 +87,7 @@ methodology was applied to the repo — the "enforce-on-others, skip-on-self" fi
 **Finding**: `/security-check` is scoped to application code and does **not**
 cover this plugin's primary (supply-chain / semantic-content) threats. This
 document fills that gap. A future plugin-specific lens for the skill is tracked
-in [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343).
+in [#367](https://github.com/pitimon/8-habit-ai-dev/issues/367) (re-homed after #343 closed).
 
 ## 5. Controls NOT present (honest gaps)
 
@@ -109,7 +109,7 @@ Stated so posture is not overstated:
   secrets" residual drops Medium → Low. GitHub's built-in secret scanning /
   push protection still applies at the repo level where enabled.
 
-The SLSA gap remains tracked from [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343)
+The SLSA gap is tracked in [#367](https://github.com/pitimon/8-habit-ai-dev/issues/367) (re-homed after #343 closed)
 and is revisited per §6.
 
 ## 6. Review cadence
