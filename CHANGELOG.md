@@ -20,6 +20,12 @@ Batch 2 of the 2026-07-03 `/research deep` sweep (the Mind-3.5 cluster). Bundled
 - **#358 — F7: routing knows the newer skills** — README "Fix a production bug" re-routed `/build-brief` → `/diagnose`; `/using-8-habits` decision tree gains 4 branches (bug investigation → `/diagnose`/`/operational-state`/`/post-mortem`, proposal review → `/scrutinize`, leadership brief → `/management-talk`, repo save point → `/save-spec`).
 - **#358 — F8: `Last citation` tally column** — promised in the 2026-06-06 tally, now shipped in `SKILL-EFFECTIVENESS.md` with a provenance note; values are traceable to each row's existing trend notes (`—` = never cited; no invented dates).
 
+### Added
+
+- **#360 — `tests/ci-local.sh`** — one-shot runner for the exact 5-suite set CI runs (closes Fable F14 + the 2026-06-28 lesson action item). The CI-parity gap already bit once: "439/0 green" declared on `validate-structure.sh` alone, then branch protection blocked on Check 19. Runs all suites and reports every failing one in a single pass.
+- **#360 — `guides/release-surface.md`** — enumerates the 6 version-bearing files, the Check 19 release-notes surfaces, the Check 27 same-PR-bump rule, and the notes-honesty constraints (pre-tag QA caught stale notes two releases running). Closes the 2026-06-20 lesson action item, overdue since v2.21.33.
+- **#360 — F13 recorded as wontfix** — Fable F13 asked for `cmp -s` on `plugin/.codex-plugin/plugin.json`, but the root and child Codex manifests are intentionally distinct (`sync-mirror.sh` excludes `.codex-plugin/` by design); the existing field-grep is the correct check.
+
 ---
 
 ## v2.21.36 — least-privilege residue + Fable doc-drift close + script-vs-AI-workflow boundary (#353, #354) (2026-07-03)
