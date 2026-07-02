@@ -1,0 +1,11 @@
+# Dependabot for SHA-pinned GitHub Actions (threat-model §5 gap D2, #361).
+# All workflow actions are SHA-pinned by convention; without this, a pinned
+# SHA ages silently — no alerts when the upstream tag moves or a CVE lands.
+# Dependabot PRs bump the SHA and update the trailing version comment.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5

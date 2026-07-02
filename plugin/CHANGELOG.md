@@ -25,6 +25,7 @@ Batch 2 of the 2026-07-03 `/research deep` sweep (the Mind-3.5 cluster). Bundled
 - **#360 — `tests/ci-local.sh`** — one-shot runner for the exact 5-suite set CI runs (closes Fable F14 + the 2026-06-28 lesson action item). The CI-parity gap already bit once: "439/0 green" declared on `validate-structure.sh` alone, then branch protection blocked on Check 19. Runs all suites and reports every failing one in a single pass.
 - **#360 — `guides/release-surface.md`** — enumerates the 6 version-bearing files, the Check 19 release-notes surfaces, the Check 27 same-PR-bump rule, and the notes-honesty constraints (pre-tag QA caught stale notes two releases running). Closes the 2026-06-20 lesson action item, overdue since v2.21.33.
 - **#360 — F13 recorded as wontfix** — Fable F13 asked for `cmp -s` on `plugin/.codex-plugin/plugin.json`, but the root and child Codex manifests are intentionally distinct (`sync-mirror.sh` excludes `.codex-plugin/` by design); the existing field-grep is the correct check.
+- **#361 — continuous secret scanning + Dependabot** — `.github/workflows/secret-scan.yml` runs gitleaks (SHA-pinned v3.0.0) on every PR/push with `fetch-depth: 0` (full-history scan — the threat-model §3.1 git-history residual drops Medium → Low), and `.github/dependabot.yml` bumps the SHA-pinned actions weekly. Closes the two closable rows in threat-model §5 "Controls NOT present"; the §5/§4 text updated to match reality (claim-vs-artifact consistency). SLSA gap remains, documented.
 
 ---
 
