@@ -59,13 +59,13 @@ trusted from that point forward. The downstream agent runtime executes with the
 | **Spoofing**                                    | A malicious marketplace entry named similarly, or a tampered tag / manifest, installed as "8-habit-ai-dev".                                                                                                                                                            | Canonical install from the official marketplace (`claude plugin marketplace add pitimon/8-habit-ai-dev`); version-pinned install; releases are tag-anchored.                                                                                                                                                          | Low for users who follow the documented install.                                                                                                   |
 | **Repudiation**                                 | Lack of provenance for a shipped change.                                                                                                                                                                                                                               | Git history; ADRs (`docs/adr/`) record _why_; [`SELF-CHECK.md`](../../SELF-CHECK.md) records release self-assessment.                                                                                                                                                                                                 | Low.                                                                                                                                               |
 | **Denial of service**                           | N/A — no runtime service to deny.                                                                                                                                                                                                                                      | —                                                                                                                                                                                                                                                                                                                     | None.                                                                                                                                              |
-| **CI/CD supply chain**                          | A compromised or malicious third-party GitHub Action could inject into releases.                                                                                                                                                                                       | All Actions are **SHA-pinned** (not floating tags); each workflow declares a least-privilege `permissions:` block; only the built-in `GITHUB_TOKEN` is used (no long-lived CI secrets); `lychee` link-checking is config-scoped.                                                                                      | Low. (No Dependabot / Renovate yet — tracked in §5.)                                                                                               |
+| **CI/CD supply chain**                          | A compromised or malicious third-party GitHub Action could inject into releases.                                                                                                                                                                                       | All Actions are **SHA-pinned** (not floating tags); each workflow declares a least-privilege `permissions:` block; only the built-in `GITHUB_TOKEN` is used (no long-lived CI secrets); `lychee` link-checking is config-scoped.                                                                                      | Low. (Dependabot bumps pinned SHAs weekly — #361.)                                                                                                 |
 
 ## 3.1 Additional surfaces (STRIDE supplements)
 
 Beyond the table, these surfaces are explicitly in scope:
 
-- **Git-history secrets** — data committed historically survives deletion from HEAD. Control: the §4 spot-check + GitHub built-in secret scanning where enabled. Residual: **Medium** — no automated history scan in CI; history rewrite would be a last resort.
+- **Git-history secrets** — data committed historically survives deletion from HEAD. Control: gitleaks in CI over full history (`secret-scan.yml`, `fetch-depth: 0`, #361) + GitHub built-in secret scanning where enabled. Residual: **Low** (was Medium before the automated history scan); history rewrite would be a last resort.
 - **Mirror / packaging integrity (root ↔ `plugin/`)** — drift between root and the `plugin/` Codex child package could ship content differing from what was reviewed at root. Control: `scripts/sync-mirror.sh` + `tests/validate-structure.sh` Check 28 enforce byte-equality at CI. Residual: **Low**.
 - **Wiki publication integrity** — `.github/workflows/wiki-sync.yml` writes to the GitHub wiki with `GITHUB_TOKEN`; a CI compromise could publish malicious wiki content. Control: SHA-pinned action, least-privilege `permissions:`, maintainer-reviewed source. Residual: **Low**.
 - **Prompt injection** (named in the Tampering row) — the **primary** threat to any LLM-plugin: a skill's markdown is an instruction the agent obeys; structural validators cannot detect it, so maintainer review is the control.
@@ -76,13 +76,13 @@ As part of closing the Spirit gap, the plugin's **own** `/security-check`
 methodology was applied to the repo — the "enforce-on-others, skip-on-self" fix
 ([#343](https://github.com/pitimon/8-habit-ai-dev/issues/343)):
 
-| `/security-check` category     | Result on this repo                                                                                                                                                                                                                                                                                                                    |
-| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Secrets & credentials          | **Pass (point-in-time)** — a manual `git grep` for `sk-`, `ghp_`, `AKIA`, private keys, `api_key=`, `password=` across tracked content returned no matches (2026-06-29). This is a **one-off spot-check, not continuous assurance** — there is no automated secret scan in CI (§5). No CI secrets beyond the ephemeral `GITHUB_TOKEN`. |
-| Auth & access control          | **N/A** — no endpoints, no auth.                                                                                                                                                                                                                                                                                                       |
-| Input handling / injection     | **N/A** — no DB, no string-interpolated queries, no service input.                                                                                                                                                                                                                                                                     |
-| OWASP application Top 10       | **N/A** — no application.                                                                                                                                                                                                                                                                                                              |
-| Supply-chain / plugin-specific | **Not covered by the skill** — see §3 Tampering.                                                                                                                                                                                                                                                                                       |
+| `/security-check` category     | Result on this repo                                                                                                                                                                                                                                                                                                                                                                                 |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Secrets & credentials          | **Pass (point-in-time)** — a manual `git grep` for `sk-`, `ghp_`, `AKIA`, private keys, `api_key=`, `password=` across tracked content returned no matches (2026-06-29). Originally a **one-off spot-check**; since #361 (2026-07-03) `secret-scan.yml` runs gitleaks over full history on every PR/push, making this continuous assurance (§5). No CI secrets beyond the ephemeral `GITHUB_TOKEN`. |
+| Auth & access control          | **N/A** — no endpoints, no auth.                                                                                                                                                                                                                                                                                                                                                                    |
+| Input handling / injection     | **N/A** — no DB, no string-interpolated queries, no service input.                                                                                                                                                                                                                                                                                                                                  |
+| OWASP application Top 10       | **N/A** — no application.                                                                                                                                                                                                                                                                                                                                                                           |
+| Supply-chain / plugin-specific | **Not covered by the skill** — see §3 Tampering.                                                                                                                                                                                                                                                                                                                                                    |
 
 **Finding**: `/security-check` is scoped to application code and does **not**
 cover this plugin's primary (supply-chain / semantic-content) threats. This
@@ -97,14 +97,20 @@ Stated so posture is not overstated:
   cosign-signed. Markdown-only content + SHA-pinned CI limit (but do not
   eliminate) the blast radius; this is an accepted-but-undocumented risk, not a
   formal risk acceptance.
-- **No Dependabot / Renovate** for the SHA-pinned CI actions → a pinned action
-  could age without automated bump alerts.
-- **No automated secret scan in CI** — the scan cited in §4 was run manually.
-  (GitHub's built-in secret scanning / push protection applies at the repo level
-  where enabled.)
 
-These are tracked in [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343)
-and revisited per §6.
+Closed since the first version of this document ([#361](https://github.com/pitimon/8-habit-ai-dev/issues/361), 2026-07-03):
+
+- ~~No Dependabot / Renovate~~ → `.github/dependabot.yml` bumps the SHA-pinned
+  actions weekly (`github-actions` ecosystem).
+- ~~No automated secret scan in CI~~ → `.github/workflows/secret-scan.yml` runs
+  gitleaks (SHA-pinned v3.0.0) on every PR and push to main with
+  `fetch-depth: 0`, scanning the **full git history** continuously — the §4
+  point-in-time spot-check is now a standing gate, and the §3.1 "git-history
+  secrets" residual drops Medium → Low. GitHub's built-in secret scanning /
+  push protection still applies at the repo level where enabled.
+
+The SLSA gap remains tracked from [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343)
+and is revisited per §6.
 
 ## 6. Review cadence
 
