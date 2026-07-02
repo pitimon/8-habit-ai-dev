@@ -22,7 +22,7 @@ From a `/research deep` sweep (2026-07-03) of the repo's own recorded debt — e
 ### Added
 
 - **#354 — `/ai-dev-log` No-Script Fallback** — when `scripts/generate-ai-dev-log.sh` cannot run (Windows without Git Bash, restricted host, missing plugin `scripts/`), the skill documents performing the 6 process steps directly via individual git commands with the same output contract. Honest limitation stated: no shell → no git data → report "not generatable" rather than invented statistics. Friction citation: user portability request 2026-07-03 (#354).
-- **#354 — `guides/script-vs-ai-workflow.md`** — the execution/verification boundary: an AI workflow may replace a script's _execution_ when a deterministic verifier gates the result downstream (e.g. hand-synced mirror still faces Check 28); it must never replace _verification_ (validators are fitness functions — an LLM re-check is probabilistic self-grading, the F4 grade-saturation trap). Classifies all 10 repo scripts; documents the session-hook markdown degradation path (rules autoload).
+- **#354 — `guides/script-vs-ai-workflow.md`** — the execution/verification boundary: an AI workflow may replace a script's _execution_ when a deterministic verifier gates the result downstream (e.g. hand-synced mirror still faces Check 28); it must never replace _verification_ (validators are fitness functions — an LLM re-check is probabilistic self-grading, the F4 grade-saturation trap). Classifies all 12 repo script files (2 hooks, 5 `scripts/`, 5 test validators); documents the session-hook markdown degradation path (rules autoload).
 
 ---
 
