@@ -8,7 +8,9 @@
 
 **Check 27** (`tests/validate-structure.sh`): any PR that changes a consumer-doctrine path since the last git tag must carry the version bump **in the same PR** — "Bundle later" defers the _tag_, never the _bump_ (lesson 2026-06-28). Once the version differs from the latest tag, follow-up PRs in the same bundle need no further bump; they extend the same version's notes instead.
 
-## Version-bearing files (Check: `validate-structure.sh` version-consistency)
+## Version-bearing files
+
+Files 1–5 are cross-checked by `validate-structure.sh` version-consistency (Check 4); file 6's header/footer freshness is enforced by `validate-content.sh` Check 19 (git-tag-derived), not by Check 4.
 
 | #   | File                               | What to change                                                              |
 | --- | ---------------------------------- | --------------------------------------------------------------------------- |
