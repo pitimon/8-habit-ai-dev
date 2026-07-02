@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
-[![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-ready-green)]()
+[![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
 [![Version](https://img.shields.io/badge/Version-2.21.35-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.35)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
