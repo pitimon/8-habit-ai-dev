@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.37-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.38-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.38 · post-review batch — script-count drift + validator hardening + tracking hygiene (#369)
+
+An independent 8-habit-reviewer pass over the completed v2.21.36+37 arc found 5 gaps; all closed here. Highlights: `ci-local.sh` classification row added (its own addition had invalidated the "12 script files" claim — hardcoded totals now retired), Check 32 made mirror-independent + section-scoped, new Check 33 lock-step guard, D3/SLSA re-homed to #367, F12/F15/F16 tracked in #368, SPEC.md refreshed. See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) for details.
 
 ## v2.21.37 · Mind-cluster doc-drift close — Fable F3/F7/F8 (#358)
 

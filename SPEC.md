@@ -76,8 +76,10 @@ Release work must reconcile the version-bearing files named in `CLAUDE.md` and `
 
 ## Current State
 
-Last updated: 2026-06-06
+Last updated: 2026-07-03
 
 Codex support is already native through `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json`. `AGENTS.md`, `docs/codex-integration.md`, and `docs/compatibility-matrix.md` define that Codex consumes the same markdown skills and parses `hooks/hooks.json` at install (strict schema, top level = `hooks` only — see #321) but does not run the full Claude hook lifecycle.
+
+Since 2026-06-06: v2.21.35–v2.21.37 shipped the #343 adversarial-honesty batch (fail-closed pre-commit example, `SECURITY.md` + `docs/security/threat-model.md`, retired grade-saturated SELF-CHECK headline) and the 2026-07-03 research-sweep batches — CI now runs a gitleaks full-history secret scan (`.github/workflows/secret-scan.yml`) with Dependabot bumping the SHA-pinned actions; `tests/ci-local.sh` mirrors the CI validator set locally (lock-step-guarded); new guides `script-vs-ai-workflow.md` (execution/verification boundary) and `release-surface.md` (version-bump enumeration); CLAUDE.md's Skills→Habits table is completeness-pinned by validator check.
 
 The repo now has explicit Codex-ready project context files: `DOMAIN.md`, `SPEC.md`, `docs/adr/README.md`, `.codex/README.md`, and `docs/adr/ADR-025-codex-project-context-files.md`. Release `v2.21.2` clarified that source/marketplace validation and installed Codex cache validation have different child-source expectations; release `v2.21.10` replaced the original `plugin -> .` symlink with a real `plugin/` directory for Linux Claude Code install compatibility.

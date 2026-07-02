@@ -1181,16 +1181,42 @@ echo "--- Check 32: CLAUDE.md skill-table completeness (Fable F3, #358) ---"
 # cell is a backticked slash-command (`| \`/name\``) — unique to that table.
 for claudemd in CLAUDE.md plugin/CLAUDE.md; do
   [ -f "$claudemd" ] || continue
-  SKILL_DIR_COUNT=$(find skills -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')
+  # Count the skills/ SIBLING of each CLAUDE.md copy (reviewer-caught #369:
+  # counting root skills/ for the plugin copy was only accidentally correct
+  # via Check 28's mirror guarantee — this makes the check independent).
+  CLAUDE_DIR=$(dirname "$claudemd")
+  SKILL_DIR_COUNT=$(find "$CLAUDE_DIR/skills" -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')
   # awk, not `grep -c ... || true` — the || true shape is the banned
   # false-success class (QA-caught pre-tag); awk prints 0 without masking.
-  TABLE_ROW_COUNT=$(awk '/^\| `\//{c++} END{print c+0}' "$claudemd")
+  # Scoped to the "## Skills → Habits Mapping" section so a backticked
+  # slash-command row in any OTHER table can't inflate the count (#369).
+  TABLE_ROW_COUNT=$(awk '/^## /{insec = ($0 ~ /Skills .* Habits Mapping/)} insec && /^\| `\//{c++} END{print c+0}' "$claudemd")
   if [ "$SKILL_DIR_COUNT" -eq "$TABLE_ROW_COUNT" ]; then
     pass "$claudemd Skills→Habits table has $TABLE_ROW_COUNT rows == $SKILL_DIR_COUNT skill dirs"
   else
     fail "$claudemd Skills→Habits table has $TABLE_ROW_COUNT rows but skills/ has $SKILL_DIR_COUNT dirs — add the missing skill row(s) (Fable F3 recurrence)"
   fi
 done
+echo ""
+
+# --- Check 33: ci-local.sh ↔ validate.yml lock-step (#369) ---
+echo "--- Check 33: ci-local.sh SCRIPTS lock-step with validate.yml (#369) ---"
+# tests/ci-local.sh hardcodes the suite list with a "MUST stay in lock-step"
+# comment; without this guard a 6th CI script would silently diverge the local
+# runner — the exact F14 CI-parity failure mode ci-local.sh exists to prevent.
+if [ -f tests/ci-local.sh ] && [ -f .github/workflows/validate.yml ]; then
+  CI_LOCAL_LIST=$(awk -F'"' '/^SCRIPTS=/{print $2}' tests/ci-local.sh | tr ' ' '\n' | sort | tr '\n' ' ')
+  WORKFLOW_LIST=$(grep -oE 'bash tests/[a-z0-9-]+\.sh' .github/workflows/validate.yml | sed 's|bash tests/||' | sort | tr '\n' ' ')
+  if [ -z "$CI_LOCAL_LIST" ]; then
+    fail "tests/ci-local.sh SCRIPTS= line not found or empty — lock-step guard cannot verify"
+  elif [ "$CI_LOCAL_LIST" = "$WORKFLOW_LIST" ]; then
+    pass "tests/ci-local.sh SCRIPTS matches validate.yml suite set ($(echo "$CI_LOCAL_LIST" | wc -w | tr -d ' ') scripts)"
+  else
+    fail "ci-local.sh/validate.yml suite drift — ci-local: [$CI_LOCAL_LIST] vs workflow: [$WORKFLOW_LIST]"
+  fi
+else
+  fail "tests/ci-local.sh or .github/workflows/validate.yml missing — lock-step guard cannot run"
+fi
 echo ""
 
 # --- Summary ---
