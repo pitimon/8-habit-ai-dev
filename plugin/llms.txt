@@ -39,6 +39,7 @@ Repo: https://github.com/pitimon/8-habit-ai-dev
 - [guides/templates/issue-tracking-comments.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/templates/issue-tracking-comments.md): Pickup, progress/blocker, and completion comment drafts for issue-based work without automatic issue mutation.
 - [guides/tdd-tracer-bullet.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/tdd-tracer-bullet.md): Behavior-first TDD tracer-bullet loop through public interfaces; guidance only, no test runner.
 - [guides/script-vs-ai-workflow.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/script-vs-ai-workflow.md): The execution/verification boundary — when an AI workflow may substitute a repo script (execution behind a deterministic gate) and when it never may (verification); classifies all repo scripts.
+- [guides/release-surface.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/release-surface.md): Every file a version bump touches — the 6 version-bearing files, the Check 19 release-notes surfaces, and the honesty constraints pre-tag QA enforces.
 - [docs/wiki/Limitations.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/docs/wiki/Limitations.md): Boundary and evidence expectations for users evaluating whether plugin behavior is in scope.
 
 ## Compliance
