@@ -10,6 +10,22 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.36 — least-privilege residue + Fable doc-drift close + script-vs-AI-workflow boundary (#353, #354) (2026-07-03)
+
+From a `/research deep` sweep (2026-07-03) of the repo's own recorded debt — every item carries a prior citation (v2.21.35 follow-up note, Fable review IDs, or a user friction request). Ships across PR #355 (#353) and the #354 PR; version bumped once for the pair (Bundle-later: release deferred, bump not).
+
+### Changed
+
+- **#353 — `eu-ai-act-check` stub drops `Bash`** — `allowed-tools` `["Read","Bash"]` → `["Read"]`; the redirect stub only points to `claude-governance`. Closes the least-privilege follow-up named in the v2.21.35 notes (orphaned when #343 closed). CLAUDE.md Bash-minimization count reconciled 10 → 9; Skills→Habits row updated "migrating" → "migrated" (ADR-012, done 2026-05-02).
+- **#353 — Fable F17/F19/F20 doc drift** — `link-check.yml` comment: `plugin` symlink → real committed mirror (ADR-023); README EU AI Act badge "ready" → "via claude-governance" (closes ADR-012:83's deferred badge fix); verbosity guide "17 skills" dated to v2.7.0 design time + snippet now cases on `DIRECTIVE_LEVEL` matching `session-start.sh:78`.
+
+### Added
+
+- **#354 — `/ai-dev-log` No-Script Fallback** — when `scripts/generate-ai-dev-log.sh` cannot run (Windows without Git Bash, restricted host, missing plugin `scripts/`), the skill documents performing the 6 process steps directly via individual git commands with the same output contract. Honest limitation stated: no shell → no git data → report "not generatable" rather than invented statistics. Friction citation: user portability request 2026-07-03 (#354).
+- **#354 — `guides/script-vs-ai-workflow.md`** — the execution/verification boundary: an AI workflow may replace a script's _execution_ when a deterministic verifier gates the result downstream (e.g. hand-synced mirror still faces Check 28); it must never replace _verification_ (validators are fitness functions — an LLM re-check is probabilistic self-grading, the F4 grade-saturation trap). Classifies all 10 repo scripts; documents the session-hook markdown degradation path (rules autoload).
+
+---
+
 ## v2.21.35 — #343 adversarial-Spirit-pass findings: fail-closed hook + security docs + self-check honesty (#343) (2026-06-30)
 
 The first batch from the [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343) workstream — driven by an adversarial `governance-reviewer` Spirit pass corroborating the [Fable model review](docs/reviews/2026-06-10-fable-model-review.md) (both scored the plugin Spirit 3/5). Each item passed independent Codex QA.
