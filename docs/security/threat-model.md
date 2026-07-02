@@ -98,12 +98,12 @@ Stated so posture is not overstated:
   eliminate) the blast radius; this is an accepted-but-undocumented risk, not a
   formal risk acceptance.
 
-Closed since the first version of this document ([#361](https://github.com/pitimon/8-habit-ai-dev/issues/361), 2026-07-03):
+## 5.1 Controls added since the first version ([#361](https://github.com/pitimon/8-habit-ai-dev/issues/361), 2026-07-03)
 
-- ~~No Dependabot / Renovate~~ → `.github/dependabot.yml` bumps the SHA-pinned
-  actions weekly (`github-actions` ecosystem).
-- ~~No automated secret scan in CI~~ → `.github/workflows/secret-scan.yml` runs
-  gitleaks (SHA-pinned v3.0.0) on every PR and push to main with
+- **Dependabot for pinned actions** — `.github/dependabot.yml` bumps the
+  SHA-pinned actions weekly (`github-actions` ecosystem).
+- **Automated secret scanning in CI** — `.github/workflows/secret-scan.yml`
+  runs gitleaks (SHA-pinned v3.0.0) on every PR and push to main with
   `fetch-depth: 0`, scanning the **full git history** continuously — the §4
   point-in-time spot-check is now a standing gate, and the §3.1 "git-history
   secrets" residual drops Medium → Low. GitHub's built-in secret scanning /

@@ -1182,7 +1182,9 @@ echo "--- Check 32: CLAUDE.md skill-table completeness (Fable F3, #358) ---"
 for claudemd in CLAUDE.md plugin/CLAUDE.md; do
   [ -f "$claudemd" ] || continue
   SKILL_DIR_COUNT=$(find skills -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')
-  TABLE_ROW_COUNT=$(grep -c '^| `/' "$claudemd" || true)
+  # awk, not `grep -c ... || true` — the || true shape is the banned
+  # false-success class (QA-caught pre-tag); awk prints 0 without masking.
+  TABLE_ROW_COUNT=$(awk '/^\| `\//{c++} END{print c+0}' "$claudemd")
   if [ "$SKILL_DIR_COUNT" -eq "$TABLE_ROW_COUNT" ]; then
     pass "$claudemd Skills→Habits table has $TABLE_ROW_COUNT rows == $SKILL_DIR_COUNT skill dirs"
   else
