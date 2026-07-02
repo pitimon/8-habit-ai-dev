@@ -8,6 +8,34 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A **Claude Code plugin** (not a runnable application). No build system, no dependencies — the entire plugin is structured markdown files that Claude Code loads at runtime. Structural validation via `tests/validate-structure.sh` (pure bash, no test framework). The plugin provides a 7-step workflow discipline based on Covey's 8 Habits, designed to replace "vibe coding" with structured AI-assisted development. Install: `claude plugin marketplace add pitimon/8-habit-ai-dev && claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev`.
 
+`deep-project/` is a git-ignored local vendor of a third-party plugin — not part of this repo's tracked surface.
+
+## Validation Commands
+
+CI ([`.github/workflows/validate.yml`](.github/workflows/validate.yml)) runs exactly these five scripts. Run them from the repo root with `bash` (they use process substitution — `sh` fails):
+
+```bash
+bash tests/validate-structure.sh   # frontmatter, 6-file version consistency, mirror parity (Check 28), size caps
+bash tests/test-skill-graph.sh     # prev-skill/next-skill DAG integrity
+bash tests/validate-content.sh     # content fitness functions; Check 19 needs full tag history (CI uses fetch-depth: 0)
+bash tests/test-verbosity-hook.sh  # session-start verbosity regression (8 branches + override + budget)
+bash tests/test-pre-commit-hook.sh # pre-commit F6 fail-closed verdict paths
+```
+
+When skill metadata or discovery docs change, also run `node scripts/generate-skill-catalog.js --check` (regenerate by running without `--check`). External URLs are link-checked in separate workflows (`link-check.yml`, `wiki-linkcheck.yml`); internal relative links are Check 12b in `validate-content.sh`.
+
+When editing the test scripts themselves: extract frontmatter with a single `awk`, never `sed | grep | head` under `set -o pipefail` — the SIGPIPE race caused intermittent CI failures. See `CONTRIBUTING.md` §"Testing Conventions".
+
+## The `plugin/` Mirror (edit → sync, always)
+
+`plugin/` is a **real, git-tracked, byte-for-byte copy** of the root content — the Codex marketplace child package per [ADR-023](docs/adr/ADR-023-codex-native-packaging.md) (a `plugin -> .` symlink broke Linux installs; see `docs/out-of-scope/mirror-untracking.md` for why it stays tracked). Check 28 in `validate-structure.sh` enforces parity, so after editing any mirrored path — the dirs `skills/ guides/ habits/ hooks/ agents/ rules/ scripts/ docs/` or the root files listed in `scripts/sync-mirror.sh` (including `README.md`, `CHANGELOG.md`, and **this file**) — run:
+
+```bash
+bash scripts/sync-mirror.sh   # then git add the changed plugin/ files in the same commit
+```
+
+Exception: `.codex-plugin/` manifests are intentionally distinct between root and `plugin/` — never copy one over the other.
+
 ## Architecture
 
 The plugin has three loading mechanisms with distinct timing:
