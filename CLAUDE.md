@@ -105,6 +105,11 @@ Body pattern: Habit mapping → Process steps → Handoff → When to Skip → D
 | `/ai-dev-log`         | —    | H4 Win-Win + H1       | AI-assisted dev log from git history (v2.3.0)                                                                                      |
 | `/reflect`            | —    | H7 Sharpen the Saw    | 6-question retrospective + lesson file + Q6 → `SKILL-EFFECTIVENESS.md` ([ADR-018](docs/adr/ADR-018-memory-layer-activation.md))    |
 | `/calibrate`          | —    | H8 Find Your Voice    | Self-assessment → `~/.claude/habit-profile.md` ([ADR-008](docs/adr/ADR-008-user-maturity-calibration-design.md))                   |
+| `/diagnose`           | —    | H1 + H5               | 6-phase bug-investigation discipline — feedback loop before guessing (v2.18.0)                                                     |
+| `/post-mortem`        | —    | H4 + H7               | Canonical engineering record of a fixed bug — root cause, mechanism, validation (v2.18.0)                                          |
+| `/scrutinize`         | —    | H5 + H8               | Outsider review — should this change exist at all? (v2.18.0)                                                                       |
+| `/save-spec`          | —    | H8 + H2               | Scaffold project-root SPEC.md digest — project-orientation save point (v2.16.0)                                                    |
+| `/management-talk`    | —    | H4 + H6               | Channel-aware leadership brief — right signal per channel (v2.18.0)                                                                |
 | `/workflow`           | —    | All                   | Guided 7-step walkthrough                                                                                                          |
 
 ## Proposed (awaiting evidence)

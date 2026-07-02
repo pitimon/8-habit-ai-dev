@@ -10,6 +10,18 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.37 — Mind-cluster doc-drift close: Fable F3/F7/F8 (#358) (2026-07-03)
+
+Batch 2 of the 2026-07-03 `/research deep` sweep (the Mind-3.5 cluster). Bundled release: Batches 3 (tooling) and 4 (security CI) extend this entry before the tag is created.
+
+### Changed
+
+- **#358 — F3: CLAUDE.md skill table complete (19 → 24 rows)** — `/diagnose`, `/post-mortem`, `/scrutinize`, `/save-spec`, `/management-talk` added to the Skills→Habits table. New **Check 32** in `validate-structure.sh` pins table-row count to `skills/` dir count (F3's root cause was "no validator covers CLAUDE.md" — the fix ships with its fitness function).
+- **#358 — F7: routing knows the newer skills** — README "Fix a production bug" re-routed `/build-brief` → `/diagnose`; `/using-8-habits` decision tree gains 4 branches (bug investigation → `/diagnose`/`/operational-state`/`/post-mortem`, proposal review → `/scrutinize`, leadership brief → `/management-talk`, repo save point → `/save-spec`).
+- **#358 — F8: `Last citation` tally column** — promised in the 2026-06-06 tally, now shipped in `SKILL-EFFECTIVENESS.md` with a provenance note; values are traceable to each row's existing trend notes (`—` = never cited; no invented dates).
+
+---
+
 ## v2.21.36 — least-privilege residue + Fable doc-drift close + script-vs-AI-workflow boundary (#353, #354) (2026-07-03)
 
 From a `/research deep` sweep (2026-07-03) of the repo's own recorded debt — every item carries a prior citation (v2.21.35 follow-up note, Fable review IDs, or a user friction request). Ships across PR #355 (#353) and the #354 PR; version bumped once for the pair (Bundle-later: release deferred, bump not).

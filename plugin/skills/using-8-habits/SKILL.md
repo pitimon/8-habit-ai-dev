@@ -104,6 +104,20 @@ What are you doing?
 │   ├── Need deployment plan             ─── /deploy-guide (Step 6)
 │   └── Need monitoring                  ─── /monitor-setup (Step 7)
 │
+├── Investigating a bug or production incident
+│   ├── No obvious root cause?           ─── /diagnose (6-phase: loop before guessing)
+│   ├── Classifying what you found?      ─── /operational-state (Watch / Fix / Incident)
+│   └── Fix landed and validated?        ─── /post-mortem (canonical record)
+│
+├── Reviewing a proposal or external change
+│   └── "Should this exist at all?"      ─── /scrutinize (outsider lens)
+│
+├── Reporting to leadership / stakeholders
+│   └──                                  ─── /management-talk (channel-aware brief)
+│
+├── Setting up a repo save point (survive /clear)
+│   └──                                  ─── /save-spec (SPEC.md digest)
+│
 ├── Something feels wrong but can't pinpoint
 │   └──                                  ─── /cross-verify (17-question checklist)
 │
