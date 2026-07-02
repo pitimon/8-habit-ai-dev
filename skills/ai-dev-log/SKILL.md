@@ -68,6 +68,16 @@ The script handles all 6 process steps below (discover, extract, group, oversigh
 
 The detailed process and report template live in `reference.md`; load it when you need to explain or customize the generator.
 
+## No-Script Fallback (AI workflow)
+
+If the script cannot run (Windows shell without Git Bash, restricted environment, missing `scripts/` in the plugin cache), perform the 6 process steps yourself with individual git commands — the script is an accelerator, not the contract:
+
+1. Discover: `git log --since=<date> --date=short --format='%h|%ad|%an|%(trailers:key=Co-Authored-By,valueonly)'`
+2. Extract: filter rows with AI co-author trailers; if the trailer parser returns empty, fall back to `git log --grep='Co-Authored-By:'` commit-body scan
+3. Group by period, 4. add oversight evidence (PR/review/test metadata), 5. render the report template from `reference.md`, 6. pin `git rev-parse HEAD` as the snapshot boundary
+
+Output contract is identical to the script's. Honest limitation: the data source is git history — on a host with no shell access at all, report "not generatable on this host" instead of inventing statistics. Boundary rationale: [`guides/script-vs-ai-workflow.md`](../../guides/script-vs-ai-workflow.md).
+
 ## Process Summary
 
 1. Discover AI co-authors from `Co-Authored-By` trailers, using commit-body trailer lines only as a fallback when Git's trailer parser returns empty.
