@@ -57,10 +57,14 @@ The graph is validated by repository tests so skill references do not silently d
 
 | Script                         | Purpose                                                            |
 | ------------------------------ | ------------------------------------------------------------------ |
-| `tests/validate-structure.sh`  | Frontmatter, names, version sync, graph fields, packaging surfaces |
-| `tests/validate-content.sh`    | Markdown integrity, internal links, ADR shape, doctrine checks     |
+| `tests/validate-structure.sh`  | Frontmatter, names, version sync, graph fields, packaging surfaces, CLAUDE.md table completeness (Check 32), ci-local lock-step (Check 33) |
+| `tests/validate-content.sh`    | Markdown integrity, internal links, ADR shape, doctrine checks, release-surface freshness (Check 19) |
 | `tests/test-skill-graph.sh`    | Handoff graph integrity                                            |
 | `tests/test-verbosity-hook.sh` | Claude hook output and token budget                                |
+| `tests/test-pre-commit-hook.sh` | Fail-closed verdict paths of the opt-in pre-commit example (v2.21.35) |
+| `tests/ci-local.sh`            | One-shot runner for the exact CI suite set (lock-step-guarded)     |
+
+CI additionally runs a full-history gitleaks secret scan (`.github/workflows/secret-scan.yml`) with Dependabot bumping the SHA-pinned actions weekly.
 
 ## Documentation Surfaces
 
@@ -100,8 +104,8 @@ Illustrative layout (skill/ADR counts grow between releases — browse the repo 
 ├── hooks/                          # SessionStart workflow reminder
 ├── habits/                         # h1..h8 reference content (loaded on-demand)
 ├── guides/                         # Checklists, templates, cross-verify-packs
-├── tests/                          # validate-structure / validate-content / test-skill-graph
-├── scripts/                        # sync-mirror.sh, windows-preflight.ps1
+├── tests/                          # 5 validator suites + ci-local.sh one-shot runner
+├── scripts/                        # sync-mirror.sh, generators, windows-preflight.ps1
 ├── docs/                           # adr/, wiki/, out-of-scope/, compatibility matrix
 ├── plugin/                         # Codex child-package mirror (kept in sync via sync-mirror.sh)
 ├── rules/effective-development.md  # Auto-loaded Claude Code rules
