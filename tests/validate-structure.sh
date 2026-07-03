@@ -1204,6 +1204,10 @@ echo "--- Check 33: ci-local.sh SCRIPTS lock-step with validate.yml (#369) ---"
 # tests/ci-local.sh hardcodes the suite list with a "MUST stay in lock-step"
 # comment; without this guard a 6th CI script would silently diverge the local
 # runner — the exact F14 CI-parity failure mode ci-local.sh exists to prevent.
+# ENFORCED SHAPES (parser is deliberately exact, not robust): ci-local.sh must
+# declare double-quoted `SCRIPTS="a.sh b.sh ..."`; validate.yml steps must
+# invoke `bash tests/<name>.sh` (no ./ prefix, no bash flags). Deviating from
+# either shape fails this check — that is the convention, not a parser bug.
 if [ -f tests/ci-local.sh ] && [ -f .github/workflows/validate.yml ]; then
   CI_LOCAL_LIST=$(awk -F'"' '/^SCRIPTS=/{print $2}' tests/ci-local.sh | tr ' ' '\n' | sort | tr '\n' ' ')
   WORKFLOW_LIST=$(grep -oE 'bash tests/[a-z0-9-]+\.sh' .github/workflows/validate.yml | sed 's|bash tests/||' | sort | tr '\n' ' ')
