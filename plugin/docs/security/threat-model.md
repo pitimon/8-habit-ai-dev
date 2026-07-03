@@ -119,5 +119,5 @@ Revisit this threat model when any of the following occurs, or annually:
 - A new hook that executes is added (beyond `session-start.sh` and
   `hooks/pre-commit.sh.example`).
 - The plugin gains any runtime, network, or dependency surface.
-- A finding in [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343)
+- A finding in [#367](https://github.com/pitimon/8-habit-ai-dev/issues/367) (or any security-lens work)
   materially changes the threat surface.
