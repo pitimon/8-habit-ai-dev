@@ -104,7 +104,7 @@ next-skill: build-brief
 
 ## Optional Persistence (`--persist <slug>`)
 
-When invoked with `--persist <slug>`, this skill writes its task breakdown to `docs/specs/<slug>/tasks.md` in addition to emitting the conversation `SKILL_OUTPUT:breakdown` block. Without the flag, behavior is byte-identical to v2.14.3 (no file writes).
+When invoked with `--persist <slug>`, this skill writes its task breakdown to `docs/specs/<slug>/tasks.md`, and the `SKILL_OUTPUT:breakdown` block lives in that file (not the conversation). Without the flag: no file writes and no block (byte-identical filesystem behavior to v2.14.3; conversation-block emission was removed in v2.21.39 per [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)).
 
 For the canonical convention (slug regex `^[a-z0-9][a-z0-9-]{1,63}$`, conflict policy, YAML frontmatter format, error message rules, ID-linkage `Task #N` guidance), load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
 
@@ -129,7 +129,7 @@ ID-linkage tip: when persisting, format each task as `Task #N implements: Decisi
 
 ## Structured Output Block
 
-After writing the task list, append a structured output block for cross-skill handoff. This HTML comment is invisible when rendered but enables `/cross-verify` to auto-check scope alignment:
+**Emit this block only into the persisted `docs/specs/<slug>/tasks.md` file when `--persist` is used** — never append it to the conversation response (the HTML comment renders as visible noise in Codex; see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Emission gate"). It is machine-readable evidence for `/cross-verify`. The fenced block below is the **file template**:
 
 ```
 [/breakdown] COMPLETE SKILL_OUTPUT:breakdown
@@ -144,7 +144,7 @@ estimated_complexity: "[low|medium|high]"
 END_SKILL_OUTPUT -->
 ```
 
-Place this at the very end of the task list output, after all human-readable content.
+Place this at the very end of the persisted `tasks.md` file, after all human-readable content.
 
 ## Further Reading
 

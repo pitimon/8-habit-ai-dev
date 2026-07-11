@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.38-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.38)
+[![Version](https://img.shields.io/badge/Version-2.21.39-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.39)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22138) — Version history
+- [What's New](#whats-new-in-v22139) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -458,6 +458,17 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.39
+
+**Theme: cross-runtime output hygiene — structured handoff blocks no longer leak into Codex ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375))**
+
+- **`SKILL_OUTPUT` blocks are now file-only** — the machine-readable handoff block from `/requirements`, `/design`, `/breakdown`, `/review-ai` is written into the persisted artifact (`docs/specs/<slug>/…` under `--persist`, or a saved `*-review.md`), never appended to the conversation. Claude hid the HTML comment; Codex rendered it verbatim as noise. Non-persisted runs emit no block — concise output on every runtime.
+- **`/cross-verify` reads the right place** — its auto-detect now globs the canonical `docs/specs/*/{prd,design,tasks}.md` paths (the previous `*-prd.md`-in-cwd glob never matched a persisted file); non-persisted runs fall through to manual assessment as before.
+- **`/diagnose` block removed** — it had no consumer (`/post-mortem` reads prose, `/cross-verify` never globbed it) and its `METHODOLOGY-COMPLETE` marker was outside the protocol vocabulary.
+- **Contract recorded** — [ADR-013](docs/adr/ADR-013-spec-persistence-opt-in.md) amended (conversation-emission superseded; filesystem back-compat invariant preserved); canonical spec in [`guides/structured-output-protocol.md`](guides/structured-output-protocol.md) §"Emission gate".
+
+---
+
 ## What's New in v2.21.38
 
 **Theme: post-review batch — the reviewer reviewing the reviewers (#369)**
@@ -624,4 +635,4 @@ MIT
 
 ---
 
-_Version: 2.21.38 | Last updated: 2026-07-03_
+_Version: 2.21.39 | Last updated: 2026-07-12_

@@ -8,6 +8,20 @@
 
 ---
 
+## Amendment (2026-07-12, v2.21.39 — [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375))
+
+This ADR originally stated that skills emit the `SKILL_OUTPUT` block **into the conversation transcript**, and that `--persist` writes to a file **"in addition to"** the conversation block (see §Context ¶1, §Decision step 1, and the byte-identical clause below). That premise was **factually wrong about the consumer**: `/cross-verify` reads the block by globbing persisted files, never the transcript. In Claude Code the duplicate conversation block was invisible; in Codex (and other runtimes that render HTML comments verbatim) it printed as visible noise.
+
+**Superseded, effective v2.21.39:** the `SKILL_OUTPUT` block is a property of the **persisted artifact file only** and is never appended to the conversation response.
+
+- §Decision step 1 — read *"produce the block **into `docs/specs/<slug>/…`** (not conversation)"*; the "AND write" / "in addition to" framing no longer applies.
+- §Context ¶1 and the byte-identical clause (§Decision, final ¶) — the **filesystem** invariant is preserved verbatim (no-flag = no file writes, no directory access, no errors). The **conversation-block emission** is the only behavior intentionally changed: no-flag runs now emit no block at all, and a failed/aborted persist emits no block either (a conversation block cannot reach the file-globbing consumer).
+- `/diagnose`'s block was consumer-less and is removed outright.
+
+Canonical current spec: [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Emission gate" and [`guides/persistence-convention.md`](../../guides/persistence-convention.md) §"Block placement — persisted file only". The original decision text below is retained unedited as the historical record.
+
+---
+
 ## Context
 
 This plugin's 7-step workflow skills (`/research`, `/requirements`, `/design`, `/breakdown`, `/build-brief`, `/review-ai`, `/deploy-guide`, `/monitor-setup`) emit their output as `SKILL_OUTPUT` blocks **into the conversation transcript**. By design (CLAUDE.md "Key Conventions"), most skills do not have the `Write` tool — they are read-only guidance.

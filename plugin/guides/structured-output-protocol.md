@@ -2,7 +2,19 @@
 
 ## Purpose
 
-Enable cross-skill data handoff via machine-readable blocks embedded in markdown output. Blocks are HTML comments — invisible when rendered, parseable by consuming skills.
+Enable cross-skill data handoff via machine-readable blocks embedded in a **persisted artifact file**. Blocks are HTML comments — parseable by consuming skills, and invisible when rendered *by a Markdown viewer that hides comments*.
+
+> **Renderer note (v2.21.39, [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375))**: "invisible" is renderer-specific. Claude Code hides HTML comments; **Codex and some other runtimes render the comment payload verbatim**, so an emitted block becomes visible noise there. The block therefore lives **only in a persisted artifact file** the consumer reads — never appended to the conversation response. A skill run that writes no file emits no block. This keeps the human-facing response concise on every runtime while `/cross-verify` still gets structured evidence from the files it globs.
+
+## Emission gate (when to emit)
+
+Emit a `SKILL_OUTPUT` block **only when the skill's output is being written to a file a consumer reads** — the block is a property of that file, not of the conversation:
+
+- `/requirements`, `/design`, `/breakdown`: emit into `docs/specs/<slug>/{prd,design,tasks}.md` when invoked with `--persist <slug>` (see [`persistence-convention.md`](./persistence-convention.md)). No `--persist` → no block.
+- `/review-ai`: emit into the review report **only when that report is saved to a `*-review.md` file**. A conversation-only review emits no block; `/cross-verify` Q5 falls back to manual assessment.
+- Persistence aborted or the file write fails → **no block** (no file means no consumer to reach; a conversation block would be pure Codex noise).
+
+The fenced example blocks in the producer SKILL.md files below are the **file templates**, not an instruction to print the block to conversation.
 
 ## Format
 
@@ -25,9 +37,9 @@ END_SKILL_OUTPUT -->
    - No plugin version in attribution — keeps version-bump checklist at 4 files instead of 4+N
 2. **Block delimiters**: `<!-- SKILL_OUTPUT:<type>` opens, `END_SKILL_OUTPUT -->` closes
 3. **Content format**: YAML-like key-value pairs (human-readable, not strict YAML)
-4. **Placement**: At the END of skill output, after all human-readable content
-5. **Optional payload, REQUIRED attribution**: Skills SHOULD emit blocks but output remains valid without payload; if a block is emitted, attribution is required.
-6. **Invisible payload, visible attribution**: HTML comment payload doesn't render in markdown viewers — zero visual impact. Attribution line is plain text above the comment, scannable in transcripts.
+4. **Placement**: At the END of the **persisted artifact file**, after all human-readable content — never appended to the conversation response (see §"Emission gate").
+5. **Consumer-gated payload, REQUIRED attribution when emitted**: emit a block only when it is written to a file a consumer reads (§"Emission gate"); output remains valid without one. If a block is emitted, the attribution line is required directly above it.
+6. **Payload lives in the file, not the conversation**: the block is machine-readable evidence for the consumer that globs the artifact file. It is not printed to the human-facing response — do not rely on "the viewer hides HTML comments," because Codex does not (see the Renderer note).
 
 ### Parser-impact statement
 
@@ -145,7 +157,7 @@ rejection_path: stop if catalog fields imply Claude hook parity in Codex
 
 When `/cross-verify` runs, it should:
 
-1. Search for `<!-- SKILL_OUTPUT:` blocks in recent files (PRD, task list, review report) in the current directory
+1. Search for `<!-- SKILL_OUTPUT:` blocks in the persisted artifact files — glob **`docs/specs/*/prd.md`, `docs/specs/*/design.md`, `docs/specs/*/tasks.md`** (plus their `*.vN.md` conflict variants) for the persist-based skills, and **`*-review.md`** in the working directory for a saved review report. (These canonical `docs/specs/<slug>/…` paths are where `--persist` writes; a bare `*-prd.md` glob in the current directory would miss them.)
 2. If blocks found, auto-populate evidence for relevant questions:
    - **Q4** (success criteria): Check `ears_count > 0` and `success_criteria_count > 0` from requirements block; cross-check `decision_count` from design block against `success_criteria_count` — flag if decisions don't cover all criteria
    - **Q5** (test plan): Check `test_coverage_checked: true` from review block

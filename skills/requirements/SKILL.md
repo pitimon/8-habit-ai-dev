@@ -96,7 +96,7 @@ next-skill: design
 
 ## Optional Persistence (`--persist <slug>`)
 
-When invoked with `--persist <slug>`, this skill writes its PRD output to `docs/specs/<slug>/prd.md` in addition to emitting the conversation `SKILL_OUTPUT:requirements` block. Without the flag, behavior is byte-identical to v2.14.3 (no file writes).
+When invoked with `--persist <slug>`, this skill writes its PRD output to `docs/specs/<slug>/prd.md`, and the `SKILL_OUTPUT:requirements` block lives in that file (not the conversation). Without the flag: no file writes and no block (byte-identical filesystem behavior to v2.14.3; conversation-block emission was removed in v2.21.39 per [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)).
 
 For the canonical convention (slug regex `^[a-z0-9][a-z0-9-]{1,63}$`, conflict policy, YAML frontmatter format, error message rules, ID-linkage `FR-NNN` guidance), load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
 
@@ -123,7 +123,7 @@ ID-linkage tip: when persisting, prefix each EARS criterion with `FR-NNN:` (e.g.
 
 ## Structured Output Block
 
-After writing the PRD, append a structured output block for cross-skill handoff. This HTML comment is invisible when rendered but enables `/cross-verify` to auto-check coverage:
+**Emit this block only into the persisted `docs/specs/<slug>/prd.md` file when `--persist` is used** — never append it to the conversation response (the HTML comment renders as visible noise in Codex; see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Emission gate"). It is machine-readable evidence for `/cross-verify`. The fenced block below is the **file template**:
 
 ```
 [/requirements] COMPLETE SKILL_OUTPUT:requirements
@@ -141,7 +141,7 @@ success_criteria_count: [N]
 END_SKILL_OUTPUT -->
 ```
 
-Place this at the very end of the PRD output, after all human-readable content.
+Place this at the very end of the persisted `prd.md` file, after all human-readable content.
 
 ## Further Reading
 

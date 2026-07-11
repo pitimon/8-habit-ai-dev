@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.38-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.39-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.39 · cross-runtime output hygiene — file-only SKILL_OUTPUT blocks (#375)
+
+A Codex-reported cross-runtime mismatch: the `SKILL_OUTPUT` handoff blocks from `/requirements`, `/design`, `/breakdown`, `/review-ai` are HTML comments — invisible in Claude, but rendered verbatim as noise in Codex. Emission is now consumer-gated / file-only: the block lives in the persisted artifact (`docs/specs/<slug>/…` or a saved `*-review.md`), never the conversation; non-persisted runs emit nothing. `/cross-verify`'s auto-detect glob was corrected to the canonical `docs/specs/*/…` paths, `/diagnose`'s consumer-less block was removed, and ADR-013 was amended. See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md) for details.
 
 ## v2.21.38 · post-review batch — script-count drift + validator hardening + tracking hygiene (#369)
 

@@ -153,7 +153,7 @@ After producing findings, do not stop at the verdict. Run a **Find → Fix → R
 2. **Apply fix** — edit the offending file(s) per the actionable feedback
 3. **Re-run review on the same scope** — re-Read the changed lines, re-grep for the original pattern, confirm the issue is gone
 4. **Cite evidence-of-fix per finding** — `file:line` showing the fix is now in place (with before/after snippets where helpful), OR explicit `deferred — tracked as #N` with the issue number
-5. **Refuse to emit `SKILL_OUTPUT:review` with `pass: true`** unless all CRITICAL findings are closed. HIGH findings may be deferred only with an issue ref. Refusal is in prose: state `"review cannot pass — N CRITICAL finding(s) remain open"` and stop. This is guidance to Claude, not a runtime gate.
+5. **Refuse to declare the review passed** — in prose, and in any emitted `SKILL_OUTPUT:review` block (`pass: true`) — unless all CRITICAL findings are closed. HIGH findings may be deferred only with an issue ref. Refusal is in prose: state `"review cannot pass — N CRITICAL finding(s) remain open"` and stop. This is guidance to Claude, not a runtime gate.
 
 **Output**: end the review report with a Verification Table replacing the prior flat finding list:
 
@@ -185,7 +185,7 @@ After producing findings, do not stop at the verdict. Run a **Find → Fix → R
 
 ## Structured Output Block
 
-After rendering the review verdict, append a structured output block for cross-skill handoff. This HTML comment is invisible when rendered but enables `/cross-verify` to auto-check review coverage:
+`/review-ai` has no `--persist` flag. **Emit this block only when the review report is written to a `*-review.md` file** (where `/cross-verify` Q5 can glob it) — never append it to the conversation response (the HTML comment renders as visible noise in Codex; see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Emission gate"). A conversation-only review emits no block, and `/cross-verify` Q5 falls back to manual assessment. The fenced block below is the **file template**:
 
 ```
 [/review-ai] COMPLETE SKILL_OUTPUT:review
@@ -202,7 +202,7 @@ ai_work_health_checked: [true|false]
 END_SKILL_OUTPUT -->
 ```
 
-Place this at the very end of the review report, after all human-readable content.
+Place this at the very end of the saved `*-review.md` report file, after all human-readable content.
 
 ## Further Reading
 

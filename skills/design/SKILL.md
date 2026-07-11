@@ -18,7 +18,7 @@ next-skill: breakdown
 
 1. **Read existing architecture and context contract**: Check `CLAUDE.md`, `AGENTS.md`, `SPEC.md`, `DOMAIN.md`, `CONTEXT.md`, `CONTEXT-MAP.md`, `DESIGN.md`, `ARCHITECTURE.md`, `docs/agents/domain.md`, and ADR directories. Understand current state and project vocabulary before proposing changes.
 
-1b. **Validate scope alignment**: If a `SKILL_OUTPUT:requirements` block exists in the PRD output, read it and verify:
+1b. **Validate scope alignment**: read the `SKILL_OUTPUT:requirements` block from `docs/specs/<slug>/prd.md` when persisted; otherwise recover `scope_in` / success criteria / `risks` from the PRD prose in context (non-persisted runs carry no block since v2.21.39, [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)). Then verify:
 
 - Proposed architecture decisions don't expand beyond `scope_in`
 - Success criteria are achievable with the proposed design
@@ -158,7 +158,7 @@ Ask `Blocking` questions before final recommendations. For `Important` or `Usefu
 
 ## Optional Persistence (`--persist <slug>`)
 
-When invoked with `--persist <slug>`, this skill writes its design output to `docs/specs/<slug>/design.md` in addition to emitting the conversation `SKILL_OUTPUT:design` block. Without the flag, behavior is byte-identical to v2.14.3 (no file writes).
+When invoked with `--persist <slug>`, this skill writes its design output to `docs/specs/<slug>/design.md`, and the `SKILL_OUTPUT:design` block lives in that file (not the conversation). Without the flag: no file writes and no block (byte-identical filesystem behavior to v2.14.3; conversation-block emission was removed in v2.21.39 per [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)).
 
 For the canonical convention (slug regex `^[a-z0-9][a-z0-9-]{1,63}$`, conflict policy, YAML frontmatter format, error message rules, ID-linkage `Decision-N` guidance), load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
 
@@ -182,7 +182,7 @@ ID-linkage tip: when persisting, label each decision as `### Decision-N: <topic>
 
 ## Structured Output
 
-After documenting design decisions, append a structured output block for cross-skill handoff. This HTML comment is invisible when rendered but enables `/cross-verify` to auto-check design coverage:
+**Emit this block only into the persisted `docs/specs/<slug>/design.md` when `--persist` is used** — never to the conversation response (the HTML comment is visible noise in Codex; see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Emission gate"). The fenced block below is the **file template**:
 
 ```
 [/design] COMPLETE SKILL_OUTPUT:design
@@ -207,7 +207,7 @@ article_14_pass: [true|false|n/a]
 END_SKILL_OUTPUT -->
 ```
 
-Place this at the very end of the design output, after all human-readable content.
+Place this at the very end of the persisted `design.md` file, after all human-readable content.
 
 ## Further Reading
 
