@@ -60,7 +60,7 @@ source-skill-version: <plugin version, e.g. 2.15.0>
 ---
 ```
 
-Body: full skill output as you would have emitted to conversation, including the `SKILL_OUTPUT:<step>` HTML-comment block at the end.
+Body: the full human-readable skill output, followed by the `SKILL_OUTPUT:<step>` HTML-comment block at the very end of the persisted artifact file (the block lives here, not in the conversation — see §"Block placement — persisted file only").
 
 ## Block placement — persisted file only
 
