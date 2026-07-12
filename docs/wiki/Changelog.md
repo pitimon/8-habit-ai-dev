@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.41-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.42-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.42 · #375 follow-up (ค) — recover Claude's lost convenience runtime-neutrally (#375)
+
+The v2.21.39 file-only fix removed the same-session `/cross-verify` auto-populate and the visible completion line from non-persist Claude runs. Recovered both on the consumer/plain-text side (not via runtime-conditional producer behavior, which would violate ADR-024): `/cross-verify` gains a session-context prose-mining fallback, and the four producer skills regain a plain-text `[/<skill>] complete` line (no HTML comment, no Codex noise). See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.21.41 · finish #375 — guard the output templates (#375)
 

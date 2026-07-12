@@ -31,7 +31,7 @@ next-skill: any
 Before running the manual checklist, search for structured output blocks in the current directory:
 
 1. Glob for the persisted artifact files: `docs/specs/*/prd.md`, `docs/specs/*/design.md`, `docs/specs/*/tasks.md` (plus their `*.vN.md` conflict variants — the canonical `--persist` targets), and `*-review.md` / `*-prd.md` / `*-tasks.md` in the working directory for hand-saved reports
-2. Read each file and look for `<!-- SKILL_OUTPUT:` blocks. As of v2.21.39 ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)) these blocks live in the persisted files only, not the conversation transcript — a non-persisted run has no block, which is expected and falls through to manual assessment (step 5)
+2. Read each file and look for `<!-- SKILL_OUTPUT:` blocks. As of v2.21.39 ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)) these blocks live in the persisted files only, not the conversation transcript — a non-persisted run has no block, which is expected and falls through to the session-context fallback and, failing that, manual assessment (steps 5–6)
 3. If found, pre-populate evidence for:
    - **Q4**: Extract `ears_count` and `success_criteria_count` from requirements block
    - **Q5**: Extract `test_coverage_checked` from review block
@@ -40,7 +40,8 @@ Before running the manual checklist, search for structured output blocks in the 
    - **Q16**: Extract `sticky_decisions` from design block — flag if 0 sticky decisions in a design with >3 decisions (WHY not captured)
    - **Q4**: Cross-check `decision_count` against requirements `success_criteria_count` — flag if decisions don't cover all criteria
 4. Mark auto-populated answers with `✓A` (auto-detected) confidence level
-5. If no blocks found, proceed with manual assessment (no change to current behavior)
+5. **Session-context fallback (no persisted block)**: if no file block was found but the producer skills (`/requirements`, `/design`, `/breakdown`, `/review-ai`) ran earlier in **this session**, mine their conversation output — the PRD / design / tasks **prose** still in context — to pre-populate Q4 / Q8 / Q14 / Q16. Mark `✓I` (inferred from prose), or `✓A` only for fields the prose states as an explicit count (e.g. a numbered EARS list). This is runtime-neutral: it reads prose, not the HTML-comment block, so it works identically in Codex. (v2.21.42, [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375) follow-up — restores the same-session auto-populate that file-only emission removed, without runtime-conditional producer behavior.)
+6. If neither a persisted block nor prior producer output is available, proceed with manual assessment (no change to prior behavior)
 
 ## Process
 

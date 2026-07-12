@@ -16,6 +16,20 @@ Emit a `SKILL_OUTPUT` block **only when the skill's output is being written to a
 
 The fenced example blocks in the producer SKILL.md files below are the **file templates**, not an instruction to print the block to conversation.
 
+## Completion signal (plain-text, all runtimes)
+
+Separately from the (file-only) `SKILL_OUTPUT` block, a producer skill SHOULD end its **conversation** output with a single plain-text completion line so the human and the next skill get a visible "done" marker:
+
+```
+[/<skill-name>] complete
+```
+
+e.g. `[/requirements] complete`. When persisting, append the artifact path: `[/requirements] complete → docs/specs/<slug>/prd.md`.
+
+- **Plain text, no HTML comment** — renders cleanly in every runtime (no Codex noise); this is the visible half of the old attribution line, kept after the block itself moved to file-only (v2.21.42, [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375) follow-up).
+- It does **not** reference or imply a `SKILL_OUTPUT` block — the block is file-only and may be absent.
+- Lowercase `complete` distinguishes it from the block's `COMPLETE|PARTIAL|FAILED` attribution marker (which lives only inside the persisted file's template).
+
 ## Format
 
 ```
