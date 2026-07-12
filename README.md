@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.39-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.39)
+[![Version](https://img.shields.io/badge/Version-2.21.40-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.40)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22139) — Version history
+- [What's New](#whats-new-in-v22140) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -128,6 +128,8 @@ Use the cross-verify skill to check this release plan.
 **Verify Claude Code installation**: After restarting, you should see `## 8-Habit AI Dev Active` in the session banner with the 7-step workflow reminder. For Codex, run `codex plugin list` and confirm `8-habit-ai-dev@pitimon-8-habit-ai-dev` is installed.
 
 **New to the plugin?** Start with `/workflow` for a guided walkthrough, or see [Use Cases](#use-cases-which-skill-when) to find the right skill for your situation.
+
+**The Core 5 (≈80% of daily work)**: `/requirements` · `/review-ai` · `/cross-verify` · `/research` · `/reflect`. If you learn only five skills, learn these — the session banner surfaces the same set each session.
 
 Two commands to install per platform. Claude Code also loads a session reminder; both platforms make 24 skills available. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md), [Codex integration guide](docs/codex-integration.md), and wiki [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations): Codex gets native packaging, the same markdown skills, and a narrow `SessionStart` JSON adapter if the host invokes the hook; it does not get Claude hook feature parity or runtime enforcement.
 
@@ -458,6 +460,16 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.40
+
+**Theme: close the 2026-06-10 Fable review ledger — F12/F15/F16 (#368)**
+
+- **Core 5 reaches README readers (F12)** — the "80% of daily work" skill set (`/requirements` · `/review-ai` · `/cross-verify` · `/research` · `/reflect`) was only in the session banner; Quick Start now surfaces it too, so the two onboarding entry points agree.
+- **ADR status field carries information (F15)** — `docs/adr/README.md` gains a status vocabulary (`Accepted` / `Accepted (amended YYYY-MM-DD, #NNN)` / `Superseded by ADR-NNN`), the validator (`validate-content.sh`) is widened to enforce it, and `ADR-013` — amended for #375 in v2.21.39 but still marked plain `Accepted` — now reads `Accepted (amended 2026-07-12, #375)`. Convention + fitness function ship together.
+- **Session-hook token budget recorded as a constraint (F16)** — worst-case output measures ~281 tokens (chars/4) against the ≤300 ceiling; a header comment now warns that any new line must trim an existing one. Measured, not trimmed (the enforced estimator passes with headroom — trimming would be gold-plating).
+
+---
+
 ## What's New in v2.21.39
 
 **Theme: cross-runtime output hygiene — structured handoff blocks no longer leak into Codex ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375))**
@@ -635,4 +647,4 @@ MIT
 
 ---
 
-_Version: 2.21.39 | Last updated: 2026-07-12_
+_Version: 2.21.40 | Last updated: 2026-07-12_

@@ -1,6 +1,11 @@
 #!/bin/bash
 # 8-Habit AI Dev — Session Start Reminder (≤300 tokens)
 #
+# TOKEN BUDGET (F16, #368): worst-case output measures ~281 tokens by chars/4
+# (the enforced estimator in tests/test-verbosity-hook.sh uses words×1.3 and passes
+# with headroom). Treat ~300 as a hard ceiling with little slack: any NEW feature/skill
+# line here MUST trim an existing line to stay under budget — do not just append.
+#
 # Opt out: export HABIT_QUIET=1 (silences this reminder entirely)
 
 # Honor opt-out before any work
