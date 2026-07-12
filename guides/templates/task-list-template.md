@@ -26,6 +26,10 @@ Output template for `/breakdown` (Step 3).
 - Total files affected: [N] (if >15, consider splitting the feature)
 - Estimated complexity: [small | medium | large]
 
+<!-- Persisted-artifact fragment only (v2.21.41, #375): this block belongs at the END of the
+     docs/specs/<slug>/tasks.md file written under --persist. Do NOT emit it to the conversation —
+     the HTML comment renders as visible noise in Codex. See guides/structured-output-protocol.md
+     §"Emission gate". A non-persist run produces no block. -->
 <!-- SKILL_OUTPUT:breakdown
 task_count: [N]
 tasks:

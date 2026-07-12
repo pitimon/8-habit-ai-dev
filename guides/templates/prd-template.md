@@ -46,6 +46,10 @@ Output template for `/requirements` (Step 1).
 
 - [Anything unresolved that needs human decision]
 
+<!-- Persisted-artifact fragment only (v2.21.41, #375): this block belongs at the END of the
+     docs/specs/<slug>/prd.md file written under --persist. Do NOT emit it to the conversation —
+     the HTML comment renders as visible noise in Codex. See guides/structured-output-protocol.md
+     §"Emission gate". A non-persist run produces no block. -->
 <!-- SKILL_OUTPUT:requirements
 ears_count: [N]
 ears_criteria:

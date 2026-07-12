@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.40-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.41-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.41 · finish #375 — guard the output templates (#375)
+
+Fable's review of the v2.21.39 file-only `SKILL_OUTPUT` fix found that `guides/templates/prd-template.md` and `task-list-template.md` still embedded the block unconditionally with no gating note — a model following a template verbatim could re-emit it to the conversation and re-introduce the Codex noise #375 removed. Added a persisted-artifact-fragment guard comment above each block. See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.21.40 · close the 2026-06-10 Fable review ledger — F12/F15/F16 (#368)
 
