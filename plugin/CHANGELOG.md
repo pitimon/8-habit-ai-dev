@@ -10,6 +10,17 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.42 — #375 follow-up (ค): recover Claude's lost convenience runtime-neutrally (#375) (2026-07-13)
+
+The v2.21.39 file-only `SKILL_OUTPUT` fix removed two things from **non-persist Claude runs**: the same-session `/cross-verify` auto-populate (the block used to sit in transcript context) and the visible completion/attribution line. Fable's chosen "third option" recovers both on the **consumer / plain-text side** rather than via runtime-conditional producer behavior — which was rejected as an [ADR-024](docs/adr/ADR-024-codex-runtime-adapter-boundary.md) runtime-neutrality violation.
+
+### Added
+
+- **`/cross-verify` session-context fallback** — when no persisted block is found but the producer skills ran earlier in the same session, `/cross-verify` mines their PRD/design/tasks **prose** in context to pre-populate Q4/Q8/Q14/Q16 (marked `✓I`). Runtime-neutral: it reads prose, not the HTML-comment block, so it works identically in Codex.
+- **Plain-text completion signal** — `/requirements`, `/design`, `/breakdown`, `/review-ai` now end conversation output with a `[/<skill>] complete` line (canonical spec in `guides/structured-output-protocol.md` §"Completion signal"). This restores the visible half of the old attribution line that file-only emission removed; plain text means zero Codex noise.
+
+---
+
 ## v2.21.41 — finish #375: guard the output templates that still leaked the block (#375) (2026-07-12)
 
 A follow-up completing #375. Fable's review of the v2.21.39 file-only fix found that the two output templates still embedded the `SKILL_OUTPUT` block unconditionally.

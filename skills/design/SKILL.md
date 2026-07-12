@@ -32,7 +32,7 @@ next-skill: breakdown
 | **Focus**  | One module, workflow, subsystem, integration, or boundary is in scope                                                                                         | Targeted decisions, local trade-offs, risks, and any needed ADRs                               |
 | **Full**   | Whole-system design, unclear ownership, 3+ interacting modules, persistence, authentication, payment, security, deployment, or future-agent handoff is needed | Full decision set, ADR coverage, risk register, human approvals, and handoff-ready constraints |
 
-Start with `Scan` unless the user's request or existing evidence already proves a `Focus` or `Full` trigger. **Promote only with evidence, explicit user request, or risk of staying smaller**. When promoting, state the trigger, cite the evidence or request, and name the risk of keeping the smaller pass.
+Start with `Scan` unless the user's request or existing evidence proves a `Focus` or `Full` trigger. **Promote only with evidence, explicit user request, or risk of staying smaller** — then name the trigger, its evidence, and that risk.
 
 2. **Identify decisions** that need human input:
    - Database choice and schema
@@ -183,6 +183,8 @@ ID-linkage tip: when persisting, label each decision as `### Decision-N: <topic>
 ## Structured Output
 
 **Emit this block only into the persisted `docs/specs/<slug>/design.md` when `--persist` is used** — never to the conversation response (the HTML comment is visible noise in Codex; see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Emission gate"). The fenced block below is the **file template**:
+
+Regardless of persistence, end your conversation output with the plain-text line `[/design] complete` — see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Completion signal".
 
 ```
 [/design] COMPLETE SKILL_OUTPUT:design
