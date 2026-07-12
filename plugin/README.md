@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.40-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.40)
+[![Version](https://img.shields.io/badge/Version-2.21.41-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.41)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22140) — Version history
+- [What's New](#whats-new-in-v22141) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -460,6 +460,14 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.41
+
+**Theme: finish #375 — guard the two output templates that still leaked the block**
+
+- **`prd-template.md` and `task-list-template.md` now label their `SKILL_OUTPUT` block as a persisted-artifact fragment** — a guarding comment states the block belongs only at the end of the `docs/specs/<slug>/…` file under `--persist` and must never be emitted to the conversation. Fable's review of the v2.21.39 fix found these two templates still embedded the block unconditionally, so a model following a template verbatim could re-introduce the exact Codex noise #375 removed. This closes that residue.
+
+---
+
 ## What's New in v2.21.40
 
 **Theme: close the 2026-06-10 Fable review ledger — F12/F15/F16 (#368)**
@@ -647,4 +655,4 @@ MIT
 
 ---
 
-_Version: 2.21.40 | Last updated: 2026-07-12_
+_Version: 2.21.41 | Last updated: 2026-07-12_

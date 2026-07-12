@@ -10,6 +10,20 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.41 — finish #375: guard the output templates that still leaked the block (#375) (2026-07-12)
+
+A follow-up completing #375. Fable's review of the v2.21.39 file-only fix found that the two output templates still embedded the `SKILL_OUTPUT` block unconditionally.
+
+### Fixed
+
+- **`guides/templates/prd-template.md` and `guides/templates/task-list-template.md`** now carry a guard comment above the `SKILL_OUTPUT` block stating it is a persisted-artifact fragment (belongs only at the end of the `docs/specs/<slug>/…` file under `--persist`, never emitted to the conversation). Without it, a model following a template verbatim could re-emit the block and re-introduce the exact Codex noise #375 removed — the last residue of the file-only migration.
+
+### Note
+
+- The maintainer's report that "Claude Code broke after the #375 fix" was investigated and disentangled: the reported symptom was the assistant's own malformed tool-call output leaking to the console (an AI output-formatting glitch), **not** a plugin regression — confirmed three ways, including that the live environment was still running v2.21.38 (pre-#375). The one genuine plugin-side change (the completion/attribution line no longer printing on non-persist runs) is a graceful degradation, not a failure; a runtime-conditional emission (`ก′`) was rejected as an [ADR-024](docs/adr/ADR-024-codex-runtime-adapter-boundary.md) runtime-neutrality violation.
+
+---
+
 ## v2.21.40 — close the 2026-06-10 Fable review ledger: F12/F15/F16 (#368) (2026-07-12)
 
 Clears the last three un-adjudicated findings from the 2026-06-10 Fable model review. F15 had become live: `ADR-013` was amended for #375 the day before but its Status field still read plain `Accepted` — the exact drift the finding named.
