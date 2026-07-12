@@ -166,12 +166,17 @@ if [ -d "docs/adr" ]; then
     if grep -q '\*\*Status\*\*:' "$adr_file"; then
       # Validate status value
       status_val=$(grep '\*\*Status\*\*:' "$adr_file" | head -1 | sed 's/.*\*\*Status\*\*:[[:space:]]*//')
+      # Status vocabulary per docs/adr/README.md §"Status field vocabulary" (F15, #368):
+      # plain states, plus 'Accepted (amended YYYY-MM-DD, #NNN)' and 'Superseded by ADR-NNN'.
       case "$status_val" in
         Proposed|Accepted|Deprecated|Superseded)
           pass "$adr_name status '$status_val' is valid"
           ;;
+        "Accepted (amended "*|"Superseded by ADR-"*)
+          pass "$adr_name status '$status_val' is valid (amended/superseded vocabulary)"
+          ;;
         *)
-          fail "$adr_name status '$status_val' not in [Proposed, Accepted, Deprecated, Superseded]"
+          fail "$adr_name status '$status_val' not in [Proposed, Accepted, Deprecated, Superseded, 'Accepted (amended YYYY-MM-DD, #NNN)', 'Superseded by ADR-NNN']"
           ;;
       esac
     else

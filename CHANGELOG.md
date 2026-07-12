@@ -10,6 +10,22 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.40 — close the 2026-06-10 Fable review ledger: F12/F15/F16 (#368) (2026-07-12)
+
+Clears the last three un-adjudicated findings from the 2026-06-10 Fable model review. F15 had become live: `ADR-013` was amended for #375 the day before but its Status field still read plain `Accepted` — the exact drift the finding named.
+
+### Changed
+
+- **ADR status vocabulary now carries information (F15)** — `docs/adr/README.md` documents `Accepted` / `Accepted (amended YYYY-MM-DD, #NNN)` / `Superseded by ADR-NNN`, and `tests/validate-content.sh`'s ADR-status check is widened to enforce the richer set. `ADR-013` corrected to `Accepted (amended 2026-07-12, #375)`. Convention and fitness function ship together, so the vocabulary can't drift from the check.
+- **Core 5 reaches README readers (F12)** — the "80% of daily work" skill set (`/requirements` · `/review-ai` · `/cross-verify` · `/research` · `/reflect`) now appears in the README Quick Start, not just the session banner; the two onboarding entry points agree.
+- **Session-hook token budget recorded (F16)** — a header comment in `hooks/session-start.sh` documents the ~281-token (chars/4) worst case against the ≤300 ceiling and requires trimming an existing line before adding a new one. Measured, not trimmed — the enforced `words×1.3` estimator passes with headroom, so trimming would be gold-plating.
+
+### Process
+
+- Consulted Fable on all three open tracking issues before acting (advisor tool gated → `Agent(model: fable)` fallback). Sibling trackers #297 and #367 received [ADR-016](docs/adr/ADR-016-t2-bag-drop-date-eviction-policy.md) drop-date comments in the same sitting, applying the eviction discipline the repo had only given to file-based deferrals.
+
+---
+
 ## v2.21.39 — cross-runtime output hygiene: file-only SKILL_OUTPUT blocks (#375) (2026-07-12)
 
 A Codex-reported cross-runtime output-contract mismatch: the `SKILL_OUTPUT` handoff blocks that `/requirements`, `/design`, `/breakdown`, `/review-ai` append are HTML comments — invisible in Claude Code, but rendered verbatim as noise in Codex and other runtimes. Reviewed by two independent models (deep-reasoner + Codex QA at `xhigh`) before implementation; all four QA Fix findings adopted.

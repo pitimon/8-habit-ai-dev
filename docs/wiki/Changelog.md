@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.39-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.40-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.40 · close the 2026-06-10 Fable review ledger — F12/F15/F16 (#368)
+
+Clears the last three un-adjudicated findings from the 2026-06-10 Fable review. **F12**: the "Core 5" onboarding framing now appears in the README Quick Start, not only the session banner. **F15**: `docs/adr/README.md` gains an ADR status vocabulary and `validate-content.sh` enforces it, so an amended ADR can no longer read plain "Accepted" — `ADR-013` (amended for #375) is corrected. **F16**: the session-hook token budget is recorded as a header constraint (measured ~281 tokens, not trimmed). Sibling trackers #297/#367 received ADR-016 drop-date comments. See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.21.39 · cross-runtime output hygiene — file-only SKILL_OUTPUT blocks (#375)
 

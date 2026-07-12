@@ -1,6 +1,6 @@
 # ADR-013: Spec Persistence as Opt-In `--persist` Flag
 
-**Status**: Accepted
+**Status**: Accepted (amended 2026-07-12, #375)
 **Date**: 2026-05-03
 **Decision makers**: Pitimon (human) + Claude Opus 4.7 (AI, 1M context)
 **Related**: pitimon/8-habit-ai-dev#165, [ADR-009 Skill Split Convention](./ADR-009-skill-split-convention.md), research brief at `~/.claude/plans/https-github-com-github-spec-kit-idea-in-robust-walrus.md`
