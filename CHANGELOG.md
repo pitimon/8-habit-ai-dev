@@ -10,6 +10,26 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.39 — cross-runtime output hygiene: file-only SKILL_OUTPUT blocks (#375) (2026-07-12)
+
+A Codex-reported cross-runtime output-contract mismatch: the `SKILL_OUTPUT` handoff blocks that `/requirements`, `/design`, `/breakdown`, `/review-ai` append are HTML comments — invisible in Claude Code, but rendered verbatim as noise in Codex and other runtimes. Reviewed by two independent models (deep-reasoner + Codex QA at `xhigh`) before implementation; all four QA Fix findings adopted.
+
+### Changed
+
+- **`SKILL_OUTPUT` emission is now consumer-gated / file-only** — the block lives in the persisted artifact (`docs/specs/<slug>/{prd,design,tasks}.md` under `--persist`, or a saved `*-review.md` for `/review-ai`) and is never appended to the conversation response. A run that writes no file emits no block. Non-persisted runs are concise on every runtime; Claude behavior is otherwise unchanged (the block was already invisible there).
+- **`/cross-verify` glob fixed** — auto-detect now scans the canonical `docs/specs/*/{prd,design,tasks}.md` paths (plus `*.vN.md` variants) instead of the `*-prd.md`-in-cwd pattern that never matched a persisted file. Non-persisted runs fall through to manual assessment as before.
+- **`persistence-convention.md` §"Conversation parity" corrected** — it claimed `/cross-verify` reads the conversation transcript; it reads globbed files. The block is now documented as a property of the persisted file only. The filesystem back-compat invariant (no `--persist` = no file writes / no directory access) is preserved verbatim.
+
+### Removed
+
+- **`/diagnose`'s `SKILL_OUTPUT:diagnose` block** — consumer-less (`/post-mortem` reads the diagnosis as prose; `/cross-verify` never globbed it), rendered as Codex noise, and its `METHODOLOGY-COMPLETE` marker was outside the protocol's `COMPLETE|PARTIAL|FAILED` vocabulary.
+
+### Docs
+
+- **[ADR-013](docs/adr/ADR-013-spec-persistence-opt-in.md) amended** (not silently rewritten) — the original conversation-emission decision is superseded; historical text retained. Canonical current spec: [`guides/structured-output-protocol.md`](guides/structured-output-protocol.md) §"Emission gate".
+
+---
+
 ## v2.21.38 — post-review batch: script-count drift + validator hardening + tracking hygiene (#369) (2026-07-03)
 
 From an 8-habit-reviewer pass over the completed v2.21.36+37 arc (advisor-pattern fallback). Verdict was "appropriate with named gaps" — this batch closes the gaps.

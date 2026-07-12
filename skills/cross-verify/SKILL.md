@@ -30,8 +30,8 @@ next-skill: any
 
 Before running the manual checklist, search for structured output blocks in the current directory:
 
-1. Glob for `*-prd.md`, `*-requirements.md`, `*-tasks.md`, `*-breakdown.md`, `*-review.md` files
-2. Read each file and look for `<!-- SKILL_OUTPUT:` blocks
+1. Glob for the persisted artifact files: `docs/specs/*/prd.md`, `docs/specs/*/design.md`, `docs/specs/*/tasks.md` (plus their `*.vN.md` conflict variants — the canonical `--persist` targets), and `*-review.md` / `*-prd.md` / `*-tasks.md` in the working directory for hand-saved reports
+2. Read each file and look for `<!-- SKILL_OUTPUT:` blocks. As of v2.21.39 ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)) these blocks live in the persisted files only, not the conversation transcript — a non-persisted run has no block, which is expected and falls through to manual assessment (step 5)
 3. If found, pre-populate evidence for:
    - **Q4**: Extract `ears_count` and `success_criteria_count` from requirements block
    - **Q5**: Extract `test_coverage_checked` from review block

@@ -171,16 +171,7 @@ Load `${CLAUDE_PLUGIN_ROOT}/habits/h1-be-proactive.md` for the H1 principle.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the H5 principle.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local glossary, issue-tracker, or agent context files are present.
 
----
-
-[/diagnose] METHODOLOGY-COMPLETE SKILL_OUTPUT:diagnose
-
-<!-- SKILL_OUTPUT:diagnose
-phases: 6
-feedback_loop_built: [true|false]
-reproduction_rate: "[percentage]"
-hypotheses_count: [3-5]
-regression_test_written_first: [true|false]
-cleanup_grep_clean: [true|false]
-handoff_to: post-mortem
-END_SKILL_OUTPUT -->
+<!-- The structured-output handoff block was removed in v2.21.39 (#375): it had no consumer
+     (/post-mortem takes the diagnosis as prose; /cross-verify never globs a diagnose artifact),
+     rendered as verbatim noise in Codex, and its status marker was outside the protocol's
+     accepted vocabulary. /diagnose hands off to /post-mortem in prose. -->

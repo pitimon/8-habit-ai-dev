@@ -11,7 +11,7 @@ Canonical spec for the opt-in artifact persistence used by `/requirements`, `/de
 
 - Skill is invoked with the argument `--persist <slug>` (e.g., `/8-habit-ai-dev:requirements --persist add-user-login add user authentication`)
 - The flag MAY appear before or after the positional feature description
-- When the flag is absent: behavior is byte-identical to the pre-v2.15 skill — no file writes, no errors, no directory access. **Hard back-compat invariant.**
+- When the flag is absent: **no file writes, no errors, no directory access.** This filesystem invariant is the hard back-compat guarantee. (Conversation output no longer carries a `SKILL_OUTPUT` block in either mode as of v2.21.39 / [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375) — the block is a property of the persisted file only; see §"Block placement — persisted file only". The pre-v2.15 conversation-block emission is intentionally superseded.)
 
 ## Slug validation
 
@@ -39,7 +39,7 @@ If the target file already exists, prompt the user via `AskUserQuestion` with th
 
 1. **Overwrite** — replace the existing file
 2. **Numbered variant** — write to next available `<artifact>.vN.md` (e.g., `prd.v2.md`, `prd.v3.md`)
-3. **Abort** — skip persistence; emit conversation output only
+3. **Abort** — skip persistence; emit the human-readable conversation output only, with **no** `SKILL_OUTPUT` block (no file means no consumer to reach — the block would be pure noise; `/cross-verify` uses its manual fallback)
 
 When `AskUserQuestion` is unavailable (non-interactive context, batch invocation): default to numbered variant and emit a single warning naming the variant chosen:
 
@@ -60,11 +60,13 @@ source-skill-version: <plugin version, e.g. 2.15.0>
 ---
 ```
 
-Body: full skill output as you would have emitted to conversation, including the `SKILL_OUTPUT:<step>` HTML-comment block at the end.
+Body: the full human-readable skill output, followed by the `SKILL_OUTPUT:<step>` HTML-comment block at the very end of the persisted artifact file (the block lives here, not in the conversation — see §"Block placement — persisted file only").
 
-## Conversation parity
+## Block placement — persisted file only
 
-When persisting, the skill MUST also emit the `SKILL_OUTPUT:<step>` block to conversation (not just to the file). This preserves `/cross-verify` auto-detect, which reads from conversation transcript.
+The `SKILL_OUTPUT:<step>` block lives in the persisted artifact file **only** — do NOT also emit it to the conversation response. `/cross-verify` auto-detect reads the block from the persisted files it globs (see [`structured-output-protocol.md`](./structured-output-protocol.md) §"Consumer Skills"), not from the conversation transcript, so a file-only block reaches the consumer while keeping the human-facing response concise on every runtime (the HTML comment renders verbatim in Codex — see the protocol's renderer note).
+
+> **Why the change (v2.21.39, [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375))**: the earlier "conversation parity" rule required emitting the block to conversation as well, on the belief that `/cross-verify` read the transcript. It does not — it globs files. The duplicated conversation block was invisible in Claude but rendered as noise in Codex, so it is now removed from the conversation surface entirely.
 
 ## Error message format
 
@@ -81,7 +83,7 @@ Generic "error" or "failed" messages are NOT acceptable.
 If `docs/specs/<slug>/` cannot be created (read-only filesystem, permission denied, disk full):
 
 1. Emit the 3-part error message above
-2. **Fall back to conversation-only output** (do NOT abort the skill — the user still gets their PRD/design/tasks in conversation)
+2. **Fall back to conversation-only output** (do NOT abort the skill — the user still gets their PRD/design/tasks in conversation), with **no** `SKILL_OUTPUT` block: there is no file for it to live in, and a conversation block cannot reach `/cross-verify` (which reads files) — it would only re-introduce the Codex noise this convention removes. `/cross-verify` falls back to manual assessment.
 3. Continue normal skill execution
 
 ## ID-linkage convention (optional, recommended)
