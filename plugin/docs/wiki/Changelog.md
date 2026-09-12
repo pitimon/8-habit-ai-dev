@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.42-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.43-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.43 · #384 — separate production release gates from core checklist scoring
+
+`/cross-verify` now keeps `OPEN_VERIFICATION_DEBT` out of the core score and renders independent production domain gates and release states. A read-only evidence contract covers source/runtime reconciliation, exact-target mutation read-back, conditional economics/quality evidence, skipped-test debt, data impact, and owner closure. Runtime mutation and approval automation remain out of scope. See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.21.42 · #375 follow-up (ค) — recover Claude's lost convenience runtime-neutrally (#375)
 

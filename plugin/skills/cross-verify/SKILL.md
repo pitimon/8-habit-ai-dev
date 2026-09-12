@@ -92,7 +92,7 @@ For critical decisions (architecture, security, production deploys), mark each P
 | Unverified    | ✓U   | Assumption — should verify before proceeding              | "Assuming tests exist but haven't checked coverage"                 |
 | Auto-detected | ✓A   | Evidence extracted from structured output block           | "Parsed 5 EARS criteria from PRD structured block"                  |
 
-**Scoring**: All Pass levels count toward the score, but ✓U items are flagged as verification debt.
+**Scoring**: Only `PASS` counts. Exclude `N/A` only with evidence that the item is irrelevant. `OPEN_VERIFICATION_DEBT` is unresolved evidence; it does not count as PASS. The core score cannot override a blocking domain gate.
 
 **Staleness**: a ✓V resting on memory or a prior session — not a check made _this_ session — is really ✓U. Recalled state goes stale (a function, flag, or path may have changed). Re-verify before it carries weight in the verdict.
 
@@ -114,10 +114,15 @@ This is the cheap inline complement to a full reviewer-subagent dispatch (`advis
 ```
 ## Cross-Verification Report
 **Feature**: [name]
-**Score**: [X]/17 (N/A excluded: [Y]/[Z] applicable = [%])
+**Core checklist**: [PASS X] / [FAIL Y] / [N/A Z] / [OPEN_VERIFICATION_DEBT W]
+**Adjusted score**: [PASS X] / ([total] - [N/A Z]) = [%] (debt is not PASS)
 **Band**: [see table below]
 **Confidence**: [V: X, I: Y, U: Z — required for high-stakes reviews] · **Open unknowns**: [top 1-3 still unverified, or "none material"]
 **Failed**: [list failed items with 1-line explanation each]
+**Domain gates**: [Infrastructure: status] · [Functional: status] · [Economic: status] · [Quality: status]
+**Release state**: [PLAN / READY / CANARY / OBSERVING / PROVISIONAL_KEEP / FINAL_KEEP / HOLD / ROLLBACK]
+**Release verdict**: [PROVISIONAL_KEEP / FINAL_KEEP / HOLD / ROLLBACK]
+**Blocking gates/debt**: [list, or "none"]
 **Recommendation**: [proceed / address gaps / revisit plan / stop and rethink]
 
 ### Dimension Summary
@@ -130,6 +135,8 @@ This is the cheap inline complement to a full reviewer-subagent dispatch (`advis
 ⚠️ Flag if any dimension scores <50% while others score >75%
 ```
 
+For production work, load `${CLAUDE_PLUGIN_ROOT}/guides/production-release-gates.md`. It is read-only; use `/deploy-guide` for deployment planning and `/operational-state` for incident/watch/handoff classification.
+
 ### Scoring Bands
 
 | Score | Band             | Action                               |
@@ -139,7 +146,7 @@ This is the cheap inline complement to a full reviewer-subagent dispatch (`advis
 | 8-11  | Significant gaps | Revisit the plan before implementing |
 | < 8   | Not ready        | Stop and rethink the approach        |
 
-When calculating adjusted score, exclude N/A items from both numerator and denominator. Use the adjusted percentage to determine the band.
+When calculating adjusted score, count only `PASS` in the numerator and exclude `N/A` from the denominator. `FAIL` and `OPEN_VERIFICATION_DEBT` remain visible and prevent a production `FINAL_KEEP` when their gate policy is blocking. Use the adjusted percentage to determine the core band, then determine the release verdict independently from domain gates and evidence completeness.
 
 ### Common Failure Patterns
 
@@ -152,11 +159,13 @@ When calculating adjusted score, exclude N/A items from both numerator and denom
 
 - [ ] All 17 questions answered with Pass/Fail/N/A and 1-line evidence
 - [ ] Dimension Summary table rendered with per-dimension scores
-- [ ] Band determined from adjusted score (N/A items excluded)
+- [ ] Core status buckets rendered: PASS/FAIL/N/A/OPEN_VERIFICATION_DEBT
+- [ ] Band determined from adjusted score (PASS numerator; N/A excluded; debt not PASS)
 - [ ] Failed items each have a specific remediation action
 - [ ] Report follows the output template above (not free-form prose)
 - [ ] High-stakes reviews carry the Confidence (V/I/U) + Open-unknowns footer in the report header
 - [ ] Shadow self-check run on the verdict (counter-argument + who's harmed if wrong)
+- [ ] Production reviews render independent domain gates and a release state/verdict; a core score cannot override a blocking domain gate
 
 ## Domain Question Packs (Optional)
 
@@ -173,3 +182,4 @@ Domain questions are scored separately and do not affect the main 17-question sc
 Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verification.md` for detailed guidance on each question.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards when using confidence levels.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/production-release-gates.md` for production states, independent gates, runtime reconciliation, mutation read-back, and closure evidence.

@@ -26,3 +26,5 @@ jobs:
         run: bash tests/test-verbosity-hook.sh
       - name: Pre-commit hook F6 regression test (fail-closed verdict paths)
         run: bash tests/test-pre-commit-hook.sh
+      - name: Cross-verify production release-gate contract (#384)
+        run: bash tests/test-cross-verify-release-gates.sh
