@@ -236,6 +236,26 @@ if [ "$LOAD_ABS_FAIL" -eq 0 ]; then
 fi
 echo ""
 
+# Check 8c: Hermes substitution note present (issue #388).
+# ${CLAUDE_PLUGIN_ROOT} does not resolve on Hermes (no plugin-manifest layer). Every
+# skill that uses it MUST carry the one-line "Hermes: no ${CLAUDE_PLUGIN_ROOT}; ..."
+# substitution note (AGENTS.md Hermes contract) so an agent reading the skill on
+# Hermes knows the exact fallback URL, instead of the note silently rotting as new
+# ${CLAUDE_PLUGIN_ROOT} references get added without it.
+HERMES_NOTE_FAIL=0
+while read -r skill_file; do
+  if grep -q 'CLAUDE_PLUGIN_ROOT' "$skill_file" 2>/dev/null; then
+    if ! grep -q 'Hermes: no `\${CLAUDE_PLUGIN_ROOT}`' "$skill_file" 2>/dev/null; then
+      fail "$skill_file uses \${CLAUDE_PLUGIN_ROOT} but is missing the Hermes substitution note (issue #388)"
+      HERMES_NOTE_FAIL=$((HERMES_NOTE_FAIL + 1))
+    fi
+  fi
+done < <(find skills/ plugin/skills/ -name "SKILL.md" -type f 2>/dev/null)
+if [ "$HERMES_NOTE_FAIL" -eq 0 ]; then
+  pass "All \${CLAUDE_PLUGIN_ROOT}-using skills carry the Hermes substitution note"
+fi
+echo ""
+
 # --- Check 9: Word count guardrails (warning only) ---
 echo "--- Check 9: Word count guardrails ---"
 for skill_dir in skills/*/; do

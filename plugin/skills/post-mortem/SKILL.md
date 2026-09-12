@@ -57,7 +57,7 @@ What was actually observed — test output, error message, log line, performance
 
 ### 3. Root cause _(mandatory)_
 
-The actual bug mechanism. **Code identifiers welcome and expected** — function names, file paths, struct fields, branch conditions, commit SHAs of the offending change. Walk the cause chain end-to-end. This is the most expensive section and the reason the post-mortem exists at all.
+The actual bug mechanism. **Code identifiers welcome and expected** — function names, file paths, struct fields, branch conditions, commit SHAs of the offending change. Walk the cause chain end-to-end — the most expensive section, and the reason this artifact exists.
 
 ### 4. Why it produced the symptom
 
@@ -118,11 +118,11 @@ If there are no action items, write _"None — the fix is sufficient and no clas
 >
 > **Symptom.** Users on fresh installs reported that `/calibrate` ran but subsequent `/research` calls didn't adapt verbosity. Reproduced on every clean home directory. Hook output showed `status: ready` — no error surfaced.
 >
-> **Root cause.** `hooks/session-start.sh:42` wrapped the `cat ~/.claude/habit-profile.md` call in `|| true`. When the file was absent (typical first-run state), `cat` exited 1, `|| true` swallowed it, and the script continued to print `status: ready`. The verbosity directive that should have been injected was simply missing from the hook output, but the hook reported success. This is the canonical "False Success Report" anti-pattern from `rules/coding-style.md`.
+> **Root cause.** `hooks/session-start.sh:42` wrapped the `cat ~/.claude/habit-profile.md` call in `|| true`. When the file was absent (typical first-run state), `cat` exited 1, `|| true` swallowed it, and the script continued to print `status: ready`. The verbosity directive that should have been injected was simply missing, but the hook still reported success. This is the canonical "False Success Report" anti-pattern from `rules/coding-style.md`.
 >
-> **Why it produced the symptom.** Skills downstream of the hook (e.g. `/research`) read the injected verbosity directive at session start. With no directive present, they defaulted to Dependence-level verbosity — full ceremony, even for Significance-profile users. The user saw verbose output that didn't match their calibration, but no error pointed back to the hook.
+> **Why it produced the symptom.** Skills downstream of the hook (e.g. `/research`) read the injected verbosity directive at session start. With no directive present, they defaulted to Dependence-level verbosity — full ceremony, even for Significance-profile users. The user saw mismatched verbose output, with no error pointing back to the hook.
 >
-> **Fix.** PR #95 replaces `cat ... || true` with a explicit `if [ -f ~/.claude/habit-profile.md ]; then ... else emit default Independence directive; fi`. The fallback directive is now part of the contract — never silent. A prior attempt (PR #88) added a comment warning "do not let this fail silently," which obviously didn't prevent the silent failure — that warning is now a `set -e` check instead.
+> **Fix.** PR #95 replaces `cat ... || true` with a explicit `if [ -f ~/.claude/habit-profile.md ]; then ... else emit default Independence directive; fi`. The fallback directive is now part of the contract — never silent. A prior attempt (PR #88) added a comment warning "do not let this fail silently" — it didn't prevent the failure; that warning is now a `set -e` check.
 >
 > **How it was found.** A user on Significance profile reported `/research` was emitting full-template output on a clean machine. Initial hypothesis: skill regression in `/research` v2.16.3. Disproved by running the skill with a populated profile — output adapted correctly. Second hypothesis: hook not running. Disproved by adding `[DBG-9a4f]` trace to the hook — it ran, but the verbosity block was empty. Single experiment that nailed it: `bash -x hooks/session-start.sh` on a clean home → `cat` exited 1, `|| true` returned 0, the next line ran unconditionally.
 >

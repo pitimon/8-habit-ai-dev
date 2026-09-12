@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.46-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.47-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.47 · #388 follow-up — enforce the substitution note + refresh stale docs
+
+A CI check now fails if any `skills/*/SKILL.md` uses `${CLAUDE_PLUGIN_ROOT}` without the Hermes substitution note added in v2.21.46 — closing an enforcement gap where the rule was documented but not checked. Five doc surfaces still describing the older "references do not resolve" framing were updated to mention the note, and `post-mortem`'s worked example was trimmed after it was found sitting at the exact word-count cap. See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.21.46 · #388 — Hermes substitution note for `${CLAUDE_PLUGIN_ROOT}` references
 
