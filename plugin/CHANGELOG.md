@@ -10,6 +10,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.43 — #384: separate production release gates from core checklist scoring (2026-09-12)
+
+### Added
+
+- **Independent production release-gate contract** — `/cross-verify` now separates `PASS`, `FAIL`, `N/A`, and `OPEN_VERIFICATION_DEBT`; unresolved evidence cannot inflate the core score or override a blocking domain gate.
+- **Read-only production evidence guidance** — adds release states, source/runtime reconciliation, exact-target mutation read-back, conditional functional/economic/quality evidence, skipped-test debt, data-impact classification, and owner closure requirements. Runtime mutation, live provider queries, approval automation, and rollback execution remain out of scope.
+- **Regression coverage** — adds `tests/test-cross-verify-release-gates.sh` to the CI/local validation set and keeps the Codex mirror synchronized.
+
+---
+
 ## v2.21.42 — #375 follow-up (ค): recover Claude's lost convenience runtime-neutrally (#375) (2026-07-13)
 
 The v2.21.39 file-only `SKILL_OUTPUT` fix removed two things from **non-persist Claude runs**: the same-session `/cross-verify` auto-populate (the block used to sit in transcript context) and the visible completion/attribution line. Fable's chosen "third option" recovers both on the **consumer / plain-text side** rather than via runtime-conditional producer behavior — which was rejected as an [ADR-024](docs/adr/ADR-024-codex-runtime-adapter-boundary.md) runtime-neutrality violation.
