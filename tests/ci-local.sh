@@ -2,7 +2,7 @@
 # ci-local.sh — run the EXACT validator set CI runs, in one shot (Fable F14, #360).
 # Requires bash (child scripts use process substitution). Do not run with sh.
 #
-# WHY: the CI `validate` job (.github/workflows/validate.yml) runs FIVE scripts.
+# WHY: the CI `validate` job (.github/workflows/validate.yml) runs SIX scripts.
 # Declaring "green" after running only validate-structure.sh has already caused
 # one blocked merge (branch protection failed on validate-content.sh Check 19 —
 # lesson 2026-06-28, "CI-parity local gate"). This script closes that gap:
@@ -18,7 +18,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 # Keep in lock-step with .github/workflows/validate.yml steps.
-SCRIPTS="validate-structure.sh test-skill-graph.sh validate-content.sh test-verbosity-hook.sh test-pre-commit-hook.sh"
+SCRIPTS="validate-structure.sh test-skill-graph.sh validate-content.sh test-verbosity-hook.sh test-pre-commit-hook.sh test-cross-verify-release-gates.sh"
 
 FAILED=""
 for s in $SCRIPTS; do
@@ -37,4 +37,4 @@ if [ -n "$FAILED" ]; then
   echo "RESULT: FAILED —$FAILED"
   exit 1
 fi
-echo "RESULT: ALL 5 SUITES PASSED (CI parity: .github/workflows/validate.yml)"
+echo "RESULT: ALL 6 SUITES PASSED (CI parity: .github/workflows/validate.yml)"
