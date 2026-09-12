@@ -2,7 +2,7 @@
 
 # 8-Habit AI Dev
 
-`8-habit-ai-dev` is a Claude Code and Codex plugin that adds workflow discipline to AI-assisted development. It ships portable markdown skills, a 7-step development workflow, and review habits grounded in Covey's 8 Habits.
+`8-habit-ai-dev` is a Claude Code and Codex plugin, also installable in Hermes Agent via its Skills Hub tap, that adds workflow discipline to AI-assisted development. It ships portable markdown skills, a 7-step development workflow, and review habits grounded in Covey's 8 Habits.
 
 > [!IMPORTANT]
 > This plugin provides guidance, prompts, review structure, and documentation. It does not add runtime enforcement, policy authorization, compliance certification, cloud automation, or production mutation.
@@ -24,7 +24,7 @@
 | --- | --- |
 | Workflow | Steps 0-7 from research through monitoring |
 | Skills | 24 markdown skills for planning, review, operations, audit, and reflection |
-| Runtime support | Claude Code package and native Codex package |
+| Runtime support | Claude Code package, native Codex package, and Hermes Skills Hub tap |
 | Validation | Bash validators for skill structure, content, graph integrity, and hook budget |
 | Documentation | Wiki pages generated from `docs/wiki/` through PR review |
 
@@ -52,7 +52,7 @@ Version `v2.21.0` keeps the plugin's markdown-only boundary while improving cros
 
 ## Compatibility Boundary
 
-Claude Code and Codex both consume the same markdown skills. Claude Code also has Claude-specific hooks and session reminders. Codex uses `AGENTS.md`, the Codex plugin manifest, and the same `skills/` directory; if Codex invokes the package `SessionStart` hook, the hook returns JSON additional context rather than raw markdown.
+Claude Code and Codex both consume the same markdown skills. Claude Code also has Claude-specific hooks and session reminders. Codex uses `AGENTS.md`, the Codex plugin manifest, and the same `skills/` directory; if Codex invokes the package `SessionStart` hook, the hook returns JSON additional context rather than raw markdown. Hermes has no plugin manifest or hook — it installs skills one at a time through its Skills Hub tap (`hermes skills tap add pitimon/8-habit-ai-dev`).
 
 For details, see [Architecture](Architecture), [Limitations](Limitations), [Installation](Installation), and the repository compatibility docs.
 

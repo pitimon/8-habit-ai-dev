@@ -26,11 +26,11 @@
 | Cloud, Kubernetes, Docker, or database mutation | Your normal infrastructure tooling, runbooks, and staged rollout process |
 | Secret scanning or credential handling | Dedicated security scanners and secret-management systems |
 | Dynamic sub-agent orchestration engine | A separate adapter or orchestration product |
-| Claude hook feature parity inside Codex | Codex-native adapters or explicit manual checks |
+| Claude hook feature parity inside Codex or Hermes | Codex-native adapters, explicit manual checks, or a Hermes-native equivalent workflow |
 
 ## Platform Boundaries
 
-Claude Code and Codex both receive the same markdown skills. Claude Code may also run Claude-specific hooks from `hooks/`. If Codex invokes this package's `SessionStart` hook, the hook returns JSON additional context rather than raw markdown; broader hook behavior remains host-specific. Other agents can use the repo as markdown instructions when they can load `AGENTS.md`, `skills/RESOLVER.md`, and the relevant `SKILL.md`.
+Claude Code, Codex, and Hermes all receive the same markdown skills. Claude Code may also run Claude-specific hooks from `hooks/`. If Codex invokes this package's `SessionStart` hook, the hook returns JSON additional context rather than raw markdown; broader hook behavior remains host-specific. Hermes has no plugin-manifest or hook layer — it installs skills one at a time through its Skills Hub "tap" mechanism (`hermes skills tap add pitimon/8-habit-ai-dev`), and no `AGENTS.md`/`CLAUDE.md` doctrine, session hook, or `SessionStart` reminder travels with that install. Other agents can use the repo as markdown instructions when they can load `AGENTS.md`, `skills/RESOLVER.md`, and the relevant `SKILL.md`.
 
 The shared source of truth remains `skills/*/SKILL.md`. Packaging, hooks, banners, and marketplace behavior are host-specific presentation layers.
 

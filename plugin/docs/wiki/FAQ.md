@@ -4,7 +4,7 @@ This page answers common questions about what `8-habit-ai-dev` does, where its b
 
 ## What Is This Plugin?
 
-It is a markdown guidance plugin for AI-assisted development. It provides 24 skills, a 7-step workflow, and review habits for Claude Code and Codex.
+It is a markdown guidance plugin for AI-assisted development. It provides 24 skills, a 7-step workflow, and review habits for Claude Code and Codex, and is also installable per-skill in Hermes Agent via its Skills Hub tap.
 
 ## Does It Enforce Policy?
 
@@ -13,6 +13,10 @@ No. It gives prompts, checklists, handoffs, and review structure. Runtime enforc
 ## Does Codex Run The Claude Hooks?
 
 Codex should not be treated as having Claude hook feature parity. If Codex invokes this package's `SessionStart` hook, the hook returns Codex-compatible JSON with the reminder in `hookSpecificOutput.additionalContext`; broader hook behavior remains host-specific.
+
+## Can I Use This With Hermes Agent?
+
+Yes, but differently than Claude Code or Codex: Hermes has no plugin manifest, so there is no single "install the plugin" command. Add the repo as a Skills Hub tap and install skills one at a time — see [Installation](Installation#hermes-agent). No `AGENTS.md`/`CLAUDE.md` doctrine, session hook, or `SessionStart` reminder travels with a Hermes install.
 
 ## Which Skill Should I Start With?
 

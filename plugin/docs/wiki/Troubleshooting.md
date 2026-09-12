@@ -29,6 +29,17 @@ For Codex:
 codex plugin marketplace add pitimon/8-habit-ai-dev
 ```
 
+For Hermes, there is no marketplace step — add the repo as a tap instead:
+
+```bash
+hermes skills tap add pitimon/8-habit-ai-dev
+hermes skills install pitimon/8-habit-ai-dev/skills/<name>
+```
+
+### `hermes skills install` Fails With "Could not fetch ... from any source"
+
+Hermes's Skills Hub fetcher fail-closes an entire skill install if the `SKILL.md` contains a same-directory markdown link starting with `..` (treated as a path-traversal attempt). This was fixed repo-wide in v2.21.44 (#386) by switching every doc cross-reference in `skills/*/SKILL.md` to an absolute `https://github.com/pitimon/8-habit-ai-dev/blob/main/...` URL. If you still see this error, confirm you are on v2.21.44 or later (`hermes skills inspect pitimon/8-habit-ai-dev/skills/<name>` shows the resolved source), and check `hermes doctor` for a GitHub rate-limit warning — set `GITHUB_TOKEN` if unauthenticated requests are exhausted.
+
 ### Skills Do Not Appear
 
 Checks:
@@ -37,6 +48,7 @@ Checks:
 2. Start a fresh session.
 3. Invoke a known skill directly, such as `/workflow` or `/requirements`.
 4. For Codex, confirm `AGENTS.md` and `skills/RESOLVER.md` are available to the runtime.
+5. For Hermes, confirm the skill was actually installed with `hermes skills list --source hub` — Hermes has no top-level "load whole plugin" step, so each skill must be installed individually.
 
 ## Workflow
 

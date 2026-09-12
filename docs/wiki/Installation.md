@@ -3,7 +3,7 @@
 Install `8-habit-ai-dev` through the plugin marketplace for your agent runtime. The package is markdown-only: no dependency install, build step, or application service is required.
 
 > [!NOTE]
-> Claude Code and Codex use different package surfaces. Both load the same `skills/` content; Claude hook feature parity is not assumed. If Codex invokes the package `SessionStart` hook, the hook returns Codex-compatible JSON.
+> Claude Code, Codex, and Hermes each use a different package surface. All three load the same `skills/` content; Claude hook feature parity is not assumed. If Codex invokes the package `SessionStart` hook, the hook returns Codex-compatible JSON. Hermes has no manifest/hook layer at all — it installs skill content only.
 
 ## Claude Code
 
@@ -59,16 +59,49 @@ codex plugin list
 
 Use `codex plugin marketplace list` if you need to confirm the configured marketplace name.
 
+## Hermes Agent
+
+Hermes has no plugin-manifest layer. It discovers skills through its Skills Hub "tap" mechanism, reading `skills/*/SKILL.md` directly from the repo's default branch — install per skill, not per package:
+
+```bash
+hermes skills tap add pitimon/8-habit-ai-dev
+hermes skills install pitimon/8-habit-ai-dev/skills/cross-verify
+hermes skills install pitimon/8-habit-ai-dev/skills/requirements
+```
+
+Repeat `hermes skills install` for each skill you want; there is no single command that installs all 24 at once.
+
+Verify:
+
+```bash
+hermes skills list --source hub
+```
+
+Update a skill after upstream changes:
+
+```bash
+hermes skills check cross-verify
+hermes skills update cross-verify
+```
+
+Uninstall:
+
+```bash
+hermes skills uninstall cross-verify
+```
+
+No `AGENTS.md`/`CLAUDE.md` doctrine, session hook, or `SessionStart` reminder travels with a Hermes tap install — only the skill content itself.
+
 ## What Installs
 
-| Surface | Claude Code | Codex |
-| --- | --- | --- |
-| 24 markdown skills | Yes | Yes |
-| 7-step workflow guidance | Yes | Yes |
-| Claude session hook | Yes | No |
-| Hook-based verbosity reminder | Yes | No |
-| Runtime enforcement | No | No |
-| Compliance certification | No | No |
+| Surface | Claude Code | Codex | Hermes |
+| --- | --- | --- | --- |
+| 24 markdown skills | Yes | Yes | Yes (installed one at a time) |
+| 7-step workflow guidance | Yes | Yes | Yes |
+| Claude session hook | Yes | No | No |
+| Hook-based verbosity reminder | Yes | No | No |
+| Runtime enforcement | No | No | No |
+| Compliance certification | No | No | No |
 
 ## Next
 
