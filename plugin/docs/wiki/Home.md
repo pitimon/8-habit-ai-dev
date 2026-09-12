@@ -52,7 +52,7 @@ Version `v2.21.0` keeps the plugin's markdown-only boundary while improving cros
 
 ## Compatibility Boundary
 
-Claude Code and Codex both consume the same markdown skills. Claude Code also has Claude-specific hooks and session reminders. Codex uses `AGENTS.md`, the Codex plugin manifest, and the same `skills/` directory; if Codex invokes the package `SessionStart` hook, the hook returns JSON additional context rather than raw markdown. Hermes has no plugin manifest or hook — it installs skills one at a time through its Skills Hub tap (`hermes skills tap add pitimon/8-habit-ai-dev`).
+Claude Code and Codex both consume the same markdown skills. Claude Code also has Claude-specific hooks and session reminders. Codex uses `AGENTS.md`, the Codex plugin manifest, and the same `skills/` directory; if Codex invokes the package `SessionStart` hook, the hook returns JSON additional context rather than raw markdown. Hermes has no plugin manifest or hook — it installs skills one at a time through its Skills Hub tap (`hermes skills tap add pitimon/8-habit-ai-dev`). Most skills' `guides/`/`habits/`/`scripts/` references do not resolve there ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).
 
 For details, see [Architecture](Architecture), [Limitations](Limitations), [Installation](Installation), and the repository compatibility docs.
 
