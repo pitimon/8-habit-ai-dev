@@ -10,6 +10,20 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.47 — #388 follow-up: enforce the substitution note + refresh stale docs (2026-09-12)
+
+### Fixed
+
+- `tests/validate-structure.sh` gains Check 8c: any `skills/*/SKILL.md` (and its `plugin/` mirror) that uses `${CLAUDE_PLUGIN_ROOT}` must also carry the "Hermes: no `${CLAUDE_PLUGIN_ROOT}`..." substitution note, or CI fails. Closes the enforcement gap left by v2.21.46 — `AGENTS.md` already declared the note a MUST, but nothing checked it.
+- Updated 5 doc surfaces still describing the v2.21.45-era gap ("references do not resolve") without mentioning the v2.21.46 substitution note: `docs/compatibility-matrix.md`, `docs/wiki/Installation.md`, `docs/wiki/Limitations.md`, `docs/wiki/FAQ.md`, `docs/wiki/Home.md`.
+- `skills/post-mortem/SKILL.md` was sitting at exactly 2000/2000 words (zero margin) after v2.21.46 — trimmed genuinely verbose prose in its worked example to restore real slack under the skill-complexity budget.
+
+### Scope boundary
+
+Enforcement + docs-consistency follow-up only. No skill semantics change, no new runtime behavior.
+
+---
+
 ## v2.21.46 — #388: Hermes substitution note for ${CLAUDE_PLUGIN_ROOT} references (2026-09-12)
 
 ### Fixed
