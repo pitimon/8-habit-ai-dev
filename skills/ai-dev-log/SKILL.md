@@ -76,7 +76,7 @@ If the script cannot run (Windows shell without Git Bash, restricted environment
 2. Extract: filter rows with AI co-author trailers; if the trailer parser returns empty, fall back to `git log --grep='Co-Authored-By:'` commit-body scan
 3. Group by period, 4. add oversight evidence (PR/review/test metadata), 5. render the report template from `reference.md`, 6. pin `git rev-parse HEAD` as the snapshot boundary
 
-Output contract is identical to the script's. Honest limitation: the data source is git history — on a host with no shell access at all, report "not generatable on this host" instead of inventing statistics. Boundary rationale: [`guides/script-vs-ai-workflow.md`](../../guides/script-vs-ai-workflow.md).
+Output contract is identical to the script's. Honest limitation: the data source is git history — on a host with no shell access at all, report "not generatable on this host" instead of inventing statistics. Boundary rationale: [`guides/script-vs-ai-workflow.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/script-vs-ai-workflow.md).
 
 ## Process Summary
 

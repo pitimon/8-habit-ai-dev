@@ -10,6 +10,23 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.44 — #386: fix Hermes Skills Hub tap install (relative parent-dir links) (2026-09-12)
+
+### Fixed
+
+- Replaced 25 repo-root-relative markdown links (`](../../docs/...)`, `](../../guides/...)`) across 14 `skills/*/SKILL.md` files with absolute `https://github.com/pitimon/8-habit-ai-dev/blob/main/...` URLs. Hermes's Skills Hub fetcher fail-closes an entire skill install when a `SKILL.md` contains a same-directory link starting with `..` (treated as a path-traversal attempt), so every skill in the repo previously failed `hermes skills tap add`/`hermes skills install`.
+
+### Added
+
+- `tests/test-hermes-tap-links.sh` — CI regression guard rejecting any future `](../` link in `skills/*/SKILL.md`.
+- Hermes install instructions in `README.md`, a "Hermes Agent" platform contract in `docs/compatibility-matrix.md`, and a "Hermes contract" section in `AGENTS.md`.
+
+### Verified
+
+- `hermes skills tap add pitimon/8-habit-ai-dev` + `hermes skills install pitimon/8-habit-ai-dev/skills/<name>` against a sandboxed `HERMES_HOME`, post-merge on `main`.
+
+---
+
 ## v2.21.43 — #384: separate production release gates from core checklist scoring (2026-09-12)
 
 ### Added

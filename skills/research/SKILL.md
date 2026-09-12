@@ -189,7 +189,7 @@ Rationale: a dep or symbol can be imported by a different-sounding name (e.g. `n
 
 ## Further Reading
 
-See [Step 0 wiki page](../../docs/wiki/Step-0-Research.md) for deeper walkthrough, examples, and common pitfalls.
+See [Step 0 wiki page](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/wiki/Step-0-Research.md) for deeper walkthrough, examples, and common pitfalls.
 
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the full H5 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards.

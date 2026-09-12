@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.43-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.44-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.44 · #386 — fix Hermes Skills Hub tap install
+
+Hermes's Skills Hub fetcher fail-closes an entire skill install when a `SKILL.md` contains a same-directory markdown link starting with `..` (treated as path traversal). 25 repo-root-relative links across 14 `skills/*/SKILL.md` files tripped this; every skill in the repo previously failed `hermes skills tap add`/`hermes skills install`. Replaced with absolute GitHub blob URLs, added a CI regression guard, and documented the Hermes install path in README/AGENTS.md/compatibility matrix. See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.21.43 · #384 — separate production release gates from core checklist scoring
 
