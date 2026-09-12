@@ -12,8 +12,9 @@ This matrix documents what `8-habit-ai-dev` promises across agent runtimes. It i
 | `CLAUDE.md` architecture reference        | Primary auto-loaded context                        | Reference only                                                                                                                                                                                                      | Reference only                                      |
 | `llms.txt` documentation map              | Useful                                             | Useful                                                                                                                                                                                                              | Useful                                              |
 | `skills/RESOLVER.md` phrase dispatcher    | Yes                                                | Yes                                                                                                                                                                                                                 | Yes                                                 |
-| Claude Code plugin packaging              | Yes                                                | No                                                                                                                                                                                                                  | No                                                  |
+| Claude Code plugin packaging              | Yes                                                | No                                                                                                                                                                                                                 | No                                                  |
 | Codex plugin packaging                    | No                                                 | Yes                                                                                                                                                                                                                 | No                                                  |
+| Hermes Skills Hub tap packaging           | No                                                 | No                                                                                                                                                                                                                 | Yes — `hermes skills tap add pitimon/8-habit-ai-dev`, then `hermes skills install pitimon/8-habit-ai-dev/skills/<name>` |
 | Claude hooks in `hooks/`                  | Yes                                                | `hooks/hooks.json` is parsed at install with a strict schema (top level = `hooks` only, [#321](https://github.com/pitimon/8-habit-ai-dev/issues/321)); narrow `SessionStart` JSON adapter if Codex invokes the hook | No direct runtime compatibility                     |
 | Hook-based verbosity adaptation           | Claude Code markdown context                       | Codex-compatible JSON additional context if the hook is invoked                                                                                                                                                     | Not runtime-integrated                              |
 | `disable-model-invocation` intent marker  | Decorative for current plugin skills per ADR-014   | Must remain Codex-ingestible                                                                                                                                                                                        | Varies                                              |
@@ -49,6 +50,15 @@ Codex gets native packaging and the same markdown skills:
 Codex does not automatically gain Claude hook feature parity. The shipped `SessionStart` hook has a narrow JSON output adapter for Codex hosts that invoke it; any broader runtime automation must remain an adapter layer, not a rewrite of the core skills.
 
 See [Codex Integration Guide](codex-integration.md).
+
+### Hermes Agent
+
+Hermes has no plugin-manifest layer; it discovers skills through its Skills Hub "tap" mechanism, which reads `skills/*/SKILL.md` directly off the default branch:
+
+- `hermes skills tap add pitimon/8-habit-ai-dev` registers the repo as a skill source.
+- `hermes skills install pitimon/8-habit-ai-dev/skills/<name>` installs one skill (no bundle/marketplace concept — install per skill).
+- No `AGENTS.md`/`CLAUDE.md` doctrine, session hook, or `SessionStart` reminder is loaded; skill content alone travels.
+- Hermes's fetcher fail-closes an entire skill install if its `SKILL.md` contains a same-directory markdown link starting with `../` (treated as a path-traversal attempt, [#386](https://github.com/pitimon/8-habit-ai-dev/issues/386)) — every doc cross-reference in `skills/*/SKILL.md` must use an absolute `https://github.com/pitimon/8-habit-ai-dev/blob/main/...` URL instead, enforced by `tests/test-hermes-tap-links.sh`.
 
 ### Other Agents
 

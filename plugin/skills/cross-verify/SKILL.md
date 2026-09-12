@@ -79,7 +79,7 @@ Run through this checklist. Flag any item that fails.
 | 16  | H8: Voice       | Spirit    | Do I understand WHY this task matters, not just WHAT needs to be done?  |
 | 17  | H8: Voice       | Spirit    | Does this work empower the next person who touches this code?           |
 
-> **When the subject under review is a diagnosis or root cause** (not a plan or code change), add one reconciliation check before scoring Q12: could this root cause be **confidently wrong**? Confirm it by an **independent method** — a different tool, command, or vantage, not the same observation — and **reconcile** conflicting evidence before proceeding. Author-side gates all share your evidence, so only an independent source can diverge from it. See [`independent-source-verification.md`](../../guides/independent-source-verification.md).
+> **When the subject under review is a diagnosis or root cause** (not a plan or code change), add one reconciliation check before scoring Q12: could this root cause be **confidently wrong**? Confirm it by an **independent method** — a different tool, command, or vantage, not the same observation — and **reconcile** conflicting evidence before proceeding. Author-side gates all share your evidence, so only an independent source can diverge from it. See [`independent-source-verification.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/independent-source-verification.md).
 
 ## Confidence Levels (Required for high-stakes reviews)
 

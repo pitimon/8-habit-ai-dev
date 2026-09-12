@@ -185,9 +185,9 @@ After producing findings, do not stop at the verdict. Run a **Find → Fix → R
 
 ## Structured Output Block
 
-`/review-ai` has no `--persist` flag. **Emit this block only when the review report is written to a `*-review.md` file** (where `/cross-verify` Q5 can glob it) — never append it to the conversation response (the HTML comment renders as visible noise in Codex; see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Emission gate"). A conversation-only review emits no block, and `/cross-verify` Q5 falls back to manual assessment. The fenced block below is the **file template**:
+`/review-ai` has no `--persist` flag. **Emit this block only when the review report is written to a `*-review.md` file** (where `/cross-verify` Q5 can glob it) — never append it to the conversation response (the HTML comment renders as visible noise in Codex; see [`guides/structured-output-protocol.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/structured-output-protocol.md) §"Emission gate"). A conversation-only review emits no block, and `/cross-verify` Q5 falls back to manual assessment. The fenced block below is the **file template**:
 
-Regardless of persistence, end your conversation output with the plain-text line `[/review-ai] complete` — see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Completion signal".
+Regardless of persistence, end your conversation output with the plain-text line `[/review-ai] complete` — see [`guides/structured-output-protocol.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/structured-output-protocol.md) §"Completion signal".
 
 ```
 [/review-ai] COMPLETE SKILL_OUTPUT:review
@@ -208,7 +208,7 @@ Place this at the very end of the saved `*-review.md` report file, after all hum
 
 ## Further Reading
 
-See [Step 5 wiki page](../../docs/wiki/Step-5-Review-AI.md) for deeper walkthrough, examples, and common pitfalls.
+See [Step 5 wiki page](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/wiki/Step-5-Review-AI.md) for deeper walkthrough, examples, and common pitfalls.
 
 **If `superpowers` is installed**: `superpowers:requesting-code-review` dispatches a multi-agent review with structured feedback. Use it for large PRs or cross-cutting changes. `/review-ai` is lighter-weight — best for single-file or focused reviews before commit.
 

@@ -182,9 +182,9 @@ ID-linkage tip: when persisting, label each decision as `### Decision-N: <topic>
 
 ## Structured Output
 
-**Emit this block only into the persisted `docs/specs/<slug>/design.md` when `--persist` is used** — never to the conversation response (the HTML comment is visible noise in Codex; see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Emission gate"). The fenced block below is the **file template**:
+**Emit this block only into the persisted `docs/specs/<slug>/design.md` when `--persist` is used** — never to the conversation response (the HTML comment is visible noise in Codex; see [`guides/structured-output-protocol.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/structured-output-protocol.md) §"Emission gate"). The fenced block below is the **file template**:
 
-Regardless of persistence, end your conversation output with the plain-text line `[/design] complete` — see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Completion signal".
+Regardless of persistence, end your conversation output with the plain-text line `[/design] complete` — see [`guides/structured-output-protocol.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/structured-output-protocol.md) §"Completion signal".
 
 ```
 [/design] COMPLETE SKILL_OUTPUT:design
@@ -213,7 +213,7 @@ Place this at the very end of the persisted `design.md` file, after all human-re
 
 ## Further Reading
 
-See [Step 2 wiki page](../../docs/wiki/Step-2-Design.md) for deeper walkthrough, examples, and common pitfalls.
+See [Step 2 wiki page](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/wiki/Step-2-Design.md) for deeper walkthrough, examples, and common pitfalls.
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/adr-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/behavioral-spec-craft.md` for spec-writing craft — precedence/override ordering, invariants over mechanics, trust-boundary declaration (techniques 2, 5, 7).

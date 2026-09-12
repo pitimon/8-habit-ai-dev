@@ -99,8 +99,8 @@ next-skill: build-brief
 
 - **Expects from predecessor** (`/design`): Architecture decisions and constraints
 - **Produces for successor** (`/build-brief`): Prioritized task list with dependencies and file paths
-- **Backlog-bound tasks**: When a task in the produced list will sit ≥7 days before pickup (or filer ≠ picker), recommend filing an issue using the repo's tracker contract if `docs/agents/issue-tracker.md` exists; otherwise default to GitHub issue wording. Use [`guides/templates/agent-brief-template.md`](../../guides/templates/agent-brief-template.md) for the durable issue spec. Habit-mapped variant of the pattern from [mattpocock/skills](https://github.com/mattpocock/skills).
-- **Issue tracking comments**: When the user asks an agent to pick up, track, or close work through an issue, draft pickup/progress/completion comments using [`guides/templates/issue-tracking-comments.md`](../../guides/templates/issue-tracking-comments.md). Do not auto-post, auto-label, or auto-close unless the user or repo tracker contract explicitly allows it.
+- **Backlog-bound tasks**: When a task in the produced list will sit ≥7 days before pickup (or filer ≠ picker), recommend filing an issue using the repo's tracker contract if `docs/agents/issue-tracker.md` exists; otherwise default to GitHub issue wording. Use [`guides/templates/agent-brief-template.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/templates/agent-brief-template.md) for the durable issue spec. Habit-mapped variant of the pattern from [mattpocock/skills](https://github.com/mattpocock/skills).
+- **Issue tracking comments**: When the user asks an agent to pick up, track, or close work through an issue, draft pickup/progress/completion comments using [`guides/templates/issue-tracking-comments.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/templates/issue-tracking-comments.md). Do not auto-post, auto-label, or auto-close unless the user or repo tracker contract explicitly allows it.
 
 ## Optional Persistence (`--persist <slug>`)
 
@@ -129,9 +129,9 @@ ID-linkage tip: when persisting, format each task as `Task #N implements: Decisi
 
 ## Structured Output Block
 
-**Emit this block only into the persisted `docs/specs/<slug>/tasks.md` file when `--persist` is used** — never append it to the conversation response (the HTML comment renders as visible noise in Codex; see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Emission gate"). It is machine-readable evidence for `/cross-verify`. The fenced block below is the **file template**:
+**Emit this block only into the persisted `docs/specs/<slug>/tasks.md` file when `--persist` is used** — never append it to the conversation response (the HTML comment renders as visible noise in Codex; see [`guides/structured-output-protocol.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/structured-output-protocol.md) §"Emission gate"). It is machine-readable evidence for `/cross-verify`. The fenced block below is the **file template**:
 
-Regardless of persistence, end your conversation output with the plain-text line `[/breakdown] complete` — see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Completion signal".
+Regardless of persistence, end your conversation output with the plain-text line `[/breakdown] complete` — see [`guides/structured-output-protocol.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/structured-output-protocol.md) §"Completion signal".
 
 ```
 [/breakdown] COMPLETE SKILL_OUTPUT:breakdown
@@ -150,7 +150,7 @@ Place this at the very end of the persisted `tasks.md` file, after all human-rea
 
 ## Further Reading
 
-See [Step 3 wiki page](../../docs/wiki/Step-3-Breakdown.md) for deeper walkthrough, examples, and common pitfalls.
+See [Step 3 wiki page](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/wiki/Step-3-Breakdown.md) for deeper walkthrough, examples, and common pitfalls.
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/task-list-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h3-first-things-first.md` for the full H3 principle and examples.

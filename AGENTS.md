@@ -36,10 +36,12 @@ bash tests/test-skill-graph.sh
 bash tests/validate-content.sh
 bash tests/test-verbosity-hook.sh
 bash tests/test-pre-commit-hook.sh
+bash tests/test-cross-verify-release-gates.sh
+bash tests/test-hermes-tap-links.sh
 bash tests/ci-local.sh
 ```
 
-`bash tests/ci-local.sh` runs the exact five-script CI validation set. `validate-content.sh` checks release-doc freshness against git tags, so shallow clones can produce incomplete results; CI uses full tag history. When skill metadata or discovery docs change, also run `node scripts/generate-skill-catalog.js --check`; regenerate with `node scripts/generate-skill-catalog.js`.
+`bash tests/ci-local.sh` runs the exact seven-script CI validation set (keep it in lock-step with `.github/workflows/validate.yml`). `validate-content.sh` checks release-doc freshness against git tags, so shallow clones can produce incomplete results; CI uses full tag history. When skill metadata or discovery docs change, also run `node scripts/generate-skill-catalog.js --check`; regenerate with `node scripts/generate-skill-catalog.js`.
 
 ## Codex contract
 
@@ -48,6 +50,12 @@ bash tests/ci-local.sh
 - Do not assume Claude hooks in `hooks/` run under Codex. Codex gets the same markdown skills, not Claude session hooks or hook-based verbosity adaptation.
 - Keep any future Codex automation as an adapter around routing, reading skills, validation, release reconciliation, and curated memory deposit.
 - Do not add policy enforcement, irreversible-action authorization, compliance certification, or dynamic orchestration engines to this plugin core. Those belong in companion tooling such as `claude-governance`.
+
+## Hermes contract
+
+- Hermes has no plugin manifest layer. It discovers skills via its Skills Hub tap: `hermes skills tap add pitimon/8-habit-ai-dev`, then `hermes skills install pitimon/8-habit-ai-dev/skills/<name>` per skill.
+- Every `skills/*/SKILL.md` cross-reference to another repo doc MUST be an absolute `https://github.com/pitimon/8-habit-ai-dev/blob/main/...` URL, never a repo-root-relative `../../` link — Hermes's fetcher fail-closes the ENTIRE skill install on a same-directory link starting with `..` (path-traversal guard, [#386](https://github.com/pitimon/8-habit-ai-dev/issues/386)). Enforced by `tests/test-hermes-tap-links.sh`.
+- Hermes loads skill content only — no `AGENTS.md`/`CLAUDE.md` doctrine, session hook, or `SessionStart` reminder travels with a tap install.
 
 ## Conventions and pitfalls
 

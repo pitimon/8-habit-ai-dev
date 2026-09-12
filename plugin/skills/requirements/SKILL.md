@@ -123,9 +123,9 @@ ID-linkage tip: when persisting, prefix each EARS criterion with `FR-NNN:` (e.g.
 
 ## Structured Output Block
 
-**Emit this block only into the persisted `docs/specs/<slug>/prd.md` file when `--persist` is used** — never append it to the conversation response (the HTML comment renders as visible noise in Codex; see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Emission gate"). It is machine-readable evidence for `/cross-verify`. The fenced block below is the **file template**:
+**Emit this block only into the persisted `docs/specs/<slug>/prd.md` file when `--persist` is used** — never append it to the conversation response (the HTML comment renders as visible noise in Codex; see [`guides/structured-output-protocol.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/structured-output-protocol.md) §"Emission gate"). It is machine-readable evidence for `/cross-verify`. The fenced block below is the **file template**:
 
-Regardless of persistence, end your conversation output with the plain-text line `[/requirements] complete` — see [`guides/structured-output-protocol.md`](../../guides/structured-output-protocol.md) §"Completion signal".
+Regardless of persistence, end your conversation output with the plain-text line `[/requirements] complete` — see [`guides/structured-output-protocol.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/structured-output-protocol.md) §"Completion signal".
 
 ```
 [/requirements] COMPLETE SKILL_OUTPUT:requirements
@@ -147,7 +147,7 @@ Place this at the very end of the persisted `prd.md` file, after all human-reada
 
 ## Further Reading
 
-See [Step 1 wiki page](../../docs/wiki/Step-1-Requirements.md) for deeper walkthrough, examples, and common pitfalls.
+See [Step 1 wiki page](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/wiki/Step-1-Requirements.md) for deeper walkthrough, examples, and common pitfalls.
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/prd-template.md` for the output template.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/interview-protocol.md` for the structured discovery protocol.

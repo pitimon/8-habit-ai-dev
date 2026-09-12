@@ -123,7 +123,7 @@ next-skill: review-ai
 
 ## Further Reading
 
-See [Step 4 wiki page](../../docs/wiki/Step-4-Build-Brief.md) for deeper walkthrough, examples, and common pitfalls.
+See [Step 4 wiki page](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/wiki/Step-4-Build-Brief.md) for deeper walkthrough, examples, and common pitfalls.
 
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the full H5 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/orchestration-patterns.md` for context boundary and orchestration patterns.

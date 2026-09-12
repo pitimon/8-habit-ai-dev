@@ -67,7 +67,7 @@ For each artifact, check whether ID markers are present:
 
 If ANY artifact lacks its expected marker, set `id_linkage = absent` and emit this warning at the TOP of the report (before any findings):
 
-> ⚠️ **ID linkage absent** — using fuzzy match for Coverage and Inconsistency passes; results approximate. See [ADR-013](../../docs/adr/ADR-013-spec-persistence-opt-in.md) for ID guidance.
+> ⚠️ **ID linkage absent** — using fuzzy match for Coverage and Inconsistency passes; results approximate. See [ADR-013](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-013-spec-persistence-opt-in.md) for ID guidance.
 
 If all three artifacts have their markers, set `id_linkage = present` and run all passes deterministically.
 
@@ -169,7 +169,7 @@ Flag drift when PR scope fixes only the visible symptom, changelog/release notes
 
 ## Hybrid Evaluation Decision
 
-The hybrid (deterministic-when-IDs-present, semantic-when-absent) approach was chosen in [ADR-013](../../docs/adr/ADR-013-spec-persistence-opt-in.md) and [Decision 9 of consistency-check design](../../docs/specs/consistency-check/design.md). It preserves backward compatibility with PRDs that don't use IDs (PRD-EARS-2 invariant) while rewarding teams that adopt IDs with deterministic, reproducible analyzer results.
+The hybrid (deterministic-when-IDs-present, semantic-when-absent) approach was chosen in [ADR-013](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/adr/ADR-013-spec-persistence-opt-in.md) and [Decision 9 of consistency-check design](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/specs/consistency-check/design.md). It preserves backward compatibility with PRDs that don't use IDs (PRD-EARS-2 invariant) while rewarding teams that adopt IDs with deterministic, reproducible analyzer results.
 
 ## Severity Bands and Action Recommendations
 

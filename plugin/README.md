@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.43-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.43)
+[![Version](https://img.shields.io/badge/Version-2.21.44-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.44)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22143) — Version history
+- [What's New](#whats-new-in-v22144) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -98,6 +98,15 @@ codex plugin marketplace add pitimon/8-habit-ai-dev
 codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
 ```
 
+**Install for Hermes Agent** (Hermes tap: individual skills, no plugin manifest layer):
+
+```bash
+hermes skills tap add pitimon/8-habit-ai-dev
+hermes skills install pitimon/8-habit-ai-dev/skills/cross-verify
+hermes skills install pitimon/8-habit-ai-dev/skills/requirements
+# ...repeat per skill you want; see skills/ for the full list.
+```
+
 **Use in Claude Code** (restart Claude Code, then invoke a skill by slash command):
 
 ```
@@ -131,7 +140,7 @@ Use the cross-verify skill to check this release plan.
 
 **The Core 5 (≈80% of daily work)**: `/requirements` · `/review-ai` · `/cross-verify` · `/research` · `/reflect`. If you learn only five skills, learn these — the session banner surfaces the same set each session.
 
-Two commands to install per platform. Claude Code also loads a session reminder; both platforms make 24 skills available. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md), [Codex integration guide](docs/codex-integration.md), and wiki [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations): Codex gets native packaging, the same markdown skills, and a narrow `SessionStart` JSON adapter if the host invokes the hook; it does not get Claude hook feature parity or runtime enforcement.
+Two commands to install for Claude Code or Codex, or a `tap add` + per-skill `install` for Hermes. Claude Code also loads a session reminder; all three platforms make the 24 skills available. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md), [Codex integration guide](docs/codex-integration.md), and wiki [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations): Codex gets native packaging, the same markdown skills, and a narrow `SessionStart` JSON adapter if the host invokes the hook; Hermes gets the same markdown skills via its Skills Hub tap mechanism, with no session-hook, `SessionStart` reminder, or CLAUDE.md/AGENTS.md doctrine attached; neither gets Claude hook feature parity or runtime enforcement.
 
 ### Keeping the plugin updated
 
@@ -460,6 +469,15 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.44
+
+**Theme: #386 — fix Hermes Skills Hub tap install**
+
+- **`hermes skills tap add`/`install` now works** — 25 repo-root-relative markdown links (`](../../docs/...)`) across 14 `skills/*/SKILL.md` files tripped Hermes's path-traversal guard, which fail-closes the entire skill install rather than just skipping the link. Replaced with absolute GitHub blob URLs; added `tests/test-hermes-tap-links.sh` to prevent regression.
+- **Hermes is now a documented install path** — README Quick Start, `docs/compatibility-matrix.md`, and `AGENTS.md` cover the Hermes tap/install flow alongside Claude Code and Codex.
+
+---
+
 ## What's New in v2.21.43
 
 **Theme: #384 — separate production release gates from core checklist scoring**
@@ -673,4 +691,4 @@ MIT
 
 ---
 
-_Version: 2.21.43 | Last updated: 2026-09-12_
+_Version: 2.21.44 | Last updated: 2026-09-12_
