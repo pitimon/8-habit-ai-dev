@@ -58,7 +58,7 @@ Start with `Scan` unless the user's request or existing evidence proves a `Focus
    **Recommendation**: [Which and why]
    ```
 
-   Before giving the recommendation, **steelman the option(s) you are about to reject** — state the strongest case each advocate would make, then justify the choice. Rejecting a strawman lets it resurface next cycle (commandment 14, `integrity-principles.md`).
+   Before giving the recommendation, **steelman the option(s) you are about to reject** — state the strongest case for each, then justify the choice. Rejecting a strawman lets it resurface next cycle (commandment 14, `integrity-principles.md`).
 
 4. **Human must decide**: AI proposes, human disposes. Mark each decision as In-the-Loop.
 
@@ -96,7 +96,7 @@ Ask `Blocking` questions before final recommendations. For `Important` or `Usefu
 
 5. **Identify sticky decisions** (decisions that should not change mid-implementation):
 
-   Some decisions act as **sticky latches** — once set, reversing them mid-session wastes all context built on top of them. Claude Code uses this pattern internally: boolean flags that once true, never revert, because toggling would invalidate the prompt cache (90% cost saving lost).
+   Some decisions act as **sticky latches** — once set, reversing them mid-session wastes prior context. Claude Code uses this pattern internally: boolean flags that, once true, never revert, since toggling invalidates the prompt cache (90% cost saving lost).
 
    For each decision in step 4, ask: **"If we change this after implementation starts, how much rework does it cause?"**
 
@@ -134,7 +134,7 @@ Ask `Blocking` questions before final recommendations. For `Important` or `Usefu
 
    > 🔗 **Skip if**: System is not AI-based, or is AI but not high-risk under Annex III, or not EU-targeted. For formal scope pre-flight, install [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0+ and run `/eu-ai-act-check --scope` (the canonical skill, migrated from this plugin on 2026-05-02 per ADR-012).
    >
-   > 🔗 **Three Loops — use claude-governance for the formal model**: The 5-capability table above is a lightweight design-time sanity check. For **formal Three Loops classification per decision** (Out-of / On-the / In-the-Loop with consequence-based gating for irreversible ops), install [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) alongside this plugin. The Three Loops Decision Model and its ADR-002 live in governance by design — `8-habit-ai-dev` references it rather than reimplementing (see `CLAUDE.md` → Plugin Boundary). Three Loops originates from human-autonomy teaming literature (Endsley 1999, DARPA) — it is a design pattern that _satisfies_ EU AI Act Article 14 ¶4(a-e), not a term used by EU law itself. Cite Article 14 ¶ refs in audits, not Three Loops labels.
+   > 🔗 **Three Loops — use claude-governance for the formal model**: The 5-capability table above is a lightweight design-time sanity check. For **formal Three Loops classification per decision** (Out-of / On-the / In-the-Loop with consequence-based gating for irreversible ops), install [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) alongside this plugin. Three Loops and its ADR-002 live in governance by design — `8-habit-ai-dev` references it rather than reimplementing (see `CLAUDE.md` → Plugin Boundary). It originates from human-autonomy teaming literature (Endsley 1999, DARPA) — a design pattern that _satisfies_ Article 14 ¶4(a-e), not a term EU law itself uses. Cite Article 14 ¶ refs in audits, not Three Loops labels.
 
 7. **Document as ADR** if the decision is:
    - Hard to reverse

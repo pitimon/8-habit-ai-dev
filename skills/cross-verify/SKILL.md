@@ -31,7 +31,7 @@ next-skill: any
 Before running the manual checklist, search for structured output blocks in the current directory:
 
 1. Glob for the persisted artifact files: `docs/specs/*/prd.md`, `docs/specs/*/design.md`, `docs/specs/*/tasks.md` (plus their `*.vN.md` conflict variants — the canonical `--persist` targets), and `*-review.md` / `*-prd.md` / `*-tasks.md` in the working directory for hand-saved reports
-2. Read each file and look for `<!-- SKILL_OUTPUT:` blocks. As of v2.21.39 ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)) these blocks live in the persisted files only, not the conversation transcript — a non-persisted run has no block, which is expected and falls through to the session-context fallback and, failing that, manual assessment (steps 5–6)
+2. Read each file and look for `<!-- SKILL_OUTPUT:` blocks. As of v2.21.39 ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)) these blocks live only in persisted files, not the conversation transcript — a non-persisted run has no block, which is expected and falls through to the session-context fallback and, failing that, manual assessment (steps 5–6)
 3. If found, pre-populate evidence for:
    - **Q4**: Extract `ears_count` and `success_criteria_count` from requirements block
    - **Q5**: Extract `test_coverage_checked` from review block
@@ -40,7 +40,7 @@ Before running the manual checklist, search for structured output blocks in the 
    - **Q16**: Extract `sticky_decisions` from design block — flag if 0 sticky decisions in a design with >3 decisions (WHY not captured)
    - **Q4**: Cross-check `decision_count` against requirements `success_criteria_count` — flag if decisions don't cover all criteria
 4. Mark auto-populated answers with `✓A` (auto-detected) confidence level
-5. **Session-context fallback (no persisted block)**: if no file block was found but the producer skills (`/requirements`, `/design`, `/breakdown`, `/review-ai`) ran earlier in **this session**, mine their conversation output — the PRD / design / tasks **prose** still in context — to pre-populate Q4 / Q8 / Q14 / Q16. Mark `✓I` (inferred from prose), or `✓A` only for fields the prose states as an explicit count (e.g. a numbered EARS list). This is runtime-neutral: it reads prose, not the HTML-comment block, so it works identically in Codex. (v2.21.42, [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375) follow-up — restores the same-session auto-populate that file-only emission removed, without runtime-conditional producer behavior.)
+5. **Session-context fallback (no persisted block)**: if no file block was found but the producer skills (`/requirements`, `/design`, `/breakdown`, `/review-ai`) ran earlier in **this session**, mine their conversation output — the PRD / design / tasks **prose** still in context — to pre-populate Q4 / Q8 / Q14 / Q16. Mark `✓I` (inferred from prose), or `✓A` only for fields the prose states as an explicit count (e.g. a numbered EARS list). This is runtime-neutral, reading prose rather than the HTML-comment block, so it works identically in Codex. (v2.21.42, [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375) follow-up — restores same-session auto-populate that file-only emission removed, without runtime-conditional producer behavior.)
 6. If neither a persisted block nor prior producer output is available, proceed with manual assessment (no change to prior behavior)
 
 ## Process
@@ -105,7 +105,7 @@ After scoring, run a 10-second adversarial pass on your _own_ verdict — the ch
 
 - **What is the strongest counter-argument to my recommendation?** If you can't state one, you haven't pressure-tested it — re-examine the failed and ✓U items before proceeding.
 - **Who is harmed if my verdict is wrong?** A false "proceed" ships the gap; a false "stop" wastes the work. Reweight borderline calls toward the costlier error.
-- **Is my recommendation itself a trap?** Test it against the failure modes — hidden cost, false economy, scaling failure, premature abstraction (commandment 14, `integrity-principles.md`). A clean-looking verdict can still hide one. (Commandment 14's steelman half is N/A here: you are pressure-testing your _own_ verdict, not rejecting an alternative.)
+- **Is my recommendation itself a trap?** Test it against the failure modes — hidden cost, false economy, scaling failure, premature abstraction (commandment 14, `integrity-principles.md`). A clean-looking verdict can still hide one. (Commandment 14's steelman half is N/A here: this pressure-tests your own verdict, not an alternative.)
 
 This is the cheap inline complement to a full reviewer-subagent dispatch (`advisor-pattern.md`) — run it always; escalate to the subagent only when the action is irreversible or the context is contaminated.
 
@@ -146,7 +146,7 @@ For production work, load `${CLAUDE_PLUGIN_ROOT}/guides/production-release-gates
 | 8-11  | Significant gaps | Revisit the plan before implementing |
 | < 8   | Not ready        | Stop and rethink the approach        |
 
-When calculating adjusted score, count only `PASS` in the numerator and exclude `N/A` from the denominator. `FAIL` and `OPEN_VERIFICATION_DEBT` remain visible and prevent a production `FINAL_KEEP` when their gate policy is blocking. Use the adjusted percentage to determine the core band, then determine the release verdict independently from domain gates and evidence completeness.
+When calculating adjusted score, count only `PASS` in the numerator and exclude `N/A` from the denominator. `FAIL` and `OPEN_VERIFICATION_DEBT` stay visible and block a production `FINAL_KEEP` under a blocking gate policy. Use the adjusted percentage for the core band, then determine the release verdict independently from domain gates and evidence completeness.
 
 ### Common Failure Patterns
 
