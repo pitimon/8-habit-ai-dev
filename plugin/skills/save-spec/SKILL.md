@@ -103,3 +103,7 @@ The 8 steps below are the runtime contract — each step maps to specific FRs fr
 Load `${CLAUDE_PLUGIN_ROOT}/skills/save-spec/reference.md` for the SPEC.md output template, canonical refusal and error messages, skip-sentinels list, glob filename set, parse examples, and rationale links to issue #199.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/spec-digest-pattern.md` for the full pattern documentation, including the CLAUDE.md auto-update recipe stanza that this skill emits in step 7.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h8-find-voice.md` for the full H8 principle (deployment-mode choice is human; tools follow).
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

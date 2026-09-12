@@ -129,3 +129,7 @@ Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the full H5 princ
 Load `${CLAUDE_PLUGIN_ROOT}/guides/orchestration-patterns.md` for context boundary and orchestration patterns.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local glossary, issue-tracker, or agent context files are present.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/tdd-tracer-bullet.md` when the task is explicitly TDD, red-green-refactor, or test-first.
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

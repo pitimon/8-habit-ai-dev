@@ -134,3 +134,8 @@ This skill reads git commit metadata and, only when Git's trailer parser returns
 - Author email addresses (uses display names only)
 
 If your project has confidentiality requirements about AI tool usage, pair this skill with explicit allowlist/denylist of which projects can run it.
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).
+`scripts/generate-ai-dev-log.sh` ships with this skill's Hermes install; run relative to its own directory.

@@ -141,3 +141,7 @@ After saving the lesson file, run the 4-phase consolidation cycle automatically.
 
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h7-sharpen-saw.md` for the full H7 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/lesson-template.md` for the lesson file format.
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

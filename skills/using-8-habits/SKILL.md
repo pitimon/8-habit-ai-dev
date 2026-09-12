@@ -171,3 +171,7 @@ For 5 worked examples covering all 4 quadrants (workflow / assessment / meta / u
 - [ ] User has picked their next skill based on the decision tree
 - [ ] User knows about the honest skip rule: justify skipping out loud, or run the step
 - [ ] User knows `/cross-verify` + `/reflect` exist for review and retrospective
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

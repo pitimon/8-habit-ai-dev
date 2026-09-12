@@ -56,7 +56,7 @@ bash tests/ci-local.sh
 - Hermes has no plugin manifest layer. It discovers skills via its Skills Hub tap: `hermes skills tap add pitimon/8-habit-ai-dev`, then `hermes skills install pitimon/8-habit-ai-dev/skills/<name>` per skill.
 - Every `skills/*/SKILL.md` cross-reference to another repo doc MUST be an absolute `https://github.com/pitimon/8-habit-ai-dev/blob/main/...` URL, never a repo-root-relative `../../` link — Hermes's fetcher fail-closes the ENTIRE skill install on a same-directory link starting with `..` (path-traversal guard, [#386](https://github.com/pitimon/8-habit-ai-dev/issues/386)). Enforced by `tests/test-hermes-tap-links.sh` against both `skills/` and `plugin/skills/`.
 - Hermes loads skill content only — no `AGENTS.md`/`CLAUDE.md` doctrine, session hook, or `SessionStart` reminder travels with a tap install.
-- `${CLAUDE_PLUGIN_ROOT}`-prefixed load directives (`guides/`, `habits/`, `scripts/`) do not resolve on Hermes — a known functional gap, not yet fixed ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)). Do not describe Hermes install as full functional parity with Claude Code/Codex in docs until it closes.
+- `${CLAUDE_PLUGIN_ROOT}`-prefixed load directives (`guides/`, `habits/`, `scripts/`) do not resolve on Hermes; every affected `SKILL.md` carries a one-line "Hermes" note with the exact `blob/main` substitution URL ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)). New `${CLAUDE_PLUGIN_ROOT}`-prefixed loads must add the same note pattern. Do not describe Hermes install as full functional parity with Claude Code/Codex — it requires the agent to follow the substitution note, not automatic resolution.
 
 ## Conventions and pitfalls
 

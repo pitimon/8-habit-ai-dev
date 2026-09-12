@@ -112,3 +112,7 @@ Use this before `/deploy-guide` for operational mutations, before `/post-mortem`
 - [ ] Closure criteria stated and do not confuse Running/recovered with healthy/fixed
 
 Load `${CLAUDE_PLUGIN_ROOT}/skills/operational-state/reference.md` for the full state matrix, artifact map, and worked examples.
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

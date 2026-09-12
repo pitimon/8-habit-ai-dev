@@ -58,7 +58,7 @@ Start with `Scan` unless the user's request or existing evidence proves a `Focus
    **Recommendation**: [Which and why]
    ```
 
-   Before giving the recommendation, **steelman the option(s) you are about to reject** — state the strongest case each advocate would make, then explain why the chosen option still wins. Rejecting a strawman is how a sound alternative gets re-proposed next cycle (commandment 14, `integrity-principles.md`).
+   Before giving the recommendation, **steelman the option(s) you are about to reject** — state the strongest case each advocate would make, then justify the choice. Rejecting a strawman lets it resurface next cycle (commandment 14, `integrity-principles.md`).
 
 4. **Human must decide**: AI proposes, human disposes. Mark each decision as In-the-Loop.
 
@@ -220,3 +220,7 @@ Load `${CLAUDE_PLUGIN_ROOT}/guides/behavioral-spec-craft.md` for spec-writing cr
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h8-find-voice.md` for the full H8 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md` when `--persist <slug>` is used (canonical spec for opt-in persistence to `docs/specs/<slug>/design.md`).
 Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local glossary, issue-tracker, or agent context files are present.
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

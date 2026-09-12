@@ -10,6 +10,19 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.46 — #388: Hermes substitution note for ${CLAUDE_PLUGIN_ROOT} references (2026-09-12)
+
+### Fixed
+
+- All 22 `skills/*/SKILL.md` files that reference `${CLAUDE_PLUGIN_ROOT}/guides|habits|scripts|skills/...` now carry a one-line "Hermes" note giving the exact substitution: `https://github.com/pitimon/8-habit-ai-dev/blob/main` for the plugin-root prefix. `ai-dev-log` additionally notes that its bundled `scripts/generate-ai-dev-log.sh` ships with the Hermes install and should run relative to the skill's own directory instead of via URL.
+- `tests/validate-content.sh` Check 22 receipt and F3 convention-consistency word-count budget updated/preserved after the note additions (trimmed verbose prose in `design`/`post-mortem` to stay under the 2000-word skill cap).
+
+### Scope boundary
+
+This closes the *documentation* half of #388 (an agent reading any of the 22 files now has the exact URL to use on Hermes). It does not change `${CLAUDE_PLUGIN_ROOT}` itself, restructure `guides/`/`habits/` into per-skill directories, or add runtime detection logic — Claude Code and Codex behavior is unchanged.
+
+---
+
 ## v2.21.45 — #386 follow-up: honest Hermes docs + traversal guard hardening (2026-09-12)
 
 ### Fixed

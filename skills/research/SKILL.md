@@ -194,3 +194,7 @@ See [Step 0 wiki page](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the full H5 principle and examples.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/templates/research-brief-template.md` for the output template.
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).
