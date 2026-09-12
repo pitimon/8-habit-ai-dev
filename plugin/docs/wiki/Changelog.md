@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.47-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.48-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.48 · #388 follow-up round 2 — hard-fail the word cap + real margin
+
+Internal validator hardening, not a doc-facing change: the repo's 2000-word `SKILL.md` cap is now a hard CI failure in both validators (it previously only warned in one of the two). No wiki content changed. See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.21.47 · #388 follow-up — enforce the substitution note + refresh stale docs
 

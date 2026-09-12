@@ -10,6 +10,20 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.48 — #388 follow-up round 2: hard-fail the word cap + real margin (2026-09-12)
+
+### Fixed
+
+- `tests/validate-structure.sh` Check 9 now `fail`s (not `WARN`) when a `skills/*/SKILL.md` exceeds the 2000-word cap. `tests/validate-content.sh`'s F3 fitness check already hard-failed on this; the two suites disagreed on severity, so a contributor reading only Check 9's output could reasonably (and wrongly) treat the cap as advisory.
+- `skills/design/SKILL.md` (1997→1979 words) and `skills/cross-verify/SKILL.md` (1994→1988 words) were the two skills sitting closest to the cap, tighter than v2.21.47's `post-mortem` fix — trimmed genuinely verbose prose in both to restore real margin.
+- Captured two durable lessons in the local `software-development:import-claude-codex-plugins` skill: ship a new MUST rule's CI enforcement in the same change as the rule, and check word-cap margin with `wc -w` before adding prose to a near-cap skill (repo AGENTS.md edit blocked by a stalled approval prompt despite explicit user consent — see PR discussion).
+
+### Scope boundary
+
+Validator hardening + margin restoration only. No skill semantics change.
+
+---
+
 ## v2.21.47 — #388 follow-up: enforce the substitution note + refresh stale docs (2026-09-12)
 
 ### Fixed

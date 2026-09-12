@@ -256,7 +256,12 @@ if [ "$HERMES_NOTE_FAIL" -eq 0 ]; then
 fi
 echo ""
 
-# --- Check 9: Word count guardrails (warning only) ---
+# --- Check 9: Word count guardrails ---
+# >2000 words is a HARD gate, not a warning: tests/validate-content.sh's F3
+# fitness check (convention-consistency) already treats it as a fitness
+# BREACH that fails CI. Failing it here too, in the same place a contributor
+# is most likely to be looking (skill-authoring changes), keeps the two
+# suites from disagreeing about whether this is optional.
 echo "--- Check 9: Word count guardrails ---"
 for skill_dir in skills/*/; do
   skill_file="${skill_dir}SKILL.md"
@@ -265,7 +270,7 @@ for skill_dir in skills/*/; do
   if [ "$words" -lt 200 ]; then
     echo "  WARN: $skill_file has $words words (consider 200+ for completeness)"
   elif [ "$words" -gt 2000 ]; then
-    echo "  WARN: $skill_file has $words words (consider splitting or moving detail to references/)"
+    fail "$skill_file has $words words — exceeds the 2000-word hard cap (split content into references/, or trim)"
   else
     pass "$skill_file word count OK ($words words)"
   fi
