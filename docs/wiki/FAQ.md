@@ -16,7 +16,7 @@ Codex should not be treated as having Claude hook feature parity. If Codex invok
 
 ## Can I Use This With Hermes Agent?
 
-Yes, but differently than Claude Code or Codex: Hermes has no plugin manifest, so there is no single "install the plugin" command. Add the repo as a Skills Hub tap and install skills one at a time — see [Installation](Installation#hermes-agent). No `AGENTS.md`/`CLAUDE.md` doctrine, session hook, or `SessionStart` reminder travels with a Hermes install.
+Yes, but differently than Claude Code or Codex: Hermes has no plugin manifest, so there is no single "install the plugin" command. Add the repo as a Skills Hub tap and install skills one at a time — see [Installation](Installation#hermes-agent). No `AGENTS.md`/`CLAUDE.md` doctrine, session hook, or `SessionStart` reminder travels with a Hermes install, and most skills' `guides/`/`habits/`/`scripts/` references currently don't resolve on Hermes either ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)) — the skill still runs, just with fewer supporting references than on Claude Code or Codex.
 
 ## Which Skill Should I Start With?
 

@@ -10,6 +10,19 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.45 — #386 follow-up: honest Hermes docs + traversal guard hardening (2026-09-12)
+
+### Fixed
+
+- README, `docs/compatibility-matrix.md`, `AGENTS.md`, and wiki `Installation`/`Limitations`/`FAQ` no longer imply full functional parity for Hermes installs. Fixing #386 made skills *installable* on Hermes; it did not make `${CLAUDE_PLUGIN_ROOT}`-based `guides/`/`habits/`/`scripts/` references *resolvable* there — 22 of 24 skills still carry that gap, now documented and tracked in [#388](https://github.com/pitimon/8-habit-ai-dev/issues/388).
+- `tests/test-hermes-tap-links.sh` now also rejects the `_SUSPICIOUS_LOCAL_REF_RE` traversal pattern (a `..` segment inside a `references/templates/scripts/assets/examples/` path) and checks `plugin/skills/` in addition to `skills/`, closing a coverage gap in the original #386 guard.
+
+### Added
+
+- Issue [#388](https://github.com/pitimon/8-habit-ai-dev/issues/388) tracking Hermes functional-reference portability, scoped separately from the #386 install fix.
+
+---
+
 ## v2.21.44 — #386: fix Hermes Skills Hub tap install (relative parent-dir links) (2026-09-12)
 
 ### Fixed

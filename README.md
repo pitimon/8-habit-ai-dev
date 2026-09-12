@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.44-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.44)
+[![Version](https://img.shields.io/badge/Version-2.21.45-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.45)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22144) — Version history
+- [What's New](#whats-new-in-v22145) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -140,7 +140,7 @@ Use the cross-verify skill to check this release plan.
 
 **The Core 5 (≈80% of daily work)**: `/requirements` · `/review-ai` · `/cross-verify` · `/research` · `/reflect`. If you learn only five skills, learn these — the session banner surfaces the same set each session.
 
-Two commands to install for Claude Code or Codex, or a `tap add` + per-skill `install` for Hermes. Claude Code also loads a session reminder; all three platforms make the 24 skills available. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md), [Codex integration guide](docs/codex-integration.md), and wiki [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations): Codex gets native packaging, the same markdown skills, and a narrow `SessionStart` JSON adapter if the host invokes the hook; Hermes gets the same markdown skills via its Skills Hub tap mechanism, with no session-hook, `SessionStart` reminder, or CLAUDE.md/AGENTS.md doctrine attached; neither gets Claude hook feature parity or runtime enforcement.
+Two commands to install for Claude Code or Codex, or a `tap add` + per-skill `install` for Hermes. Claude Code also loads a session reminder; all three platforms can install the 24 skills. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md), [Codex integration guide](docs/codex-integration.md), and wiki [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations): Codex gets native packaging, the same markdown skills, and a narrow `SessionStart` JSON adapter if the host invokes the hook; Hermes gets the same markdown skills via its Skills Hub tap mechanism, with no session-hook, `SessionStart` reminder, or CLAUDE.md/AGENTS.md doctrine attached — and, as of v2.21.44, most skills still cross-reference `guides/`, `habits/`, and `scripts/` via a Claude/Codex-only `${CLAUDE_PLUGIN_ROOT}` path that Hermes cannot resolve, so a Hermes-installed skill can run with fewer supporting references than on Claude Code or Codex (tracked in [#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)); neither gets Claude hook feature parity or runtime enforcement.
 
 ### Keeping the plugin updated
 
@@ -469,6 +469,15 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.45
+
+**Theme: #386 follow-up — honest Hermes docs + traversal guard hardening**
+
+- **Hermes install claims corrected** — fixing #386 made skills *installable* on Hermes; it did not make `${CLAUDE_PLUGIN_ROOT}`-based `guides/`/`habits/`/`scripts/` references *resolvable* there. README, `docs/compatibility-matrix.md`, `AGENTS.md`, and wiki Installation/Limitations/FAQ now say so, with the gap tracked in [#388](https://github.com/pitimon/8-habit-ai-dev/issues/388).
+- **`tests/test-hermes-tap-links.sh` hardened** — now also rejects a `..` traversal segment inside `references/templates/scripts/assets/examples/` paths (not just parent-directory links), and checks `plugin/skills/` in addition to `skills/`.
+
+---
+
 ## What's New in v2.21.44
 
 **Theme: #386 — fix Hermes Skills Hub tap install**
@@ -691,4 +700,4 @@ MIT
 
 ---
 
-_Version: 2.21.44 | Last updated: 2026-09-12_
+_Version: 2.21.45 | Last updated: 2026-09-12_

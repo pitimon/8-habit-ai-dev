@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.44-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.45-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.45 · #386 follow-up — honest Hermes docs + traversal guard hardening
+
+Fixing #386 made skills installable on Hermes; it did not make `${CLAUDE_PLUGIN_ROOT}`-based `guides`/`habits`/`scripts` references resolvable there. README, the compatibility matrix, `AGENTS.md`, and the Installation/Limitations/FAQ wiki pages now say so explicitly, with the gap tracked separately in [#388](https://github.com/pitimon/8-habit-ai-dev/issues/388). `tests/test-hermes-tap-links.sh` also now catches traversal segments inside `references/templates/scripts/assets/examples/` paths, not just parent-directory links, and checks the `plugin/` mirror too. See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.21.44 · #386 — fix Hermes Skills Hub tap install
 

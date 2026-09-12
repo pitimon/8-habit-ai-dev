@@ -92,11 +92,14 @@ hermes skills uninstall cross-verify
 
 No `AGENTS.md`/`CLAUDE.md` doctrine, session hook, or `SessionStart` reminder travels with a Hermes tap install — only the skill content itself.
 
+> [!WARNING]
+> Most skills also reference `guides/`, `habits/`, or `scripts/` via a Claude/Codex-only `${CLAUDE_PLUGIN_ROOT}` path that Hermes cannot resolve — a Hermes-installed skill runs with fewer supporting references than on Claude Code or Codex. Tracked in [#388](https://github.com/pitimon/8-habit-ai-dev/issues/388).
+
 ## What Installs
 
 | Surface | Claude Code | Codex | Hermes |
 | --- | --- | --- | --- |
-| 24 markdown skills | Yes | Yes | Yes (installed one at a time) |
+| 24 markdown skills | Yes | Yes | Yes (installed one at a time; supporting `guides/`/`habits/`/`scripts/` references do not resolve — [#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)) |
 | 7-step workflow guidance | Yes | Yes | Yes |
 | Claude session hook | Yes | No | No |
 | Hook-based verbosity reminder | Yes | No | No |
