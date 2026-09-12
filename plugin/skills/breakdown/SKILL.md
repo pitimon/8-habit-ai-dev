@@ -158,3 +158,7 @@ Load `${CLAUDE_PLUGIN_ROOT}/guides/orchestration-patterns.md` for worktree isola
 Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md` when `--persist <slug>` is used (canonical spec for opt-in persistence to `docs/specs/<slug>/tasks.md`).
 Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local issue-tracker, triage-label, or domain context files are present.
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

@@ -175,3 +175,7 @@ Load `${CLAUDE_PLUGIN_ROOT}/guides/project-context-contract.md` when repo-local 
      (/post-mortem takes the diagnosis as prose; /cross-verify never globs a diagnose artifact),
      rendered as verbatim noise in Codex, and its status marker was outside the protocol's
      accepted vocabulary. /diagnose hands off to /post-mortem in prose. -->
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

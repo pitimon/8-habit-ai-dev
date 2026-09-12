@@ -183,3 +183,7 @@ Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verification.md` for detailed guidance 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards when using confidence levels.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/production-release-gates.md` for production states, independent gates, runtime reconciliation, mutation read-back, and closure evidence.
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

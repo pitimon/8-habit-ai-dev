@@ -204,3 +204,7 @@ Load `${CLAUDE_PLUGIN_ROOT}/skills/consistency-check/reference.md` for the full 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md` for the canonical artifact convention and ID marker formats.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h5-understand-first.md` for the H5 principle (verify understanding across sources).
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h1-be-proactive.md` for the H1 principle (catch drift before it becomes a bug).
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

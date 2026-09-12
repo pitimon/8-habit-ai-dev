@@ -228,3 +228,7 @@ If the source is ambiguous, ask one question and stop.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md` for the full H4 principle.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h6-synergize.md` for the full H6 principle.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards.
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

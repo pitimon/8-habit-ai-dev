@@ -79,3 +79,7 @@ If you only invest in P and neglect PC, eventually the saw is too dull to cut.
 See [Step 7 wiki page](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/wiki/Step-7-Monitor-Setup.md) for deeper walkthrough, examples, and common pitfalls.
 
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h7-sharpen-saw.md` for the full H7 principle and examples.
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

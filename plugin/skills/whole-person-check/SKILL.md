@@ -107,3 +107,7 @@ AI-assisted development excels at Body (CI, tests) and Mind (architecture, desig
 
 Load `${CLAUDE_PLUGIN_ROOT}/guides/whole-person-rubrics.md` for detailed rubric definitions.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h8-find-voice.md` for the full H8 principle and examples.
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

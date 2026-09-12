@@ -113,3 +113,7 @@ The profile file format is documented in `guides/habit-profile-schema.md` (v1 co
 Load `${CLAUDE_PLUGIN_ROOT}/rules/effective-development.md` for the full maturity model (Dependence → Independence → Interdependence → Significance) and the 8 habits each level implies.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/habit-profile-schema.md` for the v1 schema contract that this skill writes.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/whole-person-rubrics.md` for the dominant-level selection pattern this skill's scoring rubric adapts from (3 levels → 4 levels, system → user).
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

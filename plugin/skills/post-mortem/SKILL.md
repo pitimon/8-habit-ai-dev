@@ -16,7 +16,7 @@ next-skill: any
 
 **Habit**: H4 — Think Win-Win + H7 — Sharpen the Saw | **Anti-pattern**: Closing a fix with "Fixed in PR #N" and walking away
 
-Canonical engineering record of a bug fix. Written **after** debugging lands a validated fix, **for** other engineers (and future-you, who will have forgotten everything in 6 months). Code identifiers are first-class here — this is the artifact that lets the next person grep back to the cause in seconds, not hours.
+Canonical engineering record of a bug fix. Written **after** debugging lands a validated fix, **for** other engineers (and future-you, who forgets everything in 6 months). Code identifiers are first-class here — this lets the next person grep back to the cause in seconds, not hours.
 
 ## When to Use
 
@@ -184,3 +184,7 @@ Structure and discipline inspired by [`thananon/9arm-skills/post-mortem`](https:
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h4-win-win.md` for the full H4 principle.
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h7-sharpen-saw.md` for the full H7 principle.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards (the 14 commandments).
+
+---
+
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).

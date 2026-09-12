@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.45-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.46-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.46 · #388 — Hermes substitution note for `${CLAUDE_PLUGIN_ROOT}` references
+
+All 22 `skills/*/SKILL.md` files that load `guides/`, `habits/`, `scripts/`, or a sibling skill's `reference.md` via `${CLAUDE_PLUGIN_ROOT}` now carry a one-line note giving the exact Hermes substitution (the repo's `blob/main` URL). `ai-dev-log` additionally notes its bundled script ships with the Hermes install and should run relative to the skill's own directory. See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.21.45 · #386 follow-up — honest Hermes docs + traversal guard hardening
 
