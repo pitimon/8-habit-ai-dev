@@ -10,6 +10,21 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.49 — OpenClaw skill compatibility (2026-09-14)
+
+### Added
+
+- OpenClaw integration guide covering compatible-bundle installation, workspace/`extraDirs` loading, skill allowlists, invocation, and runtime boundaries.
+- Static OpenClaw compatibility validation for both the source skills and the tracked Codex mirror; CI/local validation now runs this as the eighth suite.
+- OpenClaw-specific notes on all 22 skills that use `${CLAUDE_PLUGIN_ROOT}`, including the `{baseDir}`/bundled-file fallback.
+- Runtime compatibility matrix and README install guidance for OpenClaw.
+
+### Scope boundary
+
+OpenClaw support is a portable Agent Skills compatibility surface only. No native OpenClaw runtime module, tool registration, hook parity, enforcement, or compliance engine was added.
+
+---
+
 ## v2.21.48 — #388 follow-up round 2: hard-fail the word cap + real margin (2026-09-12)
 
 ### Fixed

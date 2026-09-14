@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.48-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.48)
+[![Version](https://img.shields.io/badge/Version-2.21.49-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.49)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22148) — Version history
+- [What's New](#whats-new-in-v22149) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -137,6 +137,16 @@ Use the cross-verify skill to check this release plan.
 **Verify Claude Code installation**: After restarting, you should see `## 8-Habit AI Dev Active` in the session banner with the 7-step workflow reminder. For Codex, run `codex plugin list` and confirm `8-habit-ai-dev@pitimon-8-habit-ai-dev` is installed.
 
 **New to the plugin?** Start with `/workflow` for a guided walkthrough, or see [Use Cases](#use-cases-which-skill-when) to find the right skill for your situation.
+
+**Use with OpenClaw:** OpenClaw can load this repository as a compatible skill bundle. Install from a pinned tag, restart the Gateway, and verify the skill snapshot:
+
+```bash
+openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.49
+openclaw gateway restart
+openclaw skills list
+```
+
+See the [OpenClaw Integration Guide](docs/openclaw-integration.md) for workspace/`extraDirs` loading, allowlists, `{baseDir}` references, and the runtime boundary. OpenClaw does not run this repository's Claude hooks or provide runtime enforcement.
 
 **The Core 5 (≈80% of daily work)**: `/requirements` · `/review-ai` · `/cross-verify` · `/research` · `/reflect`. If you learn only five skills, learn these — the session banner surfaces the same set each session.
 
@@ -469,13 +479,14 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
-## What's New in v2.21.48
+## What's New in v2.21.49
 
-**Theme: #388 follow-up round 2 — hard-fail the word cap + real margin**
+**Theme: OpenClaw skill compatibility**
 
-- **The 2000-word skill cap is now hard-enforced in both validators** — `tests/validate-structure.sh` Check 9 now `fail`s instead of `WARN`ing, matching `tests/validate-content.sh`'s F3 fitness check that already hard-failed on the same threshold.
-- **`design` and `cross-verify` had less margin than the `post-mortem` fix in v2.21.47** — trimmed both back to real slack (design 1997→1979, cross-verify 1994→1988).
-- **Two durable lessons captured** for future changes: ship a new MUST rule's CI enforcement in the same PR, and check word-cap margin with `wc -w` before touching a near-cap skill.
+- **OpenClaw installation and usage are documented** in `docs/openclaw-integration.md`, including compatible bundle, workspace, and `extraDirs` paths.
+- **OpenClaw compatibility is statically validated** for all 24 skills and the Codex mirror; CI/local validation now runs the eighth suite.
+- **All 22 `${CLAUDE_PLUGIN_ROOT}` skills carry an OpenClaw fallback note** for `{baseDir}`, bundled files, or the repository URL.
+- **Runtime boundaries remain explicit**: Claude hooks, Claude-specific persistence, enforcement, and native OpenClaw runtime modules are not claimed.
 
 ---
 
@@ -728,4 +739,4 @@ MIT
 
 ---
 
-_Version: 2.21.48 | Last updated: 2026-09-12_
+_Version: 2.21.49 | Last updated: 2026-09-14_

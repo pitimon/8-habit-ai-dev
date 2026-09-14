@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.48-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.49-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.49 · OpenClaw skill compatibility
+
+The repository now documents and validates OpenClaw support as a compatible Agent Skills bundle. Users can install from a pinned Git tag or load `skills/` through an OpenClaw workspace/`extraDirs`; Claude hooks and runtime enforcement remain outside this compatibility promise. See the [OpenClaw Integration Guide](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/openclaw-integration.md) and [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev).
 
 ## v2.21.48 · #388 follow-up round 2 — hard-fail the word cap + real margin
 

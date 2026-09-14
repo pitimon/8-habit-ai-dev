@@ -137,5 +137,5 @@ If your project has confidentiality requirements about AI tool usage, pair this 
 
 ---
 
-Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)). OpenClaw: use the bundled file or `{baseDir}`; otherwise use the same GitHub URL.
 `scripts/generate-ai-dev-log.sh` ships with this skill's Hermes install; run relative to its own directory.

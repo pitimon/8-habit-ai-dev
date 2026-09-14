@@ -110,4 +110,4 @@ Load `${CLAUDE_PLUGIN_ROOT}/habits/h8-find-voice.md` for the full H8 principle a
 
 ---
 
-Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)). OpenClaw: use the bundled file or `{baseDir}`; otherwise use the same GitHub URL.

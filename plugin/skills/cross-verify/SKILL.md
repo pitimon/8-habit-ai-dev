@@ -186,4 +186,4 @@ Load `${CLAUDE_PLUGIN_ROOT}/guides/production-release-gates.md` for production s
 
 ---
 
-Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)). OpenClaw: use `{baseDir}`, bundled file, or URL.

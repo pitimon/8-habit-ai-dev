@@ -187,4 +187,4 @@ Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standar
 
 ---
 
-Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)). OpenClaw: use the bundled file or `{baseDir}`; otherwise use the same GitHub URL.

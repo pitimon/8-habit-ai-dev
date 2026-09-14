@@ -207,4 +207,4 @@ Load `${CLAUDE_PLUGIN_ROOT}/habits/h1-be-proactive.md` for the H1 principle (cat
 
 ---
 
-Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)).
+Hermes: no `${CLAUDE_PLUGIN_ROOT}`; use `https://github.com/pitimon/8-habit-ai-dev/blob/main` ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)). OpenClaw: use the bundled file or `{baseDir}`; otherwise use the same GitHub URL.
