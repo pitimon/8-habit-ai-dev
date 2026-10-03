@@ -88,7 +88,7 @@ Every review MUST end with a structured verdict — not free-form prose.
 | Level | Label        | Criteria                                   | Action                               |
 | ----- | ------------ | ------------------------------------------ | ------------------------------------ |
 | 0     | **PASS**     | No findings or all informational; Owner note confirmed | Proceed to commit                    |
-| 1     | **CONCERNS** | Non-blocking issues found                  | Merge allowed, author should address |
+| 1     | **CONCERNS** | Non-blocking issues found                  | Merge allowed, author should address; if only the Owner note is open, merger confirms it first |
 | 2     | **REWORK**   | Significant quality or completeness issues | Must fix before merge                |
 | 3     | **FAIL**     | Security vulnerability or breaking change  | Cannot merge, immediate fix required |
 

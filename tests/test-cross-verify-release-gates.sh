@@ -132,6 +132,8 @@ require "$REVIEW" "Owner note drafted from artifacts and confirmed by the merger
 require "$REVIEW" "closed and the Owner note is confirmed" "SKILL_OUTPUT pass requires confirmed note (FR-005)"
 require "$REVIEW" "that cap alone does not trigger Deep Review" "ownership cap does not force Deep Review (FR-005)"
 require "guides/templates/review-report-template.md" "Confirmed by:" "report template carries the Owner note (FR-004)"
+require "$REVIEW" "if only the Owner note is open, merger confirms it first" "CONCERNS row tells the merger to confirm before merge (FR-005)"
+require "skills/deploy-guide/SKILL.md" "Review verdict PASS with a confirmed Owner note" "deploy-guide handoff matches the Owner-note cap (FR-005)"
 if grep -qF "Is there enough audit evidence to explain what changed and why?" "$REVIEW"; then
   fail "old step-7 audit-evidence bullet still present — FR-003 requires replacement, not addition"
 else
