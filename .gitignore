@@ -13,3 +13,5 @@
 .vscode/
 *.swp
 *~
+/diagrams/
+.worktrees/
