@@ -71,7 +71,7 @@ The 8 steps below are the runtime contract — each step maps to specific FRs fr
 6. **Write SPEC.md** (FR-010, FR-012) — Call `Write` with the absolute path `<target-dir>/SPEC.md` (per step 1's resolution; `<cwd>/SPEC.md` if no `[target-dir]` was supplied) and the assembled content. **Do NOT include YAML frontmatter** — `SPEC.md` is a user-owned file per `guides/persistence-convention.md:108-109` and is exempt from the frontmatter requirement.
    - If the `Write` fails: emit the **3-part error message** from `reference.md` (verbatim, with `<absolute-path>`, `<error-class>`, `<error-message>`, `<suggested-action>` substituted) and **STOP**. Do not retry.
 
-7. **Emit CLAUDE.md recipe stanza** (FR-011, FR-014, FR-015) — After a successful `Write`, print to conversation (NOT to any file):
+7. **Show the CLAUDE.md recipe stanza** (FR-011, FR-014, FR-015) — After a successful `Write`, show it in your reply (NOT in any file):
    - A one-line hint: "Copy this into your project's `CLAUDE.md` to auto-update `SPEC.md` after every task. The plugin does NOT modify your `CLAUDE.md` automatically."
    - The recipe stanza in a fenced markdown code block, copied verbatim from `guides/spec-digest-pattern.md` (the "CLAUDE.md auto-update rule (user-side)" section).
    - **Do NOT invoke `Edit` or `Write` against `CLAUDE.md`** — emission is conversation-only.

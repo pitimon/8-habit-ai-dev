@@ -18,7 +18,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 # Keep in lock-step with .github/workflows/validate.yml steps.
-SCRIPTS="validate-structure.sh test-skill-graph.sh validate-content.sh test-verbosity-hook.sh test-pre-commit-hook.sh test-cross-verify-release-gates.sh test-hermes-tap-links.sh test-openclaw-compatibility.sh"
+SCRIPTS="validate-structure.sh test-skill-graph.sh validate-content.sh test-verbosity-hook.sh test-pre-commit-hook.sh test-cross-verify-release-gates.sh test-hermes-tap-links.sh test-hermes-skills-guard.sh test-openclaw-compatibility.sh"
 
 FAILED=""
 for s in $SCRIPTS; do
@@ -37,4 +37,4 @@ if [ -n "$FAILED" ]; then
   echo "RESULT: FAILED —$FAILED"
   exit 1
 fi
-echo "RESULT: ALL 8 SUITES PASSED (CI parity: .github/workflows/validate.yml)"
+echo "RESULT: ALL $(echo $SCRIPTS | wc -w | tr -d " ") SUITES PASSED (CI parity: .github/workflows/validate.yml)"

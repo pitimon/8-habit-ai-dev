@@ -17,7 +17,7 @@ Single-page reference. Read this first when starting a new session.
 
 ## 1. Architecture (pointer)
 
-<!-- TODO: one paragraph summarizing what this system is + where it runs -->
+<!-- TODO: one paragraph summarizing what this project is + where it runs -->
 
 <§1-bullets ASSEMBLY-DIRECTIVE — one bullet per confirmed pointer-target file. Empty set → single template-stub bullet from the empty-set example below. NEVER appears in output — replaced by the generator at scaffold time.>
 
@@ -101,7 +101,7 @@ SPEC.md already exists at <absolute-path>.
 Phase 1 of /save-spec is generator-only — it deliberately refuses to overwrite an
 existing file. To update SPEC.md:
 
-  1. Edit it directly. The CLAUDE.md auto-update recipe (from
+  1. Update SPEC.md by hand. The user-side auto-update recipe (from
      guides/spec-digest-pattern.md) handles ongoing updates without re-invoking
      this skill.
   2. Wait for the Phase 2 --update flag, which will refresh §4 (Current state)

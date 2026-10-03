@@ -30,5 +30,7 @@ jobs:
         run: bash tests/test-cross-verify-release-gates.sh
       - name: Hermes tap install link safety (#386)
         run: bash tests/test-hermes-tap-links.sh
+      - name: Hermes skills-guard install safety (static layer; real scanner runs locally)
+        run: bash tests/test-hermes-skills-guard.sh
       - name: OpenClaw skill compatibility
         run: bash tests/test-openclaw-compatibility.sh

@@ -74,7 +74,7 @@ next-skill: build-brief
    | ----------------------------- | --------------------------- | ---------------------------------------------- |
    | Sequential (no sharing)       | Tasks depend on each other  | 1x (baseline)                                  |
    | Parallel, independent briefs  | Tasks touch different areas | ~1.3x (overhead from duplicate system prompts) |
-   | Parallel, shared prefix brief | Tasks share context         | ~0.3x (90% cache hit on shared prefix)         |
+   | Parallel, shared prefix brief | Tasks read the same files   | ~0.3x (90% cache hit on shared prefix)         |
 
    This step is most valuable for 3+ parallel tasks. For 2 tasks, the overhead of optimizing the prefix rarely pays off.
 
