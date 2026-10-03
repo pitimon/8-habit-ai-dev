@@ -98,6 +98,63 @@ if [ -f "$GUIDE" ]; then
   require "$GUIDE" "core claim in \`FAIL\` or \`OPEN_VERIFICATION_DEBT\` is blocking too" "production guide honors the core-claim hold (FR-003)"
 fi
 
+# --- v2.21.51: pro-ready entry point + "You Own It" Owner note ---
+RESOLVER="skills/RESOLVER.md"
+REVIEW="skills/review-ai/SKILL.md"
+OOS="docs/out-of-scope/statewright-enforcement.md"
+printf '\n%s\n' "--- pro-ready ownership (v2.21.51) ---"
+require "$RESOLVER" "## Composite Triggers" "RESOLVER has a composite-trigger section (FR-001)"
+require "$RESOLVER" '"pro-ready review"' "RESOLVER routes pro-ready (FR-001)"
+require "$RESOLVER" '@pro-ready-review' "RESOLVER routes the @pro-ready-review handle (FR-001)"
+require "$RESOLVER" '"ready to merge?"' "RESOLVER routes ready-to-merge (FR-001)"
+require "$RESOLVER" '"is this production-ready?"' "RESOLVER routes production-ready (FR-001)"
+require "$RESOLVER" '"ready to deploy?"' "RESOLVER routes ready-to-deploy (FR-001)"
+require "$RESOLVER" "a match there overrides single rows" "composite triggers take precedence (FR-001)"
+if [ -f "$RESOLVER" ]; then
+  chain=$(awk '/^## Composite Triggers/{f=1;next} /^## /{f=0} f' "$RESOLVER" | grep -oE 'skills/(review-ai|cross-verify|deploy-guide)/SKILL\.md' | tr '\n' ' ' || true)
+  if [ "$chain" = "skills/review-ai/SKILL.md skills/cross-verify/SKILL.md skills/deploy-guide/SKILL.md " ]; then
+    pass "composite chain is review-ai -> cross-verify -> deploy-guide, one path per line (FR-001)"
+  else
+    fail "composite chain wrong or missing: '$chain' (FR-001)"
+  fi
+fi
+require "$XV_GUIDE" "## PRO-READY Mapping" "guide maps PRO-READY letters (FR-002)"
+require "$XV_GUIDE" "community checklist, not doctrine" "PRO-READY source labeled unverified (FR-002)"
+require "$REVIEW" "without the AI transcript" "review-ai asks the ownership question (FR-003)"
+require "$REVIEW" "**Owner note**" "review-ai output carries an Owner note (FR-004)"
+require "$REVIEW" "how to roll back" "Owner note includes rollback (FR-004)"
+require "$REVIEW" "from repository artifacts alone" "Owner note sourced from repo only (FR-005)"
+require "$REVIEW" "[not in artifacts]" "unsupported fields are marked (FR-005)"
+require "$REVIEW" 'unconfirmed, or `[not in artifacts]` Owner note caps the final verdict at `CONCERNS`' "missing/unconfirmed/unsupported note caps at CONCERNS (FR-005)"
+require "$REVIEW" "Confirmed by:" "Owner note names its confirmer (FR-004)"
+require "$REVIEW" "Owner note confirmed | Proceed to commit" "PASS row requires a confirmed Owner note (FR-005)"
+require "$REVIEW" "Owner note drafted from artifacts and confirmed by the merger, or verdict capped at CONCERNS" "Definition of Done carries the Owner note (FR-005)"
+require "$REVIEW" "closed and the Owner note is confirmed" "SKILL_OUTPUT pass requires confirmed note (FR-005)"
+require "$REVIEW" "that cap alone does not trigger Deep Review" "ownership cap does not force Deep Review (FR-005)"
+require "guides/templates/review-report-template.md" "Confirmed by:" "report template carries the Owner note (FR-004)"
+require "$REVIEW" "if only the Owner note is open, merger confirms it first" "CONCERNS row tells the merger to confirm before merge (FR-005)"
+require "skills/deploy-guide/SKILL.md" "Review verdict PASS with a confirmed Owner note" "deploy-guide handoff matches the Owner-note cap (FR-005)"
+if grep -qF "Is there enough audit evidence to explain what changed and why?" "$REVIEW"; then
+  fail "old step-7 audit-evidence bullet still present — FR-003 requires replacement, not addition"
+else
+  pass "ownership question replaced the old bullet (FR-003)"
+fi
+require "$XV_GUIDE" "statewright" "guide cites statewright ToolSearch corroboration (FR-006)"
+require "$XV_GUIDE" "2426f75" "corroboration pinned to a commit (FR-006)"
+if [ -f "$OOS" ]; then
+  pass "$OOS exists (FR-007)"
+  require "$OOS" "ADR-021" "out-of-scope record cites the boundary ADR (FR-007)"
+  require "$OOS" "FSL-1.1" "out-of-scope record notes licensing (FR-007)"
+else
+  fail "$OOS missing (FR-007)"
+fi
+rwords=$(wc -w < "$REVIEW" | tr -d ' ')
+if [ "$rwords" -le 1950 ]; then
+  pass "review-ai stays below the Check 9 WARN line ($rwords words, FR-009)"
+else
+  fail "review-ai has $rwords words — FR-009 requires ≤1950"
+fi
+
 printf '\n=== Summary ===\nPASS: %s\nFAIL: %s\n' "$PASS" "$ERRORS"
 if [ "$ERRORS" -gt 0 ]; then
   echo "RESULT: FAILED ($ERRORS errors)"

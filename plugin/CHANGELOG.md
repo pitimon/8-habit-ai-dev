@@ -10,6 +10,23 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.51 — pro-ready entry point + "You Own It" Owner note (2026-10-03)
+
+### Added
+
+- **`skills/RESOLVER.md` § Composite Triggers.** "pro-ready review", `@pro-ready-review`, "is this production-ready?", "ready to merge?", "ready to deploy?" route to `/review-ai` → `/cross-verify` → `/deploy-guide`. Composite matches take precedence over single rows. Each cited path sits on its own line: `tests/validate-structure.sh` Check 20 extracts one path per line, so a three-link table row would have left two links unchecked (verified before design).
+- **`/review-ai` ownership check.** Step 7 replaces "enough audit evidence to explain what changed and why?" with "can the merger explain what changed, why, and how to roll back without the AI transcript?". The verdict block ends with an **Owner note** (changed, why, roll back, read first, confirmed by) drafted from repository artifacts alone; fields the artifacts do not support are marked `[not in artifacts]`. A missing, unconfirmed, or unsupported note caps the final verdict at `CONCERNS` — wired into the PASS row, Definition of Done, `SKILL_OUTPUT` `pass` rule, and `guides/templates/review-report-template.md`; the cap alone does not trigger Deep Review. The CONCERNS row tells the merger to confirm the note before merging, and `/deploy-guide` now expects PASS with a confirmed Owner note. This is guidance; nothing blocks the merge. Net +115 words (1774 → 1889 by `wc -w`; spec cap revised from +60 when review showed the rule was unwired). Idea adapted from statewright's approval evidence packet, without its engine.
+- **`guides/cross-verification.md` § PRO-READY Mapping.** Maps each letter of the community PRO-READY checklist to the existing skill or question covering it; Y maps to the new ownership check. The checklist's origin is unverified and it is labeled as such.
+- **statewright `ToolSearch` corroboration** in § Core-Claim Verification: statewright's own allowlist hooks exempt `ToolSearch` (commit `2426f75`), the host behavior #399's unit-tested allowlist missed.
+- **`docs/out-of-scope/statewright-enforcement.md`**: state-machine runtime enforcement stays out (ADR-021); notes FSL-1.1, patent-pledge terms, and the self-reported benchmark.
+
+### Tests
+
+- `tests/test-cross-verify-release-gates.sh`: +31 checks (78 total), mostly string pins plus one structural check of chain order. Mutation check: changing the cap to `PASS` fails the suite.
+- Independent review: CONCERNS (13 findings: the cap was not wired into the verdict table, DoD, template, or structured output; RESOLVER precedence; an overbroad licence sentence) → all fixed. Replaying PR #400 found its rollback path in no artifact — the new rule caps that review at `CONCERNS`.
+
+Spec: `docs/specs/pro-ready-ownership/`.
+
 ## v2.21.50 — #399 cross-verify score scope + core-claim gating; #393 cleanup (2026-10-03)
 
 ### Changed

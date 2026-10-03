@@ -109,7 +109,7 @@ next-skill: monitor-setup
 
 ## Handoff
 
-- **Expects from predecessor** (`/review-ai`): Review verdict PASS — code ready for deployment
+- **Expects from predecessor** (`/review-ai`): Review verdict PASS with a confirmed Owner note — code ready for deployment. If the verdict is CONCERNS only because the note is unconfirmed, get the merger's confirmation before planning the rollout.
 - **Produces for successor** (`/monitor-setup`): Deployed service with rollback plan documented
 
 ## When to Skip

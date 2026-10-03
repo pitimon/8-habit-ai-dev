@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.50-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.51-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.51 · pro-ready entry point + "You Own It" Owner note
+
+Asking whether work is "pro-ready" or "ready to merge" now routes to `/review-ai` → `/cross-verify` → `/deploy-guide`. `/review-ai` asks whether the merger can explain the change and its rollback without the AI transcript and ends with an Owner note; an unconfirmed note caps the verdict at `CONCERNS`. statewright-style runtime enforcement is recorded as out of scope.
 
 ## v2.21.50 · `/cross-verify` score scope + core-claim gating
 
