@@ -38,7 +38,7 @@ Quality gate: PASS / FAIL / N/A / OPEN_VERIFICATION_DEBT
 Release verdict: FINAL_KEEP / PROVISIONAL_KEEP / HOLD / ROLLBACK
 ```
 
-`OPEN_VERIFICATION_DEBT` is not PASS and does not count as PASS in the adjusted score. `N/A` is excluded from the denominator only when the evidence explains why the gate is irrelevant. A high core score cannot override a blocking domain gate.
+`OPEN_VERIFICATION_DEBT` is not PASS and does not count as PASS in the adjusted score. `N/A` is excluded from the denominator only when the evidence explains why the gate is irrelevant. A high core score cannot override a blocking domain gate. A `/cross-verify` core claim in `FAIL` or `OPEN_VERIFICATION_DEBT` is blocking too: the Release verdict is `HOLD` until it is re-graded `PASS` on new evidence (see `cross-verification.md` § Core-Claim Verification).
 
 ## Production evidence contract
 

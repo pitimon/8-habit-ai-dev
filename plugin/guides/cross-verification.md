@@ -76,12 +76,36 @@ If you can read through all 17 answers and feel confident, proceed. If any answe
 
 ## Scoring Guide
 
-| Score      | Meaning          | Action                               |
-| ---------- | ---------------- | ------------------------------------ |
-| 15-17 Pass | Well-prepared    | Proceed with confidence              |
-| 12-14 Pass | Mostly ready     | Address gaps, then proceed           |
-| 8-11 Pass  | Significant gaps | Revisit the plan before implementing |
-| < 8 Pass   | Not ready        | Stop and rethink the approach        |
+| Score      | Adjusted % | Meaning          | Action                               |
+| ---------- | ---------- | ---------------- | ------------------------------------ |
+| 15-17 Pass | ≥88%       | Well-prepared    | Proceed with confidence              |
+| 12-14 Pass | ≥70%       | Mostly ready     | Address gaps, then proceed           |
+| 8-11 Pass  | ≥47%       | Significant gaps | Revisit the plan before implementing |
+| < 8 Pass   | <47%       | Not ready        | Stop and rethink the approach        |
+
+Use the adjusted percentage (PASS / (total − N/A)) when some items are N/A; bands are half-open, so 87.5% (14/16) is Mostly ready and 69.2% (9/13) is Significant gaps. The score measures **process completeness** — whether the right questions were asked and answered. It is not evidence that the conclusions are right or that the changed behavior works. A high score with an unverified core claim is still `hold: verify core claim` (see below).
+
+## Core-Claim Verification
+
+A core claim is what the change is supposed to make true: "the allowlist lets the child stage a skill", "the root cause is the bind mount", "reflection never ran". Name them in every review, each as `claim — evidence source — independent? Y/N`. Checking the 17 questions by category is not enough: a review can flag Q12 "single source" and still miss the one unsupported claim in front of it.
+
+Which claims must be listed — the reviewer does not get to pick only the safe ones:
+
+- the claim the change exists to make true (the headline conclusion of a diagnosis; the main behavior of a patch);
+- every claim that crosses an integration boundary (below);
+- every absence claim ("X did not happen").
+
+If more than three qualify, list them all.
+
+If a core claim presented as established — built, diagnosed, or observed — is `FAIL` or `OPEN_VERIFICATION_DEBT`, a `proceed` or `address gaps` recommendation becomes `hold: verify core claim`. Lower bands keep their own recommendation (`revisit plan`, `stop and rethink`) and list the claim as blocking. The score and band are computed unchanged; the hold sits beside them, not inside them. In a production review the same claim also sets the Release verdict to `HOLD` (see [`production-release-gates.md`](./production-release-gates.md)). The hold lifts when the claim is re-graded `PASS` on new evidence; the band's own recommendation then applies.
+
+In a pre-implementation plan review, core claims about what will be built are intentions that cannot be verified yet. That is expected, not a hold: write each one into the test plan (Q5) with the check that will verify it — for integration claims, the real-host probe and its control case. This carve-out covers only unbuilt behavior. A diagnosis or observation the plan rests on ("the root cause is X", "the feature is unused") is established, and the hold applies to it.
+
+**Integration boundaries need the real host.** When the change crosses a host boundary — permissions or allowlists, hooks, host↔plugin contracts, CLI flags — a core claim counts as `PASS` only after the changed behavior was exercised on the real host, together with a control case (for example, child session vs main session). Unit tests over a mocked host cannot see host behavior such as deferred tool schemas; with mocks alone, record the claim as `OPEN_VERIFICATION_DEBT`. For production work, use the runtime reconciliation in [`production-release-gates.md`](./production-release-gates.md) instead of restating it here.
+
+**Absence claims: find the writer.** Before concluding "X did not happen because artifact Y is missing", find the writer: cite the code line that writes Y and confirm it executes on that path. An artifact that is only written on some paths (for example, only when a run produces output) says nothing about the other paths. Without the writer line, the conclusion is `OPEN_VERIFICATION_DEBT`. See "absence of evidence is not evidence of absence" in [`integrity-principles.md`](./integrity-principles.md).
+
+**Ask the discriminating question.** For each core claim: "If this claim were false, would my evidence look different?" If the answer is "no", the evidence carries no information about the claim, so the claim is `OPEN_VERIFICATION_DEBT`, not `PASS` — however confident it feels. And: "Which of my conclusions has only been checked by me, with my own evidence?" Those claims are candidates for an independent pass — a cross-vendor challenge, a reviewer agent, or live execution. Author-side checks, including this checklist, share the author's evidence and cannot diverge from it ([`independent-source-verification.md`](./independent-source-verification.md)).
 
 ## Common Failure Patterns
 

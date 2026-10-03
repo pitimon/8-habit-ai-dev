@@ -10,6 +10,37 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.50 — #399 cross-verify score scope + core-claim gating; #393 cleanup (2026-10-03)
+
+### Changed
+
+- **`/cross-verify` report states what the score measures.** New header line: `Score scope: process completeness (verification) — not evidence that conclusions or changed runtime behavior are correct (validation).` Two recorded runs (69% and 78.6%) were read as evidence that the work was right, while independent checks later found the substantive defects ([#399](https://github.com/pitimon/8-habit-ai-dev/issues/399)).
+- **Core claims + `hold: verify core claim`.** Reports list core claims as `claim — evidence source — independent? Y/N`. The claim the change exists to make true, every integration-boundary claim, and every absence claim must be listed. If a claim presented as established (built, diagnosed, observed) is `FAIL` or `OPEN_VERIFICATION_DEBT`, a `proceed`/`address gaps` recommendation becomes `hold: verify core claim`; lower bands keep their own; in production reviews the Release verdict becomes `HOLD`. Score, band, and dimension math are unchanged. Previously debt blocked only a production `FINAL_KEEP`, so it could not affect a plan/patch recommendation (the 78.6% case).
+- **Evidence that cannot discriminate is debt.** If a claim's evidence would look the same were the claim false, the claim is `OPEN_VERIFICATION_DEBT`, not `PASS`. This is the rule that reaches the 69% case: its band already said "revisit plan", so the hold does not change that recommendation, but its headline claim is now listed as blocking instead of passing.
+- **Pre-implementation plans**: unbuilt claims go to the Q5 test plan instead of a hold, so a low score that forces a redesign reads as before. Diagnoses the plan rests on are still established.
+- **Shadow Self-Check** gains: "Which conclusions have only been checked by me, with my own evidence?" and "If it were false, would my evidence look different?"
+- **Scoring bands show half-open percentages** (≥88% / ≥70% / ≥47% / <47%) beside pass counts, so N/A-adjusted scores such as 87.5% (14/16) fall in a band.
+- **`guides/cross-verification.md` § Core-Claim Verification**: mandatory claims, hold exit condition, real-host exercise with a control case for integration-boundary claims (mocks alone are debt), "find the writer" for absence claims, the discriminating question. `guides/production-release-gates.md` gains one sentence mapping the hold to `HOLD`.
+- `guides/integrity-principles.md` commandment 14 now states that only the failure-mode tag applies in the `/cross-verify` Shadow Self-Check (moved there from the skill, which no longer carries it).
+- `skills/cross-verify/SKILL.md` at 1967 words (`wc -w`; was 1996). Removed: version-history parentheticals already recorded here, and the Confidence-table example column.
+
+### Fixed (#393)
+
+- `tests/validate-structure.sh` Check 9 now scans `plugin/skills/` as well as `skills/` (same set as Check 8c), and WARNs above 1950 words with the remaining margin. It currently warns on six skills per tree (`wc -w`): `management-talk` 2000, `post-mortem` 2000, `scrutinize` 1998, `consistency-check` 1997, `design` 1992, `cross-verify` 1967.
+- `AGENTS.md` now records the two v2.21.48 lessons: the 2000-word cap measured with `wc -w`, and shipping CI enforcement in the same PR as a new mandatory convention.
+- Link check: `deepwiki.com` is excluded like the Gartner newsroom links. It returns 429 to every automated request (runner and workstation), which failed the PR link check on a file this release does not touch.
+
+### Tests
+
+- `tests/test-cross-verify-release-gates.sh` pins the #399 contract with 27 new assertions (47 total). The first 15 were observed failing on v2.21.49 before the change; the rest were added after an independent review found the hold's carve-outs and exit unpinned. These are string pins of the doctrine, not behavior tests.
+- `tests/validate-content.sh` Check 22 receipt for `guides/cross-verification.md` updated 95→119 body lines.
+
+### Scope boundary
+
+Discipline only: no Q18, no runtime enforcement, no automated cross-vendor dispatch. The rules are still applied by the author over the author's evidence; they make unverified claims visible and blocking, they do not verify them. Spec: `docs/specs/cross-verify-core-claims-399/`.
+
+---
+
 ## v2.21.49 — OpenClaw skill compatibility (2026-09-14)
 
 ### Added
