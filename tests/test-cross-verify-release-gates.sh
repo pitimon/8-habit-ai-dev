@@ -155,6 +155,19 @@ else
   fail "review-ai has $rwords words — FR-009 requires ≤1950"
 fi
 
+# --- v2.21.52: #402 absence claims framed as failures ---
+printf '\n%s\n' "--- false-failure premise (v2.21.52, #402) ---"
+require "$SKILL" "did it fail at all?" "cross-verify asks whether before why (#402)"
+require "$SKILL" "is an absence claim even when framed as a failure with candidate causes" "failure-framed absence is named in the skill (#402)"
+require "$SKILL" "a missing artifact alone is \`OPEN_VERIFICATION_DEBT\`" "missing artifact alone is debt (#402)"
+require "$SKILL" "artifacts that _are_ present may prove X ran" "present-artifact check in the skill (#402)"
+require "$XV_GUIDE" "Recognize it by meaning, not by wording" "surface forms are examples, not a list (#402)"
+require "$XV_GUIDE" "Ask **whether** before **why**" "guide orders whether before why (#402)"
+require "$XV_GUIDE" "so is every cause analysis built on it" "cause analysis on an unproven failure is debt (#402)"
+require "$XV_GUIDE" "**Check the artifacts that are present.**" "guide has present-artifact check (#402)"
+require "$XV_GUIDE" "**False failure**" "#402 case recorded as a failure pattern"
+require "skills/diagnose/SKILL.md" "The failure happened at all" "diagnose Phase 2 asks whether it failed (#402)"
+
 printf '\n=== Summary ===\nPASS: %s\nFAIL: %s\n' "$PASS" "$ERRORS"
 if [ "$ERRORS" -gt 0 ]; then
   echo "RESULT: FAILED ($ERRORS errors)"

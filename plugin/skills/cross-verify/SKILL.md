@@ -79,7 +79,7 @@ Run through this checklist. Flag any item that fails.
 | 16  | H8: Voice       | Spirit    | Do I understand WHY this task matters, not just WHAT needs to be done?  |
 | 17  | H8: Voice       | Spirit    | Does this work empower the next person who touches this code?           |
 
-> **When reviewing a diagnosis or root cause**, before scoring Q12 ask: could it be **confidently wrong**? Confirm it by an **independent method** (different tool, command, or vantage) and **reconcile** conflicting evidence. Author-side gates share your evidence, so only an independent source can diverge from it. See [`independent-source-verification.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/independent-source-verification.md).
+> **When reviewing a diagnosis or root cause**, first ask **did it fail at all?** Name positive evidence of the failure (error, exit code, log line, wrong output). "X did not run / never triggered / produced nothing" is an absence claim even when framed as a failure with candidate causes: a missing artifact alone is `OPEN_VERIFICATION_DEBT`, and artifacts that _are_ present may prove X ran. Then, before scoring Q12: could the cause be **confidently wrong**? Confirm it by an **independent method** and **reconcile** conflicting evidence. See [`independent-source-verification.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/independent-source-verification.md).
 
 ## Confidence Levels (Required for high-stakes reviews)
 
@@ -153,12 +153,7 @@ When calculating adjusted score, count only `PASS` in the numerator and exclude 
 
 **Core-claim hold**: if a core claim presented as established (built, diagnosed, observed) is `FAIL` or `OPEN_VERIFICATION_DEBT`, `proceed`/`address gaps` becomes `hold: verify core claim`; lower bands keep theirs. The score and band are computed unchanged; list the claim under Blocking gates/debt; production Release verdict is `HOLD`. Always list the claim the change exists to make true; evidence that would look the same if it were false makes a claim debt. Unbuilt claims in a pre-implementation plan go to Q5's test plan; diagnosed premises stay established. Rules: guide § Core-Claim Verification.
 
-### Common Failure Patterns
-
-- **Q1-3 fail together**: Being reactive, not proactive — step back and think about impact
-- **Q4-6 fail together**: Haven't defined success — write criteria first
-- **Q11-12 fail together**: Jumping to solutions — read the code and reproduce the problem
-- **Q13 always N/A**: May be underutilizing parallelization
+Common failure patterns (Q1-3, Q4-6, Q11-12, Q13, false failures): guide § Common Failure Patterns.
 
 ## Definition of Done
 

@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.51-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.52-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.52 · Ask whether it failed before asking why
+
+`/cross-verify` and `/diagnose` now treat "X did not run" as an absence claim even when it is phrased as a failure with candidate causes: establish positive evidence that it failed before analysing why. A blind evaluation on the #402 case moved this from 0/6 to 5/6 reviews.
 
 ## v2.21.51 · pro-ready entry point + "You Own It" Owner note
 

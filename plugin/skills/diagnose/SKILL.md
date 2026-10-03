@@ -72,6 +72,7 @@ Acceptable loop shapes (use Bash for read-only execution):
 
 Run the loop and confirm:
 
+- The failure happened at all: cite positive evidence (error, exit code, log line, wrong output). "It never ran" or "no output appeared" is an absence claim, not a symptom — find the code that writes the missing artifact, and check what present artifacts prove did run
 - The failure matches the user's description (not a different bug that happens to break the same test)
 - Reproducibility is acceptable (≥80% — flaky bugs need more loop work, not more hypotheses)
 - The exact symptom is captured (error message, status code, output diff)
