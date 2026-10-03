@@ -33,6 +33,10 @@ name: Link Check
 # Gartner newsroom links are excluded because they return 403 to GitHub-hosted
 # link checkers while remaining human-readable in browsers.
 #
+# deepwiki.com is excluded for the same reason: it answers automated checkers
+# with 429 Too Many Requests on every attempt (reproduced from both a runner
+# and a workstation on 2026-10-03), while the pages stay readable in browsers.
+#
 # Issue: pitimon/8-habit-ai-dev#172
 
 on:
@@ -68,6 +72,7 @@ jobs:
             --exclude '^https://github\.com/pitimon/8-habit-ai-dev/(blob|tree|raw)/main/|^https://github\.com/pitimon/8-habit-ai-dev/releases/tag/'
             --exclude '^https://github\.com/pitimon/(memforge|devsecops-ai-team)(/|$)'
             --exclude '^https://www\.gartner\.com/en/newsroom/press-releases/'
+            --exclude '^https://deepwiki\.com/'
             --exclude-path '(^|/)docs/wiki/'
             --exclude-path '(^|/)plugin/'
             --exclude-path '(^|/)\.claude/'

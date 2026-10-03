@@ -28,6 +28,7 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 - `tests/validate-structure.sh` Check 9 now scans `plugin/skills/` as well as `skills/` (same set as Check 8c), and WARNs above 1950 words with the remaining margin. It currently warns on six skills per tree (`wc -w`): `management-talk` 2000, `post-mortem` 2000, `scrutinize` 1998, `consistency-check` 1997, `design` 1992, `cross-verify` 1963.
 - `AGENTS.md` now records the two v2.21.48 lessons: the 2000-word cap measured with `wc -w`, and shipping CI enforcement in the same PR as a new mandatory convention.
+- Link check: `deepwiki.com` is excluded like the Gartner newsroom links. It returns 429 to every automated request (runner and workstation), which failed the PR link check on a file this release does not touch.
 
 ### Tests
 
