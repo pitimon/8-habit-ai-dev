@@ -18,7 +18,7 @@ source-skill-version: 2.21.49
 
 1. [ ] **T1 — RED: pin #399 contract in the release-gates test** — add assertions for FR-001/002/003/006/007 (skill) and FR-004/005 + `%` bands (guide); run it and record the failure on 5d5e0e3. | Files: `tests/test-cross-verify-release-gates.sh` | Depends on: none
    Task #1 implements: Decision-1, Decision-2, Decision-3 (FR-009)
-   Verify: `bash tests/test-cross-verify-release-gates.sh` → FAIL (new assertions only; existing 18 still PASS)
+   Verify: `bash tests/test-cross-verify-release-gates.sh` → FAIL (new assertions only; existing 20 still PASS)
 
 2. [ ] **T2 — Guide: Core-Claim Verification section + % bands** — add `## Core-Claim Verification` (integration runtime exercise + control case, absence-claim writer check, discriminating question, link to `production-release-gates.md` for production) and a `%` column in the Scoring Guide. | Files: `guides/cross-verification.md` | Depends on: T1
    Task #2 implements: Decision-2, Decision-3 (FR-004, FR-005, FR-006, FR-007)

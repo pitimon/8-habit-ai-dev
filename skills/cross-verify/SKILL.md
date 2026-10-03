@@ -116,7 +116,7 @@ Run it always; escalate to a reviewer subagent (`advisor-pattern.md`) only when 
 ## Cross-Verification Report
 **Feature**: [name]
 **Score scope**: process completeness (verification) — not evidence that conclusions or changed runtime behavior are correct (validation).
-**Core claims**: [1-3, each: claim — evidence source — independent? Y/N — PASS/FAIL/OPEN_VERIFICATION_DEBT]
+**Core claims**: [headline + every integration/absence claim, each: claim — evidence source — independent? Y/N — PASS/FAIL/OPEN_VERIFICATION_DEBT]
 **Core checklist**: [PASS X] / [FAIL Y] / [N/A Z] / [OPEN_VERIFICATION_DEBT W]
 **Adjusted score**: [PASS X] / ([total] - [N/A Z]) = [%] (debt is not PASS)
 **Band**: [see table below]

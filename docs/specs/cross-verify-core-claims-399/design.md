@@ -40,7 +40,7 @@ Decision-3 covers: FR-007
 
 - **Option A**: Add a `%` column next to existing counts in both tables (`SKILL.md:142-147`, `guides/cross-verification.md:79-84`). — Pro: backward compatible with `README.md:395` and past review records (`docs/reviews/2026-06-10-fable-model-review.md:66`).
 - **Option B**: Replace counts with percent. — Con: forces README + historical wording churn.
-- **Recommendation**: A. Thresholds: ≥88% / 70–87% / 47–69% / <47% (= 15, 12, 8 of 17).
+- **Recommendation**: A. Thresholds: ≥88% / ≥70% / ≥47% / <47% (= 15, 12, 8 of 17), half-open. <!-- Amended after review F4: closed ranges left 87.5%, 69.2%, 46.2% in no band. -->
 
 ## Decision-4: Check 9 scope + margin WARN — flexible
 

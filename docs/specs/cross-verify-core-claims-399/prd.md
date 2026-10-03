@@ -46,7 +46,7 @@ target-version: 2.21.50
 ## Acceptance Criteria (EARS)
 
 1. [Ubiquitous] FR-001: The cross-verify report header shall contain the line `Score scope: process completeness (verification) — not evidence that conclusions or changed runtime behavior are correct (validation).`
-2. [Ubiquitous] FR-002: The cross-verify report shall list 1–3 **core claims** — what the change is supposed to make true — each as `claim — evidence source — independent? (Y/N)`.
+2. [Ubiquitous] FR-002: The cross-verify report shall list its **core claims** — the claim the change exists to make true, every integration-boundary claim, and every absence claim — each as `claim — evidence source — independent? (Y/N)`. <!-- Amended after review F3: a free choice of 1–3 claims let the reviewer omit the risky one. -->
 3. [Unwanted] FR-003: If a core claim presented as established (built, diagnosed, observed) is `FAIL` or `OPEN_VERIFICATION_DEBT`, then a `proceed` or `address gaps` recommendation shall become `hold: verify core claim` (a new recommendation value); lower bands keep their recommendation; the score and band shall be computed unchanged; and the claim shall be listed under `Blocking gates/debt`. <!-- Amended during build: success criterion 2 replay showed an unqualified rule would hold every pre-implementation plan, whose claims are unbuilt by definition. Those go to the Q5 test plan instead. -->
 4. [Optional] FR-004: Where the change crosses an integration boundary (permissions/allowlists, hooks, host↔plugin boundary, CLI flags), a core claim shall count as `PASS` only with evidence of exercise on the real host plus a control case; mocked-host unit tests alone shall be recorded as `OPEN_VERIFICATION_DEBT`.
 5. [Unwanted] FR-005: If a conclusion asserts that X did not happen because artifact Y is absent, then the reviewer shall cite the code line that writes Y and confirm it executes on that path; otherwise the conclusion shall be recorded as `OPEN_VERIFICATION_DEBT`.
@@ -84,7 +84,7 @@ target-version: 2.21.50
 ears_count: 12
 ears_criteria:
   - "FR-001: Report header states score = process completeness, not correctness"
-  - "FR-002: Report lists 1-3 core claims with evidence source and independence flag"
+  - "FR-002: Report lists mandatory core claims (headline, integration, absence) with evidence source and independence flag"
   - "FR-003: Unverified/failed core claim forces 'hold: verify core claim'; score unchanged"
   - "FR-004: Integration-boundary core claim PASS requires real-host exercise + control"
   - "FR-005: Absence claims must cite the writer line or become debt"

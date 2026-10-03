@@ -22,11 +22,11 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 - **Scoring bands show half-open percentages** (≥88% / ≥70% / ≥47% / <47%) beside pass counts, so N/A-adjusted scores such as 87.5% (14/16) fall in a band.
 - **`guides/cross-verification.md` § Core-Claim Verification**: mandatory claims, hold exit condition, real-host exercise with a control case for integration-boundary claims (mocks alone are debt), "find the writer" for absence claims, the discriminating question. `guides/production-release-gates.md` gains one sentence mapping the hold to `HOLD`.
 - `guides/integrity-principles.md` commandment 14 now states that only the failure-mode tag applies in the `/cross-verify` Shadow Self-Check (moved there from the skill, which no longer carries it).
-- `skills/cross-verify/SKILL.md` at 1963 words (`wc -w`; was 1996). Removed: version-history parentheticals already recorded here, and the Confidence-table example column.
+- `skills/cross-verify/SKILL.md` at 1967 words (`wc -w`; was 1996). Removed: version-history parentheticals already recorded here, and the Confidence-table example column.
 
 ### Fixed (#393)
 
-- `tests/validate-structure.sh` Check 9 now scans `plugin/skills/` as well as `skills/` (same set as Check 8c), and WARNs above 1950 words with the remaining margin. It currently warns on six skills per tree (`wc -w`): `management-talk` 2000, `post-mortem` 2000, `scrutinize` 1998, `consistency-check` 1997, `design` 1992, `cross-verify` 1963.
+- `tests/validate-structure.sh` Check 9 now scans `plugin/skills/` as well as `skills/` (same set as Check 8c), and WARNs above 1950 words with the remaining margin. It currently warns on six skills per tree (`wc -w`): `management-talk` 2000, `post-mortem` 2000, `scrutinize` 1998, `consistency-check` 1997, `design` 1992, `cross-verify` 1967.
 - `AGENTS.md` now records the two v2.21.48 lessons: the 2000-word cap measured with `wc -w`, and shipping CI enforcement in the same PR as a new mandatory convention.
 - Link check: `deepwiki.com` is excluded like the Gartner newsroom links. It returns 429 to every automated request (runner and workstation), which failed the PR link check on a file this release does not touch.
 

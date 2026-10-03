@@ -87,7 +87,7 @@ Use the adjusted percentage (PASS / (total − N/A)) when some items are N/A; ba
 
 ## Core-Claim Verification
 
-A core claim is what the change is supposed to make true: "the allowlist lets the child stage a skill", "the root cause is the bind mount", "reflection never ran". Name 1–3 per review, each as `claim — evidence source — independent? Y/N`. Checking the 17 questions by category is not enough: a review can flag Q12 "single source" and still miss the one unsupported claim in front of it.
+A core claim is what the change is supposed to make true: "the allowlist lets the child stage a skill", "the root cause is the bind mount", "reflection never ran". Name them in every review, each as `claim — evidence source — independent? Y/N`. Checking the 17 questions by category is not enough: a review can flag Q12 "single source" and still miss the one unsupported claim in front of it.
 
 Which claims must be listed — the reviewer does not get to pick only the safe ones:
 
