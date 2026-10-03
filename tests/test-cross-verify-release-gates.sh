@@ -159,7 +159,7 @@ fi
 printf '\n%s\n' "--- false-failure premise (v2.21.52, #402) ---"
 require "$SKILL" "did it fail at all?" "cross-verify asks whether before why (#402)"
 require "$SKILL" "is an absence claim even when framed as a failure with candidate causes" "failure-framed absence is named in the skill (#402)"
-require "$SKILL" "a missing artifact alone is \`OPEN_VERIFICATION_DEBT\`" "missing artifact alone is debt (#402)"
+require "$SKILL" "a missing artifact alone is \`OPEN_VERIFICATION_DEBT\` until you cite the line that writes it" "missing artifact is debt until the writer is cited — in SKILL.md (#402)"
 require "$SKILL" "artifacts that _are_ present may prove X ran" "present-artifact check in the skill (#402)"
 require "$XV_GUIDE" "Recognize it by meaning, not by wording" "surface forms are examples, not a list (#402)"
 require "$XV_GUIDE" "Ask **whether** before **why**" "guide orders whether before why (#402)"

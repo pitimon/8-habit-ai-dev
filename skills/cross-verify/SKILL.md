@@ -79,7 +79,7 @@ Run through this checklist. Flag any item that fails.
 | 16  | H8: Voice       | Spirit    | Do I understand WHY this task matters, not just WHAT needs to be done?  |
 | 17  | H8: Voice       | Spirit    | Does this work empower the next person who touches this code?           |
 
-> **When reviewing a diagnosis or root cause**, first ask **did it fail at all?** Name positive evidence of the failure (error, exit code, log line, wrong output). "X did not run / never triggered / produced nothing" is an absence claim even when framed as a failure with candidate causes: a missing artifact alone is `OPEN_VERIFICATION_DEBT`, and artifacts that _are_ present may prove X ran. Then, before scoring Q12: could the cause be **confidently wrong**? Confirm it by an **independent method** and **reconcile** conflicting evidence. See [`independent-source-verification.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/independent-source-verification.md).
+> **When reviewing a diagnosis or root cause**, first ask **did it fail at all?** Name positive evidence (error, exit code, log line, wrong output). "X did not run / never triggered" is an absence claim even when framed as a failure with candidate causes: a missing artifact alone is `OPEN_VERIFICATION_DEBT` until you cite the line that writes it and confirm it runs on that path; artifacts that _are_ present may prove X ran. Then, before Q12: could the cause be **confidently wrong**? Confirm it independently; reconcile conflicts. See [`independent-source-verification.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/independent-source-verification.md).
 
 ## Confidence Levels (Required for high-stakes reviews)
 

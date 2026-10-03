@@ -485,7 +485,7 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 - **`/cross-verify`** treats "X did not run / never triggered / produced nothing" as an absence claim even when it arrives as a failure with candidate causes: name positive evidence of the failure first; a missing artifact alone is debt, and artifacts that _are_ present may prove X ran.
 - **`/diagnose`** Phase 2 confirms the failure happened at all before reproducing its cause.
-- **Measured, blind, SKILL.md only**: asking *whether* before *why* went from 0/6 (control) to 5/6; the #402 metric went from 0/3 to 3/3 under a neutral prompt. Small n, one model family — see `docs/specs/absence-premise-402/eval.md`.
+- **Measured, blind, SKILL.md only**: the #402 case went from 0/3 (control) to 3/3 on recording the absence as unverified, asking whether before why, and citing the writer line — the same as the old rule with its guide in context. The original miss was the rule's location, not its wording. Small n, one model family — see `docs/specs/absence-premise-402/eval.md`.
 
 ---
 

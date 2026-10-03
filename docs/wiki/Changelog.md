@@ -9,7 +9,7 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 ## v2.21.52 · Ask whether it failed before asking why
 
-`/cross-verify` and `/diagnose` now treat "X did not run" as an absence claim even when it is phrased as a failure with candidate causes: establish positive evidence that it failed before analysing why. A blind evaluation on the #402 case moved this from 0/6 to 5/6 reviews.
+`/cross-verify` and `/diagnose` now treat "X did not run" as an absence claim even when it is phrased as a failure with candidate causes: establish positive evidence that it failed before analysing why. A blind evaluation on the #402 case moved this from 0/3 to 3/3 reviews; the original miss was where the rule lived (only in an optional guide), not how it was worded.
 
 ## v2.21.51 · pro-ready entry point + "You Own It" Owner note
 

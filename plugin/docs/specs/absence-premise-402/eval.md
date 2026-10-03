@@ -20,6 +20,18 @@ Ground truth: the job ran. The correct move is "establish whether it failed at a
 - B miss (round 2, run 3): flagged the absence as debt but still assumed "the more likely failure point is after the request is queued".
 - No run in either arm reached the true explanation (`last_run.json` is written only when a run stages something) — that needs code access, which the evaluators did not have; the rule asks them to *require* it, and 5/6 B runs did.
 
+## Round 3 — location vs wording (prompted by host evidence)
+
+Host evidence from `~/.hermes/state.db` (read-only): the three original #402 v2.21.50 runs never opened the guide; "find the writer" never entered their context. Round 3 gives the control the guide explicitly (A + guide: read v2.21.51 SKILL.md **and** `guides/cross-verification.md` first), neutral prompt, n=3.
+
+| Metric | A (SKILL.md only, round 2) | A + guide | B (round 2) | **B2 final (SKILL.md only, round 4)** |
+|---|---|---|---|---|
+| M1 absence recorded as unverified | 0/3 | **3/3** | 3/3 | **3/3** |
+| M2 whether before why | 0/3 | **3/3** | 2/3 | **3/3** |
+| M3 names the writer line as the check | 0/3 | **3/3** | 0/3 | **3/3** |
+
+With the old wording in context the rule worked on this case, so the cause was **location (F3)**, not wording (F1). A + guide came closest to the true explanation ("written only when a run produces output"). B lacked "cite the line that writes it" in SKILL.md (M3 0/3); round 4 re-ran the final text (B2, neutral prompt, SKILL.md only) and matched A + guide on all three metrics without the guide.
+
 ## Limits
 
 n=6 per arm, one model family, author-written case, keyword-plus-reading scoring by the author. This is evidence the rule changes behaviour on this case, not proof it generalises.
