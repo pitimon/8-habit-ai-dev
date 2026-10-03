@@ -38,10 +38,11 @@ bash tests/test-verbosity-hook.sh
 bash tests/test-pre-commit-hook.sh
 bash tests/test-cross-verify-release-gates.sh
 bash tests/test-hermes-tap-links.sh
+bash tests/test-hermes-skills-guard.sh
 bash tests/ci-local.sh
 ```
 
-`bash tests/ci-local.sh` runs the exact seven-script CI validation set (keep it in lock-step with `.github/workflows/validate.yml`). `validate-content.sh` checks release-doc freshness against git tags, so shallow clones can produce incomplete results; CI uses full tag history. When skill metadata or discovery docs change, also run `node scripts/generate-skill-catalog.js --check`; regenerate with `node scripts/generate-skill-catalog.js`.
+`bash tests/ci-local.sh` runs the exact CI validation script set (keep it in lock-step with `.github/workflows/validate.yml`). `validate-content.sh` checks release-doc freshness against git tags, so shallow clones can produce incomplete results; CI uses full tag history. When skill metadata or discovery docs change, also run `node scripts/generate-skill-catalog.js --check`; regenerate with `node scripts/generate-skill-catalog.js`.
 
 ## Codex contract
 
@@ -55,6 +56,7 @@ bash tests/ci-local.sh
 
 - Hermes has no plugin manifest layer. It discovers skills via its Skills Hub tap: `hermes skills tap add pitimon/8-habit-ai-dev`, then `hermes skills install pitimon/8-habit-ai-dev/skills/<name>` per skill.
 - Every `skills/*/SKILL.md` cross-reference to another repo doc MUST be an absolute `https://github.com/pitimon/8-habit-ai-dev/blob/main/...` URL, never a repo-root-relative `../../` link — Hermes's fetcher fail-closes the ENTIRE skill install on a same-directory link starting with `..` (path-traversal guard, [#386](https://github.com/pitimon/8-habit-ai-dev/issues/386)). Enforced by `tests/test-hermes-tap-links.sh` against both `skills/` and `plugin/skills/`.
+- `hermes skills install` runs Hermes's static security scanner (`tools/skills_guard.py`) and blocks a community skill on any high finding (refuses on critical, even with `--force`). It matches wording, not behaviour: HTML comments containing `ignore/override/system/secret/hidden`, "print/share … context", or imperative "edit CLAUDE.md" prose all trip it. Keep every skill at verdict `safe`: `tests/test-hermes-skills-guard.sh` runs the real scanner when a local Hermes checkout exists (run it before a release) and a static HTML-comment check in CI.
 - Hermes loads skill content only — no `AGENTS.md`/`CLAUDE.md` doctrine, session hook, or `SessionStart` reminder travels with a tap install.
 - `${CLAUDE_PLUGIN_ROOT}`-prefixed load directives (`guides/`, `habits/`, `scripts/`) do not resolve on Hermes; every affected `SKILL.md` carries a one-line "Hermes" note with the exact `blob/main` substitution URL ([#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)). New `${CLAUDE_PLUGIN_ROOT}`-prefixed loads must add the same note pattern. Do not describe Hermes install as full functional parity with Claude Code/Codex — it requires the agent to follow the substitution note, not automatic resolution.
 

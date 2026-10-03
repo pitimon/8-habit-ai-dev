@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.52-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.53-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.53 · Every skill installs through the Hermes tap
+
+Hermes's install-time scanner refused `save-spec` and blocked `breakdown` because of wording, not behaviour. Four lines are reworded with the same meaning, so all 24 skills now scan `safe`, and a new test keeps it that way (#405).
 
 ## v2.21.52 · Ask whether it failed before asking why
 
