@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.53-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.54-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.54 · Verdict rules live in SKILL.md
+
+Agents usually read a skill's `SKILL.md` and stop, so a verdict rule kept only in a guide is never applied. An audit of every loaded guide moved those rules into `/cross-verify`, `/whole-person-check`, and `/research`. A new test keeps them there (#404).
 
 ## v2.21.53 · Every skill installs through the Hermes tap
 

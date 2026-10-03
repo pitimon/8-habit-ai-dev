@@ -10,6 +10,25 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.54 — verdict rules live in SKILL.md (#404) (2026-10-03)
+
+### Fixed
+
+- **`/cross-verify`**: an integration claim (allowlists, hooks, CLI flags) passes only when exercised on the real host with a control case; mocks alone are debt. Loading `production-release-gates.md` is now required before setting Release state. Wording trimmed elsewhere to stay within the FR-008 cap (1967 words).
+- **`/whole-person-check`**: score observable evidence, not plans; a score needs every indicator in its row, and a partial match takes the score below (717 words).
+- **`/research`**: Confidence & Open Unknowns added to the brief skeleton and Definition of Done; past lessons are marked unverified (✓U) until re-checked this session (1560 words).
+
+### Added
+
+- **`tests/test-guide-rule-anchors.sh`** pins each verdict rule to the SKILL.md that must carry it. RED on v2.21.53, GREEN here. Wired into `tests/ci-local.sh` and `.github/workflows/validate.yml`; AGENTS.md adds the convention.
+- **Evidence**: `docs/specs/guide-only-rules-404/eval.md`, a blind SKILL.md-only evaluation, n=3 per arm. The research section moved 0/3 → 3/3 and the real-host control case 0/3 → 3/3 (secondary). Four metrics were 3/3 in both arms. One model family only.
+
+### Deferred
+
+- OUTPUT/PROCESS rows from the audit (persistence convention, status markers, save-spec verification commands) are tracked in a follow-up issue.
+
+---
+
 ## v2.21.53 — Hermes skills-guard install safety (#405) (2026-10-03)
 
 ### Fixed

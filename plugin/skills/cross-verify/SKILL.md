@@ -106,7 +106,7 @@ After scoring, run a 10-second adversarial pass on your _own_ verdict:
 - **What is the strongest counter-argument to my recommendation?** If you can't state one, you haven't pressure-tested it — re-examine the failed and ✓U items before proceeding.
 - **Who is harmed if my verdict is wrong?** A false "proceed" ships the gap; a false "stop" wastes the work. Reweight borderline calls toward the costlier error.
 - **Which conclusions have only been checked by me, with my own evidence?** For each core claim: if it were false, would my evidence look different? A "no" makes it a candidate for an independent pass (cross-vendor, reviewer agent, or live execution).
-- **Is my recommendation itself a trap?** Test it against the failure modes — hidden cost, false economy, scaling failure, premature abstraction (commandment 14, `integrity-principles.md`). A clean-looking verdict can still hide one.
+- **Is my recommendation itself a trap?** Check hidden cost, false economy, scaling failure, premature abstraction (commandment 14, `integrity-principles.md`).
 
 Run it always; escalate to a reviewer subagent (`advisor-pattern.md`) only when the action is irreversible or the context is contaminated.
 
@@ -138,7 +138,7 @@ Run it always; escalate to a reviewer subagent (`advisor-pattern.md`) only when 
 ⚠️ Flag if any dimension scores <50% while others score >75%
 ```
 
-For production work, load `${CLAUDE_PLUGIN_ROOT}/guides/production-release-gates.md`. It is read-only; use `/deploy-guide` for deployment planning and `/operational-state` for incident/watch/handoff classification.
+For production work, load `${CLAUDE_PLUGIN_ROOT}/guides/production-release-gates.md` before setting Release state (entry criteria, mutation read-back, `FINAL_KEEP` record). `/deploy-guide` plans deployment; `/operational-state` classifies incidents.
 
 ### Scoring Bands
 
@@ -151,7 +151,7 @@ For production work, load `${CLAUDE_PLUGIN_ROOT}/guides/production-release-gates
 
 When calculating adjusted score, count only `PASS` in the numerator and exclude `N/A` from the denominator. `FAIL` and `OPEN_VERIFICATION_DEBT` stay visible and block a production `FINAL_KEEP` under a blocking gate policy. Use the adjusted percentage for the core band, then determine the release verdict independently from domain gates and evidence completeness.
 
-**Core-claim hold**: if a core claim presented as established (built, diagnosed, observed) is `FAIL` or `OPEN_VERIFICATION_DEBT`, `proceed`/`address gaps` becomes `hold: verify core claim`; lower bands keep theirs. The score and band are computed unchanged; list the claim under Blocking gates/debt; production Release verdict is `HOLD`. Always list the claim the change exists to make true; evidence that would look the same if it were false makes a claim debt. Unbuilt claims in a pre-implementation plan go to Q5's test plan; diagnosed premises stay established. Rules: guide § Core-Claim Verification.
+**Core-claim hold**: if a core claim presented as established (built, diagnosed, observed) is `FAIL` or `OPEN_VERIFICATION_DEBT`, `proceed`/`address gaps` becomes `hold: verify core claim`; lower bands keep theirs. The score and band are computed unchanged; list the claim under Blocking gates/debt; production Release verdict is `HOLD`. Always list the claim the change exists to make true; evidence that would look the same if it were false makes a claim debt. Unbuilt claims in a pre-implementation plan go to Q5's test plan; diagnosed premises stay established. Integration claims (allowlists, hooks, CLI flags) pass only when exercised on the real host with a control case; mocks are debt. Rules: guide § Core-Claim Verification.
 
 Common failure patterns (Q1-3, Q4-6, Q11-12, Q13, false failures): guide § Common Failure Patterns.
 
@@ -182,7 +182,6 @@ Domain questions are scored separately and do not affect the main 17-question sc
 Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verification.md` for detailed guidance on each question.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` for evidence standards when using confidence levels.
 Load `${CLAUDE_PLUGIN_ROOT}/guides/structured-output-protocol.md` for the structured output block format specification.
-Load `${CLAUDE_PLUGIN_ROOT}/guides/production-release-gates.md` for production states, independent gates, runtime reconciliation, mutation read-back, and closure evidence.
 
 ---
 

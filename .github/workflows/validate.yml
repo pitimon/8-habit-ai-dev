@@ -32,5 +32,7 @@ jobs:
         run: bash tests/test-hermes-tap-links.sh
       - name: Hermes skills-guard install safety (static layer; real scanner runs locally)
         run: bash tests/test-hermes-skills-guard.sh
+      - name: Guide-only verdict rules stay in SKILL.md (#404)
+        run: bash tests/test-guide-rule-anchors.sh
       - name: OpenClaw skill compatibility
         run: bash tests/test-openclaw-compatibility.sh

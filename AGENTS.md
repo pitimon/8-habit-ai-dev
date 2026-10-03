@@ -39,6 +39,7 @@ bash tests/test-pre-commit-hook.sh
 bash tests/test-cross-verify-release-gates.sh
 bash tests/test-hermes-tap-links.sh
 bash tests/test-hermes-skills-guard.sh
+bash tests/test-guide-rule-anchors.sh
 bash tests/ci-local.sh
 ```
 
@@ -67,6 +68,7 @@ bash tests/ci-local.sh
 - After editing mirrored root content (`skills/`, `guides/`, `habits/`, `hooks/`, `agents/`, `rules/`, `scripts/`, `docs/`, or listed root files), run `bash scripts/sync-mirror.sh`; review both root and `plugin/` changes. `.codex-plugin/` manifests are intentionally distinct.
 - Version-bearing files must stay synchronized: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `.codex-plugin/plugin.json`, `plugin/.codex-plugin/plugin.json`, `README.md`, and `SELF-CHECK.md`.
 - `skills/*/SKILL.md` has a hard 2000-word cap, enforced by `tests/validate-structure.sh` Check 9 (over both `skills/` and `plugin/skills/`, WARN above 1950) and by `tests/validate-content.sh` F3. Check margin with `wc -w skills/<name>/SKILL.md`, not Python `len(text.split())`, which can differ by about one word; quote `wc -w` numbers in CHANGELOG/README.
+- A rule that changes a verdict, score, status, or required output must appear in the owning `SKILL.md`, not only in a guide it loads: agents usually read `SKILL.md` and stop (#402/#404). Pin it in `tests/test-guide-rule-anchors.sh`.
 - When a change adds a new mandatory convention (a MUST rule, a required note, a naming pattern), ship its CI enforcement in the same PR, not as a follow-up.
 
 ## Hard boundaries
