@@ -67,7 +67,7 @@ Pick the row whose trigger matches the user intent, then read the cited SKILL.md
 
 Some phrases ask for a chain, not one skill. Run the steps in order; each cited path is on its own line so every link is checked.
 
-`"pro-ready review"`, `"is this production-ready?"`, `"ready to merge?"`, `"ready to deploy?"`:
+`"pro-ready review"`, `@pro-ready-review`, `"is this production-ready?"`, `"ready to merge?"`, `"ready to deploy?"`:
 
 1. [`skills/review-ai/SKILL.md`](review-ai/SKILL.md) — code findings, verdict, Owner note
 2. [`skills/cross-verify/SKILL.md`](cross-verify/SKILL.md) — 17-question gate with core claims
