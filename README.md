@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.49-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.49)
+[![Version](https://img.shields.io/badge/Version-2.21.50-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.50)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22149) — Version history
+- [What's New](#whats-new-in-v22150) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -141,7 +141,7 @@ Use the cross-verify skill to check this release plan.
 **Use with OpenClaw:** OpenClaw can load this repository as a compatible skill bundle. Install from a pinned tag, restart the Gateway, and verify the skill snapshot:
 
 ```bash
-openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.49
+openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.50
 openclaw gateway restart
 openclaw skills list
 ```
@@ -479,6 +479,17 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.50
+
+**Theme: `/cross-verify` says what its score measures (#399)**
+
+- **Score scope line** in every report: process completeness (verification), not proof that conclusions or runtime behavior are correct (validation).
+- **Core claims** — the headline claim plus every integration and absence claim, each with evidence source and independence flag; evidence that would look the same if the claim were false makes it unverified; a failed or unverified core claim presented as established turns `proceed`/`address gaps` into `hold: verify core claim`.
+- **Integration changes need the real host** plus a control case; **absence claims** must cite the line that writes the missing artifact.
+- **#393 cleanup**: word-cap check now covers the `plugin/` mirror and warns above 1950 words.
+
+---
+
 ## What's New in v2.21.49
 
 **Theme: OpenClaw skill compatibility**
@@ -739,4 +750,4 @@ MIT
 
 ---
 
-_Version: 2.21.49 | Last updated: 2026-09-14_
+_Version: 2.21.50 | Last updated: 2026-10-03_

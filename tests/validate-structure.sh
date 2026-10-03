@@ -263,18 +263,26 @@ echo ""
 # is most likely to be looking (skill-authoring changes), keeps the two
 # suites from disagreeing about whether this is optional.
 echo "--- Check 9: Word count guardrails ---"
-for skill_dir in skills/*/; do
-  skill_file="${skill_dir}SKILL.md"
-  [ ! -f "$skill_file" ] && continue
+# Scans the same file set as Check 8c (skills/ + plugin/skills/) so the
+# mirror is gated directly, not only via sync-mirror (#393 item 2). Above
+# WORD_WARN the skill still passes but gets an advance-notice WARN with its
+# remaining margin (#393 item 3). Counts use `wc -w`, the same tool this gate
+# uses — not Python's str.split(), which can differ by ~1 (#393 item 4).
+WORD_CAP=2000
+WORD_WARN=1950
+while IFS= read -r skill_file; do
   words=$(wc -w < "$skill_file" | tr -d ' ')
   if [ "$words" -lt 200 ]; then
     echo "  WARN: $skill_file has $words words (consider 200+ for completeness)"
-  elif [ "$words" -gt 2000 ]; then
-    fail "$skill_file has $words words — exceeds the 2000-word hard cap (split content into references/, or trim)"
+  elif [ "$words" -gt "$WORD_CAP" ]; then
+    fail "$skill_file has $words words — exceeds the ${WORD_CAP}-word hard cap (split content into references/, or trim)"
+  elif [ "$words" -gt "$WORD_WARN" ]; then
+    echo "  WARN: $skill_file has $words words — $((WORD_CAP - words)) words of margin before the ${WORD_CAP}-word hard cap"
+    pass "$skill_file word count OK ($words words, near cap)"
   else
     pass "$skill_file word count OK ($words words)"
   fi
-done
+done < <(find skills/ plugin/skills/ -name "SKILL.md" -type f 2>/dev/null | sort)
 echo ""
 
 # --- Check 9b: Sibling reference/examples soft word budget (F6, ADR-009) ---

@@ -30,8 +30,8 @@ next-skill: any
 
 Before running the manual checklist, search for structured output blocks in the current directory:
 
-1. Glob for the persisted artifact files: `docs/specs/*/prd.md`, `docs/specs/*/design.md`, `docs/specs/*/tasks.md` (plus their `*.vN.md` conflict variants — the canonical `--persist` targets), and `*-review.md` / `*-prd.md` / `*-tasks.md` in the working directory for hand-saved reports
-2. Read each file and look for `<!-- SKILL_OUTPUT:` blocks. As of v2.21.39 ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)) these blocks live only in persisted files, not the conversation transcript — a non-persisted run has no block, which is expected and falls through to the session-context fallback and, failing that, manual assessment (steps 5–6)
+1. Glob for the persisted artifact files: `docs/specs/*/prd.md`, `docs/specs/*/design.md`, `docs/specs/*/tasks.md` (plus `*.vN.md` variants), and hand-saved `*-review.md` / `*-prd.md` / `*-tasks.md` in the working directory
+2. Read each file and look for `<!-- SKILL_OUTPUT:` blocks. These blocks live only in persisted files ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)); a non-persisted run has none and falls through to steps 5–6
 3. If found, pre-populate evidence for:
    - **Q4**: Extract `ears_count` and `success_criteria_count` from requirements block
    - **Q5**: Extract `test_coverage_checked` from review block
@@ -40,8 +40,8 @@ Before running the manual checklist, search for structured output blocks in the 
    - **Q16**: Extract `sticky_decisions` from design block — flag if 0 sticky decisions in a design with >3 decisions (WHY not captured)
    - **Q4**: Cross-check `decision_count` against requirements `success_criteria_count` — flag if decisions don't cover all criteria
 4. Mark auto-populated answers with `✓A` (auto-detected) confidence level
-5. **Session-context fallback (no persisted block)**: if no file block was found but the producer skills (`/requirements`, `/design`, `/breakdown`, `/review-ai`) ran earlier in **this session**, mine their conversation output — the PRD / design / tasks **prose** still in context — to pre-populate Q4 / Q8 / Q14 / Q16. Mark `✓I` (inferred from prose), or `✓A` only for fields the prose states as an explicit count (e.g. a numbered EARS list). This is runtime-neutral, reading prose rather than the HTML-comment block, so it works identically in Codex. (v2.21.42, [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375) follow-up — restores same-session auto-populate that file-only emission removed, without runtime-conditional producer behavior.)
-6. If neither a persisted block nor prior producer output is available, proceed with manual assessment (no change to prior behavior)
+5. **Session-context fallback (no persisted block)**: if the producer skills (`/requirements`, `/design`, `/breakdown`, `/review-ai`) ran earlier in **this session**, mine their PRD / design / tasks **prose** still in context to pre-populate Q4 / Q8 / Q14 / Q16. Mark `✓I`, or `✓A` only for fields the prose states as an explicit count (e.g. a numbered EARS list).
+6. If neither a persisted block nor prior producer output is available, proceed with manual assessment
 
 ## Process
 
@@ -79,41 +79,44 @@ Run through this checklist. Flag any item that fails.
 | 16  | H8: Voice       | Spirit    | Do I understand WHY this task matters, not just WHAT needs to be done?  |
 | 17  | H8: Voice       | Spirit    | Does this work empower the next person who touches this code?           |
 
-> **When the subject under review is a diagnosis or root cause** (not a plan or code change), add one reconciliation check before scoring Q12: could this root cause be **confidently wrong**? Confirm it by an **independent method** — a different tool, command, or vantage, not the same observation — and **reconcile** conflicting evidence before proceeding. Author-side gates all share your evidence, so only an independent source can diverge from it. See [`independent-source-verification.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/independent-source-verification.md).
+> **When reviewing a diagnosis or root cause**, before scoring Q12 ask: could it be **confidently wrong**? Confirm it by an **independent method** (different tool, command, or vantage) and **reconcile** conflicting evidence. Author-side gates share your evidence, so only an independent source can diverge from it. See [`independent-source-verification.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/independent-source-verification.md).
 
 ## Confidence Levels (Required for high-stakes reviews)
 
-For critical decisions (architecture, security, production deploys), mark each Pass with a confidence level. Inspired by Feynman's honest uncertainty principle — separate what you verified from what you assumed.
+For critical decisions (architecture, security, production deploys), mark each Pass with a confidence level — separate what you verified from what you assumed (Feynman).
 
-| Level         | Mark | Meaning                                                   | Example                                                             |
-| ------------- | ---- | --------------------------------------------------------- | ------------------------------------------------------------------- |
-| Verified      | ✓V   | Evidence checked — test ran, code read, diff reviewed     | "Read the function at api.ts:42, confirmed input validation exists" |
-| Inferred      | ✓I   | Reasonable belief based on context, not directly verified | "Codebase uses Zod throughout, likely validated here too"           |
-| Unverified    | ✓U   | Assumption — should verify before proceeding              | "Assuming tests exist but haven't checked coverage"                 |
-| Auto-detected | ✓A   | Evidence extracted from structured output block           | "Parsed 5 EARS criteria from PRD structured block"                  |
+| Level         | Mark | Meaning                                                   |
+| ------------- | ---- | --------------------------------------------------------- |
+| Verified      | ✓V   | Evidence checked — test ran, code read, diff reviewed     |
+| Inferred      | ✓I   | Reasonable belief based on context, not directly verified |
+| Unverified    | ✓U   | Assumption — should verify before proceeding              |
+| Auto-detected | ✓A   | Evidence extracted from structured output block           |
 
 **Scoring**: Only `PASS` counts. Exclude `N/A` only with evidence that the item is irrelevant. `OPEN_VERIFICATION_DEBT` is unresolved evidence; it does not count as PASS. The core score cannot override a blocking domain gate.
 
-**Staleness**: a ✓V resting on memory or a prior session — not a check made _this_ session — is really ✓U. Recalled state goes stale (a function, flag, or path may have changed). Re-verify before it carries weight in the verdict.
+**Staleness**: a ✓V resting on memory or a prior session, not a check made _this_ session, is really ✓U. Re-verify before it carries weight in the verdict.
 
 **Required for**: Architecture reviews, security-sensitive changes, pre-production gates — these MUST carry the Confidence + Open-unknowns footer in the report header (below).
 **Optional for**: Quick checks, formatting changes, familiar code — Pass/Fail/N/A is sufficient.
 
 ## Shadow Self-Check (before recording the recommendation)
 
-After scoring, run a 10-second adversarial pass on your _own_ verdict — the checklist judged the work; this judges your judgment:
+After scoring, run a 10-second adversarial pass on your _own_ verdict:
 
 - **What is the strongest counter-argument to my recommendation?** If you can't state one, you haven't pressure-tested it — re-examine the failed and ✓U items before proceeding.
 - **Who is harmed if my verdict is wrong?** A false "proceed" ships the gap; a false "stop" wastes the work. Reweight borderline calls toward the costlier error.
-- **Is my recommendation itself a trap?** Test it against the failure modes — hidden cost, false economy, scaling failure, premature abstraction (commandment 14, `integrity-principles.md`). A clean-looking verdict can still hide one. (Commandment 14's steelman half is N/A here: this pressure-tests your own verdict, not an alternative.)
+- **Which conclusions have only been checked by me, with my own evidence?** For each core claim: if it were false, would my evidence look different? A "no" makes it a candidate for an independent pass (cross-vendor, reviewer agent, or live execution).
+- **Is my recommendation itself a trap?** Test it against the failure modes — hidden cost, false economy, scaling failure, premature abstraction (commandment 14, `integrity-principles.md`). A clean-looking verdict can still hide one.
 
-This is the cheap inline complement to a full reviewer-subagent dispatch (`advisor-pattern.md`) — run it always; escalate to the subagent only when the action is irreversible or the context is contaminated.
+Run it always; escalate to a reviewer subagent (`advisor-pattern.md`) only when the action is irreversible or the context is contaminated.
 
 ## Output
 
 ```
 ## Cross-Verification Report
 **Feature**: [name]
+**Score scope**: process completeness (verification) — not evidence that conclusions or changed runtime behavior are correct (validation).
+**Core claims**: [1-3, each: claim — evidence source — independent? Y/N — PASS/FAIL/OPEN_VERIFICATION_DEBT]
 **Core checklist**: [PASS X] / [FAIL Y] / [N/A Z] / [OPEN_VERIFICATION_DEBT W]
 **Adjusted score**: [PASS X] / ([total] - [N/A Z]) = [%] (debt is not PASS)
 **Band**: [see table below]
@@ -123,7 +126,7 @@ This is the cheap inline complement to a full reviewer-subagent dispatch (`advis
 **Release state**: [PLAN / READY / CANARY / OBSERVING / PROVISIONAL_KEEP / FINAL_KEEP / HOLD / ROLLBACK]
 **Release verdict**: [PROVISIONAL_KEEP / FINAL_KEEP / HOLD / ROLLBACK]
 **Blocking gates/debt**: [list, or "none"]
-**Recommendation**: [proceed / address gaps / revisit plan / stop and rethink]
+**Recommendation**: [proceed / address gaps / revisit plan / stop and rethink / hold: verify core claim]
 
 ### Dimension Summary
 | Dimension | Questions | Pass | Score |
@@ -139,14 +142,16 @@ For production work, load `${CLAUDE_PLUGIN_ROOT}/guides/production-release-gates
 
 ### Scoring Bands
 
-| Score | Band             | Action                               |
-| ----- | ---------------- | ------------------------------------ |
-| 15-17 | Well-prepared    | Proceed with confidence              |
-| 12-14 | Mostly ready     | Address gaps, then proceed           |
-| 8-11  | Significant gaps | Revisit the plan before implementing |
-| < 8   | Not ready        | Stop and rethink the approach        |
+| Score | %    | Band             | Action                               |
+| ----- | ---- | ---------------- | ------------------------------------ |
+| 15-17 | ≥88% | Well-prepared    | Proceed with confidence              |
+| 12-14 | ≥70% | Mostly ready     | Address gaps, then proceed           |
+| 8-11  | ≥47% | Significant gaps | Revisit the plan before implementing |
+| < 8   | <47% | Not ready        | Stop and rethink the approach        |
 
 When calculating adjusted score, count only `PASS` in the numerator and exclude `N/A` from the denominator. `FAIL` and `OPEN_VERIFICATION_DEBT` stay visible and block a production `FINAL_KEEP` under a blocking gate policy. Use the adjusted percentage for the core band, then determine the release verdict independently from domain gates and evidence completeness.
+
+**Core-claim hold**: if a core claim presented as established (built, diagnosed, observed) is `FAIL` or `OPEN_VERIFICATION_DEBT`, `proceed`/`address gaps` becomes `hold: verify core claim`; lower bands keep theirs. The score and band are computed unchanged; list the claim under Blocking gates/debt; production Release verdict is `HOLD`. Always list the claim the change exists to make true; evidence that would look the same if it were false makes a claim debt. Unbuilt claims in a pre-implementation plan go to Q5's test plan; diagnosed premises stay established. Rules: guide § Core-Claim Verification.
 
 ### Common Failure Patterns
 
@@ -160,22 +165,22 @@ When calculating adjusted score, count only `PASS` in the numerator and exclude 
 - [ ] All 17 questions answered with Pass/Fail/N/A and 1-line evidence
 - [ ] Dimension Summary table rendered with per-dimension scores
 - [ ] Core status buckets rendered: PASS/FAIL/N/A/OPEN_VERIFICATION_DEBT
-- [ ] Band determined from adjusted score (PASS numerator; N/A excluded; debt not PASS)
+- [ ] Band determined from adjusted score (PASS numerator; N/A excluded; debt not PASS); core-claim hold applied
 - [ ] Failed items each have a specific remediation action
 - [ ] Report follows the output template above (not free-form prose)
 - [ ] High-stakes reviews carry the Confidence (V/I/U) + Open-unknowns footer in the report header
-- [ ] Shadow self-check run on the verdict (counter-argument + who's harmed if wrong)
+- [ ] Shadow self-check run on the verdict (counter-argument, who's harmed, own-evidence-only claims)
 - [ ] Production reviews render independent domain gates and a release state/verdict; a core score cannot override a blocking domain gate
 
 ## Domain Question Packs (Optional)
 
-If the work is domain-specific, load the relevant pack for additional questions:
+If the work is domain-specific, load the relevant pack (5 extra questions each):
 
-- **API work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/api.md` (5 extra questions)
-- **Frontend work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/frontend.md` (5 extra questions)
-- **Infrastructure work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/infra.md` (5 extra questions)
-- **AI/ML work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/ai-ml.md` (5 extra questions)
-- **Mobile work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/mobile.md` (5 extra questions)
+- **API work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/api.md`
+- **Frontend work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/frontend.md`
+- **Infrastructure work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/infra.md`
+- **AI/ML work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/ai-ml.md`
+- **Mobile work**: Load `${CLAUDE_PLUGIN_ROOT}/guides/cross-verify-packs/mobile.md`
 
 Domain questions are scored separately and do not affect the main 17-question score.
 

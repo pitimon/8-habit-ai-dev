@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.49-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.50-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.50 · `/cross-verify` score scope + core-claim gating
+
+`/cross-verify` reports now state that the score measures process completeness, not correctness, and list the review's core claims. A failed or unverified core claim presented as established turns a `proceed` or `address gaps` recommendation into `hold: verify core claim`. The [cross-verification guide](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/cross-verification.md) adds a Core-Claim Verification section (real-host exercise for integration changes, "find the writer" for absence claims). See [CHANGELOG.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/CHANGELOG.md).
 
 ## v2.21.49 · OpenClaw skill compatibility
 
