@@ -25,7 +25,7 @@ AI-assisted development excels at Body (CI, tests) and Mind (architecture, desig
 
 2. **Read the relevant code and docs**: Understand what exists before scoring.
 
-3. **Score each dimension** (1-5) using the indicators below:
+3. **Score each dimension** (1-5) using the indicators below. Score observable evidence, not plans or intentions. A score needs every indicator in its row; a partial match takes the score below.
 
 ### Body (PQ/Discipline) — "Is it reliable and well-built?"
 

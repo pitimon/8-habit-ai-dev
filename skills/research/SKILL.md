@@ -66,7 +66,7 @@ What do we need to know before specifying requirements?
 
 - Glob `~/.claude/lessons/*.md` to check if lesson files exist
 - If lessons exist, Grep for tags or keywords matching the research topic: `Grep pattern="tags:.*<keyword>" path="~/.claude/lessons/"` then fall back to `Grep pattern="<keyword>" path="~/.claude/lessons/"` for body matches
-- If relevant lessons are found, Read them and include findings under "Prior lessons learned" in the research brief
+- If relevant lessons are found, Read them and include findings under "Prior lessons learned" in the research brief. A lesson is a prior-session claim: mark it unverified (✓U) until re-checked this session
 - If `~/.claude/lessons/` does not exist or is empty, skip silently
 
 Route by depth level:
@@ -140,6 +140,7 @@ Produce a research brief using the template. Load the template for the full stru
 **Source Verification Report**: [if Deep mode — from research-verifier agent]
 **Key insight**: [1-2 sentence finding that shapes requirements]
 **Recommendation**: [build/reuse/adapt + reasoning]
+**Confidence & Open Unknowns**: [overall High/Medium/Low + what stays unverified — mandatory]
 ```
 
 ### 6. H5 Checkpoint
@@ -185,6 +186,7 @@ Rationale: a dep or symbol can be imported by a different-sounding name (e.g. `n
 - [ ] Comparison matrix included (if Compare mode) with evidence per cell
 - [ ] Audit results included (if Audit mode) with file:line per row
 - [ ] Code-symbol verdicts (remove/dead/unused/transitional/safe-to-drop) cite grep-check liveness evidence, not just declaration sites
+- [ ] Confidence & Open Unknowns stated (overall confidence + what stays unverified)
 - [ ] Research brief ready for handoff to /requirements
 
 ## Further Reading

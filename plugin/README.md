@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.53-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.53)
+[![Version](https://img.shields.io/badge/Version-2.21.54-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.54)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22153) — Version history
+- [What's New](#whats-new-in-v22154) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -141,7 +141,7 @@ Use the cross-verify skill to check this release plan.
 **Use with OpenClaw:** OpenClaw can load this repository as a compatible skill bundle. Install from a pinned tag, restart the Gateway, and verify the skill snapshot:
 
 ```bash
-openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.53
+openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.54
 openclaw gateway restart
 openclaw skills list
 ```
@@ -479,6 +479,19 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.54
+
+**Theme: rules that change a verdict live in SKILL.md (#404)**
+
+- Agents usually read `SKILL.md` and stop, so a verdict rule kept only in a guide is never applied (#402). An audit of every guide that skills load moved the verdict rules into the skills:
+  - **`/cross-verify`**: integration claims pass only when exercised on the real host with a control case; loading `production-release-gates.md` is now required before setting the release state.
+  - **`/whole-person-check`**: score observable evidence, not plans; a score needs every indicator in its row.
+  - **`/research`**: the Confidence & Open Unknowns section is mandatory, and lessons from earlier sessions are marked unverified until re-checked.
+- **New guard**: `tests/test-guide-rule-anchors.sh` fails CI if one of these rules leaves its SKILL.md.
+- **Measured (blind, SKILL.md only, n=3)**: the mandatory research section went from 0/3 to 3/3; the real-host check now asks for a control case (0/3 to 3/3). Other metrics were already 3/3 without the change. Details: `docs/specs/guide-only-rules-404/eval.md`.
+
+---
+
 ## What's New in v2.21.53
 
 **Theme: every skill installs through the Hermes tap (#405)**
@@ -779,4 +792,4 @@ MIT
 
 ---
 
-_Version: 2.21.53 | Last updated: 2026-10-03_
+_Version: 2.21.54 | Last updated: 2026-10-03_
