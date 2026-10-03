@@ -10,6 +10,19 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.52 — #402 absence claims framed as failures (2026-10-03)
+
+### Fixed
+
+- **`/cross-verify` asks whether before why.** The diagnosis note before Q12 now opens with "did it fail at all?": name positive evidence (error, exit code, log line, wrong output). "X did not run / never triggered / produced nothing" is an absence claim even when framed as a failure with candidate causes; a missing artifact alone is `OPEN_VERIFICATION_DEBT` until the line that writes it is cited, and artifacts that are present may prove X ran. The rule lives in SKILL.md itself: host evidence showed the original #402 evaluators never opened the guide, and with the guide in context the old rule worked 3/3 — the cause was location, not wording. Net +3 words (1967 → 1970 by `wc -w`): the Common Failure Patterns list moved to the guide.
+- **`guides/cross-verification.md`**: how absence claims hide in failure reports (surface forms as examples, recognised by meaning); cause analysis on an unproven failure is debt too; a present-artifact check; the #402 case as a "False failure" pattern.
+- **`/diagnose` Phase 2** first confirms the failure happened at all, treating "it never ran" as an absence claim (1706 → 1753 words).
+
+### Evidence
+
+- Blind evaluation, n=3 per arm per round (`docs/specs/absence-premise-402/eval.md`): SKILL.md-only control 0/3 on #402's metric under a neutral prompt (baseline reproduced); the same control **with the guide in context** 3/3, and it named the writer line 3/3; an earlier draft of this change, SKILL.md only, 3/3 on the metric but 0/3 on citing the writer. The writer-line clause was then moved into SKILL.md; the final text, SKILL.md only, scored 3/3 on all three metrics (absence as debt, whether before why, cite the writer) — matching the old rule with the guide in context. One model family, author-written case: evidence of a behaviour change on this case, not proof it generalises.
+- `tests/test-cross-verify-release-gates.sh`: +10 string pins (88 total); 10 fail on v2.21.51. They guard the text; the eval is what measures behaviour.
+
 ## v2.21.51 — pro-ready entry point + "You Own It" Owner note (2026-10-03)
 
 ### Added
