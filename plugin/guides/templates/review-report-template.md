@@ -36,3 +36,9 @@ Output template for `/review-ai` (Step 5).
 ## Action Required
 
 - [Specific next steps or "none — clear to commit"]
+
+## Owner Note
+
+**Owner note**: Changed: [what] | Why: [issue] | Roll back: [how] | Read first: [files] | Confirmed by: [merger or "unconfirmed"]
+
+Write each field from repository artifacts (diff, tests, PR); mark unsupported fields `[not in artifacts]`. A missing, unconfirmed, or `[not in artifacts]` note caps the final verdict at CONCERNS.

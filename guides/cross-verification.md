@@ -101,11 +101,26 @@ If a core claim presented as established — built, diagnosed, or observed — i
 
 In a pre-implementation plan review, core claims about what will be built are intentions that cannot be verified yet. That is expected, not a hold: write each one into the test plan (Q5) with the check that will verify it — for integration claims, the real-host probe and its control case. This carve-out covers only unbuilt behavior. A diagnosis or observation the plan rests on ("the root cause is X", "the feature is unused") is established, and the hold applies to it.
 
-**Integration boundaries need the real host.** When the change crosses a host boundary — permissions or allowlists, hooks, host↔plugin contracts, CLI flags — a core claim counts as `PASS` only after the changed behavior was exercised on the real host, together with a control case (for example, child session vs main session). Unit tests over a mocked host cannot see host behavior such as deferred tool schemas; with mocks alone, record the claim as `OPEN_VERIFICATION_DEBT`. For production work, use the runtime reconciliation in [`production-release-gates.md`](./production-release-gates.md) instead of restating it here.
+**Integration boundaries need the real host.** When the change crosses a host boundary — permissions or allowlists, hooks, host↔plugin contracts, CLI flags — a core claim counts as `PASS` only after the changed behavior was exercised on the real host, together with a control case (for example, child session vs main session). Unit tests over a mocked host cannot see host behavior such as deferred tool schemas; with mocks alone, record the claim as `OPEN_VERIFICATION_DEBT`. Independent corroboration: the statewright guardrail project exempts `ToolSearch` from its own tool allowlist hooks (`plugins/claude-code/hook.sh`, `plugins/omx/src/hook.ts` at commit `2426f75`) — consistent with the host behavior that unit-tested allowlists missed in [#399](https://github.com/pitimon/8-habit-ai-dev/issues/399). For production work, use the runtime reconciliation in [`production-release-gates.md`](./production-release-gates.md) instead of restating it here.
 
 **Absence claims: find the writer.** Before concluding "X did not happen because artifact Y is missing", find the writer: cite the code line that writes Y and confirm it executes on that path. An artifact that is only written on some paths (for example, only when a run produces output) says nothing about the other paths. Without the writer line, the conclusion is `OPEN_VERIFICATION_DEBT`. See "absence of evidence is not evidence of absence" in [`integrity-principles.md`](./integrity-principles.md).
 
 **Ask the discriminating question.** For each core claim: "If this claim were false, would my evidence look different?" If the answer is "no", the evidence carries no information about the claim, so the claim is `OPEN_VERIFICATION_DEBT`, not `PASS` — however confident it feels. And: "Which of my conclusions has only been checked by me, with my own evidence?" Those claims are candidates for an independent pass — a cross-vendor challenge, a reviewer agent, or live execution. Author-side checks, including this checklist, share the author's evidence and cannot diverge from it ([`independent-source-verification.md`](./independent-source-verification.md)).
+
+## PRO-READY Mapping
+
+PRO-READY is a community checklist, not doctrine: its origin is unverified. It is mapped here so that a "pro-ready" request routes to existing skills (see [`skills/RESOLVER.md`](../skills/RESOLVER.md) § Composite Triggers) instead of a new checklist.
+
+| Letter | Asks | Covered by |
+| --- | --- | --- |
+| P — Purpose | Does it meet the requirement? | `/requirements` success criteria; Q4 |
+| R — Reliability | Are APIs and dependencies trustworthy? | `/security-check` dependencies; core-claim real-host rule above |
+| O — Organizational context | Does it fit the system and security model? | `/build-brief`, `/design` context contract, `/security-check` |
+| R — Reasoning | Can design and trade-offs be explained? | `/design` options and steelman; Q14, Q16 |
+| E — Execution | Test, rollout, rollback? | Q5; `/deploy-guide` rollback plan |
+| A — Accuracy | Build, test, security check pass? | `/review-ai`, `/security-check`; core claims above |
+| D — Delivery quality | Code, PR, docs ready to hand off? | `/review-ai` completeness; Q3, Q9, Q17 |
+| Y — You Own It | Does the merger understand and own it? | `/review-ai` step 7 ownership question and Owner note |
 
 ## Common Failure Patterns
 

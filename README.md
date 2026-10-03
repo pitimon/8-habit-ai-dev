@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)]()
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)]()
-[![Version](https://img.shields.io/badge/Version-2.21.50-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.50)
+[![Version](https://img.shields.io/badge/Version-2.21.51-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.51)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22150) — Version history
+- [What's New](#whats-new-in-v22151) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -141,7 +141,7 @@ Use the cross-verify skill to check this release plan.
 **Use with OpenClaw:** OpenClaw can load this repository as a compatible skill bundle. Install from a pinned tag, restart the Gateway, and verify the skill snapshot:
 
 ```bash
-openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.50
+openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.51
 openclaw gateway restart
 openclaw skills list
 ```
@@ -479,6 +479,16 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.51
+
+**Theme: "Is it pro-ready?" has an answer, and the merger owns it**
+
+- **One phrase, one chain**: "pro-ready review", "is this production-ready?", or "ready to merge?" route through `skills/RESOLVER.md` to `/review-ai` → `/cross-verify` → `/deploy-guide`. No new skill.
+- **You Own It**: `/review-ai` asks whether the merger can explain what changed, why, and how to roll back without the AI transcript, and ends with a one-line **Owner note** drafted from repository artifacts. An unconfirmed note caps the verdict at `CONCERNS`.
+- **PRO-READY mapping** in `guides/cross-verification.md` shows which skill covers each letter; **statewright** runtime enforcement is recorded as out of scope, and its `ToolSearch` exemption is cited as independent support for the #399 real-host rule.
+
+---
+
 ## What's New in v2.21.50
 
 **Theme: `/cross-verify` says what its score measures (#399)**
@@ -750,4 +760,4 @@ MIT
 
 ---
 
-_Version: 2.21.50 | Last updated: 2026-10-03_
+_Version: 2.21.51 | Last updated: 2026-10-03_

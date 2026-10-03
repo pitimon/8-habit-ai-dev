@@ -8,7 +8,7 @@ This is a flat lookup. **Given these words → which SKILL.md to read.** It does
 - Every row cites `skills/<name>/SKILL.md` — enforced bidirectionally by Check 20 in `tests/validate-structure.sh`
 - Pattern: quoted user phrase or short action description → skill path → one-line purpose
 
-Pick the row whose trigger matches the user intent, then read the cited SKILL.md before acting. If two rows could match, read both — skills chain (e.g., `/research` → `/requirements` → `/design`).
+Pick the row whose trigger matches the user intent, then read the cited SKILL.md before acting. If two rows could match, read both — skills chain (e.g., `/research` → `/requirements` → `/design`). Check [§ Composite Triggers](#composite-triggers) first: a match there overrides single rows.
 
 ---
 
@@ -60,6 +60,20 @@ Pick the row whose trigger matches the user intent, then read the cited SKILL.md
 | `"new to the plugin"`, `"which skill should I use?"`, `"onboard me"`  | [`skills/using-8-habits/SKILL.md`](using-8-habits/SKILL.md) | Onboarding meta-skill — 7-step workflow + 24-skill inventory + decision tree |
 | `"what's my habit maturity"`, `"assess my level"`, `"set my profile"` | [`skills/calibrate/SKILL.md`](calibrate/SKILL.md)           | 5–7 question maturity assessment → persists `~/.claude/habit-profile.md`     |
 | `"walk me through the 7 steps"`, `"guided workflow"`, starting fresh  | [`skills/workflow/SKILL.md`](workflow/SKILL.md)             | Guided 7-step walkthrough with skip prompts per step                         |
+
+---
+
+## Composite Triggers
+
+Some phrases ask for a chain, not one skill. Run the steps in order; each cited path is on its own line so every link is checked.
+
+`"pro-ready review"`, `"is this production-ready?"`, `"ready to merge?"`, `"ready to deploy?"`:
+
+1. [`skills/review-ai/SKILL.md`](review-ai/SKILL.md) — code findings, verdict, Owner note
+2. [`skills/cross-verify/SKILL.md`](cross-verify/SKILL.md) — 17-question gate with core claims
+3. [`skills/deploy-guide/SKILL.md`](deploy-guide/SKILL.md) — rollout and rollback plan, only when deploying
+
+The PRO-READY letters map onto this chain in [`guides/cross-verification.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/cross-verification.md#pro-ready-mapping).
 
 ---
 

@@ -49,7 +49,7 @@ next-skill: deploy-guide
 7. **AI-work budget and health check** (MEDIUM, guidance only):
    - Did the work enter repeated loops, retries, or re-generation without new evidence?
    - Was context compacted or summarized, and was any summary verified against source files?
-   - Is there enough audit evidence to explain what changed and why?
+   - **You own it**: can the merger explain what changed, why, and how to roll back without the AI transcript?
    - Does token, cost, or elapsed time look disproportionate to the task value?
    - Can the next session recover state from committed docs, issues, PRs, or handoff notes?
    - Does this PR add review burden, validator brittleness, generated-content noise, or contract drift?
@@ -87,7 +87,7 @@ Every review MUST end with a structured verdict — not free-form prose.
 
 | Level | Label        | Criteria                                   | Action                               |
 | ----- | ------------ | ------------------------------------------ | ------------------------------------ |
-| 0     | **PASS**     | No findings, or all informational          | Proceed to commit                    |
+| 0     | **PASS**     | No findings or all informational; Owner note confirmed | Proceed to commit                    |
 | 1     | **CONCERNS** | Non-blocking issues found                  | Merge allowed, author should address |
 | 2     | **REWORK**   | Significant quality or completeness issues | Must fix before merge                |
 | 3     | **FAIL**     | Security vulnerability or breaking change  | Cannot merge, immediate fix required |
@@ -106,7 +106,10 @@ Output format:
 | AI-work health | [count] | [highest] |
 | Software ecology | [count] | [highest] |
 **Action required**: [specific next steps or "none — clear to commit"]
+**Owner note**: Changed: [what] | Why: [issue] | Roll back: [how] | Read first: [files] | Confirmed by: [merger or "unconfirmed"]
 ```
+
+Draft the Owner note from repository artifacts alone (diff, tests, PR); mark any field they do not support `[not in artifacts]`. The merger confirms it. A missing, unconfirmed, or `[not in artifacts]` Owner note caps the final verdict at `CONCERNS`; that cap alone does not trigger Deep Review.
 
 ## Deep Review Mode (Optional)
 
@@ -153,7 +156,7 @@ After producing findings, do not stop at the verdict. Run a **Find → Fix → R
 2. **Apply fix** — edit the offending file(s) per the actionable feedback
 3. **Re-run review on the same scope** — re-Read the changed lines, re-grep for the original pattern, confirm the issue is gone
 4. **Cite evidence-of-fix per finding** — `file:line` showing the fix is now in place (with before/after snippets where helpful), OR explicit `deferred — tracked as #N` with the issue number
-5. **Refuse to declare the review passed** — in prose, and in any emitted `SKILL_OUTPUT:review` block (`pass: true`) — unless all CRITICAL findings are closed. HIGH findings may be deferred only with an issue ref. Refusal is in prose: state `"review cannot pass — N CRITICAL finding(s) remain open"` and stop. This is guidance to Claude, not a runtime gate.
+5. **Refuse to declare the review passed** — in prose, and in any emitted `SKILL_OUTPUT:review` block (`pass: true`) — unless all CRITICAL findings are closed and the Owner note is confirmed. HIGH findings may be deferred only with an issue ref. Refusal is in prose: state `"review cannot pass — N CRITICAL finding(s) remain open"` and stop. This is guidance to Claude, not a runtime gate.
 
 **Output**: end the review report with a Verification Table replacing the prior flat finding list:
 
@@ -177,6 +180,7 @@ After producing findings, do not stop at the verdict. Run a **Find → Fix → R
 
 - [ ] All CRITICAL findings addressed (zero remaining) — proven in the Verification Table, not just claimed
 - [ ] Verdict rendered using the 4-level table above
+- [ ] Owner note drafted from artifacts and confirmed by the merger, or verdict capped at CONCERNS
 - [ ] Each finding includes actionable feedback (WHY + HOW to fix)
 - [ ] Every finding cites specific evidence (file:line, test output, or diff)
 - [ ] Summary table shows findings count for Security, Quality, Performance, Completeness, and AI-work health
