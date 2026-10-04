@@ -40,6 +40,23 @@ hermes skills install pitimon/8-habit-ai-dev/skills/<name> --category productivi
 
 The skill's name matches a category folder that already holds other skills in your Hermes home (common for `research`). Install into a category instead: `hermes skills install pitimon/8-habit-ai-dev/skills/research --category productivity`. The skill keeps its name, so `/research` still works ([#409](https://github.com/pitimon/8-habit-ai-dev/issues/409)).
 
+### Already Installed Without `--category`
+
+No action needed. Re-running `hermes skills install … --category productivity` on an installed skill reports "already installed" and leaves it in place; `hermes skills update <name>` keeps updating it where it is. Only a skill whose name collides with a category folder (for example `research`) needs `--category` ([#409](https://github.com/pitimon/8-habit-ai-dev/issues/409)).
+
+### Old Skill Names Stop Working After Switching to Tap Installs
+
+Hand-made ports often used prefixed names (`8-habit-diagnose`, `research-skill`). Tap installs use the upstream names (`diagnose`, `research`), so `/8-habit-diagnose` returns "Unknown command". Keep the old command working with an alias in `~/.hermes/config.yaml`, then start a new session (`/reload-skills` does not reload aliases):
+
+```yaml
+quick_commands:
+  8-habit-diagnose:
+    type: alias
+    target: /diagnose
+```
+
+Update any other skill or config that references the old name as well.
+
 ### `hermes skills install` Fails With "Could not fetch ... from any source"
 
 Hermes's Skills Hub fetcher fail-closes an entire skill install if the `SKILL.md` contains a same-directory markdown link starting with `..` (treated as a path-traversal attempt). This was fixed repo-wide in v2.21.44 (#386) by switching every doc cross-reference in `skills/*/SKILL.md` to an absolute `https://github.com/pitimon/8-habit-ai-dev/blob/main/...` URL. If you still see this error, confirm you are on v2.21.44 or later (`hermes skills inspect pitimon/8-habit-ai-dev/skills/<name>` shows the resolved source), and check `hermes doctor` for a GitHub rate-limit warning — set `GITHUB_TOKEN` if unauthenticated requests are exhausted.
