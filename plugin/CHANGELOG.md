@@ -15,9 +15,9 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 ### Fixed
 
 - **Persistence rules in `/requirements`, `/design`, `/breakdown`**: slug failure skips persistence only; an existing target asks overwrite / `.vN.md` / abort (non-interactive: `.vN.md` plus one warning); required frontmatter fields; 3-part errors; directory failure falls back to conversation output with no block; the completion line names the persisted file. Previously these were only named, with the rules in `guides/persistence-convention.md`.
-- **`/requirements`** (1466 → 1623 words): paired failure case per criterion, precedence between conflicting criteria, ambiguous input fails safe; the interview stop gate; EARS for security-sensitive paths and public API contracts at any count.
-- **`/breakdown`** (1389 → 1568): fan-out preconditions and oversight (from `orchestration-patterns.md`); AGENT-BRIEF hard rules; issue comments never claim unverified release, deploy, or closure.
-- **`/design`** (1992 → 1940): glossary conflicts surfaced; an ADR stands unless the user reopens it. To fit, the Three Loops note and the sticky-latch example were shortened.
+- **`/requirements`** (1466 → 1624 words): paired failure case per criterion, precedence between conflicting criteria, ambiguous input fails safe; the interview stop gate; EARS for security-sensitive paths and public API contracts at any count.
+- **`/breakdown`** (1389 → 1569): fan-out preconditions and oversight (from `orchestration-patterns.md`); AGENT-BRIEF hard rules; issue comments never claim unverified release, deploy, or closure.
+- **`/design`** (1992 → 1942): glossary conflicts surfaced; an ADR stands unless the user reopens it. To fit, the Three Loops note and the sticky-latch example were shortened.
 - **`/build-brief`** (947 → 998): glossary conflicts; one behavior test at a time, failing for the expected reason.
 - **`/review-ai`** (1889 → 1903): a PASS states what was checked and how (commandment 3); completion line names a saved report.
 - **`/cross-verify`** (1967 → 1958): Q17 handoff-note auto-check; report which blocks were found and missing. Fallback prose shortened to stay within FR-008.
