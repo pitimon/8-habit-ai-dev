@@ -37,3 +37,7 @@ jobs:
           path: docs/wiki/
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "docs(wiki): sync from docs/wiki/ @ ${{ github.sha }}"
+          # v5 defaults to preprocess: true, which rewrites every page (escapes
+          # GitHub callouts like [!NOTE], reflows lists and code blocks). Our wiki
+          # already uses bare page links, so keep v4 behaviour (dry-run verified: 0-file diff).
+          preprocess: false
