@@ -82,6 +82,8 @@ next-skill: build-brief
    - Can I do this sequentially in ≤5 tool calls? If yes, sequential is cheaper.
    - Are the tasks meaningfully disjoint (different files, different concerns)?
    - Will coordinating results add complexity that outweighs time savings?
+   - Have cross-cutting effects been traced once, centrally, and is the architecture already decided by a human? If not, trace first or run `/design` first — fan-out executes a plan, it does not author one.
+   - Under fan-out: agent outputs are proposals a human confirms before commit; the run has a human-set count or budget cap and logs what each agent is doing.
 
    Parallel agents have overhead: context loading, coordination, result merging. Only parallelize when decomposition is genuinely independent and substantial enough to justify the cost.
 
@@ -99,14 +101,22 @@ next-skill: build-brief
 
 - **Expects from predecessor** (`/design`): Architecture decisions and constraints
 - **Produces for successor** (`/build-brief`): Prioritized task list with dependencies and file paths
-- **Backlog-bound tasks**: When a task in the produced list will sit ≥7 days before pickup (or filer ≠ picker), recommend filing an issue using the repo's tracker contract if `docs/agents/issue-tracker.md` exists; otherwise default to GitHub issue wording. Use [`guides/templates/agent-brief-template.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/templates/agent-brief-template.md) for the durable issue spec. Habit-mapped variant of the pattern from [mattpocock/skills](https://github.com/mattpocock/skills).
-- **Issue tracking comments**: When the user asks an agent to pick up, track, or close work through an issue, draft pickup/progress/completion comments using [`guides/templates/issue-tracking-comments.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/templates/issue-tracking-comments.md). Do not auto-post, auto-label, or auto-close unless the user or repo tracker contract explicitly allows it.
+- **Backlog-bound tasks**: When a task in the produced list will sit ≥7 days before pickup (or filer ≠ picker), recommend filing an issue using the repo's tracker contract if `docs/agents/issue-tracker.md` exists; otherwise default to GitHub issue wording. Use [`guides/templates/agent-brief-template.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/templates/agent-brief-template.md) for the durable issue spec: describe behavior only (no file paths, line numbers, commit hashes, or implementation details) and always include "Why this matters". Habit-mapped variant of the pattern from [mattpocock/skills](https://github.com/mattpocock/skills).
+- **Issue tracking comments**: When the user asks an agent to pick up, track, or close work through an issue, draft pickup/progress/completion comments using [`guides/templates/issue-tracking-comments.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/templates/issue-tracking-comments.md). Do not auto-post, auto-label, or auto-close unless the user or repo tracker contract explicitly allows it. Never claim a release, deploy, or closure before it is verified; if tests were not run, say so.
 
 ## Optional Persistence (`--persist <slug>`)
 
 When invoked with `--persist <slug>`, this skill writes its task breakdown to `docs/specs/<slug>/tasks.md`, and the `SKILL_OUTPUT:breakdown` block lives in that file (not the conversation). Without the flag: no file writes and no block (byte-identical filesystem behavior to v2.14.3; conversation-block emission was removed in v2.21.39 per [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)).
 
-For the canonical convention (slug regex `^[a-z0-9][a-z0-9-]{1,63}$`, conflict policy, YAML frontmatter format, error message rules, ID-linkage `Task #N` guidance), load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
+Persistence rules:
+- **Slug** fails `^[a-z0-9][a-z0-9-]{1,63}$` → skip persistence only; the skill still runs.
+- **Target exists** → ask: overwrite, numbered `<artifact>.vN.md`, or abort. Without a way to ask, write the next `.vN.md` and warn once.
+- **Frontmatter** (required): `feature`, `step`, `created`, `updated`, `source-skill-version`; `source-issue` if known.
+- **Errors** state what was attempted, what failed and why, and what the user can do next.
+- **Directory cannot be created** → give that error, then show the result in the reply only, with no `SKILL_OUTPUT` block.
+- **Completion line** names the file: `[/breakdown] complete → docs/specs/<slug>/tasks.md`.
+
+Details and ID-linkage (`Task #N`): `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
 
 ID-linkage tip: when persisting, format each task as `Task #N implements: Decision-X (FR-Y)` to cite the design decision and PRD requirement it satisfies. This enables deterministic Coverage and Inconsistency passes in `/consistency-check`. IDs are recommended, not required.
 

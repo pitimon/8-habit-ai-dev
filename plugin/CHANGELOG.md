@@ -10,6 +10,30 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.55 — guide-only output and process rules move into SKILL.md (#407) (2026-10-04)
+
+### Fixed
+
+- **Persistence rules in `/requirements`, `/design`, `/breakdown`**: slug failure skips persistence only; an existing target asks overwrite / `.vN.md` / abort (non-interactive: `.vN.md` plus one warning); required frontmatter fields; 3-part errors; directory failure falls back to conversation output with no block; the completion line names the persisted file. Previously these were only named, with the rules in `guides/persistence-convention.md`.
+- **`/requirements`** (1466 → 1624 words): paired failure case per criterion, precedence between conflicting criteria, ambiguous input fails safe; the interview stop gate; EARS for security-sensitive paths and public API contracts at any count.
+- **`/breakdown`** (1389 → 1569): fan-out preconditions and oversight (from `orchestration-patterns.md`); AGENT-BRIEF hard rules; issue comments never claim unverified release, deploy, or closure.
+- **`/design`** (1992 → 1942): glossary conflicts surfaced; an ADR stands unless the user reopens it. To fit, the Three Loops note and the sticky-latch example were shortened.
+- **`/build-brief`** (947 → 998): glossary conflicts; one behavior test at a time, failing for the expected reason.
+- **`/review-ai`** (1889 → 1903): a PASS states what was checked and how (commandment 3); completion line names a saved report.
+- **`/cross-verify`** (1967 → 1958): Q17 handoff-note auto-check; report which blocks were found and missing. Fallback prose shortened to stay within FR-008.
+- **`/save-spec`** (1742 → 1776): the five verification checks are listed in the Definition of Done; the CLAUDE.md stanza is shipped in `reference.md` (a guide is not in the skill bundle); stale `persistence-convention.md:108-109` citation replaced.
+- **`/research`** (1560 → 1567): `✓U` is defined inline.
+
+### Added
+
+- `tests/test-guide-rule-anchors.sh`: 18 more anchors (27 rules) and a check that the save-spec stanza stays identical to `guides/spec-digest-pattern.md`.
+
+### Not measured
+
+- No blind evaluation for these rules; they are pinned by contract tests only.
+
+---
+
 ## v2.21.54 — verdict rules live in SKILL.md (#404) (2026-10-03)
 
 ### Fixed

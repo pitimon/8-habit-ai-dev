@@ -274,6 +274,19 @@ Parsing: multi-select list = `["README.md"]`. Other free-text split on newlines,
 
 Result: §1 = 4 bullets (one path per bullet). The skill does NOT validate that the Other paths exist on disk — Phase 1 cannot Bash. Adopters supplying nonexistent paths get bullets pointing at paths that fail Check 4 verification; the skill writes what was asked.
 
+## CLAUDE.md recipe stanza (step 7)
+
+Copied verbatim from `guides/spec-digest-pattern.md` § "CLAUDE.md auto-update rule (user-side)"; emit it to the conversation exactly as below.
+
+```markdown
+## After completing any task:
+
+1. Update `SPEC.md` §4 (Current state) — what changed, what's next, last-updated timestamp
+2. Update `SPEC.md` §3 (Backlog) — check off completed items, add new ones surfaced
+3. Update the relevant pointer-target file from `SPEC.md` §1 if any operational fact changed (data contracts, runbooks, server state, changelog entries, etc. — whatever the §1 pointers actually point to in your repo archetype)
+4. Never claim "done" without updating `SPEC.md` first
+```
+
 ## Rationale links to issue #199 open-question defaults
 
 The Phase 1 design accepted these 6 open-question defaults from the design-discussion issue (https://github.com/pitimon/8-habit-ai-dev/issues/199):

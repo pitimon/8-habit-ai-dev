@@ -27,6 +27,24 @@ whole-person-check|not plans or intentions|whole-person-rubrics.md:9 observable 
 research|**Confidence & Open Unknowns**|research-brief-template.md mandatory confidence section
 research|mark it unverified (✓U) until re-checked this session|integrity-principles.md C7 staleness of prior-session claims
 review-ai|Owner note caps the final verdict at `CONCERNS`|review-report-template.md Owner-note cap (v2.21.51)
+requirements|Target exists** → ask: overwrite, numbered|persistence-convention.md conflict policy (#407)
+requirements|**Frontmatter** (required)|persistence-convention.md required frontmatter (#407)
+requirements|show the result in the reply only, with no `SKILL_OUTPUT` block|persistence-convention.md mkdir fallback (#407)
+requirements|paired failure case that must not pass|behavioral-spec-craft.md paired failure case (#407)
+requirements|Stop only when you have 3+ testable criteria|interview-protocol.md stop gate (#407)
+breakdown|Target exists** → ask: overwrite, numbered|persistence-convention.md conflict policy (#407)
+breakdown|fan-out executes a plan, it does not author one|orchestration-patterns.md fan-out preconditions (#407)
+breakdown|Never claim a release, deploy, or closure before it is verified|issue-tracking-comments.md honest closure (#407)
+breakdown|always include "Why this matters"|agent-brief-template.md hard rules (#407)
+design|ask overwrite / `design.vN.md` / abort|persistence-convention.md conflict policy (#407)
+design|glossary conflicts surfaced|project-context-contract.md glossary conflicts (#407)
+design|an ADR stands unless the user asks to revisit it|project-context-contract.md ADR precedence (#407)
+build-brief|surface the conflict before building on it|project-context-contract.md glossary conflicts (#407)
+build-brief|fails for the expected reason|tdd-tracer-bullet.md one behavior test at a time (#407)
+review-ai|state what was checked and how|integrity-principles.md commandment 3 (#407)
+cross-verify|**Q17**: if a handoff note exists|structured-output-protocol.md Q17 auto-check (#407)
+cross-verify|report which blocks were found and which were missing|structured-output-protocol.md found/missing report (#407)
+save-spec|every backtick path resolves|spec-digest-pattern.md 5 verification checks (#407)
 EOF
 )
 
@@ -46,6 +64,17 @@ for root in skills plugin/skills; do
       FAIL=1
     fi
   done <<< "$RULES"
+done
+
+# save-spec ships the CLAUDE.md recipe stanza in its own reference.md (a guide is not
+# in the skill bundle); it must stay verbatim with the guide it mirrors (#407).
+stanza() { awk '/^## After completing any task:/{f=1} f{print} f&&/^4\. Never claim/{exit}' "$1"; }
+for root in skills plugin/skills; do
+  if ! diff -q <(stanza "$root/save-spec/reference.md") <(stanza guides/spec-digest-pattern.md) >/dev/null \
+     || [ -z "$(stanza "$root/save-spec/reference.md")" ]; then
+    echo "FAIL: $root/save-spec/reference.md recipe stanza differs from guides/spec-digest-pattern.md"
+    FAIL=1
+  fi
 done
 
 if [ "$FAIL" -ne 0 ]; then

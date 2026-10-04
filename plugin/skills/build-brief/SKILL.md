@@ -25,7 +25,7 @@ next-skill: review-ai
 
    Research basis: Amazon Working Backwards, Basecamp Shape Up, and Google Design Docs all physically separate "what & why" from "how". Teams that skip this waste 30-40% of implementation time on rework.
 
-1. **Read existing code and context first**: Before writing anything new, read the files in the affected area. Also read repo context files when present: `DOMAIN.md`, `SPEC.md`, `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/agents/domain.md`, and relevant ADRs. Understand current patterns, naming conventions, glossary terms, and architecture.
+1. **Read existing code and context first**: Before writing anything new, read the files in the affected area. Also read repo context files when present: `DOMAIN.md`, `SPEC.md`, `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/agents/domain.md`, and relevant ADRs. Understand current patterns, naming conventions, glossary terms, and architecture. If glossary wording conflicts with code or the user's wording, surface the conflict before building on it.
 
 1b. **Check past lessons** (if `~/.claude/lessons/` exists):
    - Grep `~/.claude/lessons/` for tags or keywords matching the task name, affected file paths, or domain
@@ -46,7 +46,7 @@ next-skill: review-ai
    **Test approach**: [what to test, TDD if applicable]
    ```
 
-   If the user requested TDD, red-green-refactor, or test-first work, load `${CLAUDE_PLUGIN_ROOT}/guides/tdd-tracer-bullet.md` and define the first behavior-level tracer bullet before implementation starts.
+   If the user requested TDD, red-green-refactor, or test-first work, load `${CLAUDE_PLUGIN_ROOT}/guides/tdd-tracer-bullet.md` and define the first behavior-level tracer bullet before implementation starts. One behavior test at a time: it goes through a public interface, fails for the expected reason, then the minimal code makes it pass; refactor only when green. No batches of tests written ahead.
 
 3. **Include relevant context** the AI needs:
    - CLAUDE.md project rules

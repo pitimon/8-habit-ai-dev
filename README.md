@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)](skills/RESOLVER.md)
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)](habits/)
-[![Version](https://img.shields.io/badge/Version-2.21.54-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.54)
+[![Version](https://img.shields.io/badge/Version-2.21.55-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.55)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22154) — Version history
+- [What's New](#whats-new-in-v22155) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -141,7 +141,7 @@ Use the cross-verify skill to check this release plan.
 **Use with OpenClaw:** OpenClaw can load this repository as a compatible skill bundle. Install from a pinned tag, restart the Gateway, and verify the skill snapshot:
 
 ```bash
-openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.54
+openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.55
 openclaw gateway restart
 openclaw skills list
 ```
@@ -479,6 +479,19 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.55
+
+**Theme: the rest of the guide-only rules move into SKILL.md (#407)**
+
+- **Persistence** (`/requirements`, `/design`, `/breakdown`): the conflict policy, required frontmatter, error format, directory-failure fallback, and completion line that names the file are now in each SKILL.md.
+- **`/requirements`**: each success criterion gets a failure case that must not pass; the interview stops only when its four conditions hold; EARS also for security paths and public APIs.
+- **`/breakdown`**: fan-out only after effects are traced and the architecture is decided; agent briefs describe behavior and say why; issue comments never claim unverified closure.
+- **`/design`**, **`/build-brief`**: surface glossary conflicts; an ADR stands unless the user reopens it; one behavior test at a time that fails for the expected reason.
+- **`/review-ai`**: a PASS says what was checked. **`/cross-verify`**: Q17 handoff auto-check; report which output blocks were found. **`/save-spec`**: the five checks are listed, and the CLAUDE.md stanza ships in `reference.md`.
+- **Guard**: `tests/test-guide-rule-anchors.sh` now pins 27 rules and checks the save-spec stanza stays identical to its guide.
+
+---
+
 ## What's New in v2.21.54
 
 **Theme: rules that change a verdict live in SKILL.md (#404)**
@@ -792,4 +805,4 @@ MIT
 
 ---
 
-_Version: 2.21.54 | Last updated: 2026-10-03_
+_Version: 2.21.55 | Last updated: 2026-10-04_
