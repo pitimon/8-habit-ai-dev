@@ -14,6 +14,7 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
+- **OpenClaw install guide** pinned `@v2.21.49` while README tracked the release; it now matches, and the test fails if a pinned install tag differs from the plugin version.
 - **Hermes install docs** (README, `docs/compatibility-matrix.md`, wiki Installation and Troubleshooting): every `hermes skills install` command now passes `--category productivity`. Without it, Hermes refuses a skill whose name matches an existing category folder; `research` collides on Hermes homes that already have a `research/` category. Reproduced in a sandboxed `HERMES_HOME` before and after. The Troubleshooting page gains an entry for the error message.
 
 ### Added

@@ -7,7 +7,7 @@
 OpenClaw recognizes the existing Claude-compatible bundle layout. Install the repository from a pinned tag when reproducibility matters:
 
 ```bash
-openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.49
+openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.56
 openclaw skills list
 ```
 
