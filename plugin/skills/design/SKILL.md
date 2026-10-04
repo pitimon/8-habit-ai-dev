@@ -160,7 +160,7 @@ Ask `Blocking` questions before final recommendations. For `Important` or `Usefu
 
 When invoked with `--persist <slug>`, this skill writes its design output to `docs/specs/<slug>/design.md`, and the `SKILL_OUTPUT:design` block lives in that file (not the conversation). Without the flag: no file writes and no block ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)).
 
-Persistence rules: an invalid slug (`^[a-z0-9][a-z0-9-]{1,63}$`) skips persistence only. If the file exists, ask overwrite / `design.vN.md` / abort (no way to ask: `.vN.md` + one warning). Frontmatter: `feature`, `step`, `created`, `updated`, `source-skill-version`. Errors state attempt, cause, next step; if the directory cannot be created, output stays in conversation without a block. Completion line: `[/design] complete → docs/specs/<slug>/design.md`. Details: `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
+Persistence rules: an invalid slug (`^[a-z0-9][a-z0-9-]{1,63}$`) skips persistence only. If the file exists, ask overwrite / `design.vN.md` / abort (no way to ask: `.vN.md` + one warning). Frontmatter: `feature`, `step`, `created`, `updated`, `source-skill-version`. Errors state attempt, cause, next step; if the directory cannot be created, show the result in the reply without a block. Completion line: `[/design] complete → docs/specs/<slug>/design.md`. Details: `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
 
 ID-linkage tip: when persisting, label each decision as `### Decision-N: <topic>` and cite covered requirements as `Decision-N covers: FR-001, FR-003` to enable deterministic Coverage and Inconsistency passes in `/consistency-check`. IDs are recommended, not required.
 

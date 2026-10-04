@@ -103,7 +103,7 @@ Persistence rules:
 - **Target exists** → ask: overwrite, numbered `<artifact>.vN.md`, or abort. Without a way to ask, write the next `.vN.md` and warn once.
 - **Frontmatter** (required): `feature`, `step`, `created`, `updated`, `source-skill-version`; `source-issue` if known.
 - **Errors** state what was attempted, what failed and why, and what the user can do next.
-- **Directory cannot be created** → give that error, then deliver the output in conversation only, with no `SKILL_OUTPUT` block.
+- **Directory cannot be created** → give that error, then show the result in the reply only, with no `SKILL_OUTPUT` block.
 - **Completion line** names the file: `[/requirements] complete → docs/specs/<slug>/prd.md`.
 
 Details and ID-linkage (`FR-NNN`): `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.

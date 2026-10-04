@@ -29,7 +29,7 @@ research|mark it unverified (✓U) until re-checked this session|integrity-princ
 review-ai|Owner note caps the final verdict at `CONCERNS`|review-report-template.md Owner-note cap (v2.21.51)
 requirements|Target exists** → ask: overwrite, numbered|persistence-convention.md conflict policy (#407)
 requirements|**Frontmatter** (required)|persistence-convention.md required frontmatter (#407)
-requirements|deliver the output in conversation only, with no `SKILL_OUTPUT` block|persistence-convention.md mkdir fallback (#407)
+requirements|show the result in the reply only, with no `SKILL_OUTPUT` block|persistence-convention.md mkdir fallback (#407)
 requirements|paired failure case that must not pass|behavioral-spec-craft.md paired failure case (#407)
 requirements|Stop only when you have 3+ testable criteria|interview-protocol.md stop gate (#407)
 breakdown|Target exists** → ask: overwrite, numbered|persistence-convention.md conflict policy (#407)
