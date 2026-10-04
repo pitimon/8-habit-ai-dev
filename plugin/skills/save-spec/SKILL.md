@@ -68,12 +68,12 @@ The 8 steps below are the runtime contract — each step maps to specific FRs fr
    - §3 = one `[ ] <item>` bullet per parsed item. Empty set → single template-stub bullet.
    - §4 = `**Last updated**: <ISO 8601 datetime with timezone offset>` (RFC 3339 strict, e.g. `2026-05-17T20:44:23+07:00`); `**Last apply / commit / deploy event**:` followed by an HTML-comment TODO marker; "What's happening now" body is an HTML-comment TODO marker; "Stuck / waiting on: nothing" default; "Next session entry point" code block with `cat SPEC.md` + comment; the trailing "Optional command sequence" line is an HTML comment. **No literal angle-bracket placeholders in the rendered output** (F1 fix — issue [#203](https://github.com/pitimon/8-habit-ai-dev/issues/203)). See `reference.md` template for exact wording.
 
-6. **Write SPEC.md** (FR-010, FR-012) — Call `Write` with the absolute path `<target-dir>/SPEC.md` (per step 1's resolution; `<cwd>/SPEC.md` if no `[target-dir]` was supplied) and the assembled content. **Do NOT include YAML frontmatter** — `SPEC.md` is a user-owned file per `guides/persistence-convention.md:108-109` and is exempt from the frontmatter requirement.
+6. **Write SPEC.md** (FR-010, FR-012) — Call `Write` with the absolute path `<target-dir>/SPEC.md` (per step 1's resolution; `<cwd>/SPEC.md` if no `[target-dir]` was supplied) and the assembled content. **Do NOT include YAML frontmatter** — `SPEC.md` is a user-owned file per the project-orientation hub mode (`guides/spec-digest-pattern.md`), not a skill-managed `docs/specs/` artifact, and is exempt from the frontmatter requirement.
    - If the `Write` fails: emit the **3-part error message** from `reference.md` (verbatim, with `<absolute-path>`, `<error-class>`, `<error-message>`, `<suggested-action>` substituted) and **STOP**. Do not retry.
 
 7. **Show the CLAUDE.md recipe stanza** (FR-011, FR-014, FR-015) — After a successful `Write`, show it in your reply (NOT in any file):
    - A one-line hint: "Copy this into your project's `CLAUDE.md` to auto-update `SPEC.md` after every task. The plugin does NOT modify your `CLAUDE.md` automatically."
-   - The recipe stanza in a fenced markdown code block, copied verbatim from `guides/spec-digest-pattern.md` (the "CLAUDE.md auto-update rule (user-side)" section).
+   - The recipe stanza in a fenced markdown code block, copied verbatim from `reference.md` § "CLAUDE.md recipe stanza" (mirrors `guides/spec-digest-pattern.md`).
    - **Do NOT invoke `Edit` or `Write` against `CLAUDE.md`** — emission is conversation-only.
 
 8. **Confirm completion** — Print exactly one summary line in this shape: `Created SPEC.md at <absolute-path> with N pointer(s) in §1, M decision(s) in §2, K backlog item(s) in §3.` `<absolute-path>` is the resolved write target from step 6 (target-dir or cwd). Use the actual counts. End the skill.
@@ -82,7 +82,7 @@ The 8 steps below are the runtime contract — each step maps to specific FRs fr
 
 - [ ] `SPEC.md` exists at the project root with all four sections (§1 Architecture, §2 Decisions snapshot, §3 Live backlog, §4 Current state)
 - [ ] §4 has a timestamped `Last updated` line in RFC 3339 format with timezone offset
-- [ ] The output passes the 5 verification commands from `guides/spec-digest-pattern.md` (Verification section)
+- [ ] The output passes the 5 verification checks (`guides/spec-digest-pattern.md` § Verification): four `## N.` sections; a clear/compact hint in §4; a `Last updated` line; every bracket-link target resolves; every backtick path resolves (paths starting with `/` exempt)
 - [ ] No file other than `SPEC.md` was modified (CLAUDE.md, ADRs, detail files all untouched)
 - [ ] The CLAUDE.md auto-update recipe stanza was emitted to conversation with the one-line hint
 - [ ] If `SPEC.md` already existed at invocation: refusal message was emitted and no `Write` was attempted

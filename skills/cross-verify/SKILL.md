@@ -31,16 +31,17 @@ next-skill: any
 Before running the manual checklist, search for structured output blocks in the current directory:
 
 1. Glob for the persisted artifact files: `docs/specs/*/prd.md`, `docs/specs/*/design.md`, `docs/specs/*/tasks.md` (plus `*.vN.md` variants), and hand-saved `*-review.md` / `*-prd.md` / `*-tasks.md` in the working directory
-2. Read each file and look for `<!-- SKILL_OUTPUT:` blocks. These blocks live only in persisted files ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)); a non-persisted run has none and falls through to steps 5–6
+2. Read each file and look for `<!-- SKILL_OUTPUT:` blocks. Blocks live only in persisted files ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)); otherwise go to steps 5–6
 3. If found, pre-populate evidence for:
    - **Q4**: Extract `ears_count` and `success_criteria_count` from requirements block
    - **Q5**: Extract `test_coverage_checked` from review block
    - **Q8**: Compare `task_count` vs `ears_count` for scope alignment — flag if `task_count > ears_count * 3`
    - **Q14**: Extract `decision_count` from design block — flag if only 1 option was presented (no third alternative considered)
    - **Q16**: Extract `sticky_decisions` from design block — flag if 0 sticky decisions in a design with >3 decisions (WHY not captured)
-   - **Q4**: Cross-check `decision_count` against requirements `success_criteria_count` — flag if decisions don't cover all criteria
-4. Mark auto-populated answers with `✓A` (auto-detected) confidence level
-5. **Session-context fallback (no persisted block)**: if the producer skills (`/requirements`, `/design`, `/breakdown`, `/review-ai`) ran earlier in **this session**, mine their PRD / design / tasks **prose** still in context to pre-populate Q4 / Q8 / Q14 / Q16. Mark `✓I`, or `✓A` only for fields the prose states as an explicit count (e.g. a numbered EARS list).
+   - **Q4** also: flag if design `decision_count` < requirements `success_criteria_count`
+   - **Q17**: if a handoff note exists, check it names current state, evidence, and next skill
+4. Mark auto-populated answers `✓A`; report which blocks were found and which were missing
+5. **Session-context fallback (no persisted block)**: if producer skills ran earlier **this session**, mine their prose still in context for Q4 / Q8 / Q14 / Q16. Mark `✓I`, or `✓A` only for explicit counts (e.g. a numbered EARS list).
 6. If neither a persisted block nor prior producer output is available, proceed with manual assessment
 
 ## Process

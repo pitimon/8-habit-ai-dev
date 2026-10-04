@@ -96,7 +96,7 @@ Ask `Blocking` questions before final recommendations. For `Important` or `Usefu
 
 5. **Identify sticky decisions** (decisions that should not change mid-implementation):
 
-   Some decisions act as **sticky latches** — once set, reversing them mid-session wastes prior context. Claude Code uses this pattern internally: boolean flags that, once true, never revert, since toggling invalidates the prompt cache (90% cost saving lost).
+   Some decisions act as **sticky latches** — once set, reversing them mid-session wastes prior context (like a flag that, once flipped, invalidates the prompt cache).
 
    For each decision in step 4, ask: **"If we change this after implementation starts, how much rework does it cause?"**
 
@@ -134,7 +134,7 @@ Ask `Blocking` questions before final recommendations. For `Important` or `Usefu
 
    > 🔗 **Skip if**: System is not AI-based, or is AI but not high-risk under Annex III, or not EU-targeted. For formal scope pre-flight, install [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) v3.1.0+ and run `/eu-ai-act-check --scope` (the canonical skill, migrated from this plugin on 2026-05-02 per ADR-012).
    >
-   > 🔗 **Three Loops — use claude-governance for the formal model**: The 5-capability table above is a lightweight design-time sanity check. For **formal Three Loops classification per decision** (Out-of / On-the / In-the-Loop with consequence-based gating for irreversible ops), install [`pitimon/claude-governance`](https://github.com/pitimon/claude-governance) alongside this plugin. Three Loops and its ADR-002 live in governance by design — `8-habit-ai-dev` references it rather than reimplementing (see `CLAUDE.md` → Plugin Boundary). It originates from human-autonomy teaming literature (Endsley 1999, DARPA) — a design pattern that _satisfies_ Article 14 ¶4(a-e), not a term EU law itself uses. Cite Article 14 ¶ refs in audits, not Three Loops labels.
+   > 🔗 **Three Loops** (formal per-decision classification) lives in `claude-governance` (ADR-002); cite Article 14 ¶ refs in audits, not Three Loops labels.
 
 7. **Document as ADR** if the decision is:
    - Hard to reverse
@@ -158,9 +158,9 @@ Ask `Blocking` questions before final recommendations. For `Important` or `Usefu
 
 ## Optional Persistence (`--persist <slug>`)
 
-When invoked with `--persist <slug>`, this skill writes its design output to `docs/specs/<slug>/design.md`, and the `SKILL_OUTPUT:design` block lives in that file (not the conversation). Without the flag: no file writes and no block (byte-identical filesystem behavior to v2.14.3; conversation-block emission was removed in v2.21.39 per [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)).
+When invoked with `--persist <slug>`, this skill writes its design output to `docs/specs/<slug>/design.md`, and the `SKILL_OUTPUT:design` block lives in that file (not the conversation). Without the flag: no file writes and no block ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)).
 
-For the canonical convention (slug regex `^[a-z0-9][a-z0-9-]{1,63}$`, conflict policy, YAML frontmatter format, error message rules, ID-linkage `Decision-N` guidance), load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
+Persistence rules: an invalid slug (`^[a-z0-9][a-z0-9-]{1,63}$`) skips persistence only. If the file exists, ask overwrite / `design.vN.md` / abort (no way to ask: `.vN.md` + one warning). Frontmatter: `feature`, `step`, `created`, `updated`, `source-skill-version`. Errors state attempt, cause, next step; if the directory cannot be created, output stays in conversation without a block. Completion line: `[/design] complete → docs/specs/<slug>/design.md`. Details: `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
 
 ID-linkage tip: when persisting, label each decision as `### Decision-N: <topic>` and cite covered requirements as `Decision-N covers: FR-001, FR-003` to enable deterministic Coverage and Inconsistency passes in `/consistency-check`. IDs are recommended, not required.
 
@@ -176,7 +176,7 @@ ID-linkage tip: when persisting, label each decision as `### Decision-N: <topic>
 - [ ] Human has explicitly decided (not AI default) — decision recorded
 - [ ] ADR created for decisions affecting >3 files or changing public API
 - [ ] Constraints and non-goals documented
-- [ ] Existing glossary/context files and ADRs were checked when present
+- [ ] Existing glossary/context files and ADRs were checked when present; glossary conflicts surfaced; an ADR stands unless the user asks to revisit it
 - [ ] AI/agent acceleration work labels `software ecology impact` when it affects boundaries, API contracts, validation, release, or ownership
 - [ ] Pass level, claim labels, evidence strength, and `Verify first: Yes/No` are recorded for load-bearing claims
 

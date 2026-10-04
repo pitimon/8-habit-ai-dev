@@ -87,7 +87,7 @@ Every review MUST end with a structured verdict — not free-form prose.
 
 | Level | Label        | Criteria                                   | Action                               |
 | ----- | ------------ | ------------------------------------------ | ------------------------------------ |
-| 0     | **PASS**     | No findings or all informational; Owner note confirmed | Proceed to commit                    |
+| 0     | **PASS**     | No findings or all informational (state what was checked and how); Owner note confirmed | Proceed to commit                    |
 | 1     | **CONCERNS** | Non-blocking issues found                  | Merge allowed, author should address; if only the Owner note is open, merger confirms it first |
 | 2     | **REWORK**   | Significant quality or completeness issues | Must fix before merge                |
 | 3     | **FAIL**     | Security vulnerability or breaking change  | Cannot merge, immediate fix required |
@@ -191,7 +191,7 @@ After producing findings, do not stop at the verdict. Run a **Find → Fix → R
 
 `/review-ai` has no `--persist` flag. **Emit this block only when the review report is written to a `*-review.md` file** (where `/cross-verify` Q5 can glob it) — never append it to the conversation response (the HTML comment renders as visible noise in Codex; see [`guides/structured-output-protocol.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/structured-output-protocol.md) §"Emission gate"). A conversation-only review emits no block, and `/cross-verify` Q5 falls back to manual assessment. The fenced block below is the **file template**:
 
-Regardless of persistence, end your conversation output with the plain-text line `[/review-ai] complete` — see [`guides/structured-output-protocol.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/structured-output-protocol.md) §"Completion signal".
+Regardless of persistence, end your conversation output with the plain-text line `[/review-ai] complete` (append `→ <path>` when the report is saved) — see [`guides/structured-output-protocol.md`](https://github.com/pitimon/8-habit-ai-dev/blob/main/guides/structured-output-protocol.md) §"Completion signal".
 
 ```
 [/review-ai] COMPLETE SKILL_OUTPUT:review

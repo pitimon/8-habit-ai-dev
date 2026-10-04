@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.54-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.55-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.55 · The rest of the guide-only rules move into SKILL.md
+
+Persistence rules, interview stop conditions, fan-out preconditions, review coverage, and the save-spec checks now live in the skills that use them, not only in guides. A test pins 27 such rules (#407).
 
 ## v2.21.54 · Verdict rules live in SKILL.md
 

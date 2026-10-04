@@ -25,7 +25,7 @@ next-skill: design
 
    If the request mixes both, use **Existing-system mode** for the known system boundary and **Idea-mode** for new proposed behavior. Do not let proposed behavior masquerade as confirmed system fact.
 
-1. **Discover requirements**: Before writing EARS criteria, follow the Interview Protocol (loaded below) to discover requirements through structured conversation. Use adaptive depth — Quick (3 questions) for small scope, Standard (5) by default, Deep (7+) for complex features.
+1. **Discover requirements**: Before writing EARS criteria, follow the Interview Protocol (loaded below) to discover requirements through structured conversation. Use adaptive depth — Quick (3 questions) for small scope, Standard (5) by default, Deep (7+) for complex features. Stop only when you have 3+ testable criteria, in/out scope, the primary user and success scenario, and at least one risk or constraint; otherwise keep asking.
 
    Core questions to clarify:
    - What problem are we solving? (not what solution — the problem)
@@ -51,7 +51,7 @@ next-skill: design
    **Definition of Done**: [What must be true before this is "done"]
    ```
 
-4. **Write acceptance criteria in EARS notation** (recommended for features with ≥3 criteria):
+4. **Write acceptance criteria in EARS notation** (recommended for features with ≥3 criteria, and for security-sensitive paths or public API contracts at any count; keep criteria a stakeholder already wrote precisely):
 
    EARS = Easy Approach to Requirements Syntax — 5 templates that eliminate ambiguity in acceptance criteria. Originally from Rolls-Royce (2009), now adopted by GitHub Spec Kit (84.7K⭐).
 
@@ -98,7 +98,15 @@ next-skill: design
 
 When invoked with `--persist <slug>`, this skill writes its PRD output to `docs/specs/<slug>/prd.md`, and the `SKILL_OUTPUT:requirements` block lives in that file (not the conversation). Without the flag: no file writes and no block (byte-identical filesystem behavior to v2.14.3; conversation-block emission was removed in v2.21.39 per [#375](https://github.com/pitimon/8-habit-ai-dev/issues/375)).
 
-For the canonical convention (slug regex `^[a-z0-9][a-z0-9-]{1,63}$`, conflict policy, YAML frontmatter format, error message rules, ID-linkage `FR-NNN` guidance), load `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
+Persistence rules:
+- **Slug** fails `^[a-z0-9][a-z0-9-]{1,63}$` → skip persistence only; the skill still runs.
+- **Target exists** → ask: overwrite, numbered `<artifact>.vN.md`, or abort. Without a way to ask, write the next `.vN.md` and warn once.
+- **Frontmatter** (required): `feature`, `step`, `created`, `updated`, `source-skill-version`; `source-issue` if known.
+- **Errors** state what was attempted, what failed and why, and what the user can do next.
+- **Directory cannot be created** → give that error, then deliver the output in conversation only, with no `SKILL_OUTPUT` block.
+- **Completion line** names the file: `[/requirements] complete → docs/specs/<slug>/prd.md`.
+
+Details and ID-linkage (`FR-NNN`): `${CLAUDE_PLUGIN_ROOT}/guides/persistence-convention.md`.
 
 ID-linkage tip: when persisting, prefix each EARS criterion with `FR-NNN:` (e.g., `1. [Event-driven] FR-001: When user submits...`) to enable deterministic Coverage and Inconsistency passes in `/consistency-check`. IDs are recommended, not required.
 
@@ -120,6 +128,7 @@ ID-linkage tip: when persisting, prefix each EARS criterion with `FR-NNN:` (e.g.
 - [ ] 3-5 concrete, verifiable success criteria defined
 - [ ] Scope boundaries clear — both "in scope" and "out of scope" listed
 - [ ] Stakeholder/target user identified
+- [ ] Each success criterion has a paired failure case that must not pass; when two criteria conflict, the PRD says which wins; ambiguous input defaults to ask or fail safe, not guess
 
 ## Structured Output Block
 
