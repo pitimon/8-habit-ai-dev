@@ -49,6 +49,29 @@ check_dir() {
 check_dir "skills"
 check_dir "plugin/skills"
 
+# Install docs must pass --category (#409): Hermes refuses a skill whose name
+# matches an existing category folder, and `research` collides on common homes.
+for doc in README.md docs/compatibility-matrix.md docs/wiki/Installation.md docs/wiki/Troubleshooting.md; do
+  [ -f "$doc" ] || continue
+  if bad=$(grep -nE 'hermes skills install pitimon/8-habit-ai-dev/skills/[^ `]+' "$doc" | grep -v -- '--category'); then
+    echo "FAIL: $doc has a Hermes install command without --category (see #409):"
+    echo "$bad" | sed 's/^/      /'
+    FAIL=1
+  fi
+done
+
+# Pinned OpenClaw install tags in docs must match the current plugin version
+# (docs/openclaw-integration.md drifted to v2.21.49 while README moved on, #409).
+CUR=$(grep '"version"' .claude-plugin/plugin.json | head -1 | sed 's/.*"version": *"\([^"]*\)".*/\1/')
+for doc in README.md docs/openclaw-integration.md; do
+  [ -f "$doc" ] || continue
+  if stale=$(grep -noE '8-habit-ai-dev@v[0-9]+\.[0-9]+\.[0-9]+' "$doc" | grep -v "@v$CUR\$"); then
+    echo "FAIL: $doc pins an install tag other than v$CUR:"
+    echo "$stale" | sed 's/^/      /'
+    FAIL=1
+  fi
+done
+
 if [ "$FAIL" -ne 0 ]; then
   echo ""
   echo "RESULT: FAILED"

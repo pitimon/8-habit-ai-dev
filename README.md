@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)](skills/RESOLVER.md)
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)](habits/)
-[![Version](https://img.shields.io/badge/Version-2.21.55-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.55)
+[![Version](https://img.shields.io/badge/Version-2.21.56-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.56)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22155) — Version history
+- [What's New](#whats-new-in-v22156) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -102,10 +102,12 @@ codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
 
 ```bash
 hermes skills tap add pitimon/8-habit-ai-dev
-hermes skills install pitimon/8-habit-ai-dev/skills/cross-verify
-hermes skills install pitimon/8-habit-ai-dev/skills/requirements
+hermes skills install pitimon/8-habit-ai-dev/skills/cross-verify --category productivity
+hermes skills install pitimon/8-habit-ai-dev/skills/requirements --category productivity
 # ...repeat per skill you want; see skills/ for the full list.
 ```
+
+Pass `--category`: Hermes refuses to install a skill whose name matches an existing category folder (for example `research`, if you already have `~/.hermes/skills/research/`).
 
 **Use in Claude Code** (restart Claude Code, then invoke a skill by slash command):
 
@@ -141,7 +143,7 @@ Use the cross-verify skill to check this release plan.
 **Use with OpenClaw:** OpenClaw can load this repository as a compatible skill bundle. Install from a pinned tag, restart the Gateway, and verify the skill snapshot:
 
 ```bash
-openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.55
+openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.56
 openclaw gateway restart
 openclaw skills list
 ```
@@ -479,6 +481,15 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
+## What's New in v2.21.56
+
+**Theme: Hermes install commands that work on every Hermes home (#409)**
+
+- `hermes skills install …/skills/research` was refused on Hermes homes that already have a `research/` category folder ("Refusing to overwrite category directory"). The install commands in README, the compatibility matrix, and the wiki now pass `--category productivity`; the skill keeps its name.
+- `tests/test-hermes-tap-links.sh` fails if any documented Hermes install command omits `--category`.
+
+---
+
 ## What's New in v2.21.55
 
 **Theme: the rest of the guide-only rules move into SKILL.md (#407)**
@@ -805,4 +816,4 @@ MIT
 
 ---
 
-_Version: 2.21.55 | Last updated: 2026-10-04_
+_Version: 2.21.56 | Last updated: 2026-10-04_

@@ -33,8 +33,12 @@ For Hermes, there is no marketplace step — add the repo as a tap instead:
 
 ```bash
 hermes skills tap add pitimon/8-habit-ai-dev
-hermes skills install pitimon/8-habit-ai-dev/skills/<name>
+hermes skills install pitimon/8-habit-ai-dev/skills/<name> --category productivity
 ```
+
+### `hermes skills install` Fails With "Refusing to overwrite category directory"
+
+The skill's name matches a category folder that already holds other skills in your Hermes home (common for `research`). Install into a category instead: `hermes skills install pitimon/8-habit-ai-dev/skills/research --category productivity`. The skill keeps its name, so `/research` still works ([#409](https://github.com/pitimon/8-habit-ai-dev/issues/409)).
 
 ### `hermes skills install` Fails With "Could not fetch ... from any source"
 

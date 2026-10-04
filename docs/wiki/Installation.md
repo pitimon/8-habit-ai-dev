@@ -65,11 +65,11 @@ Hermes has no plugin-manifest layer. It discovers skills through its Skills Hub 
 
 ```bash
 hermes skills tap add pitimon/8-habit-ai-dev
-hermes skills install pitimon/8-habit-ai-dev/skills/cross-verify
-hermes skills install pitimon/8-habit-ai-dev/skills/requirements
+hermes skills install pitimon/8-habit-ai-dev/skills/cross-verify --category productivity
+hermes skills install pitimon/8-habit-ai-dev/skills/requirements --category productivity
 ```
 
-Repeat `hermes skills install` for each skill you want; there is no single command that installs all 24 at once.
+Repeat `hermes skills install` for each skill you want; there is no single command that installs all 24 at once. Keep `--category`: without it, a skill whose name matches an existing category folder (for example `research`) is refused with "Refusing to overwrite category directory".
 
 Verify:
 
