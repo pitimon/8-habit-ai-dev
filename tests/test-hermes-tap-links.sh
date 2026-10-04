@@ -49,6 +49,17 @@ check_dir() {
 check_dir "skills"
 check_dir "plugin/skills"
 
+# Install docs must pass --category (#409): Hermes refuses a skill whose name
+# matches an existing category folder, and `research` collides on common homes.
+for doc in README.md docs/compatibility-matrix.md docs/wiki/Installation.md docs/wiki/Troubleshooting.md; do
+  [ -f "$doc" ] || continue
+  if bad=$(grep -nE 'hermes skills install pitimon/8-habit-ai-dev/skills/[^ `]+' "$doc" | grep -v -- '--category'); then
+    echo "FAIL: $doc has a Hermes install command without --category (see #409):"
+    echo "$bad" | sed 's/^/      /'
+    FAIL=1
+  fi
+done
+
 if [ "$FAIL" -ne 0 ]; then
   echo ""
   echo "RESULT: FAILED"

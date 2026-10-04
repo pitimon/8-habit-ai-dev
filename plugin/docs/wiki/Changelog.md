@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.55-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.56-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.56 · Hermes install commands pass --category
+
+Hermes refused to install `research` on homes that already have a `research/` category folder. The documented install commands now pass `--category productivity`, and a test keeps them that way (#409).
 
 ## v2.21.55 · The rest of the guide-only rules move into SKILL.md
 
