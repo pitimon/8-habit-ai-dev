@@ -66,7 +66,7 @@ What do we need to know before specifying requirements?
 
 - Glob `~/.claude/lessons/*.md` to check if lesson files exist
 - If lessons exist, Grep for tags or keywords matching the research topic: `Grep pattern="tags:.*<keyword>" path="~/.claude/lessons/"` then fall back to `Grep pattern="<keyword>" path="~/.claude/lessons/"` for body matches
-- If relevant lessons are found, Read them and include findings under "Prior lessons learned" in the research brief. A lesson is a prior-session claim: mark it unverified (✓U) until re-checked this session
+- If relevant lessons are found, Read them and include findings under "Prior lessons learned" in the research brief. A lesson is a prior-session claim: mark it unverified (✓U) until re-checked this session (✓U = an assumption not checked now)
 - If `~/.claude/lessons/` does not exist or is empty, skip silently
 
 Route by depth level:
