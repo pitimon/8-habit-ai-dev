@@ -44,6 +44,15 @@ The skill's name matches a category folder that already holds other skills in yo
 
 No action needed. Re-running `hermes skills install … --category productivity` on an installed skill reports "already installed" and leaves it in place; `hermes skills update <name>` keeps updating it where it is. Only a skill whose name collides with a category folder (for example `research`) needs `--category` ([#409](https://github.com/pitimon/8-habit-ai-dev/issues/409)).
 
+### `/plugins` Does Not List 8-habit-ai-dev on Hermes
+
+Expected. On Hermes, 8-habit-ai-dev is installed as a skill tap, not a plugin; `/plugins` (`hermes plugins list`) shows only code plugins. Check the tap and skills instead:
+
+```bash
+hermes skills tap list          # pitimon/8-habit-ai-dev should be listed
+hermes skills list --source hub # the installed skills, e.g. diagnose, research
+```
+
 ### Old Skill Names Stop Working After Switching to Tap Installs
 
 Hand-made ports often used prefixed names (`8-habit-diagnose`, `research-skill`). Tap installs use the upstream names (`diagnose`, `research`), so `/8-habit-diagnose` returns "Unknown command". Keep the old command working with an alias in `~/.hermes/config.yaml`, then start a new session (`/reload-skills` does not reload aliases):
