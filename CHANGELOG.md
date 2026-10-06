@@ -14,12 +14,12 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ### Documentation
 
-- **Hermes TUI alias collision**: wiki Troubleshooting, Installation, Limitations, the compatibility matrix, and AGENTS.md now warn that a Hermes `quick_commands` alias containing a skill name (`research-skill` → `/research`) captures the exact skill command, so the skill prints "Loading skill" and the model never replies ([hermes-agent#96972](https://github.com/NousResearch/hermes-agent/issues/96972), related [#106063](https://github.com/NousResearch/hermes-agent/issues/106063)). The earlier advice to alias old port names is replaced by "use upstream names and delete the alias". Simulated TUI resolution over all 24 skills: 11 misrouted with typical port aliases, 0 without; only `/research` verified live end to end.
-- Hermes runtime defect, not a skill defect; no skill content changed and this plugin does not patch Hermes.
+- **Hermes TUI alias collision**: wiki Troubleshooting, Installation, Limitations, the compatibility matrix, and AGENTS.md now warn that a Hermes `quick_commands` alias named after a skill (`research-skill` → `/research`) can capture the exact skill command, so the skill prints "Loading skill" and the model never replies ([hermes-agent#96972](https://github.com/NousResearch/hermes-agent/issues/96972), related [#106063](https://github.com/NousResearch/hermes-agent/issues/106063)). Replaces the earlier "alias old port names" advice. Simulated TUI resolution over all 24 skills: 11 misrouted with typical port aliases, 0 without; only `/research` verified live. Hermes runtime defect, not a skill defect; no skill content changed.
+- Same branch also adds the Troubleshooting entries for existing installs without `--category` and for `/plugins` not listing the tap.
 
 ### Added
 
-- `tests/test-hermes-tap-links.sh` fails if docs recommend an alias targeting one of this repo's skills or drop the #96972 warning.
+- `tests/test-hermes-tap-links.sh` fails if README/AGENTS/CLAUDE/`docs/` carry a YAML alias targeting one of this repo's skills (block or inline form; skill list derived from `skills/`), or if the #96972 Troubleshooting entry or its heading goes missing.
 
 ---
 

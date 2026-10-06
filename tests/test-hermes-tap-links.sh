@@ -60,14 +60,24 @@ for doc in README.md docs/compatibility-matrix.md docs/wiki/Installation.md docs
   fi
 done
 
-# Hermes TUI exact-skill routing (hermes-agent#96972): docs must not recommend a
-# quick_commands alias targeting one of our skills, and must carry the warning.
-if grep -nE 'target: */(breakdown|calibrate|deploy-guide|design|diagnose|eu-ai-act-check|reflect|requirements|research|security-check|workflow)$' README.md docs/*.md docs/wiki/*.md AGENTS.md 2>/dev/null | grep -v 'delete\|Delete\|Never'; then
-  echo "FAIL: docs recommend an alias targeting a skill; the Hermes TUI misroutes it (#96972)."
+# Hermes TUI exact-skill routing (hermes-agent#96972): the TUI omits skills from its
+# exact-match map, so a quick_commands alias targeting one of our skills (or named after
+# one) captures the exact /<skill> command. Docs must not recommend such an alias.
+# Matches real YAML lines only (line-start), both block (`target: /research`) and inline
+# (`name: {type: alias, target: /research}`) forms; prose mentions are not flagged.
+SKILLS=$(ls skills | paste -sd'|' -)
+ALIAS_DOCS="README.md AGENTS.md CLAUDE.md docs/*.md docs/wiki/*.md"
+# shellcheck disable=SC2086
+if grep -nE "^[[:space:]]*(target:[[:space:]]*/($SKILLS)([^a-z-]|$)|[A-Za-z0-9_-]+:[[:space:]]*\{[^}]*type:[[:space:]]*alias[^}]*target:[[:space:]]*/($SKILLS)([^a-z-]|$))" $ALIAS_DOCS 2>/dev/null; then
+  echo "FAIL: docs recommend a quick_commands alias targeting a skill; the Hermes TUI misroutes it (#96972)."
   FAIL=1
 fi
-if ! grep -q 'hermes-agent/issues/96972' docs/wiki/Troubleshooting.md docs/compatibility-matrix.md docs/wiki/Limitations.md; then
-  echo "FAIL: Hermes alias-collision warning (#96972) missing from Troubleshooting/compatibility docs."
+if ! grep -q 'hermes-agent/issues/96972' docs/wiki/Troubleshooting.md; then
+  echo "FAIL: docs/wiki/Troubleshooting.md lost the Hermes alias-collision entry (#96972)."
+  FAIL=1
+fi
+if ! grep -q '^### Hermes TUI: `/research` Prints "Loading skill" Then Nothing Happens$' docs/wiki/Troubleshooting.md; then
+  echo "FAIL: Troubleshooting heading changed; fix the anchors in Installation.md/Limitations.md (#96972)."
   FAIL=1
 fi
 
