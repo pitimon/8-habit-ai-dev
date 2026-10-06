@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.56-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.57-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.57 · Hermes TUI: aliases named after a skill break the skill
+
+In the Hermes TUI, an alias such as `research-skill` → `/research` can capture `/research`, so the skill prints "Loading skill" and nothing else happens (Hermes issue #96972). The old advice to alias port names is replaced by "use the upstream names and remove those aliases"; see Troubleshooting.
 
 ## v2.21.56 · Hermes install commands pass --category
 

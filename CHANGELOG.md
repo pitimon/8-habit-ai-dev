@@ -10,7 +10,7 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## Unreleased
+## v2.21.57 — Hermes TUI alias collision docs (hermes-agent#96972) (2026-10-06)
 
 ### Documentation
 
