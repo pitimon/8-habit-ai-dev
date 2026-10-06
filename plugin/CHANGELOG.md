@@ -10,6 +10,19 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.57 — Hermes TUI alias collision docs (hermes-agent#96972) (2026-10-06)
+
+### Documentation
+
+- **Hermes TUI alias collision**: wiki Troubleshooting, Installation, Limitations, the compatibility matrix, and AGENTS.md now warn that a Hermes `quick_commands` alias named after a skill (`research-skill` → `/research`) can capture the exact skill command, so the skill prints "Loading skill" and the model never replies ([hermes-agent#96972](https://github.com/NousResearch/hermes-agent/issues/96972), related [#106063](https://github.com/NousResearch/hermes-agent/issues/106063)). Replaces the earlier "alias old port names" advice. Simulation: 11/24 misrouted with the maintainer's port aliases, 0 without. Live dispatch on locally patched Hermes with aliases retained: 24/24 model replies; sanitized receipt in `docs/data/hermes-tui-dispatch.json`. Unpatched alias-removal recovery remains simulation-only, and full workflows were not tested. Hermes runtime defect, not a skill defect; no skill content changed.
+- Same branch also adds the Troubleshooting entries for existing installs without `--category` and for `/plugins` not listing the tap.
+
+### Added
+
+- `tests/test-hermes-tap-links.sh` checks alias names containing a skill name in fenced YAML examples in README/AGENTS/CLAUDE/`docs/` (block or inline, either field order; skill list derived from `skills/*/SKILL.md`). Its runnable regression matrix covers independent targets, unrelated-name controls and prose. It also requires the #96972 Troubleshooting entry and heading. This bounded snippet guard is not a general YAML parser or a check of the separate alias-to-skill runtime defect.
+
+---
+
 ## v2.21.56 — Hermes install commands pass --category (#409) (2026-10-04)
 
 ### Fixed

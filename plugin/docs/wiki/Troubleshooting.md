@@ -40,6 +40,47 @@ hermes skills install pitimon/8-habit-ai-dev/skills/<name> --category productivi
 
 The skill's name matches a category folder that already holds other skills in your Hermes home (common for `research`). Install into a category instead: `hermes skills install pitimon/8-habit-ai-dev/skills/research --category productivity`. The skill keeps its name, so `/research` still works ([#409](https://github.com/pitimon/8-habit-ai-dev/issues/409)).
 
+### Already Installed Without `--category`
+
+No action needed. Re-running `hermes skills install … --category productivity` on an installed skill reports "already installed" and leaves it in place; `hermes skills update <name>` keeps updating it where it is. Only a skill whose name collides with a category folder (for example `research`) needs `--category` ([#409](https://github.com/pitimon/8-habit-ai-dev/issues/409)).
+
+### `/plugins` Does Not List 8-habit-ai-dev on Hermes
+
+Expected. On Hermes, 8-habit-ai-dev is installed as a skill tap, not a plugin; `/plugins` (`hermes plugins list`) shows only code plugins. Check the tap and skills instead:
+
+```bash
+hermes skills tap list          # pitimon/8-habit-ai-dev should be listed
+hermes skills list --source hub # the installed skills, e.g. diagnose, research
+```
+
+### Old Skill Names Stop Working After Switching to Tap Installs
+
+Hand-made ports often used prefixed names (`8-habit-diagnose`, `research-skill`). Tap installs use the upstream names (`diagnose`, `research`), so `/8-habit-diagnose` returns "Unknown command". Avoid aliasing an old name to a tap skill when the alias name contains the skill's name (`research-skill` → `/research`): on affected Hermes builds that makes the skill silently stop working in the TUI (see the next entry). An alias with an unrelated name was not tested. Update any other skill or config that references the old name.
+
+### Hermes TUI: `/research` Prints "Loading skill" Then Nothing Happens
+
+Symptom: in the modern TUI (`hermes --tui`) a tap-installed skill such as `/research <topic>` shows `⚡ Loading skill: research`, returns to ready, and the model never replies. A plain message in the same session works, and the CLI may load the skill fine.
+
+Likely cause (Hermes TUI, not this repo's skills; per source reading and the simulation below, confirmed live only for `/research`): the TUI resolves a typed command against an exact-match map that omits skills. When no exact entry exists it falls back to prefix/substring matching, so a longer quick-command alias such as `research-skill` (`quick_commands: … type: alias, target: /research`) captures `/research` and sends it down a path that loads the skill without submitting a model turn. It is the skill-missing-from-`canon` defect in [NousResearch/hermes-agent#96972](https://github.com/NousResearch/hermes-agent/issues/96972); the alias-to-skill path is separately tracked in [#106063](https://github.com/NousResearch/hermes-agent/issues/106063) and [#106088](https://github.com/NousResearch/hermes-agent/pull/106088). Reproduced on Hermes v0.21.5 (upstream `71574220`); check those issues for a fix before relying on this workaround.
+
+Workaround — this avoids the trigger; it does not fix Hermes, and any other command whose name contains a skill name can still capture it. Remove the alias, then start a new session (`/reload-skills` does not reload aliases):
+
+```bash
+grep -n -B1 -A2 'type: alias' ~/.hermes/config.yaml   # list quick_commands aliases
+```
+
+Delete each `quick_commands` alias whose name contains one of this repo's skill names (heuristic: its `target` is that skill, e.g. `research-skill` → `/research`), then invoke the skill by its upstream name; the old name stops working. With no such alias, a simulation of the TUI resolution over all 24 skills matched each skill to its own name; with the maintainer's own hand-made-port aliases (`research-skill`, `8-habit-diagnose`, `workflow-guide`, …), 11 were redirected (`breakdown`, `calibrate`, `deploy-guide`, `design`, `diagnose`, `eu-ai-act-check`, `reflect`, `requirements`, `research`, `security-check`, `workflow`). This alias-removal recommendation has simulation evidence only: **unpatched Hermes with aliases removed has not been live-tested**.
+
+#### Live dispatch evidence (2026-10-06)
+
+On the locally patched Hermes v0.21.5 checkout based on `439334127f`, all **24/24** skills produced model replies in fresh real TUI processes, with the existing aliases still configured. The local patch adds `cat.canon.setdefault(k.lower(), k)` in `tui_gateway/methods_tools.py::_catalog_skills`, preserving existing canonical owners. This is a separate developer workaround, not something this plugin installs; removing aliases was not the configuration tested in this run.
+
+Each probe submitted `/<skill>` with a diagnostic instruction to reply `PROBE-<skill>-<result of 7*6>`. The input did not contain the computed `-42` marker; captured TUI output did for every skill. The probe requested no workflow or file changes, but the model could use tools (the `/research` capture includes a calculation tool call). Results and environment limits are recorded in [the sanitized dispatch receipt](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/data/hermes-tui-dispatch.json).
+
+This proves **live command-to-model dispatch on the patched runtime**, not full workflow correctness, independent validation of skill content, unpatched alias-removal recovery, or compatibility with every Hermes version. The original unpatched silent-failure reproduction remains live-verified only for `/research`.
+
+Note: this is a Hermes runtime issue. Skills content is unchanged, and this plugin does not patch Hermes.
+
 ### `hermes skills install` Fails With "Could not fetch ... from any source"
 
 Hermes's Skills Hub fetcher fail-closes an entire skill install if the `SKILL.md` contains a same-directory markdown link starting with `..` (treated as a path-traversal attempt). This was fixed repo-wide in v2.21.44 (#386) by switching every doc cross-reference in `skills/*/SKILL.md` to an absolute `https://github.com/pitimon/8-habit-ai-dev/blob/main/...` URL. If you still see this error, confirm you are on v2.21.44 or later (`hermes skills inspect pitimon/8-habit-ai-dev/skills/<name>` shows the resolved source), and check `hermes doctor` for a GitHub rate-limit warning — set `GITHUB_TOKEN` if unauthenticated requests are exhausted.

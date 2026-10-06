@@ -60,6 +60,70 @@ for doc in README.md docs/compatibility-matrix.md docs/wiki/Installation.md docs
   fi
 done
 
+# Guard alias NAMES, not targets. Only inspect fenced yaml/yml examples;
+# prose is not a recommendation. This is a bounded snippet check, not a YAML parser.
+SKILLS=""
+for skill in skills/*/SKILL.md; do
+  name=${skill%/SKILL.md}; name=${name##*/}
+  SKILLS="${SKILLS:+$SKILLS|}$name"
+done
+unsafe_aliases() {
+  awk -v names="$SKILLS" '
+    FNR == 1 { yaml = 0; delete keys }
+    /^```/ { yaml = ($0 ~ /^```ya?ml[[:space:]]*$/); delete keys; next }
+    !yaml { next }
+    /^[[:space:]]*[A-Za-z0-9_-]+:/ {
+      match($0, /[^[:space:]]/); indent = RSTART - 1
+      for (i in keys) if (i >= indent) delete keys[i]
+      key = $0; sub(/^[[:space:]]*/, "", key); sub(/:.*/, "", key)
+      keys[indent] = key
+      if ($0 ~ /type:[[:space:]]*alias([[:space:],}]|$)/) {
+        if (key == "type") {
+          parent = -1
+          for (i in keys) if (i < indent && i + 0 > parent) parent = i + 0
+          key = keys[parent]
+        }
+        if (key ~ names) print FILENAME ":" FNR ": unsafe alias name: " key
+      }
+    }
+  ' "$@"
+}
+# Runnable regression matrix: field order, target independence, block layout,
+# sibling reset, unrelated-name control, and prose control.
+for snippet in \
+  'research-skill: {type: alias, target: /research}' \
+  'research-skill: {target: /research, type: alias}' \
+  'research-skill: {type: alias, target: /help}' \
+  $'research-skill:\n  target: /help\n  type: alias'; do
+  if [ -z "$(printf '```yaml\n%s\n```\n' "$snippet" | unsafe_aliases)" ]; then
+    echo "FAIL: alias guard missed regression: $snippet"; FAIL=1
+  fi
+done
+for snippet in \
+  'rs: {type: alias, target: /research}' \
+  $'research-skill:\n  type: shell\nrs:\n  type: alias\n  target: /research'; do
+  if [ -n "$(printf '```yaml\n%s\n```\n' "$snippet" | unsafe_aliases)" ]; then
+    echo "FAIL: alias guard rejected unrelated-name control"; FAIL=1
+  fi
+done
+if [ -n "$(printf 'research-skill: {type: alias, target: /research}\n' | unsafe_aliases)" ]; then
+  echo "FAIL: alias guard rejected prose control"; FAIL=1
+fi
+bad=$(unsafe_aliases README.md AGENTS.md CLAUDE.md docs/*.md docs/wiki/*.md)
+if [ -n "$bad" ]; then
+  printf '%s\n' "$bad"
+  echo "FAIL: fenced YAML recommends an alias whose name contains a skill name (#96972)."
+  FAIL=1
+fi
+if ! grep -q 'hermes-agent/issues/96972' docs/wiki/Troubleshooting.md; then
+  echo "FAIL: docs/wiki/Troubleshooting.md lost the Hermes alias-collision entry (#96972)."
+  FAIL=1
+fi
+if ! grep -q '^### Hermes TUI: `/research` Prints "Loading skill" Then Nothing Happens$' docs/wiki/Troubleshooting.md; then
+  echo "FAIL: Troubleshooting heading changed; fix the anchors in Installation.md/Limitations.md (#96972)."
+  FAIL=1
+fi
+
 # Pinned OpenClaw install tags in docs must match the current plugin version
 # (docs/openclaw-integration.md drifted to v2.21.49 while README moved on, #409).
 CUR=$(grep '"version"' .claude-plugin/plugin.json | head -1 | sed 's/.*"version": *"\([^"]*\)".*/\1/')

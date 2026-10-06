@@ -28,6 +28,7 @@
 | Dynamic sub-agent orchestration engine | A separate adapter or orchestration product |
 | Claude hook feature parity inside Codex or Hermes | Codex-native adapters, explicit manual checks, or a Hermes-native equivalent workflow |
 | Full supporting-reference parity on Hermes (`guides/`, `habits/`, `scripts/` via `${CLAUDE_PLUGIN_ROOT}`) | Follow the "Hermes:" note each affected `SKILL.md` carries for the substitution URL (v2.21.46), or track [#388](https://github.com/pitimon/8-habit-ai-dev/issues/388) |
+| Hermes TUI: quick-command aliases that contain a skill name (for example `research-skill` → `/research`) redirect the exact skill command and the skill never runs ([hermes-agent#96972](https://github.com/NousResearch/hermes-agent/issues/96972)) | Use the upstream skill names and remove such aliases; see [Troubleshooting](Troubleshooting#hermes-tui-research-prints-loading-skill-then-nothing-happens) |
 
 ## Platform Boundaries
 
