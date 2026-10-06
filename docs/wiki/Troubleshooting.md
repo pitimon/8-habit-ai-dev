@@ -69,7 +69,15 @@ Workaround — this avoids the trigger; it does not fix Hermes, and any other co
 grep -n -B1 -A2 'type: alias' ~/.hermes/config.yaml   # list quick_commands aliases
 ```
 
-Delete each `quick_commands` alias whose name contains one of this repo's skill names (heuristic: its `target` is that skill, e.g. `research-skill` → `/research`), then invoke the skill by its upstream name; the old name stops working. With no such alias, a simulation of the TUI resolution over all 24 skills matched each skill to its own name; with the maintainer's own hand-made-port aliases (`research-skill`, `8-habit-diagnose`, `workflow-guide`, …), 11 were redirected (`breakdown`, `calibrate`, `deploy-guide`, `design`, `diagnose`, `eu-ai-act-check`, `reflect`, `requirements`, `research`, `security-check`, `workflow`). In a fresh TUI only `/research` was verified end to end; the other skills were checked by that simulation and by backend dispatch, not by a live model turn each.
+Delete each `quick_commands` alias whose name contains one of this repo's skill names (heuristic: its `target` is that skill, e.g. `research-skill` → `/research`), then invoke the skill by its upstream name; the old name stops working. With no such alias, a simulation of the TUI resolution over all 24 skills matched each skill to its own name; with the maintainer's own hand-made-port aliases (`research-skill`, `8-habit-diagnose`, `workflow-guide`, …), 11 were redirected (`breakdown`, `calibrate`, `deploy-guide`, `design`, `diagnose`, `eu-ai-act-check`, `reflect`, `requirements`, `research`, `security-check`, `workflow`). This alias-removal recommendation has simulation evidence only: **unpatched Hermes with aliases removed has not been live-tested**.
+
+#### Live dispatch evidence (2026-10-06)
+
+On the locally patched Hermes v0.21.5 checkout based on `439334127f`, all **24/24** skills produced model replies in fresh real TUI processes, with the existing aliases still configured. The local patch adds `cat.canon.setdefault(k.lower(), k)` in `tui_gateway/methods_tools.py::_catalog_skills`, preserving existing canonical owners. This is a separate developer workaround, not something this plugin installs; removing aliases was not the configuration tested in this run.
+
+Each probe submitted `/<skill>` with a diagnostic instruction to reply `PROBE-<skill>-<result of 7*6>`. The input did not contain the computed `-42` marker; captured TUI output did for every skill. The probe requested no workflow or file changes, but the model could use tools (the `/research` capture includes a calculation tool call). Results and environment limits are recorded in [the sanitized dispatch receipt](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/data/hermes-tui-dispatch.json).
+
+This proves **live command-to-model dispatch on the patched runtime**, not full workflow correctness, independent validation of skill content, unpatched alias-removal recovery, or compatibility with every Hermes version. The original unpatched silent-failure reproduction remains live-verified only for `/research`.
 
 Note: this is a Hermes runtime issue. Skills content is unchanged, and this plugin does not patch Hermes.
 

@@ -60,16 +60,59 @@ for doc in README.md docs/compatibility-matrix.md docs/wiki/Installation.md docs
   fi
 done
 
-# Hermes TUI exact-skill routing (hermes-agent#96972): the TUI omits skills from its
-# exact-match map, so a quick_commands alias targeting one of our skills (or named after
-# one) captures the exact /<skill> command. Docs must not recommend such an alias.
-# Matches real YAML lines only (line-start), both block (`target: /research`) and inline
-# (`name: {type: alias, target: /research}`) forms; prose mentions are not flagged.
-SKILLS=$(ls skills | paste -sd'|' -)
-ALIAS_DOCS="README.md AGENTS.md CLAUDE.md docs/*.md docs/wiki/*.md"
-# shellcheck disable=SC2086
-if grep -nE "^[[:space:]]*(target:[[:space:]]*/($SKILLS)([^a-z-]|$)|[A-Za-z0-9_-]+:[[:space:]]*\{[^}]*type:[[:space:]]*alias[^}]*target:[[:space:]]*/($SKILLS)([^a-z-]|$))" $ALIAS_DOCS 2>/dev/null; then
-  echo "FAIL: docs recommend a quick_commands alias targeting a skill; the Hermes TUI misroutes it (#96972)."
+# Guard alias NAMES, not targets. Only inspect fenced yaml/yml examples;
+# prose is not a recommendation. This is a bounded snippet check, not a YAML parser.
+SKILLS=""
+for skill in skills/*/SKILL.md; do
+  name=${skill%/SKILL.md}; name=${name##*/}
+  SKILLS="${SKILLS:+$SKILLS|}$name"
+done
+unsafe_aliases() {
+  awk -v names="$SKILLS" '
+    FNR == 1 { yaml = 0; delete keys }
+    /^```/ { yaml = ($0 ~ /^```ya?ml[[:space:]]*$/); delete keys; next }
+    !yaml { next }
+    /^[[:space:]]*[A-Za-z0-9_-]+:/ {
+      match($0, /[^[:space:]]/); indent = RSTART - 1
+      for (i in keys) if (i >= indent) delete keys[i]
+      key = $0; sub(/^[[:space:]]*/, "", key); sub(/:.*/, "", key)
+      keys[indent] = key
+      if ($0 ~ /type:[[:space:]]*alias([[:space:],}]|$)/) {
+        if (key == "type") {
+          parent = -1
+          for (i in keys) if (i < indent && i + 0 > parent) parent = i + 0
+          key = keys[parent]
+        }
+        if (key ~ names) print FILENAME ":" FNR ": unsafe alias name: " key
+      }
+    }
+  ' "$@"
+}
+# Runnable regression matrix: field order, target independence, block layout,
+# sibling reset, unrelated-name control, and prose control.
+for snippet in \
+  'research-skill: {type: alias, target: /research}' \
+  'research-skill: {target: /research, type: alias}' \
+  'research-skill: {type: alias, target: /help}' \
+  $'research-skill:\n  target: /help\n  type: alias'; do
+  if [ -z "$(printf '```yaml\n%s\n```\n' "$snippet" | unsafe_aliases)" ]; then
+    echo "FAIL: alias guard missed regression: $snippet"; FAIL=1
+  fi
+done
+for snippet in \
+  'rs: {type: alias, target: /research}' \
+  $'research-skill:\n  type: shell\nrs:\n  type: alias\n  target: /research'; do
+  if [ -n "$(printf '```yaml\n%s\n```\n' "$snippet" | unsafe_aliases)" ]; then
+    echo "FAIL: alias guard rejected unrelated-name control"; FAIL=1
+  fi
+done
+if [ -n "$(printf 'research-skill: {type: alias, target: /research}\n' | unsafe_aliases)" ]; then
+  echo "FAIL: alias guard rejected prose control"; FAIL=1
+fi
+bad=$(unsafe_aliases README.md AGENTS.md CLAUDE.md docs/*.md docs/wiki/*.md)
+if [ -n "$bad" ]; then
+  printf '%s\n' "$bad"
+  echo "FAIL: fenced YAML recommends an alias whose name contains a skill name (#96972)."
   FAIL=1
 fi
 if ! grep -q 'hermes-agent/issues/96972' docs/wiki/Troubleshooting.md; then

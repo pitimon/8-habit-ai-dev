@@ -1,0 +1,119 @@
+{
+  "date": "2026-10-06",
+  "scope": "Real fresh TUI command-to-model dispatch only; no full skill workflows",
+  "runtime": {
+    "version": "v0.21.5",
+    "base_commit": "439334127f",
+    "local_patch": "cat.canon.setdefault(k.lower(), k) in _catalog_skills",
+    "existing_quick_command_aliases_retained": true,
+    "other_local_changes_present": true
+  },
+  "method": "Fresh hermes --tui process per skill via tmux; diagnostic prompt requests PROBE-<skill>-<result of 7*6>; captured output checked for computed -42 marker absent from input. Four probes run concurrently.",
+  "limitations": [
+    "Unpatched runtime with aliases removed not live-tested",
+    "Probe does not prove skill content was followed or workflow correctness",
+    "Tools were requested off but could be used; research capture includes calculation tool",
+    "No cross-platform or newer-release guarantee",
+    "Raw captures retained locally, excluded from public receipt"
+  ],
+  "total": 24,
+  "passed": 24,
+  "results": [
+    {
+      "skill": "ai-dev-log",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "breakdown",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "build-brief",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "calibrate",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "consistency-check",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "cross-verify",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "deploy-guide",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "design",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "diagnose",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "eu-ai-act-check",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "management-talk",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "monitor-setup",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "operational-state",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "post-mortem",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "reflect",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "requirements",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "research",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "review-ai",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "save-spec",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "scrutinize",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "security-check",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "using-8-habits",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "whole-person-check",
+      "model_reply_marker_verified": true
+    },
+    {
+      "skill": "workflow",
+      "model_reply_marker_verified": true
+    }
+  ]
+}
