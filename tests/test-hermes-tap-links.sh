@@ -60,6 +60,17 @@ for doc in README.md docs/compatibility-matrix.md docs/wiki/Installation.md docs
   fi
 done
 
+# Hermes TUI exact-skill routing (hermes-agent#96972): docs must not recommend a
+# quick_commands alias targeting one of our skills, and must carry the warning.
+if grep -nE 'target: */(breakdown|calibrate|deploy-guide|design|diagnose|eu-ai-act-check|reflect|requirements|research|security-check|workflow)$' README.md docs/*.md docs/wiki/*.md AGENTS.md 2>/dev/null | grep -v 'delete\|Delete\|Never'; then
+  echo "FAIL: docs recommend an alias targeting a skill; the Hermes TUI misroutes it (#96972)."
+  FAIL=1
+fi
+if ! grep -q 'hermes-agent/issues/96972' docs/wiki/Troubleshooting.md docs/compatibility-matrix.md docs/wiki/Limitations.md; then
+  echo "FAIL: Hermes alias-collision warning (#96972) missing from Troubleshooting/compatibility docs."
+  FAIL=1
+fi
+
 # Pinned OpenClaw install tags in docs must match the current plugin version
 # (docs/openclaw-integration.md drifted to v2.21.49 while README moved on, #409).
 CUR=$(grep '"version"' .claude-plugin/plugin.json | head -1 | sed 's/.*"version": *"\([^"]*\)".*/\1/')

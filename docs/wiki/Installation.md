@@ -92,6 +92,8 @@ hermes skills uninstall cross-verify
 
 No `AGENTS.md`/`CLAUDE.md` doctrine, session hook, or `SessionStart` reminder travels with a Hermes tap install — only the skill content itself.
 
+Do not alias old port names (`research-skill`, `8-habit-diagnose`) to the tap skills: in the Hermes TUI such an alias can capture the exact skill command so it silently does nothing. See [Troubleshooting](Troubleshooting#hermes-tui-research-prints-loading-skill-then-nothing-happens).
+
 > [!WARNING]
 > Most skills also reference `guides/`, `habits/`, or `scripts/` via a Claude/Codex-only `${CLAUDE_PLUGIN_ROOT}` path that Hermes cannot auto-resolve — each affected `SKILL.md` carries a one-line note with the exact substitution URL (`https://github.com/pitimon/8-habit-ai-dev/blob/main`) as of v2.21.46, so a Hermes-installed skill needs one extra step for supporting references, not zero. Tracked in [#388](https://github.com/pitimon/8-habit-ai-dev/issues/388).
 

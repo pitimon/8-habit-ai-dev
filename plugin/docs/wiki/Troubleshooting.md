@@ -55,16 +55,23 @@ hermes skills list --source hub # the installed skills, e.g. diagnose, research
 
 ### Old Skill Names Stop Working After Switching to Tap Installs
 
-Hand-made ports often used prefixed names (`8-habit-diagnose`, `research-skill`). Tap installs use the upstream names (`diagnose`, `research`), so `/8-habit-diagnose` returns "Unknown command". Keep the old command working with an alias in `~/.hermes/config.yaml`, then start a new session (`/reload-skills` does not reload aliases):
+Hand-made ports often used prefixed names (`8-habit-diagnose`, `research-skill`). Tap installs use the upstream names (`diagnose`, `research`), so `/8-habit-diagnose` returns "Unknown command". **Use the upstream names and do not alias the old ones to the new skill**: on affected Hermes builds an alias whose name contains a skill's name makes that skill silently stop working in the TUI (see the next entry). Update any other skill or config that references the old name.
 
-```yaml
-quick_commands:
-  8-habit-diagnose:
-    type: alias
-    target: /diagnose
+### Hermes TUI: `/research` Prints "Loading skill" Then Nothing Happens
+
+Symptom: in the modern TUI (`hermes --tui`) a tap-installed skill such as `/research <topic>` shows `⚡ Loading skill: research`, returns to ready, and the model never replies. A plain message in the same session works, and the CLI may load the skill fine.
+
+Cause (Hermes TUI, not this repo's skills): the TUI resolves a typed command against an exact-match map that omits skills. When no exact entry exists it falls back to prefix/substring matching, so a longer quick-command alias such as `research-skill` (`quick_commands: … type: alias, target: /research`) captures `/research` and sends it down a path that loads the skill without submitting a model turn. It is the skill-missing-from-`canon` defect in [NousResearch/hermes-agent#96972](https://github.com/NousResearch/hermes-agent/issues/96972); the alias-to-skill path is separately tracked in [#106063](https://github.com/NousResearch/hermes-agent/issues/106063) and [#106088](https://github.com/NousResearch/hermes-agent/pull/106088). Reproduced on Hermes v0.21.5 (upstream `71574220`); check those issues for a fix before relying on this workaround.
+
+Workaround — remove the alias, then start a new session (`/reload-skills` does not reload aliases):
+
+```bash
+grep -n -B1 -A2 'type: alias' ~/.hermes/config.yaml   # list quick_commands aliases
 ```
 
-Update any other skill or config that references the old name as well.
+Delete each `quick_commands` entry whose `target` is one of this repo's skills (for example `research-skill: {type: alias, target: /research}`), then invoke the skill by its upstream name. With no such alias, a simulation of the TUI resolution over all 24 skills matched each skill to its own name; with the aliases from a typical hand-made port, 11 were redirected (`breakdown`, `calibrate`, `deploy-guide`, `design`, `diagnose`, `eu-ai-act-check`, `reflect`, `requirements`, `research`, `security-check`, `workflow`). In a fresh TUI only `/research` was verified end to end; the other skills were checked by that simulation and by backend dispatch, not by a live model turn each.
+
+Note: this is a Hermes runtime issue. Skills content is unchanged, and this plugin does not patch Hermes.
 
 ### `hermes skills install` Fails With "Could not fetch ... from any source"
 
