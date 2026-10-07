@@ -10,6 +10,18 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.58 — Research citation-verification scope (#418) (2026-10-07)
+
+### Documentation
+
+- The research brief template explicitly distinguishes citation existence/accuracy from correctness of conclusions, beside the Source Verification Report table. Existing status vocabulary and SKILL.md remain unchanged; rename and optional quote evidence remain deferred in #417. No runtime or semantic-validation improvement is claimed.
+
+### Tests
+
+- A fixed-string pin checks the disclosure in root and mirror. RED before the template change (both copies), GREEN after; this verifies wording, not reader comprehension or agent compliance.
+
+---
+
 ## v2.21.57 — Hermes TUI alias collision docs (hermes-agent#96972) (2026-10-06)
 
 ### Documentation

@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.57-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.58-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.58 · Research citation-verification scope
+
+The research brief template now says citation checks do not certify conclusions, beside its Source Verification Report table. Status names stay unchanged; terminology and optional quote evidence remain deferred in #417.
 
 ## v2.21.57 · Hermes TUI: aliases named after a skill break the skill
 

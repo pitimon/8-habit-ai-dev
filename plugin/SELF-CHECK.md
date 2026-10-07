@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 2.21.57 | **Date**: 2026-10-06 | **Previous**: 2.21.56 (#409 Hermes install --category)
+**Version**: 2.21.58 | **Date**: 2026-10-07 | **Previous**: 2.21.57 (Hermes TUI alias collision docs)
 
 > **H8 Modeling:** "Follow the process always, no shortcuts when unwatched."
 
@@ -9,6 +9,8 @@
 > Re-running 17 self-graded questions would re-enter the self-inflation trap those reviews documented (honest score at the audit: **Body 4 / Mind 3.5 / Heart 4 / Spirit 3 = 3.6/5**, not 5.0). The **authoritative current self-assessment is the living per-release scoring list below** — refreshed every release with concrete evidence per dimension (Body / Mind / Heart / Spirit). The honesty discipline and dimension definitions remain; only the frozen headline is gone.
 
 ## Honesty Notes
+
+- v2.21.58: Body 4, Mind 4, Heart 4, Spirit 4 = **4.0** (#418 research citation-verification disclosure. Body: RED/GREEN wording pins protect root and mirror, not reader comprehension. Mind: scope narrowed to one template sentence; initial local CI missed committed-change bump enforcement, caught by hosted CI. Heart: clarification is next to the status table; no user misunderstanding is claimed. Spirit: citation accuracy is distinguished from correctness of conclusions; terminology and quote schema remain deferred in #417.)
 
 v2.7.0 improvements (Reader Adoption — closing the /calibrate feature loop):
 
@@ -222,4 +224,4 @@ The `/cross-verify` checklist (17 questions) measures **plan discipline**; the W
 
 ---
 
-_Updated with each release. Previous: 2.21.56 (Body 4.5, Mind 4.5, Heart 4.5, Spirit 4.5 = 4.5)_
+_Updated with each release. Previous: 2.21.57 (Body 4, Mind 4.5, Heart 4.5, Spirit 4.5 = 4.375)_

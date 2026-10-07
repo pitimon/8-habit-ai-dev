@@ -77,6 +77,15 @@ for root in skills plugin/skills; do
   fi
 done
 
+# Research template disclosure: citation checks do not certify conclusions.
+for prefix in "" "plugin/"; do
+  f="${prefix}guides/templates/research-brief-template.md"
+  if ! grep -qF 'Source verification checks citation existence and accuracy, not whether the conclusions drawn from those sources are correct.' "$f"; then
+    echo "FAIL: $f lacks the source-verification scope disclosure"
+    FAIL=1
+  fi
+done
+
 if [ "$FAIL" -ne 0 ]; then
   echo ""
   echo "RESULT: FAILED — a verdict-changing rule left SKILL.md (#404)"
