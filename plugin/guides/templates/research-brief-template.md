@@ -38,6 +38,8 @@ Use this template when producing output from `/research`. All sections marked (o
 
 ### Source Verification Report (optional — Deep mode)
 
+Source verification checks citation existence and accuracy, not whether the conclusions drawn from those sources are correct.
+
 | Source | Type | Status | Notes |
 |--------|------|--------|-------|
 | [path or URL] | [codebase/web/doc] | [Verified/Dead/Not Found] | [detail] |
