@@ -44,7 +44,7 @@ Repo: https://github.com/pitimon/8-habit-ai-dev
 
 ## Compliance
 
-- [guides/eu-ai-act-mapping.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/eu-ai-act-mapping.md): EU AI Act Articles 9-15 mapping to plugin skills.
+- [skills/eu-ai-act-check/SKILL.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/skills/eu-ai-act-check/SKILL.md): EU AI Act Articles 9-15 mapping migrated to `pitimon/claude-governance` v3.1.0 (ADR-012); this repo keeps a redirect stub only.
 - [guides/cross-verification.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/cross-verification.md): 17-question 8-habit checklist with dimension summary.
 - [guides/ears-notation.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/guides/ears-notation.md): EARS requirements syntax reference for `/requirements`.
 - [SKILL-EFFECTIVENESS.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/SKILL-EFFECTIVENESS.md): Per-skill effectiveness signal ledger from `/reflect`.
