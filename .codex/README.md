@@ -45,7 +45,7 @@ Codex does not run Claude Code's full hook lifecycle, but it is not blind to `ho
 
 Repo-local Codex packaging exposes the markdown skills. It does not provide runtime enforcement, policy authorization, compliance certification, or dynamic orchestration.
 
-User-level Codex configuration and global memory are outside this repo. When a session has the configured memory setup, use `claude-mem` as read-only history and write durable project notes to the Obsidian vault at `/Volumes/ipv9-OneT/ObsidianVault`, preferably under `Claude-Mem/Projects/`, rather than to `claude-mem`.
+User-level Codex configuration and global memory are outside this repo. When a session has the configured memory setup, use `claude-mem` as read-only history and write durable project notes to the maintainer's configured Obsidian vault (machine-local path, intentionally not committed), preferably under `Claude-Mem/Projects/`, rather than to `claude-mem`.
 
 ## Do not store
 
