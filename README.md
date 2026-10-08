@@ -5,7 +5,7 @@
 [![Skills](https://img.shields.io/badge/Skills-24-blue)](skills/RESOLVER.md)
 [![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)](habits/)
-[![Version](https://img.shields.io/badge/Version-2.21.58-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.58)
+[![Version](https://img.shields.io/badge/Version-2.21.59-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.59)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
@@ -44,7 +44,7 @@
 
 **Reference**
 
-- [What's New](#whats-new-in-v22158) — Version history
+- [What's New](#whats-new-in-v22159) — Version history
 - [Not a Checklist](#not-a-checklist) — Principles, not gates
 - [Origin](#origin) — Where these habits come from
 - [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
@@ -143,7 +143,7 @@ Use the cross-verify skill to check this release plan.
 **Use with OpenClaw:** OpenClaw can load this repository as a compatible skill bundle. Install from a pinned tag, restart the Gateway, and verify the skill snapshot:
 
 ```bash
-openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.58
+openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.59
 openclaw gateway restart
 openclaw skills list
 ```
@@ -478,6 +478,14 @@ See an illustrative repository file tree in [`docs/wiki/Architecture.md`](docs/w
 Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
+
+---
+
+## What's New in v2.21.59
+
+**Theme: dead EU AI Act link in `llms.txt` fixed**
+
+- `llms.txt` pointed at `guides/eu-ai-act-mapping.md`, which moved to `pitimon/claude-governance` v3.1.0 (ADR-012). The entry now points at the in-repo `skills/eu-ai-act-check/SKILL.md` redirect stub (#419). All 33 raw links in `llms.txt` were checked against the tree. The link checker still excludes same-repo `main` URLs, so this class of dead link is not CI-enforced.
 
 ---
 
@@ -836,4 +844,4 @@ MIT
 
 ---
 
-_Version: 2.21.58 | Last updated: 2026-10-07_
+_Version: 2.21.59 | Last updated: 2026-10-08_
