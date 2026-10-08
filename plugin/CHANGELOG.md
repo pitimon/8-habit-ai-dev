@@ -10,6 +10,14 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.60 — Remove machine-local vault path from public agent docs (#420) (2026-10-08)
+
+### Documentation
+
+- `AGENTS.md`, `plugin/AGENTS.md` and `.codex/README.md` no longer pin the maintainer's absolute Obsidian vault path; they refer to the maintainer's configured vault. Memory-policy behavior is unchanged. The path remains in git history and earlier tags.
+
+---
+
 ## v2.21.59 — Fix dead EU AI Act link in llms.txt (#419) (2026-10-08)
 
 ### Documentation
