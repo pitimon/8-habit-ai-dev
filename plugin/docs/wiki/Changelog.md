@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.59-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.60-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.60 · Machine-local vault path removed from agent docs
+
+`AGENTS.md` and `.codex/README.md` now refer to the maintainer's configured Obsidian vault instead of an absolute local path. Behavior is unchanged.
 
 ## v2.21.59 · Dead EU AI Act link in llms.txt fixed
 
