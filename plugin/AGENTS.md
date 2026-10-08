@@ -92,4 +92,4 @@ bash tests/ci-local.sh
 
 ## Memory policy
 
-Use `claude-mem` as read-only historical agent memory when available. Write new durable project notes to the Obsidian vault at `/Volumes/ipv9-OneT/ObsidianVault`, preferably under `Claude-Mem/Projects/` or generated exports under `Claude-Mem/Exports/`. Treat `Codex/Inbox/` captures as raw evidence; promote only concise summaries, decisions, and runbooks.
+Use `claude-mem` as read-only historical agent memory when available. Write new durable project notes to the maintainer's configured Obsidian vault (machine-local path, intentionally not committed), preferably under `Claude-Mem/Projects/` or generated exports under `Claude-Mem/Exports/`. Treat `Codex/Inbox/` captures as raw evidence; promote only concise summaries, decisions, and runbooks.
