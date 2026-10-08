@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 2.21.58 | **Date**: 2026-10-07 | **Previous**: 2.21.57 (Hermes TUI alias collision docs)
+**Version**: 2.21.59 | **Date**: 2026-10-08 | **Previous**: 2.21.58 (research citation-verification scope)
 
 > **H8 Modeling:** "Follow the process always, no shortcuts when unwatched."
 
@@ -10,6 +10,7 @@
 
 ## Honesty Notes
 
+- v2.21.59: Body 4, Mind 4, Heart 4.5, Spirit 4 = **4.125** (#419 dead `llms.txt` link. Body: all 33 raw links resolved against the tree, but link-check still excludes same-repo URLs, so no CI guard was added. Mind: one-line pointer fix plus mirror. Heart: LLM indexers no longer hit a 404. Spirit: review ran after the commit; released on explicit request despite the Bundle-later default.)
 - v2.21.58: Body 4, Mind 4, Heart 4, Spirit 4 = **4.0** (#418 research citation-verification disclosure. Body: RED/GREEN wording pins protect root and mirror, not reader comprehension. Mind: scope narrowed to one template sentence; initial local CI missed committed-change bump enforcement, caught by hosted CI. Heart: clarification is next to the status table; no user misunderstanding is claimed. Spirit: citation accuracy is distinguished from correctness of conclusions; terminology and quote schema remain deferred in #417.)
 
 v2.7.0 improvements (Reader Adoption — closing the /calibrate feature loop):
@@ -224,4 +225,4 @@ The `/cross-verify` checklist (17 questions) measures **plan discipline**; the W
 
 ---
 
-_Updated with each release. Previous: 2.21.57 (Body 4, Mind 4.5, Heart 4.5, Spirit 4.5 = 4.375)_
+_Updated with each release. Previous: 2.21.58 (Body 4, Mind 4, Heart 4, Spirit 4 = 4.0)_

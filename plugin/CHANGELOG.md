@@ -10,6 +10,14 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.59 — Fix dead EU AI Act link in llms.txt (#419) (2026-10-08)
+
+### Documentation
+
+- `llms.txt` line 47 linked to `guides/eu-ai-act-mapping.md`, removed when the EU AI Act toolkit migrated to `pitimon/claude-governance` v3.1.0 (ADR-012). It now points at the `skills/eu-ai-act-check/SKILL.md` redirect stub. All 33 raw links in `llms.txt` resolve to files in the tree. Same-repo `main` URLs remain excluded from `link-check.yml`, so this check is not CI-enforced.
+
+---
+
 ## v2.21.58 — Research citation-verification scope (#418) (2026-10-07)
 
 ### Documentation

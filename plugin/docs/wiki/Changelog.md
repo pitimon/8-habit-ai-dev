@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.58-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.59-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.59 · Dead EU AI Act link in llms.txt fixed
+
+`llms.txt` now points its EU AI Act entry at the `eu-ai-act-check` redirect stub instead of the removed `guides/eu-ai-act-mapping.md` (migrated to claude-governance v3.1.0).
 
 ## v2.21.58 · Research citation-verification scope
 
