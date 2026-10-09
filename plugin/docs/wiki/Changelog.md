@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.60-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.61-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.61 · Self-referential link targets checked in CI
+
+A network-free validator checks same-repo `/main/` URLs against exact tracked working-tree targets (#423), with 15 regression fixtures. This closes the blind spot behind #419. Literal paths only; encoded/non-ASCII support remains deferred to [#424](https://github.com/pitimon/8-habit-ai-dev/issues/424). No skill or runtime behavior changed.
 
 ## v2.21.60 · Machine-local vault path removed from agent docs
 

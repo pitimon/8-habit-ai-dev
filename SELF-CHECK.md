@@ -1,6 +1,6 @@
 # Self-Check: 8-Habit Cross-Verification on This Plugin
 
-**Version**: 2.21.60 | **Date**: 2026-10-08 | **Previous**: 2.21.59 (dead llms.txt link)
+**Version**: 2.21.61 | **Date**: 2026-10-09 | **Previous**: 2.21.60 (machine-local vault path removal)
 
 > **H8 Modeling:** "Follow the process always, no shortcuts when unwatched."
 
@@ -10,6 +10,7 @@
 
 ## Honesty Notes
 
+- v2.21.61: Body 4, Mind 4, Heart 4, Spirit 4 = **4.0** (#423 self-link validator. Body: scanner and 15-case fixtures execute in CI; candidate bytes passed Bash 3.2.57 and 5.2.21; original dead-link negative control fails. Mind: exact index spelling closes local filesystem false passes. Heart: literal-path scope is explicit, not a general URL parser. Spirit: independent agent reviewed hashed candidate bytes before the fix commit, not cross-vendor proof; non-ASCII/encoded-path gaps remain in #424. No runtime installs were exercised.)
 - v2.21.60: Body 4, Mind 4, Heart 4, Spirit 4 = **4.0** (#420 machine-local vault path removed from public agent docs. Body: grep finds no remaining occurrence in the tree, but no CI guard prevents reintroduction. Mind: three one-line edits plus mirror. Heart: other maintainers no longer read a path meaningless to them. Spirit: path stays in git history and tags; review ran after the commit; released on explicit request despite the Bundle-later default.)
 - v2.21.59: Body 4, Mind 4, Heart 4.5, Spirit 4 = **4.125** (#419 dead `llms.txt` link. Body: all 33 raw links resolved against the tree, but link-check still excludes same-repo URLs, so no CI guard was added. Mind: one-line pointer fix plus mirror. Heart: LLM indexers no longer hit a 404. Spirit: review ran after the commit; released on explicit request despite the Bundle-later default.)
 - v2.21.58: Body 4, Mind 4, Heart 4, Spirit 4 = **4.0** (#418 research citation-verification disclosure. Body: RED/GREEN wording pins protect root and mirror, not reader comprehension. Mind: scope narrowed to one template sentence; initial local CI missed committed-change bump enforcement, caught by hosted CI. Heart: clarification is next to the status table; no user misunderstanding is claimed. Spirit: citation accuracy is distinguished from correctness of conclusions; terminology and quote schema remain deferred in #417.)
@@ -226,4 +227,4 @@ The `/cross-verify` checklist (17 questions) measures **plan discipline**; the W
 
 ---
 
-_Updated with each release. Previous: 2.21.59 (Body 4, Mind 4, Heart 4.5, Spirit 4 = 4.125)_
+_Updated with each release. Previous: 2.21.60 (Body 4, Mind 4, Heart 4, Spirit 4 = 4.0)_
