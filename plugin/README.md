@@ -4,7 +4,7 @@
 [![Validation](https://github.com/pitimon/8-habit-ai-dev/actions/workflows/validate.yml/badge.svg)](https://github.com/pitimon/8-habit-ai-dev/actions/workflows/validate.yml)
 [![Skills](https://img.shields.io/badge/Skills-24-blue)](skills/RESOLVER.md)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)](habits/)
-[![Version](https://img.shields.io/badge/Version-2.21.61-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.61)
+[![Version](https://img.shields.io/badge/Version-2.21.62-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.62)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
 **A shared development playbook for teams using AI coding agents.** Define success criteria, prepare implementation context, review evidence, and plan deployment before shipping. `8-habit-ai-dev` packages these practices as 24 Markdown skills, grounded in Stephen Covey's 8 Habits.
@@ -28,7 +28,7 @@ EU AI Act framework mappings belong to the separate [claude-governance](https://
 - [Workflow](#the-7-step-workflow) and [skill catalog](#skills-reference)
 - [Use cases](#use-cases-which-skill-when) and [recipes](#end-to-end-recipes)
 - [Framework and architecture](#the-8-habits)
-- [What's New](#whats-new-in-v22161)
+- [What's New](#whats-new-in-v22162)
 - [Security](#security), [support](#support-and-maintenance), and [contributing](#contributing)
 - [FAQ](#faq) and [glossary](#glossary)
 
@@ -129,7 +129,7 @@ Use the cross-verify skill to check this release plan.
 **Use with OpenClaw:** OpenClaw can load this repository as a compatible skill bundle. Install from a pinned tag, restart the Gateway, and verify the skill snapshot:
 
 ```bash
-openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.61
+openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.62
 openclaw gateway restart
 openclaw skills list
 ```
@@ -528,13 +528,14 @@ The repository records an integration baseline of `claude-governance` 3.3.0 and 
 
 ---
 
-## What's New in v2.21.61
+## What's New in v2.21.62
 
-**Theme: CI catches dangling same-repo links before merge**
+**Theme: a clearer team-adoption overview**
 
-- A network-free validator checks self-referential `/main/` URLs in tracked Markdown and `llms.txt` against exact Git index paths and existing working-tree targets (#423). This closes the link-check exclusion that missed the broken EU AI Act pointer fixed in #419.
-- Zero-match scans and Git/grep errors fail closed. An isolated 15-case regression matrix runs in the same CI step; candidate fixtures passed on Bash 3.2.57 and 5.2.21, and the original dead link was rejected.
-- Encoded, space-containing and non-ASCII path support remains deferred to [#424](https://github.com/pitimon/8-habit-ai-dev/issues/424). Current literal-path links pass; this is contributor validation, not new runtime enforcement or skill behavior.
+- The README now explains intended outputs, pilot adoption, team responsibilities, runtime differences, update checks, and public support (#426).
+- It distinguishes this guidance package from a managed service, policy enforcement, compliance certification, and contractual SLA. Unmeasured productivity claims are removed from current introductory prose.
+- The refreshed README was reduced from 866 to 669 lines before this release entry changed: 26 older release summaries are replaced by a link to CHANGELOG.md. All 24 skill entries remain, and FAQ links point to standalone targets.
+- This release changes documentation and version surfaces only. No skill behavior, runtime integration, or service assurance changed. Independent reviews covered the README candidate; browser rendering and runtime installations were not re-tested.
 
 ---
 
@@ -666,4 +667,4 @@ MIT
 
 ---
 
-_Version: 2.21.61 | Last updated: 2026-10-09_
+_Version: 2.21.62 | Last updated: 2026-10-09_

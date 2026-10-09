@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.61-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.62-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.62 · README team-adoption refresh
+
+The README explains intended team outcomes, pilot adoption, responsibilities, runtime differences, rollout/update, security, and public support. It remains a guidance plugin, not a managed service or compliance certification. Older release summaries now point to CHANGELOG.md; the 24-skill catalog remains.
 
 ## v2.21.61 · Self-referential link targets checked in CI
 
