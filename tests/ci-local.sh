@@ -4,8 +4,8 @@
 #
 # WHY: the CI `validate` job (.github/workflows/validate.yml) runs the step
 # list below. Declaring "green" after running only validate-structure.sh has
-# already caused
-# one blocked merge (branch protection failed on validate-content.sh Check 19 —
+# already caused one blocked merge (branch protection failed on
+# validate-content.sh Check 19 —
 # lesson 2026-06-28, "CI-parity local gate"). This script closes that gap:
 # derive the set from validate.yml when editing — the list below MUST stay in
 # lock-step with the workflow's steps.
