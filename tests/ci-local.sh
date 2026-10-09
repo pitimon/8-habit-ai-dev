@@ -2,9 +2,10 @@
 # ci-local.sh — run the EXACT validator set CI runs, in one shot (Fable F14, #360).
 # Requires bash (child scripts use process substitution). Do not run with sh.
 #
-# WHY: the CI `validate` job (.github/workflows/validate.yml) runs EIGHT scripts.
-# Declaring "green" after running only validate-structure.sh has already caused
-# one blocked merge (branch protection failed on validate-content.sh Check 19 —
+# WHY: the CI `validate` job (.github/workflows/validate.yml) runs the step
+# list below. Declaring "green" after running only validate-structure.sh has
+# already caused one blocked merge (branch protection failed on
+# validate-content.sh Check 19 —
 # lesson 2026-06-28, "CI-parity local gate"). This script closes that gap:
 # derive the set from validate.yml when editing — the list below MUST stay in
 # lock-step with the workflow's steps.
@@ -18,7 +19,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 # Keep in lock-step with .github/workflows/validate.yml steps.
-SCRIPTS="validate-structure.sh test-skill-graph.sh validate-content.sh test-verbosity-hook.sh test-pre-commit-hook.sh test-cross-verify-release-gates.sh test-hermes-tap-links.sh test-hermes-skills-guard.sh test-guide-rule-anchors.sh test-openclaw-compatibility.sh"
+SCRIPTS="validate-structure.sh test-skill-graph.sh validate-content.sh test-verbosity-hook.sh test-pre-commit-hook.sh test-cross-verify-release-gates.sh test-hermes-tap-links.sh test-hermes-skills-guard.sh test-guide-rule-anchors.sh test-openclaw-compatibility.sh test-self-link-targets.sh"
 
 FAILED=""
 for s in $SCRIPTS; do

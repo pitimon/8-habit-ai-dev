@@ -36,3 +36,5 @@ jobs:
         run: bash tests/test-guide-rule-anchors.sh
       - name: OpenClaw skill compatibility
         run: bash tests/test-openclaw-compatibility.sh
+      - name: Self-referential /main/ link targets resolve (#419 blind spot)
+        run: bash tests/test-self-link-targets.sh

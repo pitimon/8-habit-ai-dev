@@ -40,6 +40,8 @@ bash tests/test-cross-verify-release-gates.sh
 bash tests/test-hermes-tap-links.sh
 bash tests/test-hermes-skills-guard.sh
 bash tests/test-guide-rule-anchors.sh
+bash tests/test-openclaw-compatibility.sh
+bash tests/test-self-link-targets.sh
 bash tests/ci-local.sh
 ```
 
