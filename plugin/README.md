@@ -1,84 +1,64 @@
-# 8 Habits of Effective AI-Assisted Development
+# 8-Habit AI Dev
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED)](https://github.com/pitimon/8-habit-ai-dev)
+[![Validation](https://github.com/pitimon/8-habit-ai-dev/actions/workflows/validate.yml/badge.svg)](https://github.com/pitimon/8-habit-ai-dev/actions/workflows/validate.yml)
 [![Skills](https://img.shields.io/badge/Skills-24-blue)](skills/RESOLVER.md)
-[![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-via%20claude--governance-lightgrey)](https://github.com/pitimon/claude-governance)
 [![Habits](https://img.shields.io/badge/Habits-8-orange)](habits/)
 [![Version](https://img.shields.io/badge/Version-2.21.61-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.61)
 [![Wiki](https://img.shields.io/badge/docs-Wiki-informational)](https://github.com/pitimon/8-habit-ai-dev/wiki)
 
-📖 **Full documentation**: **[Wiki](https://github.com/pitimon/8-habit-ai-dev/wiki)** — deep-dive guides per step, [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), and the [8 Habits Reference](https://github.com/pitimon/8-habit-ai-dev/wiki/Habits-Reference).
+**A shared development playbook for teams using AI coding agents.** Define success criteria, prepare implementation context, review evidence, and plan deployment before shipping. `8-habit-ai-dev` packages these practices as 24 Markdown skills, grounded in Stephen Covey's 8 Habits.
 
-> **"ทำเสร็จ ≠ ทำดี"** — Shipping code is not the same as shipping _good_ code.
->
-> AI coding tools are powerful — but "build me X" without requirements, review, or staging creates fast, fragile code. This plugin adds the discipline AI lacks: **24 skills** across a **7-step workflow**, grounded in **Covey's 8 Habits** of effective development.
+It installs as a Claude Code or Codex plugin, or as individual Hermes skills. It is an open-source guidance package, **not a hosted or managed service**. Your team retains responsibility for approvals, testing, access control, and production changes.
+
+EU AI Act framework mappings belong to the separate [claude-governance](https://github.com/pitimon/claude-governance) project. This package's `eu-ai-act-check` entry is a redirect, not a compliance assessment or certification.
+
+[Install](#quick-start) · [Team adoption](#team-adoption) · [Runtime boundaries](#runtime-boundaries) · [Skills](#skills-reference) · [Documentation](https://github.com/pitimon/8-habit-ai-dev/wiki) · [Latest release](https://github.com/pitimon/8-habit-ai-dev/releases/latest)
+
+> **ทำเสร็จ ≠ ทำดี**: completing a task is not the same as delivering it with quality.
 
 ---
 
 ## Table of Contents
 
-**Get Started**
-
-- [The Problem](#the-problem) — Why this exists
-- [Quick Start](#quick-start) — Install in 3 steps, verify in 1
-- [Not using Claude Code?](AGENTS.md) — Entry point for Codex, Cursor, Windsurf, Aider, etc.
-
-**The Framework**
-
-- [Design Principle](#design-principle) — Thin harness, fat skills
-- [7-Step Workflow](#the-7-step-workflow) — Visual pipeline from research to monitoring
-- [Skills Reference](#skills-reference) — All 24 skills with habit mappings
-- [Use Cases](#use-cases-which-skill-when) — Common scenarios and recommended paths
-- [End-to-End Recipes](#end-to-end-recipes) — Copy-paste tool sequences for real situations
-- [The 8 Habits](#the-8-habits) — Principles behind the workflow
-- [Maturity Model](#the-maturity-model) — Dependence to Significance
-
-**Deep Dives**
-
-- [Cross-Verification](#cross-verification) — 17-question checklist + scoring
-- [Whole Person Assessment](#whole-person-assessment) — Body/Mind/Heart/Spirit + worked example
-- [Agents](#agents) — Read-only reviewers that analyze your work
-- [Architecture](#architecture) — File tree + design decisions
-- [Companion Plugins](#companion-plugins) — Working with `claude-governance` + `devsecops-ai-team`
-
-**Reference**
-
-- [What's New](#whats-new-in-v22161) — Version history
-- [Not a Checklist](#not-a-checklist) — Principles, not gates
-- [Origin](#origin) — Where these habits come from
-- [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations) — Runtime boundaries and evidence expectations
-- [FAQ](#faq) — Common questions answered
-- [Glossary](#glossary) — Key terms defined
-- [Alternative Setup](#alternative-setup-without-plugin) | [Security](#security) | [Contributing](#contributing) | [License](#license)
+- [What your team gets](#the-problem)
+- [Install and verify](#quick-start)
+- [Runtime boundaries](#runtime-boundaries)
+- [Team adoption](#team-adoption)
+- [Workflow](#the-7-step-workflow) and [skill catalog](#skills-reference)
+- [Use cases](#use-cases-which-skill-when) and [recipes](#end-to-end-recipes)
+- [Framework and architecture](#the-8-habits)
+- [What's New](#whats-new-in-v22161)
+- [Security](#security), [support](#support-and-maintenance), and [contributing](#contributing)
+- [FAQ](#faq) and [glossary](#glossary)
 
 ---
 
 ## The Problem
 
-AI coding tools (Claude Code, Cursor, Copilot, Codex) are powerful — but they amplify whatever process you bring to them. No process? You get fast, fragile code that works in demo but breaks in production.
+AI coding agents can produce changes before a team agrees on scope, architecture, or acceptance criteria. This playbook gives developers, reviewers, and technical leads a common process and documented outputs.
 
-The 7 most common mistakes:
+Use it to make development decisions inspectable:
 
-1. **No requirements** — jumping straight to "build me X"
-2. **No design** — letting AI decide architecture
-3. **No task breakdown** — one giant prompt for everything
-4. **No context** — AI doesn't know your codebase
-5. **No review** — shipping AI output without reading it
-6. **No staging** — deploying directly to production
-7. **No monitoring** — "it works on my machine" mindset
+| Team need | Skills | Expected output |
+| --- | --- | --- |
+| Agree on scope before implementation | `research`, `requirements` | Research brief, product requirements, success criteria |
+| Keep architecture decisions with people | `design`, `breakdown`, `build-brief` | Decision record, task list, implementation context |
+| Review AI-generated work against evidence | `review-ai`, `security-check`, `cross-verify` | Findings, verification status, remaining risks |
+| Prepare a controlled release | `deploy-guide`, `monitor-setup` | Deployment and rollback plan, monitoring checklist |
+| Preserve learning and communicate outcomes | `post-mortem`, `reflect`, `management-talk` | Root-cause record, lessons, audience-specific update |
 
-This plugin provides a **skill for each step** — not as a gate, but as a habit.
+These are intended outputs, not automatic guarantees. Skills guide the agent; your repository controls and human review determine whether work can proceed.
 
 ---
 
 ## Design Principle
 
-We follow the **"Thin Harness, Fat Skills"** pattern — the session hook is bounded (≤300 tokens, enforced in [`hooks/session-start.sh`](hooks/session-start.sh) and documented in `CLAUDE.md`), and the intelligence lives in on-demand markdown skills loaded when you invoke them. The harness gets out of the way; the skills do the work.
+The package keeps runtime integration small and loads detailed guidance on demand: **"Thin Harness, Fat Skills"**. Claude Code has a session reminder bounded to 300 tokens; Markdown skills contain the workflow, templates, and handoff instructions.
 
-The same principle is documented independently by Garry Tan (President & CEO, Y Combinator) in his 2026 essay [_"Thin Harness, Fat Skills"_](https://github.com/garrytan/gbrain/blob/master/docs/ethos/THIN_HARNESS_FAT_SKILLS.md) and shipped in [gbrain](https://github.com/garrytan/gbrain). We arrived at it from workflow discipline; he arrived at it from building a brain — same conclusion.
+The repository has no application server or hosted control plane. Consumer skills need no project package installation, but you still need a compatible agent runtime. Repository validation requires Bash, Git, and Node.js.
 
-The same shift is happening industry-wide under the name **Spec-Driven Development (SDD)**: after "vibe coding" entered the vocabulary in early 2025, tools like GitHub spec-kit, AWS Kiro, and Tessl emerged to generate code from specs. Those are spec-first _tooling_ — this plugin is spec-first _discipline_: tool-agnostic guidance that helps any of them (or none of them) produce better specs in the first place. It adds no enforcement and spawns no role-agents — that is the companion [`claude-governance`](https://github.com/pitimon/claude-governance). We arrived here from workflow discipline; they arrived from building codegen tools — same discipline layer, different delivery.
+Read the [runtime compatibility matrix](docs/compatibility-matrix.md) before assuming hooks, agent definitions, or memory behavior transfer between tools.
 
 ---
 
@@ -91,12 +71,16 @@ claude plugin marketplace add pitimon/8-habit-ai-dev
 claude plugin install 8-habit-ai-dev@pitimon-8-habit-ai-dev
 ```
 
+Verify the package with `claude plugin list`, then restart Claude Code and invoke `/requirements` on a non-production task.
+
 **Install for Codex:**
 
 ```bash
 codex plugin marketplace add pitimon/8-habit-ai-dev
 codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
 ```
+
+Verify with `codex plugin list`. Restart Codex, open `/skills`, and select `requirements`. See the [Codex integration guide](docs/codex-integration.md) for update and Windows instructions.
 
 **Install for Hermes Agent** (Hermes tap: individual skills, no plugin manifest layer):
 
@@ -109,9 +93,11 @@ hermes skills install pitimon/8-habit-ai-dev/skills/requirements --category prod
 
 Pass `--category`: Hermes refuses to install a skill whose name matches an existing category folder (for example `research`, if you already have `~/.hermes/skills/research/`).
 
+Hermes installs skills, not a plugin entry in `/plugins`. Follow each installed skill's Hermes substitution note when it references a repository guide.
+
 **Use in Claude Code** (restart Claude Code, then invoke a skill by slash command):
 
-```
+```text
 /requirements       # Before you build anything
 /review-ai          # Before you commit anything
 /cross-verify       # Before you ship anything
@@ -150,9 +136,21 @@ openclaw skills list
 
 See the [OpenClaw Integration Guide](docs/openclaw-integration.md) for workspace/`extraDirs` loading, allowlists, `{baseDir}` references, and the runtime boundary. OpenClaw does not run this repository's Claude hooks or provide runtime enforcement.
 
-**The Core 5 (≈80% of daily work)**: `/requirements` · `/review-ai` · `/cross-verify` · `/research` · `/reflect`. If you learn only five skills, learn these — the session banner surfaces the same set each session.
+**The Core 5 (recommended starting set)**: `/requirements` · `/review-ai` · `/cross-verify` · `/research` · `/reflect`. This is an onboarding recommendation, not a measured coverage percentage.
 
-Two commands to install for Claude Code or Codex, or a `tap add` + per-skill `install` for Hermes. Claude Code also loads a session reminder; all three platforms can install the 24 skills. For exact runtime boundaries, see the [runtime compatibility matrix](docs/compatibility-matrix.md), [Codex integration guide](docs/codex-integration.md), and wiki [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations): Codex gets native packaging, the same markdown skills, and a narrow `SessionStart` JSON adapter if the host invokes the hook; Hermes gets the same markdown skills via its Skills Hub tap mechanism, with no session-hook, `SessionStart` reminder, or CLAUDE.md/AGENTS.md doctrine attached — and most skills cross-reference `guides/`, `habits/`, and `scripts/` via a Claude/Codex-only `${CLAUDE_PLUGIN_ROOT}` path that Hermes cannot resolve, so each affected `SKILL.md` carries a one-line note with the exact substitution URL as of v2.21.46 (tracked in [#388](https://github.com/pitimon/8-habit-ai-dev/issues/388)); neither gets Claude hook feature parity or runtime enforcement.
+### Runtime boundaries
+
+Shared Markdown skills do not mean identical runtime features:
+
+| Runtime | Install and invocation | Boundary |
+| --- | --- | --- |
+| Claude Code | Plugin; slash commands | Claude-specific session hook and reviewer definitions |
+| Codex | Native plugin; `/skills`, `$skill-name`, or intent | No plugin-provided top-level skill slash commands; narrow SessionStart output adapter only if the host invokes it |
+| Hermes Agent | Skills Hub tap; individual installed skills | No Claude hooks or installed AGENTS.md/CLAUDE.md doctrine; `${CLAUDE_PLUGIN_ROOT}` does not resolve, so follow the skill's substitution URL |
+| OpenClaw | Pinned compatible bundle or workspace loading | No Claude hooks; real-install verification remains open in [#413](https://github.com/pitimon/8-habit-ai-dev/issues/413) |
+| Other agents | Read [AGENTS.md](AGENTS.md), then [skills/RESOLVER.md](skills/RESOLVER.md) | Manual guidance loading, not a native integration promise |
+
+Do not create Hermes quick-command aliases named after skills: they can capture exact skill commands. See [Troubleshooting](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting), the [compatibility matrix](docs/compatibility-matrix.md), and [Limitations](https://github.com/pitimon/8-habit-ai-dev/wiki/Limitations).
 
 ### Keeping the plugin updated
 
@@ -182,11 +180,43 @@ Use `codex plugin marketplace list` if you need to confirm the configured market
 
 ---
 
+## Team adoption
+
+Start with a pilot repository and expand after your team has reviewed the resulting artifacts. The steps below are adoption recommendations, not controls enforced by the plugin.
+
+1. **Assign an owner.** A technical lead selects the runtime, skill set, and version. A reviewer evaluates outputs independently of the author.
+2. **Choose a bounded task.** Use a non-production feature or maintenance change with existing tests. Record the current process before the pilot.
+3. **Define done before implementation.** Use `requirements` for acceptance criteria and `build-brief` for codebase context. Keep architecture decisions with the team.
+4. **Apply your existing controls.** Keep branch protection, continuous integration (CI), security scans, staging, and change approval in place. Skill verdicts do not replace them.
+5. **Review pilot evidence.** Record whether requirements were clear, findings were actionable, and handoffs preserved context. Track rework and review effort without assuming productivity gains.
+6. **Expand deliberately.** Use `reflect` to capture lessons, then update the team's onboarding and change-review process.
+
+### Responsibilities and boundaries
+
+| Area | Package contribution | Team responsibility |
+| --- | --- | --- |
+| Development process | Reusable instructions, templates, and handoff guidance | Choose task scope, accept requirements, and decide architecture |
+| Quality review | Structured findings and evidence prompts | Run tests, verify cited evidence, and approve changes |
+| Deployment | Planning, rollback, and monitoring guidance | Authorize and execute production changes through existing controls |
+| Security and data | [Security policy](SECURITY.md) and [threat model](docs/security/threat-model.md) | Evaluate agent/provider data handling and access permissions; keep secrets out of artifacts |
+| Release management | Versioned Git tags, release notes, and validation workflows | Record the deployed package version and test updates before rollout |
+| Support | Public documentation and issue tracking | Provide internal support, ownership, and escalation routes |
+
+**Not included:** a hosted control plane, organization-wide policy enforcement, compliance certification, tenant isolation, or a contractual service-level agreement (SLA). Companion tools are separate products; installing this package does not establish those assurances.
+
+### Rollout and update checks
+
+Record the plugin version and agent runtime version used in the pilot. Marketplace installs can follow moving snapshots; they are not automatically pinned deployments. Review [release notes](https://github.com/pitimon/8-habit-ai-dev/releases) and the [compatibility matrix](docs/compatibility-matrix.md) before updating. Verify the installed listing and run a representative task before expanding the rollout.
+
+If an update changes behavior unexpectedly, pause adoption and follow your runtime's supported reinstall or version-selection procedure. Reverting repository source alone does not revert an installed agent cache. See the [installation guide](https://github.com/pitimon/8-habit-ai-dev/wiki/Installation) and [Codex update guide](docs/codex-integration.md#update).
+
+---
+
 ## The 7-Step Workflow
 
-Each step maps to one of Covey's 8 Habits — the habit explains _why_ the step matters.
+The workflow has seven delivery steps (1–7), preceded by research (Step 0). Each step maps to a habit explaining why it matters. Use only the steps relevant to the task.
 
-```
+```text
 Step 0          Step 1          Step 2         Step 3
 /research  ───→ /requirements ─→ /design  ────→ /breakdown
 H5:Understand   H2:End in Mind   H8:Find Voice  H3:First Things
@@ -196,7 +226,7 @@ Step 4          Step 5          Step 6         Step 7
 H5:Understand   H4:Win-Win      H1:Proactive   H7:Sharpen Saw
 ```
 
-You don't need all steps every time. Start with **`requirements` before building** and **`review-ai` before committing** — those two alone eliminate most Vibe Coding problems. In Claude Code that usually means `/requirements` and `/review-ai`; in Codex, select them through `/skills`, mention `$requirements` / `$review-ai`, or ask in natural language.
+Start with `requirements` before building and `review-ai` before committing. In Claude Code, invoke `/requirements` and `/review-ai`; in Codex, select them through `/skills`, mention `$requirements` / `$review-ai`, or ask by intent. The implementation stage remains your coding agent's work, not a self-executing skill.
 
 ---
 
@@ -219,6 +249,11 @@ Skill names below use Claude Code slash notation because that is the shortest la
 
 ### Assessment Skills (Use Anytime)
 
+The full catalog below includes 16 additional entries, including the `eu-ai-act-check` redirect stub. For onboarding, start with the Core 5 above; use `/using-8-habits` or the [resolver](skills/RESOLVER.md) when choosing the next skill.
+
+<details>
+<summary>Expand the assessment, investigation, and communication catalog</summary>
+
 | Skill                 | Habit               | Purpose                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | --------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `/cross-verify`       | H1-H8               | 17-question checklist + dimension summary (Body/Mind/Heart/Spirit)                                                                                                                                                                                                                                                                                                                                                                                                                           |
@@ -239,6 +274,8 @@ Skill names below use Claude Code slash notation because that is the shortest la
 | `/management-talk`    | H4 + H6             | **Channel-aware audience reshape** — engineer-to-engineer content → leadership channel (JIRA / Slack / standup / email / meeting). Strips function/file/SHA but keeps JIRA keys, PR numbers, workload names. Inspired by [9arm-skills](https://github.com/thananon/9arm-skills) (v2.17.0)                                                                                                                                                                                                    |
 
 ---
+
+</details>
 
 ## Use Cases: Which Skill When?
 
@@ -262,17 +299,20 @@ Start from **your situation**, not the skill name.
 
 ### Recommended Paths
 
-**Minimum Viable Discipline** — `/requirements` before building + `/review-ai` before committing. Two skills, biggest impact.
+**Starting workflow** — `/requirements` before building + `/review-ai` before committing. Add further steps when the task warrants them.
 
 **Full Workflow** — `/research` through `/monitor-setup` via `/workflow`. For new features or greenfield projects.
 
-**Quality Gate** — `/cross-verify` + `/whole-person-check`. For pre-PR or pre-release assessment.
+**Quality assessment** — `/cross-verify` + `/whole-person-check`. Use before a pull request or release; your team's controls determine approval.
 
 For the full 15-situation map, see [`guides/situation-map.md`](guides/situation-map.md).
 
 ---
 
 ## End-to-End Recipes
+
+<details>
+<summary>Expand six worked sequences for features, reviews, incidents, research, context, and leadership updates</summary>
 
 The table above answers _"which skill?"_. These recipes answer _"how do I actually drive a whole situation?"_ — copy-paste sequences that chain skills (and, where it pays off, the plugin's read-only `8-habit-reviewer` agent — or an independent-model QA pass, if you run one). Names use Claude Code slash notation; in Codex, invoke the same skills via `/skills` or `$skill-name`. Mix, skip, and extend them for your own project — the discipline is the chain (**define → build → verify**), not any single skill.
 
@@ -287,7 +327,7 @@ The table above answers _"which skill?"_. These recipes answer _"how do I actual
 /cross-verify   → 17-question gate across Body / Mind / Heart / Spirit
 ```
 
-**You get:** _done_ is defined before the first prompt and reviewed before the commit. In a hurry? `/requirements` + `/review-ai` alone remove the two most common vibe-coding failure modes — undefined _done_ and unreviewed output. — **H2 + H4**
+**Expected outcome:** acceptance criteria are defined before implementation and reviewed before commit. For a bounded task, start with `/requirements` and `/review-ai`; they address undefined scope and unreviewed output. — **H2 + H4**
 
 ### R2 — Audit AI-generated code before merge (independent gate)
 
@@ -340,11 +380,16 @@ current-state.md                 → lightweight save point for in-flight featur
 
 > Recipes are starting points, not rails. The value is the verification chain, not ceremony — escalate to `/cross-verify` or an independent reviewer when an action is irreversible, and keep it light when it isn't.
 
+</details>
+
 ---
 
 ## The 8 Habits
 
-Based on Stephen Covey's _The 7 Habits of Highly Effective People_ + Habit 8 (_The 8th Habit: From Effectiveness to Greatness_), adapted for AI-assisted development from real experience building a production system over 910 man-day-equivalents.
+Based on Stephen Covey's _The 7 Habits of Highly Effective People_ and _The 8th Habit: From Effectiveness to Greatness_. This package adapts those principles to AI-assisted development; it is not a compliance standard.
+
+<details>
+<summary>Expand the habits, maturity model, assessments, reviewers, and architecture</summary>
 
 ### Private Victory (Self-Management)
 
@@ -406,16 +451,16 @@ Full checklist: [guides/cross-verification.md](guides/cross-verification.md)
 
 ## Whole Person Assessment
 
-The `/whole-person-check` skill evaluates work across Covey's 4 dimensions — one of the plugin's **differentiators**, since few engineering tools assess all four.
+The `/whole-person-check` skill evaluates work across four dimensions. Use the dimensions to ask questions that code-level tests do not address.
 
-| Dimension               | What It Measures                            | AI Strength         |
+| Dimension               | Review focus                                | Team attention      |
 | ----------------------- | ------------------------------------------- | ------------------- |
-| **Body** (Discipline)   | CI, tests, monitoring, quality gates        | Strong — AI excels  |
-| **Mind** (Vision)       | Architecture, ADRs, roadmap, tech debt      | Strong — AI excels  |
-| **Heart** (Passion)     | Craft quality, empathetic errors, UX, DX    | Weak — needs humans |
-| **Spirit** (Conscience) | Security-first, ethics, compliance, sharing | Weak — needs humans |
+| **Body** (Discipline)   | CI, tests, monitoring, quality checks      | Verify execution and outcomes |
+| **Mind** (Vision)       | Architecture, decision records, roadmap    | Evaluate trade-offs and ownership |
+| **Heart** (Passion)     | Craft, error messages, user experience      | Review usability and empathy |
+| **Spirit** (Conscience) | Security, ethics, compliance considerations | Apply human judgment and applicable controls |
 
-AI-assisted development systematically neglects Heart and Spirit. This assessment makes the gap visible so teams can compensate.
+The framework treats Heart and Spirit as areas requiring explicit human attention. The table is a review lens, not a measured benchmark of agent capabilities.
 
 A worked example (a REST-API feature scorecard), the maturity rubrics, and the plugin's own progression chart are in [`docs/wiki/Whole-Person-Assessment.md`](docs/wiki/Whole-Person-Assessment.md).
 
@@ -460,7 +505,7 @@ See an illustrative repository file tree in [`docs/wiki/Architecture.md`](docs/w
 - **When to Skip** — honest conditions prevent compliance theater (H8: contribution over compliance)
 - **Output templates** — structured formats for PRD, ADR, task list, review report, research brief
 - **Dimension mapping** — all 17 cross-verify questions tagged with Body/Mind/Heart/Spirit
-- **Zero dependencies** — pure markdown + bash. No npm, no pip, no runtime requirements. Windows PowerShell validator smokes use Git Bash as a compatibility layer; run `scripts/windows-preflight.ps1` first.
+- **No consumer package dependencies** — Markdown skills do not require an npm or pip install in your project. A compatible agent runtime is still required. Contributor validation uses Bash, Git, and Node.js; Windows validation uses Git Bash via `scripts/windows-preflight.ps1`.
 
 ---
 
@@ -475,9 +520,11 @@ See an illustrative repository file tree in [`docs/wiki/Architecture.md`](docs/w
 
 **Single source of truth for integration:** see [`docs/INTEGRATION.md`](docs/INTEGRATION.md) — covers layer map, choosing-your-stack matrix, integration points, Three Loops asymmetry, EU AI Act scope split, and suggested integrated flow.
 
-Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
+The repository records an integration baseline of `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+. This is not a current-version compatibility guarantee; verify your installed versions separately.
 
 > **Naming note (v2.16.5)**: in `devsecops-ai-team` v10.12.0, the `/workflow` skill was renamed to `/security-workflow` to resolve a cross-plugin naming collision with this plugin's `/workflow` (the 7-step Covey practice). If you have both plugins installed, type `/workflow` for the 7-step walkthrough or `/security-workflow` for devsecops's scan orchestration. Legacy `/workflow` in devsecops continues as a deprecation stub through v10.x (removed in v11.0.0). See devsecops ADR-014.
+
+</details>
 
 ---
 
@@ -491,271 +538,9 @@ Tested against `claude-governance` 3.3.0 and `devsecops-ai-team` 10.12.0+.
 
 ---
 
-## What's New in v2.21.60
-
-**Theme: no machine-local path in public agent docs**
-
-- `AGENTS.md` (Memory policy) and `.codex/README.md` named the maintainer's local Obsidian vault path. They now say "the maintainer's configured Obsidian vault (machine-local path, intentionally not committed)" (#420). The memory policy itself is unchanged.
-- The old path remains in git history and in earlier release tags; this removes it from the current tree only.
-
----
-
-## What's New in v2.21.59
-
-**Theme: dead EU AI Act link in `llms.txt` fixed**
-
-- `llms.txt` pointed at `guides/eu-ai-act-mapping.md`, which moved to `pitimon/claude-governance` v3.1.0 (ADR-012). The entry now points at the in-repo `skills/eu-ai-act-check/SKILL.md` redirect stub (#419). All 33 raw links in `llms.txt` were checked against the tree. The link checker still excludes same-repo `main` URLs, so this class of dead link is not CI-enforced.
-
----
-
-## What's New in v2.21.58
-
-**Theme: citation checks do not certify conclusions**
-
-- The research brief template now states the scope directly beside its Source Verification Report table: checking citation existence and accuracy does not certify the conclusions drawn from those sources.
-- The existing `Verified` vocabulary and SKILL.md are unchanged. A regression pin protects the disclosure in root and mirror; terminology and optional quote evidence remain deferred in #417. This is a disclosure improvement, not proof that readers interpret reports differently.
-
----
-
-## What's New in v2.21.57
-
-**Theme: Hermes TUI skill commands that silently do nothing ([hermes-agent#96972](https://github.com/NousResearch/hermes-agent/issues/96972))**
-
-- In the Hermes TUI, a `quick_commands` alias whose name contains a skill name (`research-skill` → `/research`) can capture the exact skill command: `/research` prints "Loading skill" and the model never replies. Hermes runtime defect; no skill content changed.
-- The wiki previously advised such aliases for old port names; it now says to use upstream names and remove them. New Troubleshooting entry with symptom, cause, workaround and evidence limits.
-- Evidence: 24/24 live model replies in fresh TUIs on a locally patched Hermes (aliases retained, receipt in `docs/data/hermes-tui-dispatch.json`); alias removal on unpatched Hermes is simulation-only (11/24 misrouted with aliases, 0 without). Full workflows not tested.
-- `tests/test-hermes-tap-links.sh` rejects fenced-YAML aliases named after a skill.
-
----
-
-## What's New in v2.21.56
-
-**Theme: Hermes install commands that work on every Hermes home (#409)**
-
-- `hermes skills install …/skills/research` was refused on Hermes homes that already have a `research/` category folder ("Refusing to overwrite category directory"). The install commands in README, the compatibility matrix, and the wiki now pass `--category productivity`; the skill keeps its name.
-- `tests/test-hermes-tap-links.sh` fails if any documented Hermes install command omits `--category`.
-
----
-
-## What's New in v2.21.55
-
-**Theme: the rest of the guide-only rules move into SKILL.md (#407)**
-
-- **Persistence** (`/requirements`, `/design`, `/breakdown`): the conflict policy, required frontmatter, error format, directory-failure fallback, and completion line that names the file are now in each SKILL.md.
-- **`/requirements`**: each success criterion gets a failure case that must not pass; the interview stops only when its four conditions hold; EARS also for security paths and public APIs.
-- **`/breakdown`**: fan-out only after effects are traced and the architecture is decided; agent briefs describe behavior and say why; issue comments never claim unverified closure.
-- **`/design`**, **`/build-brief`**: surface glossary conflicts; an ADR stands unless the user reopens it; one behavior test at a time that fails for the expected reason.
-- **`/review-ai`**: a PASS says what was checked. **`/cross-verify`**: Q17 handoff auto-check; report which output blocks were found. **`/save-spec`**: the five checks are listed, and the CLAUDE.md stanza ships in `reference.md`.
-- **Guard**: `tests/test-guide-rule-anchors.sh` now pins 27 rules and checks the save-spec stanza stays identical to its guide.
-
----
-
-## What's New in v2.21.54
-
-**Theme: rules that change a verdict live in SKILL.md (#404)**
-
-- Agents usually read `SKILL.md` and stop, so a verdict rule kept only in a guide is never applied (#402). An audit of every guide that skills load moved the verdict rules into the skills:
-  - **`/cross-verify`**: integration claims pass only when exercised on the real host with a control case; loading `production-release-gates.md` is now required before setting the release state.
-  - **`/whole-person-check`**: score observable evidence, not plans; a score needs every indicator in its row.
-  - **`/research`**: the Confidence & Open Unknowns section is mandatory, and lessons from earlier sessions are marked unverified until re-checked.
-- **New guard**: `tests/test-guide-rule-anchors.sh` fails CI if one of these rules leaves its SKILL.md.
-- **Measured (blind, SKILL.md only, n=3)**: the mandatory research section went from 0/3 to 3/3; the real-host check now asks for a control case (0/3 to 3/3). Other metrics were already 3/3 without the change. Details: `docs/specs/guide-only-rules-404/eval.md`.
-
----
-
-## What's New in v2.21.53
-
-**Theme: every skill installs through the Hermes tap (#405)**
-
-- **`save-spec` and `breakdown` install on Hermes again.** Hermes's install-time scanner (`skills_guard`) refused `save-spec` (DANGEROUS) and blocked `breakdown` (CAUTION) on wording alone; four lines are reworded with the same meaning, and all 24 skills now scan `safe`.
-- **New guard**: `tests/test-hermes-skills-guard.sh` runs a static HTML-comment check in CI and the real Hermes scanner locally before a release.
-
----
-
-## What's New in v2.21.52
-
-**Theme: ask whether it failed before asking why (#402)**
-
-- **`/cross-verify`** treats "X did not run / never triggered / produced nothing" as an absence claim even when it arrives as a failure with candidate causes: name positive evidence of the failure first; a missing artifact alone is debt, and artifacts that _are_ present may prove X ran.
-- **`/diagnose`** Phase 2 confirms the failure happened at all before reproducing its cause.
-- **Measured, blind, SKILL.md only**: the #402 case went from 0/3 (control) to 3/3 on recording the absence as unverified, asking whether before why, and citing the writer line — the same as the old rule with its guide in context. The original miss was the rule's location, not its wording. Small n, one model family — see `docs/specs/absence-premise-402/eval.md`.
-
----
-
-## What's New in v2.21.51
-
-**Theme: "Is it pro-ready?" has an answer, and the merger owns it**
-
-- **One phrase, one chain**: "pro-ready review", "is this production-ready?", or "ready to merge?" route through `skills/RESOLVER.md` to `/review-ai` → `/cross-verify` → `/deploy-guide`. No new skill.
-- **You Own It**: `/review-ai` asks whether the merger can explain what changed, why, and how to roll back without the AI transcript, and ends with a one-line **Owner note** drafted from repository artifacts. An unconfirmed note caps the verdict at `CONCERNS`.
-- **PRO-READY mapping** in `guides/cross-verification.md` shows which skill covers each letter; **statewright** runtime enforcement is recorded as out of scope, and its `ToolSearch` exemption is cited as independent support for the #399 real-host rule.
-
----
-
-## What's New in v2.21.50
-
-**Theme: `/cross-verify` says what its score measures (#399)**
-
-- **Score scope line** in every report: process completeness (verification), not proof that conclusions or runtime behavior are correct (validation).
-- **Core claims** — the headline claim plus every integration and absence claim, each with evidence source and independence flag; evidence that would look the same if the claim were false makes it unverified; a failed or unverified core claim presented as established turns `proceed`/`address gaps` into `hold: verify core claim`.
-- **Integration changes need the real host** plus a control case; **absence claims** must cite the line that writes the missing artifact.
-- **#393 cleanup**: word-cap check now covers the `plugin/` mirror and warns above 1950 words.
-
----
-
-## What's New in v2.21.49
-
-**Theme: OpenClaw skill compatibility**
-
-- **OpenClaw installation and usage are documented** in `docs/openclaw-integration.md`, including compatible bundle, workspace, and `extraDirs` paths.
-- **OpenClaw compatibility is statically validated** for all 24 skills and the Codex mirror; CI/local validation now runs the eighth suite.
-- **All 22 `${CLAUDE_PLUGIN_ROOT}` skills carry an OpenClaw fallback note** for `{baseDir}`, bundled files, or the repository URL.
-- **Runtime boundaries remain explicit**: Claude hooks, Claude-specific persistence, enforcement, and native OpenClaw runtime modules are not claimed.
-
----
-
-## What's New in v2.21.47
-
-**Theme: #388 follow-up — enforce the substitution note + refresh stale docs**
-
-- **The Hermes substitution note is now CI-enforced** — `tests/validate-structure.sh` fails if any `skills/*/SKILL.md` uses `${CLAUDE_PLUGIN_ROOT}` without the note added in v2.21.46, closing a gap where the rule was declared in `AGENTS.md` but never checked.
-- **5 doc surfaces caught up to v2.21.46** — `docs/compatibility-matrix.md` and wiki Installation/Limitations/FAQ/Home no longer describe the older "references do not resolve" framing without mentioning the substitution note.
-- **`post-mortem` was at the exact 2000-word cap** with zero margin — trimmed verbose (non-essential) prose in its worked example to restore real slack.
-
----
-
-## What's New in v2.21.46
-
-**Theme: #388 — Hermes substitution note for `${CLAUDE_PLUGIN_ROOT}` references**
-
-- **Every affected skill now tells you the Hermes substitution** — all 22 `skills/*/SKILL.md` files that load `guides/`, `habits/`, `scripts/`, or a sibling skill's `reference.md` via `${CLAUDE_PLUGIN_ROOT}` carry a one-line note with the exact `blob/main` URL to use instead. `ai-dev-log` also notes its bundled script ships with the Hermes install and should run relative to the skill's own directory.
-
----
-
-## What's New in v2.21.45
-
-**Theme: #386 follow-up — honest Hermes docs + traversal guard hardening**
-
-- **Hermes install claims corrected** — fixing #386 made skills *installable* on Hermes; it did not make `${CLAUDE_PLUGIN_ROOT}`-based `guides/`/`habits/`/`scripts/` references *resolvable* there. README, `docs/compatibility-matrix.md`, `AGENTS.md`, and wiki Installation/Limitations/FAQ now say so, with the gap tracked in [#388](https://github.com/pitimon/8-habit-ai-dev/issues/388).
-- **`tests/test-hermes-tap-links.sh` hardened** — now also rejects a `..` traversal segment inside `references/templates/scripts/assets/examples/` paths (not just parent-directory links), and checks `plugin/skills/` in addition to `skills/`.
-
----
-
-## What's New in v2.21.44
-
-**Theme: #386 — fix Hermes Skills Hub tap install**
-
-- **`hermes skills tap add`/`install` now works** — 25 repo-root-relative markdown links (`](../../docs/...)`) across 14 `skills/*/SKILL.md` files tripped Hermes's path-traversal guard, which fail-closes the entire skill install rather than just skipping the link. Replaced with absolute GitHub blob URLs; added `tests/test-hermes-tap-links.sh` to prevent regression.
-- **Hermes is now a documented install path** — README Quick Start, `docs/compatibility-matrix.md`, and `AGENTS.md` cover the Hermes tap/install flow alongside Claude Code and Codex.
-
----
-
-## What's New in v2.21.43
-
-**Theme: #384 — separate production release gates from core checklist scoring**
-
-- **Verification debt no longer inflates the core score** — `/cross-verify` now distinguishes `PASS`, `FAIL`, `N/A`, and `OPEN_VERIFICATION_DEBT`; unresolved evidence is not treated as PASS.
-- **Production release evidence is explicit and read-only** — independent domain gates, release states, source/runtime reconciliation, mutation read-back, conditional economics/quality evidence, and owner closure are documented without adding runtime mutation or approval automation.
-
----
-
-## What's New in v2.21.42
-
-**Theme: #375 follow-up (ค) — recover Claude's lost convenience, runtime-neutrally**
-
-- **`/cross-verify` gains a session-context fallback** — when no persisted `SKILL_OUTPUT` block exists but the producer skills ran earlier in the same session, it now mines their PRD/design/tasks **prose** in context to pre-populate Q4/Q8/Q14/Q16 (marked `✓I`). This restores the same-session auto-populate that file-only emission removed — and it works identically in Codex, because it reads prose, not the HTML-comment block (no runtime-conditional producer behavior, so no [ADR-024](docs/adr/ADR-024-codex-runtime-adapter-boundary.md) conflict).
-- **Producer skills regain a visible completion signal** — `/requirements`, `/design`, `/breakdown`, `/review-ai` now end conversation output with a plain-text `[/<skill>] complete` line. This is the visible half of the old attribution line, kept after the block moved to file-only; plain text means it renders cleanly in every runtime with zero Codex noise.
-
----
-
-## What's New in v2.21.41
-
-**Theme: finish #375 — guard the two output templates that still leaked the block**
-
-- **`prd-template.md` and `task-list-template.md` now label their `SKILL_OUTPUT` block as a persisted-artifact fragment** — a guarding comment states the block belongs only at the end of the `docs/specs/<slug>/…` file under `--persist` and must never be emitted to the conversation. Fable's review of the v2.21.39 fix found these two templates still embedded the block unconditionally, so a model following a template verbatim could re-introduce the exact Codex noise #375 removed. This closes that residue.
-
----
-
-## What's New in v2.21.40
-
-**Theme: close the 2026-06-10 Fable review ledger — F12/F15/F16 (#368)**
-
-- **Core 5 reaches README readers (F12)** — the "80% of daily work" skill set (`/requirements` · `/review-ai` · `/cross-verify` · `/research` · `/reflect`) was only in the session banner; Quick Start now surfaces it too, so the two onboarding entry points agree.
-- **ADR status field carries information (F15)** — `docs/adr/README.md` gains a status vocabulary (`Accepted` / `Accepted (amended YYYY-MM-DD, #NNN)` / `Superseded by ADR-NNN`), the validator (`validate-content.sh`) is widened to enforce it, and `ADR-013` — amended for #375 in v2.21.39 but still marked plain `Accepted` — now reads `Accepted (amended 2026-07-12, #375)`. Convention + fitness function ship together.
-- **Session-hook token budget recorded as a constraint (F16)** — worst-case output measures ~281 tokens (chars/4) against the ≤300 ceiling; a header comment now warns that any new line must trim an existing one. Measured, not trimmed (the enforced estimator passes with headroom — trimming would be gold-plating).
-
----
-
-## What's New in v2.21.39
-
-**Theme: cross-runtime output hygiene — structured handoff blocks no longer leak into Codex ([#375](https://github.com/pitimon/8-habit-ai-dev/issues/375))**
-
-- **`SKILL_OUTPUT` blocks are now file-only** — the machine-readable handoff block from `/requirements`, `/design`, `/breakdown`, `/review-ai` is written into the persisted artifact (`docs/specs/<slug>/…` under `--persist`, or a saved `*-review.md`), never appended to the conversation. Claude hid the HTML comment; Codex rendered it verbatim as noise. Non-persisted runs emit no block — concise output on every runtime.
-- **`/cross-verify` reads the right place** — its auto-detect now globs the canonical `docs/specs/*/{prd,design,tasks}.md` paths (the previous `*-prd.md`-in-cwd glob never matched a persisted file); non-persisted runs fall through to manual assessment as before.
-- **`/diagnose` block removed** — it had no consumer (`/post-mortem` reads prose, `/cross-verify` never globbed it) and its `METHODOLOGY-COMPLETE` marker was outside the protocol vocabulary.
-- **Contract recorded** — [ADR-013](docs/adr/ADR-013-spec-persistence-opt-in.md) amended (conversation-emission superseded; filesystem back-compat invariant preserved); canonical spec in [`guides/structured-output-protocol.md`](guides/structured-output-protocol.md) §"Emission gate".
-
----
-
-## What's New in v2.21.38
-
-**Theme: post-review batch — the reviewer reviewing the reviewers (#369)**
-
-- **Script-count drift fixed at the class level** — #360's `ci-local.sh` made the shipped "all 12 repo script files" claim false (13th script); the guide gains its classification row and current-doc surfaces drop hardcoded totals entirely — the count can't drift again because it's no longer stated.
-- **Check 32 hardened** — the `plugin/CLAUDE.md` iteration now counts its *sibling* `plugin/skills/` (was accidentally correct via Check 28's mirror guarantee); the row-count awk is scoped to the Skills→Habits Mapping section.
-- **New Check 33** — `ci-local.sh`'s `SCRIPTS` list is lock-step-guarded against `validate.yml` (a "MUST stay in lock-step" comment is not a fitness function).
-- **Tracking hygiene** — D3 + SLSA gaps re-homed from closed #343 to [#367](https://github.com/pitimon/8-habit-ai-dev/issues/367); Fable residue F12/F15/F16 tracked in [#368](https://github.com/pitimon/8-habit-ai-dev/issues/368); `SPEC.md` Current State refreshed (was 2 releases stale).
-
----
-
-## What's New in v2.21.37
-
-**Theme: Mind-cluster doc-drift close — Fable F3/F7/F8 (#358); bundled with tooling + security-CI batches before release**
-
-- **F3 — CLAUDE.md skill table complete (19 → 24 rows)** — `/diagnose`, `/post-mortem`, `/scrutinize`, `/save-spec`, `/management-talk` were missing from the Skills→Habits table. New validator **Check 32** pins table-row count to `skills/` dir count so this class can't recur.
-- **F7 — routing knows the newer skills** — README "Fix a production bug" now routes to `/diagnose` (reproduce-first _is_ diagnose Phase 1-2), and the `/using-8-habits` decision tree gains leaves for bug investigation (`/diagnose` → `/operational-state` → `/post-mortem`), proposal review (`/scrutinize`), leadership briefs (`/management-talk`), and repo save points (`/save-spec`).
-- **F8 — `Last citation` column shipped** — the SKILL-EFFECTIVENESS tally column promised in the 2026-06-06 tally now exists; values are traceable to each row's existing trend notes (no invented dates; `—` = never cited).
-
----
-
-## What's New in v2.21.36
-
-**Theme: least-privilege residue + Fable doc-drift close (#353) · script-vs-AI-workflow portability (#354)**
-
-- **Stub Bash dropped** — the `eu-ai-act-check` redirect stub's `allowed-tools` is now `["Read"]`; closes the least-privilege carry named in the v2.21.35 notes (CLAUDE.md Bash-skill count reconciled 10 → 9).
-- **Fable F17/F19/F20 doc drift closed** — `link-check.yml` no longer calls `plugin/` a symlink; the README EU AI Act badge now points to the canonical [`claude-governance`](https://github.com/pitimon/claude-governance) toolkit (the ADR-012 deferred badge fix); the verbosity guide's "17 skills" is dated to v2.7.0 design time and its snippet matches the hook's real `DIRECTIVE_LEVEL` variable.
-- **`/ai-dev-log` No-Script Fallback** — when `generate-ai-dev-log.sh` can't run (Windows without Git Bash, restricted host), the skill now documents performing the 6 process steps via individual git commands; a host with no shell reports "not generatable" instead of inventing statistics ([#354](https://github.com/pitimon/8-habit-ai-dev/issues/354)).
-- **New guide: [`guides/script-vs-ai-workflow.md`](guides/script-vs-ai-workflow.md)** — the execution/verification boundary: AI workflows may replace script _execution_ when a deterministic verifier gates the result; they must never replace _verification_ (validators stay scripts — LLM re-checks are the grade-saturation trap F4 closed). Classifies every repo script file (see the guide's table — count guarded against drift after the "10 vs 12" QA catch).
-
----
-
-## What's New in v2.21.35
-
-**Theme: #343 adversarial-Spirit-pass workstream — fail-closed hook + security docs + self-check honesty**
-
-- **F6 + F6b + F6c — fully fail-closed pre-commit example** — `hooks/pre-commit.sh.example` no longer ships the banned `|| true` false-success shape. A CLI crash, REWORK/FAIL verdict, missing verdict, or missing `claude` each block the commit; only an explicit PASS/CONCERNS proceeds (`HABIT_REVIEW_SKIP=1` escape hatch). Verdict regex tightened so `NOT PASS` can't false-proceed. `tests/test-pre-commit-hook.sh` (20 assertions, both mirrors) guards it.
-- **S1 — SECURITY.md + threat model** — added a disclosure policy + `docs/security/threat-model.md` (the plugin's own `/security-check` applied to the repo).
-- **F4 — retired the frozen "16/17 = 100%" SELF-CHECK headline** (grade-saturation fossil) → points to the living per-release list.
-- **B1 — Check 5b**: documented 1500-line bash-tooling exemption (the plugin's validators exceeded the 800-line rule they enforce).
-- **F5 — CLAUDE.md Bash-skill drift reconciled** (3 → 10).
-
-> Driven by a 2026-06-29 adversarial Spirit pass (`governance-reviewer`) corroborating the [Fable model review](docs/reviews/2026-06-10-fable-model-review.md): honest score Body 4 / Mind 3.5 / Heart 4 / Spirit 3 = 3.6/5, not the self-assessed 4.5. Closes [#343](https://github.com/pitimon/8-habit-ai-dev/issues/343). Each item passed independent Codex QA.
-
----
-
-## What's New in v2.21.34
-
-**Theme: Karpathy simplicity + surgical-edit gaps recorded as deferred doctrine (ADR-026 Deliverable B, #339)**
-
-- **Two Karpathy rules logged as deferred candidates** — the `multica-ai/andrej-karpathy-skills` rules #2 (simplicity / YAGNI) and #3 (surgical / minimal-diff edits) are recorded as **N8 + N9 (T2, drop-date 2026-12-27)** in `guides/anthropic-engineering-doctrine-audit.md` Table 2 — the greppable defensive-citation surface a contributor checks before re-proposing a blog-post pattern. They are **deferred, not adopted**: no first-person friction citation exists, and repo popularity is not friction (ADR-014). Rule #3 also carries a recorded tension with H1 (defense-in-depth) that must be reframed before any future ship.
-
-> Follow-up to [ADR-026](docs/adr/ADR-026-external-prior-art-audit-karpathy-gstack.md) (the prior-art audit of the 5 viral-post repos). This is the "Deliverable B" discoverability step: the audit verdict lives in the ADR; this lands the rows where the `How to use this guide` grep-protocol will actually find them. Docs/doctrine only — no skill, rule, or enforcement behavior changed.
-
----
-
 ### Previous releases
 
-For the full version history, see [`CHANGELOG.md`](CHANGELOG.md) (v2.3.0+), [`docs/wiki/Changelog.md`](docs/wiki/Changelog.md) (v2.2.0 and earlier), or [GitHub Releases](https://github.com/pitimon/8-habit-ai-dev/releases).
+Read [CHANGELOG.md](CHANGELOG.md) for the version history or [GitHub Releases](https://github.com/pitimon/8-habit-ai-dev/releases) for published release notes. Earlier summaries are not repeated here.
 
 ---
 
@@ -775,21 +560,21 @@ The cross-verification exists for planning reviews, not as a gate for every comm
 
 ## Origin
 
-This framework was developed while building [MemForge](https://github.com/pitimon/memforge) — a production AI memory system with 15 services, 154K+ observations, and a 3-node Docker Swarm cluster. Over 910 man-day-equivalents of AI-assisted development, these habits emerged from real mistakes:
+The framework originated in work on [MemForge](https://github.com/pitimon/memforge). Its project history motivated practices such as staging before production, review before commit, and validation before deployment. Historical examples are not product performance measurements:
 
 - **H1**: A deploy bypassed staging and went straight to production (now there's a mandatory staging-first rule)
 - **H4**: Code reviews were skipped "just this once" — 2 CRITICAL and 3 HIGH issues shipped (now review-before-commit is enforced)
 - **H7**: Monitoring was the weakest step across 3 projects — a systematic blind spot we only caught through cross-project analysis
 - **H5**: A database password mismatch crashed production because nobody validated the .env file before deploying
 
-Every habit in this plugin exists because **skipping it caused real damage**.
+Those lessons motivate the guidance; the plugin does not itself enforce the example project's controls.
 
 ---
 
 ## FAQ
 
 **Q: Do I need to use all 24 skills for every task?**
-No. Start with `/requirements` before building and `/review-ai` before committing. Those two alone eliminate most Vibe Coding problems. Add more skills as they feel natural. See [Use Cases](#use-cases-which-skill-when).
+No. Start with `/requirements` before building and `/review-ai` before committing. Add skills when the task needs them. See [Use Cases](#use-cases-which-skill-when).
 
 **Q: What is "Vibe Coding"?**
 Building software by feel — jumping straight to "build me X" without requirements, design, or review. AI tools amplify this tendency because they make coding feel effortless. This plugin provides structure without removing speed.
@@ -804,13 +589,13 @@ Thai: "Done is not done well." Completing a task (ทำเสร็จ) is not 
 Yes. v2.19.0 adds native Codex packaging via `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json`. Other agent platforms can still load `skills/<name>/SKILL.md` manually; start at [AGENTS.md](AGENTS.md).
 
 **Q: What are the "Whole Person dimensions"?**
-Covey's model: Body (discipline/quality), Mind (vision/architecture), Heart (passion/craft/empathy), Spirit (conscience/ethics/security). AI excels at Body and Mind but systematically neglects Heart and Spirit. See [Whole Person Assessment](#whole-person-assessment).
+Covey's model: Body (discipline/quality), Mind (vision/architecture), Heart (craft/empathy), Spirit (conscience/ethics/security). Use these as complementary review perspectives, not a benchmark or certification. See the [Whole Person Assessment guide](docs/wiki/Whole-Person-Assessment.md).
 
 **Q: How do the agents work?**
-Agents are read-only reviewers that run inside Claude Code. They analyze your code and produce reports but never modify files. See [Agents](#agents).
+The [8-habit-reviewer](agents/8-habit-reviewer.md) and [research-verifier](agents/research-verifier.md) are read-only Claude Code agent definitions. They analyze work and produce reports without modifying project files. Other runtimes do not gain these agent definitions merely by loading the Markdown skills.
 
 **Q: Is this plugin opinionated?**
-Yes, deliberately. The opinions come from 910 man-day-equivalents of production AI-assisted development. Every rule exists because skipping it caused real damage. See [Origin](#origin).
+Yes. The package prioritizes requirements, human judgment, evidence-based review, and controlled deployment. These are development recommendations, not claims of measured productivity or universal enforcement. See [Origin](#origin).
 
 ---
 
@@ -837,12 +622,20 @@ This auto-loads the 8-Habit principles into every Claude Code session without th
 
 ## Security
 
-This plugin ships **markdown guidance only** — no runtime service, endpoints, database, or network client — so the conventional application-layer attack surface does not apply. The real surface is **supply-chain** (integrity of skill / hook / rule content) and the opt-in `hooks/pre-commit.sh.example`.
+This package has no hosted service, API, or database. It includes Markdown guidance, Claude-specific shell hooks, and helper scripts. Review the supply-chain risks of skill, hook, rule, and script content, including the opt-in `hooks/pre-commit.sh.example`.
+
+The agent runtime determines which tools execute and how prompts or files reach a model provider. This package does not provide a data-residency guarantee or isolate sensitive project information. Do not put credentials, raw customer data, or private operational evidence in shared artifacts.
 
 - 📄 [**Security Policy**](SECURITY.md) — how to report a vulnerability (private disclosure; please do **not** open a public issue).
 - 🛡️ [**Threat Model**](docs/security/threat-model.md) — STRIDE for a markdown-only plugin, trust boundaries, and an honest list of controls not yet present.
 
 ---
+
+## Support and maintenance
+
+Use the [wiki](https://github.com/pitimon/8-habit-ai-dev/wiki), [FAQ](https://github.com/pitimon/8-habit-ai-dev/wiki/FAQ), and [troubleshooting guide](https://github.com/pitimon/8-habit-ai-dev/wiki/Troubleshooting) for setup and usage. For reproducible bugs or feature requests, open a [GitHub issue](https://github.com/pitimon/8-habit-ai-dev/issues) with the package version, agent/runtime version, expected behavior, and sanitized reproduction steps.
+
+Support is through the public repository, not a contractual service desk. No response-time or resolution-time commitment is published here. Report vulnerabilities privately using [SECURITY.md](SECURITY.md), not public issues.
 
 ## Contributing
 
@@ -856,6 +649,16 @@ Quick options:
 - **Add real examples** to `habits/*.md` files
 - **Add domain question packs** in `guides/cross-verify-packs/`
 - **Report issues** at [GitHub Issues](https://github.com/pitimon/8-habit-ai-dev/issues)
+
+For repository changes, validate from a full Git checkout with tag history. Install Bash, Git, and Node.js, then run:
+
+```bash
+bash scripts/sync-mirror.sh
+bash tests/ci-local.sh
+node scripts/generate-skill-catalog.js --check
+```
+
+The local runner tracks the hosted validation suite. Source checks cover structure, mirrors, links, metadata, and selected hook behavior; they do not prove every agent follows the workflow. Consult [AGENTS.md](AGENTS.md) before editing and [CONTRIBUTING.md](CONTRIBUTING.md) for release conventions.
 
 ## License
 
