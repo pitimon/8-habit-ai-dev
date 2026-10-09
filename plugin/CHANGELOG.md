@@ -10,6 +10,17 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.62 — README team-adoption refresh (#426) (2026-10-09)
+
+### Documentation
+
+- Reworked the README introduction, navigation, installation verification, runtime boundaries, team pilot/adoption, responsibility matrix, rollout/update, security/data handling, and public-support framing.
+- Removed unmeasured coverage/productivity framing from current introductory prose. Clarified seven delivery steps plus research Step 0, redirect-only EU AI Act scope, and the difference between guidance and managed-service assurances.
+- Replaced 26 older README release summaries with the canonical CHANGELOG link, retained all 24 skill entries, and fixed FAQ links into collapsed sections by linking directly to guide/agent files. Historical records elsewhere remain intact.
+- Independent prose review and bounded closure passed the hashed candidate. All 11 suites passed on clean committed scratch bytes; local links/anchors and mirror parity verified. Runtime installs and browser rendering were not exercised.
+
+---
+
 ## v2.21.61 — Self-referential link target validation (#423) (2026-10-09)
 
 ### Tests
