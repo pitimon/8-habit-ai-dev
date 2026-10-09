@@ -10,6 +10,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.61 — Self-referential link target validation (#423) (2026-10-09)
+
+### Tests
+
+- Added a network-free scanner for same-repo `/main/` URLs in tracked `*.md` and `llms.txt`, excluding wiki and mirror sources. File targets must match exact Git index spelling and exist in the working tree; tree targets need an existing tracked descendant. Zero matches and Git/grep errors fail closed.
+- Added a 15-case isolated Git regression matrix, invoked by the scanner in local and hosted CI. Candidate bytes passed on Bash 3.2.57 and Linux Bash 5.2.21; the original #419 dead link is rejected. Hosted exact-head logs confirm the scanner and all fixture cases ran. Remote full CI is not claimed (missing Node.js and separate installed-scanner findings).
+- Literal-path scope is explicit. Encoded/space/non-ASCII paths can fail despite being valid; support is deferred to #424. No skill behavior or runtime install change is claimed.
+
+---
+
 ## v2.21.60 — Remove machine-local vault path from public agent docs (#420) (2026-10-08)
 
 ### Documentation
