@@ -3,13 +3,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Validation](https://github.com/pitimon/8-habit-ai-dev/actions/workflows/validate.yml/badge.svg)](https://github.com/pitimon/8-habit-ai-dev/actions/workflows/validate.yml)
 [![Skills](https://img.shields.io/badge/Skills-24-blue)](docs/skills-reference.md)
-[![Version](https://img.shields.io/badge/Version-2.21.62-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.62)
+[![Version](https://img.shields.io/badge/Version-2.21.63-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.63)
 
 A development playbook for AI coding agents: define the task before coding, prepare repository context, and review evidence before shipping. The package contains 24 Markdown skills based on Stephen Covey's 8 Habits.
 
 **Start by choosing your client below.** Each guide covers installation, verification, a first task, daily use, updates and troubleshooting without interleaving other clients' commands.
 
-[Choose a client](#quick-start) · [Workflow](#the-7-step-workflow) · [Team adoption](docs/team-adoption.md) · [What's New](#whats-new-in-v22162)
+[Choose a client](#quick-start) · [Workflow](#the-7-step-workflow) · [Team adoption](docs/team-adoption.md) · [What's New](#whats-new-in-v22163)
 
 ## What you get
 
@@ -69,6 +69,17 @@ The [team adoption guide](docs/team-adoption.md) covers responsibilities, data/p
 
 Update instructions belong to the selected client guide. Review [release notes](https://github.com/pitimon/8-habit-ai-dev/releases), record the installed version and verify a representative task after updating. Marketplace snapshots are not automatically pinned deployments.
 
+## What's New in v2.21.63
+
+**Theme: choose a client, finish a first reviewed task**
+
+- The README is a client-neutral landing page: outcome, client selection, shared workflow, catalog, team adoption and support (#428).
+- Each client guide (Claude Code, Codex, Hermes, OpenClaw, manual loading) covers installation, verification, a first task, daily use, updates and troubleshooting without interleaving other clients' commands.
+- The full skill catalog moved to canonical `docs/skills-reference.md` (8 workflow + 16 additional entries), enforced by a new 12-fixture CI contract test. No skill behavior, runtime integration or service assurance changed.
+- Live installs on real runtimes and rendered-browser behavior were not re-tested. OpenClaw real-install verification stays open (#413).
+
+---
+
 ## What's New in v2.21.62
 
 Release v2.21.62 refreshed the team-adoption overview and clarified service boundaries without changing skill behavior. See [CHANGELOG.md](CHANGELOG.md) and [GitHub Releases](https://github.com/pitimon/8-habit-ai-dev/releases) for the release record.
@@ -95,4 +106,4 @@ The consumer package needs a compatible agent runtime, not an application build.
 
 [MIT](LICENSE)
 
-_Version: 2.21.62 | Last updated: 2026-10-09_
+_Version: 2.21.63 | Last updated: 2026-10-10_

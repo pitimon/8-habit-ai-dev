@@ -10,6 +10,17 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.63 — Client-first onboarding guides (#428) (2026-10-10)
+
+### Documentation
+
+- README is now a 98-line landing page routing to per-client guides. New guides for Claude Code, Hermes, manual loading, shared skill catalog and team adoption; Codex, OpenClaw, wiki Installation and llms.txt reworked with mirror sync.
+- Catalog ownership moved from the README table to `docs/skills-reference.md` (24 entries: 8 workflow + 16 additional), enforced by `tests/test-client-docs.sh` with 12 regression fixtures wired through `validate-structure.sh` Check 12.
+- All 11 suites passed on the exact head and on a scratch-committed copy; negative controls (phantom row, broken catalog reference) fail with intended diagnostics. Fixtures pass on Bash 3.2 and 5.2.
+- PRO-READY review verdict PASS with independent reviewer PASS; no blocking findings. Live runtime installs and browser rendering not re-tested. No skill behavior or service assurance changed.
+
+---
+
 ## v2.21.62 — README team-adoption refresh (#426) (2026-10-09)
 
 ### Documentation

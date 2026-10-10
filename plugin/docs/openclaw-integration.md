@@ -11,7 +11,7 @@ This guide describes the repository's documented compatible skill-bundle path fo
 Install the compatible bundle from a pinned release:
 
 ```bash
-openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.62
+openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.63
 ```
 
 For workspace loading instead, place selected skill directories under `<workspace>/skills/` or configure `skills.load.extraDirs`:
