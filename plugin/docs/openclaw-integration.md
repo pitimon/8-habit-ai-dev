@@ -1,17 +1,20 @@
-# OpenClaw Integration
+# Use 8-Habit AI Dev with OpenClaw
 
-`8-habit-ai-dev` is compatible with OpenClaw as a portable Agent Skills bundle. The supported surface is the shared Markdown skill corpus; this repository does not add an OpenClaw runtime module, tools, or enforcement engine.
+This guide describes the repository's documented compatible skill-bundle path for OpenClaw. Static compatibility is checked in CI; real-install verification is still open in [#413](https://github.com/pitimon/8-habit-ai-dev/issues/413). Treat the first-task examples as an operator exercise, not a verified live-install receipt.
 
-## Install from Git
+[Install](#install) · [Verify](#verify) · [First task](#first-task) · [Daily use](#daily-use) · [Update](#update) · [Troubleshooting](#troubleshooting)
 
-OpenClaw recognizes the existing Claude-compatible bundle layout. Install the repository from a pinned tag when reproducibility matters:
+## Install
+
+### Install from Git
+
+Install the compatible bundle from a pinned release:
 
 ```bash
 openclaw plugins install git:github.com/pitimon/8-habit-ai-dev@v2.21.62
-openclaw skills list
 ```
 
-OpenClaw can also load the skills without plugin installation by placing or linking the repository's `skills/` directory into a supported skill root, or by configuring `skills.load.extraDirs`:
+For workspace loading instead, place selected skill directories under `<workspace>/skills/` or configure `skills.load.extraDirs`:
 
 ```json5
 {
@@ -23,49 +26,97 @@ OpenClaw can also load the skills without plugin installation by placing or link
 }
 ```
 
-For a workspace-local setup, copy the selected skill directories to `<workspace>/skills/`. Do not copy the repository's `plugin/` mirror into a workspace skill root; it is the Codex child package.
+Choose one route; do not copy the `plugin/` mirror into a workspace skill root. It is the Codex child package, not a separate skill corpus.
 
-## Use Skills
+## Verify
 
-OpenClaw refreshes skills automatically. If an existing session has not picked up the bundle, start a new agent turn or restart the Gateway, then verify availability:
+Inspect available skills:
 
 ```bash
 openclaw skills list
 ```
 
-Invoke a skill explicitly with `/skill <name>` or reference it in a prompt with `$<name>`:
+Confirm that the selected `requirements`, `build-brief` and `review-ai` skills are available. Start a new agent turn if an existing session has not refreshed. A Gateway restart is another documented refresh option, but follow your deployment policy before restarting a shared service.
+
+Check configured skill allowlists separately. A non-empty agent-specific `skills` list replaces defaults rather than merging with them; installation alone does not prove the skill is selected.
+
+## First task
+
+Use a non-production feature such as adding a status filter to an existing list endpoint:
 
 ```text
-Use $requirements to define the acceptance criteria for this feature.
-Use $review-ai to review the proposed change before commit.
-Use $cross-verify to check the release evidence.
+Use $requirements to define allowed status values, defaults and acceptance
+criteria for our list endpoint. Do not implement yet.
 ```
 
-Skill allowlists are separate from skill installation. If `agents.defaults.skills` or an agent-specific `skills` list is configured, include the selected skill names there; a non-empty agent list replaces the defaults rather than merging with them.
+Expected output: scope and testable criteria. Approve that scope before asking for implementation context:
+
+```text
+Use $build-brief to inspect the handler, callers and existing tests for the
+approved status filter. Prepare a brief; do not implement yet.
+```
+
+Ask the agent to implement the approved task and run the project's tests. Then request review:
+
+```text
+Use $review-ai to review the status-filter diff and test evidence.
+Report defects and verification gaps. Do not commit or push.
+```
+
+Verify the cited evidence and resolve blockers before approving a commit. These examples have not been exercised on a real OpenClaw install in this documentation change.
+
+## Daily use
+
+### Use Skills
+
+Use `/skill <name>` or a `$<name>` reference in your request. Select the skill for the task:
+
+| Situation | Skill reference | Expected result |
+| --- | --- | --- |
+| Define work | `$requirements` | Scope and acceptance criteria |
+| Inspect context | `$build-brief` | Implementation brief |
+| Review a diff | `$review-ai` | Findings and evidence gaps |
+| Assess a release | `$cross-verify` | Readiness assessment |
+| Reflect after work | `$reflect` | Short retrospective |
+
+The [catalog](skills-reference.md) describes the shared entries. Read bundled supporting files where available; otherwise follow the skill's OpenClaw repository-URL note. `{baseDir}` is OpenClaw's supporting-file base, not a promise that every repo-root guide was copied into the skill directory.
+
+## Update
+
+For workspace loading, refresh the checkout or copied skill directories through your approved source-update workflow. Record the version or commit, inspect `openclaw skills list`, and repeat a representative task.
+
+The package does not document a verified live updater for the pinned compatible-bundle route here. Use your installed OpenClaw version's supported update/reinstall procedure rather than treating a new Git tag as proof that an existing installation changed. Track this with the real-install evidence in #413.
+
+## Troubleshooting
+
+| Symptom | Check |
+| --- | --- |
+| Installed skill is not selected | Inspect defaults and agent-specific skill allowlists |
+| Existing session uses older guidance | Start a new turn; check refresh and any required Gateway restart under your deployment policy |
+| A guide path does not resolve | Use a bundled file if it exists, then the documented repository URL fallback |
+| Expected lesson/profile path is under `~/.claude/` | Treat persistence as unavailable unless the operator intentionally provides an appropriate compatible path |
+| Install succeeded but workflow behavior is uncertain | Exercise the skill in a fresh turn; installation is not end-to-end runtime proof |
 
 ## Portability Contract
 
-- `skills/*/SKILL.md` is the source of truth across Claude Code, Codex, Hermes, and OpenClaw.
-- OpenClaw's native tool names and permissions remain the host's responsibility. The `allowed-tools` field documents intent for Claude/Codex and is not an OpenClaw authorization boundary.
-- OpenClaw resolves supporting files relative to a loaded skill with `{baseDir}`. The skills that use `${CLAUDE_PLUGIN_ROOT}` carry an OpenClaw note describing the repository URL fallback; use the bundled file when available, otherwise read the cited GitHub URL.
-- OpenClaw does not run Claude's `hooks/` lifecycle. The session-start reminder and hook-based verbosity adaptation are therefore not promised on OpenClaw.
-- Skills that persist lessons or profiles under `~/.claude/` retain that behavior only for Claude Code. On OpenClaw, treat those paths as unavailable unless the operator intentionally provides a compatible local path; conversation output remains valid without persistence.
-- Runtime enforcement, irreversible-action authorization, compliance certification, and dynamic orchestration remain outside this plugin.
+The source of truth is `skills/*/SKILL.md`. Tool permissions, model-provider data handling and production authorization remain with your runtime and team. The package does not add runtime enforcement, compliance certification or orchestration engines. Claude hooks and hook-based reminders do not run as part of this OpenClaw integration.
+
+Use the separate [team adoption guide](team-adoption.md) for rollout and security ownership.
 
 ## Verification
 
-From the repository root, maintainers run the static OpenClaw compatibility check together with the normal CI-parity suite:
+Maintainers check the static bundle with:
 
 ```bash
 bash tests/test-openclaw-compatibility.sh
 bash tests/ci-local.sh
 ```
 
-When an OpenClaw installation is available, also run `openclaw skills list` and start a fresh agent turn before claiming live loading evidence. A successful package install alone does not prove that every skill was selected or that Claude-only hooks ran.
+Before claiming live compatibility, also inspect the actual installed skills and exercise a fresh agent turn with a representative task and a rejection/control case. Static green checks do not close #413.
 
 ## References
 
 - [OpenClaw Skills](https://docs.openclaw.ai/tools/skills)
 - [OpenClaw Creating Skills](https://docs.openclaw.ai/tools/creating-skills)
-- [OpenClaw Plugin manifest and compatible bundles](https://docs.openclaw.ai/plugins/manifest)
+- [OpenClaw compatible bundles](https://docs.openclaw.ai/plugins/manifest)
 - [Runtime Compatibility Matrix](compatibility-matrix.md)

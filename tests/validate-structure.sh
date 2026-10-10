@@ -349,54 +349,14 @@ for skill_dir in skills/*/; do
 done
 echo ""
 
-# --- Check 12: README skills table cross-reference ---
-echo "--- Check 12: README ↔ skills directory cross-reference ---"
-# Extract skill directory names
-DIR_SKILLS=""
-for skill_dir in skills/*/; do
-  [ ! -d "$skill_dir" ] && continue
-  DIR_SKILLS="$DIR_SKILLS $(basename "$skill_dir")"
-done
-
-# Extract skill names from README table rows matching | `/skill-name`
-README_SKILLS=""
-while IFS= read -r line; do
-  # Anchor to the first table column (^| `/skill`) — a greedy `.*`\/...` would
-  # match the LAST `/skill` reference in a row that mentions several, picking the
-  # wrong skill name (Issue #214, surfaced via /diagnose dogfood on PR #213).
-  sname=$(echo "$line" | sed -n 's/^| *`\/\([a-z0-9-]*\)`.*/\1/p')
-  [ -n "$sname" ] && README_SKILLS="$README_SKILLS $sname"
-done < <(grep '| `/[a-z]' README.md 2>/dev/null)
-# Deduplicate
-README_SKILLS=$(echo "$README_SKILLS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
-
-# Regression fixture for Issue #214: a row mentioning 3 skills must yield the
-# FIRST-column skill, not the last. Fails loudly if the greedy regex regresses.
-_c12_row='| `/firstskill` | H1 | mentions `/secondskill` and `/thirdskill` |'
-_c12_got=$(echo "$_c12_row" | sed -n 's/^| *`\/\([a-z0-9-]*\)`.*/\1/p')
-if [ "$_c12_got" = "firstskill" ]; then
-  pass "Check 12 regex anchored to first column (Issue #214 regression guard)"
+# --- Check 12: Client-first landing routes and canonical skill catalog ---
+echo "--- Check 12: client routes and canonical skill catalog ---"
+# Keep the landing page client-neutral; the canonical catalog owns the full
+# skill-directory cross-reference. The delegated check runs real fixtures too.
+if bash tests/test-client-docs.sh; then
+  pass "README routes, client journeys and canonical catalog verified"
 else
-  fail "Check 12 regex regressed (#214): picked '$_c12_got' instead of 'firstskill'"
-fi
-
-XREF_FAIL=0
-# Check: every directory skill is in README
-for s in $DIR_SKILLS; do
-  if ! echo "$README_SKILLS" | grep -qw "$s"; then
-    fail "Skill '$s' exists as directory but missing from README"
-    XREF_FAIL=$((XREF_FAIL + 1))
-  fi
-done
-# Check: every README skill has a directory
-for s in $README_SKILLS; do
-  if ! echo "$DIR_SKILLS" | grep -qw "$s"; then
-    fail "Skill '$s' listed in README but no skills/$s/ directory"
-    XREF_FAIL=$((XREF_FAIL + 1))
-  fi
-done
-if [ "$XREF_FAIL" -eq 0 ]; then
-  pass "README skills table matches skills/ directories ($(echo "$DIR_SKILLS" | wc -w | tr -d ' ') skills)"
+  fail "Client-first documentation contract failed (see Check 12 diagnostics)"
 fi
 echo ""
 

@@ -1,19 +1,85 @@
-# Codex Integration Guide
+# Use 8-Habit AI Dev with Codex
 
-This guide explains how to use `8-habit-ai-dev` from Codex without overstating runtime parity with Claude Code.
+Follow this page to install the package, select skills, complete a first reviewed task, and update it in Codex. You need a configured Codex runtime and a project with existing tests. Start with a non-production change.
+
+[Install](#install) · [Verify](#verify) · [First task](#first-task) · [Daily use](#daily-use) · [Update](#update) · [Troubleshooting](#troubleshooting)
 
 ## Install
+
+Add the marketplace and install the native plugin:
 
 ```bash
 codex plugin marketplace add pitimon/8-habit-ai-dev
 codex plugin add 8-habit-ai-dev@pitimon-8-habit-ai-dev
 ```
 
-Verify with:
+Start a new Codex session after installation.
+
+## Verify
+
+Inspect the plugin listing:
 
 ```bash
 codex plugin list
 ```
+
+Confirm the package's installed/enabled state, not merely that a marketplace entry exists. Then open the skill selector in the session:
+
+```text
+/skills
+```
+
+Look for the installed `requirements`, `build-brief` and `review-ai` skills. Select the entry from this package if another installed skill has the same name. Plugin skills are not new top-level slash commands.
+
+## First task
+
+Use a feature such as adding a status filter to an existing list endpoint. These prompts are an illustrative exercise, not an executed demo; substitute a real feature in your project.
+
+**1. Define success before editing.** Mention the installed skill:
+
+```text
+$requirements Add a status filter to our list endpoint.
+Define allowed values, default behavior and testable acceptance criteria.
+Do not edit implementation files yet.
+```
+
+Expected output: scope, edge cases, acceptance criteria and a definition of done. Review the scope before proceeding.
+
+**2. Prepare the implementation context.** After approving the scope:
+
+```text
+$build-brief Prepare a brief for the approved status filter.
+Read the handler, callers and tests. Identify what to change and verify.
+Do not implement yet.
+```
+
+Expected output: an implementation brief grounded in your repository. Then ask Codex to implement the approved change and run the project's actual tests. Skills provide guidance; implementation still needs an explicit task and your normal permission controls.
+
+**3. Review before committing.** Once implementation and tests finish:
+
+```text
+$review-ai Review the status-filter diff and test evidence.
+List defects and missing verification. Do not commit or push.
+```
+
+Expected output: a review verdict and actionable findings. Verify the evidence and resolve blocking findings before approving a commit; the verdict is not production authorization.
+
+If a direct skill mention is unavailable in your Codex surface, use `/skills` to select it or ask by intent: “Use the review-ai skill from 8-habit-ai-dev to review this diff.”
+
+## Daily use
+
+Use the same native skill selector or mention mechanism for each task:
+
+| Situation | Skill mention | Expected result |
+| --- | --- | --- |
+| Define work | `$requirements` | Scope and acceptance criteria |
+| Prepare context | `$build-brief` | Repository-grounded brief |
+| Review a diff | `$review-ai` | Findings and evidence gaps |
+| Assess readiness | `$cross-verify` | Readiness assessment |
+| Capture learning | `$reflect` | Short retrospective |
+| Select a next step | `$using-8-habits` | Skill routing |
+
+For other entries, use the [shared catalog](skills-reference.md). A skill's instructions about local persistence are not a universal memory integration; follow your project's configured memory policy.
 
 ## Update
 
@@ -38,6 +104,55 @@ codex plugin list
 ```
 
 Use `codex plugin marketplace list` if you need to confirm the configured marketplace name before running `marketplace upgrade`.
+
+## Troubleshooting
+
+| Symptom | Check |
+| --- | --- |
+| Plugin is absent | Confirm the marketplace name and repeat the install flow |
+| Skill is absent from the selector | Inspect the listing and start a new session; confirm which installed package owns the skill |
+| Updated source but old installed version | Refresh the marketplace snapshot, then reinstall only if the installed cache is still old |
+| A bare skill slash command is rejected | Use `/skills`, a `$skill-name` mention or intent rather than inventing a top-level command |
+| Bash validation fails in PowerShell | Read [Windows PowerShell Preflight](#windows-powershell-preflight); Git Bash is needed for repository validators, not for every skill request |
+
+Report package/runtime versions and sanitized reproduction steps through [GitHub Issues](https://github.com/pitimon/8-habit-ai-dev/issues). Use [SECURITY.md](../SECURITY.md) for private vulnerability disclosure.
+
+## Runtime boundaries
+
+This package supplies guidance, not production authorization or a memory integration. Your runtime and model provider own tool permissions and data handling. Use [team adoption](team-adoption.md) for organizational rollout, not as a prerequisite for an individual first task.
+
+## Maintainer reference
+
+The material below concerns packaging, adapters and repository validation. Skip it unless you are maintaining the package or troubleshooting one of those topics. Windows users running Bash-based repository validation should read [Windows PowerShell Preflight](#windows-powershell-preflight).
+
+## Codex Runtime Contract
+
+Codex integration promises:
+
+- Codex can install the plugin through the native marketplace flow.
+- Codex can load the same 24 markdown skills from `skills/`.
+- Codex can invoke those skills through its native skill surfaces: `/skills`, `$skill-name` mentions, plugin/skill mentions in the app, or natural-language intent.
+- Codex should start from `AGENTS.md`, then use `skills/RESOLVER.md` to select a skill.
+- Codex and other tools may read `docs/data/skills.json` as generated discovery metadata.
+- Codex should treat `CLAUDE.md` as architecture reference, not as automatically loaded runtime state.
+- Codex should treat Obsidian or other memory systems as external curated memory, not as the plugin's internal state.
+
+Codex integration does not promise:
+
+- plugin-provided top-level slash commands such as `/research`, `/requirements`, or `/cross-verify`.
+- Claude hook feature parity.
+- automatic verbosity adaptation as a required Codex runtime feature.
+- runtime enforcement gates.
+- policy authorization.
+- dynamic sub-agent orchestration.
+- compliance framework execution.
+
+Those belong in companion tooling or a future adapter layer.
+
+Config-parse note: even though Codex does not run the full Claude hook lifecycle, it **auto-discovers and parses `hooks/hooks.json` at install/cache time** with a strict schema that accepts only a top-level `hooks` key. A sibling metadata field (e.g. `description`) makes Codex reject the config with `unknown field ..., expected hooks` ([#321](https://github.com/pitimon/8-habit-ai-dev/issues/321)). Keep the file schema-pure; `tests/validate-structure.sh` Check 31 enforces this so the same `hooks.json` installs cleanly in both Claude Code and Codex.
+
+Compatibility note: if Codex invokes this package's `SessionStart` hook, `hooks/session-start.sh` emits Codex-compatible JSON with the existing reminder under `hookSpecificOutput.additionalContext`. Claude/default runs still emit the markdown reminder directly. This is a narrow hook-output adapter, not a general runtime enforcement layer.
+
 
 ## Validation Contexts
 
@@ -71,34 +186,6 @@ it prints copy-pasteable validator commands such as:
 
 Use the absolute Git Bash path in PowerShell automation. A bare `bash` command
 may invoke the WSL launcher instead of Git Bash on Windows.
-
-## Codex Runtime Contract
-
-Codex integration promises:
-
-- Codex can install the plugin through the native marketplace flow.
-- Codex can load the same 24 markdown skills from `skills/`.
-- Codex can invoke those skills through its native skill surfaces: `/skills`, `$skill-name` mentions, plugin/skill mentions in the app, or natural-language intent.
-- Codex should start from `AGENTS.md`, then use `skills/RESOLVER.md` to select a skill.
-- Codex and other tools may read `docs/data/skills.json` as generated discovery metadata.
-- Codex should treat `CLAUDE.md` as architecture reference, not as automatically loaded runtime state.
-- Codex should treat Obsidian or other memory systems as external curated memory, not as the plugin's internal state.
-
-Codex integration does not promise:
-
-- plugin-provided top-level slash commands such as `/research`, `/requirements`, or `/cross-verify`.
-- Claude hook feature parity.
-- automatic verbosity adaptation as a required Codex runtime feature.
-- runtime enforcement gates.
-- policy authorization.
-- dynamic sub-agent orchestration.
-- compliance framework execution.
-
-Those belong in companion tooling or a future adapter layer.
-
-Config-parse note: even though Codex does not run the full Claude hook lifecycle, it **auto-discovers and parses `hooks/hooks.json` at install/cache time** with a strict schema that accepts only a top-level `hooks` key. A sibling metadata field (e.g. `description`) makes Codex reject the config with `unknown field ..., expected hooks` ([#321](https://github.com/pitimon/8-habit-ai-dev/issues/321)). Keep the file schema-pure; `tests/validate-structure.sh` Check 31 enforces this so the same `hooks.json` installs cleanly in both Claude Code and Codex.
-
-Compatibility note: if Codex invokes this package's `SessionStart` hook, `hooks/session-start.sh` emits Codex-compatible JSON with the existing reminder under `hookSpecificOutput.additionalContext`. Claude/default runs still emit the markdown reminder directly. This is a narrow hook-output adapter, not a general runtime enforcement layer.
 
 ## Codex Command UX
 
