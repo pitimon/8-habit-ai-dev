@@ -2,6 +2,8 @@
 
 `8-habit-ai-dev` ships 24 user-facing markdown skills. Skills are read-only guidance: they structure investigation, planning, review, deployment, communication, and reflection, but they do not execute changes by themselves.
 
+For the compact client-neutral catalog, use [docs/skills-reference.md](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/skills-reference.md). Slash labels below identify skills; invoke them using your selected [client guide](Installation), not by assuming every runtime accepts the same command.
+
 > [!TIP]
 > If you are unsure where to start, use `/using-8-habits` or the quick selector below.
 

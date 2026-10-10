@@ -531,11 +531,11 @@ if [ -f "$META_SKILL" ]; then
       fail "using-8-habits triad missing mention of /$skill_name (anti-drift assertion)"
     fi
   done
-  # Cross-linked from README + CLAUDE.md
-  if grep -q "/using-8-habits" README.md; then
-    pass "README.md cross-links to /using-8-habits"
+  # README routes through the client-neutral catalog, not Claude slash labels.
+  if grep -Fq '(docs/skills-reference.md)' README.md && grep -Fq '| `using-8-habits` |' docs/skills-reference.md; then
+    pass "README.md links the catalog containing using-8-habits"
   else
-    fail "README.md missing /using-8-habits cross-link"
+    fail "README.md missing catalog route or using-8-habits catalog entry"
   fi
   if grep -q "/using-8-habits" CLAUDE.md; then
     pass "CLAUDE.md cross-links to /using-8-habits"
