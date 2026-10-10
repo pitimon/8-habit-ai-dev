@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.62-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.63-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.63 · Client-first onboarding guides
+
+The README routes to per-client guides (Claude Code, Codex, Hermes, OpenClaw, manual) and the catalog moved to `docs/skills-reference.md` with CI enforcement. No skill or runtime behavior changed.
 
 ## v2.21.62 · README team-adoption refresh
 
