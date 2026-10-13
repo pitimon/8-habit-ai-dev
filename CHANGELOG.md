@@ -10,6 +10,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.64 — CI validation guidance points to ci-local runner (#430) (2026-10-13)
+
+### Documentation
+
+- `CLAUDE.md` replaces the stale "exactly five scripts" inventory with the single `bash tests/ci-local.sh` command; the suite list stays owned by `tests/ci-local.sh`, kept in lock-step with `.github/workflows/validate.yml`.
+- Paths are inline code rather than relative links, so the byte-mirrored `plugin/CLAUDE.md` no longer points at non-existent `plugin/tests/` or `plugin/.github/` targets.
+- Local `bash tests/ci-local.sh` passed all 11 suites; hosted `validate`, `linkcheck` and `gitleaks` passed on the PR head. No skill behavior changed. Released on explicit request despite the Bundle-later default for docs-only changes.
+
+---
+
 ## v2.21.63 — Client-first onboarding guides (#428) (2026-10-10)
 
 ### Documentation

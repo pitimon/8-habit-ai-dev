@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.63-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.64-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.64 · CI validation guidance
+
+`CLAUDE.md` now points to the single `bash tests/ci-local.sh` runner instead of a stale five-script list, using mirror-safe paths. No skill or runtime behavior changed.
 
 ## v2.21.63 · Client-first onboarding guides
 
