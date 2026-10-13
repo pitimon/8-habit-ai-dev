@@ -12,15 +12,13 @@ A **Claude Code plugin** (not a runnable application). No build system, no depen
 
 ## Validation Commands
 
-CI ([`.github/workflows/validate.yml`](.github/workflows/validate.yml)) runs exactly these five scripts. Run them from the repo root with `bash` (they use process substitution — `sh` fails):
+Run the CI validation suite from the repo root with `bash` (the child scripts use process substitution — `sh` fails):
 
 ```bash
-bash tests/validate-structure.sh   # frontmatter, 6-file version consistency, mirror parity (Check 28), size caps
-bash tests/test-skill-graph.sh     # prev-skill/next-skill DAG integrity
-bash tests/validate-content.sh     # content fitness functions; Check 19 needs full tag history (CI uses fetch-depth: 0)
-bash tests/test-verbosity-hook.sh  # session-start verbosity regression (8 branches + override + budget)
-bash tests/test-pre-commit-hook.sh # pre-commit F6 fail-closed verdict paths
+bash tests/ci-local.sh
 ```
+
+The suite list lives in `tests/ci-local.sh`, kept in lock-step with `.github/workflows/validate.yml`. validate-content.sh Check 19 needs full git tag history; CI uses fetch-depth: 0.
 
 When skill metadata or discovery docs change, also run `node scripts/generate-skill-catalog.js --check` (regenerate by running without `--check`). External URLs are link-checked in separate workflows (`link-check.yml`, `wiki-linkcheck.yml`); internal relative links are Check 12b in `validate-content.sh`.
 
