@@ -15,7 +15,7 @@ PRD: [prd.md](./prd.md) · Research: [research.md](./research.md) · **Pass leve
 
 | Fact | Evidence |
 | --- | --- |
-| Word counts: `review-ai` 1903, `research` 1567, `deploy-guide` 1391, `build-brief` 998; cap 2000, WARN above 1950 | `wc -w skills/*/SKILL.md`, [AGENTS.md](../../../AGENTS.md) |
+| Word counts before this change: `review-ai` 1903, `research` 1567, `deploy-guide` 1391, `build-brief` 998 (final counts are in `CHANGELOG.md`); cap 2000, WARN above 1950 | `wc -w skills/*/SKILL.md`, [AGENTS.md](../../../AGENTS.md) |
 | `research` and `review-ai` already load `integrity-principles.md`; `build-brief` and `deploy-guide` do not; all four carry the Hermes note | `grep` over the four SKILL.md files |
 | A rule that changes a required output must live in the owning `SKILL.md` and be pinned in `tests/test-guide-rule-anchors.sh` | [AGENTS.md](../../../AGENTS.md), `tests/test-guide-rule-anchors.sh` header |
 | Skills are guidance, not enforcement; no new skill or hook in core | [DOMAIN.md](../../../DOMAIN.md) |
@@ -45,7 +45,7 @@ Decision-3 covers: FR-006, FR-006N, FR-007, FR-007N
 
 ### Decision-4: Eval pilot as a manual document
 
-`docs/evals/handoff-pilot.md`, one file, linked from `llms.txt` only. Each scenario has Prompt, Expected behavior, Must-not-pass case, Deterministic check, Human-judged check and a result row (model, runtime, version, date, outcome, variance note). No script, no CI step, no pass threshold before a recorded baseline. Scenario 5 (Hermes/Codex not described as running Claude hooks) is checkable by grep against `docs/compatibility-matrix.md`.
+`docs/evals/handoff-pilot.md`, one file, linked from `llms.txt` only. Each scenario has Prompt, Expected behavior, Must-not-pass case, Deterministic check, Human-judged check and a result row (model, runtime, version, date, outcome, variance note). No script, no CI step, no pass threshold before a recorded baseline. Scenario 5 (Hermes/Codex not described as running Claude hooks) is checked by manual comparison with `docs/compatibility-matrix.md` (a reference check, not a grep).
 Decision-4 covers: FR-003N, FR-009, FR-009N, FR-010, FR-010N, FR-011, FR-011N, FR-012, FR-012N
 
 ### Decision-5: Doctrine audit

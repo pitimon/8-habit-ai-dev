@@ -93,7 +93,7 @@ These commandments define what AI-assisted development must **never** do. Rules 
 
 ## Handoff contract
 
-When work passes to another session or agent, the handoff MUST state **Evidence** and **Not verified**, and SHOULD state Intent/source, Decisions (with who decided) and Next action/stop.
+When work passes to another session or agent, the handoff MUST state **Evidence** and **Not verified**, and SHOULD state Intent/source, Decisions (with who decided) and Next action/stop. It works conversation-only; no file is required.
 
 - **Evidence**: list each claim with its class — Static (read or linted), Executed test (command and result), or Runtime (observed in a running system) — plus method and result. A claim without method and result is unverified.
 - A static or test result never establishes runtime behavior. If only static evidence exists for a runtime claim, report runtime as Not verified.

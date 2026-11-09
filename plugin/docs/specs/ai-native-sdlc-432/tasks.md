@@ -11,7 +11,7 @@ source-skill-version: unversioned (Hermes-installed breakdown skill; no version 
 
 **Source**: [prd.md](./prd.md), [design.md](./design.md).
 
-**Status (2026-11-09)**: T1–T7 implemented in the working tree, not committed; `bash tests/ci-local.sh` passes all 11 suites, catalog is fresh, `review-ai` is 1943 words, and removing an anchor makes `test-guide-rule-anchors.sh` fail. T8–T10 await the owner. **Plan correction:** PR #433 failed hosted `validate` on Check 27 (consumer-doctrine paths changed without a version bump), so the bump to v2.21.65 plus release notes were added in the same PR as the repo requires (`guides/release-surface.md`). Task #10 now means only: owner decides merge and tag. Decision-1/Decision-2 use the recommended options and remain open for owner confirmation.
+**Status (2026-11-09)**: T1–T7 are committed in PR #433 (review fixes applied in a follow-up commit); `bash tests/ci-local.sh` passes all 11 suites, catalog is fresh, `review-ai` is 1943 words, and removing an anchor makes `test-guide-rule-anchors.sh` fail. T8–T10 await the owner. **Plan correction:** PR #433 failed hosted `validate` on Check 27 (consumer-doctrine paths changed without a version bump), so the bump to v2.21.65 plus release notes were added in the same PR as the repo requires (`guides/release-surface.md`). Task #10 now means only: owner decides merge and tag. Decision-1/Decision-2 use the recommended options and remain open for owner confirmation.
 
 ## Tasks
 
@@ -26,7 +26,7 @@ source-skill-version: unversioned (Hermes-installed breakdown skill; no version 
 | 7 | Sync mirror and run full validation | Run `sync-mirror.sh`, `ci-local.sh` and the catalog check, then report exact results. | `plugin/` (generated mirror) | #4, #5, #6 | Q1 | ready-for-agent |
 | 8 | Run the pilot baseline manually | Owner picks model/runtime and runs the five scenarios once; the agent runs no paid model. | `docs/evals/handoff-pilot.md` | #5, #7 | Q2 | ready-for-human |
 | 9 | Confirm and post issue #432 correction | Owner reviews the drafted wording and chooses comment or body edit before anything is posted. | external issue #432 | none | Q3 | ready-for-human |
-| 10 | Release decision gate | Owner decides on a release; if yes, follow `guides/release-surface.md`. Not authorized by this plan. | release surface | #7 | Q3 | ready-for-human |
+| 10 | Release decision gate | Owner decides to merge and tag PR #433. The v2.21.65 bump is already in the PR (Check 27); merge and tag are not authorized by this plan. | release surface | #7 | Q3 | ready-for-human |
 
 Task #1 implements: Decision-1, Decision-2 (FR-001, FR-002, FR-003, FR-004, FR-005)
 Task #2 implements: Decision-3 (FR-006)

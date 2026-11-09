@@ -37,7 +37,7 @@
 
 ### 1.3 P3 ขัดกับ plugin boundary
 
-P3 (fail-closed PreToolUse edit blocker) คือ runtime enforcement ซึ่ง [DOMAIN.md:19–25, 37](../../../DOMAIN.md), [CLAUDE.md:73–80](../../../CLAUDE.md), [ADR-024:43–45](../../adr/ADR-024-codex-runtime-adapter-boundary.md) ระบุให้อยู่นอก core (→ `claude-governance`) หากจะใส่ใน core ต้องมี ADR ปรับ boundary ก่อน; อีกทั้ง hooks เป็น Claude-only ([compatibility-matrix.md:17–24, 63–71](../../compatibility-matrix.md))
+P3 (fail-closed PreToolUse edit blocker) คือ runtime enforcement ซึ่ง [DOMAIN.md:19–25, 37](../../../DOMAIN.md), [CLAUDE.md:73–80](../../../CLAUDE.md), [ADR-024:43–45](../../adr/ADR-024-codex-runtime-adapter-boundary.md) ระบุให้อยู่นอก core (→ `claude-governance`) หากจะใส่ใน core ต้องมี ADR ปรับ boundary ก่อน; อีกทั้ง hooks ของ repo เป็นของ Claude Code; Codex มีเพียง adapter แคบเมื่อ host เรียกใช้ ([compatibility-matrix.md:17–24, 63–71](../../compatibility-matrix.md))
 
 ## 2. ประเมินข้อเสนอ P1–P5
 

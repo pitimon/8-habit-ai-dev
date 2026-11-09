@@ -151,7 +151,7 @@ Produce a research brief using the template. Load the template for the full stru
 
 - **Expects from predecessor**: A problem statement or feature idea — "we need to..."
 - **Produces for successor** (`/requirements`): Research brief with depth level, findings, constraints, and recommendation. In Compare mode, includes a comparison matrix. In Audit mode, includes a code-vs-docs audit table. In Deep mode, includes a source verification report.
-- **Handoff evidence**: when handing off to another session or agent, state Evidence (Static / Executed test / Runtime, with method and result) and Not verified; a static or test result never establishes runtime behavior. See `integrity-principles.md` § Handoff contract.
+- **Handoff evidence**: when handing off to another session or agent, MUST state Evidence (Static / Executed test / Runtime, with method and result) and Not verified; a static or test result never establishes runtime behavior. See `integrity-principles.md` § Handoff contract.
 
 ## Evidence Standard
 

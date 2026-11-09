@@ -111,7 +111,7 @@ next-skill: monitor-setup
 
 - **Expects from predecessor** (`/review-ai`): Review verdict PASS with a confirmed Owner note — code ready for deployment. If the verdict is CONCERNS only because the note is unconfirmed, get the merger's confirmation before planning the rollout.
 - **Produces for successor** (`/monitor-setup`): Deployed service with rollback plan documented
-- **Handoff evidence**: when handing off to another session or agent, state Evidence (Static / Executed test / Runtime, with method and result) and Not verified; a static or test result never establishes runtime behavior. See `integrity-principles.md` § Handoff contract.
+- **Handoff evidence**: when handing off to another session or agent, MUST state Evidence (Static / Executed test / Runtime, with method and result) and Not verified; a static or test result never establishes runtime behavior. See `integrity-principles.md` § Handoff contract.
 
 ## When to Skip
 

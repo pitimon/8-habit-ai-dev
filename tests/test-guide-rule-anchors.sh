@@ -49,6 +49,10 @@ research|static or test result never establishes runtime behavior|integrity-prin
 build-brief|static or test result never establishes runtime behavior|integrity-principles.md Handoff contract (#432)
 review-ai|static or test result never establishes runtime behavior|integrity-principles.md Handoff contract (#432)
 deploy-guide|static or test result never establishes runtime behavior|integrity-principles.md Handoff contract (#432)
+research|MUST state Evidence (Static / Executed test / Runtime, with method and result) and Not verified|integrity-principles.md Handoff contract MUST fields (#432)
+build-brief|MUST state Evidence (Static / Executed test / Runtime, with method and result) and Not verified|integrity-principles.md Handoff contract MUST fields (#432)
+review-ai|MUST state Evidence (Static / Executed test / Runtime, with method and result) and Not verified|integrity-principles.md Handoff contract MUST fields (#432)
+deploy-guide|MUST state Evidence (Static / Executed test / Runtime, with method and result) and Not verified|integrity-principles.md Handoff contract MUST fields (#432)
 EOF
 )
 

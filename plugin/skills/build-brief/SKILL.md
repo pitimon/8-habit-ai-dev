@@ -103,7 +103,7 @@ next-skill: review-ai
 
 - **Expects from predecessor** (`/breakdown`): Specific task with file paths and dependencies
 - **Produces for successor** (`/review-ai`): Implementation brief with context, patterns, constraints, and test approach
-- **Handoff evidence**: when handing off to another session or agent, state Evidence (Static / Executed test / Runtime, with method and result) and Not verified; a static or test result never establishes runtime behavior. See `integrity-principles.md` § Handoff contract.
+- **Handoff evidence**: when handing off to another session or agent, MUST state Evidence (Static / Executed test / Runtime, with method and result) and Not verified; a static or test result never establishes runtime behavior. See `integrity-principles.md` § Handoff contract.
 
 ## When to Skip
 
