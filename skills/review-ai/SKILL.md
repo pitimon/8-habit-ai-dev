@@ -80,6 +80,7 @@ next-skill: deploy-guide
 
 - **Expects from predecessor** (`/build-brief`): Implemented code with context brief
 - **Produces for successor** (`/deploy-guide`): Review verdict (PASS/CONCERNS/REWORK/FAIL) with findings resolved
+- **Handoff evidence**: when handing off to another session or agent, state Evidence (Static / Executed test / Runtime, with method and result) and Not verified; a static or test result never establishes runtime behavior. See `integrity-principles.md` § Handoff contract.
 
 ## Verdict (Required Output)
 

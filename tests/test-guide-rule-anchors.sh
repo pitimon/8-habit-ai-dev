@@ -45,6 +45,10 @@ review-ai|state what was checked and how|integrity-principles.md commandment 3 (
 cross-verify|**Q17**: if a handoff note exists|structured-output-protocol.md Q17 auto-check (#407)
 cross-verify|report which blocks were found and which were missing|structured-output-protocol.md found/missing report (#407)
 save-spec|every backtick path resolves|spec-digest-pattern.md 5 verification checks (#407)
+research|static or test result never establishes runtime behavior|integrity-principles.md Handoff contract (#432)
+build-brief|static or test result never establishes runtime behavior|integrity-principles.md Handoff contract (#432)
+review-ai|static or test result never establishes runtime behavior|integrity-principles.md Handoff contract (#432)
+deploy-guide|static or test result never establishes runtime behavior|integrity-principles.md Handoff contract (#432)
 EOF
 )
 

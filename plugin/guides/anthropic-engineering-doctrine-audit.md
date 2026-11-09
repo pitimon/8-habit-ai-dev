@@ -30,8 +30,10 @@ The 2026-05-24 research brief identified the meta-pattern "doctrine doc that nam
 | Post-session "should this become a skill?" refinement                 | `/reflect` Q6 (most / least useful skill) → `SKILL-EFFECTIVENESS.md` tally → `/skill-improve` cycles                                                             | [ADR-018](../docs/adr/ADR-018-memory-layer-activation.md) lesson → ADR pipeline                                               |
 | Subagent context isolation                                            | `@8-habit-reviewer` (Sonnet, read-only) + advisor-pattern disprove-mode (fresh subagent, no named role)                                                          | `guides/advisor-pattern.md:69-120`                                                                                            |
 | "Audit before deep dive" as research discipline                       | Already practiced — see lesson `2026-05-24-notebook-agent-harness-audit-adr018.md` which reframed ADR-018 from invention to activation via audit-first synthesis | `~/.claude/lessons/2026-05-24-notebook-agent-harness-audit-adr018.md`                                                         |
+| Artifact chain: each stage writes an artifact the next stage reads (AI-native SDLC playbook) | Opt-in `--persist` spec artifacts plus the Handoff contract (Evidence / Not verified MUST) | `guides/persistence-convention.md:24`, `guides/integrity-principles.md:94` (#432, unreleased) |
+| Feedback loop: verification is part of "done" (AI-native SDLC playbook) | Integrity commandments 1–4 and `/review-ai` reading tests first | `guides/integrity-principles.md:11`, `skills/review-ai/SKILL.md:21` |
 
-**12 rows.** Adding to this table requires citing the specific file/line and the date the pattern shipped.
+**14 rows.** Adding to this table requires citing the specific file/line and the date the pattern shipped.
 
 ## Table 2 — Evaluated and deferred
 
@@ -46,8 +48,12 @@ The 2026-05-24 research brief identified the meta-pattern "doctrine doc that nam
 | N7  | This guide — doctrine doc that names adopted patterns                                                                                                                      | Meta (this 2026-05-24 audit)                                                                | **T1 Adopted** | Shipped as this guide in v2.18.3. The defensive-citation function closes a documented [ADR-018](../docs/adr/ADR-018-memory-layer-activation.md) gap: without a catalogue, future contributors re-propose adopted patterns.                                                                                                                                                                                                                                                                                                                                                                                                                                               | — (shipped)  |
 | N8  | Simplicity-first / YAGNI edit discipline (minimum code that solves the problem; no single-use abstraction, no unasked flexibility, no error handling for impossible cases) | multica-ai/andrej-karpathy-skills (Karpathy rule #2), via the 2026-06-27 viral-post audit   | **T2**         | [ADR-026](../docs/adr/ADR-026-external-prior-art-audit-karpathy-gstack.md) §1. Genuine gap at the level of a consolidated surface — H3 covers only gold-plating (`habits/h3-first-things-first.md:54`) and Q4 names premature optimization (`:14`); partial YAGNI exists in passing (`guides/tdd-tracer-bullet.md:38`) but there is no general simplicity guide. n=0 — no `/reflect` lesson cites AI over-engineering rework in this project; repo popularity (~220k★) is not friction ([ADR-014](../docs/adr/ADR-014-external-prior-art-audit.md):63). Re-evaluate when a lesson cites a first-person "AI added a speculative abstraction / over-engineered" admission. | 2026-12-27   |
 | N9  | Surgical / minimal-diff edits (touch only what the request needs; don't rewrite whole files or refactor unbroken adjacent code)                                            | multica-ai/andrej-karpathy-skills (Karpathy rule #3), via the 2026-06-27 viral-post audit   | **T2**         | [ADR-026](../docs/adr/ADR-026-external-prior-art-audit-karpathy-gstack.md) §1 + the #3↔H1 tension. Genuine gap — only blast-radius (`skills/deploy-guide/SKILL.md:71`) and size limits in `/review-ai` exist; no minimal-diff edit discipline. **Must be reframed before any ship**: Karpathy "touch only what you must" tensions with H1 defense-in-depth (`habits/h1-be-proactive.md:9` "check every caller… all in the same session") — adopt as "surgical within the change diff" without suppressing H1's caller-tracing. n=0 friction. Re-evaluate when a lesson cites a first-person "AI rewrote a whole file where a targeted edit was correct" admission.       | 2026-12-27   |
+| N10 | Hooks as approval gates; managed settings and a production-gate PreToolUse hook | AI-native SDLC playbook (claude.com, 2026-08-21) | **OOS** | Runtime enforcement belongs to `claude-governance` (`CLAUDE.md:78`, `DOMAIN.md:23`). This plugin can describe the pattern but does not ship gates. | — (rejected) |
+| N11 | Continuous evals in CI on every `CLAUDE.md`/skill change, run non-interactively with a paid model | AI-native SDLC playbook | **T2** | Adapted only as a manual pilot, `docs/evals/handoff-pilot.md` (#432); no baseline yet, and a paid CI step conflicts with the zero-dependency consumer contract. Re-evaluate when the pilot has a recorded baseline and a `/reflect` lesson cites a skill regression found late. | 2027-05-09 |
+| N12 | `intent.md` written by the originator as the first committed artifact | AI-native SDLC playbook | **T2** | n=0 — no lesson cites intent lost between request and PRD; `/research` and `/requirements` already capture it. Re-evaluate when a lesson cites a first-person "the PRD drifted from what was asked" admission. | 2027-05-09 |
+| N13 | Closed-loop maintenance agent: a breached control band invokes the agent headless and writes the next `intent.md` | AI-native SDLC playbook | **OOS** | A dynamic orchestration engine is a stated non-goal (`SPEC.md:30`, `docs/adr/ADR-024-codex-runtime-adapter-boundary.md:43`). | — (rejected) |
 
-**9 rows.** Adding a new row requires the same evidence discipline as the existing rows: source, tier, rationale, drop-date if T2.
+**13 rows.** Adding a new row requires the same evidence discipline as the existing rows: source, tier, rationale, drop-date if T2.
 
 ## How to use this guide
 
@@ -83,8 +89,8 @@ The 2026-05-24 research brief identified the meta-pattern "doctrine doc that nam
 
 ## Self-Check
 
-- [x] Table 1 has exactly 12 rows
-- [x] Table 2 has exactly 9 rows (N1 through N9)
+- [x] Table 1 has exactly 14 rows
+- [x] Table 2 has exactly 13 rows (N1 through N13)
 - [x] N6 is in Table 2 at T2 with drop-date 2026-11-24, not in Table 1
 - [x] N7 is in Table 2 marked "T1 Adopted — shipped v2.18.3" (self-reference acknowledged)
 - [x] N8 + N9 (Karpathy #2 simplicity / #3 surgical-edit) are in Table 2 at T2 with drop-date 2026-12-27, cross-referencing ADR-026
@@ -99,3 +105,4 @@ The 2026-05-24 research brief identified the meta-pattern "doctrine doc that nam
 - Research brief: `~/.claude/plans/https-vibecodingthailand-com-blog-anthro-tranquil-rocket.md` (Deep mode + Audit submode, 5 URLs fetched and verified 2026-05-24)
 - Cross-verify: `@8-habit-reviewer` agent run 2026-05-24 — 11/17 pass, 1 CRITICAL (cherry-picking) + 2 HIGH + 3 MEDIUM. The CRITICAL finding is the reason N6 sits at T2 in this guide, not T1 as the original brief proposed.
 - Issue: [#231](https://github.com/pitimon/8-habit-ai-dev/issues/231)
+- AI-native SDLC playbook rows (Table 1 last two, N10–N13): research brief `docs/specs/ai-native-sdlc-432/research.md` (#432)

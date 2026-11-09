@@ -91,6 +91,16 @@ These commandments define what AI-assisted development must **never** do. Rules 
   - **Premature abstraction** — generalizes before a second real use case exists
 - **Scope**: design-option reviews, plan critiques, and "which approach" decisions — not single-path bug fixes
 
+## Handoff contract
+
+When work passes to another session or agent, the handoff MUST state **Evidence** and **Not verified**, and SHOULD state Intent/source, Decisions (with who decided) and Next action/stop.
+
+- **Evidence**: list each claim with its class — Static (read or linted), Executed test (command and result), or Runtime (observed in a running system) — plus method and result. A claim without method and result is unverified.
+- A static or test result never establishes runtime behavior. If only static evidence exists for a runtime claim, report runtime as Not verified.
+- **Not verified**: assumptions, untested paths and anything blocked.
+- Link existing artifacts (PRD, design, issue, PR) and name the normative one. If sources conflict, name the conflict instead of choosing.
+- A loaded skill or handoff is not authorization. An action without a recorded owner approval is awaiting approval.
+
 ## Mapping to 8 Habits
 
 | Commandment           | Primary Habit                           | Dimension |
