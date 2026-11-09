@@ -2,7 +2,7 @@
 feature: ai-native-sdlc-432
 step: design
 created: 2026-11-09T05:05:00+07:00
-updated: 2026-11-09T05:55:00+07:00
+updated: 2026-11-09T06:20:00+07:00
 source-issue: 432
 source-skill-version: unversioned (Hermes-installed design skill; no version field)
 ---
@@ -55,7 +55,7 @@ Decision-5 covers: FR-008, FR-008N
 
 ### Decision-6: Verification and release hygiene
 
-Run `bash scripts/sync-mirror.sh`, `bash tests/ci-local.sh` and `node scripts/generate-skill-catalog.js --check` (only if frontmatter changed). A release, version bump or merge is a separate owner gate under `guides/release-surface.md`.
+Run `bash scripts/sync-mirror.sh`, `bash tests/ci-local.sh` and `node scripts/generate-skill-catalog.js --check` (only if frontmatter changed). The version bump and release notes must ride in the same PR (Check 27, `guides/release-surface.md`); merge and tag remain a separate owner gate.
 Decision-6 covers: FR-013, FR-013N
 
 ## Load-bearing claims

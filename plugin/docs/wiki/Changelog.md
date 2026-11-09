@@ -1,4 +1,4 @@
-![Latest](https://img.shields.io/badge/latest-v2.21.64-blue)
+![Latest](https://img.shields.io/badge/latest-v2.21.65-blue)
 
 # Changelog
 
@@ -6,6 +6,10 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 > [!NOTE]
 > Wiki summaries intentionally focus on user-facing documentation changes and workflow boundaries. Use the repository changelog for exact release notes.
+
+## v2.21.65 · Handoff evidence contract
+
+Handoffs to another session or agent now state Evidence and Not verified (guide plus a pointer in four skills), and a manual eval pilot document was added with no baseline yet. No hooks, enforcement or runtime behavior changed.
 
 ## v2.21.64 · CI validation guidance
 

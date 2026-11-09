@@ -2,7 +2,7 @@
 feature: ai-native-sdlc-432
 step: breakdown
 created: 2026-11-09T05:05:00+07:00
-updated: 2026-11-09T05:40:00+07:00
+updated: 2026-11-09T06:20:00+07:00
 source-issue: 432
 source-skill-version: unversioned (Hermes-installed breakdown skill; no version field)
 ---
@@ -11,7 +11,7 @@ source-skill-version: unversioned (Hermes-installed breakdown skill; no version 
 
 **Source**: [prd.md](./prd.md), [design.md](./design.md).
 
-**Status (2026-11-09)**: T1–T7 implemented in the working tree, not committed; `bash tests/ci-local.sh` passes all 11 suites, catalog is fresh, `review-ai` is 1943 words, and removing an anchor makes `test-guide-rule-anchors.sh` fail. T8–T10 await the owner. Decision-1/Decision-2 use the recommended options and remain open for owner confirmation.
+**Status (2026-11-09)**: T1–T7 implemented in the working tree, not committed; `bash tests/ci-local.sh` passes all 11 suites, catalog is fresh, `review-ai` is 1943 words, and removing an anchor makes `test-guide-rule-anchors.sh` fail. T8–T10 await the owner. **Plan correction:** PR #433 failed hosted `validate` on Check 27 (consumer-doctrine paths changed without a version bump), so the bump to v2.21.65 plus release notes were added in the same PR as the repo requires (`guides/release-surface.md`). Task #10 now means only: owner decides merge and tag. Decision-1/Decision-2 use the recommended options and remain open for owner confirmation.
 
 ## Tasks
 

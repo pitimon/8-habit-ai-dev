@@ -10,6 +10,18 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## v2.21.65 — Handoff evidence contract and manual eval pilot (#432) (2026-11-09)
+
+### Documentation
+
+- `guides/integrity-principles.md` adds a Handoff contract: handoffs to another session or agent MUST state Evidence (Static / Executed test / Runtime, with method and result) and Not verified; Intent, Decisions and Next/stop are SHOULD. A static or test result never establishes runtime behavior.
+- `research`, `build-brief`, `review-ai` and `deploy-guide` carry one pointer sentence each (word counts 1607, 1051, 1943, 1444); `tests/test-guide-rule-anchors.sh` pins it (62 anchors).
+- `docs/evals/handoff-pilot.md` is a manual five-scenario pilot. No baseline run exists and no model was run for this release.
+- `guides/anthropic-engineering-doctrine-audit.md` records the AI-native SDLC playbook (Table 1 +2, Table 2 N10–N13); the spec chain is in `docs/specs/ai-native-sdlc-432/`.
+- Local `bash tests/ci-local.sh` passed all 11 suites. No hooks, enforcement or new skill; live Claude Code/Codex/Hermes behavior was not exercised.
+
+---
+
 ## v2.21.64 — CI validation guidance points to ci-local runner (#430) (2026-10-13)
 
 ### Documentation
