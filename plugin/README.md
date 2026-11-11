@@ -3,13 +3,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Validation](https://github.com/pitimon/8-habit-ai-dev/actions/workflows/validate.yml/badge.svg)](https://github.com/pitimon/8-habit-ai-dev/actions/workflows/validate.yml)
 [![Skills](https://img.shields.io/badge/Skills-24-blue)](docs/skills-reference.md)
-[![Version](https://img.shields.io/badge/Version-2.21.64-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.64)
+[![Version](https://img.shields.io/badge/Version-2.21.65-brightgreen)](https://github.com/pitimon/8-habit-ai-dev/releases/tag/v2.21.65)
 
 A development playbook for AI coding agents: define the task before coding, prepare repository context, and review evidence before shipping. The package contains 24 Markdown skills based on Stephen Covey's 8 Habits.
 
 **Start by choosing your client below.** Each guide covers installation, verification, a first task, daily use, updates and troubleshooting without interleaving other clients' commands.
 
-[Choose a client](#quick-start) · [Workflow](#the-7-step-workflow) · [Team adoption](docs/team-adoption.md) · [What's New](#whats-new-in-v22164)
+[Choose a client](#quick-start) · [Workflow](#the-7-step-workflow) · [Team adoption](docs/team-adoption.md) · [What's New](#whats-new-in-v22165)
 
 ## What you get
 
@@ -69,9 +69,17 @@ The [team adoption guide](docs/team-adoption.md) covers responsibilities, data/p
 
 Update instructions belong to the selected client guide. Review [release notes](https://github.com/pitimon/8-habit-ai-dev/releases), record the installed version and verify a representative task after updating. Marketplace snapshots are not automatically pinned deployments.
 
+## What's New in v2.21.65
+
+- A **Handoff contract** in `guides/integrity-principles.md`: when work passes to another session or agent, state Evidence (Static / Executed test / Runtime, with method and result) and Not verified. `research`, `build-brief`, `review-ai` and `deploy-guide` point to it, pinned by anchor tests (#432).
+- A manual five-scenario eval pilot, `docs/evals/handoff-pilot.md`. No baseline has been recorded and no model was run.
+- No hooks, enforcement or new skill were added.
+
+---
+
 ## What's New in v2.21.64
 
-- `CLAUDE.md` validation guidance now points to the single `bash tests/ci-local.sh` runner instead of a stale five-script list, with mirror-safe paths (#430). No skill behavior changed.
+Release v2.21.64 pointed `CLAUDE.md` validation guidance to the single `bash tests/ci-local.sh` runner (#430). See [CHANGELOG.md](CHANGELOG.md) for the release record.
 
 ---
 
@@ -107,4 +115,4 @@ The consumer package needs a compatible agent runtime, not an application build.
 
 [MIT](LICENSE)
 
-_Version: 2.21.64 | Last updated: 2026-10-13_
+_Version: 2.21.65 | Last updated: 2026-11-09_

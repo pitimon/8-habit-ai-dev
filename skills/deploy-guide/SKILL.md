@@ -111,6 +111,7 @@ next-skill: monitor-setup
 
 - **Expects from predecessor** (`/review-ai`): Review verdict PASS with a confirmed Owner note — code ready for deployment. If the verdict is CONCERNS only because the note is unconfirmed, get the merger's confirmation before planning the rollout.
 - **Produces for successor** (`/monitor-setup`): Deployed service with rollback plan documented
+- **Handoff evidence**: when handing off to another session or agent, MUST state Evidence (Static / Executed test / Runtime, with method and result) and Not verified; a static or test result never establishes runtime behavior. See `integrity-principles.md` § Handoff contract.
 
 ## When to Skip
 
@@ -139,6 +140,7 @@ next-skill: monitor-setup
 See [Step 6 wiki page](https://github.com/pitimon/8-habit-ai-dev/blob/main/docs/wiki/Step-6-Deploy-Guide.md) for deeper walkthrough, examples, and common pitfalls.
 
 Load `${CLAUDE_PLUGIN_ROOT}/habits/h1-be-proactive.md` for the full H1 principle and examples.
+Load `${CLAUDE_PLUGIN_ROOT}/guides/integrity-principles.md` § Handoff contract when handing work to another session or agent.
 
 ---
 

@@ -24,6 +24,7 @@ Repo: https://github.com/pitimon/8-habit-ai-dev
 - [docs/team-adoption.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/docs/team-adoption.md): Team pilot, responsibilities, rollout, security and support.
 - [docs/adr/README.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/docs/adr/README.md): ADR index and authoring convention.
 - [docs/adr/ADR-025-codex-project-context-files.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/docs/adr/ADR-025-codex-project-context-files.md): Decision record for root project context files and Codex setup notes.
+- [docs/evals/handoff-pilot.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/docs/evals/handoff-pilot.md): Manual five-scenario pilot that checks whether an agent follows the handoff-evidence discipline. No baseline recorded yet.
 - [.codex/README.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/.codex/README.md): Repo-local Codex setup notes and hook/config boundary.
 - [docs/wiki/Limitations.md](https://raw.githubusercontent.com/pitimon/8-habit-ai-dev/main/docs/wiki/Limitations.md): User-facing boundaries, non-goals, runtime limits, and release-evidence expectations.
 
