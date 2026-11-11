@@ -23,7 +23,7 @@ PRD: [prd.md](./prd.md) · Research: [research.md](./research.md) · **Pass leve
 
 ### Decision-1: Host guide for the contract
 
-**Option A**: add a "Handoff contract" section (≤150 words) to `guides/integrity-principles.md`. Pro: evidence classes match commandments 1–4; `research`/`review-ai` already load it. Con: the file is mostly "never do" rules; `build-brief`/`deploy-guide` need a Load line.
+**Option A**: add a "Handoff contract" section (≈150 words; 151 after review additions) to `guides/integrity-principles.md`. Pro: evidence classes match commandments 1–4; `research`/`review-ai` already load it. Con: the file is mostly "never do" rules; `build-brief`/`deploy-guide` need a Load line.
 **Option B**: `guides/structured-output-protocol.md`. Pro: already about cross-skill handoff. Con: it specifies machine-readable blocks and emission gates, so human-readable handoff rules would mix with it.
 **Option C**: `guides/cross-verification.md`. Con: 1955 words, already near its ceiling.
 **Steelman of B**: one place for everything handoff-related. Rejected because the contract mainly defines what counts as evidence, which the integrity commandments already own.

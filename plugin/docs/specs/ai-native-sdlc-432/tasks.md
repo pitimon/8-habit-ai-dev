@@ -17,7 +17,7 @@ source-skill-version: unversioned (Hermes-installed breakdown skill; no version 
 
 | #   | Task | Description (1 sentence) | Files | Depends on | Priority | Readiness |
 | --- | ---- | ------------------------ | ----- | ---------- | -------- | --------- |
-| 1 | Add Handoff contract section | Add a ≤150-word section (5 fields, evidence classes, not-authorization; MUST only for Evidence and Not verified) to the integrity guide. | `guides/integrity-principles.md` | none | Q2 | ready-for-agent |
+| 1 | Add Handoff contract section | Add a ≈150-word section (151 after review) (5 fields, evidence classes, not-authorization; MUST only for Evidence and Not verified) to the integrity guide. | `guides/integrity-principles.md` | none | Q2 | ready-for-agent |
 | 2 | Add handoff sentence to research, build-brief, deploy-guide | Insert the contract pointer in each Handoff section and add the integrity-principles Load line to build-brief and deploy-guide. | `skills/research/SKILL.md`, `skills/build-brief/SKILL.md`, `skills/deploy-guide/SKILL.md` | #1 | Q2 | ready-for-agent |
 | 3 | Add handoff sentence to review-ai within word budget | Insert the same sentence and prove by `wc -w` it stays below 1950 words, trimming the new sentence, not existing content. | `skills/review-ai/SKILL.md` | #1 | Q2 | ready-for-agent |
 | 4 | Pin the rule with anchor tests | Add four anchor rows and prove a deleted anchor makes the test fail. | `tests/test-guide-rule-anchors.sh` | #2, #3 | Q2 | ready-for-agent |

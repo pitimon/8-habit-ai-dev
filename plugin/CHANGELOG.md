@@ -14,9 +14,9 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ### Documentation
 
-- `guides/integrity-principles.md` adds a Handoff contract: handoffs to another session or agent MUST state Evidence (Static / Executed test / Runtime, with method and result) and Not verified; Intent, Decisions and Next/stop are SHOULD. A static or test result never establishes runtime behavior.
-- `research`, `build-brief`, `review-ai` and `deploy-guide` carry one pointer sentence each (word counts 1608, 1052, 1944, 1445); `tests/test-guide-rule-anchors.sh` pins it (70 anchors).
-- `docs/evals/handoff-pilot.md` is a manual five-scenario pilot. No baseline run exists and no model was run for this release.
+- `guides/integrity-principles.md` adds a Handoff contract: handoffs to another session or agent MUST state Evidence (Static / Executed test / Runtime, with method and result) and Not verified; Intent, Decisions and Next/stop are SHOULD. A static or test result never establishes runtime behavior. The guide states it is guidance only (enforcement belongs to companion tooling) and gives a minimal valid form.
+- `research`, `build-brief`, `review-ai` and `deploy-guide` carry one pointer sentence each (word counts 1608, 1052, 1944, 1445); `tests/test-guide-rule-anchors.sh` pins that wording (70 anchors); the anchors do not measure whether agents comply, and no effectiveness is claimed.
+- `docs/evals/handoff-pilot.md` is a manual five-scenario pilot. S2 and S3 use binary criteria scored against a ground-truth sheet. No baseline run exists and no model was run for this release.
 - `guides/anthropic-engineering-doctrine-audit.md` records the AI-native SDLC playbook (Table 1 +2, Table 2 N10–N13); the spec chain is in `docs/specs/ai-native-sdlc-432/`.
 - Local `bash tests/ci-local.sh` passed all 11 suites. No hooks, enforcement or new skill; live Claude Code/Codex/Hermes behavior was not exercised.
 
