@@ -9,7 +9,7 @@ source-skill-version: unversioned (Hermes-installed design skill; no version fie
 
 # Design: Evidence & Handoff Contract + Behavioral Eval Pilot
 
-PRD: [prd.md](./prd.md) · Research: [research.md](./research.md) · **Pass level: Focus** · Status: **proposed; owner said "ทำต่อ" without answering Decision-1/Decision-2, so the recommended options are recorded as the working choice and remain revisable before implementation.**
+PRD: [prd.md](./prd.md) · Research: [research.md](./research.md) · **Pass level: Focus** · Status: **proposed; owner said "ทำต่อ" without answering Decision-1/Decision-2, so the recommended options are recorded as the working choice and remain revisable until the owner confirms; T1–T7 are implemented in PR #433 on those choices.**
 
 ## Constraints (Confirmed)
 

@@ -94,7 +94,7 @@ If FR-003 (conversation-only default) conflicts with a traceability need, FR-003
 - [ ] Mirror synced; `tests/ci-local.sh` passes.
 - [ ] Touched `SKILL.md` files are under 2000 words by `wc -w`.
 - [ ] No text implies a skill enforces approval or runtime parity across hosts.
-- [ ] Owner has approved this PRD before `/design` starts.
+- [ ] Owner has formally approved this PRD (design and implementation proceeded on the recommended working choices; formal approval is still pending).
 
 ## Constraints
 

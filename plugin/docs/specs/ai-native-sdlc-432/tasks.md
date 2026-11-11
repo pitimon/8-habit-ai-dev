@@ -11,7 +11,7 @@ source-skill-version: unversioned (Hermes-installed breakdown skill; no version 
 
 **Source**: [prd.md](./prd.md), [design.md](./design.md).
 
-**Status (2026-11-09)**: T1–T7 are committed in PR #433 (review fixes applied in a follow-up commit); `bash tests/ci-local.sh` passes all 11 suites, catalog is fresh, `review-ai` is 1943 words, and removing an anchor makes `test-guide-rule-anchors.sh` fail. T8–T10 await the owner. **Plan correction:** PR #433 failed hosted `validate` on Check 27 (consumer-doctrine paths changed without a version bump), so the bump to v2.21.65 plus release notes were added in the same PR as the repo requires (`guides/release-surface.md`). Task #10 now means only: owner decides merge and tag. Decision-1/Decision-2 use the recommended options and remain open for owner confirmation.
+**Status (2026-11-09)**: T1–T7 are committed in PR #433 (review fixes applied in a follow-up commit); `bash tests/ci-local.sh` passes all 11 suites, catalog is fresh, `review-ai` is 1944 words, and removing an anchor makes `test-guide-rule-anchors.sh` fail. T8–T10 await the owner. **Plan correction:** PR #433 failed hosted `validate` on Check 27 (consumer-doctrine paths changed without a version bump), so the bump to v2.21.65 plus release notes were added in the same PR as the repo requires (`guides/release-surface.md`). Task #10 now means only: owner decides merge and tag. Decision-1/Decision-2 use the recommended options and remain open for owner confirmation.
 
 ## Tasks
 
@@ -20,7 +20,7 @@ source-skill-version: unversioned (Hermes-installed breakdown skill; no version 
 | 1 | Add Handoff contract section | Add a ≈150-word section (151 after review) (5 fields, evidence classes, not-authorization; MUST only for Evidence and Not verified) to the integrity guide. | `guides/integrity-principles.md` | none | Q2 | ready-for-agent |
 | 2 | Add handoff sentence to research, build-brief, deploy-guide | Insert the contract pointer in each Handoff section and add the integrity-principles Load line to build-brief and deploy-guide. | `skills/research/SKILL.md`, `skills/build-brief/SKILL.md`, `skills/deploy-guide/SKILL.md` | #1 | Q2 | ready-for-agent |
 | 3 | Add handoff sentence to review-ai within word budget | Insert the same sentence and prove by `wc -w` it stays below 1950 words, trimming the new sentence, not existing content. | `skills/review-ai/SKILL.md` | #1 | Q2 | ready-for-agent |
-| 4 | Pin the rule with anchor tests | Add four anchor rows and prove a deleted anchor makes the test fail. | `tests/test-guide-rule-anchors.sh` | #2, #3 | Q2 | ready-for-agent |
+| 4 | Pin the rule with anchor tests | Add anchor rows (four for the runtime sentence and, after review, four for the MUST clause: eight in all) and prove a deleted anchor makes the test fail. | `tests/test-guide-rule-anchors.sh` | #2, #3 | Q2 | ready-for-agent |
 | 5 | Write manual eval pilot document | Create the five-scenario pilot with must-not-pass cases, deterministic and human checks, and a result table; link it from `llms.txt`. | `docs/evals/handoff-pilot.md`, `llms.txt` | #1 | Q2 | ready-for-agent |
 | 6 | Add playbook rows to doctrine audit | Record the playbook as adopted/adapt/defer/out-of-scope rows with citations and update the self-check counts. | `guides/anthropic-engineering-doctrine-audit.md` | #2, #3 | Q2 | ready-for-agent |
 | 7 | Sync mirror and run full validation | Run `sync-mirror.sh`, `ci-local.sh` and the catalog check, then report exact results. | `plugin/` (generated mirror) | #4, #5, #6 | Q1 | ready-for-agent |

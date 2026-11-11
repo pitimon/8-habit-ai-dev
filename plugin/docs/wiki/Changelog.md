@@ -9,7 +9,7 @@ This page summarizes recent wiki-relevant releases. The authoritative release hi
 
 ## v2.21.65 · Handoff evidence contract
 
-Handoffs to another session or agent now state Evidence and Not verified (guide plus a pointer in four skills), and a manual eval pilot document was added with no baseline yet. No hooks, enforcement or runtime behavior changed.
+The integrity guide now asks handoffs to another session or agent to state Evidence and Not verified (guidance only; a pointer sits in four skills), and a manual eval pilot document was added with no baseline yet. No hooks, enforcement or runtime behavior changed.
 
 ## v2.21.64 · CI validation guidance
 
